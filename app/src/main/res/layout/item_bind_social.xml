@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:paddingTop="@dimen/pd_xlarge">
+
+    <RelativeLayout
+        android:layout_width="@dimen/vs_xnormal"
+        android:layout_height="@dimen/vs_xnormal"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/socialIcon"
+            style="@style/social_icon"/>
+
+        <ImageView
+            android:id="@+id/socialIconClose"
+            style="@style/social_icon_close"
+            android:src="@drawable/social_close"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/socialTitle"
+        android:layout_gravity="center"
+        style="@style/text.normal.black"/>
+</LinearLayout>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">ELK</string>
+    <string name="elk_refresh">Обновить</string>
+    <string name="elk_attention">Внимание</string>
+    <string name="elk_empty">Не указано</string>
+    <string name="elk_authority">ru.mos.elk1.AUTHORITY</string>
+
+    <!-- auth pages -->
+    <string name="elk_authorization">Авторизация</string>
+    <string name="elk_register">Регистрация</string>
+    <string name="elk_restoreTitle">Восстановление пароля</string>
+    <string name="elk_changePasswords">Сменить пароль</string>
+    <string name="elk_email">E-mail</string>
+    <string name="elk_password">Пароль</string>
+    <string name="elk_oldPassword">Текущий пароль</string>
+    <string name="elk_newPassword">Новый пароль</string>
+    <string name="elk_authorize">Войти</string>
+    <string name="elk_skip">Пропустить</string>
+    <string name="elk_registerBtn">Зарегистрировать</string>
+    <string name="elk_restoreBtn">Восстановить</string>
+    <string name="elk_restorePassword">Забыли пароль?</string>
+    <string name="elk_info_auth">Вход в приложение осуществляется через Единую мобильную платформу.</string>
+    <string name="elk_info_auth_section">Для доступа к разделу необходимо авторизоваться через Единую мобильную платформу.</string>
+    <string name="elk_info_register">Для регистрации укажите свой номер телефона, на который будет выслано смс с паролем для входа в систему. В дальнейшем пароль можно будет изменить в личном кабинете.</string>
+    <string name="elk_info_restore">Для восстановления пароля укажите свой номер телефона. В дальнейшем пароль можно будет изменить в личном кабинете.</string>
+    <string name="elk_info_change_password">Новый пароль должен содержать не менее %s символов.</string>
+    <string name="elk_emp">Единая мобильная платформа города Москвы</string>
+    <string name="elk_unauthorized">Ваша сессия закрыта. Для продолжения работы необходима повторная авторизация.</string>
+    <string name="elk_hint_phone">Телефон 9991112233</string>
+    <string name="elk_no_changes">Изменения отсутствуют</string>
+
+    <!-- profile -->
+    <string name="elk_profile">Профиль</string>
+    <string name="elk_personal_data">Контактная информация</string>
+    <string name="elk_my_transport">Мой транспорт</string>
+    <string name="elk_my_flats">Мои квартиры</string>
+    <string name="elk_subscription">Информирование</string>
+    <string name="elk_transport">Транспорт</string>
+    <string name="elk_gkh">ЖКХ</string>
+    <string name="elk_info_services">Информационные сервисы</string>
+    <string name="elk_other">Другие</string>
+    <string name="elk_menu_logout">Выйти</string>
+    <string name="elk_menu_change_password">Сменить пароль</string>
+    <string name="elk_logout_question">Хотите выйти?</string>
+    <string name="elk_menu_block">Заблокировать</string>
+    <string name="elk_title_blockme">Блокировка пользователя</string>
+
+
+    <!-- personal-->
+    <string name="elk_separator_contacts">Контактная информация</string>
+    <string name="elk_lastname">Фамилия</string>
+    <string name="elk_firstname">Имя</string>
+    <string name="elk_middlename">Отчество</string>
+    <string name="elk_drive_license">Водительское удостоверение</string>
+    <string name="elk_confirmation_sent">На указанный e-mail отправлено письмо с инструкцией.</string>
+    <string name="elk_send_instruction">Выслать инструкцию</string>
+    <string name="elk_save">Сохранить</string>
+    <string name="elk_no_cars_and_lisense">Для настройки оповещения о начисленных штрафах укажите номер водительского удостоверения на вкладке \"Личные\" или добавьте траспортное средство с заполненным свидетельством о регистрации на вкладке \"Транспорт\".</string>
+    <string name="elk_fines_info">Настройка сервиса информирования о штрафах ГИБДД. Чтобы иметь возможность получить интересующую информацию, введите серию и номер свидетельства о регистрации вашего автомобиля или номер водительского удостоверения.</string>
+    <string name="elk_fines_subscr">Штрафы ГИБДД</string>
+    <string name="elk_addCar">Добавить транспортное средство</string>
+	<string name="elk_car_header">Транспортное средство %d</string>
+    <string name="elk_info_transport">Добавьте транспортные средства для удобства пользования сервисами отправки сообщений, получения информации о штрафах и эвакуации автомобиля.</string>
+    <string name="elk_change_email">Изменить E-mail?</string>
+    <string name="elk_change_email_info">При изменении или удалении email, вы не сможете видеть список ранее отправленных заявок</string>
+    <string name="elk_menu_save">Сохранить</string>
+    <string name="elk_snils">СНИЛС</string>
+
+    <!-- Transport -->
+    <string name="elk_menu_add_car">Добавить авто</string>
+    <string name="elk_title_cars">Транспортные средства</string>
+    <string name="elk_car_number">Номер ТС</string>
+    <string name="elk_sts_number">Свид. о регистр.</string>
+    <string name="elk_default_car">ТС для отправки новых сообщений</string>
+    <string name="elk_not_filled">Не указано</string>
+    <!-- New Car -->
+    <string name="elk_title_new_car">ТС №%d</string>
+    <string name="elk_hint_new_car">Введите серию и номер свидетельства о регистрации транспортного средства в формате 12АВ345678 (либо 1234567890). Номер ТС введите в формате А111АА199.</string>
+    <!-- Blocked-->
+    <string name="elk_blocked_header">Черный список</string>
+    <string name="elk_menu_add_black">Добавить в черный список</string>
+    <string name="elk_menu_delete_black">Удалить</string>
+    <string name="elk_unblock_question">Вы действительно хотите разблокировать данного пользователя?</string>
+    <string name="elk_unblock_confirm">Разблокировать</string>
+    <string name="elk_no_blocked_items">В черном списке находятся номера транспортных средств, от владельцев которых вы не желаете получать сообщения.</string>
+
+    <!-- Flats -->
+    <string name="elk_flats">Квартиры</string>
+    <string name="elk_flat_address" formatted="false" tools:ignore="StringFormatInvalid"><xliff:g id="street" example="ул. Мира">%s</xliff:g>\\u0020<xliff:g id="building" example="121">%s</xliff:g>, кв. <xliff:g id="flat" example="32">%s</xliff:g></string>
+    <string name="elk_flat_address2" formatted="false" tools:ignore="StringFormatInvalid"><xliff:g id="street" example="ул. Мира">%s</xliff:g>\\u0020<xliff:g id="building" example="121">%s</xliff:g></string>
+    <string name="elk_info_flats">Добавьте квартиры для удобства пользования сервисами внесения показаний счетчиков, информирования о начислениях за ЖКУ, информирования об отключении горячей воды и др.</string>
+    <string name="elk_default_flat">Адрес для отправки показаний приборов учета</string>
+    <string name="elk_epd">\u0020- код плательщика</string>
+    <string name="elk_electro_account">\u0020- лицевой счет</string>
+    <string name="elk_electro_device">\u0020- счетчик эл. энергии</string>
+    <string name="elk_hotwater_off_disabled">По данному адресу недоступна информация об отключении горячего водоснабжения.</string>
+    <string name="elk_menu_add_flat">Добавить адрес</string>
+    <string name="elk_addresses">Адреса</string>
+
+    <!-- New Flat -->
+    <string name="elk_street">Улица</string>
+    <string name="elk_building">Строение</string>
+    <string name="elk_flat">Квартира</string>
+    <string name="elk_utilities">Коммунальные платежи</string>
+    <string name="elk_epd2">Код плательщика</string>
+    <string name="elk_electro">Учет электроэнергии</string>
+    <string name="elk_electro_account2">Лицевой счет</string>
+    <string name="elk_electro_device2">Прибор учета</string>
+    <string name="elk_menu_delete">Удалить</string>
+    <string name="elk_help_add_flat">Введите адрес квартиры и номера платежных документов для использования услуг отправки показаний счетчиков водоснабжения и электроэнергии.</string>
+    <string name="elk_not_filled_flat">Выберите улицу и строение</string>
+
+
+    <!-- Dynamic-->
+    <string name="elk_search">Поиск</string>
+    <string name="elk_phone_call">Набрать номер?</string>
+    <string name="elk_yes">Да</string>
+    <string name="elk_ok">Ок</string>
+    <string name="elk_no">Нет</string>
+    <string name="elk_cancel">Отмена</string>
+    <string name="elk_to_block">Заблокировать</string>
+    <string name="elk_block_question">Вы действительно хотите заблокировать свой аккаунт? Для разблокировки аккаунта обратитесь в службу технической поддержки</string>
+
+
+    <!-- wait -->
+    <string name="elk_wait_authorization">Авторизация…</string>
+    <string name="elk_wait_registration">Регистрация…</string>
+    <string name="elk_wait_restore">Восстановление…</string>
+    <string name="elk_wait_changePassword">Изменение пароля…</string>
+    <string name="elk_wait_logout">Выход…</string>
+    <string name="elk_wait_save">Сохранение…</string>
+    <string name="elk_wait_load">Загрузка…</string>
+    <string name="elk_wait_sending">Отправка…</string>
+    <string name="elk_wait_add">Добавление…</string>
+    <string name="elk_wait_delete">Удаление…</string>
+    <string name="elk_wait_update">Обновление…</string>
+    <string name="elk_wait_block">Блокировка…</string>
+
+    <!-- success -->
+    <string name="elk_succeeded_auth">Авторизация прошла успешно</string>
+    <string name="elk_succeeded_register">Регистрация прошла успешно. На указанный номер отправлено смс с паролем.</string>
+    <string name="elk_succeeded_restore">Восстановление прошло успешно. На указанный номер отправлено смс с паролем.</string>
+    <string name="elk_succeeded_change">Пароль успешно изменен</string>
+    <string name="elk_succeeded_logout">Выход успешно осуществлен.</string>
+    <string name="elk_succeeded_save">Изменения успешно сохранены.</string>
+    <string name="elk_succeeded_sent_instruction">Инструкция отправлена</string>
+	<string name="elk_succeeded_unblocked">Пользователи разблокированы</string>
+    <string name="elk_succeeded_add_flat">Квартира добавлена</string>
+    <string name="elk_succeeded_add_car">Траспортное средство добавлено</string>
+    <string name="elk_succeeded_delete_car">Траспортное средство удалено</string>
+    <string name="elk_succeeded_update_car">Траспортное средство обновлено</string>
+    <string name="elk_succeeded_add_block">Заблокирован</string>
+
+    <!-- subscriptions-->
+    <string name="elk_title_subscriptions">Настройка</string>
+    <string name="elk_on">Вкл</string>
+    <string name="elk_off">Выкл</string>
+    <string name="elk_fines_title">Мои Штрафы</string>
+    <string name="elk_road_info">Дорожная ситуация</string>
+    <string name="elk_fines_description">Настройка уведомлений о штрафах ГИБДД.</string>
+    <string name="elk_fines_unavailable">Для получения информации о штрафах ГИБДД, введите серию и номер свидетельства о регистрации вашего автомобиля или номер водительского удостоверения.</string>
+    <string name="elk_change_route_title">Изменения в расписании городского транспорта</string>
+    <string name="elk_change_route_description">Настройка сервиса информирования об изменениях маршрутов городского транспорта Москвы.</string>
+    <string name="elk_stop_title">Перекрытия дорог</string>
+    <string name="elk_stop_description">Настройка сервиса информирования о перекрытии дорог.</string>
+    <string name="elk_sboi_title">Сбои работы транспорта</string>
+    <string name="elk_sboi_description">Настройка сервиса информирования о сбоях в работе общественного транспорта г.Москвы.</string>
+    <string name="elk_road_speed_title">Текущая скорость на основных магистралях</string>
+    <string name="elk_road_speed_description">Настройка подписки на  информацию о загруженности основных магистралей Москвы. \nВыберите до 5 направлений для получения рассылки по SMS и время получения оповещений.</string>
+    <string name="elk_road_speed_roads">Магистрали</string>
+    <string name="elk_road_speed_times">Время информирования</string>
+    <string name="elk_mosnews_title">Новости Москвы</string>
+    <string name="elk_mosnews_description">Настройка подписки на городские новости</string>
+    <string name="elk_evacuation_title">Эвакуация автомобиля</string>
+    <string name="elk_evacuation_description">Настройка уведомлений о эвакуации автомобилей.</string>
+    <string name="elk_chat_cars_title">Общение между водителями</string>
+    <string name="elk_chat_cars_description">Настройка уведомлений о новых сообщениях.</string>
+    <string name="elk_chat_cars_unavailable">Для использования сервиса введите номер вашего автомобиля. Другие пользователи смогут отправлять вам сообщения на этот номер.</string>
+    <string name="elk_gku_title">Начисления за ЖКУ</string>
+    <string name="elk_gku_description">Настройка уведомления о новых начислениях за жилищно-коммунальные услуги.</string>
+    <string name="elk_gku_unavailable">Для использования сервиса укажите код плательщика - это 10-значный код финансового лицевого счета, который указан в правом верхнем углу квитанции ЕПД.</string>
+    <string name="elk_hotwater_title">Отключение горячего водоснабжения</string>
+    <string name="elk_hotwater_description">Настройка уведомлений об отключении горячего водоснабжения.</string>
+    <string name="elk_hotwater_unavailable">Для использования сервиса укажите ваш домашний адрес.</string>
+    <string name="elk_soesg_title">Обращения граждан</string>
+    <string name="elk_soesg_description">Настройка сервиса оповещения об изменении статуса сообщений</string>
+    <string name="elk_fssp_title">Делопроизводство ФССП</string>
+    <string name="elk_fssp_description">Для настройки уведомлений о новых делопроизводствах Федеральной службы судебных приставов укажите Ф.И.О. и дату рождения</string>
+    <string name="elk_fssp_unavailable">Для использования сервиса укажите ваши фамилию, имя, отчество и дату рождения.</string>
+    <string name="elk_mgt_title">Жалобы в МГТ</string>
+    <string name="elk_mgt_description">Настройки уведомлений об изменении статусов жалоб, отправленных в МосГорТранс</string>
+
+    <string name="elk_roads_hint">Выбрано <xliff:g id="directions">%d</xliff:g> из 5 направлений для получения информации о скорости движения по SMS.</string>
+    <string name="elk_times_hint">Выбрано %d из 2 интервала времени для получения информации о скорости движения по SMS.</string>
+    <string name="elk_times">Время</string>
+    <string name="elk_time_max">Выбрано максимальное количество интервалов времени</string>
+    <string name="elk_roads_max">Выбрано максимальное количество направлений</string>
+    <string name="elk_subscription_channel">Способ оповещения</string>
+    <string name="elk_remind">Напоминание</string>
+
+    <string name="elk_sms">SMS</string>
+    <string name="elk_push">Push</string>
+    <string name="elk_checked">%d отмечено</string>
+    <string name="elk_mark_all">выбрать/снять все</string>
+    <string name="elk_birthdate">Дата рождения</string>
+
+    <string name="elk_birthdate_pattern" formatted="false">%s %s %s г.р.</string>
+    <string name="choose_building">Выберите строение из списка</string>
+    <string name="add_address">Добавить адрес</string>
+    <string name="title_formatted_address" formatted="false" tools:ignore="StringFormatInvalid">%s %s</string>
+    <string name="warning_editing_blocked">Просим вас внимательно отнестись к заполнению адреса. Изменить сохраненный адрес можно только один раз в течение трех месяцев.</string>
+    <string-array name="elk_birthdate_months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+
+</resources>

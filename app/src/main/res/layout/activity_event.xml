@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/screen"
+            style="@style/item.linear">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/imageViewPager"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/vs_xnormal"/>
+
+            <include layout="@layout/layout_event_base_description"/>
+
+            <LinearLayout
+                android:id="@+id/shortContainer"
+                style="@style/linear"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"/>
+
+            <include layout="@layout/layout_event_buttons"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

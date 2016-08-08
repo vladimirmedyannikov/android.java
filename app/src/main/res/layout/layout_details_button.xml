@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pd_normal"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/detailsContainer"
+        style="@style/wrap"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/detailsExpand"
+            style="@style/wrap"
+            android:src="@drawable/more" />
+
+        <ImageView
+            android:id="@+id/detailsCollapse"
+            style="@style/wrap"
+            android:src="@drawable/nomore" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thin_separator"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/detailsContainer"
+        android:background="@color/details_more" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thin_separator"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/detailsContainer"
+        android:background="@color/details_more" />
+</RelativeLayout>

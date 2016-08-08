@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/container"
+              style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/item.linear"
+        android:background="@drawable/background_text_field"
+        android:padding="@dimen/pd_xsmall">
+
+        <EditText
+            android:id="@+id/etLogin"
+            style="@style/input.email"
+            android:hint="@string/pgu_hint_email"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/input.password"
+            android:hint="@string/pgu_hint_password"/>
+
+        <TextView
+            android:id="@+id/tvError"
+            style="@style/auth_error"
+            android:paddingTop="@dimen/pd_xsmall"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/auth"
+        style="@style/button.centered.disabled"
+        android:layout_width="@dimen/vs_xxxlarge"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/pd_xlarge"
+        android:text="@string/pgu_bind"/>
+
+    <TextView
+        style="@style/text.gray"
+        android:layout_marginTop="@dimen/pd_xlarge"
+        android:gravity="center"
+        android:text="@string/hint_not_auth_pgu"/>
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/background_text_field"
+              android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        style="@style/text.green"
+        android:text="@string/registrationAddress"/>
+    <!--Кнопка "добавить адрес"-->
+    <TextView
+        android:id="@+id/btnRegistration"
+        style="@style/flatIcon"/>
+
+    <!--Раздел адрес проживания-->
+    <LinearLayout
+        android:id="@+id/residenceContainer"
+        style="@style/item.linear">
+
+        <include layout="@layout/ag_separator_thick"/>
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:paddingBottom="@dimen/pd_xxsmall">
+
+            <TextView
+                style="@style/text.green"
+                android:paddingTop="@dimen/pd_xsmall"
+                android:text="@string/residenceAddress"/>
+            <!--Кнопка "добавить адрес"-->
+            <TextView
+                android:id="@+id/btnResidence"
+                style="@style/flatIcon"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/ag_separator_thick"/>
+
+    <LinearLayout
+        android:id="@+id/equalsContainer"
+        style="@style/item.linear.horizontal"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/checkСoincides"
+            style="@style/wrap"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/checkСoincidesText"
+            style="@style/text.small.black"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="left|center_vertical"
+            android:paddingBottom="@dimen/pd_normal"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_normal"
+            android:text="@string/coincidesAddresses"/>
+    </LinearLayout>
+</LinearLayout>

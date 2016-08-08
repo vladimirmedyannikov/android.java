@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    style="@style/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.mos.polls.AboutAppActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        style="@style/linear">
+
+        <include layout="@layout/toolbar"/>
+
+        <FrameLayout
+            android:id="@+id/container"
+            style="@style/root"/>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/navigation_drawer"
+        android:name="ru.mos.polls.navigation.drawer.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        tools:layout="@layout/fragment_navigation_drawer"/>
+
+</android.support.v4.widget.DrawerLayout>

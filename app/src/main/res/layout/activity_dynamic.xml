@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView android:id="@android:id/list"
+          style="@style/root"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:divider="@drawable/ag_list_divider"
+          android:listSelector="@drawable/ag_list_selector"
+          android:paddingLeft="@dimen/pd_normal"
+          android:paddingRight="@dimen/pd_normal"
+          android:paddingTop="@dimen/pd_xxsmall"/>
+

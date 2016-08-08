@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/layout_main"
+                style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <ProgressBar
+        android:id="@+id/loadingProgress"
+        style="@style/wrap"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/reloadInnDetails"
+        style="@style/button.centered"
+        android:layout_centerInParent="true"
+        android:onClick="reloadContent"
+        android:text="@string/refresh"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/content"
+        style="@style/item"
+        android:layout_below="@id/toolbar">
+
+        <ru.mos.polls.innovation.model.InnovationButtons
+            android:id="@+id/buttonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+        <include layout="@layout/layout_innovation_content"/>
+    </RelativeLayout>
+</RelativeLayout>

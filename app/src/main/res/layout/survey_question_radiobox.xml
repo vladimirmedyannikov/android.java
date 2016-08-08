@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.mos.polls.controls.CheckableRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item.linear"
+    android:paddingLeft="@dimen/pd_xxsmall"
+    android:paddingRight="@dimen/pd_xxsmall">
+
+    <TextView
+        android:id="@+id/votersPercent"
+        style="@style/text.green"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="left"
+        android:text="100%"/>
+
+    <FrameLayout
+        android:id="@+id/buttonContainer"
+        style="@style/wrap"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+
+        <CheckedTextView
+            android:id="@android:id/text1"
+            style="@style/item"
+            android:checkMark="@drawable/radiobutton"
+            android:gravity="center_vertical"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        style="@style/item"
+        android:layout_below="@id/votersPercent"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/pd_xxsmall"
+        android:layout_marginTop="@dimen/pd_xxsmall"
+        android:layout_toLeftOf="@id/buttonContainer"
+        android:layout_toStartOf="@id/buttonContainer"/>
+</ru.mos.polls.controls.CheckableRelativeLayout>

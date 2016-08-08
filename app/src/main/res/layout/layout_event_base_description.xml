@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--Блок основного описания-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/pd_xsmall">
+    <!--Наименование-->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_xxsmall"
+        android:textSize="@dimen/ts_large" />
+    <!--Средняя оценка-->
+    <RatingBar
+        android:id="@+id/avrRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:isIndicator="true"
+        android:maxWidth="@dimen/pd_xsmall"
+        android:minHeight="@dimen/pd_xsmall"
+        android:paddingBottom="@dimen/pd_xxsmall"
+        android:progressDrawable="@drawable/event_rating_small"
+        android:visibility="gone" />
+    <!--Адрес-->
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_hint"
+        android:textSize="@dimen/ts_normal" />
+</LinearLayout>

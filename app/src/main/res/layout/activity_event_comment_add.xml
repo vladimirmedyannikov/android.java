@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView style="@style/root"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/linear"
+        android:padding="@dimen/pd_xsmall">
+
+        <TextView
+            style="@style/text.green"
+            android:text="@string/rate_event"/>
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/wrap.centered"
+            android:progressDrawable="@drawable/event_rating_big"
+            android:stepSize="1"/>
+
+        <TextView
+            style="@style/text.green"
+            android:text="@string/header"/>
+
+        <EditText
+            android:id="@+id/title"
+            style="@style/input"
+            android:maxLength="500"/>
+
+        <TextView
+            style="@style/text.green"
+            android:text="@string/comment"/>
+
+        <EditText
+            android:id="@+id/body"
+            style="@style/input"
+            android:maxLength="5000"/>
+    </LinearLayout>
+</ScrollView>

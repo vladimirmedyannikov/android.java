@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><!--Результаты голосования-->
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        style="@style/text"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:text="@string/poll_result"/>
+    <!--E-mail-->
+    <RelativeLayout
+        style="@style/item.linear.horizontal"
+        android:paddingLeft="@dimen/pd_xlarge"
+        android:paddingRight="@dimen/pd_xlarge">
+
+        <TextView
+            style="@style/wrap.centered"
+            android:text="@string/email"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/emailResult"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+    </RelativeLayout>
+    <!--SMS-->
+    <RelativeLayout
+        style="@style/item.linear.horizontal"
+        android:padding="@dimen/pd_xlarge"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/wrap.centered"
+            android:text="@string/sms"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/smsResult"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+    </RelativeLayout>
+    <!--Push-->
+    <RelativeLayout
+        style="@style/item.linear.horizontal"
+        android:padding="@dimen/pd_xlarge">
+
+        <TextView
+            style="@style/wrap.centered"
+            android:text="@string/push"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/pushResult"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+    </RelativeLayout>
+</LinearLayout>

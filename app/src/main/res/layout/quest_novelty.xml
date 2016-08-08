@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/quest_container">
+
+    <include layout="@layout/layout_back" />
+
+    <RelativeLayout
+        android:id="@+id/front"
+        style="@style/root"
+        android:layout_marginBottom="@dimen/pd_xxsmall"
+        android:layout_marginTop="@dimen/pd_xxsmall"
+        android:background="@drawable/quest_background_pink"
+        android:gravity="center"
+        android:tag="front">
+
+        <ImageView
+            android:id="@+id/markerSpecial"
+            style="@style/wrap"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rrPrice"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingRight="@dimen/pd_xxsmall"
+            android:src="@drawable/icon02"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/quest_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/quest_title"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/markerSpecial"
+            android:drawableLeft="@drawable/icon02"
+            android:drawablePadding="@dimen/pd_xxsmall" />
+    </RelativeLayout>
+</RelativeLayout>

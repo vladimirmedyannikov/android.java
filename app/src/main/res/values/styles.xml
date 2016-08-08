@@ -1,0 +1,149 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">@style/button</item>
+        <item name="android:windowBackground">@drawable/ag_back</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/ag_radio</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/ag_checkbox</item>
+        <item name="android:listViewStyle">@style/AppTheme.ListView</item>
+        <item name="android:editTextStyle">@style/input</item>
+
+        <item name="actionModeCloseDrawable">@drawable/abc_ic_cab_done</item>
+        <item name="android:actionModeCloseDrawable" tools:ignore="NewApi">
+            @drawable/abc_ic_cab_done
+        </item>
+        <item name="actionModeBackground">@drawable/elk_actionbar_actionmode</item>
+        <item name="android:actionModeBackground" tools:ignore="NewApi">
+            @drawable/elk_actionbar_actionmode
+        </item>
+        <item name="android:actionBarItemBackground" tools:ignore="NewApi">
+            @drawable/ag_list_selector
+        </item>
+        <item name="android:buttonBarButtonStyle" tools:ignore="NewApi">@drawable/ag_list_selector
+        </item>
+
+    </style>
+
+    <style name="WebShop.AppTheme.NoActionBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@color/black_light</item>
+        <item name="colorPrimary">@color/actionbar_background</item>
+        <item name="colorPrimaryDark">@color/system_panel</item>
+        <item name="android:windowBackground">@drawable/ag_back</item>
+        <item name="android:colorBackground">@color/green_light</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle</item>
+        <item name="colorAccent">@color/green_light</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme.NoActionBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@color/black_light</item>
+        <item name="colorPrimary">@color/actionbar_background</item>
+        <item name="colorPrimaryDark">@color/system_panel</item>
+        <item name="android:windowBackground">@drawable/ag_back</item>
+        <item name="android:colorBackground">@color/green_light</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
+        <item name="colorAccent">@color/green_light</item>
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">@dimen/pd_xxsmall</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/black_light</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">@dimen/thick_separator</item>
+    </style>
+
+    <style name="itemTextStyle" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/green_pale</item>
+    </style>
+
+    <style name="QuestTitleTextViewGreen">
+        <item name="android:paddingLeft">@dimen/pd_xxsmall</item>
+        <item name="android:textColor">@color/greenText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/ts_large</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
+    <style name="AppTheme.ListView" parent="@android:style/Widget.ListView">
+        <item name="android:listSelector">@drawable/ag_list_selector</item>
+        <item name="android:divider">@drawable/ag_list_divider</item>
+        <item name="android:dividerHeight">@dimen/thick_separator</item>
+        <item name="android:cacheColorHint">#00000000</item>
+    </style>
+
+    <style name="InnovationRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/innovation_ratingbar</item>
+        <item name="android:minHeight">33dp</item>
+        <item name="android:maxHeight">33dp</item>
+    </style>
+
+    <style name="DisableInnovationRatingBar" parent="InnovationRatingBar">
+        <item name="android:progressDrawable">@drawable/disable_innovation_ratingbar</item>
+    </style>
+
+    <style name="StackedAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/StackedButtonBarButtonStyle</item>
+    </style>
+
+    <style name="StackedButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="PollNavigationButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:text">wrap_content</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:background">@color/gray_background_next_or_prev</item>
+        <item name="android:textColor">@color/black_light</item>
+    </style>
+
+    <style name="AppTheme.EmptyListHint" parent="text.large">
+        <item name="android:textColor">@color/greyHint</item>
+    </style>
+
+    <style name="AppTheme.BasicEmptyListHint" parent="AppTheme.EmptyListHint">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">@dimen/pd_xsmall</item>
+        <item name="android:layout_marginRight">@dimen/pd_xsmall</item>
+        <item name="android:drawablePadding">@dimen/pd_normal</item>
+        <item name="android:drawableTop">@drawable/common_nothing</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingBottom">@dimen/pd_xlarge</item>
+    </style>
+
+</resources>

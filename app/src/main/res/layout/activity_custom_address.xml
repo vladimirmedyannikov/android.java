@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout style="@style/linear"
+                      xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:padding="@dimen/pd_xsmall">
+
+            <TextView
+                style="@style/text.green"
+                android:text="@string/flat_district"/>
+
+            <Spinner
+                android:id="@+id/districtSpinner"
+                style="@style/item"
+                android:layout_marginTop="@dimen/pd_xxsmall"/>
+
+            <TextView
+                android:id="@+id/areaLabel"
+                style="@style/text.green"
+                android:layout_marginTop="@dimen/pd_xxsmall"
+                android:text="@string/flat_area"
+                android:visibility="gone"/>
+
+            <Spinner
+                android:id="@+id/areaSpinner"
+                style="@style/item"
+                android:layout_marginTop="@dimen/pd_xxsmall"
+                android:clickable="false"
+                android:visibility="gone"/>
+
+            <TextView
+                style="@style/text.green"
+                android:layout_marginTop="@dimen/pd_xxsmall"
+                android:text="@string/flat_street"/>
+
+            <EditText
+                android:id="@+id/street"
+                style="@style/input"/>
+
+            <TextView
+                style="@style/text.green"
+                android:text="@string/flat_building"/>
+
+            <EditText
+                android:id="@+id/building"
+                style="@style/input"/>
+
+            <Button
+                android:id="@+id/save"
+                style="@style/button.centered.disabled"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:minWidth="@dimen/vs_xxlarge"
+                android:text="@string/select"/>
+
+            <RelativeLayout
+                android:id="@+id/warningContainer"
+                style="@style/item"
+                android:layout_marginTop="@dimen/pd_xlarge">
+
+                <ImageView
+                    android:id="@+id/warningEditingBlocked"
+                    style="@style/wrap"
+                    android:src="@drawable/circle_warning"/>
+
+                <TextView
+                    android:id="@+id/tvErrorEditingBlocked"
+                    style="@style/text.red"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@id/warningEditingBlocked"
+                    android:text="@string/error_short_editing_blocked"/>
+
+                <TextView
+                    android:id="@+id/tvWarningEditingBlocked"
+                    style="@style/text.normal.black"
+                    android:layout_below="@id/tvErrorEditingBlocked"
+                    android:layout_toRightOf="@id/warningEditingBlocked"
+                    android:text="@string/warning_editing_blocked"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

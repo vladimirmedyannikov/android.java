@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/quest_container">
+
+    <include layout="@layout/layout_back" />
+
+    <RelativeLayout
+        android:id="@+id/front"
+        style="@style/root"
+        android:tag="front">
+
+        <WebView
+            android:id="@+id/webView"
+            style="@style/root"
+            android:layout_gravity="center_vertical" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item.linear"
+    android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        style="@style/text.large.black"
+        android:id="@+id/title"
+        />
+
+    <TextView
+        style="@style/text.crimson"
+        android:id="@+id/creditedPoints"
+        android:text="@string/credited"/>
+
+    <TextView
+        style="@style/text.crimson"
+        android:id="@+id/voteDateTxt"
+        android:hint="@string/vote_date_text"
+        android:visibility="gone" />
+
+    <include layout="@layout/item_innovation_ratingbar" />
+
+</LinearLayout>

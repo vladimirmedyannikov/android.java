@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonContainer"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/vs_xsmall"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="@color/background_poll_button">
+
+    <Button
+        android:id="@+id/save"
+        style="@style/button.centered"
+        android:enabled="false"
+        android:minWidth="@dimen/vs_xxxlarge"
+        android:text="@string/save" />
+</RelativeLayout>

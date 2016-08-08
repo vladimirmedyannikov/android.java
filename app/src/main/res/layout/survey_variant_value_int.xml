@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        style="@style/item"
+        android:padding="@dimen/pd_xsmall">
+
+        <TextView
+            android:id="@+id/min"
+            style="@style/text.small"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="-100"/>
+
+        <TextView
+            android:id="@+id/max"
+            style="@style/text.small"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="100"/>
+
+        <SeekBar
+            android:id="@+id/seek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/max"
+            android:layout_toRightOf="@id/min"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/text.small"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="123"/>
+</LinearLayout>

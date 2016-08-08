@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid
+        android:color="@color/quest_background_sky"/>
+    <corners
+        android:radius="@dimen/quest_background_round"/>
+    <padding
+        android:left="@dimen/quest_background_padding"
+        android:top="@dimen/quest_background_padding"
+        android:right="@dimen/quest_background_padding"
+        android:bottom="@dimen/quest_background_padding"/>
+</shape>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/linear"
+    android:layout_gravity="center"
+    android:padding="@dimen/pd_normal">
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/wrap.centered"/>
+
+    <TextView
+        style="@style/header.green"
+        android:id="@+id/title"
+        android:paddingBottom="@dimen/pd_xsmall"/>
+
+    <TextView
+        style="@style/text"
+        android:id="@+id/body"/>
+</LinearLayout>

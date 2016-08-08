@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@android:id/empty"
+              style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_centerInParent="true">
+
+    <TextView
+        style="@style/emptylist"
+        android:text="@string/empty_activepolls_hint"/>
+
+    <LinearLayout
+        android:id="@+id/subscriptionsContainer"
+        style="@style/item.linear">
+
+        <TextView
+            style="@style/text.large.black"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/notify_about_active_polls"/>
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:background="@drawable/background_text_field">
+
+            <!--E-mail-->
+            <RelativeLayout
+                style="@style/item.linear.horizontal"
+                android:padding="@dimen/pd_xlarge">
+
+                <TextView
+                    style="@style/wrap"
+                    android:layout_centerVertical="true"
+                    android:text="@string/email"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/emailNew"
+                    style="@style/wrap"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textOff="@string/empty"
+                    android:textOn="@string/empty"
+                    android:thumbTextPadding="@dimen/pd_xlarge"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

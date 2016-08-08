@@ -1,0 +1,13 @@
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout android:id="@+id/container"
+                    style="@style/root"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:context="ru.mos.polls.profile.gui.activity.UpdateSocialActivity">
+    </RelativeLayout>
+</LinearLayout>

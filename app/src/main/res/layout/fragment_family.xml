@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/background_text_field"
+              android:padding="@dimen/pd_xsmall">
+    <!--Раздел инфы о семейном положении и количестве детей-->
+    <TextView
+        style="@style/text.green"
+        android:text="@string/maritalStatus"/>
+
+    <Spinner
+        android:id="@+id/maritalStatus"
+        style="@style/item.linear"
+        android:layout_marginBottom="@dimen/pd_xsmall"
+        android:focusable="false"/>
+
+    <TextView
+        style="@style/text.green"
+        android:text="@string/childrenCount"/>
+
+    <EditText
+        android:id="@+id/childrenCount"
+        style="@style/input.number"
+        android:layout_marginBottom="@dimen/pd_xsmall"
+        android:hint="@string/not_filled"/>
+
+    <LinearLayout
+        android:id="@+id/childContainer"
+        style="@style/item.linear">
+
+        <TextView
+            style="@style/text.green"
+            android:text="@string/childBirthday"/>
+
+        <EditText
+            android:id="@+id/child"
+            style="@style/input.number"
+            android:hint="@string/not_filled"/>
+    </LinearLayout>
+    <!--Даты рожления детей-->
+    <LinearLayout
+        android:id="@+id/childrenContainer"
+        style="@style/item.linear"
+        android:background="@drawable/ag_list_selector">
+
+        <include layout="@layout/ag_separator"/>
+
+        <RelativeLayout
+            style="@style/item.linear"
+            android:paddingBottom="@dimen/pd_normal"
+            android:paddingTop="@dimen/pd_normal">
+
+            <TextView
+                android:id="@+id/children"
+                style="@style/text.large.black"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/child"/>
+
+            <TextView
+                android:id="@+id/state"
+                style="@style/text.large.crimson"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/child_birthdays_not_set"/>
+        </RelativeLayout>
+
+        <include layout="@layout/ag_separator"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/text"
+          style="@style/text.small"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawablePadding="@dimen/pd_xxsmall"
+          android:drawableRight="@drawable/action_add_any_content"
+          android:paddingBottom="@dimen/pd_xxsmall"
+          android:paddingLeft="@dimen/pd_xsmall"
+          android:paddingTop="@dimen/pd_xxsmall"
+          android:textColor="@color/survey_listitem_text_color"/>

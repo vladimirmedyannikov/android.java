@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/promocode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pd_xxsmall"
+        android:layout_marginRight="@dimen/pd_xxsmall"
+        android:gravity="top|left"
+        android:hint="@string/hint_set_promo"
+        android:inputType="textMultiLine"
+        android:paddingBottom="@dimen/pd_normal"
+        android:paddingTop="@dimen/pd_normal"
+        android:singleLine="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pd_xxsmall"
+        android:text="@string/promocode_description_info"
+        android:textColor="@color/ag_grey_color" />
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ru.mos.polls.survey.summary.SurveyHeader
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_xsmall"/>
+
+    <ru.mos.polls.survey.summary.ExpertsView
+        android:id="@+id/experts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_normal"/>
+
+    <ru.mos.polls.common.view.VotersView
+        android:id="@+id/votesInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingLeft="@dimen/pd_xsmall"
+        android:paddingRight="@dimen/pd_xsmall"
+        android:paddingTop="@dimen/pd_xxsmall"/>
+
+    <TextView
+        android:id="@+id/titleAnswers"
+        style="@style/text.large.gray.up"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xsmall"
+        android:text="@string/title_your_answer"/>
+
+    <TextView
+        android:id="@+id/info"
+        style="@style/text.normal.black"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/pd_xxsmall"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:text="123"/>
+</LinearLayout>

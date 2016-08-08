@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView style="@style/root">
+
+    <LinearLayout
+        style="@style/item.linear">
+        <!--Результаты голосования-->
+        <include layout="@layout/layout_polls_results"/>
+        <!--Результаты принятых решений-->
+        <include layout="@layout/layout_polls_decisions"/>
+        <!--Исполненные решения-->
+        <include layout="@layout/layout_polls_effected"/>
+    </LinearLayout>
+</ScrollView>

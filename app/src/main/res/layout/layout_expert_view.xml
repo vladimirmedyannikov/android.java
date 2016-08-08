@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/item.linear"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/text.large.gray.up"
+        android:id="@+id/title"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingLeft="@dimen/pd_xsmall"
+        android:paddingRight="@dimen/pd_xsmall"
+        android:text="@string/title_experts"/>
+
+    <LinearLayout
+        style="@style/item"
+        android:layout_below="@id/title"
+        android:background="@drawable/background_text_field"
+        android:clickable="true"
+        android:focusable="true">
+
+        <HorizontalScrollView
+            android:id="@+id/scrollView"
+            style="@style/root"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/container"
+                style="@style/ripple"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+</RelativeLayout>

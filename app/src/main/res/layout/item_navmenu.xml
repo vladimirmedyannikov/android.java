@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.mos.polls.controls.CheckableRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:addStatesFromChildren="true"
+    android:background="@drawable/selector_menu_item_background">
+
+    <CheckedTextView
+        android:id="@+id/tvTitle"
+        style="@style/menu_item"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:checkMark="@null"/>
+
+    <CheckedTextView
+        android:id="@+id/tvCount"
+        style="@style/text.green"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/pd_xsmall"
+        android:background="@drawable/selector_menu_bage_background"
+        android:checkMark="@null"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xxsmall"
+        android:textColor="@color/selector_menu_bage_text"
+        android:text="123"
+        android:textStyle="bold"/>
+</ru.mos.polls.controls.CheckableRelativeLayout>

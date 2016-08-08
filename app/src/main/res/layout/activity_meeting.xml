@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/linear"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/vs_xxsmall"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_0"
+        android:background="@color/background_poll_button"
+        android:padding="@dimen/dp_0">
+
+        <TextView
+            android:id="@+id/hintWithoutRegistration"
+            style="@style/text.gray"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/hint_without_registration"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/checkHearing"
+            style="@style/button.centered"
+            android:layout_centerInParent="true"
+            android:enabled="false"
+            android:minWidth="@dimen/vs_xxxxlarge"
+            android:text="@string/result_hearing"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <ScrollView
+        style="@style/root"
+        android:layout_above="@id/buttonContainer"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            style="@style/linear"
+            android:padding="@dimen/pd_xsmall">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/text.large.black"
+                android:padding="@dimen/pd_xsmall"
+                android:text="@string/place_of_hearing"
+                android:textStyle="bold"/>
+
+            <include layout="@layout/ag_separator"/>
+
+            <TextView
+                android:id="@+id/address"
+                style="@style/text.large.black"
+                android:background="@drawable/ag_list_selector"
+                android:drawableRight="@drawable/arrow_question"
+                android:padding="@dimen/pd_xsmall"
+                android:text="@string/place"/>
+
+            <include layout="@layout/ag_separator"/>
+
+            <TextView
+                style="@style/text.large.black"
+                android:padding="@dimen/pd_xsmall"
+                android:text="@string/date_and_time_of_hearing"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/text.large.black"
+                android:paddingLeft="@dimen/pd_xsmall"/>
+
+            <TextView
+                style="@style/text.large.black"
+                android:padding="@dimen/pd_xsmall"
+                android:text="@string/sign_up_to_hearing"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/condition"
+                style="@style/text.large.black"
+                android:paddingLeft="@dimen/pd_xsmall"
+                android:paddingRight="@dimen/pd_xsmall"/>
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/text.large.black"
+                android:paddingLeft="@dimen/pd_xsmall"
+                android:paddingRight="@dimen/pd_xsmall"
+                android:paddingTop="@dimen/pd_xlarge"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

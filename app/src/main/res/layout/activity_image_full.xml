@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout style="@style/root"
+                 xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:id="@+id/image"
+            style="@style/root"
+            android:background="@drawable/border_element"
+            android:scaleType="fitCenter"/>
+
+    </FrameLayout>
+</LinearLayout>

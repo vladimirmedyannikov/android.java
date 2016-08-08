@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
+              style="@style/linear">
+
+    <include layout="@layout/toolbar" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        style="@style/root"/>
+</LinearLayout>

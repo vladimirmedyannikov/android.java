@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root"
+    android:id="@+id/container"
+    android:layout_above="@id/buttonContainer">
+
+    <LinearLayout
+        style="@style/linear"
+        android:paddingBottom="@dimen/pd_normal">
+
+        <ru.mos.polls.common.view.HtmlTitleView
+            style="@style/item"
+            android:id="@+id/htmlTitleView"
+            />
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/InnovationRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/pd_xsmall"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <RatingBar
+            android:id="@+id/ratingDisable"
+            style="@style/DisableInnovationRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/pd_xsmall"
+            android:numStars="5"
+            android:stepSize="1"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/text.up"
+            android:id="@+id/hint"
+            android:layout_gravity="center"
+            android:padding="@dimen/pd_xsmall"
+            android:text="@string/title_your_mark"
+            />
+
+        <ru.mos.polls.innovation.view.ChartsView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/chartsView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingRight="@dimen/pd_xxsmall"
+            app:bar_height="10"
+            app:bar_width="500" />
+
+    </LinearLayout>
+</ScrollView>

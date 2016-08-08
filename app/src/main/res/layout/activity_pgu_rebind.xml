@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/linear">
+
+            <include layout="@layout/layout_pgu_auth_header"/>
+
+            <TextView
+                android:id="@+id/pguTitle"
+                style="@style/text.normal.black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="@dimen/pd_xlarge"
+                android:paddingLeft="@dimen/pd_xxsmall"
+                android:paddingRight="@dimen/pd_xxsmall"
+                android:paddingTop="@dimen/pd_xsmall"
+                android:text="@string/pgu_rebind_message"
+                android:textSize="@dimen/ts_normal"/>
+
+            <fragment
+                android:id="@+id/pguBindFragment"
+                android:name="ru.mos.polls.survey.hearing.gui.fragment.PguBindFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_pgu_bind"/>
+
+            <TextView
+                android:id="@+id/rebind"
+                style="@style/text.small.green"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pd_xsmall"
+                android:gravity="center"
+                android:minWidth="@dimen/vs_xxxlarge"
+                android:paddingLeft="@dimen/pd_xxsmall"
+                android:paddingRight="@dimen/pd_xxsmall"
+                android:text="@string/pgu_rebind"/>
+
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"/>
+
+            <include layout="@layout/layout_help"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

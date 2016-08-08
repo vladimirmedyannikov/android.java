@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/vs_xxsmall"
+        android:background="@color/background_poll_button">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="@dimen/thin_separator"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/gray_lightest" />
+
+        <TextView
+            android:id="@+id/prevQuestion"
+            style="@style/PollNavigationButton"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/divider"
+            android:drawableLeft="@drawable/arrow_darkgrey_left"
+            android:drawablePadding="@dimen/pd_xxlarge"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/pd_normal"
+            android:text="@string/prev_title" />
+
+        <TextView
+            android:id="@+id/nextQuestion"
+            style="@style/PollNavigationButton"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/divider"
+            android:drawablePadding="@dimen/pd_xxlarge"
+            android:drawableRight="@drawable/arrow_darkgrey_right"
+            android:gravity="center|right"
+            android:paddingRight="@dimen/pd_normal"
+            android:text="@string/next_title" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/vs_xxsmall"
+            android:layout_marginRight="@dimen/vs_xxsmall"
+            android:background="@drawable/red_poll_result_button"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/result_send"
+            android:textAllCaps="true"
+            android:textColor="@drawable/title_poll_result_button"
+            android:textSize="@dimen/ts_normal"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>

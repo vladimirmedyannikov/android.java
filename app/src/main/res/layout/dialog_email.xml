@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        style="@style/item"
+        android:background="@color/background_dialog">
+
+        <include
+            android:id="@+id/btnContainer"
+            layout="@layout/layout_email_button_container"/>
+
+        <ScrollView
+            android:id="@+id/baseContainer"
+            style="@style/root"
+            android:layout_above="@id/btnContainer"
+            android:padding="@dimen/pd_normal">
+
+            <LinearLayout
+                style="@style/linear">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/text.large.black"
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/ts_xlarge"
+                    android:paddingTop="@dimen/ts_xlarge"
+                    android:text="@string/help_email_message_title"
+                    android:textSize="@dimen/ts_xxlarge"/>
+
+                <TextView
+                    android:id="@+id/text"
+                    style="@style/text.large.black"
+                    android:paddingBottom="@dimen/pd_xlarge"
+                    android:text="@string/help_email_message_text"/>
+
+                <TextView
+                    style="@style/text.green"
+                    android:text="@string/email"/>
+
+                <EditText
+                    android:id="@+id/email"
+                    style="@style/input.email"
+                    android:layout_marginBottom="@dimen/pd_xsmall"
+                    android:hint="@string/hint_email"
+                    android:maxLength="32"/>
+
+                <TextView
+                    style="@style/text.gray"
+                    android:paddingBottom="@dimen/pd_xsmall"
+                    android:paddingTop="@dimen/pd_xxsmall"
+                    android:text="@string/title_for_email_dialog_subscribes"/>
+
+                <include layout="@layout/layout_email_subscribes"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout style="@style/root"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             tools:context="ru.mos.polls.fragments.PassedPollsFragment">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ptrLayout"
+        style="@style/root">
+
+        <GridView
+            android:id="@android:id/list"
+            style="@style/root"
+            android:numColumns="2"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@android:id/empty"
+        style="@style/emptylist"
+        android:text="@string/empty_passedpolls_hint"
+        android:textSize="@dimen/ts_xlarge"/>
+
+</FrameLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        style="@style/root"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xxsmall">
+
+        <LinearLayout style="@style/linear">
+
+            <TextView
+                style="@style/text.normal.black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="@dimen/pd_xlarge"
+                android:paddingTop="@dimen/pd_xsmall"
+                android:text="@string/pgu_auth_message"/>
+
+            <EditText
+                android:id="@+id/etLogin"
+                style="@style/input"
+                android:hint="@string/pgu_hint_email"
+                android:imeOptions="actionNext"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                style="@style/input.password"
+                android:hint="@string/pgu_hint_password"/>
+
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/auth_error"
+                android:paddingTop="@dimen/pd_xsmall"
+                android:text="@string/ag_not_right_number_or_pass"/>
+
+            <Button
+                android:id="@+id/auth"
+                style="@style/button.centered"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:drawableLeft="@drawable/lock"
+                android:drawablePadding="@dimen/pd_xsmall"
+                android:enabled="false"
+                android:text="@string/verify"
+                android:textAllCaps="true"/>
+
+            <TextView
+                style="@style/text.gray"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:background="@drawable/ag_list_selector"
+                android:text="@string/pgu_verify_descriprion"/>
+
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"/>
+
+            <include layout="@layout/layout_help"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

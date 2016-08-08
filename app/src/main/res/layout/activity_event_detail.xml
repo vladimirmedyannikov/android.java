@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/root"
+            android:padding="@dimen/pd_xsmall"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/ts_normal"/>
+    </ScrollView>
+</LinearLayout>

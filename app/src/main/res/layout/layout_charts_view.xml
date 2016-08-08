@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item"
+    android:padding="@dimen/pd_xxsmall">
+    <!--Оценка пользователя, общее количество оценок-->
+    <LinearLayout
+        android:id="@+id/ratingContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/pd_xxsmall">
+
+        <TextView
+            style="@style/chartText.fullRating"
+            android:id="@+id/fullRating"
+            android:text="4,2"
+            />
+
+        <TextView
+            style="@style/chartText.fullCount"
+            android:id="@+id/fullCount"
+            android:text="Оценок: 25 000"
+            />
+    </LinearLayout>
+    <!--Диаграмма оценок-->
+    <LinearLayout
+        android:id="@+id/charts"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/ratingContainer"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_rating_bar_five" />
+
+        <include layout="@layout/layout_rating_bar_four" />
+
+        <include layout="@layout/layout_rating_bar_three" />
+
+        <include layout="@layout/layout_rating_bar_two" />
+
+        <include layout="@layout/layout_rating_bar_one" />
+
+    </LinearLayout>
+
+</RelativeLayout>

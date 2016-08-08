@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/item.linear"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/ag_list_selector"
+                android:gravity="center_vertical"
+                android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        android:id="@+id/points"
+        style="@style/text.xlarge.green"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/text.large"
+        android:layout_below="@id/points"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/text"
+        android:layout_below="@id/name"
+        android:paddingBottom="@dimen/pd_xsmall"/>
+
+    <RelativeLayout
+        android:id="@+id/container"
+        style="@style/item"
+        android:layout_below="@id/date">
+
+        <TextView
+            android:id="@+id/distance"
+            style="@style/text.large.green"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/pd_xsmall"/>
+
+        <TextView
+            android:id="@+id/address"
+            style="@style/text.large.gray"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/distance"/>
+    </RelativeLayout>
+</RelativeLayout>

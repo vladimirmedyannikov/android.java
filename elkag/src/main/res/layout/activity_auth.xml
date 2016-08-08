@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
+
+    <include
+        android:id="@+id/llAuthTitle"
+        layout="@layout/elk_title_auth"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llAuthTitle"
+        android:layout_above="@+id/llButtons"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                style="?elk_pageNameStyle"
+                android:text="@string/elk_authorization"/>
+
+            <EditText
+                android:id="@+id/etLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/elk_hint_phone"
+                android:imeOptions="actionNext"
+                android:maxLength="10"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/elk_password"
+                android:imeActionId="@+id/actionLogin"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="24dp">
+
+                <Button
+                    android:id="@+id/btnSkip"
+                    style="@style/ProfileTheme.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/elk_skip"/>
+
+                <Button
+                    android:id="@+id/btnAction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/elk_authorize"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/AuthTheme.ErrorTextStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="4dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="gone"  />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                style="@style/AuthTheme.InfoTextStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="5dp"
+                android:text="@string/elk_info_auth"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1a08121c"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3dffffff"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/AuthTheme.Button.Register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:drawableTop="@drawable/elk_register"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:text="@string/elk_register"/>
+
+            <Button
+                android:id="@+id/btnRestorePassword"
+                style="@style/AuthTheme.Button.Register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:drawableTop="@drawable/elk_restore_password"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:text="@string/elk_restorePassword"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

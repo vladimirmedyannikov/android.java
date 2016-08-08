@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RatingBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rating"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/pd_normal"
+    android:layout_marginLeft="@dimen/pd_xxsmall"
+    android:layout_marginStart="@dimen/pd_xxsmall"
+    android:clickable="false"
+    android:max="5"
+    android:progressDrawable="@drawable/novelty_listitem_rating"
+    android:rating="3.25"
+    android:stepSize="0.5" />

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="@dimen/pd_xsmall">
+    <!--Автор, дата, рейтинг-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            style="@style/wrap.linear"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/rating">
+
+            <TextView
+                android:id="@+id/author"
+                style="@style/text.large.gray"/>
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/text.gray"/>
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/wrap"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:isIndicator="true"
+            android:maxWidth="@dimen/pd_xsmall"
+            android:minHeight="@dimen/pd_xsmall"
+            android:progressDrawable="@drawable/event_rating_small"/>
+    </RelativeLayout>
+    <!--Заголовок, комментарий-->
+    <LinearLayout
+        style="@style/item.linear">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/text.large.black"
+            android:paddingBottom="@dimen/pd_xxsmall"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/body"
+            style="@style/text"/>
+    </LinearLayout>
+    <!--Кнопка вызова контекстного меню для комментария-->
+    <ImageView
+        android:id="@+id/expandedMenu"
+        style="@style/wrap"
+        android:layout_gravity="right"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingLeft="@dimen/pd_xxlarge"
+        android:paddingTop="@dimen/pd_xsmall"
+        android:src="@drawable/open_menu"
+        android:visibility="gone"/>
+</LinearLayout>

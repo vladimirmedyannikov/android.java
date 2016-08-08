@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="gray_lightest">#ccc</color>
+    <color name="gray_pale">#d0d9d8</color>
+    <color name="gray_light">#999</color>
+    <color name="gray_dark">#5a5b5b</color>
+    <color name="green_light">#0eb0a0</color>
+    <color name="green_lightest">#88d7ba</color>
+    <color name="green_pale">#c8ecdf</color>
+    <color name="white">#fff</color>
+    <color name="red">#FF0000</color>
+    <color name="white_20">#51ffffff</color>
+    <color name="green_smoky">#87d8d1</color>
+    <color name="green_dark">#0b6c63</color>
+    <color name="green_saturated">#0e9083</color>
+    <color name="crimson">#e6007e</color>
+    <color name="orange">#f67900</color>
+    <color name="black">#000000</color>
+    <color name="black_light">#141515</color>
+
+
+    <color name="authErrorColor">@color/green_pale</color>
+    <color name="mainGreenColor">@color/green_light</color>
+    <color name="greenText">@color/green_light</color>
+    <color name="regPressedColor">@color/green_lightest</color>
+
+    <color name="separator_color">@color/gray_pale</color>
+    <color name="ag_new_color">@color/gray_dark</color>
+    <color name="greyHint">@color/gray_light</color>
+
+    <color name="text_header_disabled">#aaa</color>
+    <color name="text_header">@color/black</color>
+
+    <color name="editHintColor">#b1bab5</color>
+    <color name="editTextColor">@color/black_light</color>
+
+    <color name="text_hint">@color/gray_light</color>
+    <color name="text_hint_disabled">#ddd</color>
+
+    <color name="quest_background_green">@color/green_light</color>
+    <color name="quest_background_blue">#1e99ab</color>
+    <color name="quest_background_sky">#2f80b8</color>
+    <color name="quest_background_pink">@color/crimson</color>
+    <color name="quest_background_orange">@color/orange</color>
+    <color name="list_item_pressed">#abe3de</color>
+
+
+    <color name="ag_back_actionbar">@color/white</color>
+    <color name="ag_statusBack">@color/gray_pale</color>
+    <color name="ag_dark_color">@color/black</color>
+    <color name="ag_grey_color">#9aa3a1</color>
+    <color name="ag_red">@color/crimson</color>
+
+    <color name="ag_red_for_passed">@color/crimson</color>
+
+    <color name="ag_label_internet_failed_to_connect">@color/gray_pale</color>
+    <color name="text_helper_quest">#99ffffff</color>
+
+    <color name="public_poll">@color/orange</color>
+    <color name="special_poll">@color/crimson</color>
+
+    <color name="background_poll_button">#f5f5f5</color>
+    <color name="background_dialog">#DDFFFFFF</color>
+
+    <color name="rating_bar_five">#00c92f</color>
+    <color name="rating_bar_four">#19b03c</color>
+    <color name="rating_bar_three">#329649</color>
+    <color name="rating_bar_two">#4b7d57</color>
+    <color name="rating_bar_one">@color/gray_dark</color>
+
+
+    <color name="system_panel">@color/green_dark</color>
+    <color name="actionbar_background">@color/green_saturated</color>
+
+    <color name="menu_divider">@color/white_20</color>
+    <color name="menu_text">@color/white</color>
+    <color name="menu_text_selected">@color/mainGreenColor</color>
+    <color name="menu_background">@color/mainGreenColor</color>
+    <color name="menu_background_selected">@color/green_smoky</color>
+    <color name="menu_bage_text">@color/mainGreenColor</color>
+    <color name="menu_bage_text_selected">@color/white</color>
+    <color name="menu_bage_background">@color/green_smoky</color>
+    <color name="menu_bage_background_selected">@color/mainGreenColor</color>
+
+    <color name="novelty_list_active">@color/crimson</color>
+    <color name="novelty_list_default">@color/black_light</color>
+    <color name="novelty_list_rate">@color/gray_light</color>
+
+    <color name="details_more">@color/gray_lightest</color>
+    <color name="rating_orange">@color/orange</color>
+
+    <color name="password_quality_red">@color/red</color>
+    <color name="password_quality_orange">@color/orange</color>
+    <color name="password_quality_green">#00CC33</color>
+    <color name="progress_panel">#CCCCCC</color>
+    <color name="gray_background_next_or_prev">#F2F2F2</color>
+    <color name="gray_pressed_background_next_or_prev">#d7d6d6</color>
+    <color name="green_background_next_or_prev">@color/green_light</color>
+    <color name="green_pressed_background_next_or_prev">@color/green_dark</color>
+    <color name="red_send_result_button">@color/crimson</color>
+    <color name="pressed_red_send_result_button">#c1026b</color>
+</resources>

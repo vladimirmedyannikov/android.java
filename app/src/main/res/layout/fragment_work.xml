@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/background_text_field"
+              android:padding="@dimen/pd_xsmall">
+    <!--Адрес работы-->
+    <TextView
+        style="@style/text.green"
+        android:text="@string/workAddress"/>
+    <!--Кнопка "добавить адрес"-->
+    <TextView
+        android:id="@+id/btnWork"
+        style="@style/flatIcon"/>
+    <!--Социальный статус-->
+    <TextView
+        style="@style/text.green"
+        android:text="@string/title_social_status"/>
+
+    <Spinner
+        android:id="@+id/socialStatus"
+        style="@style/item.linear"
+        android:focusable="false"
+        android:paddingBottom="@dimen/pd_xsmall"/>
+</LinearLayout>

@@ -1,0 +1,28 @@
+<RelativeLayout
+    style="@style/root"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/close"
+        style="@style/button.centered.match"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/close"/>
+
+    <CheckBox
+        android:id="@+id/accepted"
+        style="@style/wrap"
+        android:layout_above="@id/close"
+        android:layout_centerHorizontal="true"
+        android:checkMark="@drawable/checkbox"
+        android:gravity="center"
+        android:text="@string/offer_accepted"/>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_above="@id/accepted"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

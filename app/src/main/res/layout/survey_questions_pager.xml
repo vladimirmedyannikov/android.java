@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_for_number"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp_0"
+    android:paddingLeft="@dimen/pd_xxsmall"
+    android:paddingRight="@dimen/pd_xxsmall"
+    android:paddingTop="@dimen/dp_0">
+
+    <include layout="@layout/survey_questions_pager_item_active"/>
+
+    <include layout="@layout/survey_questions_pager_item_delimiter"/>
+</LinearLayout>

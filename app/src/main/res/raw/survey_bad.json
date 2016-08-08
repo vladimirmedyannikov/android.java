@@ -1,0 +1,127 @@
+{
+        "details": {
+            "id": 54,
+            "title": "Акция «Миллион деревьев»",
+            "points": 15,
+            "status": "interrupted"
+        },
+        "information": {
+            "title": "Узнай больше",
+            "link": "http://prod.cms.ag.mos.ru//poll/html/54"
+        },
+        "questions": [
+            {
+                "id": 119,
+                "question": "Нуждается ли Ваш двор в дополнительном озеленении?",
+                "type": "radiobutton",
+                "hint": "",
+                "information": {
+                    "title": "Мнение экспертов",
+                    "link": "http://prod.cms.ag.mos.ru//question/html/119"
+                },
+                "variants": [
+                    {
+                        "id": 184,
+                        "text": "Да",
+                        "kind": "text",
+                        "constraints": null
+                    },
+                    {
+                        "id": 185,
+                        "text": "Нет",
+                        "kind": "text",
+                        "constraints": null
+                    }
+                ]
+            },
+            {
+                "id": 120,
+                "question": "Готовы ли Вы принять личное участие в акции «Миллион деревьев»?",
+                "type": "radiobutton",
+                "hint": "",
+                "information": {
+                    "title": "Мнение экспертов",
+                    "link": "http://prod.cms.ag.mos.ru//question/html/120"
+                },
+                "filter_id": 0,
+                "variants": [
+                    {
+                        "id": 186,
+                        "text": "Да",
+                        "kind": "text",
+                        "constraints": null
+                    },
+                    {
+                        "id": 187,
+                        "text": "Нет",
+                        "kind": "text",
+                        "constraints": null
+                    }
+                ]
+            },
+            {
+                "id": 211,
+                "question": "Укажите один из адресов, указанных Вами в профиле (по месту постоянной регистрации или фактический): ",
+                "type": "radiobutton",
+                "hint": "",
+                "filter_id": 1,
+                "variants": [
+                    {
+                        "id": "flat-49820-601",
+                        "kind": "text",
+                        "text": ", д. 49, строение 1, кв д. 49, строение 1",
+                        "constraints": null
+                    },
+                    {
+                        "id": "flat-49818-601",
+                        "kind": "text",
+                        "text": "Озерная ул., д. 29, корпус 1, кв д. 29, корпус 1",
+                        "constraints": null
+                    }
+                ]
+            }
+        ],
+        "filters": [
+            {
+                "id": 0,
+                "type": "equal",
+                "condition": "and",
+                "answers": [
+                    {
+                        "question_id": 119,
+                        "variant_id": 184
+                    }
+                ]
+            },
+            {
+                "id": 1,
+                "type": "equal",
+                "condition": "and",
+                "answers": [
+                    {
+                        "question_id": 119,
+                        "variant_id": 184
+                    }
+                ]
+            }
+        ],
+        "values": [
+            {
+                "id": 119,
+                "answer": [
+                    {
+                        "variant_id": 184
+                    }
+                ]
+            },
+            {
+                "id": 120,
+                "answer": [
+                    {
+                        "variant_id": 186
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="elk_authority">ru.mos.polls.elk.customer.AUTHORITY</string>
+    <string name="polls_authority">ru.mos.polls.customer.AUTHORITY</string>
+</resources>

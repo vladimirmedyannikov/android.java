@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <plurals name="constraints_min_max">
+        <item quantity="one">От %1$s до %2$s символа</item>
+        <item quantity="few">От %1$s до %2$s символов</item>
+        <item quantity="many">От %1$s до %2$s символов</item>
+        <item quantity="other">От %1$s до %2$s символов</item>
+    </plurals>
+
+    <plurals name="constraints_only_one">
+        <item quantity="one">Строго %1$s символ</item>
+        <item quantity="few">Строго %1$s символа</item>
+        <item quantity="many">Строго %1$s символов</item>
+        <item quantity="other">Строго %1$s символов</item>
+    </plurals>
+
+    <plurals name="constraints_text_by_min_max">
+        <item quantity="one">Длина текста должна быть от %1$s до %2$s символа (cейчас %3$s)</item>
+        <item quantity="few">Длина текста должна быть от %1$s до %2$s символов (cейчас %3$s)</item>
+        <item quantity="many">Длина текста должна быть от %1$s до %2$s символов (cейчас %3$s)</item>
+        <item quantity="other">Длина текста должна быть от %1$s до %2$s символов (cейчас %3$s)</item>
+    </plurals>
+
+    <plurals name="constraints_text_by_only_one">
+        <item quantity="one">Длина текста должна быть %1$s символ (cейчас %2$s)</item>
+        <item quantity="few">Длина текста должна быть %1$s символа (cейчас %2$s)</item>
+        <item quantity="many">Длина текста должна быть %1$s символов (cейчас %2$s)</item>
+        <item quantity="other">Длина текста должна быть %1$s символов (cейчас %2$s)</item>
+    </plurals>
+    <plurals name="characters_count">
+        <item quantity="zero">%1$s символов</item>
+        <item quantity="one">%1$s символ</item>
+        <item quantity="two">%1$s символа</item>
+        <item quantity="few">%1$s символа</item>
+        <item quantity="many">%1$s символов</item>
+        <item quantity="other">%1$s символов</item>
+    </plurals>
+    <plurals name="characters_left">
+        <item quantity="one">Остался</item>
+        <item quantity="other">Осталось</item>
+    </plurals>
+
+    <plurals name="points_added">
+        <item quantity="one">начислен</item>
+        <item quantity="other">начислено</item>
+    </plurals>
+</resources>

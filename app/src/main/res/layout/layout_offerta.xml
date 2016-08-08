@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/item.linear.horizontal">
+
+    <CheckBox
+        android:id="@+id/cbAgreeOffer"
+        style="@style/text"
+        android:checked="false"
+        android:paddingRight="@dimen/thick_separator"/>
+
+    <TextView
+        android:id="@+id/tvOffer"
+        style="@style/text"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:text="@string/ag_agree_offer"/>
+</LinearLayout>

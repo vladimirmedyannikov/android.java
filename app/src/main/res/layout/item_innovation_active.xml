@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item.linear"
+    android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        style="@style/text.large.crimson"
+        android:id="@+id/title" />
+
+    <include layout="@layout/item_innovation_ratingbar" />
+
+</LinearLayout>

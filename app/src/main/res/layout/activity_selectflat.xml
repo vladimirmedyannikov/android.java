@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/linear"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/ag_back"
+                android:paddingBottom="@dimen/pd_xxsmall"
+                android:paddingLeft="@dimen/pd_normal"
+                android:paddingRight="@dimen/pd_normal">
+
+    <LinearLayout
+        android:id="@+id/llNewFlat"
+        style="@style/item.linear">
+
+        <TextView
+            android:id="@+id/tvNewFlat"
+            style="@style/flatIcon"
+            android:background="@drawable/ag_list_selector"
+            android:drawablePadding="@dimen/pd_xxsmall"
+            android:padding="@dimen/pd_xsmall"
+            android:text="@string/add_new_address"
+            android:textColor="@color/selector_newflat"/>
+
+        <TextView
+            style="@style/text.large.green"
+            android:layout_marginTop="@dimen/pd_xxsmall"
+            android:paddingLeft="@dimen/pd_xsmall"
+            android:text="@string/my_addresses"
+            android:textAllCaps="true"/>
+
+        <include
+            layout="@layout/ag_separator"
+            android:background="@color/green_light"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        style="@style/root"
+        android:layout_below="@+id/llNewFlat"
+        android:divider="@drawable/ag_list_divider"
+        android:dividerHeight="@dimen/thick_separator"
+        android:listSelector="@drawable/ag_list_selector"/>
+
+    <TextView
+        android:id="@android:id/empty"
+        style="@style/emptylist"
+        android:layout_centerInParent="true"
+        android:paddingLeft="@dimen/pd_normal"
+        android:paddingRight="@dimen/pd_normal"
+        android:text="@string/no_addresses"/>
+</RelativeLayout>

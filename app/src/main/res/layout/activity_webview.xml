@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <include layout="@layout/layout_stub_offline"/>
+
+    <Button
+        android:id="@+id/reloadNewsDetails"
+        style="@style/button.centered"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:onClick="reloadContent"
+        android:text="@string/refresh"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        style="@style/linear">
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="@style/wrap"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <WebView
+            android:id="@+id/webView"
+            style="@style/root"/>
+    </RelativeLayout>
+
+</LinearLayout>

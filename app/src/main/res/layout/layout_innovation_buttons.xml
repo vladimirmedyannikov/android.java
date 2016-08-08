@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/buttonContainer"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/vs_xxsmall"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/background_poll_button">
+
+    <TextView
+        android:id="@+id/hintInnovationIsOld"
+        style="@style/text.gray"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/hint_innovation_is_old"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/send"
+        style="@style/text.up"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@drawable/red_selector_send_inn_button"
+        android:clickable="true"
+        android:enabled="false"
+        android:gravity="center"
+        android:minWidth="@dimen/vs_xxlarge"
+        android:text="@string/result_innovation"
+        android:textColor="@color/gray_selector_send_inn_button"/>
+</RelativeLayout>

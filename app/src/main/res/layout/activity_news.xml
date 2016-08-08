@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/linear"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        style="@style/item.linear"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
+
+        <Button
+            style="@style/item.linear"
+            android:background="@color/green_light"
+            android:gravity="center"
+            android:onClick="onGoToPolls"
+            android:padding="@dimen/pd_xsmall"
+            android:text="@string/goToPolls"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        style="@style/root"
+        android:layout_above="@id/buttonContainer"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

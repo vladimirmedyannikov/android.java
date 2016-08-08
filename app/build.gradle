@@ -1,0 +1,169 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'io.fabric.tools:gradle:1.20.1'
+
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+apply plugin: 'android-apt'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId "ru.mos.polls"
+        versionCode Integer.parseInt(System.getenv("BUILD_NUMBER") ?: "1")
+        versionName "2.0.0"
+        minSdkVersion 15
+        targetSdkVersion 23
+        multiDexEnabled true
+        resConfigs "en"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+
+        customer {
+            applicationIdSuffix = ".customer"
+            minifyEnabled false
+            debuggable true
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+        }
+    }
+
+    dexOptions {
+        incremental = true;
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+
+    if (project.hasProperty("debugSigningPropertiesPath") && project.hasProperty("releaseSigningPropertiesPath")) {
+
+        File debugPropsFile = new File(System.getenv('HOME') + "/" + project.property("debugSigningPropertiesPath"))
+        File releasePropsFile = new File(System.getenv('HOME') + "/" + project.property("releaseSigningPropertiesPath"))
+
+        if (debugPropsFile.exists() && releasePropsFile.exists()) {
+            Properties debugProps = new Properties()
+            debugProps.load(new FileInputStream(debugPropsFile))
+
+            Properties releaseProps = new Properties()
+            releaseProps.load(new FileInputStream(releasePropsFile))
+
+            signingConfigs {
+                debug {
+                    storeFile file(debugPropsFile.getParent() + "/" + debugProps['keystore'])
+                    storePassword debugProps['keystore.password']
+                    keyAlias debugProps['keyAlias']
+                    keyPassword debugProps['keyPassword']
+                }
+                release {
+                    storeFile file(releasePropsFile.getParent() + "/" + releaseProps['keystore'])
+                    storePassword releaseProps['keystore.password']
+                    keyAlias releaseProps['keyAlias']
+                    keyPassword releaseProps['keyPassword']
+                }
+            }
+
+            buildTypes {
+                release {
+                    minifyEnabled false
+                    signingConfig signingConfigs.release
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                }
+
+                customer {
+                    applicationIdSuffix = ".customer"
+                    signingConfig signingConfigs.debug
+                    minifyEnabled false
+                    debuggable true
+                }
+
+                debug {
+                    signingConfig signingConfigs.debug
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    compile('org.twitter4j:twitter4j-core:4.0.2') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+
+    compile project(":social:facebook")
+    compile project(":social:vksdk_library")
+    compile project(":social:odnoklassniki-android-sdk")
+    compile project(":elkag")
+
+    compile(name: 'swipelistview-1.0-SNAPSHOT', ext: 'aar') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    compile('com.nineoldandroids:library:2.4.0+') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+        transitive = true;
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:support-annotations:23.3.0'
+    compile 'com.google.android.gms:play-services:9.2.1'
+    compile 'com.googlecode.libphonenumber:libphonenumber:7.4.3'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.google.android.gms:play-services-ads:9.2.1'
+    compile 'com.google.android.gms:play-services-auth:9.2.1'
+    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:appcompat-v7:22.2.0'
+    }
+}

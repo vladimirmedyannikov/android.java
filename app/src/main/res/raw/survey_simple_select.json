@@ -1,0 +1,33 @@
+{
+  "details": {
+    "id": 21,
+    "title": "Кого из представителей Совета депутатов Вы знаете? (возможность выбрать несколько вариантов)",
+    "points": 500,
+    "status": "active"
+  },
+  "questions": [
+    {
+      "id": 39,
+      "question": "Кого из представителей Совета депутатов Вы знаете? (возможность выбрать несколько вариантов)",
+      "type": "simple",
+      "hint": "ответьте на вопрос",
+      "variants": [
+        {
+          "id": 5,
+          "kind": "select",
+          "text": "Выберите поликлинику",
+          "object": {
+            "type": "gorod",
+            "category": "med_14"
+          },
+          "constraints": {
+            "no_coordinates": true,
+            "no_address": true
+          }
+        }
+      ]
+    }
+  ],
+  "filters": [],
+  "values": []
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/vs_xxsmall"
+              android:layout_height="@dimen/vs_xxsmall"
+              android:layout_centerVertical="true"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/loadingBadge"
+        style="@style/wrap"/>
+
+    <ImageView
+        android:id="@+id/badge"
+        android:layout_width="@dimen/vs_xxsmall"
+        android:layout_height="@dimen/vs_xxsmall"
+        android:visibility="gone"/>
+</LinearLayout>

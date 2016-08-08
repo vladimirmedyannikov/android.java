@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root">
+
+    <LinearLayout
+        style="@style/linear">
+        <!--Упаковываем в еще один LinearLayout, так как для верхнего контейнера не работает layout_marginBottom, также не получается отобраить конетент с помощью параметра layout_above-->
+        <LinearLayout
+            style="@style/linear"
+            android:id="@+id/contentContainer"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/pd_normal"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingRight="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_xxsmall">
+
+            <TextView
+                style="@style/text.crimson"
+                android:id="@+id/innPointTitle"
+                android:paddingLeft="@dimen/pd_xsmall"
+                android:paddingTop="@dimen/pd_xxsmall"
+                />
+
+            <TextView
+                style="@style/text.medium"
+                android:id="@+id/title"
+                android:layout_marginBottom="@dimen/pd_normal"
+                android:paddingLeft="@dimen/pd_xsmall"
+                />
+
+            <WebView
+                style="@style/item"
+                android:id="@+id/shortContainer"
+                android:hardwareAccelerated="true"
+                android:visibility="gone" />
+
+            <WebView
+                style="@style/item"
+                android:id="@+id/fullContainer"
+                android:hardwareAccelerated="true"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/buttonContainer"
+        layout="@layout/layout_details_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/thin_separator"
+        android:layout_alignParentBottom="true"
+        android:background="@color/details_more"
+        android:visibility="gone" />
+
+</RelativeLayout>

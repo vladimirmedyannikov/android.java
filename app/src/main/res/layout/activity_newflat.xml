@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:animateLayoutChanges="true">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/ag_back">
+
+        <LinearLayout
+            style="@style/linear"
+            android:padding="@dimen/pd_xsmall">
+
+            <LinearLayout
+                android:id="@+id/areaAndDistrictLayout"
+                style="@style/item.linear"
+                android:animateLayoutChanges="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/districtFlat"
+                    style="@style/flat.inactive"
+                    android:hint="@string/flat_district"/>
+
+                <TextView
+                    android:id="@+id/areaFlat"
+                    style="@style/flat.inactive"
+                    android:layout_marginTop="@dimen/pd_xsmall"
+                    android:hint="@string/flat_area"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                style="@style/item">
+
+                <ProgressBar
+                    android:id="@+id/pbStreet"
+                    style="@style/progressbar"/>
+
+                <android.widget.AutoCompleteTextView
+                    android:id="@+id/etStreet"
+                    style="@style/flat.auto"
+                    android:layout_marginBottom="@dimen/pd_xsmall"
+                    android:completionThreshold="3"
+                    android:hint="@string/elk_street"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/street_not_found_container"
+                style="@style/flat.notfound">
+
+                <ImageView
+                    style="@style/wrap"
+                    android:paddingRight="@dimen/pd_xsmall"
+                    android:src="@drawable/ag_icon_add_address"/>
+
+                <LinearLayout
+                    style="@style/item.linear">
+
+                    <TextView
+                        style="@style/text.gray"
+                        android:text="@string/custom_address_not_found_street"/>
+
+                    <TextView
+                        style="@style/text.small.green"
+                        android:text="@string/custom_address_not_found_hint"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                style="@style/item">
+
+                <ProgressBar
+                    android:id="@+id/pbBuilding"
+                    style="@style/progressbar"/>
+
+                <android.widget.AutoCompleteTextView
+                    android:id="@+id/etBuilding"
+                    style="@style/flat.auto"
+                    android:enabled="false"
+                    android:hint="@string/elk_building"
+                    android:nextFocusDown="@+id/etFlat"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/building_not_found_container"
+                style="@style/flat.notfound">
+
+                <ImageView
+                    style="@style/wrap"
+                    android:paddingRight="@dimen/pd_xsmall"
+                    android:src="@drawable/ag_icon_add_address"/>
+
+                <LinearLayout
+                    style="@style/item.linear">
+
+                    <TextView
+                        style="@style/text.gray"
+                        android:text="@string/custom_address_not_found_building"/>
+
+                    <TextView
+                        style="@style/text.small.green"
+                        android:text="@string/custom_address_not_found_hint"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/helpLabel"
+                style="@style/text.gray"
+                android:paddingTop="@dimen/pd_xsmall"
+                android:text="@string/ag_add_flat"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/actionContainer"
+                style="@style/item.linear.horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/pd_xlarge">
+
+                <Button
+                    android:id="@+id/save"
+                    style="@style/button.centered"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/select"
+                    android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/changeFlat"
+                    style="@style/button.centered"
+                    android:minWidth="@dimen/vs_xxxlarge"
+                    android:onClick="changeFlat"
+                    android:text="@string/change"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/delete"
+                    style="@style/button.centered"
+                    android:layout_weight="1"
+                    android:text="@string/delete"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/warningContainer"
+                style="@style/item.linear"
+                android:layout_marginTop="@dimen/pd_xlarge">
+
+                <ImageView
+                    android:id="@+id/warningEditingBlocked"
+                    style="@style/wrap"
+                    android:src="@drawable/circle_warning"/>
+
+                <TextView
+                    android:id="@+id/tvErrorEditingBlocked"
+                    style="@style/text.red"
+                    android:layout_toRightOf="@id/warningEditingBlocked"
+                    android:paddingLeft="@dimen/pd_xsmall"
+                    android:text="@string/error_short_editing_blocked"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvWarningEditingBlocked"
+                    style="@style/text.normal.black"
+                    android:layout_below="@id/tvErrorEditingBlocked"
+                    android:layout_toRightOf="@id/warningEditingBlocked"
+                    android:paddingLeft="@dimen/pd_xsmall"
+                    android:text="@string/warning_editing_blocked"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

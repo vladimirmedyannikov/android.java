@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/background_dialog"
+              android:paddingBottom="@dimen/pd_xxlarge"
+              android:paddingLeft="@dimen/pd_normal"
+              android:paddingRight="@dimen/pd_normal"
+              android:paddingTop="@dimen/pd_xxlarge">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/linear">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/text.large.black"
+                android:gravity="center"
+                android:paddingBottom="@dimen/pd_xlarge"
+                android:paddingTop="@dimen/pd_xlarge"
+                android:text="@string/help_startup_message_title"
+                android:textSize="@dimen/ts_xxlarge"/>
+
+            <TextView
+                android:id="@+id/text"
+                style="@style/text.large.black"
+                android:text="@string/help_startup_message_text"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnContinue"
+        style="@style/button.centered.match"
+        android:text="@string/help_startup_continue"/>
+</LinearLayout>

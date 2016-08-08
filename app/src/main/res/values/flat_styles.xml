@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="flat" parent="input">
+        <item name="android:textSize">@dimen/ts_xlarge</item>
+        <item name="android:background">@drawable/ag_back_edittext</item>
+        <item name="android:textColorHint">@color/editHintColor</item>
+        <item name="android:textColor">@color/editTextColor</item>
+    </style>
+
+    <style name="flat.inactive">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="flat.auto">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:inputType">textAutoComplete</item>
+    </style>
+
+    <style name="progressbar" parent="wrap">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="flat.notfound" parent="text.link">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="basicIcon">
+        <item name="android:textSize">@dimen/ts_large</item>
+        <item name="android:textColor">@color/ag_dark_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/ag_list_selector</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:paddingBottom">@dimen/pd_normal</item>
+        <item name="android:paddingLeft">@dimen/pd_xxsmall</item>
+        <item name="android:paddingTop">@dimen/pd_normal</item>
+        <item name="android:drawablePadding">@dimen/pd_xxsmall</item>
+    </style>
+
+    <style name="flatIcon" parent="basicIcon">
+        <item name="android:drawableLeft">@drawable/ag_home</item>
+        <item name="android:text">@string/addFlat</item>
+    </style>
+
+</resources>

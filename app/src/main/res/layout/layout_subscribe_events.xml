@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/eventTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:text="@string/event_subscribe"
+        android:textColor="@color/greyHint" />
+
+    <LinearLayout
+        android:id="@+id/switchContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--push-->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/pd_xlarge"
+            android:paddingRight="@dimen/pd_xlarge">
+
+            <TextView
+                android:id="@+id/emailEventTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/event_push" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/pushEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="true"
+                android:textOff="@string/empty"
+                android:textOn="@string/empty"
+                android:thumbTextPadding="@dimen/pd_xlarge" />
+        </RelativeLayout>
+        <!--email-->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/pd_xlarge">
+
+            <TextView
+                android:id="@+id/pushEventTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/event_email" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/emailEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="true"
+                android:textOff="@string/empty"
+                android:textOn="@string/empty"
+                android:thumbTextPadding="@dimen/pd_xlarge" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

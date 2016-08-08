@@ -1,0 +1,19 @@
+#################
+## Android Studio project files
+*.iml
+*.ipr
+*.iws
+.idea/
+local.properties
+
+#################
+# TeamCity is a build add-in
+_TeamCity*
+
+#################
+# generated files
+build/
+
+#################
+# Gradle
+.gradle/

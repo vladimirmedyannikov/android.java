@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Стили для контейнеров-->
+    <style name="root">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!--Контейнер с отступом по умолчанию-->
+    <style name="root.padding">
+        <item name="android:padding">@dimen/pd_normal</item>
+    </style>
+
+    <style name="linear" parent="root">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="linear.horizontal">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
+
+
+    <style name="item.linear">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="item.linear.horizontal">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wrap.linear">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="wrap.centered">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="ripple">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <!--Стиль для полей ввода-->
+    <style name="input" parent="android:Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="input.edit">
+        <item name="android:background">@drawable/ag_back_edittext</item>
+        <item name="android:textColorHint">@color/editHintColor</item>
+        <item name="android:textColor">@color/editTextColor</item>
+    </style>
+
+    <style name="input.small">
+        <item name="android:textSize">@dimen/ts_small</item>
+    </style>
+
+    <style name="input.large">
+        <item name="android:textSize">@dimen/ts_large</item>
+    </style>
+
+    <style name="input.xlarge">
+        <item name="android:textSize">@dimen/ts_xlarge</item>
+    </style>
+
+    <style name="input.xxlarge">
+        <item name="android:textSize">@dimen/ts_xxlarge</item>
+    </style>
+
+    <style name="input.phone">
+        <item name="android:ems">10</item>
+        <item name="android:inputType">phone</item>
+        <item name="android:maxLength">10</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+
+    <style name="input.password">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:ems">10</item>
+        <item name="android:maxLength">30</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="input.email">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+    <style name="input.number">
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="input.numberDecimal">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+    <style name="input.multiLines">
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:maxLines">10</item>
+    </style>
+
+    <style name="input.cap">
+        <item name="android:inputType">textCapWords</item>
+        <item name="android:maxLength">32</item>
+    </style>
+
+    <!--Базовый стиль для отображения любого текста-->
+    <style name="text" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+    </style>
+
+    <style name="text.small">
+        <item name="android:textSize">@dimen/ts_small</item>
+    </style>
+
+    <style name="text.normal">
+        <item name="android:textSize">@dimen/ts_normal</item>
+    </style>
+
+    <style name="text.large">
+        <item name="android:textSize">@dimen/ts_large</item>
+    </style>
+
+    <style name="text.xlarge">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/ts_xlarge</item>
+    </style>
+
+    <style name="text.xxlarge">
+        <item name="android:textSize">@dimen/ts_xxlarge</item>
+    </style>
+
+    <style name="text.center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="text.small.white">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.large.white">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.red">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="text.center.red">
+        <item name="android:textColor">@color/ag_red</item>
+    </style>
+
+    <style name="text.crimson">
+        <item name="android:textColor">@color/crimson</item>
+    </style>
+
+    <style name="text.small.crimson">
+        <item name="android:textColor">@color/crimson</item>
+    </style>
+
+    <style name="text.large.crimson">
+        <item name="android:textColor">@color/crimson</item>
+    </style>
+
+    <style name="text.large.black">
+        <item name="android:textColor">@color/black_light</item>
+    </style>
+
+    <style name="text.normal.black">
+        <item name="android:textColor">@color/black_light</item>
+    </style>
+
+    <style name="text.small.black">
+        <item name="android:textColor">@color/black_light</item>
+    </style>
+
+    <style name="text.gray">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="text.small.gray">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="text.large.gray">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="text.large.gray.up">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="text.xlarge.gray">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="text.green">
+        <item name="android:textColor">@color/greenText</item>
+    </style>
+
+    <style name="text.small.green">
+        <item name="android:textColor">@color/greenText</item>
+    </style>
+
+    <style name="text.large.green">
+        <item name="android:textColor">@color/greenText</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="text.xlarge.green">
+        <item name="android:textColor">@color/greenText</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="text.xxlarge.green">
+        <item name="android:textColor">@color/greenText</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="text.up">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="text.medium">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="text.up.green">
+        <item name="android:textColor">@color/greenText</item>
+    </style>
+
+    <style name="text.up.green.medium">
+        <item name="android:textColor">@color/greenText</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <!--Для отображения заголовков-->
+    <style name="header" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/ts_xlarge</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+        <item name="android:padding">@dimen/pd_xsmall</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="header.up">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="header.green">
+        <item name="android:textColor">@color/green_light</item>
+    </style>
+
+    <!--Стили для кликабельных текстовых полей-->
+    <style name="text.link">
+        <item name="android:minWidth">@dimen/vs_xxxlarge</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/pd_xsmall</item>
+        <item name="android:background">@drawable/ag_list_selector</item>
+    </style>
+
+    <style name="text.link.green">
+        <item name="android:textColor">@color/greenText</item>
+    </style>
+
+    <style name="button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/ag_back_button</item>
+        <item name="android:textColor">@color/selector_button_text_color</item>
+        <item name="android:minHeight">@dimen/vs_xxsmall</item>
+        <item name="android:minWidth">@dimen/vs_xsmall</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="button.centered">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/pd_xxsmall</item>
+        <item name="android:layout_marginRight">@dimen/pd_xxsmall</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="button.centered.disabled">
+        <item name="android:enabled">false</item>
+    </style>
+
+    <style name="button.centered.match">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="button.centered.action">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:enabled">false</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+    </style>
+    <!--При переопределении разметок иногда не всегда нужны все view, те что не нужны можно скрывать данным стилем-->
+    <style name="not_used">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">@dimen/dp_0</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="emptylist" parent="wrap">
+        <item name="android:textColor">@color/greyHint</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">@dimen/pd_xsmall</item>
+        <item name="android:layout_marginRight">@dimen/pd_xsmall</item>
+        <item name="android:drawablePadding">@dimen/pd_normal</item>
+        <item name="android:drawableTop">@drawable/common_nothing</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingBottom">@dimen/pd_xlarge</item>
+    </style>
+
+    <style name="auth_error" parent="text">
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">@dimen/pd_xsmall</item>
+        <item name="android:text">@string/ag_not_right_number_or_pass</item>
+        <item name="android:textColor">@color/ag_red</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="menu_item" parent="text.large">
+        <item name="android:textColor">@color/selector_menu_item_text</item>
+        <item name="android:background">@drawable/selector_menu_item_background</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:padding">@dimen/pd_xsmall</item>
+        <item name="android:paddingLeft">@dimen/menu_side_space</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="social_icon_close">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="social_icon">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:padding">@dimen/pd_xxsmall</item>
+        <item name="android:background">@drawable/ag_list_selector</item>
+    </style>
+
+    <style name="quest_title" parent="text.large">
+        <item name="android:paddingLeft">@dimen/pd_xxsmall</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
+    <style name="quest_detail" parent="quest_title">
+        <item name="android:textColor">@color/text_helper_quest</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/ts_normal</item>
+    </style>
+
+    <style name="quest_container" parent="root">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingBottom">@dimen/pd_xxsmall</item>
+        <item name="android:paddingLeft">@dimen/pd_xsmall</item>
+        <item name="android:paddingRight">@dimen/pd_xsmall</item>
+        <item name="android:paddingTop">@dimen/pd_xxsmall</item>
+    </style>
+
+    <style name="setting_item" parent="text.large">
+        <item name="android:paddingBottom">@dimen/pd_xsmall</item>
+        <item name="android:paddingTop">@dimen/pd_xsmall</item>
+        <item name="android:drawablePadding">@dimen/pd_xxsmall</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+</resources>

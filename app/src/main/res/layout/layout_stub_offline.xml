@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/stubOfflineView"
+              style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_centerInParent="true"
+              android:gravity="center"
+              android:paddingLeft="@dimen/pd_xsmall"
+              android:paddingRight="@dimen/pd_xsmall">
+
+    <ImageView
+        style="@style/wrap"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/vs_normal"
+        android:src="@drawable/internet_failed_to_connect"/>
+
+    <TextView
+        style="@style/text.large.gray"
+        android:gravity="center"
+        android:text="@string/internet_failed_to_connect"
+        android:textColor="@color/ag_label_internet_failed_to_connect"/>
+
+    <TextView
+        style="@style/text.gray"
+        android:gravity="center"
+        android:text="@string/check_internet_settings"
+        android:textColor="@color/ag_label_internet_failed_to_connect"/>
+</LinearLayout>
+

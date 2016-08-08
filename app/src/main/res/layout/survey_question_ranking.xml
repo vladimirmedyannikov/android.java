@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/item.linear"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/container"
+        style="@style/wrap"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/pd_xsmall"/>
+</RelativeLayout>

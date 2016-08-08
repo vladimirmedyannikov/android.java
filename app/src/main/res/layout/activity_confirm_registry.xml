@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView style="@style/root.padding"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@drawable/ag_back"
+            android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/baseContainer"
+        style="@style/item.linear">
+
+        <include layout="@layout/layout_auth_logo"/>
+
+        <TextView
+            style="@style/header.green"
+            android:text="@string/password_confirm"/>
+
+        <EditText
+            android:id="@+id/etConfirmationCode"
+            style="@style/input.password"
+            android:hint="@string/confirmation_code"
+            android:imeOptions="actionNext"
+            android:inputType="numberSigned"
+            android:paddingBottom="@dimen/pd_xsmall"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/input.password"
+            android:hint="@string/password"
+            android:imeOptions="actionNext"
+            android:paddingBottom="@dimen/pd_xsmall"/>
+
+        <EditText
+            android:id="@+id/etRepeatPassword"
+            style="@style/input.password"
+            android:hint="@string/repeat_password"
+            android:paddingBottom="@dimen/pd_xsmall"/>
+
+        <TextView
+            android:id="@+id/tvHint"
+            style="@style/text.gray"
+            android:paddingBottom="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_xxsmall"
+            android:text="@string/hint_about_password"/>
+
+        <Button
+            android:id="@+id/btnAction"
+            style="@style/button.centered.action"
+            android:minWidth="@dimen/vs_xxlarge"
+            android:text="@string/save"/>
+
+        <TextView
+            android:id="@+id/tvError"
+            style="@style/auth_error"
+            android:layout_marginBottom="@dimen/pd_xxsmall"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/text.link.green"
+            android:text="@string/cancel"/>
+
+        <TextView
+            android:id="@+id/repeatCode"
+            style="@style/text.link.green"
+            android:text="@string/repeat_code_again"/>
+
+        <View style="@style/not_used"/>
+
+        <include layout="@layout/layout_help"/>
+    </LinearLayout>
+</ScrollView>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout style="@style/quest_container"
+             xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/layout_back"/>
+
+    <RelativeLayout
+        android:id="@+id/front"
+        style="@style/root"
+        android:background="@drawable/quest_background_blue"
+        android:orientation="horizontal"
+        android:tag="front">
+
+        <ImageView
+            android:id="@+id/icon"
+            style="@style/basicIcon"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/pd_xxsmall"
+            android:src="@drawable/icon01"/>
+
+        <LinearLayout
+            style="@style/wrap.linear"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/icon"
+            android:layout_weight="0.4">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/quest_title"
+                android:text="@string/title_tell_to_friends"/>
+
+            <TextView
+                android:id="@+id/details"
+                style="@style/quest_detail"
+                android:text="ВКонтакте, Facebook, Twitter "/>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

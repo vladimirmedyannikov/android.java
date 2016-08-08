@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_change_social_post_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xxsmall"
+        android:paddingTop="@dimen/pd_xxsmall"
+        android:text="@string/hint_example_for_fb"
+        android:textColor="@color/greyHint"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/pd_xxsmall"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xxsmall"
+        android:paddingTop="@dimen/dp_0"
+        android:textColor="@color/greyHint"
+        android:textIsSelectable="true"
+        android:textStyle="italic" />
+</LinearLayout>

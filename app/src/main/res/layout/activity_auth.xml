@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/scrollView"
+            style="@style/root.padding"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/topContainer"
+        style="@style/linear">
+
+        <include layout="@layout/layout_auth_logo"/>
+
+        <TextView
+            style="@style/header.green"
+            android:text="@string/elk_authorization"/>
+
+        <EditText
+            android:id="@+id/etLogin"
+            style="@style/input.phone"
+            android:hint="@string/ag_hint_phone_email"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/input.password"
+            android:hint="@string/elk_password"/>
+
+        <include layout="@layout/layout_offerta"/>
+
+        <TextView
+            android:id="@+id/tvError"
+            style="@style/text.center.red"
+            android:layout_margin="@dimen/pd_xxsmall"/>
+
+        <Button
+            android:id="@+id/btnSkip"
+            style="@style/not_used"/>
+
+        <Button
+            android:id="@+id/btnAction"
+            style="@style/button.centered.action"
+            android:layout_width="@dimen/vs_xxxlarge"
+            android:text="@string/elk_authorize"/>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            style="@style/not_used"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            style="@style/text.link.green"
+            android:layout_marginTop="@dimen/pd_xxlarge"
+            android:text="@string/elk_register"/>
+
+        <Button
+            android:id="@+id/btnRestorePassword"
+            style="@style/not_used"/>
+
+        <include layout="@layout/layout_empty_view"/>
+
+        <include layout="@layout/layout_help"/>
+
+    </LinearLayout>
+</ScrollView>

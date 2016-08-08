@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/title"
+          style="@style/text.large.gray"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:paddingBottom="@dimen/pd_xsmall"
+          android:paddingLeft="@dimen/pd_xxsmall"
+          android:paddingTop="@dimen/pd_xsmall"
+          android:text="@string/list_of_questions"/>

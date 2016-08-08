@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="@dimen/pd_xsmall">
+    <!--Заголовок описания-->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/thick_separator"
+        android:background="@drawable/ag_list_divider"/>
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/text.large.gray"
+        android:paddingBottom="@dimen/pd_xxsmall"/>
+    <!--Описание-->
+    <TextView
+        android:id="@+id/body"
+        style="@style/text.normal"
+        android:ellipsize="end"
+        android:paddingBottom="@dimen/pd_xlarge"/>
+    <!--Читать дальше-->
+    <TextView
+        android:id="@+id/more"
+        style="@style/text.green"
+        android:layout_gravity="center_horizontal"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="@string/more"/>
+</LinearLayout>

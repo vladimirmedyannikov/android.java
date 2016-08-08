@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/ag_back">
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:padding="@dimen/pd_xsmall">
+
+            <EditText
+                android:id="@+id/etOldPassword"
+                style="@style/input.password"
+                android:hint="@string/elk_oldPassword"/>
+
+            <EditText
+                android:id="@+id/etNewPassword"
+                style="@style/input.password"
+                android:hint="@string/elk_newPassword"/>
+
+            <TextView
+                android:id="@+id/tvInfo"
+                style="@style/text.gray"
+                android:gravity="center"
+                android:paddingBottom="@dimen/pd_normal"
+                android:paddingTop="@dimen/pd_normal"
+                android:text="@string/elk_info_change_password"/>
+
+            <Button
+                android:id="@+id/btnAction"
+                style="@style/button.centered.match"
+                android:enabled="false"
+                android:text="@android:string/ok"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

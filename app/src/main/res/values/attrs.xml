@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressView">
+        <attr name="drawableProgress" format="integer" />
+        <attr name="drawableEmpty" format="integer" />
+        <attr name="drawableMarker" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="QuestionsView">
+        <attr name="drawableAnswered" format="integer" />
+        <attr name="drawablePassed" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="SurveyTitleView">
+        <attr name="contentChangingType" format="enum">
+            <enum name="simple" value="0"/>
+            <enum name="expand_collapse" value="1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ChartsView">
+        <attr name="bar_width" format="integer" />
+        <attr name="bar_height" format="integer" />
+        <attr name="color_bar_one" format="color" />
+        <attr name="color_bar_two" format="color" />
+        <attr name="color_bar_three" format="color" />
+        <attr name="color_bar_four" format="color" />
+        <attr name="color_bar_five" format="color" />
+    </declare-styleable>
+</resources>

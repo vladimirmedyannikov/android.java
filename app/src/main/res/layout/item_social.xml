@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/view"
+              style="@style/root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/ag_list_selector"
+              android:orientation="horizontal"
+              android:padding="@dimen/pd_xxsmall">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/vs_xxsmall"
+        android:layout_height="@dimen/vs_xxsmall"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/social"
+        style="@style/text.xlarge"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/pd_xxsmall"/>
+</LinearLayout>

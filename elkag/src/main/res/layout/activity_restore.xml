@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/llAuthTitle"
+        layout="@layout/elk_title_auth"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llAuthTitle"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="?elk_pageNameStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/elk_restoreTitle"/>
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/elk_hint_phone"
+                android:inputType="phone"
+                android:imeActionId="@+id/actionLogin"
+                android:imeOptions="actionDone"
+                android:maxLength="10"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"/>
+
+            <Button
+                android:id="@+id/btnAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/elk_restoreBtn"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/AuthTheme.ErrorTextStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"/>
+
+            <TextView
+                style="@style/AuthTheme.InfoTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/elk_info_restore"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

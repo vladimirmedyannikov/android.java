@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/text.normal.black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/text.normal.black"
+        android:textStyle="bold"/>
+</LinearLayout>

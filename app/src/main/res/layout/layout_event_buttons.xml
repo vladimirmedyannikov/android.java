@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!--Кнопки-->
+<LinearLayout android:id="@+id/buttonContainer"
+              style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_gravity="bottom"
+              android:padding="@dimen/pd_xsmall"
+              android:visibility="gone">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thick_separator"
+        android:layout_marginLeft="@dimen/pd_xlarge"
+        android:layout_marginRight="@dimen/pd_xlarge"
+        android:background="@drawable/ag_list_divider"/>
+    <!--Пришлось заменить на linearlayout обычную кнопку
+    с leftDrawable, так как pin  смещается когда к названию кнопки добавляем + 10 баллов-->
+    <LinearLayout
+        android:id="@+id/checkIn"
+        style="@style/item.linear.horizontal"
+        android:background="@drawable/ag_back_button"
+        android:gravity="center"
+        android:minHeight="@dimen/vs_small">
+        <!--изображение pin-->
+        <ImageView
+            android:id="@+id/pin"
+            style="@style/wrap"
+            android:paddingRight="@dimen/pd_xsmall"
+            android:src="@drawable/pin"/>
+        <!--Отметиться здесь\ Вы уже отметились + ХХ баллов-->
+        <LinearLayout
+            style="@style/wrap"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/text.large"
+                android:text="@string/checkin_here"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/subtitle"
+                style="@style/text.normal"
+                android:text="@string/add_count"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ru.mos.polls.event.gui.view.DrawableAlignedButton
+        android:id="@+id/comment"
+        style="@style/basicIcon"
+        android:drawableLeft="@drawable/comment"
+        android:gravity="center"
+        android:text="@string/comments"
+        android:textColor="@color/greenText"
+        android:textSize="@dimen/ts_xlarge"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thick_separator"
+        android:background="@drawable/ag_list_divider"/>
+</LinearLayout>

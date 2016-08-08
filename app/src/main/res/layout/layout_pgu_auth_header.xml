@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/vs_xsmall"
+                android:layout_marginBottom="@dimen/pd_xlarge"
+                android:layout_marginLeft="@dimen/pd_xxsmall"
+                android:layout_marginRight="@dimen/pd_xxsmall"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:background="@android:color/white"
+                android:padding="@dimen/pd_xxsmall">
+
+    <ImageView
+        android:id="@+id/logoPgu"
+        android:layout_width="@dimen/vs_normal"
+        android:layout_height="@dimen/vs_normal"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/logo_pgu"/>
+
+    <View
+        android:id="@+id/verticalDevider"
+        android:layout_width="@dimen/thin_separator"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/pd_xsmall"
+        android:layout_marginRight="@dimen/pd_xsmall"
+        android:layout_toRightOf="@id/logoPgu"
+        android:background="@color/greyHint"/>
+
+    <LinearLayout
+        style="@style/root"
+        android:layout_toRightOf="@id/verticalDevider"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:drawableLeft="@drawable/abc_ic_cab_done"
+            android:gravity="center"
+            android:text="@string/pgu_binding_title"
+            android:textColor="@color/greenText"/>
+    </LinearLayout>
+</RelativeLayout>

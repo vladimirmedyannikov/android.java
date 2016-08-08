@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/elk_title_back_auth"
+              android:orientation="horizontal"
+              android:paddingLeft="12dp"
+              android:paddingRight="4dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingRight="12dp"
+        android:src="@drawable/elk_logo_emp"/>
+
+    <TextView
+        style="@style/AuthTheme.EMPStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/elk_emp"/>
+
+</LinearLayout>

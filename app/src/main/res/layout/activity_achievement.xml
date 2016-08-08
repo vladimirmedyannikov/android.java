@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_main"
+              style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView style="@style/root.padding"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/vs_normal"
+                android:layout_height="@dimen/vs_normal"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/loadingBadge"
+                    style="@style/wrap"/>
+
+                <ImageView
+                    android:id="@+id/badge"
+                    android:layout_width="@dimen/vs_normal"
+                    android:layout_height="@dimen/vs_normal"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/body"
+                style="@style/text.xlarge"
+                android:layout_width="wrap_content"
+                android:paddingBottom="@dimen/pd_xsmall"
+                android:paddingTop="@dimen/pd_xlarge"/>
+
+            <Button
+                android:id="@+id/share"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/vs_xxlarge"
+                android:text="@string/share"
+                android:textSize="@dimen/ts_large"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

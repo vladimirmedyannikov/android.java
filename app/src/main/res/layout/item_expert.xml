@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:paddingBottom="@dimen/pd_xxlarge">
+
+    <include layout="@layout/layout_one_expert"/>
+
+    <TextView
+        android:id="@+id/body"
+        style="@style/text.large"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/pd_xsmall"
+        android:textSize="@dimen/ts_large"/>
+</LinearLayout>

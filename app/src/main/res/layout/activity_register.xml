@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/scrollView"
+            style="@style/root.padding"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/baseContainer"
+        style="@style/linear">
+
+        <include layout="@layout/layout_auth_logo"/>
+
+        <TextView
+            style="@style/header.green"
+            android:text="@string/elk_register"/>
+
+        <EditText
+            android:id="@+id/etPhoneNumber"
+            style="@style/input.phone"
+            android:hint="@string/elk_hint_phone"/>
+
+        <include layout="@layout/layout_offerta"/>
+
+
+        <Button
+            android:id="@+id/btnAction"
+            style="@style/button.centered.action"
+            android:layout_width="@dimen/vs_xxxlarge"
+            android:text="@string/registration"/>
+
+        <TextView
+            android:id="@+id/tvError"
+            style="@style/text.center.red"
+            android:layout_margin="@dimen/pd_xxsmall"/>
+
+        <TextView
+            android:id="@+id/auth"
+            style="@style/text.link.green"
+            android:text="@string/auth_title"/>
+
+        <include layout="@layout/layout_empty_view"/>
+
+        <include layout="@layout/layout_help"/>
+    </LinearLayout>
+</ScrollView>
+

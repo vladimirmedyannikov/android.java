@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/linear">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        style="@style/root">
+
+        <LinearLayout
+            style="@style/linear"
+            android:id="@+id/container"/>
+
+    </ScrollView>
+</LinearLayout>

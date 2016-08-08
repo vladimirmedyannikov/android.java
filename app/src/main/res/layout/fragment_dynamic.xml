@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout style="@style/root"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:background="@drawable/ag_back"
+             android:paddingLeft="@dimen/pd_normal"
+             android:paddingRight="@dimen/pd_normal">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ptrLayout"
+        style="@style/root">
+
+        <ListView
+            android:id="@android:id/list"
+            style="@style/root"
+            android:divider="@drawable/ag_list_divider"
+            android:listSelector="@drawable/ag_list_selector"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@android:id/empty"
+        style="@style/wrap.centered"
+        android:layout_gravity="center"
+        android:src="@drawable/common_nothing"/>
+
+</FrameLayout>
+

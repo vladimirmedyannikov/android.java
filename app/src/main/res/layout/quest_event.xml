@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/quest_container">
+
+    <include layout="@layout/layout_back" />
+
+    <RelativeLayout
+        android:id="@+id/front"
+        style="@style/root"
+        android:background="@drawable/quest_background_pink"
+        android:gravity="center"
+        android:tag="front">
+
+        <include
+            android:id="@+id/rrPrice"
+            layout="@layout/quest_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/quest_title"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@id/rrPrice"
+            android:drawableLeft="@drawable/image_icon_category_pin"
+            android:drawablePadding="@dimen/pd_xxsmall" />
+    </RelativeLayout>
+</RelativeLayout>

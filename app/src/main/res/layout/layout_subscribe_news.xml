@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="@dimen/pd_xsmall">
+
+    <TextView
+        android:id="@+id/newsTitle"
+        style="@style/text"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:text="@string/news_subscribe"/>
+
+
+    <!--email-->
+    <RelativeLayout
+        style="@style/item.linear.horizontal"
+        android:paddingLeft="@dimen/pd_xlarge"
+        android:paddingRight="@dimen/pd_xlarge">
+
+        <TextView
+            android:id="@+id/pushEventTitle"
+            style="@style/wrap.centered"
+            android:text="@string/email"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/emailNews"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+    </RelativeLayout>
+
+    <!--push-->
+    <RelativeLayout
+        style="@style/item.linear.horizontal"
+        android:padding="@dimen/pd_xlarge">
+
+        <TextView
+            android:id="@+id/emailNewsTitle"
+            style="@style/wrap.centered"
+            android:text="@string/push"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/pushNews"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+    </RelativeLayout>
+</LinearLayout>

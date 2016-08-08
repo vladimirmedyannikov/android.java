@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right|end"
+    android:layout_margin="@dimen/pd_xxsmall"
+    android:drawableLeft="@drawable/gift"
+    android:gravity="left"
+    android:orientation="vertical"
+    android:padding="@dimen/pd_xxsmall"
+    android:text="@string/enter_promocode"
+    android:textColor="@color/white"
+    android:textSize="@dimen/ts_small"
+    android:textStyle="normal" />

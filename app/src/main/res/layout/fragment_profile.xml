@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/item"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools">
+
+    <include layout="@layout/layout_button_container_save"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ptrLayout"
+        style="@style/root"
+        android:layout_above="@id/buttonContainer">
+
+        <ScrollView
+            style="@style/linear">
+
+            <LinearLayout
+                style="@style/linear">
+
+                <fragment
+                    android:id="@+id/emailFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.EmailFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_email"/>
+
+                <fragment
+                    android:id="@+id/userPersonalFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.UserPersonalFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_user_personal"/>
+
+                <fragment
+                    android:id="@+id/familyFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.FamilyFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_family"/>
+
+                <fragment
+                    android:id="@+id/addressesFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.location.FlatsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_flats"/>
+
+                <fragment
+                    android:id="@+id/workFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.WorkFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_work"/>
+
+                <fragment
+                    android:id="@+id/profileBindItemsFragment"
+                    android:name="ru.mos.polls.profile.gui.fragment.ProfileBindItemsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_profile_bind_items"/>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

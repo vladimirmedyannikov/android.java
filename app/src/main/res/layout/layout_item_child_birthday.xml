@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/childContainer"
+              style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/background_text_field"
+              android:padding="@dimen/pd_normal">
+
+    <EditText
+        android:id="@+id/child"
+        style="@style/input.xlarge"
+        android:hint="@string/not_filled"
+        android:inputType="number"/>
+</LinearLayout>

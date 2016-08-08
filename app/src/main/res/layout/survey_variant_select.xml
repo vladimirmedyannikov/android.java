@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TODO доработать после уточнения дазйна -->
+<LinearLayout style="@style/item.linear"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/stub"
+        style="@style/input.edit"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Текст"
+        android:textColor="@color/editHintColor"/>
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/input.edit"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Текст"
+        android:textColor="@color/editTextColor"/>
+</LinearLayout>

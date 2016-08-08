@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/back"
+                style="@style/linear"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:tag="back">
+
+    <TextView
+        android:id="@+id/cancel"
+        style="@style/text.small.green"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ag_list_selector"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:padding="@dimen/pd_xsmall"
+        android:text="@string/back_cancel"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/delete"
+        style="@style/text.small.crimson"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/ag_list_selector"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:padding="@dimen/pd_xsmall"
+        android:text="@string/back_delete"
+        android:textStyle="bold"/>
+</RelativeLayout>

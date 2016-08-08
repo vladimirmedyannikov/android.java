@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item.linear.horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/pd_xxsmall">
+
+    <TextView
+        style="@style/text.gray"
+        android:id="@+id/ratingTitle"
+        android:text="@string/innovation_rate_your"/>
+
+    <include layout="@layout/layout_small_rating_bar"/>
+
+</LinearLayout>

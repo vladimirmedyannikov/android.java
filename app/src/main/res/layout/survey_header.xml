@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             style="@style/item">
+
+    <LinearLayout
+        style="@style/linear">
+
+        <LinearLayout
+            style="@style/item.linear.horizontal"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_xxsmall">
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/text.green"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/pd_xxsmall"
+                android:text="+25 баллов"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                style="@style/wrap.linear"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/reasonMark"
+                    style="@style/text.green"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:text="@string/survey_reason_mark"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/kind"
+                    style="@style/text"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:text="@string/markSpecial"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ru.mos.polls.survey.summary.SurveyTitleView
+            android:id="@+id/surveyTitleView"
+            style="@style/item"
+            app:contentChangingType="simple"/>
+    </LinearLayout>
+
+</FrameLayout>

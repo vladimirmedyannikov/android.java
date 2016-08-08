@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/votersInfoContainer"
+              style="@style/item.linear"
+    android:layout_marginTop="@dimen/pd_xsmall">
+
+    <TextView
+        android:id="@+id/votersCount"
+        style="@style/text"/>
+
+    <TextView
+        android:id="@+id/votersVariantsCount"
+        style="@style/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/votersHint"
+        style="@style/text.small.gray"
+        android:text="@string/voters_count_refresh_info" />
+</LinearLayout>

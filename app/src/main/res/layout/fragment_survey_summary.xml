@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    style="@style/item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--фон-->
+    <View
+        android:id="@+id/stub"
+        style="@style/root"
+        android:background="@drawable/ag_back"/>
+    <ScrollView
+        android:id="@+id/baseContainer"
+        style="@style/root"
+        android:layout_above="@id/buttonContainer"
+        android:layout_below="@id/progressView">
+
+        <LinearLayout
+            style="@style/item.linear">
+            <!--хедр опроса-->
+            <LinearLayout
+                android:id="@+id/topContainer"
+                style="@style/item.linear">
+
+                <ru.mos.polls.survey.summary.SurveyHeader
+                    android:id="@+id/header"
+                    style="@style/item"
+                    android:paddingBottom="@dimen/pd_xsmall"/>
+
+                <ru.mos.polls.survey.summary.ExpertsView
+                    android:id="@+id/experts"
+                    style="@style/item"
+                    android:gravity="center_vertical"/>
+
+                <ru.mos.polls.common.view.VotersView
+                    android:id="@+id/votesInfo"
+                    style="@style/item"
+                    android:padding="@dimen/pd_xsmall"/>
+            </LinearLayout>
+            <!--Список вопросов-->
+            <ru.mos.polls.survey.summary.QuestionsView
+                android:id="@+id/questionsView"
+                style="@style/root"
+                android:layout_marginBottom="@dimen/pd_xsmall"
+                android:padding="@dimen/pd_xxsmall"
+                app:drawableAnswered="@drawable/circle_fill"
+                app:drawablePassed="@drawable/circle_none"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

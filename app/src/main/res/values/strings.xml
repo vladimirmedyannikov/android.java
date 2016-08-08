@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="elk_authority">ru.mos.polls.elk.AUTHORITY</string>
+    <string name="polls_authority">ru.mos.polls.AUTHORITY</string>
+
+    <string name="ag_flurry_key">VV5TTMG3MDZ8HZBH9M6V</string>
+    <string name="app_name">Активный гражданин</string>
+    <string name="app_name_short">Гражданин</string>
+    <string name="polls_finished">Пройденные</string>
+    <string name="polls_active">Активные</string>
+    <string name="polls">Вопросы</string>
+    <string name="profile">Мой профиль</string>
+    <string name="about">О приложении</string>
+    <string name="my_points">Мои баллы</string>
+    <string name="elk_flat">Адрес</string>
+    <string name="elk_succeeded_add_flat">Адрес добавлен</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_comment_add">Добавить комментарий</string>
+    <string name="action_comment_send">Опубликовать комментарий</string>
+    <string name="poll_interrupt">Прервать</string>
+    <string name="poll_next_question">Следующий вопрос</string>
+    <string name="poll_finish">Отправить результаты</string>
+    <string name="cant_load">Загрузка не удалась. %s</string>
+    <string name="points_history">История начислений и оплаты</string>
+    <string name="interrupted">закончите голосование</string>
+    <string name="offer">&lt;a href=\"http://ag.mos.ru/oferta.html\">Договор оферты&lt;/a></string>
+    <string name="tech_support">Обратная связь</string>
+    <string name="our_apps">Наши приложения</string>
+    <string name="our_apps_uppercase">НАШИ ПРИЛОЖЕНИЯ</string>
+    <string name="dev_not_implemented">Not implemented yet</string>
+    <string name="e_version_info_not_available">Данные о номере версии недоступны</string>
+    <string name="app_version_template">v. %1$s</string>
+    <string name="email">E-mail</string>
+    <string name="contact_info">Контактная информация</string>
+    <string name="message_text">Текст сообщения</string>
+    <string name="sendMessage">Отправить</string>
+    <string name="succeeded_support">Сообщение успешно отправлено.</string>
+    <string name="cant_send_support">Не удалось отправить сообщение в службу техподдержки.  Причина: %s</string>
+    <string name="user_version">1.8.1</string>
+    <string name="good">Хорошо</string>
+    <string name="statistics">Статистика</string>
+    <string name="points_earned">Заработано баллов:</string>
+    <string name="points_spent">Потрачено баллов:</string>
+    <string name="points_lost">Сгорело баллов:</string>
+    <string name="current_balance">Текущий баланс:</string>
+    <string name="point_history_is_empty">История начислений и оплаты пуста</string>
+    <string name="help_startup_continue">Продолжить</string>
+    <string name="help_startup_message_title">Добро пожаловать в приложение «Активный гражданин»</string>
+    <string name="help_startup_message_text">Участвуйте в голосованиях и зарабатывайте баллы.\n\nДля получения дополнительных баллов выполняйте специальные задания.\n\nРасскажите друзьям и получите дополнительные баллы. Сделаем наш город лучше!</string>
+    <string name="survey_done_ok">OK</string>
+    <array name="survey_done_message_1">
+        <item>Благодарим за участие! Вам начислен %1$s балл,</item>
+        <item>Благодарим за участие! Вам начислено %1$s балла,</item>
+        <item>Благодарим за участие! Вам начислено %1$s баллов,</item>
+    </array>
+    <array name="survey_done_message_2">
+        <item>" общий счет составляет %1$s балл."</item>
+        <item>" общий счет составляет %1$s балла."</item>
+        <item>" общий счет составляет %1$s баллов."</item>
+    </array>
+    <array name="survey_points_pluse">
+        <item>+%1$s балл</item>
+        <item>+%1$s балла</item>
+        <item>+%1$s баллов</item>
+    </array>
+    <array name="poll_passed_points">
+        <item>начислено +%1$s балл</item>
+        <item>начислено +%1$s балла</item>
+        <item>начислено +%1$s баллов</item>
+    </array>
+    <string name="ag_personal_data">Профиль</string>
+    <string name="save">Сохранить</string>
+    <string name="allow_personal_process">Я согласен на обработку моих персональных данных</string>
+    <string name="lastname">Фамилия</string>
+    <string name="firstname">Имя</string>
+    <string name="middlename">Отчество</string>
+    <string name="gender">Пол</string>
+    <string name="birthdate">Дата рождения</string>
+    <string name="hint_lastname">Ваша фамилия</string>
+    <string name="hint_firstname">Ваше имя</string>
+    <string name="hint_middlename">Ваше отчество</string>
+    <string name="hint_gender">Ваш пол</string>
+    <string name="hint_birthdate">Укажите дату рождения</string>
+    <string name="hint_email">Ваша электронная почта</string>
+    <string name="auth">Авторизация</string>
+    <string name="update_location_activity">Место жительства</string>
+    <string name="maritalStatus">Семейное положение</string>
+    <string name="childrenCount">Количество детей</string>
+    <string name="addresses">Список адресов</string>
+    <string name="point_var_1">балл</string>
+    <string name="point_var_2">баллов</string>
+    <string name="point_var_3">балла</string>
+    <string name="residenceAddress">Адрес проживания</string>
+    <string name="registrationAddress">Адрес регистрации</string>
+    <string name="addFlat">Добавить адрес</string>
+    <string name="offer_accepted">Я принимаю условия оферты</string>
+    <string name="offer_request">Договор оферты</string>
+    <string name="close">Закрыть</string>
+    <string name="survey_question_info_simple">Введите ответ:</string>
+    <string name="web_shop">Потратить баллы</string>
+    <string name="socials">Социальные сети</string>
+    <string name="gorod_select_title">Поиск</string>
+    <string name="service_select_title">Поиск</string>
+    <string name="social_vk">ВКонтакте</string>
+    <string name="social_fb">Facebook</string>
+    <string name="social_tw">Twitter</string>
+    <string name="social_ok">Одноклассники</string>
+    <string name="empty_passedpolls_hint">Вы не приняли участия ни в одном голосовании</string>
+    <string name="empty_activepolls_hint">Новые голосования появятся в ближайшее время</string>
+    <string name="empty_point_history"> </string>
+    <string name="question_count_1" formatted="false">%s вопрос</string>
+    <string name="question_count_2" formatted="false">%s вопросов</string>
+    <string name="question_count_3" formatted="false">%s вопроса</string>
+    <string name="questions">Вопросы</string>
+    <string name="refresh">Обновить</string>
+    <string name="action_home">Место жительства</string>
+    <string name="action_quit">Выход</string>
+    <string name="action_change_password">Изменить пароль</string>
+    <string name="ag_hint_phone_email">Телефон (10 цифр)</string>
+    <string name="elk_authorization">Вход</string>
+    <string name="elk_restoreTitle">Восстановление пароля</string>
+
+    <string name="ag_agree_offer">Я согласен с
+        &lt;a href="http://ag.mos.ru/oferta.html" style="text-decoration: none;">условиями оферты&lt;/a></string>
+
+    <string-array name="socials">
+        <item>Facebook</item>
+        <item>ВКонтакте</item>
+        <item>Twitter</item>
+        <item>Одноклассники</item>
+        <item>Google+</item>
+    </string-array>
+
+
+    <string-array name="genders">
+        <item>Не установлено</item>
+        <item>Мужской</item>
+        <item>Женский</item>
+    </string-array>
+    <string-array name="marital_statuses">
+        <item>Холост\\Не замужем</item>
+        <item>Женат\\Замужем</item>
+    </string-array>
+    <string-array name="marital_statuses_for_male">
+        <item>Холост</item>
+        <item>Женат</item>
+    </string-array>
+    <string-array name="marital_statuses_for_female">
+        <item>Не замужем</item>
+        <item>Замужем</item>
+    </string-array>
+    <string-array name="child_birthdays_hint">
+        <item>Первый ребенок</item>
+        <item>Второй ребенок</item>
+        <item>Третий ребенок</item>
+        <item>Четвертый ребенок</item>
+        <item>Пятый ребенок</item>
+        <item>Шестой ребенок</item>
+        <item>Седьмой ребенок</item>
+        <item>Восьмой ребенок</item>
+        <item>Девятый ребенок</item>
+        <item>Десятый ребенок</item>
+        <item>Одиннадцатый ребенок</item>
+        <item>Двенадцатый ребенок</item>
+        <item>Тринадцатый ребенок</item>
+        <item>Четырнадцатый ребенок</item>
+        <item>Пятнадцатый ребенок</item>
+    </string-array>
+
+    <string name="elk_register">Регистрация</string>
+    <string name="elk_hint_phone">Номер Вашего телефона</string>
+    <string name="elk_info_register">Для регистрации укажите свой номер телефона, на который будет выслан пароль для входа в систему. В дальнейшем пароль можно будет изменить в личном кабинете</string>
+    <string name="elk_register_button">Регистрация</string>
+    <string name="elk_restorePassword">Восстановление</string>
+    <string name="elk_succeeded_register">Вы зарегистрированы. На указанный номер отправлено смс с паролем.</string>
+    <string name="elk_wait_registration">Регистрация…</string>
+    <string name="location_is_updating">Обновление данных о местожительстве</string>
+    <string name="profile_is_updating">Обновление данных профиля</string>
+    <string name="question_info">Информация о вопросе</string>
+    <string name="survey_info">Информация об опросе</string>
+    <string name="default_web_view_title">Информация</string>
+    <string name="ag_add_flat">Выберите улицу, а затем строение из списка.</string>
+    <string name="not_filled">Не заполнено</string>
+    <string name="author">Автор</string>
+    <string name="address_list">Список адресов</string>
+    <string name="no_addresses">Список адресов пуст. Заполните информацию о месте жительства</string>
+    <string name="ag_loading">Загрузка…</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="retriving_data_for_post_in_social">Получение данных..</string>
+    <string name="fb">Facebook</string>
+    <string name="vk">ВКонтакте</string>
+    <string name="tw">Twitter</string>
+    <string name="ok">Одноклассники</string>
+    <string name="error_in_posting">Произошла ошибка при попытке рассказать друзьям в социальных сетях. Попробуйте рассказать друзьям позже</string>
+    <string name="post_success"/>
+    <string name="error_duplicate_post_ru">Запись уже была добавлена, повторное добавление возможно через некоторое время</string>
+    <string name="error_duplicate_post_in_facebook_en">This status update is identical to the last one you posted. Try posting something different, or delete your previous update.</string>
+    <string name="post_added">Запись добавлена в социальную сеть. Текущий баланс %1$s %2$s.</string>
+    <string name="confirm_logout">Хотите выйти?</string>
+    <string name="logout">Выйти из профиля</string>
+    <string name="cancel">Отмена</string>
+    <string name="public_text" formatted="false">На Вашей странице в социальной сети будет опубликован текст \"%s\"</string>
+    <string name="confirm">Продолжить</string>
+    <string name="congratulations">Поздравляем</string>
+    <string name="invited_success">Вы успешно завершили задание!</string>
+    <string name="add_location_success">Добавление адреса прошло успешно</string>
+    <string name="sms_invite_text">\"Я - Активный гражданин - А ТЫ? Давай вместе сделаем город лучше!</string>
+    <string name="sms_invate_url">http://ag.mos.ru</string>
+    <string name="quest_task_done">Данные сохранены, Вам будут начислены баллы</string>
+    <string name="success_personal_updated">Данные сохранены</string>
+    <string name="success_location_updated">Данные сохранены</string>
+    <string name="quest_invite_warning">Внимание! Приглашение друзей осуществляется путем отправки СМС с Вашего телефона. Баллы будут начислены после того, как Ваши друзья зарегистрируются в системе. Продолжить?</string>
+    <string name="action_survey_info">Об опросе</string>
+    <string name="action_survey_break">Отложить</string>
+    <string name="action_survey_skip">Пропустить</string>
+    <string name="action_survey_close">Закрыть</string>
+    <string name="social_update_success">Спасибо! Данные скоро обновятся</string>
+    <string name="coincidesAddresses">Адрес регистрации совпадает с адресом проживания</string>
+    <string name="add_new_address">Добавить новый адрес</string>
+    <string name="title_select_address">Добавление адреса</string>
+    <string name="last_post_time_not_allow_do_new_post">Вы уже сделали пост на стене в %s, попробуйте повторить операцию позже</string>
+    <string name="my_addresses">Мои адреса</string>
+    <string name="goToPolls">Перейти к вопросам</string>
+    <string name="description">Описание</string>
+    <string name="goto_webshop">Магазин поощрений</string>
+    <string name="title_about_app">О приложении</string>
+    <string name="title_about_project">О проекте</string>
+    <string name="url_about_app">http://ag.mos.ru/about.html</string>
+    <string name="url_user_guide">http://ag.mos.ru/user_guide.html</string>
+    <string name="title_user_guide">Руководство пользователя</string>
+    <string name="would_you_like_to_break_request">Отложить опрос?</string>
+    <string name="would_you_like_to_close_request">Закрыть опрос</string>
+    <string name="user_lock">Блокировка пользователя</string>
+    <string name="would_you_like_to_lock_you_user">Вы действительно хотите заблокировать свой аккаунт? Для разблокировки аккаунта обратитесь в службу технической поддержки</string>
+    <string name="lock">Заблокировать</string>
+    <string name="access_for_information_activity_is_denied">Отсутвует соединение с интернетом, получить информацию невозможно. Попробуйте позже</string>
+    <string name="action_our_apps">Наши приложения</string>
+    <string name="survey_summary_send">Отправить результаты</string>
+    <string name="survey_summary_questions_title">Вопросы</string>
+    <string name="one_more_back_to_exit">Нажмите еще раз для выхода</string>
+    <string name="internet_failed_to_connect">Нет соединения с интернетом</string>
+    <string name="check_internet_settings">Проверьте настройки Wi-Fi или мобильного интернета в своем телефоне</string>
+
+    <!-- Pull to refresh texts-->
+    <string name="pull_to_refresh_pull_label">Потяните</string>
+    <string name="pull_to_refresh_refreshing_label">Обновление</string>
+    <string name="pull_to_refresh_release_label">Отпустите</string>
+
+    <string name="you_cannot_to_skip_question_access_to_internet_is_denied">Отсутсвует соединение с интернетом, получить слудующий вопрос невозможно</string>
+    <string name="change_text">Изменить текст</string>
+    <string name="hint_set_text">введите текст</string>
+    <string name="social_text_hint" formatted="false">Результаты %s будут показаны на Вашей странице в социальной сети</string>
+    <string name="social_text_hint_task">Информация о приложении \"Активный гражданин\"  будет добавлена на Вашу страницу в социальной сети</string>
+    <string name="share">Поделиться</string>
+    <string name="would_you_like_to_attempt_your_social_data_to_ag_account">Привязать данные социальной сети к аккаунту \"Активного гражданина\"?</string>
+    <string name="cant_load_point_history">История начисления баллов не обновлена. %s</string>
+    <string name="cant_load_user_points">Общее количество баллов не обновлено. %s</string>
+    <string name="any_requered_filed_are_empty">Заполните все поля</string>
+    <string name="add_your_address">Добавление адреса</string>
+    <string name="custom_address_not_found_street">Улица не найдена</string>
+    <string name="custom_address_not_found_building">Дом не найден</string>
+    <string name="custom_address_not_found_hint">Заполните адрес в расширенной форме</string>
+    <string name="execute_request_for_email_confirm">Отправка запроса на подтверждение эл. почты</string>
+    <string name="email_is_not_confirming">Адрес эл. почты не подтвержден</string>
+    <string name="email_confirm">Подтвертить</string>
+    <string name="email_was_nat_confirm">Не удалось подтвердить адрес эл. почты по причине %s</string>
+    <string name="whould_you_like_to_delete_residence_address">Адрес проживания будет удален</string>
+    <string name="your_address">Ваш адрес</string>
+    <string name="post_added_simple">Запись добавлена в социальную сеть</string>
+    <string name="would_you_like_to_send_answer">Вы хотите завершить вопрос и отправить результаты?</string>
+    <string name="whould_you_like_to_interrupt_survey">Вы хотите прервать вопрос?</string>
+    <string name="error_occurs">Произошла ошибка: %s</string>
+    <string name="error_general">Произошла ошибка</string>
+    <string name="hint_set_promo">Введите промо-код</string>
+    <string name="promo_is_empty">Промо-код пуст. Введите значение</string>
+    <string name="action_promo">промокод</string>
+    <string name="not_set_question_id">Не указан номер опроса</string>
+    <string name="title_poll">Голосование</string>
+    <string name="sign_in_google_plus">Авторизация в Google+</string>
+    <string name="error_occurs_when_you_try_to_auth">Не удалось авторизоваться в Google+. Попробуйте повторить операцию позже</string>
+    <string name="not_installed_google_plus_app">Приложение Google+ не установлено. Установить его?</string>
+    <string name="social_gp">Google+</string>
+    <string name="promo">Использовать промо-код</string>
+    <string name="notifying">Настройка оповещений</string>
+    <string name="subscribes">Подписки</string>
+    <string name="poll_result">Оповещать меня о результатах голосования</string>
+    <string name="push">Push</string>
+    <string name="poll_decision">Оповещать меня о принятых решениях</string>
+    <string name="sms">Sms</string>
+    <string name="poll_new">Оповещать меня о новых голосованиях</string>
+    <string name="empty"/>
+    <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
+    <string name="poll_effected">Оповещать меня об исполненных решениях</string>
+    <string name="action_rss">Подписки</string>
+    <string name="free_time">Мероприятия</string>
+    <string name="about_event">О мероприятии</string>
+    <string name="title_event_comments_list">Комментарии</string>
+    <string name="more">Читать далее</string>
+    <string name="checkin_here">Отметиться здесь</string>
+    <string name="comments">Комментарии</string>
+    <string name="events">Мероприятия</string>
+    <string name="success_checkin">Благодарим за отметку!</string>
+    <string name="checkin_post" formatted="false">Я отметился на мероприятии \"%s\" и получил %s %s</string>
+    <string name="distance_m">%s м</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_delete">Удалить</string>
+    <string name="new_comments_added">Обновлена история комментариев, чтоб просмотреть комментарии, пролистайте список вниз</string>
+    <string name="add_comment">Добавление комментария</string>
+    <string name="update_comment">Обновление комментария</string>
+    <string name="add_rating">Чтобы отправить комментарий, оцените %s</string>
+    <string name="Comment_added_success">Комментарий успешно добавлен</string>
+    <string name="cooment_updated_success">Комментарий успешно обновлён</string>
+    <string name="empty_events_hint">Список мероприятий пуст</string>
+    <string name="empty_comments_hint">Список комментариев пуст</string>
+    <string name="you_are_checked_yet">Вы уже отметились</string>
+    <string name="add_count" formatted="false">+%s %s</string>
+    <string name="action_refresh_event_list">Обновить список мероприятий</string>
+    <string name="distance_is_too_big">Вы должны находиться не далее  %s м. от места проведения мероприятия</string>
+    <string name="subscribe_settings_are_saved">Подписки на оповещения успешно сохранены</string>
+    <string name="current_position_not_detected">Текущие координаты еще не определены, попробуйте отметиться позже</string>
+    <string name="current_position_is_setting">Координаты определены</string>
+    <string name="distance_km">%s км</string>
+    <string name="location_provaders_are_not_available">Для работы экрана \"Мероприятие\" требуется включить в настройках функцию определения местоположения</string>
+    <string name="turn_on">Включить</string>
+    <string name="action_current_points">Начисленные баллы</string>
+    <string name="action_credit_points">Потраченные баллы</string>
+    <string name="action_blocked_points">Заблокированные баллы</string>
+    <string name="action_all_points">Текущий баланс</string>
+    <string name="use_promo">Использовать промо-код</string>
+    <string name="state">Ваш статус: %s</string>
+    <string name="social_not_enable">В следующий раз разместить сообщение в %s Вы можете через месяц</string>
+    <string name="promo_contains_wrong_symbols">Промо-код может содержать только латиницу, цифры и символ «-»</string>
+    <string name="support_text">Уважаемые участники проекта «Активный гражданин», обращаем ваше внимание, что Обратная связь проекта «Активный гражданин» создана в целях разрешения технических вопросов и приема предложений по развитию проекта. Рассмотрение обращений, направленных посредством Обратной связи проекта, осуществляется вне действий положений Федерального закона от 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений граждан Российской Федерации». При необходимости обратиться в органы исполнительной власти города Москвы вы можете воспользоваться электронной приемной на официальном портале Мэра Москвы и Правительства Москвы (&lt;a href="http://www.mos.ru" style="text-decoration: none;">http://www.mos.ru&lt;/a>) или электронными приемными на официальных порталах органов исполнительной власти города Москвы.</string>
+    <string name="error_avatar_load" formatted="false">Не удалось получить аватар для %s</string>
+    <string name="facebook">Facebook</string>
+    <string name="status_message_is_a_duplicate">Вы уже добавили пост с таким сообщением, попробуйте выполнить операцию позже</string>
+    <string name="request_limit_reached">По техническим причинам данный пост нельзя добавить сейчас, попробуйте повторить операцию позже</string>
+
+    <string name="mainmenu_quests">Активный гражданин</string>
+    <string name="mainmenu_free_time">Мероприятия</string>
+    <string name="mainmenu_about">О приложении</string>
+
+    <string name="mainmenu_polls">Голосования</string>
+    <string name="mainmenu_novelty">Городские новинки</string>
+    <string name="mainmenu_news">Новости</string>
+    <string name="mainmenu_shop">Магазин поощрений</string>
+    <string name="mainmenu_my_points">Мои баллы</string>
+    <string name="mainmenu_profile">Мой профиль</string>
+
+    <string name="mainmenu_settings">Настройки</string>
+    <string name="mainmenu_support">Справка/Отзыв</string>
+
+    <string name="change_password">Сменить пароль</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_support">Обратная связь</string>
+    <string name="location">Место жительства</string>
+    <string name="social">Социальные сети</string>
+    <string name="title_survey_question">ВОПРОС %s</string>
+    <string name="result_send">Завершить голосование</string>
+    <string name="action_survey_subsrcribe">Настройка оповещения</string>
+    <string name="empty_old_pollslist">Список прошедших голосований пуст</string>
+    <string name="polls_old">Прошедшие</string>
+    <string name="title_experts">Мнение экспертов</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="auth_title">Войти</string>
+    <string name="result">Результаты голосований</string>
+    <string name="instruction">Как это работает?</string>
+    <string name="title_results">Результаты голосований</string>
+    <string name="title_about_poll">О голосовании</string>
+    <string name="title_step_1">Зарегистрируйтесь</string>
+    <string name="step_1">Укажите номер своего мобильного телефона.\n\nПолучите по SMS уникальный код для входа.\n\nЗаполните данные своего профиля.\n\nНастройте приложение для удобного пользования.</string>
+    <string name="title_step_2">Участвуйте в голосованиях и получайте баллы</string>
+    <string name="step_2">Получайте приглашение на участие в общегородских и территориальных голосованиях.\n\nГолосуйте, Ваше мнение важно для города!\n\nПолучайте баллы за участие и приглашайте друзей голосовать вместе с вами.</string>
+    <string name="title_step_3">Обменивайте баллы на городские услуги</string>
+    <string name="step_3">Получайте парковочные баллы, транcпортные карты, обзорные экскурсии.\n\nПосещайте московские театры и музеи семьей или с друзьями.\n\nОбменивайте баллы на сувениры Активного гражданина.</string>
+    <string name="title_instruction">Как это работает?</string>
+    <string name="events_current">Текущие мероприятия</string>
+    <string name="events_visited">Посещенные мероприятия</string>
+    <string name="events_past">Прошедшие</string>
+    <string name="empty_list">Список пуст</string>
+    <string name="empty_current_events">Новые мероприятия появятся в ближайшее время</string>
+    <string name="empty_visited_events">Вы еще не отметились ни на одном мероприятии</string>
+    <string name="title_more">Подробнее</string>
+    <string name="title_summary">Голосование</string>
+    <string name="you_share_yet">"Вы уже делились информацией \"%s\" и Вам были начислены дополнительные баллы. Баллы начисляются только за первое сообщение. Вы хотите поделиться еще раз?"</string>
+    <string name="title_ag">Активный гражданин</string>
+    <string name="subject_support">Тема сообщения</string>
+    <string name="dialog_survey_success_title">Ваш голос принят</string>
+    <string name="survey_dialog_for_share_message">Хотите получить дополнительные баллы, сообщив друзьям о Вашем участии в голосовании?</string>
+    <string name="ag_yes">Да</string>
+    <string name="ag_no">Нет, спасибо</string>
+    <string name="title_offer">Договор оферты</string>
+    <string name="url_offer">http://ag.mos.ru/oferta.html</string>
+    <string name="markSpecial">Специальный вопрос</string>
+    <string name="end_date_for_list">, до %s</string>
+    <string name="only_end_date_for_list">до %s</string>
+    <string name="title_your_answer">ВАШ ОТВЕТ:</string>
+    <string name="back_cancel">ОТМЕНА</string>
+    <string name="back_delete">СКРЫТЬ</string>
+    <string name="survey_title" formatted="false">Вопрос %s из %s</string>
+    <string name="help">Нужна помощь?</string>
+    <string name="social_hint_value_for_poll">прохождения голосования</string>
+    <string name="social_hint_value_event">отметки на мероприятии</string>
+    <string name="support_progress_message">Отправка сообщения..</string>
+    <string name="email_un_correct">Некорректный формат введенного адреса электронной почты, отправка сообщения невозможна</string>
+    <string name="title_add_address">Адрес</string>
+    <string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях, вы должны иметь верифицированный адрес регистрации.\n\nВведите данные вашей учетной записи на Портале городских услуг для проверки наличия верифицированного адреса регистрации</string>
+    <string name="pgu_hint_email">Псевдоним</string>
+    <string name="pgu_hint_password">Пароль</string>
+    <string name="rempte_service_not_work">Ошибка удаленного сервиса</string>
+    <string name="date_soon">Cкоро</string>
+    <string name="visit_hearing">Хочу участвовать</string>
+    <string name="notify_about_hearing">Ожидайте уведомление о начале слушания</string>
+    <string name="action_subscribe_hearing">Записаться на слушания</string>
+    <string name="subscribe_hearng_text">Пожалуйста, подтвердите ваше намерение посетить собрание. Информация о предварительной записи будет передана организаторам</string>
+    <string name="subscribe_confirm">Записаться</string>
+    <string name="suscribe_cancel">Отказаться</string>
+    <string name="title_hearing">Слушание</string>
+    <string name="title_pgu_auth">Установка связи</string>
+    <string name="pgu_link">Перейти на pgu.mos.ru</string>
+    <string name="pgu_title">Портал городских услуг</string>
+    <string name="pgu_link_value">http://pgu.mos.ru/</string>
+    <string name="empty_quest_list">В настоящее время нет новостей о голосованиях, мероприятиях или городских событиях.\n\nОформите подписку, чтобы всегда быть в курсе событий!</string>
+    <string name="do_subscribe">Оформить подписку</string>
+    <string name="ag_continue">Продолжить</string>
+    <string name="get_event_subscribe">Получение настроек оповещения</string>
+    <string name="event_push">Push, в день</string>
+    <string name="event_email">E-mail, за день</string>
+    <string name="event_subscribe">Оповещать меня о начале проведения мероприятия</string>
+    <string name="add_event_to_calandar">Добавить мероприятие в календарь</string>
+    <string name="event_is_going_yet">Мероприятие уже началось!</string>
+    <string name="how_it_works">Как это работает?</string>
+    <string name="recovery_password">Восстановление пароля</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="repeat_confirmation_code">Выслать код повторно</string>
+    <string name="title_tell_to_friends">Рассказать друзьям</string>
+    <string name="action_invite_friends">Пригласить друзей</string>
+    <string name="invited_from_top_bar">Смс с приглашением успешно отправлено</string>
+    <string name="help_email_message_title">Добро пожаловать</string>
+    <string name="help_email_message_text">Укажите E-mail, чтобы быть в курсе голосований и новостей проекта.</string>
+    <string name="subscribe_polls_results">Принятые решения</string>
+    <string name="subscribe_new_polls">Новые голосования</string>
+    <string name="subscribe_events_new">Специальные акции и мероприятия</string>
+    <string name="subscribe_news">Новостная рассылка</string>
+    <string name="help_startup_save">Сохранить</string>
+    <string name="set_emails_subscribe">Сохранение настроек оповещения</string>
+    <string name="achievements">Достижения</string>
+    <string name="last_visit">Последнее посещение:</string>
+    <string name="passed_polls">Пройдено голосований:</string>
+    <string name="answered_questions">Отвечено вопросов:</string>
+    <string name="statistics_events_visited">Посещено мероприятий:</string>
+    <string name="all_points">Получено баллов:</string>
+    <string name="promo_codes">Активация промо-кодов:</string>
+    <string name="social_messages">Публикации в соцсетях:</string>
+    <string name="registration_date">Регистрация:</string>
+    <string name="spent_points">Потрачено баллов:</string>
+    <string name="statistics_empty">-</string>
+    <string name="empty_hint">Список пуст</string>
+    <string name="empty_list_of_achievement">Список достижений пуст</string>
+    <string name="achievement_subtitle_is_next">получите это достижение</string>
+    <string name="achievement_subtitle_was_add">получено %s</string>
+    <string name="subscribe_ag_special">специальные акции и мероприятия</string>
+    <string name="subscribe_polls_effeccted">исполненные решения</string>
+    <string name="profile_pgu">Связь с pgu.mos.ru</string>
+    <string name="innovation_active">Активные новинки</string>
+    <string name="innovation_passed">Мои новинки</string>
+    <string name="innovation_old">Прошедшие новинки</string>
+    <string name="innovation_formatted_date_end">голосование до %s</string>
+    <string name="formatted_full_count">Оценок: %s</string>
+    <string name="action_survey_subscribe">Подписаться</string>
+    <string name="confirm_unbind_message">Вы действительно хотите отвязать свой аккаунт %s?</string>
+    <string name="confirm_unbind_ok">Да, отвязать</string>
+    <string name="unbind_progress_message">Отвязываем данные социальной сети от аккаунта активного гражданина..</string>
+    <string name="bind_progress_message">Привязываем данные социальной сети к аккаунту активного гражданина..</string>
+    <string name="update_social_message">Обновление данных социальных сетей..</string>
+    <string name="empty_child">Список дат рождения детей пуст</string>
+    <string name="title_child">Даты рождения детей</string>
+    <string name="title_birthday">Дата рождения</string>
+    <string name="child">Года рождения</string>
+    <string name="workAddress">Адрес работы</string>
+    <string name="survey_reason_mark">за участие в голосовании</string>
+    <string name="error_for_not_available_hearing">Этот функционал недоступен. Обновите приложение до последней версии.</string>
+    <string name="ag_update">Обновить</string>
+    <string name="app_google_play">https://play.google.com/store/apps/details?id=%s</string>
+    <string name="pgu_rebind_message">Установлена связь между вашим профилем в «Активном гражданине» и вашим профилем на Портале городских услуг</string>
+    <string name="pgu_binding_title">Профили связаны</string>
+    <string name="pgu_bind">Связать</string>
+    <string name="title_bind_pgu">Связь с pgu.mos.ru</string>
+    <string name="error_full_editing_blocked">Изменить сохраненный адрес можно только один раз в течение трех месяцев. Дождитесь снятия ограничения или обратитесь в службу поддержки.</string>
+    <string name="error_short_editing_blocked">Смена адреса заблокирована.</string>
+    <string name="warning_editing_blocked">Просим вас внимательно отнестись к заполнению адреса. Изменить сохраненный адрес можно только один раз в течение трех месяцев</string>
+    <string name="hint_not_auth_pgu">Мы не сохраняем пароль и используем его только для установки связи между профилями</string>
+    <string name="pgu_rebind">Связать с другим профилем</string>
+    <string name="select">Выбрать</string>
+    <string name="clear">Очистить</string>
+    <string name="title_thanks">Спасибо!</string>
+    <string name="ag_no_only">Нет</string>
+    <string name="ag_not_more">Больше не предлагать</string>
+    <string name="ag_cancel">Закрыть</string>
+    <string name="ag_ok">Ок</string>
+    <string name="subscribe_polls_results_and_desicion">Принятые и исполненные голосования</string>
+    <string name="subscribe_email_news">Новости</string>
+    <string name="title_for_email_dialog_subscribes">Получать рассылку</string>
+    <string name="title_email_quest">Ваш e-mail</string>
+    <string name="title_auto">Личный автомобиль</string>
+    <string name="title_social_status">Род деятельности</string>
+    <string name="title_add">Добавить</string>
+    <string name="title_innovation">Новинка</string>
+    <string name="result_innovation">Оценить</string>
+    <string name="set_mark">оцените новинку</string>
+    <string name="mark">оценка %s</string>
+    <string name="title_novelty">Городские новинки</string>
+    <string name="childBirthday">Год рождения ребенка</string>
+    <string name="child_birthdays_not_set">не указаны</string>
+    <string name="title_birthday_upper">ГОД РОЖДЕНИЯ</string>
+    <string name="ready">Готово</string>
+    <string name="set">указаны</string>
+    <string name="not_set">не указаны</string>
+    <string name="quest_title_personal">Личные данные</string>
+    <string name="quest_title_family_info">Семейное положение</string>
+    <string name="quest_title_location">Место жительства</string>
+    <string name="quest_title_extra_info">Дополнительные данные</string>
+    <string name="questions_and_answers">Помощь и ответы на вопросы</string>
+    <string name="go_to_pgu_mos_ru">Перейти на pgu.mos.ru</string>
+    <string name="pgu_link_questions_and_answers">http://ag.mos.ru/pgu</string>
+    <string name="state_pgu_disconnected">Профили не связаны</string>
+    <string name="state_pgu_connected">Профили связаны</string>
+    <string name="title_rate_this_app">Оцените приложение</string>
+    <string name="count_symbols" formatted="false">%s/%s</string>
+    <string name="warning_post_mutch_long">Сократите сообщение до %s символов!</string>
+    <string name="title_passed_polls_with_zero_points" formatted="false">пройдено %s</string>
+    <string name="title_old_polls" formatted="false">"завершено %s"</string>
+    <string name="error_validating_access_token">Не удалось добавить пост на Вашу стену, требуется повторная авторизация в социальной сети. Попробуйте выполнить операцию еще раз</string>
+    <string name="warning_error_validating_access_token">Не удается получить права на публикацию сообщений у Вас на стене, если у Вас установлено официальное приложение Facebook, попробуйте заново авторизоваться в нем</string>
+    <string name="error_sharing_unknown">При попытке рассказать друзьям произошла неизветсная ошибка. Попроуйте повторить операцию позже</string>
+    <string name="novelty_result_send_share">Благодарим за участие!</string>
+    <string name="novelty_result_send_share_with_points" formatted="false">Благодарим за участие! Вам начислено %s %s, общий счет составляет %s %s.</string>
+    <string name="share_with_friends_for_points">Хотите получить дополнительные баллы, сообщив друзьям о своей оценке городской новинки?</string>
+    <string name="novelty_result_share_simple">Благодарим за участие</string>
+    <string name="social_hint_for_achievement">Достижение будет показано на Вашей странице в социальной сети</string>
+    <string name="notify_about_blocking">Для блокировки обратитесь в службу поддержки при помощи функции обратной связи</string>
+    <string name="subscribe_results">Оповещать меня о результатах работы проекта</string>
+    <string name="news_subscribe">Оповещать меня о новостях проекта</string>
+    <string name="hint_innovation_is_old">Голосование завершено</string>
+    <string name="error_has_not_auth_the_application">Не удается разместить пост на Вашей стене в социальной сети, так как Вы не дали разрешение при авторизации. Попробуйте повторить операцию</string>
+    <string name="hint_for_fb">Например:\n%s</string>
+    <string name="empty_post_text">Введите текст сообщения</string>
+    <string name="hint_example_for_fb">Например, скопируйте текст:</string>
+    <string name="title_answer">ОТВЕТЫ:</string>
+    <string name="title_answer_passed">ВАШ ОТВЕТ:</string>
+    <string name="title_answers_result">РАСПРЕДЕЛЕНИЕ ОТВЕТОВ:</string>
+    <string name="title_your_mark">Ваша оценка</string>
+    <string name="notify_about_active_polls">Мы можем оповестить Вас о новых голосованиях по e-mail</string>
+    <string name="social_share_notify">Напоминать о возможности заработать дополнительные баллы за размещение информации в социальных сетях</string>
+    <array name="voters_count_survey_opened">
+        <item>На сегодня в этом голосовании принял участие %1$s гражданин</item>
+        <item>На сегодня в этом голосовании приняли участие %1$s гражданина</item>
+        <item>На сегодня в этом голосовании приняло участие %1$s граждан</item>
+    </array>
+    <array name="voters_count_survey_question_opened">
+        <item>На сегодня на этот вопрос ответил %1$s гражданин</item>
+        <item>На сегодня на этот вопрос ответили %1$s гражданина</item>
+        <item>На сегодня на этот вопрос ответили %1$s граждан</item>
+    </array>
+    <array name="voters_count_survey_closed">
+        <item>В этом голосовании принял участие %1$s гражданин</item>
+        <item>В этом голосовании приняли участие %1$s гражданина</item>
+        <item>В этом голосовании приняло участие %1$s граждан</item>
+    </array>
+    <array name="voters_count_survey_question_closed">
+        <item>На этот вопрос ответил %1$s гражданин</item>
+        <item>На этот вопрос ответили %1$s гражданина</item>
+        <item>На этот вопрос ответили %1$s граждан</item>
+    </array>
+    <string name="voters_count_refresh_info">Данные обновляются каждые 10 минут</string>
+    <string name="survey_variant_voters_percent" formatted="false">%s (%s%%)</string>
+    <string name="innovation_rate_your">ваша оценка:</string>
+    <string name="innovation_rate_avg">средняя оценка:</string>
+    <string name="title_view_image">Просмотр изображения</string>
+    <string name="polls_title">Голосования</string>
+    <string name="my_personal_data">Данные</string>
+    <string name="title_help">Справка</string>
+    <string name="error_permission_denied">Размещение в социальной сети \"Одноклассники\" временно недоступно</string>
+    <string name="error_open_map">Не удается открыть приложение для просмотра на карте местоположения</string>
+    <string name="title_meeting">Собрание</string>
+    <string name="title_exposition">Экспозиция</string>
+    <string name="result_hearing">Записаться на собрание</string>
+    <string name="ag_exit">Выйти</string>
+    <string name="title_view_exposition">Экспозиция материалов</string>
+    <string name="title_view_meeting">Собрание участников</string>
+    <string name="hint_without_registration">Вход свободный</string>
+    <string name="verify">Установить связь</string>
+    <string name="pgu_verify_descriprion">Введенный псевдоним и пароль используется только для связывания учетных записей и не сохраняются в системе</string>
+    <string name="title_pgu_verify">Верификация</string>
+    <string name="bind">Привязать</string>
+    <string name="bind_other">Привязать другой профиль</string>
+    <string name="go_to_pgu">Перейти на ПГУ</string>
+    <string name="title_registration">Адрес регистрации</string>
+    <string name="title_residance">Адрес проживания</string>
+    <string name="title_work">Адрес работы</string>
+    <string name="social_hint_value_for_hearing">участия в публичных слушаниях</string>
+    <string name="action_share">Поделиться ссылкой</string>
+    <string name="message_innovation_has_not_mark">Вы не поставили оценку городской новинке! Выйти?</string>
+    <string name="voters_all_count">Всего проголосовало граждан: %s</string>
+    <string name="voters_variants_all_count" formatted="false">Всего выбрано вариантов: %s (100%%)</string>
+    <string name="offer_enable_pushes">Пожалуйста, включите уведовления для приложения "Активный гражданин " в настройках телефона!</string>
+    <string name="notification_message_for_before_lolipop">Пожалуйста, включите уведомления в настройках телефона, чтобы не пропустить что-то важное!\n- Включите \"Выводить уведомления\" на экране сведений о приложении</string>
+    <string name="notification_message_for_m">Пожалуйста, включите уведомления в настройках телефона, чтобы не пропустить что-то важное!\n- перейдите в раздел «Уведомления» на экране сведений о приложении;\n- «Блокировать все» должно быть выключено;\n- включите «Краткие уведомления».</string>
+    <string name="settings_on">Настроить</string>
+    <string name="title_share">Расскажите друзьям</string>
+    <string name="share_format_body">Подробности на сайте проекта «Активный гражданин» %s</string>
+    <string name="title_message_results_will_not_be_save">Вы не завершили голосование, данные ваших ответов не будут сохранены</string>
+    <string name="attantion">Внимание!</string>
+    <string name="title_nind_other_profile_pgu">Привязать другой профиль</string>
+    <string name="unknown_error">Произошла неизвестная ошибка</string>
+    <string name="number_format_exception">При отправке смс произошла ошибка, возможно, номер телефона не соответствует требуемому формату</string>
+    <string name="app_continue">Продолжить</string>
+    <string name="permission_not_available">Для корректной работы приложения, требуется получить разрешение</string>
+    <string name="register_code">Получить код подтверждения</string>
+    <string name="has_code">Уже есть код подтверждения</string>
+    <string name="password_confirm">Установка пароля</string>
+    <string name="confirmation_code">Код подтверждения</string>
+    <string name="repeat_password">Повтор пароля</string>
+    <string name="password">Пароль</string>
+    <string name="error_have_complete_not_completed_the_interval_of_time">Время задержки на повторную отправку кода еще не истекло</string>
+    <string name="title_waiting">Ожидайте..</string>
+    <string name="error_limit_is_exceeded_shipments">Превышено количество запросов</string>
+    <string name="warning_phone_not_valid">Введите номер телефона</string>
+    <string name="hint_about_password">Длина пароля 5 и более символов, используйте только латинские буквы и цифры</string>
+    <string name="password_low_quality">низкая</string>
+    <string name="password_middle_quality">средняя</string>
+    <string name="password_strong_quality">высокая</string>
+    <string name="password_formatter_quality">Сложность пароля %s</string>
+    <string name="successed_repeat_confirmation_code">Код подтверждения успешно выслан</string>
+    <string name="warning_passwords_are_not_equals">Пароли не совпадают</string>
+    <string name="message_confirm_code_request_successed">Код подтверждения успешно выслан</string>
+    <string name="repeat_code_again">Запросить код еще раз</string>
+    <string name="title_hearing_survey_summary">Публичные слушания</string>
+    <string name="next_title">Вперед</string>
+    <string name="prev_title">Назад</string>
+    <string name="title_close_hearing">Завершить</string>
+    <string name="copy_text_success">Текст скопирован, теперь его можно вставить в поле ввода</string>
+    <string name="next">Далее</string>
+    <string name="change">Изменить</string>
+    <string name="innovation_ended">завершено</string>
+    <string name="credited">начислено</string>
+    <string name="active_points_formatted" formatted="false">+%s %s, ваша оценка:</string>
+    <string name="passed_points_formatted" formatted="false">%s +%s %s, %s</string>
+    <string name="order_number_title_text">Номер заказа</string>
+    <string name="order_number_hint">Введите номер</string>
+    <string name="certificate_loaded">Соединение с сервером восстановлено. Вы можете повторить предыдущую операцию</string>
+    <string name="thanks">Спасибо</string>
+    <string name="vote_date_text" formatted="false">вы оценили, %s</string>
+    <string name="characters_max" formatted="false">Максимум %s</string>
+    <string name="ag_not_right_number_or_pass">Неверный номер телефона или пароль</string>
+    <string name="flat_building">Дом</string>
+    <string name="flat_street">Улица</string>
+    <string name="flat_area">Район</string>
+    <string name="flat_district">Округ</string>
+    <string name="rate_event">Оцените мероприятие</string>
+    <string name="header">Заголовок</string>
+    <string name="comment">Комментарий</string>
+    <string name="place_of_hearing">Адрес проведения собрания:</string>
+    <string name="place">Адрес расположения</string>
+    <string name="date_and_time_of_hearing">Дата и время проведения собрания:</string>
+    <string name="sign_up_to_hearing">Запись на собрание:</string>
+    <string name="your_message">Ваше сообщение</string>
+    <string name="date">Дата</string>
+    <string name="address_of_exposition">Адрес экспозиции:</string>
+    <string name="date_of_exposition">Дата работы экспозиции:</string>
+    <string name="work_time_of_exposition">График работы:</string>
+    <string name="subjects_of_project">Материалы проекта:</string>
+    <string name="detail_subject_of_hearing">Подробные материалы слушания</string>
+    <string name="contacts">Контакты</string>
+    <string name="promocode_description_info">Ищите информацию о промо-кодах в новостях проекта и на городских мероприятиях.</string>
+    <string name="list_of_questions">СПИСОК ВОПРОСОВ</string>
+    <string name="question">вопрос</string>
+    <string name="your_answer">Вы ответили</string>
+    <string name="beginning_of_interval_not_set">Начало интервала не задано</string>
+    <string name="ending_of_interval_not_set">Окончание интервала не задано</string>
+    <string name="interval_not_set">Интервал не задан</string>
+    <string name="enter_promocode">Ввести\nпромо-код</string>
+    <string name="you_have_got" formatted="false">"Вы получили %s"</string>
+    <string name="about_place">О месте</string>
+    <string name="event">" мероприятие"</string>
+    <string name="special_hearing">Специальное голосование</string>
+    <string name="sms_could_not_send">Отправка СМС с этого устройства невозможна</string>
+    <string name="twitter_error_message">Не удалось авторизоваться в Twitter, попробуйте повторить операцию позже</string>
+    <string name="detail_of_exosition"><![CDATA[материалы проекта доступны на <a href=\"%s\">сайте организатора</a> публичных слушаний]]></string>
+    <string name="meeting_held">Собрание состоялось</string>
+    <string name="you_singin_meeting">Вы записаны на собрание</string>
+    <string name="free_entrace">Вход свободный</string>
+    <string name="signin_closed">Запись на собрание завершена</string>
+    <string name="signin_to_meeting">Записаться на собрание</string>
+    <string name="your_position">ВАША ПОЗИЦИЯ</string>
+    <string name="date_variant_value_toast_msg" formatted="false">"Дата должна быть не больше %s. (Сейчас %s)"</string>
+    <string name="date_variant_value_toast_interval_msg" formatted="false">"Дата должна быть в интервале от %s до %s. (Сейчас %s)</string>
+    <string name="float_variant_value_toast_msg" formatted="false">"Число должно быть в интервале от %s до %s"</string>
+    <string name="start_variant_value_toast_msg">Начало интервала должно быть меньше окончания</string>
+    <string name="end_variant_value_toast_msg">Окончание интервала должно быть больше начала</string>
+    <string name="code_accepted_toast_msg">Код принят, Вам зачислено %s баллов</string>
+    <string name="contact_information">Контактная информация:</string>
+
+</resources>

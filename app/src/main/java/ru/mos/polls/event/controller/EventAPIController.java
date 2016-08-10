@@ -1,6 +1,7 @@
 package ru.mos.polls.event.controller;
 
 import android.app.ProgressDialog;
+import android.util.Log;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -172,6 +173,8 @@ public abstract class EventAPIController {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_EVENT));
         JSONObject requestJson = new JSONObject();
         Session.addSession(requestJson);
+        if (position != null) {
+        }
         try {
             requestJson.put("event_id", eventId);
             if (position == null) {
@@ -226,7 +229,7 @@ public abstract class EventAPIController {
         final ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setCancelable(false);
         progressDialog.show();
-
+        Log.d("EVENTACTIVITY", "here checkIn");
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.CHECKIN_EVENT));
         final JSONObject requestJson = new JSONObject();
         Session.addSession(requestJson);
@@ -235,6 +238,7 @@ public abstract class EventAPIController {
                 position = new Position();
             }
             requestJson.put("event_id", eventId);
+
             requestJson.put("position", position.asJson());
         } catch (JSONException ignored) {
         }

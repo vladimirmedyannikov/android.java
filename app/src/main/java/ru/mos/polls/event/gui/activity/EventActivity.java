@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -125,9 +126,7 @@ public class EventActivity extends ToolbarAbstractActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiEventBuilder.findViews();
         socialController = new SocialController(this);
-        if (isEventIdExist) {
-            refreshEvent();
-        }
+
         Statistics.enterEventTicket(eventId);
         SocialUIController.registerPostingReceiver(this);
     }
@@ -207,9 +206,9 @@ public class EventActivity extends ToolbarAbstractActivity {
             @Override
             public void onGet(Position position) {
                 currentPosition = position;
+                    refreshEvent();
             }
         });
-        currentPosition = locationController.getCurrentPosition();
     }
 
     @Override
@@ -294,7 +293,7 @@ public class EventActivity extends ToolbarAbstractActivity {
             }
         };
         uiEventBuilder.setUIVisible(View.GONE);
-        EventAPIController.loadEvent(this, eventId, eventPosition, eventListener);
+        EventAPIController.loadEvent(this, eventId, currentPosition, eventListener);
     }
 
     private void refreshControls(Event event) {
@@ -423,25 +422,6 @@ public class EventActivity extends ToolbarAbstractActivity {
         }
 
         public void findViews() {
-//            imagesViewPager = (ViewPager) findViewById(R.id.imageViewPager);
-//            name = (TextView) findViewById(R.id.name);
-//            avrRating = (RatingBar) findViewById(R.id.avrRating);
-//            address = (TextView) findViewById(R.id.address);
-//            checkIn = (LinearLayout) findViewById(R.id.checkIn);
-//            buttonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
-//            comment = (DrawableAlignedButton) findViewById(R.id.comment);
-//            comment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = EventCommentsListActivity.getStartIntent(EventActivity.this, eventId, event.getType());
-//                    startActivity(intent);
-//                }
-//            });
-//            screen = (LinearLayout) findViewById(R.id.screen);
-//            detailContainer = (LinearLayout) findViewById(R.id.shortContainer);
-//            titleCheckIn = (TextView) findViewById(R.id.title);
-//            subtitleCheckIn = (TextView) findViewById(R.id.subtitle);
-//            pin = (ImageView) findViewById(R.id.pin);
             isInit = true;
         }
 

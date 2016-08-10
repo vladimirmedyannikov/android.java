@@ -184,6 +184,24 @@ public class SocialPostValue implements Serializable {
         return result;
     }
 
+    public Bundle prepareFbPost() {
+        Bundle result = new Bundle(2);
+        result.putString("message", text);
+        result.putString("link", link);
+        return result;
+    }
+
+    /**
+     * @return строка для постинга в {@see <a href="httP://twitter.com">twitter</a>}
+     */
+    public String prepareTwPost() {
+        String result = "";
+        if (!TextUtils.isEmpty(title)) result += title + "\n";
+        if (!TextUtils.isEmpty(text)) result += text + " ";
+        if (!TextUtils.isEmpty(link)) result += link;
+        return result;
+    }
+
     public int getSocialId() {
         return socialId;
     }

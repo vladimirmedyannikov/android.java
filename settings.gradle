@@ -1,6 +1,6 @@
 include ':app', ':elkag'
 
-include ':app', ':social:facebook'
-include ':app', ':social:vksdk_library'
+include ':app'
+include ':app'
 include ':app', ':social:odnoklassniki-android-sdk'
 include ':app'

@@ -11,6 +11,7 @@ import android.support.multidex.MultiDexApplication;
 import com.appsflyer.AppsFlyerLib;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -25,6 +26,9 @@ import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.vk.sdk.VKSdk;
 
 import java.io.File;
 
@@ -119,8 +123,9 @@ public class AGApplication extends MultiDexApplication {
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();
+        TwitterAuthConfig config = new TwitterAuthConfig(getString(R.string.tw_consumer_key), getString(R.string.tw_consumer_secret));
 
-        Fabric.with(this, crashlyticsKit);
+        Fabric.with(this, crashlyticsKit, new TwitterCore(config));
 
         BaseActivity.setFlurryKey(getString(R.string.ag_flurry_key));
         AppsFlyerLib.setAppsFlyerKey("TvVxifM6uMLnGmiZEwifAi");
@@ -149,6 +154,12 @@ public class AGApplication extends MultiDexApplication {
         GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew());
 
         getContentResolver().query(UserDataProvider.getContentWithLimitUri(UserData.Cars.URI_CONTENT, 1), null, null, null, null).close(); //work around falling when query db before created
+
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        VKSdk.initialize(this.getApplicationContext());
+
+
 
         BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
             @Override

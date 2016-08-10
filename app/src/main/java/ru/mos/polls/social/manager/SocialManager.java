@@ -10,31 +10,30 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
 import com.google.android.gms.plus.PlusShare;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import io.fabric.sdk.android.Fabric;
 import ru.mos.polls.R;
 import ru.mos.polls.social.auth.GpHelper;
 import ru.mos.polls.social.controller.AgSocialApiController;
@@ -42,11 +41,6 @@ import ru.mos.polls.social.model.Error;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.social.model.TokenData;
 import ru.ok.android.sdk.Odnoklassniki;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
-import twitter4j.auth.AccessToken;
 
 /**
  * Класс для хранения данных социальных сетей, сохранненые данные в ряде случаев позволяют исключить повторные процедуры авторизации,
@@ -553,11 +547,6 @@ public class SocialManager {
         PostFactory.createPost(context, socialId).post(tokenData, socialPostValue);
     }
 
-    public static String createAvatarUrl(Context context, ru.mos.polls.social.model.Social social) throws Exception {
-        return PostFactory
-                .createPost(context, social.getSocialId())
-                .getAvatarUrl(social.getTokenData());
-    }
 
     public static void clearAll(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -592,8 +581,6 @@ public class SocialManager {
  */
 interface Social {
     void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception;
-
-    String getAvatarUrl(TokenData tokenData) throws Exception;
 }
 
 abstract class AbsSocial implements Social {
@@ -625,36 +612,14 @@ class FbSocial extends AbsSocial {
 
     @Override
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
-        Session session = Session.getActiveSession();
-        if (session == null) {
-            session = Session.openActiveSessionFromCache(getContext());
-            Session.setActiveSession(session);
-        }
-
-        Request request = new Request(Session.getActiveSession(), "me/feed", socialPostValue.getFbParams(), HttpMethod.POST);
-        final Response response = request.executeAndWait();
+        GraphRequest request = new GraphRequest(com.facebook.AccessToken.getCurrentAccessToken(), "me/feed", socialPostValue.prepareFbPost(), HttpMethod.POST);
+        final GraphResponse response = request.executeAsync().get().get(0);
         if (response.getError() != null) {
             errorToLog("FB " + response.getError().toString());
             throw new Exception(String.valueOf(response.getError().getErrorCode()));
         }
     }
 
-    @Override
-    public String getAvatarUrl(TokenData tokenData) throws Exception {
-        Session session = Session.getActiveSession();
-        if (session == null) {
-            session = Session.openActiveSessionFromCache(getContext());
-            Session.setActiveSession(session);
-        }
-
-        final Response response = Request.newMeRequest(session, null).executeAndWait();
-        String id = response.getGraphObject().getInnerJSONObject().getString("id");
-        if (response.getError() != null) {
-            errorToLog("FB avatar " + response.getError().getErrorMessage());
-            throw new Exception(response.getError().getErrorMessage());
-        }
-        return String.format(URL_FB_USER, id);
-    }
 }
 
 /**
@@ -665,44 +630,23 @@ class TwSocial extends AbsSocial {
 
     TwSocial(Context context) {
         super(context);
+        TwitterAuthConfig config = new TwitterAuthConfig(context.getString(R.string.tw_consumer_key), context.getString(R.string.tw_consumer_secret));
+        Fabric.with(context, new TwitterCore(config));
     }
 
     @Override
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
-        final Twitter twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer(
-                getContext().getString(R.string.tw_consumer_key),
-                getContext().getString(R.string.tw_consumer_secret)
-        );
-        twitter.setOAuthAccessToken(new AccessToken(tokenData.getAccessToken(), tokenData.getRefreshToken()));
-        try {
-            twitter.updateStatus(socialPostValue.getText().trim());
-        } catch (TwitterException e) {
-            /**
-             * TwitterException не реализует Serializable
-             * поэтому явно упаковываем TwitterException в Exception
-             */
-            errorToLog("TW " + e.toString());
-            throw new Exception(String.valueOf(e.getErrorCode()));
-        }
-    }
+        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>()  {
+            @Override
+            public void success(Result<Tweet> result) {
+                Log.d("TW_SUCCESS", result.data.text);
+            }
 
-    @Override
-    public String getAvatarUrl(TokenData tokenData) {
-        final Twitter twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer(
-                getContext().getString(R.string.tw_consumer_key),
-                getContext().getString(R.string.tw_consumer_secret)
-        );
-        AccessToken accessToken = new AccessToken(tokenData.getAccessToken(), tokenData.getRefreshToken());
-        twitter.setOAuthAccessToken(accessToken);
-        User user = null;
-        try {
-            user = twitter.showUser(accessToken.getUserId());
-        } catch (TwitterException e) {
-            errorToLog("TW avatar" + e.toString());
-        }
-        return user == null ? "" : user.getMiniProfileImageURL();
+            @Override
+            public void failure(TwitterException e) {
+                Log.d("TW_ERROR", e.toString());
+            }
+        });
     }
 }
 
@@ -713,52 +657,29 @@ class TwSocial extends AbsSocial {
 class VkSocial extends AbsSocial {
     public static final String URL_USER = "https://api.vk.com/method/users.get?";
     public static final String URL_POST = "https://api.vk.com/method/wall.post?";
+    private VKRequest.VKRequestListener vkRequestListener;
+    private Context context;
 
     VkSocial(Context context) {
         super(context);
+        this.context = context;
+    }
+
+    public VkSocial(Context context, VKRequest.VKRequestListener vkRequestListener) {
+        super(context);
+        this.context = context;
+        this.vkRequestListener = vkRequestListener;
     }
 
     @Override
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
-        final HttpClient client = new DefaultHttpClient();
-        final HttpGet get = new HttpGet(URL_POST + URLEncodedUtils.format(socialPostValue.getVkParams(tokenData), "UTF-8"));
-        final HttpResponse response = client.execute(get);
-        JSONObject responseJson = new JSONObject(getContent(response.getEntity()));
-        if (responseJson.has("error")) {
-            responseJson = responseJson.optJSONObject("error");
-            errorToLog("VK " + responseJson.toString());
-            throw new Exception(String.valueOf(responseJson.optInt("error_code")));
-        }
-    }
+        VKParameters vkParameters = VKParameters.from(
+                VKApiConst.ACCESS_TOKEN, SocialManager.getAccessToken(context, SocialManager.SOCIAL_ID_VK),
+                VKApiConst.MESSAGE, socialPostValue.getText(),
+                VKApiConst.ATTACHMENTS, socialPostValue.getLink());
+        VKRequest request = VKApi.wall().post(vkParameters);
 
-    @Override
-    public String getAvatarUrl(TokenData tokenData) throws Exception {
-        final List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("user_ids", SocialManager.getUserIdVk(context)));
-        params.add(new BasicNameValuePair("fields", "photo_50"));
-        params.add(new BasicNameValuePair("v", "5.21"));
-
-        final HttpClient client = new DefaultHttpClient();
-        final HttpGet get = new HttpGet(URL_USER + URLEncodedUtils.format(params, "UTF-8"));
-        final HttpResponse response = client.execute(get);
-        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-            errorToLog("VK avatar" + response.getStatusLine().getReasonPhrase());
-            throw new Exception(response.getStatusLine().getReasonPhrase());
-        }
-        JSONObject jsonObject = new JSONObject(getContent(response.getEntity())).getJSONArray("response").getJSONObject(0);
-        return jsonObject.getString("photo_50");
-    }
-
-    private String getContent(HttpEntity httpEntity) throws IOException {
-        InputStreamReader is = new InputStreamReader(httpEntity.getContent());
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(is);
-        String read = br.readLine();
-        while (read != null) {
-            sb.append(read);
-            read = br.readLine();
-        }
-        return sb.toString();
+        request.executeWithListener(vkRequestListener);
     }
 }
 
@@ -800,23 +721,6 @@ class OkSocial extends AbsSocial {
 //            throw new Exception(String.valueOf(errorCode));
 //        }
     }
-
-    @Override
-    public String getAvatarUrl(TokenData tokenData) throws Exception {
-// использовалось при старом сдк, пока оставим
-//        params.put("fields", "pic240min");
-//
-//        ok.refreshToken(getContext());
-//        String response = ok.request("users.getCurrentUser", params, "post");
-//        JSONObject responseJson = new JSONObject(response);
-//        String errorCode = responseJson.optString("error_code");
-//        if (!"".equalsIgnoreCase(errorCode)) {
-//            errorToLog("OK avatar" + responseJson.optString("error_msg") + responseJson.optString("error_code"));
-//            throw new Exception(responseJson.optString("error_msg"));
-//        }
-//        return responseJson.getString("pic240min");
-        return null;
-    }
 }
 
 
@@ -840,24 +744,6 @@ class GpSocial extends AbsSocial {
         } else {
             GpHelper.setErrorDialog(context);
         }
-    }
-
-    @Override
-    public String getAvatarUrl(TokenData tokenData) throws Exception {
-        //получаем токен
-        String accountName = SocialManager.getGpAccountName(context);
-        String accessToken = GpHelper.getAccessToken(context, accountName);
-        final HttpClient client = new DefaultHttpClient();
-        //получаем url аватара
-        String url = String.format(PROFILE_URL, accessToken); //игнорируем данные из SocialManager, так как токен там может быть просрочен
-        final HttpGet get = new HttpGet(url);
-        final HttpResponse response = client.execute(get);
-        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-            throw new Exception(response.getStatusLine().getReasonPhrase());
-        }
-        String jsonResponse = getContent(response.getEntity());
-        JSONObject jsonObjectResponse = new JSONObject(jsonResponse);
-        return jsonObjectResponse.getString("picture");
     }
 
     private String getContent(HttpEntity httpEntity) throws IOException {

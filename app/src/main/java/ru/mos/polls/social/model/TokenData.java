@@ -7,8 +7,12 @@ import ru.mos.polls.social.manager.SocialManager;
 
 public class TokenData {
 
-    private final String accessToken;
-    private final String refreshToken;
+    private  String accessToken;
+    private  String refreshToken;
+    /**
+     * Время в миллисекундах, до которого токен считается актуальным<br/>
+     * Проверка актуальности токена
+     */
 
     public TokenData(String accessToken, String refreshToken) {
         this.accessToken = accessToken;

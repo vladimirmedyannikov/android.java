@@ -2,14 +2,17 @@ package ru.mos.polls.quests;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -164,6 +167,17 @@ public class QuestsFragment extends PullableFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    private void hideNewsMenu() {
+        int coutNews = 0;
+        for (Quest q : quests) {
+            String type = ((BackQuest) q).getType();
+            if (type.equals("news") || type.equals("results") || type.equals("other")) {
+                coutNews++;
+            }
+        }
+        menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -172,8 +186,37 @@ public class QuestsFragment extends PullableFragment {
                     listener.onInviteFriends(true);
                 }
                 break;
+            case R.id.hideNews:
+                hideAllNews();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideAllNews() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getResources().getString(R.string.hide_all_news_msg));
+        builder.setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
+                    @Override
+                    public void onHide(boolean isHide) {
+                        adapter.notifyDataSetChanged();
+                        listView.refreshDrawableState();
+                        update(null, null);
+                    }
+                };
+                QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     @Override
@@ -239,6 +282,8 @@ public class QuestsFragment extends PullableFragment {
                 quests.clear();
                 quests.addAll(loadedListQuests);
                 adapter.notifyDataSetChanged();
+                hideNewsMenu();
+                adapter.getCount();
                 setHideListener();
                 setSwipeListener();
                 listView.setVisibility(View.VISIBLE);
@@ -416,6 +461,7 @@ public class QuestsFragment extends PullableFragment {
                         public void onHide(boolean isHide) {
                             adapter.notifyDataSetChanged();
                             listView.refreshDrawableState();
+                            hideNewsMenu();
                         }
                     };
                     QuestsApiController.hide((BaseActivity) getActivity(), backQuest, hideListener);

@@ -1,10 +1,16 @@
 package ru.mos.polls.quests.controller;
 
+import android.util.Log;
+
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
@@ -15,6 +21,7 @@ import ru.mos.polls.quests.quest.AchievementQuest;
 import ru.mos.polls.quests.quest.AdvertisementQuest;
 import ru.mos.polls.quests.quest.BackQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
+import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.SocialQuest;
 
 
@@ -47,6 +54,48 @@ public abstract class QuestsApiController {
         } catch (JSONException ignored) {
         }
         setVisibilityQuest(elkActivity, requestJson, listener);
+    }
+
+    public static void hideAllNews(BaseActivity elkActivity, List<Quest> quests, final HideListener listener) {
+        String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.HIDE_GROUP));
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("type", "allNews");
+            requestJson.put("hide", "true");
+            JSONObject authJson = new JSONObject();
+            authJson.put(Session.SESSION_ID, Session.getSession(elkActivity));
+            requestJson.put(Session.AUTH, authJson);
+            ArrayList<String> idsList = new ArrayList<>();
+            for (Quest q : quests) {
+                String type = ((BackQuest) q).getType();
+                if (type.equals("news") || type.equals("results")|| type.equals("other")){
+                    idsList.add(((BackQuest) q).getId());
+                }
+            }
+            JSONArray ids = new JSONArray(idsList);
+            requestJson.put("ids", ids);
+        } catch (JSONException ignored) {
+        }
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                if (jsonObject != null) {
+                    if (listener != null) {
+                        listener.onHide(true);
+                    }
+                }
+
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (listener != null) {
+                    listener.onHide(false);
+                }
+            }
+        };
+        elkActivity.addRequest(new JsonObjectRequest(url, requestJson, responseListener, errorListener));
     }
 
     public static void hide(BaseActivity elkActivity, BackQuest quest, HideListener listener) {

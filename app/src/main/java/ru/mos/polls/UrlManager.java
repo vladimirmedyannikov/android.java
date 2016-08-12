@@ -43,6 +43,7 @@ public class UrlManager {
         String BINDING = "binding";
         String GET_POINTS = "getPoints";
         String HIDE = "hide";
+        String HIDE_GROUP = "hideGroup";
         String PROFILE_GET_SOCIAL = "profileGetSocial";
         String APPROVE_OFFER = "approveOffer";
         String GET_ADDRESS_HOUSE_LIST = "getAddressHouseList";

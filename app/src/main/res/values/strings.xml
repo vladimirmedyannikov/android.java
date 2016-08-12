@@ -707,5 +707,7 @@
     <string name="end_variant_value_toast_msg">Окончание интервала должно быть больше начала</string>
     <string name="code_accepted_toast_msg">Код принят, Вам зачислено %s баллов</string>
     <string name="contact_information">Контактная информация:</string>
+    <string name="hide_all_news_msg">Вы действительно хотите отметить все новости в ленте как прочитанные?</string>
+    <string name="hide_news">Скрыть новости</string>
 
 </resources>

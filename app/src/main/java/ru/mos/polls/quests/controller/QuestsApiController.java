@@ -74,7 +74,6 @@ public abstract class QuestsApiController {
             }
             JSONArray ids = new JSONArray(idsList);
             requestJson.put("ids", ids);
-
         } catch (JSONException ignored) {
         }
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {

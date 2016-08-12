@@ -170,7 +170,6 @@ public class QuestsFragment extends PullableFragment {
     private void hideNewsMenu() {
         int coutNews = 0;
         for (Quest q : quests) {
-            Log.v("MENUITEM", " bg type = " + ((BackQuest) q).getType());
             String type = ((BackQuest) q).getType();
             if (type.equals("news") || type.equals("results") || type.equals("other")) {
                 coutNews++;
@@ -462,6 +461,7 @@ public class QuestsFragment extends PullableFragment {
                         public void onHide(boolean isHide) {
                             adapter.notifyDataSetChanged();
                             listView.refreshDrawableState();
+                            hideNewsMenu();
                         }
                     };
                     QuestsApiController.hide((BaseActivity) getActivity(), backQuest, hideListener);

@@ -4,7 +4,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/hideNews"
-        android:icon="@drawable/news_check"
+        android:icon="@drawable/ic_menu_news"
         android:title="@string/hide_news"
         android:visible="false"
         app:showAsAction="always"/>

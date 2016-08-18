@@ -686,7 +686,7 @@
     <string name="beginning_of_interval_not_set">Начало интервала не задано</string>
     <string name="ending_of_interval_not_set">Окончание интервала не задано</string>
     <string name="interval_not_set">Интервал не задан</string>
-    <string name="enter_promocode">Ввести\nпромо-код</string>
+    <string name="enter_promocode">Ввести\nпромокод</string>
     <string name="you_have_got" formatted="false">"Вы получили %s"</string>
     <string name="about_place">О месте</string>
     <string name="event">" мероприятие"</string>

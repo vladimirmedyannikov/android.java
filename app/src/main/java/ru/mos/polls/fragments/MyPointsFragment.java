@@ -107,29 +107,11 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        TextView shopTextView = (TextView) view.findViewById(R.id.shop);
-//        shopTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Statistics.shopBuy();
-//            }
-//        });
-
         final FragmentActivity activity = getActivity();
-//        tvCurrentPointsUnit = (TextView) view.findViewById(R.id.tvCurrentPointsUnit);
-//        tvCurrentPointsUnit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showPopup(v);
-//            }
-//        });
         AbsListView list = ButterKnife.findById(view,android.R.id.list);
-//                (AbsListView) view.findViewById(android.R.id.list);
         list.setEmptyView(view.findViewById(android.R.id.empty));
         adapter = new MyPointsAdapter(activity, null);
-        ((AdapterView<ListAdapter>) list).setAdapter(adapter);
-
+        (list).setAdapter(adapter);
         LoaderManager loaderManager = activity.getSupportLoaderManager();
         if (loaderManager.getLoader(POINT_HISTORY_ID) == null) {
             loaderManager.initLoader(POINT_HISTORY_ID, null, this);
@@ -247,7 +229,6 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
         /**
          * Задание кастомных view для пунктов меню, пока не работает
          */
-//        allItemsCustomize(popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -302,9 +283,7 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
         if (item != null) {
             View view = View.inflate(getActivity(), R.layout.i_point_menu, null);
             TextView count = ButterKnife.findById(view, R.id.count);
-//                    (TextView) view.findViewById(R.id.count);
             TextView title = ButterKnife.findById(view, R.id.title);
-//                    (TextView) view.findViewById(R.id.title);
             int countValue = 0;
             switch (itemId) {
                 case R.id.action_debit:

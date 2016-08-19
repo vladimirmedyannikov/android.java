@@ -25,6 +25,12 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+ext {
+    travisBuild = System.getenv("TRAVIS") == "true"
+    // allows for -Dpre-dex=false to be set
+    preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
@@ -62,7 +68,7 @@ android {
 
     dexOptions {
         incremental = true;
-        preDexLibraries = false
+        preDexLibraries = preDexEnabled && !travisBuild
         javaMaxHeapSize "4g"
     }
 
@@ -164,3 +170,4 @@ configurations.all {
         force 'com.android.support:appcompat-v7:22.2.0'
     }
 }
+

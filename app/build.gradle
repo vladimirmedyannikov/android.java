@@ -27,13 +27,13 @@ repositories {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '22.0.1'
+    buildToolsVersion '23.0.3'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "ru.mos.polls"
         versionCode Integer.parseInt(System.getenv("BUILD_NUMBER") ?: "1")
-        versionName "2.0.0"
+        versionName "2.1.0"
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true

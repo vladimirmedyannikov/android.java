@@ -165,6 +165,7 @@ public class QuestsFragment extends PullableFragment {
         this.menu = menu;
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        hideNewsMenu();
     }
 
     private void hideNewsMenu() {
@@ -199,16 +200,24 @@ public class QuestsFragment extends PullableFragment {
         builder.setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
+                QuestsApiController.HideQuestListner hideListener = new QuestsApiController.HideQuestListner() {
                     @Override
-                    public void onHide(boolean isHide) {
+                    public void hideQuests(ArrayList<String> idsList) {
+                        for (String s : idsList) {
+                            for (Quest quest : quests) {
+                                if (((BackQuest) quest).getId().equals(s)) {
+                                    quests.remove(quest);
+                                    break;
+                                }
+                            }
+                        }
                         adapter.notifyDataSetChanged();
-                        listView.refreshDrawableState();
-                        update(null, null);
+                        hideNewsMenu();
                     }
                 };
                 QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);
             }
+
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override

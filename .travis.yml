@@ -1,12 +1,13 @@
+sudo: required
+
 language: android
 jdk: oraclejdk7
 
 android:
   components:
-    - platform-tools
     - tools
+    - build-tools-23.0.2
     - android-23
-    - build-tools-22.0.1
     - add-on
     - extra
 

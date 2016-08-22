@@ -203,9 +203,9 @@ public abstract class InnovationApiController {
                     Rating rating = new Rating(ratingJson);
                     QuestMessage message = new QuestMessage(jsonObject);
                     JSONObject statusJsonObject = jsonObject.optJSONObject("status");
-                    final int allPoints = statusJsonObject.optInt("all_points");
+                    final int currentPoints = statusJsonObject.optInt("current_points");
                     if (fillNoveltyListener != null) {
-                        fillNoveltyListener.onSuccess(rating, message, allPoints);
+                        fillNoveltyListener.onSuccess(rating, message, currentPoints);
                     }
                 }
             }

@@ -709,5 +709,6 @@
     <string name="contact_information">Контактная информация:</string>
     <string name="hide_all_news_msg">Вы действительно хотите отметить все новости в ленте как прочитанные?</string>
     <string name="hide_news">Скрыть новости</string>
+    <string name="no_news">Новостей нет</string>
 
 </resources>

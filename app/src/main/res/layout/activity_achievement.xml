@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/body"
-                style="@style/text.xlarge"
+                style="@style/text.large"
                 android:layout_width="wrap_content"
                 android:paddingBottom="@dimen/pd_xsmall"
                 android:paddingTop="@dimen/pd_xlarge"/>

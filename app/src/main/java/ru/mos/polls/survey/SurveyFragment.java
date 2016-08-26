@@ -389,6 +389,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
             @Override
             public void onLoaded(Survey s) {
                 survey = s;
+                mSurveyButtons.setSurvey(survey);
                 renderScreen();
                 dismissProgress();
                 if (requestCode != -1 && data != null) {

@@ -227,6 +227,7 @@ public class ProfileFragment extends PullableFragment implements AbstractProfile
                 processSaveEnable();
                 stopProgress();
                 processResults(resultJson);
+                Toast.makeText(getContext(), getText(R.string.success_personal_updated), Toast.LENGTH_SHORT).show();
             }
 
             @Override

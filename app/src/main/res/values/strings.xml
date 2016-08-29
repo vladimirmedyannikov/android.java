@@ -276,8 +276,8 @@
     <string name="whould_you_like_to_interrupt_survey">Вы хотите прервать вопрос?</string>
     <string name="error_occurs">Произошла ошибка: %s</string>
     <string name="error_general">Произошла ошибка</string>
-    <string name="hint_set_promo">Введите промо-код</string>
-    <string name="promo_is_empty">Промо-код пуст. Введите значение</string>
+    <string name="hint_set_promo">Введите промокод</string>
+    <string name="promo_is_empty">Промокод пуст. Введите значение</string>
     <string name="action_promo">промокод</string>
     <string name="not_set_question_id">Не указан номер опроса</string>
     <string name="title_poll">Голосование</string>
@@ -285,7 +285,7 @@
     <string name="error_occurs_when_you_try_to_auth">Не удалось авторизоваться в Google+. Попробуйте повторить операцию позже</string>
     <string name="not_installed_google_plus_app">Приложение Google+ не установлено. Установить его?</string>
     <string name="social_gp">Google+</string>
-    <string name="promo">Использовать промо-код</string>
+    <string name="promo">Использовать промокод</string>
     <string name="notifying">Настройка оповещений</string>
     <string name="subscribes">Подписки</string>
     <string name="poll_result">Оповещать меня о результатах голосования</string>
@@ -333,10 +333,10 @@
     <string name="action_credit_points">Потраченные баллы</string>
     <string name="action_blocked_points">Заблокированные баллы</string>
     <string name="action_all_points">Текущий баланс</string>
-    <string name="use_promo">Использовать промо-код</string>
+    <string name="use_promo">Использовать промокод</string>
     <string name="state">Ваш статус: %s</string>
     <string name="social_not_enable">В следующий раз разместить сообщение в %s Вы можете через месяц</string>
-    <string name="promo_contains_wrong_symbols">Промо-код может содержать только латиницу, цифры и символ «-»</string>
+    <string name="promo_contains_wrong_symbols">Промокод может содержать только латиницу, цифры и символ «-»</string>
     <string name="support_text">Уважаемые участники проекта «Активный гражданин», обращаем ваше внимание, что Обратная связь проекта «Активный гражданин» создана в целях разрешения технических вопросов и приема предложений по развитию проекта. Рассмотрение обращений, направленных посредством Обратной связи проекта, осуществляется вне действий положений Федерального закона от 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений граждан Российской Федерации». При необходимости обратиться в органы исполнительной власти города Москвы вы можете воспользоваться электронной приемной на официальном портале Мэра Москвы и Правительства Москвы (&lt;a href="http://www.mos.ru" style="text-decoration: none;">http://www.mos.ru&lt;/a>) или электронными приемными на официальных порталах органов исполнительной власти города Москвы.</string>
     <string name="error_avatar_load" formatted="false">Не удалось получить аватар для %s</string>
     <string name="facebook">Facebook</string>
@@ -457,7 +457,7 @@
     <string name="answered_questions">Отвечено вопросов:</string>
     <string name="statistics_events_visited">Посещено мероприятий:</string>
     <string name="all_points">Получено баллов:</string>
-    <string name="promo_codes">Активация промо-кодов:</string>
+    <string name="promo_codes">Активация промокодов:</string>
     <string name="social_messages">Публикации в соцсетях:</string>
     <string name="registration_date">Регистрация:</string>
     <string name="spent_points">Потрачено баллов:</string>
@@ -679,7 +679,7 @@
     <string name="subjects_of_project">Материалы проекта:</string>
     <string name="detail_subject_of_hearing">Подробные материалы слушания</string>
     <string name="contacts">Контакты</string>
-    <string name="promocode_description_info">Ищите информацию о промо-кодах в новостях проекта и на городских мероприятиях.</string>
+    <string name="promocode_description_info">Ищите информацию о промокодах в новостях проекта и на городских мероприятиях.</string>
     <string name="list_of_questions">СПИСОК ВОПРОСОВ</string>
     <string name="question">вопрос</string>
     <string name="your_answer">Вы ответили</string>

@@ -118,7 +118,7 @@ public abstract class AgSupportApiController {
 //                if (groups[i] != APIGroup.OTHER)
 //                    apiVersion.put(groups[i].getPath());
 //            }
-//            params.put("api_version", apiVersion);
+            params.put("api_version", apiVersion);
         } catch (JSONException e) {
             e.printStackTrace();
         }

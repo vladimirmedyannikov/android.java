@@ -7,7 +7,7 @@
     <TextView
         style="@style/text.gray"
         android:id="@+id/ratingTitle"
-        android:text="@string/innovation_rate_your"/>
+        android:text="@string/innovation_rate_avg"/>
 
     <include layout="@layout/layout_small_rating_bar"/>
 

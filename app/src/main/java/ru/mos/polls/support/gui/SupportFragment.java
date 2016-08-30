@@ -148,6 +148,7 @@ public class SupportFragment extends Fragment {
                  * Очищаем поля при успещной отправке сообщения
                  */
                 etMessage.setText("");
+                orderNumber.setText("");
                 spinnerSubjects.setSelection(0);
                 processSendingEnabled();
             }
@@ -178,6 +179,7 @@ public class SupportFragment extends Fragment {
                 orderNumberLayout.setVisibility(View.VISIBLE);
             } else if (checkVisibility()) {
                 orderNumberLayout.setVisibility(View.GONE);
+                orderNumber.setText("");
             }
         }
         if (position == 0) {

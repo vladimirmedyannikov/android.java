@@ -109,7 +109,7 @@ public class SurveyHeader extends FrameLayout {
     private void displayPrice(Survey survey) {
         price.setText(survey.getFormattedTitle(getContext()));
         price.setTextColor(getResources().getColor(survey.getColorForTitle()));
-        price.setVisibility(View.VISIBLE);
+        price.setVisibility(survey.isActive() && survey.getPoints() == 0 ? GONE : VISIBLE);
     }
 
     private void displaySpecialMark(Survey survey) {

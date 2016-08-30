@@ -9,6 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
@@ -97,7 +98,16 @@ public class ExpositionActivity extends ToolbarAbstractActivity {
     private void displayLink() {
         Spanned linkForHearing = Html.fromHtml(
                 String.format(getString(R.string.detail_of_exosition), exposition.getReferenceUrl()));
+        if (!"".equals(exposition.getReferenceUrl())){
         link.setMovementMethod(LinkMovementMethod.getInstance());
+        } else {
+            link.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), R.string.url_not_avaible, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         link.setText(linkForHearing);
     }
 

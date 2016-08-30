@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              style="@style/item.linear.horizontal">
+<RelativeLayout style="@style/item.linear"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:padding="@dimen/pd_xsmall">
 
     <CheckBox
         android:id="@+id/cbAgreeOffer"
@@ -11,6 +12,10 @@
     <TextView
         android:id="@+id/tvOffer"
         style="@style/text"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/cbAgreeOffer"
+        android:layout_toRightOf="@+id/cbAgreeOffer"
         android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingTop="@dimen/pd_xxsmall"
         android:text="@string/ag_agree_offer"/>
-</LinearLayout>
+</RelativeLayout>

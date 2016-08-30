@@ -120,8 +120,8 @@
             <LinearLayout
                 android:id="@+id/actionContainer"
                 style="@style/item.linear.horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/pd_xlarge">
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:gravity="center_horizontal">
 
                 <Button
                     android:id="@+id/save"
@@ -148,32 +148,7 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/warningContainer"
-                style="@style/item.linear"
-                android:layout_marginTop="@dimen/pd_xlarge">
-
-                <ImageView
-                    android:id="@+id/warningEditingBlocked"
-                    style="@style/wrap"
-                    android:src="@drawable/circle_warning"/>
-
-                <TextView
-                    android:id="@+id/tvErrorEditingBlocked"
-                    style="@style/text.red"
-                    android:layout_toRightOf="@id/warningEditingBlocked"
-                    android:paddingLeft="@dimen/pd_xsmall"
-                    android:text="@string/error_short_editing_blocked"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/tvWarningEditingBlocked"
-                    style="@style/text.normal.black"
-                    android:layout_below="@id/tvErrorEditingBlocked"
-                    android:layout_toRightOf="@id/warningEditingBlocked"
-                    android:paddingLeft="@dimen/pd_xsmall"
-                    android:text="@string/warning_editing_blocked"/>
-            </RelativeLayout>
+            <include layout="@layout/layout_flat_warning_block"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

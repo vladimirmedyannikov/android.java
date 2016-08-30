@@ -61,31 +61,7 @@
                 android:minWidth="@dimen/vs_xxlarge"
                 android:text="@string/select"/>
 
-            <RelativeLayout
-                android:id="@+id/warningContainer"
-                style="@style/item"
-                android:layout_marginTop="@dimen/pd_xlarge">
-
-                <ImageView
-                    android:id="@+id/warningEditingBlocked"
-                    style="@style/wrap"
-                    android:src="@drawable/circle_warning"/>
-
-                <TextView
-                    android:id="@+id/tvErrorEditingBlocked"
-                    style="@style/text.red"
-                    android:paddingLeft="@dimen/pd_xxsmall"
-                    android:visibility="gone"
-                    android:layout_toRightOf="@id/warningEditingBlocked"
-                    android:text="@string/error_short_editing_blocked"/>
-
-                <TextView
-                    android:id="@+id/tvWarningEditingBlocked"
-                    style="@style/text.normal.black"
-                    android:layout_below="@id/tvErrorEditingBlocked"
-                    android:layout_toRightOf="@id/warningEditingBlocked"
-                    android:text="@string/warning_editing_blocked"/>
-            </RelativeLayout>
+            <include layout="@layout/layout_flat_warning_block"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -19,6 +19,7 @@
         style="@style/text.large.black"
         android:background="@drawable/ag_list_selector"
         android:drawableRight="@drawable/arrow_question"
+        android:drawablePadding="@dimen/pd_normal"
         android:paddingBottom="@dimen/pd_xsmall"
         android:paddingLeft="@dimen/pd_xxsmall"
         android:paddingRight="@dimen/pd_xxsmall"

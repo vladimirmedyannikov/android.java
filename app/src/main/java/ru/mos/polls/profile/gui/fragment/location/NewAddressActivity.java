@@ -459,9 +459,9 @@ public class NewAddressActivity extends ToolbarAbstractActivity {
 
     @OnClick(R.id.changeFlat)
     void changeFlat() {
-        if (flat.isRegistration()) {
-            Flat.deleteResidence(NewAddressActivity.this);
-        }
+//        if (flat.isRegistration()) {
+//            Flat.deleteResidence(NewAddressActivity.this);
+//        }
         flat.delete(NewAddressActivity.this);
         delete.setVisibility(View.VISIBLE);
         save.setVisibility(View.VISIBLE);

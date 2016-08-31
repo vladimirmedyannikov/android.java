@@ -21,6 +21,7 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.FragmentHelper;
 import ru.mos.polls.profile.gui.fragment.AbstractProfileFragment;
+import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
 /**
  * Работа с адресами пользователя (адрес регистрации
@@ -205,6 +206,7 @@ public class FlatsFragment extends AbstractProfileFragment {
                 residence.delete(getActivity());
                 residence = Flat.getResidence(getActivity());
                 refreshUI();
+                changeListener.onChange(ADDRESS_ID);
             }
         });
         builder.show();

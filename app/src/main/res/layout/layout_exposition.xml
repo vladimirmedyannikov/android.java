@@ -17,9 +17,10 @@
     <TextView
         android:id="@+id/address"
         style="@style/text.large.black"
+        android:layout_width="match_parent"
         android:background="@drawable/ag_list_selector"
         android:drawableRight="@drawable/arrow_question"
-        android:drawablePadding="@dimen/pd_normal"
+        android:drawablePadding="@dimen/pd_xxsmall"
         android:paddingBottom="@dimen/pd_xsmall"
         android:paddingLeft="@dimen/pd_xxsmall"
         android:paddingRight="@dimen/pd_xxsmall"

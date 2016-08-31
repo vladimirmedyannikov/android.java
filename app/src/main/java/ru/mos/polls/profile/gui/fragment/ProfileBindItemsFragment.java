@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
+import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
 
 /**
@@ -41,7 +42,7 @@ public class ProfileBindItemsFragment extends AbstractProfileFragment {
     @OnClick(R.id.bindSocial)
     void bingSocial() {
         Intent intent = new Intent(getActivity(), UpdateSocialActivity.class);
-        intent.putExtra(MainActivity.IS_TASK, false);
+        intent.putExtra(MainActivity.IS_TASK, QuestsFragment.socialQuestIsAvaible());
         startActivity(intent);
     }
 }

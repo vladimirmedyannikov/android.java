@@ -171,20 +171,24 @@ public class QuestsFragment extends PullableFragment {
 
     private void hideNewsMenu() {
         int coutNews = 0;
-        for (Quest q : quests) {
-            String type = ((BackQuest) q).getType();
-            if (type.equals("news") || type.equals("results") || type.equals("other")) {
-                coutNews++;
+        if (quests != null) {
+            for (Quest q : quests) {
+                String type = ((BackQuest) q).getType();
+                if (type.equals("news") || type.equals("results") || type.equals("other")) {
+                    coutNews++;
+                }
             }
+            if (menu != null) menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
         }
-        menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
     }
 
     public static boolean socialQuestIsAvaible() {
-        for (Quest quest : quests) {
-            if (quest instanceof ProfileQuest) {
-                if (((ProfileQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
-                    return true;
+        if (quests != null) {
+            for (Quest quest : quests) {
+                if (quest instanceof ProfileQuest) {
+                    if (((ProfileQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
+                        return true;
+                }
             }
         }
         return false;

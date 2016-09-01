@@ -53,6 +53,7 @@ import ru.mos.polls.quests.quest.BackQuest;
 import ru.mos.polls.quests.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
 import ru.mos.polls.quests.quest.OtherQuest;
+import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
@@ -70,7 +71,7 @@ public class QuestsFragment extends PullableFragment {
     private Listener listener = new QuestsListenerStub();
     @BindView(R.id.stubOffline)
     View stubOffline;
-    private List<Quest> quests;
+    public static List<Quest> quests;
     private ImageView userAvatarImageView;
     private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
     private View listHeaderView, headerRoot;
@@ -177,6 +178,16 @@ public class QuestsFragment extends PullableFragment {
             }
         }
         menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
+    }
+
+    public static boolean socialQuestIsAvaible() {
+        for (Quest quest : quests) {
+            if (quest instanceof ProfileQuest) {
+                if (((ProfileQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
+                    return true;
+            }
+        }
+        return false;
     }
 
     @Override

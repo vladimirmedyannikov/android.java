@@ -711,5 +711,6 @@
     <string name="hide_news">Скрыть новости</string>
     <string name="no_news">Новостей нет</string>
     <string name="url_not_avaible">Адрес недоступен</string>
+    <string name="error_auth_fb_message">Не удалось авторизоваться по причине: %s .Попробуйте повторить операцию позже</string>
 
 </resources>

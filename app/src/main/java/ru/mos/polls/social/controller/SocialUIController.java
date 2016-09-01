@@ -489,8 +489,10 @@ public abstract class SocialUIController {
                 SocialManager.getOauthOkSessionSecretToken(elkActivity),
                 new OkListener() {
 
+
                     @Override
                     public void onSuccess(JSONObject json) {
+                        Log.d(SocialManager.POSTING_RESULT, json.toString());
                         SocialUIController.showPostingResult(elkActivity, socialPostValue, null);
                     }
 

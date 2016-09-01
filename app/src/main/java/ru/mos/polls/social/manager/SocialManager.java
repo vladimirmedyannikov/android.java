@@ -110,6 +110,7 @@ public class SocialManager {
     public static final String AVATAR_URL_GP = "avatar_url_gp";
 
     public static final String USER_ID_VK = "user_id_vk";
+    public static final String POSTING_RESULT = "posting_result";
 
     /**
      * Получение токена доступа социальной сети
@@ -584,6 +585,7 @@ interface Social {
 }
 
 abstract class AbsSocial implements Social {
+
     protected final Context context;
 
     AbsSocial(Context context) {
@@ -597,6 +599,7 @@ abstract class AbsSocial implements Social {
     protected void errorToLog(String error) {
         Log.e(Error.POSTING_ERROR, error);
     }
+
 }
 
 /**

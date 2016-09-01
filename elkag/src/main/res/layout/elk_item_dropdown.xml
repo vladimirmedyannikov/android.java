@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|left"
+        android:background="#0eb0a0"
         android:paddingBottom="16dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"

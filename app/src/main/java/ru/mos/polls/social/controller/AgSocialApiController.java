@@ -382,7 +382,7 @@ public abstract class AgSocialApiController {
             @Override
             public void onResponse(JSONObject response) {
                 if (!forBind) {
-                    listener.onSaved(social, 0, 0, 0, 0, "");
+                    if (listener != null) listener.onSaved(social, 0, 0, 0, 0, "");
                 } else {
                     if (response != null) {
                         int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;

@@ -400,7 +400,13 @@ public abstract class SocialUIController {
             }
         });
         builder.setView(innerView);
-        builder.setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                hideKeyboard(context, inputEditText);
+            }
+        });
+        builder.setNegativeButton(R.string.next, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = inputEditText.getText().toString().trim();
@@ -416,12 +422,7 @@ public abstract class SocialUIController {
                     processBeforeStatistics(socialPostValue);
                     listener.onComplete(socialPostValue);
                 }
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                hideKeyboard(context, inputEditText);
+
             }
         });
         final AlertDialog d = builder.create();

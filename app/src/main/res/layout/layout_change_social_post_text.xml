@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView style="@style/root"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        style="@style/item.linear">
 
         <EditText
             android:id="@+id/postText"
@@ -15,7 +12,8 @@
             android:gravity="top|left"
             android:hint="@string/hint_set_text"
             android:inputType="textMultiLine"
-            android:singleLine="false" />
+            android:maxLines="3"
+            android:singleLine="false"/>
 
         <TextView
             android:id="@+id/symbols"
@@ -24,6 +22,6 @@
             android:layout_margin="@dimen/pd_xxsmall"
             android:gravity="bottom|right"
             android:text="@string/count_symbols"
-            android:textColor="@color/greyHint" />
+            android:textColor="@color/greyHint"/>
     </LinearLayout>
 </ScrollView>

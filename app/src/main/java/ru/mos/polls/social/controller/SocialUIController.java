@@ -27,6 +27,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -504,6 +510,21 @@ public abstract class SocialUIController {
                         }
                     }
                 });
+    }
+
+    public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
+        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                Log.d("TW_SUCCESS", result.data.text);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                Log.e(Error.POSTING_ERROR, e.getMessage());
+                SocialUIController.showPostingErrorDialog(baseActivity, socialPostValue, e.getMessage());
+            }
+        });
     }
 
     /**

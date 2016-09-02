@@ -644,6 +644,10 @@ public abstract class SocialUIController {
                             result = context.getString(R.string.error_validating_access_token);
                             clearAndUnbindSocial(context, socialId);
                             break;
+                        case Error.Vk.ERROR_TOKKEN_EXPIRED:
+                            result = context.getString(R.string.error_expired_access_token);
+                            clearAndUnbindSocial(context, socialId);
+                            break;
                     }
                     break;
                 case SocialManager.SOCIAL_ID_OK:

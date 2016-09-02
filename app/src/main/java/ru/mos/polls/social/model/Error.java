@@ -77,5 +77,10 @@ public interface Error {
          * "error_msg": "User authorization failed: invalid session."
          */
         int ERROR_AUTH_FAILED = 5;
+        /**
+         * "error_code": 5111
+         * "error_msg": "Ошибка при получении аватарки из vk: User authorization failed: user revoke access for this token."
+         */
+        int ERROR_TOKKEN_EXPIRED = 5111;
     }
 }

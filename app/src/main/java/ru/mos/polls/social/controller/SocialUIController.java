@@ -517,6 +517,7 @@ public abstract class SocialUIController {
             @Override
             public void success(Result<Tweet> result) {
                 Log.d("TW_SUCCESS", result.data.text);
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
             }
 
             @Override

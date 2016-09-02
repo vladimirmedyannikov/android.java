@@ -28,7 +28,8 @@
 
     <LinearLayout
         android:id="@id/empty"
-        style="@style/item.linear">
+        style="@style/item.linear"
+        android:paddingTop="@dimen/pd_xxlarge">
 
         <TextView
             style="@style/text.large.gray"

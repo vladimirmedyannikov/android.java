@@ -523,7 +523,7 @@ public abstract class SocialUIController {
             @Override
             public void failure(TwitterException e) {
                 Log.e(Error.POSTING_ERROR, e.getMessage());
-                SocialUIController.showPostingErrorDialog(baseActivity, socialPostValue, e.getMessage());
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
             }
         });
     }
@@ -656,9 +656,7 @@ public abstract class SocialUIController {
                     }
                     break;
                 case SocialManager.SOCIAL_ID_TW:
-                    if (errorCode == Error.Twitter.STATUS_MESSAGE_IS_A_DUPLICATE) {
-                        result = context.getString(R.string.status_message_is_a_duplicate);
-                    }
+                    result = context.getString(R.string.status_message_is_a_duplicate);
                     break;
                 case SocialManager.SOCIAL_ID_VK:
                     switch (errorCode) {

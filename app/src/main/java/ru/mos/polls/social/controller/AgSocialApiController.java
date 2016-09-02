@@ -363,7 +363,7 @@ public abstract class AgSocialApiController {
      * @param listener callback
      * @param forBind  признак привязки или отвязки соцсети
      */
-    public static void binding(final BaseActivity activity, final Social social, boolean forBind, final SaveSocialListener listener) {
+    public static void binding(final BaseActivity activity, final Social social, final boolean forBind, final SaveSocialListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
         if (AGApplication.IS_SOCIAL_API_V03_ENABLE) {
             url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
@@ -378,31 +378,30 @@ public abstract class AgSocialApiController {
             jsonRequest.put("social", params);
         } catch (JSONException ignored) {
         }
-
-        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
-                int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;
-                String state = "";
-                JSONObject status = null;
-                try {
-                    status = response.getJSONObject(0);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (status != null) {
-                    freezedPoints = status.optInt("freezed_points");
-                    spentPoints = status.optInt("spent_points");
-                    allPoints = status.optInt("all_points");
-                    currentPoints = status.optInt("current_points");
-                    state = status.optString("response");
-                }
-                if (listener != null) {
-                    listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state);
+            public void onResponse(JSONObject response) {
+                if (!forBind) {
+                    listener.onSaved(social, 0, 0, 0, 0, "");
+                } else {
+                    if (response != null) {
+                        int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;
+                        String state = "";
+                        response = response.optJSONObject("status");
+                        if (response != null) {
+                            freezedPoints = response.optInt("freezed_points");
+                            spentPoints = response.optInt("spent_points");
+                            allPoints = response.optInt("all_points");
+                            currentPoints = response.optInt("current_points");
+                            state = response.optString("response");
+                        }
+                        if (listener != null) {
+                            listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state);
+                        }
+                    }
                 }
             }
         };
-
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -412,7 +411,7 @@ public abstract class AgSocialApiController {
                 }
             }
         };
-        JsonArrayRequest request = new JsonArrayRequest(url, jsonRequest, responseListener, errorListener);
+        final JsonObjectRequest request = new JsonObjectRequest(url, jsonRequest, responseListener, errorListener);
         activity.addRequest(request);
     }
 

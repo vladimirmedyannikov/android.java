@@ -123,6 +123,7 @@ public class EventActivity extends ToolbarAbstractActivity {
         getFilter();
         getEventPosition();
         getLocationController();
+        refreshEvent();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiEventBuilder.findViews();
         socialController = new SocialController(this);
@@ -206,7 +207,6 @@ public class EventActivity extends ToolbarAbstractActivity {
             @Override
             public void onGet(Position position) {
                 currentPosition = position;
-                    refreshEvent();
             }
         });
     }

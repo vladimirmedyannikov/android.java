@@ -49,6 +49,7 @@ import ru.mos.polls.social.model.Social;
 import ru.mos.polls.social.model.SocialPostItem;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.survey.Survey;
+import ru.mos.polls.util.AgTextUtil;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkListener;
 
@@ -633,6 +634,9 @@ public abstract class SocialUIController {
                 errorCode = Integer.parseInt(postingException.getMessage());
             } catch (Exception ignored) {
             }
+            if (socialId == SocialManager.SOCIAL_ID_TW) {
+                errorCode = Integer.parseInt(AgTextUtil.stripNonDigitsV2(postingException.getMessage()));
+            }
             switch (socialId) {
                 case SocialManager.SOCIAL_ID_FB:
                     switch (errorCode) {
@@ -657,7 +661,11 @@ public abstract class SocialUIController {
                     }
                     break;
                 case SocialManager.SOCIAL_ID_TW:
-                    result = context.getString(R.string.status_message_is_a_duplicate);
+                    switch (errorCode) {
+                        case Error.Twitter.STATUS_MESSAGE_IS_A_DUPLICATE:
+                            result = context.getString(R.string.status_message_is_a_duplicate);
+                            break;
+                    }
                     break;
                 case SocialManager.SOCIAL_ID_VK:
                     switch (errorCode) {

@@ -37,6 +37,7 @@
     <dimen name="ts_main_header">50sp</dimen>
 
     <!-- view size !-->
+    <dimen name="vs_xxxsmall">30dp</dimen>
     <dimen name="vs_xxsmall">50dp</dimen>
     <dimen name="vs_xsmall">60dp</dimen>
     <dimen name="vs_small">75dp</dimen>

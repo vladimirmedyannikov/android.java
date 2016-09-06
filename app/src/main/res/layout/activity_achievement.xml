@@ -34,6 +34,7 @@
                 android:id="@+id/body"
                 style="@style/text.large"
                 android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
                 android:paddingBottom="@dimen/pd_xsmall"
                 android:paddingTop="@dimen/pd_xlarge"/>
 

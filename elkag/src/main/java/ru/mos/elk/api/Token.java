@@ -1,7 +1,7 @@
 package ru.mos.elk.api;
 
 public enum Token {
-    AG("ag_test_token", "ag_uat_token3","35e59a5eaab111e3b266416c74617269");
+    AG("ag_test_token_token", "ag_uat_token3","35e59a5eaab111e3b266416c74617269");
 
     private final String token;
     private String customToken = null;

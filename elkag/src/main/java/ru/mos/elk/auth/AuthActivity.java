@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -42,6 +43,7 @@ public class AuthActivity extends BaseActivity {
     protected static final int REQUEST_REGISTER = 1;
     protected static final int REQUEST_RESTORE = 2;
 
+    protected static final int ERROR_CODE_423 = 423;
 
     protected EditText etLogin;
     protected EditText etPassword;
@@ -92,7 +94,9 @@ public class AuthActivity extends BaseActivity {
             public void onError(VolleyError error) {
                 dialog.dismiss();
                 if (error != null) {
+                    if (error.getErrorCode() != ERROR_CODE_423)
                     onLoginFault(error.getMessage());
+                    showErrorDialog(error.getErrorCode());
                 }
             }
         };
@@ -163,6 +167,10 @@ public class AuthActivity extends BaseActivity {
         tvError.setText(errorMessage);
         tvError.setVisibility(View.VISIBLE);
         tvError.requestFocus();
+    }
+
+    protected void showErrorDialog(int error){
+
     }
 
     private void configSkip() {

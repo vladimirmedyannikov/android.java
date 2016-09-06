@@ -180,8 +180,10 @@ public abstract class EventAPIController {
             if (position == null) {
                 position = new Position();
             }
-            requestJson.put("my_lat", position.getLat());
-            requestJson.put("my_lng", position.getLon());
+            if (!position.isEmpty()) {
+                requestJson.put("my_lat", position.getLat());
+                requestJson.put("my_lng", position.getLon());
+            }
         } catch (JSONException ignored) {
         }
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
@@ -229,7 +231,6 @@ public abstract class EventAPIController {
         final ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Log.d("EVENTACTIVITY", "here checkIn");
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.CHECKIN_EVENT));
         final JSONObject requestJson = new JSONObject();
         Session.addSession(requestJson);

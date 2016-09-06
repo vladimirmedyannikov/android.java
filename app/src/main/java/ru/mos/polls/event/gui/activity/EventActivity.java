@@ -58,6 +58,59 @@ public class EventActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_LON = "extra_lon";
     private static final String EXTRA_FILTER = "extra_filter";
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /**
+         * мероприятия временно отключены
+         */
+        ButterKnife.bind(this);
+        boolean isEventIdExist = getEventId();
+        getFilter();
+        getEventPosition();
+        getLocationController();
+        listener = new LocationController.OnLoadEvent() {
+            @Override
+            public void loadEvent() {
+                refreshEvent();
+            }
+        };
+
+        if (locationController.hasFineLocationPermission(EventActivity.this)) {
+            if (locationController.isLocationProviderEnable(EventActivity.this)) {
+                locationController.showDialogEnableGPS(EventActivity.this, listener);
+            } else {
+                refreshEvent();
+            }
+        } else {
+            locationController.requestAllLocationRuntimePermission(EventActivity.this);
+        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        uiEventBuilder.findViews();
+        socialController = new SocialController(this);
+
+        Statistics.enterEventTicket(eventId);
+        SocialUIController.registerPostingReceiver(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        refreshEvent();
+    }
+
+    @Override
+    protected void onDestroy() {
+        SocialUIController.unregisterPostingReceiver(this);
+        if (locationController != null) {
+            locationController.disconnect();
+        }
+        super.onDestroy();
+    }
+
     public static void startActivity(Context context, long eventId) {
         Intent intent = new Intent(context, EventActivity.class);
         intent.putExtra(EXTRA_EVENT_ID, eventId);
@@ -109,37 +162,7 @@ public class EventActivity extends ToolbarAbstractActivity {
     private SocialController socialController;
     private UIEventBuilder uiEventBuilder = new UIEventBuilder();
     private MenuItem subscribeMenuItem;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /**
-         * мероприятия временно отключены
-         */
-        ButterKnife.bind(this);
-        boolean isEventIdExist = getEventId();
-        getFilter();
-        getEventPosition();
-        getLocationController();
-        refreshEvent();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiEventBuilder.findViews();
-        socialController = new SocialController(this);
-
-        Statistics.enterEventTicket(eventId);
-        SocialUIController.registerPostingReceiver(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        SocialUIController.unregisterPostingReceiver(this);
-        if (locationController != null) {
-            locationController.disconnect();
-        }
-        super.onDestroy();
-    }
+    private LocationController.OnLoadEvent listener;
 
     public void checkIn() {
         EventAPIController.CheckInListener checkInListener = new EventAPIController.CheckInListener() {
@@ -364,6 +387,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                  * если нет, то показываем диалог с предложением включить
                  */
                 if (!locationController.isLocationProviderEnable(EventActivity.this)) {
+                    locationController.showDialogEnableGPS(EventActivity.this, null);
                     return;
                 }
                 /**
@@ -659,6 +683,5 @@ public class EventActivity extends ToolbarAbstractActivity {
                 return view.equals(object);
             }
         }
-
     }
 }

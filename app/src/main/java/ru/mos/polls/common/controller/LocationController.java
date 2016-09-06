@@ -127,29 +127,30 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
      * @return - true - если включена
      */
     public boolean isLocationProviderEnable(final Context context) {
-        boolean result = true;
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
-                !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(R.string.location_provaders_are_not_available);
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    context.startActivity(intent);
-                }
-            });
-            builder.show();
-            result = false;
-        }
+        return locationManager != null
+                && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
 
-        return result;
+    public void showDialogEnableGPS(final Context context, final OnLoadEvent listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.location_provaders_are_not_available);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (listener != null) {
+                    listener.loadEvent();
+                }
+            }
+        });
+        builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goToGPSSettings(context);
+            }
+        });
+        builder.show();
     }
 
     private static final int RUNTIME_LOCATION_REQUEST = 1;
@@ -168,6 +169,7 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
                         ActivityCompat.requestPermissions(context,
                                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                                 RUNTIME_LOCATION_REQUEST);
+                        goToGPSSettings(context);
                     }
                 });
                 builder.show();
@@ -177,6 +179,11 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
                         RUNTIME_LOCATION_REQUEST);
             }
         }
+    }
+
+    public static void goToGPSSettings(Context context) {
+        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        context.startActivity(intent);
     }
 
     public boolean hasFineLocationPermission(Context context) {
@@ -214,5 +221,9 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         };
 
         void onGet(Position position);
+    }
+
+    public interface OnLoadEvent {
+        void loadEvent();
     }
 }

@@ -32,6 +32,12 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Tweet;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
 
 import org.json.JSONObject;
 
@@ -528,6 +534,32 @@ public abstract class SocialUIController {
                 SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
             }
         });
+    }
+
+    public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
+        VKParameters vkParameters = VKParameters.from(
+                VKApiConst.ACCESS_TOKEN, SocialManager.getAccessToken(baseActivity, SocialManager.SOCIAL_ID_VK),
+                VKApiConst.MESSAGE, socialPostValue.getText(),
+                VKApiConst.ATTACHMENTS, socialPostValue.getLink());
+        VKRequest request = VKApi.wall().post(vkParameters);
+        VKRequest.VKRequestListener vkRequestListener = new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                Log.d(SocialManager.POSTING_RESULT, response.toString());
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+            }
+
+            @Override
+            public void onError(VKError error) {
+                super.onError(error);
+                int errorCode = error.apiError.errorCode;
+                Log.e(Error.POSTING_ERROR, error.apiError.toString());
+                SocialUIController.showPostingResult(baseActivity,
+                        socialPostValue,
+                        new Exception(String.valueOf(errorCode)));
+            }
+        };
+        request.executeWithListener(vkRequestListener);
     }
 
     /**

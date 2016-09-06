@@ -159,6 +159,8 @@ public class SocialController {
                     SocialUIController.postInOKByWidget(activity, socialPostValue);
                 } else if (socialPostValue.forTwitter()) {
                     SocialUIController.postInTweeter(activity, socialPostValue);
+                } else if (socialPostValue.forVk()) {
+                    SocialUIController.postInVk(activity, socialPostValue);
                 } else {
                     PostingService.start(activity, socialPostValue);
                 }

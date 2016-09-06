@@ -35,6 +35,8 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
     private static final long FASTEST_INTERVAL =
             MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
 
+    private static final int RUNTIME_LOCATION_REQUEST = 1;
+
     private LocationController(Context context) {
         initLocationRequest();
         locationClient = new GoogleApiClient.Builder(context)
@@ -49,6 +51,37 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
     private LocationRequest locationRequest;
     private OnPositionListener listener;
     private Position currentPosition;
+
+    public static  boolean isLocationProviderEnable(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager != null
+                && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    public static void goToGPSSettings(Context context) {
+        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        context.startActivity(intent);
+    }
+
+
+    public static void showDialogEnableGPS(final Context context) {
+        showDialogEnableGPS(context, null);
+    }
+
+    public static void showDialogEnableGPS(final Context context, final DialogInterface.OnClickListener cancelListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.location_provaders_are_not_available);
+        builder.setNegativeButton(R.string.cancel, cancelListener);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goToGPSSettings(context);
+            }
+        });
+        builder.show();
+    }
 
     public static synchronized LocationController getInstance(Context context) {
         if (instance == null) {
@@ -96,7 +129,6 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -120,70 +152,12 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         }
     }
 
-    /**
-     * Проверка, включена ли функция определения местоположения, если нет, то показываем диалог с предложением включить
-     *
-     * @param - контекст экрана, на  котором запускается проверка
-     * @return - true - если включена
-     */
-    public boolean isLocationProviderEnable(final Context context) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager != null
-                && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    public void showDialogEnableGPS(final Context context, final OnLoadEvent listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(R.string.location_provaders_are_not_available);
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (listener != null) {
-                    listener.loadEvent();
-                }
-            }
-        });
-        builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                goToGPSSettings(context);
-            }
-        });
-        builder.show();
-    }
-
-    private static final int RUNTIME_LOCATION_REQUEST = 1;
-
     public void requestAllLocationRuntimePermission(final Activity context) {
         if (!hasFineLocationPermission(context)) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(context,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(R.string.location_provaders_are_not_available);
-                builder.setPositiveButton(R.string.ag_continue, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(context,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                                RUNTIME_LOCATION_REQUEST);
-                        goToGPSSettings(context);
-                    }
-                });
-                builder.show();
-            } else {
-                ActivityCompat.requestPermissions(context,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                        RUNTIME_LOCATION_REQUEST);
-            }
+            ActivityCompat.requestPermissions(context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    RUNTIME_LOCATION_REQUEST);
         }
-    }
-
-    public static void goToGPSSettings(Context context) {
-        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        context.startActivity(intent);
     }
 
     public boolean hasFineLocationPermission(Context context) {
@@ -223,7 +197,4 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         void onGet(Position position);
     }
 
-    public interface OnLoadEvent {
-        void loadEvent();
-    }
 }

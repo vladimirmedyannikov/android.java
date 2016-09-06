@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,59 +56,6 @@ public class EventActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_LAT = "extra_lat";
     private static final String EXTRA_LON = "extra_lon";
     private static final String EXTRA_FILTER = "extra_filter";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /**
-         * мероприятия временно отключены
-         */
-        ButterKnife.bind(this);
-        boolean isEventIdExist = getEventId();
-        getFilter();
-        getEventPosition();
-        getLocationController();
-        listener = new LocationController.OnLoadEvent() {
-            @Override
-            public void loadEvent() {
-                refreshEvent();
-            }
-        };
-
-        if (locationController.hasFineLocationPermission(EventActivity.this)) {
-            if (locationController.isLocationProviderEnable(EventActivity.this)) {
-                locationController.showDialogEnableGPS(EventActivity.this, listener);
-            } else {
-                refreshEvent();
-            }
-        } else {
-            locationController.requestAllLocationRuntimePermission(EventActivity.this);
-        }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        uiEventBuilder.findViews();
-        socialController = new SocialController(this);
-
-        Statistics.enterEventTicket(eventId);
-        SocialUIController.registerPostingReceiver(this);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        refreshEvent();
-    }
-
-    @Override
-    protected void onDestroy() {
-        SocialUIController.unregisterPostingReceiver(this);
-        if (locationController != null) {
-            locationController.disconnect();
-        }
-        super.onDestroy();
-    }
 
     public static void startActivity(Context context, long eventId) {
         Intent intent = new Intent(context, EventActivity.class);
@@ -162,7 +108,60 @@ public class EventActivity extends ToolbarAbstractActivity {
     private SocialController socialController;
     private UIEventBuilder uiEventBuilder = new UIEventBuilder();
     private MenuItem subscribeMenuItem;
-    private LocationController.OnLoadEvent listener;
+    private boolean isEventLoaded, isGPSEnableDialogShowed, isRuntimePermissionRejected;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /**
+         * мероприятия временно отключены
+         */
+        ButterKnife.bind(this);
+        boolean isEventIdExist = getEventId();
+        getFilter();
+        getEventPosition();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        uiEventBuilder.findViews();
+        socialController = new SocialController(this);
+
+        Statistics.enterEventTicket(eventId);
+        SocialUIController.registerPostingReceiver(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LocationController.isLocationProviderEnable(this)) {
+            if (!isRuntimePermissionRejected) {
+                getLocationController();
+            }
+        } else {
+            if (!isGPSEnableDialogShowed) {
+                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        refreshEvent();
+                    }
+                };
+                LocationController.showDialogEnableGPS(this, cancelListener);
+                isGPSEnableDialogShowed = true;
+            } else {
+                refreshEvent();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        SocialUIController.unregisterPostingReceiver(this);
+        if (locationController != null) {
+            locationController.disconnect();
+        }
+        super.onDestroy();
+    }
 
     public void checkIn() {
         EventAPIController.CheckInListener checkInListener = new EventAPIController.CheckInListener() {
@@ -230,6 +229,10 @@ public class EventActivity extends ToolbarAbstractActivity {
             @Override
             public void onGet(Position position) {
                 currentPosition = position;
+                if (!isEventLoaded) {
+                    isEventLoaded = true;
+                    refreshEvent();
+                }
             }
         });
     }
@@ -237,8 +240,11 @@ public class EventActivity extends ToolbarAbstractActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (!locationController.onRequestPermissionsResult(this, requestCode, grantResults)) {
-            finish();
+        if (locationController.onRequestPermissionsResult(this, requestCode, grantResults)) {
+            getLocationController();
+        } else {
+            isRuntimePermissionRejected = true;
+            refreshEvent();
         }
     }
 
@@ -306,6 +312,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 refreshControls(event);
                 uiEventBuilder.setUIVisible(View.VISIBLE);
                 processMenu();
+                isEventLoaded = true;
             }
 
             @Override
@@ -313,6 +320,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
                 Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 uiEventBuilder.setUIVisible(View.VISIBLE);
+                isEventLoaded = false;
             }
         };
         uiEventBuilder.setUIVisible(View.GONE);

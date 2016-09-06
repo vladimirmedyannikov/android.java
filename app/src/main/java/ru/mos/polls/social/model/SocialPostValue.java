@@ -362,6 +362,10 @@ public class SocialPostValue implements Serializable {
         return socialId == SocialManager.SOCIAL_ID_TW;
     }
 
+    public boolean forVk() {
+        return socialId == SocialManager.SOCIAL_ID_VK;
+    }
+
     public boolean forOk() {
         return socialId == SocialManager.SOCIAL_ID_OK;
     }

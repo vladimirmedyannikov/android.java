@@ -2,14 +2,17 @@ package ru.mos.polls.quests;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +53,7 @@ import ru.mos.polls.quests.quest.BackQuest;
 import ru.mos.polls.quests.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
 import ru.mos.polls.quests.quest.OtherQuest;
+import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
@@ -67,7 +71,7 @@ public class QuestsFragment extends PullableFragment {
     private Listener listener = new QuestsListenerStub();
     @BindView(R.id.stubOffline)
     View stubOffline;
-    private List<Quest> quests;
+    public static List<Quest> quests;
     private ImageView userAvatarImageView;
     private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
     private View listHeaderView, headerRoot;
@@ -162,6 +166,32 @@ public class QuestsFragment extends PullableFragment {
         this.menu = menu;
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        hideNewsMenu();
+    }
+
+    private void hideNewsMenu() {
+        int coutNews = 0;
+        if (quests != null) {
+            for (Quest q : quests) {
+                String type = ((BackQuest) q).getType();
+                if (type.equals("news") || type.equals("results") || type.equals("other")) {
+                    coutNews++;
+                }
+            }
+            if (menu != null) menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
+        }
+    }
+
+    public static boolean socialQuestIsAvaible() {
+        if (quests != null) {
+            for (Quest quest : quests) {
+                if (quest instanceof ProfileQuest) {
+                    if (((ProfileQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -172,8 +202,45 @@ public class QuestsFragment extends PullableFragment {
                     listener.onInviteFriends(true);
                 }
                 break;
+            case R.id.hideNews:
+                hideAllNews();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideAllNews() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getResources().getString(R.string.hide_all_news_msg));
+        builder.setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                QuestsApiController.HideQuestListner hideListener = new QuestsApiController.HideQuestListner() {
+                    @Override
+                    public void hideQuests(ArrayList<String> idsList) {
+                        for (String s : idsList) {
+                            for (Quest quest : quests) {
+                                if (((BackQuest) quest).getId().equals(s)) {
+                                    quests.remove(quest);
+                                    break;
+                                }
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        hideNewsMenu();
+                    }
+                };
+                QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);
+            }
+
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     @Override
@@ -239,6 +306,8 @@ public class QuestsFragment extends PullableFragment {
                 quests.clear();
                 quests.addAll(loadedListQuests);
                 adapter.notifyDataSetChanged();
+                hideNewsMenu();
+                adapter.getCount();
                 setHideListener();
                 setSwipeListener();
                 listView.setVisibility(View.VISIBLE);
@@ -416,6 +485,7 @@ public class QuestsFragment extends PullableFragment {
                         public void onHide(boolean isHide) {
                             adapter.notifyDataSetChanged();
                             listView.refreshDrawableState();
+                            hideNewsMenu();
                         }
                     };
                     QuestsApiController.hide((BaseActivity) getActivity(), backQuest, hideListener);

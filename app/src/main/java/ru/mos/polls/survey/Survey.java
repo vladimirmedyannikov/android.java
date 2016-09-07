@@ -274,8 +274,12 @@ public class Survey implements Serializable {
         String date;
         String result = null;
         if (isActive() || isInterrupted()) {
-            result = PointsManager.getSuitableString(context, R.array.survey_points_pluse, points);
-            result = String.format(result, points);
+            if (points > 0) {
+                result = PointsManager.getSuitableString(context, R.array.survey_points_pluse, points);
+                result = String.format(result, points);
+            } else {
+                return "";
+            }
         } else if (isPassed()) {
             date = sdf.format(passedDate);
             if (points > 0) {

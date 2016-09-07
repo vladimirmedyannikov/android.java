@@ -15,6 +15,7 @@ public class API {
     private static boolean isDebug = true;
     private static Token token = Token.AG;
     private static final String HOST = "https://emp.mos.ru:443/?token=";
+    private static final String CLIENT_REQ_ID = "&client_req_id=";
     /**
      * с версии 2.0.0 версионность методов сервисов привязана к версиям релизов<br/>
      * в клиентском коде в классе {@link android.app.Application} необходимо вызвать метод {@link #setBuildVersionName(String)}
@@ -34,12 +35,17 @@ public class API {
     }
 
     public static String getURL(String path) {
-        Uri.Builder builder = Uri.parse(HOST + token.getToken(isDebug)).buildUpon();
+        Uri.Builder builder = Uri.parse(HOST + token.getToken(isDebug) + CLIENT_REQ_ID + getUUID()).buildUpon();
         builder.appendEncodedPath(path);
 
         return builder.build().toString();
     }
 
+    public static String getUUID() {
+        UUID uuid = UUID.randomUUID();
+        String uuidInString = uuid.toString();
+        return uuidInString;
+    }
 
     public static void registerPush(Context context) {
         if (context.checkCallingOrSelfPermission("com.google.android.c2dm.permission.RECEIVE") != PackageManager.PERMISSION_GRANTED)

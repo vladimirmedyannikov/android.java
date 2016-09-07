@@ -28,7 +28,7 @@ public class SocialPostValue implements Serializable {
      * @see <a href="http://www.geek.com/news/twitter-now-limits-tweets-to-117-characters-if-you-include-a-link-1540340/">
      * Почему 115? чтоб навреняка! =)</a>
      */
-    public static final int MAX_TWEET_POST_LENGTH = 115;
+    public static final int MAX_TWEET_POST_LENGTH = 140;
     public static final int MAX_OK_POST_LENGTH = 255;
 
     private int socialId;
@@ -196,7 +196,6 @@ public class SocialPostValue implements Serializable {
      */
     public String prepareTwPost() {
         String result = "";
-        if (!TextUtils.isEmpty(title)) result += title + "\n";
         if (!TextUtils.isEmpty(text)) result += text + " ";
         if (!TextUtils.isEmpty(link)) result += link;
         return result;
@@ -361,6 +360,10 @@ public class SocialPostValue implements Serializable {
 
     public boolean forTwitter() {
         return socialId == SocialManager.SOCIAL_ID_TW;
+    }
+
+    public boolean forVk() {
+        return socialId == SocialManager.SOCIAL_ID_VK;
     }
 
     public boolean forOk() {

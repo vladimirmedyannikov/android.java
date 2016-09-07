@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/warningContainer"
+                style="@style/item"
+                android:layout_marginTop="@dimen/pd_xlarge">
+
+    <ImageView
+        android:id="@+id/warningEditingBlocked"
+        style="@style/wrap"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/circle_warning"/>
+    <TextView
+        android:id="@+id/tvErrorEditingBlocked"
+        style="@style/text.red"
+        android:layout_toRightOf="@id/warningEditingBlocked"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:text="@string/error_short_editing_blocked"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvWarningEditingBlocked"
+        style="@style/text.normal.black"
+        android:layout_below="@id/tvErrorEditingBlocked"
+        android:layout_toRightOf="@id/warningEditingBlocked"
+        android:paddingLeft="@dimen/pd_xsmall"
+        android:text="@string/warning_editing_blocked"/>
+</RelativeLayout>

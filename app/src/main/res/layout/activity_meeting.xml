@@ -38,8 +38,7 @@
         android:layout_below="@id/toolbar">
 
         <LinearLayout
-            style="@style/linear"
-            android:padding="@dimen/pd_xsmall">
+            style="@style/linear">
 
             <TextView
                 android:id="@+id/title"
@@ -53,8 +52,10 @@
             <TextView
                 android:id="@+id/address"
                 style="@style/text.large.black"
+                android:layout_width="match_parent"
                 android:background="@drawable/ag_list_selector"
                 android:drawableRight="@drawable/arrow_question"
+                android:drawablePadding="@dimen/pd_xxsmall"
                 android:padding="@dimen/pd_xsmall"
                 android:text="@string/place"/>
 
@@ -69,25 +70,25 @@
             <TextView
                 android:id="@+id/date"
                 style="@style/text.large.black"
-                android:paddingLeft="@dimen/pd_xsmall"/>
+                android:paddingLeft="@dimen/pd_xxsmall"/>
 
             <TextView
                 style="@style/text.large.black"
-                android:padding="@dimen/pd_xsmall"
+                android:padding="@dimen/pd_xxsmall"
                 android:text="@string/sign_up_to_hearing"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/condition"
                 style="@style/text.large.black"
-                android:paddingLeft="@dimen/pd_xsmall"
-                android:paddingRight="@dimen/pd_xsmall"/>
+                android:paddingLeft="@dimen/pd_xxsmall"
+                android:paddingRight="@dimen/pd_xxsmall"/>
 
             <TextView
                 android:id="@+id/description"
                 style="@style/text.large.black"
-                android:paddingLeft="@dimen/pd_xsmall"
-                android:paddingRight="@dimen/pd_xsmall"
+                android:paddingLeft="@dimen/pd_xxsmall"
+                android:paddingRight="@dimen/pd_xxsmall"
                 android:paddingTop="@dimen/pd_xlarge"/>
         </LinearLayout>
     </ScrollView>

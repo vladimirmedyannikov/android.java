@@ -338,6 +338,8 @@ public class ProfileFragment extends PullableFragment implements AbstractProfile
         QuestMessage message = new QuestMessage(resultJson);
         if (!message.isEmpty()) {
             message.show(getActivity());
+        } else {
+            Toast.makeText(getContext(), getText(R.string.success_personal_updated), Toast.LENGTH_SHORT).show();
         }
     }
 

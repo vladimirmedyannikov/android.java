@@ -1,5 +1,7 @@
 package ru.mos.polls;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.Html;
@@ -7,6 +9,7 @@ import android.text.Layout;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,6 +26,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import ru.mos.elk.auth.AuthActivity;
+import ru.mos.elk.auth.RestoreActivity;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
@@ -139,6 +143,30 @@ public class AgAuthActivity extends AuthActivity {
         Statistics.auth(etLogin.getText().toString().trim(), false);
         statistics.check(this, false);
         statistics.errorOccurs(this, errorMessage);
+    }
+
+    @Override
+    protected void showErrorDialog(int error) {
+        super.showErrorDialog(error);
+        switch (error) {
+            case ERROR_CODE_423:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(AgAuthActivity.this);
+                dialog.setMessage(R.string.auth_error_code_msg_423)
+                        .setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(AgAuthActivity.this, AgRestoreActivity.class);
+                        intent.putExtra("phone", etLogin.getText());
+                        startActivityForResult(intent, REQUEST_RESTORE);
+                    }
+                }).show();
+                break;
+        }
     }
 
     @Override

@@ -27,6 +27,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -43,6 +55,7 @@ import ru.mos.polls.social.model.Social;
 import ru.mos.polls.social.model.SocialPostItem;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.survey.Survey;
+import ru.mos.polls.util.AgTextUtil;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkListener;
 
@@ -394,7 +407,13 @@ public abstract class SocialUIController {
             }
         });
         builder.setView(innerView);
-        builder.setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                hideKeyboard(context, inputEditText);
+            }
+        });
+        builder.setNegativeButton(R.string.next, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = inputEditText.getText().toString().trim();
@@ -410,12 +429,7 @@ public abstract class SocialUIController {
                     processBeforeStatistics(socialPostValue);
                     listener.onComplete(socialPostValue);
                 }
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                hideKeyboard(context, inputEditText);
+
             }
         });
         final AlertDialog d = builder.create();
@@ -489,8 +503,10 @@ public abstract class SocialUIController {
                 SocialManager.getOauthOkSessionSecretToken(elkActivity),
                 new OkListener() {
 
+
                     @Override
                     public void onSuccess(JSONObject json) {
+                        Log.d(SocialManager.POSTING_RESULT, json.toString());
                         SocialUIController.showPostingResult(elkActivity, socialPostValue, null);
                     }
 
@@ -502,6 +518,48 @@ public abstract class SocialUIController {
                         }
                     }
                 });
+    }
+
+    public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
+        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                Log.d("TW_SUCCESS", result.data.text);
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                Log.e(Error.POSTING_ERROR, e.getMessage());
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
+            }
+        });
+    }
+
+    public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
+        VKParameters vkParameters = VKParameters.from(
+                VKApiConst.ACCESS_TOKEN, SocialManager.getAccessToken(baseActivity, SocialManager.SOCIAL_ID_VK),
+                VKApiConst.MESSAGE, socialPostValue.getText(),
+                VKApiConst.ATTACHMENTS, socialPostValue.getLink());
+        VKRequest request = VKApi.wall().post(vkParameters);
+        VKRequest.VKRequestListener vkRequestListener = new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                Log.d(SocialManager.POSTING_RESULT, response.toString());
+                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+            }
+
+            @Override
+            public void onError(VKError error) {
+                super.onError(error);
+                int errorCode = error.apiError.errorCode;
+                Log.e(Error.POSTING_ERROR, error.apiError.toString());
+                SocialUIController.showPostingResult(baseActivity,
+                        socialPostValue,
+                        new Exception(String.valueOf(errorCode)));
+            }
+        };
+        request.executeWithListener(vkRequestListener);
     }
 
     /**
@@ -608,6 +666,9 @@ public abstract class SocialUIController {
                 errorCode = Integer.parseInt(postingException.getMessage());
             } catch (Exception ignored) {
             }
+            if (socialId == SocialManager.SOCIAL_ID_TW) {
+                errorCode = Integer.parseInt(AgTextUtil.stripNonDigitsV2(postingException.getMessage()));
+            }
             switch (socialId) {
                 case SocialManager.SOCIAL_ID_FB:
                     switch (errorCode) {
@@ -632,14 +693,20 @@ public abstract class SocialUIController {
                     }
                     break;
                 case SocialManager.SOCIAL_ID_TW:
-                    if (errorCode == Error.Twitter.STATUS_MESSAGE_IS_A_DUPLICATE) {
-                        result = context.getString(R.string.status_message_is_a_duplicate);
+                    switch (errorCode) {
+                        case Error.Twitter.STATUS_MESSAGE_IS_A_DUPLICATE:
+                            result = context.getString(R.string.status_message_is_a_duplicate);
+                            break;
                     }
                     break;
                 case SocialManager.SOCIAL_ID_VK:
                     switch (errorCode) {
                         case Error.Vk.ERROR_AUTH_FAILED:
                             result = context.getString(R.string.error_validating_access_token);
+                            clearAndUnbindSocial(context, socialId);
+                            break;
+                        case Error.Vk.ERROR_TOKKEN_EXPIRED:
+                            result = context.getString(R.string.error_expired_access_token);
                             clearAndUnbindSocial(context, socialId);
                             break;
                     }

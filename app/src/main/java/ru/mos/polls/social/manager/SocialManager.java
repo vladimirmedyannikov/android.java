@@ -42,6 +42,7 @@ import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.social.model.TokenData;
 import ru.ok.android.sdk.Odnoklassniki;
 
+
 /**
  * Класс для хранения данных социальных сетей, сохранненые данные в ряде случаев позволяют исключить повторные процедуры авторизации,
  * получения нужных url и прочее. Все данные храняться в SharedPreferences.
@@ -109,6 +110,7 @@ public class SocialManager {
     public static final String AVATAR_URL_GP = "avatar_url_gp";
 
     public static final String USER_ID_VK = "user_id_vk";
+    public static final String POSTING_RESULT = "posting_result";
 
     /**
      * Получение токена доступа социальной сети
@@ -442,7 +444,6 @@ public class SocialManager {
             case SOCIAL_ID_GP:
                 return "GP";
         }
-
         return null;
     }
 
@@ -584,6 +585,7 @@ interface Social {
 }
 
 abstract class AbsSocial implements Social {
+
     protected final Context context;
 
     AbsSocial(Context context) {
@@ -597,6 +599,7 @@ abstract class AbsSocial implements Social {
     protected void errorToLog(String error) {
         Log.e(Error.POSTING_ERROR, error);
     }
+
 }
 
 /**
@@ -636,7 +639,7 @@ class TwSocial extends AbsSocial {
 
     @Override
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
-        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>()  {
+        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
             @Override
             public void success(Result<Tweet> result) {
                 Log.d("TW_SUCCESS", result.data.text);
@@ -650,10 +653,6 @@ class TwSocial extends AbsSocial {
     }
 }
 
-/**
- * Клиент для работы с ВК
- * Работает напрямую, не используя vk sdk
- */
 class VkSocial extends AbsSocial {
     public static final String URL_USER = "https://api.vk.com/method/users.get?";
     public static final String URL_POST = "https://api.vk.com/method/wall.post?";
@@ -705,21 +704,11 @@ class OkSocial extends AbsSocial {
         }
     }
 
+    /**
+     * Не используется {@link ru.mos.polls.social.controller.SocialController#post(SocialPostValue)}
+     */
     @Override
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
-// использовалось при старом сдк, пока оставим
-//        ok.refreshToken(getContext());
-//        String response = ok.request("mediatopic.post", socialPostValue.getOkAttachments(), "post");
-//        /**
-//         * реализация для старого апи
-//         */
-////        String response = ok.request("share.addLink", socialPostValue.getOkParams(), "post");
-//        JSONObject responseJson = new JSONObject(response);
-//        String errorCode = responseJson.optString("error_code");
-//        if (!"".equalsIgnoreCase(errorCode)) {
-//            errorToLog("OK " + responseJson.toString());
-//            throw new Exception(String.valueOf(errorCode));
-//        }
     }
 }
 
@@ -740,7 +729,6 @@ class GpSocial extends AbsSocial {
     public void post(TokenData tokenData, SocialPostValue socialPostValue) throws Exception {
         if (GpHelper.isGooglePlusInstalled(context)) { //Вообще нужно воспользоваться классом GooglePlusUtil, но его вроде исключили из play services.. int errorCode = GooglePlusUtil.checkGooglePlusApp(this); if (errorCode != GooglePlusUtil.SUCCESS) { GooglePlusUtil.getErrorDialog(errorCode, this, 0).show(); }
             googlePlusPost(socialPostValue);
-//            getAvatarUrl(new TokenData(SocialManager.getAccessToken(context, SocialManager.SOCIAL_ID_GP), "")); //для теста
         } else {
             GpHelper.setErrorDialog(context);
         }

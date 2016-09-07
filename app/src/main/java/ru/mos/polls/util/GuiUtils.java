@@ -1,0 +1,178 @@
+package ru.mos.polls.util;
+
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+/**
+ * Набор вспомогательных методов для UI
+ *
+ * @since 2.1.0
+ */
+public class GuiUtils {
+
+    public static void setTextAndVisibility(TextView textView, String text) {
+        if (TextUtils.isEmpty(text)) {
+            textView.setVisibility(View.GONE);
+        } else {
+            textView.setText(text);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Скрываем клавиатуру
+     *
+     * @param v любая {@link View}
+     */
+    public static void hideKeyboard(View v) {
+        if (v != null && v.getContext() != null) {
+            if (!v.isFocused()) {
+                v.requestFocus();
+            }
+            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Добавление слушателя {@link OnSoftInputStateListener} на состояние клавиатуры<br/>
+     *
+     * @param screenRootView           корневой {@link View} в разметке экрана
+     * @param onSoftInputStateListener callback {@link OnSoftInputStateListener}
+     */
+    public static void addSoftInputStateListener(final View screenRootView, final OnSoftInputStateListener onSoftInputStateListener) {
+        screenRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private static final int HEIGHT_ROOT_THRESHOLD = 100;
+
+            @Override
+            public void onGlobalLayout() {
+                final int thresold = screenRootView.getHeight() / 3;
+                final int rootViewHeight = screenRootView.getRootView().getHeight();
+                final int viewHeight = screenRootView.getHeight();
+                int heightDiff = rootViewHeight - viewHeight;
+                if (heightDiff > thresold) {
+                    if (onSoftInputStateListener != null) {
+                        onSoftInputStateListener.onOpened();
+                    }
+                } else {
+                    if (onSoftInputStateListener != null) {
+                        onSoftInputStateListener.onClosed();
+                    }
+                }
+            }
+        });
+    }
+
+    public static void openEmailForFeedback(Context context) {
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"recipient@example.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Обращение в службу технической поддержки приложения");
+        i.setType("text/plain");
+        try {
+            context.startActivity(Intent.createChooser(i, "Выберите приложение.."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(context, "Для обращения в службу технической поддержки необходимо исопльзовать E-mail клиент, установите любой E-mail клиент", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void displayUnknownError(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Произошла непредвиденная ошибка, попробуйте повторить операцию позже");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        try {
+            builder.show();
+        } catch (WindowManager.BadTokenException ignored) {
+        }
+    }
+
+    public static void displayUnknownError(Context context, DialogInterface.OnClickListener okListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Произошла непредвиденная ошибка, попробуйте повторить операцию позже");
+        builder.setPositiveButton("OK", okListener);
+        try {
+            builder.show();
+        } catch (WindowManager.BadTokenException ignored) {
+        }
+    }
+
+
+    public static void displayOkMessage(Context context, int message, DialogInterface.OnClickListener okListener) {
+        displayOkMessage(context, context.getString(message), okListener);
+    }
+
+    public static void displayOkMessage(Context context, int message, int title, DialogInterface.OnClickListener okListener) {
+        displayOkMessage(context, context.getString(message), context.getString(title), okListener);
+    }
+
+    public static void displayOkMessage(Context context, String message, DialogInterface.OnClickListener okListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", okListener);
+        try {
+            builder.show();
+        } catch (WindowManager.BadTokenException ignored) {
+            ignored.printStackTrace();
+        }
+    }
+
+    public static void displayOkMessage(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setTitle(title);
+        builder.setPositiveButton("OK", okListener);
+        try {
+            builder.show();
+        } catch (WindowManager.BadTokenException ignored) {
+        }
+    }
+
+    public static boolean checkEditTextFieldsIsEmpty(EditText... views) {
+        for (EditText view : views) {
+            if (view.getText().toString().trim().isEmpty()) return true;
+        }
+        return false;
+    }
+
+    public static void showError(Context context, EditText view, int messageId) {
+        view.setError(context.getString(messageId));
+        view.requestFocus();
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = context.getResources().getDimensionPixelSize(resourceId);
+            }
+        }
+        return result;
+    }
+
+    public interface OnSoftInputStateListener {
+
+        void onOpened();
+
+        void onClosed();
+    }
+
+}

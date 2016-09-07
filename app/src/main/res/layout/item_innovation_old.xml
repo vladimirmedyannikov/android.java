@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout style="@style/item.linear"
               xmlns:android="http://schemas.android.com/apk/res/android"
-              android:padding="@dimen/pd_xxsmall">
+              android:padding="@dimen/pd_xsmall">
 
     <TextView
         android:id="@+id/title"
@@ -11,5 +11,4 @@
         android:id="@+id/innEndedDate"
         style="@style/text.gray"
         android:text="@string/innovation_ended"/>
-
 </LinearLayout>

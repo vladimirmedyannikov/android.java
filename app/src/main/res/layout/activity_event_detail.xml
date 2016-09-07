@@ -10,7 +10,7 @@
 
         <TextView
             android:id="@+id/description"
-            style="@style/root"
+            style="@style/text"
             android:padding="@dimen/pd_xsmall"
             android:scrollbars="vertical"
             android:textSize="@dimen/ts_normal"/>

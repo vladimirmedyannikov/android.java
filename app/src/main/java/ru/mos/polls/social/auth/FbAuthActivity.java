@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -26,6 +25,7 @@ import java.util.Arrays;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.util.GuiUtils;
 
 
 public class FbAuthActivity extends BaseActivity {
@@ -64,6 +64,16 @@ public class FbAuthActivity extends BaseActivity {
         @Override
         public void onError(FacebookException error) {
             Log.d("FB_CLBCK", error.toString());
+            String message = String.format(getString(R.string.error_auth_fb_message), error.getMessage());
+            DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            };
+            GuiUtils.displayOkMessage(FbAuthActivity.this,
+                    message,
+                    okListener);
         }
     };
 

@@ -3,11 +3,14 @@ package ru.mos.polls.social.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +22,7 @@ import java.util.Map;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Statistics;
 import ru.mos.elk.api.API;
+import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
@@ -359,7 +363,7 @@ public abstract class AgSocialApiController {
      * @param listener callback
      * @param forBind  признак привязки или отвязки соцсети
      */
-    public static void binding(final BaseActivity activity, final Social social, boolean forBind, final SaveSocialListener listener) {
+    public static void binding(final BaseActivity activity, final Social social, final boolean forBind, final SaveSocialListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
         if (AGApplication.IS_SOCIAL_API_V03_ENABLE) {
             url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
@@ -374,23 +378,26 @@ public abstract class AgSocialApiController {
             jsonRequest.put("social", params);
         } catch (JSONException ignored) {
         }
-
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                if (response != null) {
-                    int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;
-                    String state = "";
-                    response = response.optJSONObject("status");
+                if (!forBind) {
+                    if (listener != null) listener.onSaved(social, 0, 0, 0, 0, "");
+                } else {
                     if (response != null) {
-                        freezedPoints = response.optInt("freezed_points");
-                        spentPoints = response.optInt("spent_points");
-                        allPoints = response.optInt("all_points");
-                        currentPoints = response.optInt("current_points");
-                        state = response.optString("response");
-                    }
-                    if (listener != null) {
-                        listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state);
+                        int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;
+                        String state = "";
+                        response = response.optJSONObject("status");
+                        if (response != null) {
+                            freezedPoints = response.optInt("freezed_points");
+                            spentPoints = response.optInt("spent_points");
+                            allPoints = response.optInt("all_points");
+                            currentPoints = response.optInt("current_points");
+                            state = response.optString("response");
+                        }
+                        if (listener != null) {
+                            listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state);
+                        }
                     }
                 }
             }

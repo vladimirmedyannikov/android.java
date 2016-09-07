@@ -108,6 +108,7 @@ public class EventActivity extends ToolbarAbstractActivity {
     private SocialController socialController;
     private UIEventBuilder uiEventBuilder = new UIEventBuilder();
     private MenuItem subscribeMenuItem;
+    private boolean isEventLoaded, isGPSEnableDialogShowed, isRuntimePermissionRejected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +122,36 @@ public class EventActivity extends ToolbarAbstractActivity {
         boolean isEventIdExist = getEventId();
         getFilter();
         getEventPosition();
-        getLocationController();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiEventBuilder.findViews();
         socialController = new SocialController(this);
-        if (isEventIdExist) {
-            refreshEvent();
-        }
+
         Statistics.enterEventTicket(eventId);
         SocialUIController.registerPostingReceiver(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LocationController.isLocationProviderEnable(this)) {
+            if (!isRuntimePermissionRejected) {
+                getLocationController();
+            }
+        } else {
+            if (!isGPSEnableDialogShowed) {
+                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        refreshEvent();
+                    }
+                };
+                LocationController.showDialogEnableGPS(this, cancelListener);
+                isGPSEnableDialogShowed = true;
+            } else {
+                refreshEvent();
+            }
+        }
     }
 
     @Override
@@ -207,16 +229,22 @@ public class EventActivity extends ToolbarAbstractActivity {
             @Override
             public void onGet(Position position) {
                 currentPosition = position;
+                if (!isEventLoaded) {
+                    isEventLoaded = true;
+                    refreshEvent();
+                }
             }
         });
-        currentPosition = locationController.getCurrentPosition();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (!locationController.onRequestPermissionsResult(this, requestCode, grantResults)) {
-            finish();
+        if (locationController.onRequestPermissionsResult(this, requestCode, grantResults)) {
+            getLocationController();
+        } else {
+            isRuntimePermissionRejected = true;
+            refreshEvent();
         }
     }
 
@@ -284,6 +312,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 refreshControls(event);
                 uiEventBuilder.setUIVisible(View.VISIBLE);
                 processMenu();
+                isEventLoaded = true;
             }
 
             @Override
@@ -291,10 +320,11 @@ public class EventActivity extends ToolbarAbstractActivity {
                 String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
                 Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 uiEventBuilder.setUIVisible(View.VISIBLE);
+                isEventLoaded = false;
             }
         };
         uiEventBuilder.setUIVisible(View.GONE);
-        EventAPIController.loadEvent(this, eventId, eventPosition, eventListener);
+        EventAPIController.loadEvent(this, eventId, currentPosition, eventListener);
     }
 
     private void refreshControls(Event event) {
@@ -365,6 +395,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                  * если нет, то показываем диалог с предложением включить
                  */
                 if (!locationController.isLocationProviderEnable(EventActivity.this)) {
+                    locationController.showDialogEnableGPS(EventActivity.this, null);
                     return;
                 }
                 /**
@@ -423,25 +454,6 @@ public class EventActivity extends ToolbarAbstractActivity {
         }
 
         public void findViews() {
-//            imagesViewPager = (ViewPager) findViewById(R.id.imageViewPager);
-//            name = (TextView) findViewById(R.id.name);
-//            avrRating = (RatingBar) findViewById(R.id.avrRating);
-//            address = (TextView) findViewById(R.id.address);
-//            checkIn = (LinearLayout) findViewById(R.id.checkIn);
-//            buttonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
-//            comment = (DrawableAlignedButton) findViewById(R.id.comment);
-//            comment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = EventCommentsListActivity.getStartIntent(EventActivity.this, eventId, event.getType());
-//                    startActivity(intent);
-//                }
-//            });
-//            screen = (LinearLayout) findViewById(R.id.screen);
-//            detailContainer = (LinearLayout) findViewById(R.id.shortContainer);
-//            titleCheckIn = (TextView) findViewById(R.id.title);
-//            subtitleCheckIn = (TextView) findViewById(R.id.subtitle);
-//            pin = (ImageView) findViewById(R.id.pin);
             isInit = true;
         }
 
@@ -679,6 +691,5 @@ public class EventActivity extends ToolbarAbstractActivity {
                 return view.equals(object);
             }
         }
-
     }
 }

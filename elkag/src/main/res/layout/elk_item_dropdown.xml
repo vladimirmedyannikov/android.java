@@ -7,11 +7,12 @@
     <TextView
         android:id="@+id/tvTitle"
         android:textSize="8pt"
-        android:textColor="@color/elk_mainTextColor"
+        android:textColor="#fff"
         android:drawablePadding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|left"
+        android:background="#0eb0a0"
         android:paddingBottom="16dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"

@@ -214,6 +214,10 @@ public abstract class SocialUIController {
         View innerView = View.inflate(context, R.layout.layout_posting_dialog, null);
         final TextView message = (TextView) innerView.findViewById(R.id.message);
         final TextView warning = (TextView) innerView.findViewById(R.id.warning);
+        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
+            socialPostValue.setText(AgTextUtil.stripLengthText(socialPostValue.getText(),
+                    SocialPostValue.MAX_TWEET_POST_LENGTH - 3));
+        }
         String post = String.format(context.getString(R.string.public_text), socialPostValue.getText());
         if (!socialPostValue.isEnable()) {
             post = String.format(context.getString(R.string.you_share_yet), socialPostValue.getText());
@@ -222,10 +226,6 @@ public abstract class SocialUIController {
         if ((socialPostValue.forTwitter() || socialPostValue.forOk()) && socialPostValue.isPostMuchLong()) {
             warning.setVisibility(View.VISIBLE);
             warning.setText(socialPostValue.getWarningTitle(context));
-        }
-        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
-            socialPostValue.setText(AgTextUtil.stripLengthText(socialPostValue.getText(),
-                    SocialPostValue.MAX_TWEET_POST_LENGTH - 3));
         }
         dialog.setView(innerView);
         /**

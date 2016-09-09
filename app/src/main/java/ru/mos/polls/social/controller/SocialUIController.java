@@ -534,7 +534,7 @@ public abstract class SocialUIController {
                 @Override
                 public void failure(TwitterException e) {
                     Log.e(Error.POSTING_ERROR, e.getMessage());
-                    SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, new Exception(AgTextUtil.stripNonDigits(e.getMessage())));
                 }
             });
         } catch (IllegalStateException e) {
@@ -673,7 +673,7 @@ public abstract class SocialUIController {
         if (postingException != null) {
             int errorCode = -1;
             try {
-                errorCode = Integer.parseInt(AgTextUtil.stripNonDigits(postingException.getMessage()));
+                errorCode = Integer.parseInt(postingException.getMessage());
             } catch (Exception ignored) {
                 Log.e(Error.POSTING_ERROR, ignored.getMessage());
             }

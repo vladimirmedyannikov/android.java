@@ -178,7 +178,12 @@ public class QuestsFragment extends PullableFragment {
                     coutNews++;
                 }
             }
-            if (menu != null) menu.findItem(R.id.hideNews).setVisible(coutNews > 10);
+            if (menu != null) {
+                MenuItem hideNews = menu.findItem(R.id.hideNews);
+                if (hideNews != null) {
+                    hideNews.setVisible(coutNews > 10);
+                }
+            }
         }
     }
 

@@ -224,7 +224,8 @@ public abstract class SocialUIController {
             warning.setText(socialPostValue.getWarningTitle(context));
         }
         if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
-            socialPostValue.setText(AgTextUtil.stripLenghtText(socialPostValue.getText()));
+            socialPostValue.setText(AgTextUtil.stripLengthText(socialPostValue.getText(),
+                    SocialPostValue.MAX_TWEET_POST_LENGTH - 3));
         }
         dialog.setView(innerView);
         /**
@@ -537,7 +538,7 @@ public abstract class SocialUIController {
                     SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
                 }
             });
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             Log.e(Error.POSTING_ERROR, e.getMessage());
             clearAndUnbindSocial(baseActivity, SocialManager.SOCIAL_ID_TW);
             AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);

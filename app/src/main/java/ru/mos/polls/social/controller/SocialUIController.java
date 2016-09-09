@@ -223,7 +223,9 @@ public abstract class SocialUIController {
             warning.setVisibility(View.VISIBLE);
             warning.setText(socialPostValue.getWarningTitle(context));
         }
-
+        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
+            socialPostValue.setText(AgTextUtil.stripLenghtText(socialPostValue.getText()));
+        }
         dialog.setView(innerView);
         /**
          * Скрываем кнопку продолжить, если постим для твиттера и сообщение слишком длинное
@@ -521,19 +523,27 @@ public abstract class SocialUIController {
     }
 
     public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
-        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
-            @Override
-            public void success(Result<Tweet> result) {
-                Log.d("TW_SUCCESS", result.data.text);
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
-            }
+        try {
+            TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+                @Override
+                public void success(Result<Tweet> result) {
+                    Log.d("TW_SUCCESS", result.data.text);
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+                }
 
-            @Override
-            public void failure(TwitterException e) {
-                Log.e(Error.POSTING_ERROR, e.getMessage());
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
-            }
-        });
+                @Override
+                public void failure(TwitterException e) {
+                    Log.e(Error.POSTING_ERROR, e.getMessage());
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
+                }
+            });
+        } catch (IllegalStateException e) {
+            Log.e(Error.POSTING_ERROR, e.getMessage());
+            clearAndUnbindSocial(baseActivity, SocialManager.SOCIAL_ID_TW);
+            AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
+            builder.setMessage(R.string.error_expired_access_token)
+                    .setPositiveButton(R.string.ag_ok, null).show();
+        }
     }
 
     public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
@@ -663,11 +673,9 @@ public abstract class SocialUIController {
         if (postingException != null) {
             int errorCode = -1;
             try {
-                errorCode = Integer.parseInt(postingException.getMessage());
+                errorCode = Integer.parseInt(AgTextUtil.stripNonDigits(postingException.getMessage()));
             } catch (Exception ignored) {
-            }
-            if (socialId == SocialManager.SOCIAL_ID_TW) {
-                errorCode = Integer.parseInt(AgTextUtil.stripNonDigitsV2(postingException.getMessage()));
+                Log.e(Error.POSTING_ERROR, ignored.getMessage());
             }
             switch (socialId) {
                 case SocialManager.SOCIAL_ID_FB:

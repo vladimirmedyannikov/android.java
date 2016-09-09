@@ -673,6 +673,7 @@ public abstract class SocialUIController {
             try {
                 errorCode = Integer.parseInt(AgTextUtil.stripNonDigits(postingException.getMessage()));
             } catch (Exception ignored) {
+                Log.e(Error.POSTING_ERROR, ignored.getMessage());
             }
             switch (socialId) {
                 case SocialManager.SOCIAL_ID_FB:

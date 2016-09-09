@@ -521,19 +521,27 @@ public abstract class SocialUIController {
     }
 
     public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
-        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
-            @Override
-            public void success(Result<Tweet> result) {
-                Log.d("TW_SUCCESS", result.data.text);
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
-            }
+        try {
+            TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+                @Override
+                public void success(Result<Tweet> result) {
+                    Log.d("TW_SUCCESS", result.data.text);
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+                }
 
-            @Override
-            public void failure(TwitterException e) {
-                Log.e(Error.POSTING_ERROR, e.getMessage());
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
-            }
-        });
+                @Override
+                public void failure(TwitterException e) {
+                    Log.e(Error.POSTING_ERROR, e.getMessage());
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
+                }
+            });
+        } catch (IllegalStateException e) {
+            Log.e(Error.POSTING_ERROR, e.getMessage());
+            clearAndUnbindSocial(baseActivity, SocialManager.SOCIAL_ID_TW);
+            AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
+            builder.setMessage(R.string.error_expired_access_token)
+                    .setPositiveButton(R.string.ag_ok, null).show();
+        }
     }
 
     public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {

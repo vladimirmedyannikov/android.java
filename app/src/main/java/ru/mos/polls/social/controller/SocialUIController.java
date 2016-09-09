@@ -223,7 +223,9 @@ public abstract class SocialUIController {
             warning.setVisibility(View.VISIBLE);
             warning.setText(socialPostValue.getWarningTitle(context));
         }
-
+        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
+            socialPostValue.setText(AgTextUtil.stripLenghtText(socialPostValue.getText()));
+        }
         dialog.setView(innerView);
         /**
          * Скрываем кнопку продолжить, если постим для твиттера и сообщение слишком длинное

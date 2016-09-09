@@ -20,4 +20,9 @@ public abstract class AgTextUtil {
         }
         return new String(result, 0, cursor);
     }
+
+    public static String stripLenghtText(String text) {
+        String stripedText = text.substring(0, 112);
+        return stripedText + "...";
+    }
 }

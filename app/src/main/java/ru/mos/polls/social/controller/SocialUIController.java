@@ -214,6 +214,10 @@ public abstract class SocialUIController {
         View innerView = View.inflate(context, R.layout.layout_posting_dialog, null);
         final TextView message = (TextView) innerView.findViewById(R.id.message);
         final TextView warning = (TextView) innerView.findViewById(R.id.warning);
+        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
+            socialPostValue.setText(AgTextUtil.stripLengthText(socialPostValue.getText(),
+                    SocialPostValue.MAX_TWEET_POST_LENGTH - 3));
+        }
         String post = String.format(context.getString(R.string.public_text), socialPostValue.getText());
         if (!socialPostValue.isEnable()) {
             post = String.format(context.getString(R.string.you_share_yet), socialPostValue.getText());
@@ -223,7 +227,6 @@ public abstract class SocialUIController {
             warning.setVisibility(View.VISIBLE);
             warning.setText(socialPostValue.getWarningTitle(context));
         }
-
         dialog.setView(innerView);
         /**
          * Скрываем кнопку продолжить, если постим для твиттера и сообщение слишком длинное
@@ -521,19 +524,27 @@ public abstract class SocialUIController {
     }
 
     public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
-        TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
-            @Override
-            public void success(Result<Tweet> result) {
-                Log.d("TW_SUCCESS", result.data.text);
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
-            }
+        try {
+            TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+                @Override
+                public void success(Result<Tweet> result) {
+                    Log.d("TW_SUCCESS", result.data.text);
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
+                }
 
-            @Override
-            public void failure(TwitterException e) {
-                Log.e(Error.POSTING_ERROR, e.getMessage());
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, e);
-            }
-        });
+                @Override
+                public void failure(TwitterException e) {
+                    Log.e(Error.POSTING_ERROR, e.getMessage());
+                    SocialUIController.showPostingResult(baseActivity, socialPostValue, new Exception(AgTextUtil.stripNonDigits(e.getMessage())));
+                }
+            });
+        } catch (Exception e) {
+            Log.e(Error.POSTING_ERROR, e.getMessage());
+            clearAndUnbindSocial(baseActivity, SocialManager.SOCIAL_ID_TW);
+            AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
+            builder.setMessage(R.string.error_expired_access_token)
+                    .setPositiveButton(R.string.ag_ok, null).show();
+        }
     }
 
     public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
@@ -665,9 +676,7 @@ public abstract class SocialUIController {
             try {
                 errorCode = Integer.parseInt(postingException.getMessage());
             } catch (Exception ignored) {
-            }
-            if (socialId == SocialManager.SOCIAL_ID_TW) {
-                errorCode = Integer.parseInt(AgTextUtil.stripNonDigitsV2(postingException.getMessage()));
+                Log.e(Error.POSTING_ERROR, ignored.getMessage());
             }
             switch (socialId) {
                 case SocialManager.SOCIAL_ID_FB:

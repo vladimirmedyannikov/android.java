@@ -6,9 +6,10 @@ package ru.mos.polls;
  * @since 1.8
  */
 public class UrlManager {
+    public static String V210 = "2.1.0";
 
     public static String url(String controller, String method) {
-        return String.format("v%s/%s/%s", BuildConfig.VERSION_NAME, controller, method);
+        return String.format("v%s/%s/%s", V210/*BuildConfig.VERSION_NAME*/, controller, method);
     }
 
     public interface Controller {

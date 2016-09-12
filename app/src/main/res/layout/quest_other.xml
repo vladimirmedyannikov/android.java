@@ -7,8 +7,6 @@
     <RelativeLayout
         android:id="@+id/front"
         style="@style/root"
-        android:layout_marginBottom="@dimen/pd_xxsmall"
-        android:layout_marginTop="@dimen/pd_xxsmall"
         android:background="@drawable/quest_background_orange"
         android:gravity="center"
         android:tag="front">

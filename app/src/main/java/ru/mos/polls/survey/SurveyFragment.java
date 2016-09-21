@@ -158,15 +158,17 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
     };
 
     private void getVariantList() {
-        List<SurveyQuestion> questionList = survey.getQuestionsList();
-        selectSurveyVariantList = new SparseArray<>();
-        for (SurveyQuestion question : questionList) {
-            List<SurveyVariant> variantList = question.getVariantsList();
-            for (SurveyVariant variant : variantList) {
-                if (variant instanceof SelectSurveyVariant) {
-                    //кладем ответ в список где ключ его id
-                    SelectSurveyVariant selectVariant = (SelectSurveyVariant) variant;
-                    selectSurveyVariantList.append(Integer.parseInt(selectVariant.getBackId()), selectVariant);
+        if (survey != null) {
+            List<SurveyQuestion> questionList = survey.getQuestionsList();
+            selectSurveyVariantList = new SparseArray<>();
+            for (SurveyQuestion question : questionList) {
+                List<SurveyVariant> variantList = question.getVariantsList();
+                for (SurveyVariant variant : variantList) {
+                    if (variant instanceof SelectSurveyVariant) {
+                        //кладем ответ в список где ключ его id
+                        SelectSurveyVariant selectVariant = (SelectSurveyVariant) variant;
+                        selectSurveyVariantList.append(Integer.parseInt(selectVariant.getBackId()), selectVariant);
+                    }
                 }
             }
         }

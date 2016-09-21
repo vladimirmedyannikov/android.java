@@ -23,11 +23,11 @@ import ru.mos.polls.model.PointHistory;
  */
 public class StatusFragment extends PullableFragment {
     @BindView(R.id.tvPoints)
-    protected TextView tvPoints;
+    TextView tvPoints;
     @BindView(R.id.tvStatus)
-    protected TextView tvStatus;
+    TextView tvStatus;
     @BindView(R.id.tvTitleBalance)
-    protected TextView tvTitleBalance;
+    TextView tvTitleBalance;
 
     /**
      * Хранит текущий тип списка баллов
@@ -53,9 +53,6 @@ public class StatusFragment extends PullableFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         currentAction = PointHistory.Action.ALL;
-//        tvStatus = (TextView) view.findViewById(R.id.tvStatus);
-//        tvPoints = (TextView) view.findViewById(R.id.tvPoints);
-//        tvTitleBalance = (TextView) view.findViewById(R.id.tvTitleBalance);
     }
 
     @Override
@@ -97,13 +94,15 @@ public class StatusFragment extends PullableFragment {
     }
 
     protected void processStatus() {
-        tvStatus.setVisibility(View.VISIBLE);
-        String status = PointsManager.getStatus(getActivity());
-        if (!TextUtils.isEmpty(status) && !"null".equalsIgnoreCase(status)) {
-            status = String.format(getString(R.string.state), status);
-            tvStatus.setText(status);
-        } else {
-            tvStatus.setVisibility(View.GONE);
+        if (tvStatus != null) {
+            tvStatus.setVisibility(View.VISIBLE);
+            String status = PointsManager.getStatus(getActivity());
+            if (!TextUtils.isEmpty(status) && !"null".equalsIgnoreCase(status)) {
+                status = String.format(getString(R.string.state), status);
+                tvStatus.setText(status);
+            } else {
+                tvStatus.setVisibility(View.GONE);
+            }
         }
     }
 

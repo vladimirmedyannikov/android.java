@@ -153,41 +153,40 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
                 cookieManager.setCookie(host, sessionCookie);
                 CookieSyncManager.getInstance().sync();
             }
-            WebSettings webSettings = webView.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setBuiltInZoomControls(true);
-            webSettings.setSupportZoom(true);
-            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-            webView.invokeZoomPicker();
-            webView.setWebViewClient(new WebViewClient() {
-
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    if (url.startsWith("mailto:")) {
-                        MailTo mt = MailTo.parse(url);
-                        Intent i = newEmailIntent(activity, mt.getTo(), mt.getSubject(), mt.getBody(), mt.getCc());
-                        startActivity(i);
-                        view.reload();
-                        return true;
+            if (webView != null) {
+                WebSettings webSettings = webView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                webSettings.setBuiltInZoomControls(true);
+                webSettings.setSupportZoom(true);
+                webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+                webView.invokeZoomPicker();
+                webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        if (url.startsWith("mailto:")) {
+                            MailTo mt = MailTo.parse(url);
+                            Intent i = newEmailIntent(activity, mt.getTo(), mt.getSubject(), mt.getBody(), mt.getCc());
+                            startActivity(i);
+                            view.reload();
+                            return true;
+                        }
+                        return super.shouldOverrideUrlLoading(view, url);
                     }
-                    return super.shouldOverrideUrlLoading(view, url);
-                }
 
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        super.onPageStarted(view, url, favicon);
+                        showLoadingProgress(true);
+                    }
 
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    super.onPageStarted(view, url, favicon);
-                    showLoadingProgress(true);
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    showLoadingProgress(false);
-                }
-            });
-
-            webView.loadUrl(url);
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+                        showLoadingProgress(false);
+                    }
+                });
+                webView.loadUrl(url);
+            }
         }
     }
 

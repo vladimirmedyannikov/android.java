@@ -59,6 +59,7 @@ public class FbAuthActivity extends BaseActivity {
         @Override
         public void onCancel() {
             Log.d("FB_CLBCK", "cancel");
+            finish();
         }
 
         @Override

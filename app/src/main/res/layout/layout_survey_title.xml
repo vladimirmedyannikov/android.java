@@ -10,8 +10,7 @@
             style="@style/linear"
             android:layout_marginBottom="@dimen/pd_normal"
             android:background="@color/white"
-            android:paddingBottom="@dimen/pd_normal"
-            android:paddingTop="@dimen/pd_xxsmall">
+            android:paddingBottom="@dimen/pd_normal">
 
             <TextView
                 android:id="@+id/title"
@@ -26,6 +25,15 @@
                 style="@style/text.green"
                 android:layout_marginLeft="@dimen/pd_xxsmall"
                 android:layout_marginRight="@dimen/pd_xxsmall"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/hearingQuestion"
+                style="@style/text.normal.black"
+                android:layout_marginBottom="@dimen/pd_xxsmall"
+                android:layout_marginLeft="@dimen/pd_xxsmall"
+                android:layout_marginRight="@dimen/pd_xxsmall"
+                android:paddingTop="@dimen/pd_xsmall"
                 android:visibility="gone"/>
 
             <ru.mos.polls.survey.hearing.gui.view.HearingInfoView

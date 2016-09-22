@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
@@ -30,6 +31,8 @@ public class SurveyTitleView extends HtmlTitleView {
 
     private TextView price;
     private HearingInfoView hearingInfoView;
+    @BindView(R.id.hearingQuestion)
+    TextView hearingQuestion;
 
     private long pollId, questionId;
     private boolean isNeedHearingInfo;
@@ -81,10 +84,13 @@ public class SurveyTitleView extends HtmlTitleView {
             /**
              * Для публичных слушаний логика отображения заголовка меняется
              * Всегда показывает стоимость и заголовок для страницы вопроса {@link ru.mos.polls.survey.SurveyFragment}
+             * C версии 2.2.0 показываем стоимость и вопрос для публичного слушания, заголовок убираем
              */
             displayPriceForHearing(survey);
             if (survey.getKind().isHearing()) {
-                displayTitle(survey);
+                title.setVisibility(GONE);
+                hearingQuestion.setVisibility(VISIBLE);
+                hearingQuestion.setText(text.getQuestion());
             }
         }
     }
@@ -117,6 +123,7 @@ public class SurveyTitleView extends HtmlTitleView {
     protected View getView() {
         View result = super.getView();
         price = ButterKnife.findById(result, R.id.price);
+        hearingQuestion = ButterKnife.findById(result, R.id.hearingQuestion);
         hearingInfoView = ButterKnife.findById(result, R.id.hearingInfo);
         hearingInfoView.setVisibility(View.GONE);
         return result;

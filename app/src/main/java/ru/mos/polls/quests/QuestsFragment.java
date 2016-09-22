@@ -366,7 +366,9 @@ public class QuestsFragment extends PullableFragment {
                     errorMessage = activity.getString(R.string.rempte_service_not_work);
                 }
                 Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show();
-                listView.setVisibility(View.GONE);
+                if (listView != null) {
+                    listView.setVisibility(View.GONE);
+                }
                 empty.setVisibility(View.GONE);
                 stubOffline.setVisibility(View.VISIBLE);
                 getPullToRefreshLayout().setRefreshing(false);

@@ -3,14 +3,11 @@ package ru.mos.polls.social.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
-import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +19,6 @@ import java.util.Map;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Statistics;
 import ru.mos.elk.api.API;
-import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
@@ -32,6 +28,7 @@ import ru.mos.polls.UrlManager;
 import ru.mos.polls.http.HttpUtils;
 import ru.mos.polls.http.Request;
 import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.social.model.Error;
 import ru.mos.polls.social.model.Message;
 import ru.mos.polls.social.model.Social;
 import ru.mos.polls.social.model.SocialPostItem;
@@ -406,6 +403,10 @@ public abstract class AgSocialApiController {
             @Override
             public void onErrorResponse(VolleyError error) {
                 onError(activity, error);
+                if (error.getErrorCode() == Error.Vk.ERROR_TOKKEN_EXPIRED) {
+                    SocialManager.clearAuth(activity, social.getSocialId());
+                    unbindSocialFromAg(activity, social, null);
+                }
                 if (listener != null) {
                     listener.onError(social);
                 }
@@ -422,7 +423,11 @@ public abstract class AgSocialApiController {
     private static void onError(Context context, VolleyError volleyError) {
         hideProgress();
         if (volleyError != null) {
-            Toast.makeText(context, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+            if (volleyError.getErrorCode() == Error.Vk.ERROR_TOKKEN_EXPIRED) {
+                SocialUIController.showSimpleDialog(context, context.getString(R.string.error_expired_access_token));
+            } else {
+                Toast.makeText(context, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -754,7 +754,7 @@ public abstract class SocialUIController {
      * @param context
      * @param message текст сообщения для пользователя
      */
-    private static void showSimpleDialog(Context context, String message) {
+    public static void showSimpleDialog(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

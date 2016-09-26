@@ -56,9 +56,6 @@ public class NotActivePollAdapter extends ArrayAdapter<Poll> {
                 sb.append(String.format(getContext().getString(R.string.title_passed_polls_with_zero_points), " "));
             }
             sb.append(sdf.format(poll.getPassedDate()));
-            if (poll.getKind().isSpecial()) {
-                sb.append(", " + getContext().getString(R.string.special_hearing).toLowerCase());
-            }
             if (poll.getKind().isHearing()) {
                 sb.append(", " + getContext().getString(R.string.title_hearing_survey_summary).toLowerCase());
             }

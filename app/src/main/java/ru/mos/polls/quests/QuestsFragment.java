@@ -174,7 +174,7 @@ public class QuestsFragment extends PullableFragment {
         if (quests != null) {
             for (Quest q : quests) {
                 String type = ((BackQuest) q).getType();
-                if (type.equals("news") || type.equals("results") || type.equals("other")) {
+                if (type.equals("news") || type.equals("results")) {
                     coutNews++;
                 }
             }

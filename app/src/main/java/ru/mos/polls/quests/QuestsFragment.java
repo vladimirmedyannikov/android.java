@@ -401,6 +401,7 @@ public class QuestsFragment extends PullableFragment {
                      * При добавлении хедера,
                      * смещается клик на одну позицию
                      */
+                    hideNewsMenu();
                     if (listView.getHeaderViewsCount() > 0) {
                         ++position;
                     }

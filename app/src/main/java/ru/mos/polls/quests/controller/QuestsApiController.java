@@ -1,6 +1,7 @@
 package ru.mos.polls.quests.controller;
 
 
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.android.volley2.Response;
@@ -17,6 +18,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.quests.quest.AchievementQuest;
 import ru.mos.polls.quests.quest.AdvertisementQuest;
@@ -60,6 +62,9 @@ public abstract class QuestsApiController {
     public static void hideAllNews(BaseActivity elkActivity, List<Quest> quests, final HideQuestListner listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.HIDE_GROUP));
         JSONObject requestJson = new JSONObject();
+        final ProgressDialog pd = new ProgressDialog(elkActivity, R.style.ProgressBar);
+        pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+        pd.show();
         ArrayList<String> idsList = null;
         try {
             requestJson.put("type", "allNews");
@@ -82,12 +87,18 @@ public abstract class QuestsApiController {
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                if (pd != null) {
+                    pd.dismiss();
+                }
                 listener.hideQuests(finalIdsList);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                if (pd != null) {
+                    pd.dismiss();
+                }
                 Log.d("volleyError", volleyError.getMessage());
             }
         };

@@ -18,7 +18,7 @@
     <color name="orange">#f67900</color>
     <color name="black">#000000</color>
     <color name="black_light">#141515</color>
-
+    <color name="transparent">#00000000</color>
 
     <color name="authErrorColor">@color/green_pale</color>
     <color name="mainGreenColor">@color/green_light</color>

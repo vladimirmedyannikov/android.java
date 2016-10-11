@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/ptrLayout"
@@ -8,21 +8,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true">
 
-        <com.fortysevendeg.swipelistview.SwipeListView
-            android:id="@id/list"
-            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@android:color/transparent"
-            android:listSelector="@android:color/transparent"
-            android:scrollbarStyle="insideOverlay"
-            swipe:swipeActionLeft="reveal"
-            swipe:swipeActionRight="reveal"
-            swipe:swipeBackView="@+id/back"
-            swipe:swipeCloseAllItemsWhenMoveList="true"
-            swipe:swipeFrontView="@+id/front"
-            swipe:swipeMode="both"/>
+            android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -34,7 +24,7 @@
         <TextView
             style="@style/text.large.gray"
             android:padding="@dimen/pd_xsmall"
-            android:text="@string/empty_quest_list"/>
+            android:text="@string/empty_quest_list" />
         <!--Социальные сети-->
         <LinearLayout
             style="@style/item.linear"
@@ -45,7 +35,7 @@
                 android:id="@+id/subscribe"
                 style="@style/basicIcon"
                 android:drawableLeft="@drawable/rss"
-                android:text="@string/do_subscribe"/>
+                android:text="@string/do_subscribe" />
         </LinearLayout>
     </LinearLayout>
     <!--Заглушка при отсутсвии интернета -->
@@ -64,7 +54,7 @@
                 android:id="@+id/refresh"
                 style="@style/button.centered"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/refresh"/>
+                android:text="@string/refresh" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -11,6 +11,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -64,10 +67,10 @@ import ru.mos.polls.subscribes.gui.SubscribeActivity;
 public class QuestsFragment extends PullableFragment {
 
     @BindView(R.id.list)
-    SwipeListView listView;
+    RecyclerView listView;
     @BindView(R.id.empty)
     LinearLayout empty;
-    private QuestsAdapter adapter;
+    //    private QuestsAdapter adapter;
     private Listener listener = new QuestsListenerStub();
     @BindView(R.id.stubOffline)
     View stubOffline;
@@ -77,20 +80,27 @@ public class QuestsFragment extends PullableFragment {
     private View listHeaderView, headerRoot;
     private Unbinder unbinder;
     private Menu menu;
-
+    public QuestsItemAdapter adapter;
+    public ItemTouchHelper mItemTouchHelper;
+    ItemTouchHelper.Callback callback;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_quests, container, false);
         unbinder = ButterKnife.bind(this, root);
-        listView.setEmptyView(empty);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        listView.setLayoutManager(layoutManager);
+        listView.addItemDecoration(new SpacesItemDecoration(20));
         listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
         headerRoot = ButterKnife.findById(listHeaderView, R.id.headerRoot);
         userAvatarImageView = ButterKnife.findById(listHeaderView, R.id.userAvatar);
-        listView.addHeaderView(listHeaderView);
+//        listView.addHeaderView(listHeaderView);
         quests = new ArrayList<>();
-        adapter = new QuestsAdapter(getActivity(), quests);
+        adapter = new QuestsItemAdapter(getActivity(), quests);
         listView.setAdapter(adapter);
-        ListViewHelper.clearScrollableState();
+        callback = new SwipeItemTouchHelper(listView, adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(listView);
+//        ListViewHelper.clearScrollableState();
         return root;
     }
 
@@ -263,14 +273,14 @@ public class QuestsFragment extends PullableFragment {
         /**
          * Восстанавливаем позиция скролла и перезапрашиваем список заданий
          */
-        ListViewHelper.restoreScrollableState(QuestsFragment.class.getName(), listView);
+//        ListViewHelper.restoreScrollableState(QuestsFragment.class.getName(), listView);
         update(null, null);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        ListViewHelper.saveScrollableState(QuestsFragment.class.getName(), listView);
+//        ListViewHelper.saveScrollableState(QuestsFragment.class.getName(), listView);
     }
 
     public void setListener(Listener listener) {
@@ -290,7 +300,7 @@ public class QuestsFragment extends PullableFragment {
     private void update(final Response.Listener<Object> addRespListener, final Response.ErrorListener addErrListener) {
         final BaseActivity activity = ((BaseActivity) getActivity());
         stubOffline.setVisibility(View.GONE);
-        if (adapter == null || adapter.getCount() == 0) {
+        if (adapter == null || adapter.getItemCount() == 0) {
             empty.setVisibility(View.GONE);
         }
 
@@ -307,16 +317,16 @@ public class QuestsFragment extends PullableFragment {
                 List<Quest> loadedListQuests = Arrays.asList(loadedQuests);
                 loadedListQuests = prepareQuests(loadedListQuests);
                 loadedListQuests = QuestStateController.getInstance().process(loadedListQuests);
-                ListViewHelper.saveScrollableState(QuestsFragment.class.getName(), listView);
+//                ListViewHelper.saveScrollableState(QuestsFragment.class.getName(), listView);
                 quests.clear();
                 quests.addAll(loadedListQuests);
                 adapter.notifyDataSetChanged();
                 hideNewsMenu();
-                adapter.getCount();
-                setHideListener();
-                setSwipeListener();
+                adapter.getItemCount();
+//                setHideListener();
+//                setSwipeListener();
                 listView.setVisibility(View.VISIBLE);
-                ListViewHelper.restoreScrollableState(QuestsFragment.class.getName(), listView);
+//                ListViewHelper.restoreScrollableState(QuestsFragment.class.getName(), listView);
 
                 if (addRespListener != null) {
                     addRespListener.onResponse(loadedQuests);
@@ -380,144 +390,144 @@ public class QuestsFragment extends PullableFragment {
         activity.addRequest(questsRequest);
     }
 
-    private void setHideListener() {
-        if (adapter != null) {
-            QuestsAdapter.HideListener hideListener = new QuestsAdapter.HideListener() {
-                @Override
-                public void onCancel(int position) {
-                    /**
-                     * При добавлении хедера,
-                     * смещается клик на одну позицию
-                     */
-                    if (listView.getHeaderViewsCount() > 0) {
-                        ++position;
-                    }
-                    listView.closeAnimate(position);
-                }
-
-                @Override
-                public void onDelete(int position) {
-                    /**
-                     * При добавлении хедера,
-                     * смещается клик на одну позицию
-                     */
-                    hideNewsMenu();
-                    if (listView.getHeaderViewsCount() > 0) {
-                        ++position;
-                    }
-                    listView.dismiss(position);
-                }
-            };
-            adapter.setHideListener(hideListener);
-        }
-    }
-
-    private void setSwipeListener() {
-        if (listView != null) {
-            listView.setSwipeListViewListener(new BaseSwipeListViewListener() {
-                @Override
-                public void onOpened(int position, boolean toRight) {
-                }
-
-                @Override
-                public void onClosed(int position, boolean fromRight) {
-                }
-
-                @Override
-                public void onListChanged() {
-                }
-
-                @Override
-                public void onMove(int position, float x) {
-                }
-
-                @Override
-                public void onStartOpen(int position, int action, boolean right) {
-                }
-
-                @Override
-                public void onStartClose(int position, boolean right) {
-                }
-
-                @Override
-                public void onClickFrontView(int position) {
-                    /**
-                     * При добавлении хедера,
-                     * смещается клик на одну позицию
-                     */
-                    if (listView.getHeaderViewsCount() > 0 && position > 0) {
-                        --position;
-                    }
-
-                    Quest quest = adapter.getItem(position);
-                    if (quest != null) {
-                        quest.onClick(getActivity(), listener);
-                        /**
-                         * Скрываем блок из ленты
-                         */
-                        if (isNeedHide(quest)) {
-                            QuestsApiController.hide((BaseActivity) getActivity(), (BackQuest) quest, null);
-                        }
-                    }
-                }
-
-                @Override
-                public void onClickBackView(int position) {
-                }
-
-                @Override
-                public void onDismiss(int[] reverseSortedPositions) {
-                    try {
-                        for (int position : reverseSortedPositions) {
-                            /**
-                             * Убираем смещение из-за наличия хедера
-                             */
-                            if (listView.getHeaderViewsCount() > 0) {
-                                --position;
-                            }
-                            hideQuest(position);
-                            quests.remove(position);
-                            listView.closeAnimate(position);
-                        }
-                        adapter.notifyDataSetChanged();
-                        listView.refreshDrawableState();
-                        listView.resetScrolling();
-                    } catch (Exception ignored) {
-                    }
-                }
-
-                private void hideQuest(int position) {
-                    if (adapter.getItem(position) instanceof BackQuest) {
-                        BackQuest backQuest = (BackQuest) adapter.getItem(position);
-                        QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
-                            @Override
-                            public void onHide(boolean isHide) {
-                                adapter.notifyDataSetChanged();
-                                listView.refreshDrawableState();
-                                hideNewsMenu();
-                            }
-                        };
-                        QuestsApiController.hide((BaseActivity) getActivity(), backQuest, hideListener);
-                    }
-                }
-
-                /**
-                 * Из-за особенностей обработки клика для блока AdvertisementQuest вызов на
-                 * удаление вызывается внутри блока {@link ru.mos.polls.quests.quest.AdvertisementQuest}
-                 *
-                 * @param quest
-                 * @return
-                 */
-                private boolean isNeedHide(Quest quest) {
-                    return quest instanceof NewsQuest
-                            || quest instanceof OtherQuest
-                            || quest instanceof ResultsQuest
-                            || (quest instanceof RateAppQuest
-                            && SocialQuest.ID_RATE_THIS_APP.equalsIgnoreCase(((SocialQuest) quest).getId()));
-                }
-            });
-        }
-    }
+//    private void setHideListener() {
+//        if (adapter != null) {
+//            QuestsAdapter.HideListener hideListener = new QuestsAdapter.HideListener() {
+//                @Override
+//                public void onCancel(int position) {
+//                    /**
+//                     * При добавлении хедера,
+//                     * смещается клик на одну позицию
+//                     */
+//                    if (listView.getHeaderViewsCount() > 0) {
+//                        ++position;
+//                    }
+//                    listView.closeAnimate(position);
+//                }
+//
+//                @Override
+//                public void onDelete(int position) {
+//                    /**
+//                     * При добавлении хедера,
+//                     * смещается клик на одну позицию
+//                     */
+//                    hideNewsMenu();
+//                    if (listView.getHeaderViewsCount() > 0) {
+//                        ++position;
+//                    }
+//                    listView.dismiss(position);
+//                }
+//            };
+//            adapter.setHideListener(hideListener);
+//        }
+//    }
+//
+//    private void setSwipeListener() {
+//        if (listView != null) {
+//            listView.setSwipeListViewListener(new BaseSwipeListViewListener() {
+//                @Override
+//                public void onOpened(int position, boolean toRight) {
+//                }
+//
+//                @Override
+//                public void onClosed(int position, boolean fromRight) {
+//                }
+//
+//                @Override
+//                public void onListChanged() {
+//                }
+//
+//                @Override
+//                public void onMove(int position, float x) {
+//                }
+//
+//                @Override
+//                public void onStartOpen(int position, int action, boolean right) {
+//                }
+//
+//                @Override
+//                public void onStartClose(int position, boolean right) {
+//                }
+//
+//                @Override
+//                public void onClickFrontView(int position) {
+//                    /**
+//                     * При добавлении хедера,
+//                     * смещается клик на одну позицию
+//                     */
+//                    if (listView.getHeaderViewsCount() > 0 && position > 0) {
+//                        --position;
+//                    }
+//
+//                    Quest quest = adapter.getItem(position);
+//                    if (quest != null) {
+//                        quest.onClick(getActivity(), listener);
+//                        /**
+//                         * Скрываем блок из ленты
+//                         */
+//                        if (isNeedHide(quest)) {
+//                            QuestsApiController.hide((BaseActivity) getActivity(), (BackQuest) quest, null);
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onClickBackView(int position) {
+//                }
+//
+//                @Override
+//                public void onDismiss(int[] reverseSortedPositions) {
+//                    try {
+//                        for (int position : reverseSortedPositions) {
+//                            /**
+//                             * Убираем смещение из-за наличия хедера
+//                             */
+//                            if (listView.getHeaderViewsCount() > 0) {
+//                                --position;
+//                            }
+//                            hideQuest(position);
+//                            quests.remove(position);
+//                            listView.closeAnimate(position);
+//                        }
+//                        adapter.notifyDataSetChanged();
+//                        listView.refreshDrawableState();
+//                        listView.resetScrolling();
+//                    } catch (Exception ignored) {
+//                    }
+//                }
+//
+//                private void hideQuest(int position) {
+//                    if (adapter.getItem(position) instanceof BackQuest) {
+//                        BackQuest backQuest = (BackQuest) adapter.getItem(position);
+//                        QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
+//                            @Override
+//                            public void onHide(boolean isHide) {
+//                                adapter.notifyDataSetChanged();
+//                                listView.refreshDrawableState();
+//                                hideNewsMenu();
+//                            }
+//                        };
+//                        QuestsApiController.hide((BaseActivity) getActivity(), backQuest, hideListener);
+//                    }
+//                }
+//
+//                /**
+//                 * Из-за особенностей обработки клика для блока AdvertisementQuest вызов на
+//                 * удаление вызывается внутри блока {@link ru.mos.polls.quests.quest.AdvertisementQuest}
+//                 *
+//                 * @param quest
+//                 * @return
+//                 */
+//                private boolean isNeedHide(Quest quest) {
+//                    return quest instanceof NewsQuest
+//                            || quest instanceof OtherQuest
+//                            || quest instanceof ResultsQuest
+//                            || (quest instanceof RateAppQuest
+//                            && SocialQuest.ID_RATE_THIS_APP.equalsIgnoreCase(((SocialQuest) quest).getId()));
+//                }
+//            });
+//        }
+//    }
 
     public interface Listener {
 

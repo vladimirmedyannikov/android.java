@@ -535,7 +535,18 @@ public class QuestsFragment extends PullableFragment {
     ItemRecyclerViewListener itemListener = new ItemRecyclerViewListener() {
         @Override
         public void onClick(BackQuest quest) {
-            quest.onClick(getContext(), listener);
+            if (quest != null) {
+                quest.onClick(getContext(), listener);
+                if (quest != null) {
+                    quest.onClick(getActivity(), listener);
+                    /**
+                     * Скрываем блок из ленты
+                     */
+                    if (isNeedHide(quest)) {
+                        QuestsApiController.hide((BaseActivity) getActivity(), quest, null);
+                    }
+                }
+            }
         }
 
         @Override
@@ -548,6 +559,15 @@ public class QuestsFragment extends PullableFragment {
 
         }
     };
+
+    private boolean isNeedHide(Quest quest) {
+        return quest instanceof NewsQuest
+                || quest instanceof OtherQuest
+                || quest instanceof ResultsQuest
+                || (quest instanceof RateAppQuest
+                && SocialQuest.ID_RATE_THIS_APP.equalsIgnoreCase(((SocialQuest) quest).getId()));
+    }
+
     public interface Listener {
 
         void onSurvey(long id);

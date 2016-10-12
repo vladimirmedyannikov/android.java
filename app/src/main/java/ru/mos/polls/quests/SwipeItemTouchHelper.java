@@ -35,7 +35,7 @@ public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             QuestsViewHolder holder = (QuestsViewHolder) viewHolder;
-            holder.swipleView.setTranslationX(dX);
+            holder.swipableView.setTranslationX(dX);
         }
     }
 }

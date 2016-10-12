@@ -35,5 +35,6 @@ public class PriceQuestHolder extends QuestsViewHolder {
         }
         priceTitleTextView.setVisibility(visibility);
         priceTextView.setVisibility(visibility);
+        urlScheme = quest.getUrlScheme();
     }
 }

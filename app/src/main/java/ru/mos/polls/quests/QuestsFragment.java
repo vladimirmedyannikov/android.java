@@ -83,6 +83,7 @@ public class QuestsFragment extends PullableFragment {
     public QuestsItemAdapter adapter;
     public ItemTouchHelper mItemTouchHelper;
     ItemTouchHelper.Callback callback;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_quests, container, false);
@@ -95,8 +96,9 @@ public class QuestsFragment extends PullableFragment {
         userAvatarImageView = ButterKnife.findById(listHeaderView, R.id.userAvatar);
 //        listView.addHeaderView(listHeaderView);
         quests = new ArrayList<>();
-        adapter = new QuestsItemAdapter(getActivity(), quests);
+        adapter = new QuestsItemAdapter(getActivity(), quests, itemListener);
         listView.setAdapter(adapter);
+        listView.setHasFixedSize(true);
         callback = new SwipeItemTouchHelper(listView, adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(listView);
@@ -359,7 +361,9 @@ public class QuestsFragment extends PullableFragment {
                     if (quest instanceof AdvertisementQuest) {
                         continue;
                     }
-
+                    if (((BackQuest) quest).isHidden()) {
+                        continue;
+                    }
                     result.add(quest);
                 }
                 return result;
@@ -390,7 +394,7 @@ public class QuestsFragment extends PullableFragment {
         activity.addRequest(questsRequest);
     }
 
-//    private void setHideListener() {
+    //    private void setHideListener() {
 //        if (adapter != null) {
 //            QuestsAdapter.HideListener hideListener = new QuestsAdapter.HideListener() {
 //                @Override
@@ -528,7 +532,22 @@ public class QuestsFragment extends PullableFragment {
 //            });
 //        }
 //    }
+    ItemRecyclerViewListener itemListener = new ItemRecyclerViewListener() {
+        @Override
+        public void onClick(BackQuest quest) {
+            quest.onClick(getContext(), listener);
+        }
 
+        @Override
+        public void onDelete() {
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
     public interface Listener {
 
         void onSurvey(long id);
@@ -564,4 +583,11 @@ public class QuestsFragment extends PullableFragment {
         void onResults(String title, String linkUrl);
     }
 
+    public interface ItemRecyclerViewListener {
+        void onClick(BackQuest quest);
+
+        void onDelete();
+
+        void onCancel();
+    }
 }

@@ -2,7 +2,6 @@ package ru.mos.polls.quests.questviewholder;
 
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;

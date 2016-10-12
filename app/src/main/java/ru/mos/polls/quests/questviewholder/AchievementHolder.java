@@ -25,5 +25,6 @@ public class AchievementHolder extends QuestsViewHolder {
         if (ElkTextUtils.isEmpty(quest.getDetails())) {
             detailsTextView.setVisibility(View.GONE);
         }
+        urlScheme = quest.getUrlScheme();
     }
 }

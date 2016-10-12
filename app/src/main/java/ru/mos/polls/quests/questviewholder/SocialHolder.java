@@ -23,5 +23,6 @@ public class SocialHolder extends PriceQuestHolder {
     public void setDataOnView(BackQuest quest) {
         super.setDataOnView(quest);
         iconImageView.setImageResource(quest.icon);
+        detailsTextView.setText(quest.getDetails());
     }
 }

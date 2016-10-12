@@ -68,10 +68,12 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
     private Context context;
     private List<Quest> quests;
     private QuestsAdapter.HideListener hideListener = QuestsAdapter.HideListener.STUB;
+    private QuestsFragment.ItemRecyclerViewListener listener;
 
-    public QuestsItemAdapter(Context context, List<Quest> quests) {
+    public QuestsItemAdapter(Context context, List<Quest> quests, QuestsFragment.ItemRecyclerViewListener listener) {
         this.context = context;
         this.quests = quests;
+        this.listener = listener;
     }
 
     @Override
@@ -114,8 +116,14 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
 
     @Override
     public void onBindViewHolder(QuestsViewHolder holder, int position) {
-        BackQuest quest = (BackQuest) quests.get(position);
+        final BackQuest quest = (BackQuest) quests.get(position);
         holder.setDataOnView(quest);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(quest);
+            }
+        });
     }
 
     @Override

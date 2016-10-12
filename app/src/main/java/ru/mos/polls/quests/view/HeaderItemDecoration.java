@@ -1,7 +1,6 @@
 package ru.mos.polls.quests.view;
 
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +10,8 @@ public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
 
     private View customView;
 
-    public HeaderItemDecoration(Context context, View view) {
+    public HeaderItemDecoration(View view) {
         this.customView = view;
-        customView.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
     }
 
     @Override
@@ -24,7 +22,7 @@ public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
             View view = parent.getChildAt(i);
             if (parent.getChildAdapterPosition(view) == 0) {
                 c.save();
-                final int height = view.getMeasuredHeight();
+                final int height = customView.getMeasuredHeight();
                 final int top = view.getTop() - height;
                 c.translate(0, top);
                 customView.draw(c);
@@ -37,6 +35,8 @@ public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (parent.getChildAdapterPosition(view) == 0) {
+            customView.measure(View.MeasureSpec.makeMeasureSpec(parent.getMeasuredWidth(), View.MeasureSpec.AT_MOST),
+                    View.MeasureSpec.makeMeasureSpec(parent.getMeasuredHeight(), View.MeasureSpec.AT_MOST));
             outRect.set(0, customView.getMeasuredHeight(), 0, 0);
         } else {
             outRect.setEmpty();

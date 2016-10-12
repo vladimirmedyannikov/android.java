@@ -89,7 +89,7 @@ public class QuestsFragment extends PullableFragment {
         unbinder = ButterKnife.bind(this, root);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
-//        listView.addItemDecoration(new SpacesItemDecoration(20));
+        listView.addItemDecoration(new SpacesItemDecoration(20));
         listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
 //        listHeaderView = LayoutInflater.from(getContext()).inflate(R.layout.quest_user_avatar, listView, false);
 //        listHeaderView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
@@ -131,7 +131,7 @@ public class QuestsFragment extends PullableFragment {
         }
         setHasOptionsMenu(true);
         doReloadAvatarFromCache();
-        listView.addItemDecoration(new HeaderItemDecoration(getContext(), listHeaderView));
+        listView.addItemDecoration(new HeaderItemDecoration(listHeaderView));
     }
 
     @OnClick(R.id.refresh)

@@ -1,4 +1,4 @@
-package ru.mos.polls.quests;
+package ru.mos.polls.quests.view;
 
 
 import android.graphics.Rect;

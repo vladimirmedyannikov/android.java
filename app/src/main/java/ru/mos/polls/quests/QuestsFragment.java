@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +28,6 @@ import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
-import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
-import com.fortysevendeg.swipelistview.SwipeListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +44,6 @@ import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.fragments.PullableFragment;
-import ru.mos.polls.helpers.ListViewHelper;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.QuestsApiController;
@@ -61,6 +57,9 @@ import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
+import ru.mos.polls.quests.view.HeaderDecoration;
+import ru.mos.polls.quests.view.HeaderItemDecoration;
+import ru.mos.polls.quests.view.SpacesItemDecoration;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
@@ -90,10 +89,15 @@ public class QuestsFragment extends PullableFragment {
         unbinder = ButterKnife.bind(this, root);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
-        listView.addItemDecoration(new SpacesItemDecoration(20));
+//        listView.addItemDecoration(new SpacesItemDecoration(20));
         listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
+//        listHeaderView = LayoutInflater.from(getContext()).inflate(R.layout.quest_user_avatar, listView, false);
+//        listHeaderView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         headerRoot = ButterKnife.findById(listHeaderView, R.id.headerRoot);
         userAvatarImageView = ButterKnife.findById(listHeaderView, R.id.userAvatar);
+
+//        listView.addItemDecoration(new HeaderDecoration(getContext(), listView, R.layout.quest_user_avatar));
 //        listView.addHeaderView(listHeaderView);
         quests = new ArrayList<>();
         adapter = new QuestsItemAdapter(getActivity(), quests, itemListener);
@@ -127,6 +131,7 @@ public class QuestsFragment extends PullableFragment {
         }
         setHasOptionsMenu(true);
         doReloadAvatarFromCache();
+        listView.addItemDecoration(new HeaderItemDecoration(getContext(), listHeaderView));
     }
 
     @OnClick(R.id.refresh)

@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import ru.mos.polls.quests.questviewholder.QuestsViewHolder;
+import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 
 public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
     private QuestsItemAdapter itemAdapter;

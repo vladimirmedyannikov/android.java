@@ -1,8 +1,7 @@
-package ru.mos.polls.quests.questviewholder;
+package ru.mos.polls.quests.view.questviewholder;
 
 import android.view.View;
 
-import ru.mos.polls.R;
 import ru.mos.polls.quests.quest.BackQuest;
 
 

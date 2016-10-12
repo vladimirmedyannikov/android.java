@@ -25,15 +25,15 @@ import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
-import ru.mos.polls.quests.questviewholder.EventHolder;
-import ru.mos.polls.quests.questviewholder.FavoriteSurveysHolder;
-import ru.mos.polls.quests.questviewholder.NewsHolder;
-import ru.mos.polls.quests.questviewholder.NoveltyHolder;
-import ru.mos.polls.quests.questviewholder.OtherHolder;
-import ru.mos.polls.quests.questviewholder.ProfileHolder;
-import ru.mos.polls.quests.questviewholder.QuestsViewHolder;
-import ru.mos.polls.quests.questviewholder.ResultsHolder;
-import ru.mos.polls.quests.questviewholder.SocialHolder;
+import ru.mos.polls.quests.view.questviewholder.EventHolder;
+import ru.mos.polls.quests.view.questviewholder.FavoriteSurveysHolder;
+import ru.mos.polls.quests.view.questviewholder.NewsHolder;
+import ru.mos.polls.quests.view.questviewholder.NoveltyHolder;
+import ru.mos.polls.quests.view.questviewholder.OtherHolder;
+import ru.mos.polls.quests.view.questviewholder.ProfileHolder;
+import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
+import ru.mos.polls.quests.view.questviewholder.ResultsHolder;
+import ru.mos.polls.quests.view.questviewholder.SocialHolder;
 
 public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
 

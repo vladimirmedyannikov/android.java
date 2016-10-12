@@ -1,4 +1,4 @@
-package ru.mos.polls.quests.questviewholder;
+package ru.mos.polls.quests.view.questviewholder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

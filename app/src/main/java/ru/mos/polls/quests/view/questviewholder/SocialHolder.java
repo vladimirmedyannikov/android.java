@@ -1,24 +1,28 @@
-package ru.mos.polls.quests.questviewholder;
+package ru.mos.polls.quests.view.questviewholder;
 
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.quests.quest.BackQuest;
 
-public class ProfileHolder extends PriceQuestHolder {
+public class SocialHolder extends PriceQuestHolder {
     TextView detailsTextView;
+    ImageView iconImageView;
 
-    public ProfileHolder(View itemView) {
+    public SocialHolder(View itemView) {
         super(itemView);
         detailsTextView = ButterKnife.findById(itemView, R.id.details);
+        iconImageView = ButterKnife.findById(itemView, R.id.icon);
     }
 
     @Override
     public void setDataOnView(BackQuest quest) {
         super.setDataOnView(quest);
+        iconImageView.setImageResource(quest.icon);
         detailsTextView.setText(quest.getDetails());
     }
 }

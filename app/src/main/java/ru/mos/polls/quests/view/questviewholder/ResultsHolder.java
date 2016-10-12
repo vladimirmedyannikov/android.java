@@ -1,12 +1,12 @@
-package ru.mos.polls.quests.questviewholder;
-
+package ru.mos.polls.quests.view.questviewholder;
 
 import android.view.View;
 
 import ru.mos.polls.quests.quest.BackQuest;
 
-public class NewsHolder extends QuestsViewHolder {
-    public NewsHolder(View itemView) {
+
+public class ResultsHolder extends QuestsViewHolder {
+    public ResultsHolder(View itemView) {
         super(itemView);
     }
 

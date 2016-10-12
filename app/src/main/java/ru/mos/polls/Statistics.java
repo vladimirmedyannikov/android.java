@@ -481,4 +481,10 @@ public class Statistics {
         return result;
     }
 
+    /**
+     * Удаление голосования на главной ленте
+     */
+    public static void deleteSurvey() {
+        FlurryAgent.logEvent("udalenie_golosovaniya");
+    }
 }

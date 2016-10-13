@@ -18,8 +18,8 @@ public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
         customView.layout(parent.getLeft(), 0, parent.getRight(), customView.getMeasuredHeight());
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            View view = parent.getChildAt(i);
+//        for (int i = 0; i < parent.getChildCount(); i++) {
+            View view = parent.getChildAt(0);
             if (parent.getChildAdapterPosition(view) == 0) {
                 c.save();
                 final int height = customView.getMeasuredHeight();
@@ -27,9 +27,9 @@ public class HeaderItemDecoration extends RecyclerView.ItemDecoration {
                 c.translate(0, top);
                 customView.draw(c);
                 c.restore();
-                break;
+//                break;
             }
-        }
+//        }
     }
 
     @Override

@@ -57,7 +57,6 @@ import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
-import ru.mos.polls.quests.view.HeaderDecoration;
 import ru.mos.polls.quests.view.HeaderItemDecoration;
 import ru.mos.polls.quests.view.SpacesItemDecoration;
 import ru.mos.polls.social.model.SocialPostValue;

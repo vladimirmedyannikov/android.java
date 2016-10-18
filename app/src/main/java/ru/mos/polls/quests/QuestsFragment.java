@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -109,6 +110,8 @@ public class QuestsFragment extends PullableFragment {
         callback = new SwipeItemTouchHelper(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(listView);
+        Toolbar avatarToolbar = (Toolbar) root.findViewById(R.id.avatarToolbar);
+        avatarToolbar.addView(LayoutInflater.from(getContext()).inflate(R.layout.quest_user_avatar, null, false));
         return root;
     }
 
@@ -133,7 +136,7 @@ public class QuestsFragment extends PullableFragment {
         }
         setHasOptionsMenu(true);
         doReloadAvatarFromCache();
-        listView.addItemDecoration(new HeaderItemDecoration(listHeaderView));
+//        listView.addItemDecoration(new HeaderItemDecoration(listHeaderView));
     }
 
     @OnClick(R.id.refresh)
@@ -152,7 +155,7 @@ public class QuestsFragment extends PullableFragment {
             userAvatarImageView.setImageBitmap(bitmap);
             headerRoot.setVisibility(View.VISIBLE);
         } else {
-            headerRoot.setVisibility(View.GONE);
+            headerRoot.setVisibility(View.VISIBLE);
         }
     }
 

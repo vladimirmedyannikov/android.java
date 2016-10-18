@@ -206,6 +206,11 @@ public class QuestsFragment extends PullableFragment {
         }
     }
 
+    private void listVisibility() {
+        listView.setVisibility(adapter.getItemCount() > 0 ? View.VISIBLE : View.INVISIBLE);
+        empty.setVisibility(adapter.getItemCount() > 0 ? View.INVISIBLE : View.VISIBLE);
+    }
+
     public static boolean socialQuestIsAvaible() {
         if (quests != null) {
             for (Quest quest : quests) {
@@ -256,7 +261,6 @@ public class QuestsFragment extends PullableFragment {
                 };
                 QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);
             }
-
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -331,6 +335,7 @@ public class QuestsFragment extends PullableFragment {
                     addRespListener.onResponse(loadedQuests);
                 }
                 getPullToRefreshLayout().setRefreshing(false);
+                listVisibility();
             }
 
             /**
@@ -350,7 +355,6 @@ public class QuestsFragment extends PullableFragment {
                                 || ((FavoriteSurveysQuest) quest).isHearingPreview()) {
                             continue;
                         }
-
                     }
                     /**
                      * Удаляем рекламные блоки из ленты
@@ -384,7 +388,6 @@ public class QuestsFragment extends PullableFragment {
                 stubOffline.setVisibility(View.VISIBLE);
                 getPullToRefreshLayout().setRefreshing(false);
             }
-
         };
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.GET));
         QuestsRequest questsRequest = new QuestsRequest(url, null, mainListener, errorListener);
@@ -416,6 +419,7 @@ public class QuestsFragment extends PullableFragment {
                     }
                 };
                 QuestsApiController.hide((BaseActivity) getActivity(), quest, hideListener);
+                listVisibility();
             }
         }
 

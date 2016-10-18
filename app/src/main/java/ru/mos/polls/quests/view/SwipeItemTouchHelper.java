@@ -1,19 +1,20 @@
-package ru.mos.polls.quests;
+package ru.mos.polls.quests.view;
 
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.View;
 
+import ru.mos.polls.quests.QuestsItemAdapter;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 
 public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
     private QuestsItemAdapter itemAdapter;
-    private RecyclerView recyclerView;
 
-    public SwipeItemTouchHelper(RecyclerView mRecyclerView, QuestsItemAdapter itemAdapter) {
+    public SwipeItemTouchHelper(QuestsItemAdapter itemAdapter) {
         this.itemAdapter = itemAdapter;
-        this.recyclerView = mRecyclerView;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+        itemAdapter.redrawViewHolder(viewHolder.getAdapterPosition());
     }
 
     @Override
@@ -33,9 +34,19 @@ public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        if (viewHolder.getAdapterPosition() == -1) {
+            return;
+        }
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             QuestsViewHolder holder = (QuestsViewHolder) viewHolder;
-            holder.swipableView.setTranslationX(dX);
+            getDefaultUIUtil().onDraw(c, recyclerView, holder.swipableView, dX, dY, actionState, isCurrentlyActive);
         }
+    }
+
+    @Override
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        View foreground = ((QuestsViewHolder) viewHolder).swipableView;
+        getDefaultUIUtil().clearView(foreground);
     }
 }

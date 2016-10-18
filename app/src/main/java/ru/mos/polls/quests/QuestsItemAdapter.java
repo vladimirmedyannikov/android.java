@@ -3,10 +3,12 @@ package ru.mos.polls.quests;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,8 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
 
     private static final Map<Class<? extends Quest>, Integer> CLASSES = new HashMap<Class<? extends Quest>, Integer>();
 
+    private List<String> questForRemoveList = new ArrayList<>();
+
     static {
         CLASSES.put(ProfileQuest.class, PROFILE);
         CLASSES.put(SocialQuest.class, SOCIAL);
@@ -67,7 +71,6 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
 
     private Context context;
     private List<Quest> quests;
-    private QuestsAdapter.HideListener hideListener = QuestsAdapter.HideListener.STUB;
     private QuestsFragment.ItemRecyclerViewListener listener;
 
     public QuestsItemAdapter(Context context, List<Quest> quests, QuestsFragment.ItemRecyclerViewListener listener) {
@@ -102,11 +105,9 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
             case OTHER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_other, parent, false);
                 return new OtherHolder(view);
-//            case BANNER:
-//                layoutRes = R.layout.quest_html_banner;
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_news, parent, false);
-//                return new NewsHolder(view);
-//                break;
+            case BANNER:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_news, parent, false);
+                return new NewsHolder(view);
             case NOVELTY:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_novelty, parent, false);
                 return new NoveltyHolder(view);
@@ -115,15 +116,47 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(QuestsViewHolder holder, int position) {
+    public void onBindViewHolder(final QuestsViewHolder holder, int position) {
         final BackQuest quest = (BackQuest) quests.get(position);
+        final String id = quest.getId();
         holder.setDataOnView(quest);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick(quest);
-            }
-        });
+        if (questForRemoveList.contains(id)) {
+            holder.itemView.setOnClickListener(null);
+            holder.swipableView.setVisibility(View.INVISIBLE);
+            holder.backView.setVisibility(View.VISIBLE);
+            holder.cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    notifyItemChanged(quests.indexOf(quest));
+                    questForRemoveList.remove(id);
+                    listener.onCancel(holder);
+                }
+            });
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeItem(holder.getAdapterPosition());
+                    listener.onDelete(quest, holder.getAdapterPosition());
+                }
+            });
+        } else {
+            holder.swipableView.setVisibility(View.VISIBLE);
+            holder.cancel.setOnClickListener(null);
+            holder.delete.setOnClickListener(null);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(quest);
+                }
+            });
+        }
+    }
+
+    public void removeItem(int position) {
+        if (quests.size() > 0 && position >= 0) {
+            quests.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     @Override
@@ -131,6 +164,15 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
         final Quest quest = quests.get(position);
         final int result = CLASSES.get(quest.getClass());
         return result;
+    }
+
+    public void redrawViewHolder(int position) {
+        BackQuest quest = (BackQuest) quests.get(position);
+        String id = quest.getId();
+        if (!questForRemoveList.contains(id)) {
+            questForRemoveList.add(id);
+            notifyItemChanged(position);
+        }
     }
 
     @Override

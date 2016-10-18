@@ -43,7 +43,7 @@
             <TextView
                 android:id="@+id/details"
                 style="@style/quest_detail"
-                android:text="Заполнить профиль fjsakjfkdasjfasjf;kljask;ldfjas;klfj;sakdljf;klsdajf;klaskjfdsak;ljf;kljafds;klj;lksadjf;kljsda;kl fadksjk;lfj a;lfskjdfkljdsalfkjdas;lkjf;sakdljf;ladsjf;laskdjf;lasdf;lkj flkdsaj fasdlkjf asdfjsda;ljf fasdkjdas;lkjf;lkdsajf af;jasd;" />
+                android:text="Заполнить профиль" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

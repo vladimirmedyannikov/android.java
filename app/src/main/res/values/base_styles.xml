@@ -388,7 +388,7 @@
         <item name="android:textSize">@dimen/ts_normal</item>
     </style>
 
-    <style name="quest_container" parent="item">
+    <style name="quest_container" parent="item.linear">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:paddingBottom">@dimen/pd_xxsmall</item>
         <item name="android:paddingLeft">@dimen/pd_xsmall</item>

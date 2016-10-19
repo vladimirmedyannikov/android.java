@@ -13,6 +13,5 @@ public class NewsHolder extends QuestsViewHolder {
     @Override
     public void setDataOnView(BackQuest quest) {
         questTitle.setText(quest.getTitle());
-        urlScheme = quest.getUrlScheme();
     }
 }

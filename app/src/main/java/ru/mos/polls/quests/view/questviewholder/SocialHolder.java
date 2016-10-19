@@ -5,18 +5,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.quests.quest.BackQuest;
 
 public class SocialHolder extends PriceQuestHolder {
-    TextView detailsTextView;
-    ImageView iconImageView;
+    @BindView(R.id.details)
+    public TextView detailsTextView;
+    @BindView(R.id.icon)
+    public ImageView iconImageView;
 
     public SocialHolder(View itemView) {
         super(itemView);
-        detailsTextView = ButterKnife.findById(itemView, R.id.details);
-        iconImageView = ButterKnife.findById(itemView, R.id.icon);
     }
 
     @Override

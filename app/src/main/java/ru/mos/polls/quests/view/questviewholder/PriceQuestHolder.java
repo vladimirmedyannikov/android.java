@@ -3,6 +3,7 @@ package ru.mos.polls.quests.view.questviewholder;
 import android.view.View;
 import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
@@ -10,13 +11,13 @@ import ru.mos.polls.quests.quest.BackQuest;
 
 
 public class PriceQuestHolder extends QuestsViewHolder {
-    protected TextView priceTextView;
-    protected TextView priceTitleTextView;
+    @BindView(R.id.points)
+    public TextView priceTextView;
+    @BindView(R.id.points_title)
+    public TextView priceTitleTextView;
 
     public PriceQuestHolder(View itemView) {
         super(itemView);
-        this.priceTextView = ButterKnife.findById(itemView, R.id.points);
-        this.priceTitleTextView = ButterKnife.findById(itemView, R.id.points_title);
     }
 
     @Override
@@ -35,6 +36,5 @@ public class PriceQuestHolder extends QuestsViewHolder {
         }
         priceTitleTextView.setVisibility(visibility);
         priceTextView.setVisibility(visibility);
-        urlScheme = quest.getUrlScheme();
     }
 }

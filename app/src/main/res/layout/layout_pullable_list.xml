@@ -20,5 +20,5 @@
     <TextView
         android:id="@+id/empty"
         style="@style/emptylist"
-        android:text="@string/empty_list"/>
+        android:text="@string/innovation_emptylist"/>
 </RelativeLayout>

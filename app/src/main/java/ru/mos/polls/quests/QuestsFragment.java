@@ -207,8 +207,12 @@ public class QuestsFragment extends PullableFragment {
     }
 
     private void listVisibility() {
-        listView.setVisibility(adapter.getItemCount() > 0 ? View.VISIBLE : View.INVISIBLE);
-        empty.setVisibility(adapter.getItemCount() > 0 ? View.INVISIBLE : View.VISIBLE);
+        if (listView != null) {
+            listView.setVisibility(adapter.getItemCount() > 0 ? View.VISIBLE : View.INVISIBLE);
+        }
+        if (empty != null) {
+            empty.setVisibility(adapter.getItemCount() > 0 ? View.INVISIBLE : View.VISIBLE);
+        }
     }
 
     public static boolean socialQuestIsAvaible() {
@@ -330,7 +334,6 @@ public class QuestsFragment extends PullableFragment {
                 adapter.notifyDataSetChanged();
                 hideNewsMenu();
                 adapter.getItemCount();
-                listView.setVisibility(View.VISIBLE);
                 if (addRespListener != null) {
                     addRespListener.onResponse(loadedQuests);
                 }

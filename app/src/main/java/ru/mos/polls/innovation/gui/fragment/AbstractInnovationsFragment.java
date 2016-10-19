@@ -17,6 +17,9 @@ import com.android.volley2.VolleyError;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.ScrollableController;
@@ -37,12 +40,13 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
     /**
      * Общие view для всех типов экранов со списком опросов
      */
-    protected ListView listView;
-    protected TextView empty;
+    @BindView(android.R.id.list)
+    public ListView listView;
+    @BindView(R.id.empty)
+    public TextView empty;
 
     private boolean isLastListEmpty;
     private boolean hasAnymoreForLoading;
-
     protected ScrollableController scrollableController = new ScrollableController(new ScrollableController.OnLastItemVisibleListener() {
         @Override
         public void onLastItemVisible() {
@@ -94,7 +98,9 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_pullable_list, container, false);
+        View root = inflater.inflate(R.layout.layout_pullable_list, container, false);
+        unbinder = ButterKnife.bind(this, root);
+        return root;
     }
 
     @Override
@@ -105,9 +111,9 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
     }
 
     protected void findViews(View view) {
-        TextView empty = (TextView) view.findViewById(R.id.empty);
-        empty.setText(getEmptyText());
-        listView = (ListView) view.findViewById(android.R.id.list);
+//        TextView empty = (TextView) view.findViewById(R.id.empty);
+//        empty.setText(getEmptyText());
+//        listView = (ListView) view.findViewById(android.R.id.list);
         listView.setEmptyView(empty);
         listView.setAdapter(adapter);
         listView.setOnScrollListener(scrollableController);
@@ -132,10 +138,6 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
 
     protected Status getStatus() {
         return Status.ACTIVE;
-    }
-
-    protected String getEmptyText() {
-        return getString(R.string.empty_list);
     }
 
     protected void onPrepareLoadEvents() {

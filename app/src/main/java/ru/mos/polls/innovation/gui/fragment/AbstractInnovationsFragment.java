@@ -111,9 +111,6 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
     }
 
     protected void findViews(View view) {
-//        TextView empty = (TextView) view.findViewById(R.id.empty);
-//        empty.setText(getEmptyText());
-//        listView = (ListView) view.findViewById(android.R.id.list);
         listView.setEmptyView(empty);
         listView.setAdapter(adapter);
         listView.setOnScrollListener(scrollableController);

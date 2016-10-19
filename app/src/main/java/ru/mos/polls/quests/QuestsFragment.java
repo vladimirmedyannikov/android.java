@@ -97,8 +97,6 @@ public class QuestsFragment extends PullableFragment {
         * инициализируем аватарку для хэедера
         *
          */
-//        listHeaderView = ButterKnife.findById(root, R.id.headerRoot)
-//        listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
         headerRoot = ButterKnife.findById(root, R.id.headerRoot);
         userAvatarImageView = ButterKnife.findById(headerRoot, R.id.userAvatar);
 
@@ -135,7 +133,6 @@ public class QuestsFragment extends PullableFragment {
         }
         setHasOptionsMenu(true);
         doReloadAvatarFromCache();
-//        listView.addItemDecoration(new HeaderItemDecoration(listHeaderView));
     }
 
     @OnClick(R.id.refresh)

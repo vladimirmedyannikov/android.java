@@ -97,9 +97,10 @@ public class QuestsFragment extends PullableFragment {
         * инициализируем аватарку для хэедера
         *
          */
-        listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
-        headerRoot = ButterKnife.findById(listHeaderView, R.id.headerRoot);
-        userAvatarImageView = ButterKnife.findById(listHeaderView, R.id.userAvatar);
+//        listHeaderView = ButterKnife.findById(root, R.id.headerRoot)
+//        listHeaderView = View.inflate(getActivity(), R.layout.quest_user_avatar, null);
+        headerRoot = ButterKnife.findById(root, R.id.headerRoot);
+        userAvatarImageView = ButterKnife.findById(headerRoot, R.id.userAvatar);
 
         quests = new ArrayList<>();
         adapter = new QuestsItemAdapter(getActivity(), quests, itemListener);
@@ -110,8 +111,6 @@ public class QuestsFragment extends PullableFragment {
         callback = new SwipeItemTouchHelper(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(listView);
-        Toolbar avatarToolbar = (Toolbar) root.findViewById(R.id.avatarToolbar);
-        avatarToolbar.addView(LayoutInflater.from(getContext()).inflate(R.layout.quest_user_avatar, null, false));
         return root;
     }
 
@@ -155,7 +154,7 @@ public class QuestsFragment extends PullableFragment {
             userAvatarImageView.setImageBitmap(bitmap);
             headerRoot.setVisibility(View.VISIBLE);
         } else {
-            headerRoot.setVisibility(View.VISIBLE);
+            headerRoot.setVisibility(View.GONE);
         }
     }
 

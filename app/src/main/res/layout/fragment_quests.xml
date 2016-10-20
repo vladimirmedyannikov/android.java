@@ -9,6 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/ptrLayout"
+            style="@style/root"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="-28dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
@@ -30,22 +48,6 @@
                 <include layout="@layout/quest_user_avatar"/>
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/ptrLayout"
-            style="@style/root"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout

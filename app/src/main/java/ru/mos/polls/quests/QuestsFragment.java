@@ -74,7 +74,7 @@ public class QuestsFragment extends PullableFragment {
     private Listener listener = new QuestsListenerStub();
     @BindView(R.id.stubOffline)
     View stubOffline;
-    public static List<Quest> quests;
+    public List<Quest> quests;
     private ImageView userAvatarImageView;
     private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
     private View listHeaderView, headerRoot;
@@ -212,18 +212,6 @@ public class QuestsFragment extends PullableFragment {
         if (empty != null) {
             empty.setVisibility(adapter.getItemCount() > 0 ? View.INVISIBLE : View.VISIBLE);
         }
-    }
-
-    public static boolean socialQuestIsAvaible() {
-        if (quests != null) {
-            for (Quest quest : quests) {
-                if (quest instanceof ProfileQuest) {
-                    if (((ProfileQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
-                        return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override

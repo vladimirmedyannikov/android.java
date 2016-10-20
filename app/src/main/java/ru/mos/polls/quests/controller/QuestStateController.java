@@ -22,6 +22,7 @@ public class QuestStateController {
      * так как они имеют различный тип
      */
     private List<Object> executedQuestQueue;
+    private boolean isUpdateSocialAvaible;
 
     private QuestStateController() {
         executedQuestQueue = new ArrayList<>();
@@ -51,6 +52,8 @@ public class QuestStateController {
         for (Quest quest : quests) {
             if (!isExecuted((BackQuest) quest)) {
                 result.add(quest);
+                if (((BackQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
+                    isUpdateSocialAvaible = true;
             }
         }
         return result;
@@ -71,5 +74,13 @@ public class QuestStateController {
 
     private boolean isExecuted(String taskId) {
         return executedQuestQueue.contains(taskId);
+    }
+
+    public boolean isUpdateSocialAvaible() {
+        return isUpdateSocialAvaible;
+    }
+
+    public void updateSocialUnavaible() {
+        isUpdateSocialAvaible = false;
     }
 }

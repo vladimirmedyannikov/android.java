@@ -3,6 +3,7 @@ package ru.mos.polls.profile.gui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.quests.controller.QuestStateController;
+import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
 
 /**
@@ -41,8 +44,6 @@ public class ProfileBindItemsFragment extends AbstractProfileFragment {
 
     @OnClick(R.id.bindSocial)
     void bingSocial() {
-        Intent intent = new Intent(getActivity(), UpdateSocialActivity.class);
-        intent.putExtra(MainActivity.IS_TASK, QuestsFragment.socialQuestIsAvaible());
-        startActivity(intent);
+        UpdateSocialActivity.startActivity(getContext(), QuestStateController.getInstance().isUpdateSocialAvaible());
     }
 }

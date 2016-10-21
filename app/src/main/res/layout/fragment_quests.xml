@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/coordinatorLayout"
+        style="@style/root">
 
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -20,32 +18,29 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/root"
                 android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/item"
             android:layout_alignParentTop="true"
             android:background="@null"
             android:fitsSystemWindows="true"
             app:elevation="@dimen/dp_0">
 
             <LinearLayout
-                android:id="@+id/lytSearchBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/avatarLayout"
+                style="@style/item"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <include layout="@layout/quest_user_avatar"/>
+                <include layout="@layout/quest_user_avatar" />
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
@@ -58,7 +53,7 @@
         <TextView
             style="@style/text.large.gray"
             android:padding="@dimen/pd_xsmall"
-            android:text="@string/empty_quest_list"/>
+            android:text="@string/empty_quest_list" />
         <!--Социальные сети-->
         <LinearLayout
             style="@style/item.linear"
@@ -69,7 +64,7 @@
                 android:id="@+id/subscribe"
                 style="@style/basicIcon"
                 android:drawableLeft="@drawable/rss"
-                android:text="@string/do_subscribe"/>
+                android:text="@string/do_subscribe" />
         </LinearLayout>
     </LinearLayout>
     <!--Заглушка при отсутсвии интернета -->
@@ -88,7 +83,7 @@
                 android:id="@+id/refresh"
                 style="@style/button.centered"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/refresh"/>
+                android:text="@string/refresh" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

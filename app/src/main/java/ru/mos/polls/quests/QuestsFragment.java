@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -53,12 +52,10 @@ import ru.mos.polls.quests.quest.BackQuest;
 import ru.mos.polls.quests.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
 import ru.mos.polls.quests.quest.OtherQuest;
-import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
-import ru.mos.polls.quests.view.HeaderItemDecoration;
 import ru.mos.polls.quests.view.SpacesItemDecoration;
 import ru.mos.polls.quests.view.SwipeItemTouchHelper;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
@@ -92,7 +89,7 @@ public class QuestsFragment extends PullableFragment {
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
-        listView.addItemDecoration(new SpacesItemDecoration(10));
+        listView.addItemDecoration(new SpacesItemDecoration(3));
         /*
         * инициализируем аватарку для хэедера
         *
@@ -101,7 +98,7 @@ public class QuestsFragment extends PullableFragment {
         userAvatarImageView = ButterKnife.findById(headerRoot, R.id.userAvatar);
 
         quests = new ArrayList<>();
-        adapter = new QuestsItemAdapter(getActivity(), quests, itemListener);
+        adapter = new QuestsItemAdapter(quests, itemListener);
         listView.setAdapter(adapter);
         /*
         * добавляет свайп на recyclerview

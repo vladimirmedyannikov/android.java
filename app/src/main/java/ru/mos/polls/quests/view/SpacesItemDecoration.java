@@ -14,9 +14,10 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.left = space;
-        outRect.right = space;
+//        outRect.left = space;
+//        outRect.right = space;
         outRect.bottom = space;
+        outRect.top = 0;
         if (parent.getChildAdapterPosition(view) == 0)
             outRect.top = 90;
     }

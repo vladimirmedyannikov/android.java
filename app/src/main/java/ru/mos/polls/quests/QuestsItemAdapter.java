@@ -69,12 +69,11 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
         CLASSES.put(AchievementQuest.class, ACHIEVEMENT);
     }
 
-    private Context context;
+
     private List<Quest> quests;
     private QuestsFragment.ItemRecyclerViewListener listener;
 
-    public QuestsItemAdapter(Context context, List<Quest> quests, QuestsFragment.ItemRecyclerViewListener listener) {
-        this.context = context;
+    public QuestsItemAdapter(List<Quest> quests, QuestsFragment.ItemRecyclerViewListener listener) {
         this.quests = quests;
         this.listener = listener;
     }

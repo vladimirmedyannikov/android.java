@@ -6,9 +6,9 @@
 
     <RelativeLayout
         android:id="@+id/headerRoot"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        style="@style/root"
+        android:visibility="visible"
+        android:clipToPadding="false">
 
         <View
             android:id="@+id/fake_bar1"
@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:elevation="6dp"
             android:src="@drawable/unlogin"
-            app:civ_border_color="@color/green_dark"
+            app:civ_border_color="@color/white"
             app:civ_border_width="@dimen/thin_separator"/>
     </RelativeLayout>
 </FrameLayout>

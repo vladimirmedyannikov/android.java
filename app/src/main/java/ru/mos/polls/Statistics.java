@@ -487,4 +487,80 @@ public class Statistics {
     public static void deleteSurvey() {
         FlurryAgent.logEvent("udalenie_golosovaniya");
     }
+
+    /**
+     * Экран городские новинки, факт перехода
+     */
+    public static void innovationsListFragment() {
+        FlurryAgent.logEvent("enter_novelty_list");
+    }
+
+    /**
+     * Экран карточка городской новинки, факт перехода
+     */
+    public static void innovationsDetail() {
+        FlurryAgent.logEvent("enter_novelty");
+    }
+
+    /**
+     * Новинки, ФАКТ ПРЕрывания голосования
+     */
+    public static void innovationsInterrupted() {
+        FlurryAgent.logEvent("novelty_interrupted");
+    }
+
+    /**
+     * Экран достижения, факт перехода
+     */
+    public static void achievementsFragment() {
+        FlurryAgent.logEvent("enter_awards_list");
+    }
+
+    /**
+     * Экран достижения детали, факт перехода
+     */
+    public static void achievementsDetail() {
+        FlurryAgent.logEvent("enter_award");
+    }
+
+    /**
+     * Экран настройки, факт перехода
+     */
+    public static void propertiesFragment() {
+        FlurryAgent.logEvent("enter_settings");
+    }
+
+    /**
+     * Нажатие кнопки "Прочитать все новости"
+     */
+    public static void hideAllNews(){
+        FlurryAgent.logEvent("read_all_news");
+    }
+
+    /**
+     * До шаринга городской новинки
+     *
+     * @param name   - имя соц сети
+     * @param noveltyId - идентификатор опроса
+     */
+    public static void beforeSocialInnovationSharing(String name, String noveltyId) {
+        Map<String, String> params = new HashMap<String, String>(2);
+        params.put("name", name);
+        params.put("novelty_id", noveltyId);
+        FlurryAgent.logEvent("social_sharing", params, true);
+    }
+    /**
+     * После шаринга результатов опроса
+     *
+     * @param name      - имя соцсети
+     * @param noveltyId    - идентифиатор опроса
+     * @param isSuccess - результат шаринга
+     */
+    public static void afterSocialInnovationSharing(String name, String noveltyId, boolean isSuccess) {
+        Map<String, String> params = new HashMap<String, String>(3);
+        params.put("name", name);
+        params.put("novelty_id", noveltyId);
+        params.put("success", String.valueOf(isSuccess));
+        FlurryAgent.endTimedEvent("social_sharing", params);
+    }
 }

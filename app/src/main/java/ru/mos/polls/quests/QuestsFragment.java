@@ -40,6 +40,7 @@ import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.polls.R;
+import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
@@ -232,6 +233,7 @@ public class QuestsFragment extends PullableFragment {
         builder.setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Statistics.hideAllNews();
                 QuestsApiController.HideQuestListner hideListener = new QuestsApiController.HideQuestListner() {
                     @Override
                     public void hideQuests(ArrayList<String> idsList) {

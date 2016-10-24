@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.Statistics;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.profile.adapter.AchievementAdapter;
 import ru.mos.polls.profile.controller.ProfileApiController;
@@ -49,6 +50,7 @@ public class AchievementsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.layout_list, null);
+        Statistics.achievementsFragment();
         unbinder = ButterKnife.bind(this, root);
         return root;
     }
@@ -89,6 +91,7 @@ public class AchievementsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Achievement achievement = achievements.get(position);
                 AchievementActivity.startActivity(getActivity(), achievement);
+                Statistics.achievementsDetail();
             }
         });
     }

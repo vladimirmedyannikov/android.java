@@ -188,6 +188,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = PagerFragment.Polls.newInstance();
                 break;
             case NavigationMenuItem.SETTINGS:
+                Statistics.propertiesFragment();
                 fr = SettingsFragment.newInstance();
                 tag = TAG_SETTINGS;
                 break;
@@ -337,6 +338,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 //                ActionBarNavigationController.setNoveltyNavigation(this);
                 fr = new ActiveInnovationsFragment();
                 tag = TAG_NOVELTY;
+                Statistics.innovationsListFragment();
                 break;
             case NavigationMenuItem.SHOP:
                 Statistics.shopBuy();

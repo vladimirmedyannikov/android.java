@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
+import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.common.model.QuestMessage;
@@ -152,6 +153,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                     .setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Statistics.innovationsInterrupted();
                             setResult();
                             finish();
                         }

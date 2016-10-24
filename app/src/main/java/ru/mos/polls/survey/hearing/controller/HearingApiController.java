@@ -33,7 +33,7 @@ public abstract class HearingApiController {
     public static final int ERROR_CODE_NOT_ACCESS_FOR_SLAVE_SSO_ID = 100500;
     public static final int ERROR_FIELDS_ARE_EMPTY = 5703;
     public static final int ERROR_SESSION_EXPIRED = 5732;
-    public static final int ERROR_HEARING_NOT_ENABLE = 5704;
+    public static final int ERROR_PGU_FLAT_NOT_MATCH = 5734;
 
     public static void pguBind(final BaseActivity elkActivity, String pguLogin, String pguPassword, final PguAuthListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.PGU, UrlManager.Methods.BINDING));
@@ -135,6 +135,7 @@ public abstract class HearingApiController {
                         case ERROR_CODE_NO_MASTER_SSO_ID:
                         case ERROR_SESSION_EXPIRED:
                         case ERROR_FIELDS_ARE_EMPTY:
+                        case ERROR_PGU_FLAT_NOT_MATCH:
                             listener.onPguAuthError(volleyError.getErrorCode(), volleyError.getMessage());
                             break;
                         default:

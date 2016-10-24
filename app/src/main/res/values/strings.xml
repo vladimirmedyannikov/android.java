@@ -426,7 +426,7 @@
     <string name="title_pgu_auth">Установка связи</string>
     <string name="pgu_link">Перейти на pgu.mos.ru</string>
     <string name="pgu_title">Портал городских услуг</string>
-    <string name="pgu_link_value">http://pgu.mos.ru/</string>
+    <string name="pgu_link_value">https://pgu.mos.ru/</string>
     <string name="empty_quest_list">В настоящее время нет новостей о голосованиях, мероприятиях или городских событиях.\n\nОформите подписку, чтобы всегда быть в курсе событий!</string>
     <string name="do_subscribe">Оформить подписку</string>
     <string name="ag_continue">Продолжить</string>

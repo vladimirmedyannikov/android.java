@@ -5,6 +5,7 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.quests.QuestsFragment;
 
@@ -24,6 +25,11 @@ public abstract class BackQuest extends Quest {
     private int priority;
     private String id;
     private String details;
+    public int icon;
+    public static final String TYPE_SOCIAL = "social";
+    public static final String ID_POST_IN_SOCIAL = "postInSocial";
+    public static final String ID_INVITE_FRIENDS = "inviteFriends";
+    public static final String ID_RATE_THIS_APP = "rateThisApplication";
 
     public BackQuest(long innerId, JSONObject jsonObject) {
         super(innerId);
@@ -35,9 +41,25 @@ public abstract class BackQuest extends Quest {
         id = jsonObject.optString(ID);
         urlScheme = urlSchemeFromJson(jsonObject);
         type = jsonObject.optString(TYPE);
+        icon = getIcon(jsonObject);
     }
 
-    protected static String processPoints(int points) {
+    private int getIcon(JSONObject jsonObject) {
+        final String id = jsonObject.optString(ID);
+        int iconId;
+        if (ID_INVITE_FRIENDS.equals(id)) {
+            iconId = R.drawable.image_icon_category_friends;
+        } else if (ID_POST_IN_SOCIAL.equals(id)) {
+            iconId = R.drawable.image_icon_category_social;
+        } else if (ID_RATE_THIS_APP.equals(id)) {
+            iconId = R.drawable.icon03;
+        } else {
+            iconId = R.drawable.image_icon_category_profile;
+        }
+        return iconId;
+    }
+
+    public static String processPoints(int points) {
         return String.format(PATTERN, points);
     }
 

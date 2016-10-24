@@ -715,5 +715,6 @@
     <string name="error_expired_access_token">Не удалось пройти авторизацию. Пройдите авторизацию заново</string>
     <string name="auth_error_code_msg_423">Слишком много попыток авторизации.\nЗабыли пароль? Воспользуйтесь сервисом восстановления пароля.</string>
     <string name="restore">Восстановить</string>
+    <string name="innovation_emptylist">Городских новинок нет</string>
 
 </resources>

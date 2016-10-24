@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--Стили для контейнеров-->
     <style name="root">
@@ -388,7 +389,7 @@
         <item name="android:textSize">@dimen/ts_normal</item>
     </style>
 
-    <style name="quest_container" parent="root">
+    <style name="quest_container" parent="item.linear">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:paddingBottom">@dimen/pd_xxsmall</item>
         <item name="android:paddingLeft">@dimen/pd_xsmall</item>
@@ -401,5 +402,13 @@
         <item name="android:paddingTop">@dimen/pd_xsmall</item>
         <item name="android:drawablePadding">@dimen/pd_xxsmall</item>
         <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="cardview" parent="root">
+        <item name="android:layout_margin">2dp</item>
+        <item name="cardCornerRadius">@dimen/quest_background_round</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardPreventCornerOverlap">false</item>
     </style>
 </resources>

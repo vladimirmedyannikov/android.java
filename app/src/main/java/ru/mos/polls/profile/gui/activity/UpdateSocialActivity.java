@@ -14,6 +14,8 @@ import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
+import ru.mos.polls.quests.controller.QuestStateController;
+import ru.mos.polls.quests.quest.ProfileQuest;
 
 public class UpdateSocialActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_IS_TASK = "is_task";
@@ -55,6 +57,7 @@ public class UpdateSocialActivity extends ToolbarAbstractActivity {
     @Override
     public void onBackPressed() {
         if (fragment.isQuestExecuted()) {
+            QuestStateController.getInstance().updateSocialUnavaible();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.quest_task_done);
             builder.setCancelable(false);

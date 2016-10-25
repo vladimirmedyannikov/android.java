@@ -586,6 +586,8 @@ public abstract class SocialUIController {
                 Statistics.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
                 Statistics.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+            } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
+                Statistics.beforeSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             }
         } catch (Exception ignored) {
         }
@@ -603,6 +605,8 @@ public abstract class SocialUIController {
             Statistics.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
             Statistics.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+        } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
+            Statistics.afterSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         }
     }
 

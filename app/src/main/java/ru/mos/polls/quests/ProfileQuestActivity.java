@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.R;
+import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.helpers.TitleHelper;
@@ -165,6 +167,9 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
             public void onSaved(JSONObject resultJson) {
                 changed.save(ProfileQuestActivity.this);
                 processResults(resultJson);
+                if (taskId.equalsIgnoreCase(ProfileQuest.ID_UPDATE_EXTRA_INFO)) {
+                    Statistics.taskFillProfileAddressWork();
+                }
                 stopProgress();
                 QuestStateController.getInstance().add(taskId);
             }

@@ -39,6 +39,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
@@ -59,6 +60,7 @@ import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
 import ru.mos.polls.quests.view.SpacesItemDecoration;
 import ru.mos.polls.quests.view.SwipeItemTouchHelper;
+import ru.mos.polls.quests.view.questviewholder.FavoriteSurveysHolder;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
@@ -82,11 +84,13 @@ public class QuestsFragment extends PullableFragment {
     public ItemTouchHelper mItemTouchHelper;
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
+    private GoogleStatistics.QuestsFragment qf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_quests, container, false);
         unbinder = ButterKnife.bind(this, root);
+        qf = new GoogleStatistics.QuestsFragment();
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
@@ -400,6 +404,10 @@ public class QuestsFragment extends PullableFragment {
         @Override
         public void onDelete(BackQuest quest, final int position) {
             if (quest != null) {
+                if (quest.getType().equalsIgnoreCase(FavoriteSurveysHolder.ID_HEARING)) {
+                    Statistics.deleteSurveyHearing();
+                    qf.deleteSurveyHearing(getActivity());
+                }
                 QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
                     @Override
                     public void onHide(boolean isHide) {

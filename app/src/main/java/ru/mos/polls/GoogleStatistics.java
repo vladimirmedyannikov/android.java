@@ -11,6 +11,7 @@ import ru.mos.elk.ElkTextUtils;
 /**
  * Инкапсулирует методы Google Analytics
  * Возможно, со временем заменит Flurry аналитику {@link ru.mos.polls.Statistics}
+ *
  * @since 1.9
  */
 public abstract class GoogleStatistics {
@@ -22,6 +23,7 @@ public abstract class GoogleStatistics {
      */
     public static abstract class BaseAuth {
         abstract String getCategory();
+
         abstract String getAction();
 
         protected void sendEvent(Activity activity, String label) {
@@ -30,8 +32,9 @@ public abstract class GoogleStatistics {
 
         /**
          * Проверка аторизации
+         *
          * @param activity
-         * @param isLogon прошла ли авторизация
+         * @param isLogon  прошла ли авторизация
          */
         public void check(Activity activity, boolean isLogon) {
             sendEvent(activity, isLogon ? CHECK_YES : CHECK_NO);
@@ -39,6 +42,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по оферте
+         *
          * @param activity
          */
         public void offerClick(Activity activity) {
@@ -47,8 +51,9 @@ public abstract class GoogleStatistics {
 
         /**
          * произошла ошибка
+         *
          * @param activity
-         * @param error отправляем текст ошибки, если передаем пустую строку или null, то отправится "Ок"
+         * @param error    отправляем текст ошибки, если передаем пустую строку или null, то отправится "Ок"
          */
         public void errorOccurs(Activity activity, String error) {
             sendEvent(activity, ElkTextUtils.isEmpty(error) ? "Ok" : error);
@@ -56,6 +61,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по меню "как это работает"
+         *
          * @param activity
          */
         public void howItWorksClick(Activity activity) {
@@ -64,6 +70,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по меню "Восстановление пароля"
+         *
          * @param activity
          */
         public void recoveryClick(Activity activity) {
@@ -72,6 +79,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по меню "Обратная связь"
+         *
          * @param activity
          */
         public void feedbackClick(Activity activity) {
@@ -81,6 +89,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по кнопе "нужна помощь?"
+         *
          * @param activity
          */
         public void helpClick(Activity activity) {
@@ -91,7 +100,7 @@ public abstract class GoogleStatistics {
     /**
      * События для экрана авторизации
      */
-    public static class Auth  extends BaseAuth{
+    public static class Auth extends BaseAuth {
         private static final String CATEGORY = "Vhod";
         private static final String ACTION = "Forma_Vhoda";
 
@@ -108,6 +117,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по кнопке "Регистрация"
+         *
          * @param activity
          */
         public void registryClick(Activity activity) {
@@ -134,6 +144,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по кнопке "Войти"
+         *
          * @param activity
          */
         public void authClick(Activity activity) {
@@ -161,6 +172,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по меню "Обратная связь"
+         *
          * @param activity
          */
         public void feedbackClick(Activity activity) {
@@ -169,6 +181,7 @@ public abstract class GoogleStatistics {
 
         /**
          * клик по меню "как это работает"
+         *
          * @param activity
          */
         public void howItWorksClick(Activity activity) {
@@ -199,10 +212,11 @@ public abstract class GoogleStatistics {
 
     /**
      * Базовый метод для отправки события
+     *
      * @param activity
      * @param category категория
-     * @param action действие
-     * @param label пометка о результате действия
+     * @param action   действие
+     * @param label    пометка о результате действия
      */
     public static void sendEvent(Activity activity, String category, String action, String label) {
         Tracker tracker = ((AGApplication) activity.getApplication()).getTracker();
@@ -213,5 +227,21 @@ public abstract class GoogleStatistics {
                 .setValue(1);
         tracker.send(eventBuilder.build());
         Log.i("AG_Google_Analytics", "action = " + action + ", category = " + category + ", label = " + label);
+    }
+
+    /**
+     * Coбытия на главной ленте
+     */
+    public static class QuestsFragment {
+        private static final String CATEGORY = "Quests_List";
+
+        /**
+         * Удаление голосования на главной ленте
+         *
+         * @param activity
+         */
+        public void deleteSurveyHearing(Activity activity) {
+            GoogleStatistics.sendEvent(activity, CATEGORY, "Udalenie_Golosovaniya", "Udalenie_Golosovaniya");
+        }
     }
 }

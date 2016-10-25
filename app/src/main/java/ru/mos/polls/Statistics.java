@@ -484,7 +484,7 @@ public class Statistics {
     /**
      * Удаление голосования на главной ленте
      */
-    public static void deleteSurvey() {
+    public static void deleteSurveyHearing() {
         FlurryAgent.logEvent("udalenie_golosovaniya");
     }
 
@@ -533,14 +533,14 @@ public class Statistics {
     /**
      * Нажатие кнопки "Прочитать все новости"
      */
-    public static void hideAllNews(){
+    public static void hideAllNews() {
         FlurryAgent.logEvent("read_all_news");
     }
 
     /**
      * До шаринга городской новинки
      *
-     * @param name   - имя соц сети
+     * @param name      - имя соц сети
      * @param noveltyId - идентификатор опроса
      */
     public static void beforeSocialInnovationSharing(String name, String noveltyId) {
@@ -549,11 +549,12 @@ public class Statistics {
         params.put("novelty_id", noveltyId);
         FlurryAgent.logEvent("social_sharing", params, true);
     }
+
     /**
      * После шаринга результатов опроса
      *
      * @param name      - имя соцсети
-     * @param noveltyId    - идентифиатор опроса
+     * @param noveltyId - идентифиатор опроса
      * @param isSuccess - результат шаринга
      */
     public static void afterSocialInnovationSharing(String name, String noveltyId, boolean isSuccess) {
@@ -562,5 +563,47 @@ public class Statistics {
         params.put("novelty_id", noveltyId);
         params.put("success", String.valueOf(isSuccess));
         FlurryAgent.endTimedEvent("social_sharing", params);
+    }
+
+    /**
+     * До шаринга достижения
+     *
+     * @param name    - имя соц сети
+     * @param awardId - идентификатор опроса
+     */
+    public static void beforeSocialAchivementSharing(String name, String awardId) {
+        Map<String, String> params = new HashMap<String, String>(2);
+        params.put("name", name);
+        params.put("award_id", awardId);
+        FlurryAgent.logEvent("social_sharing", params, true);
+    }
+
+    /**
+     * После шаринга достижения
+     *
+     * @param name      - имя соцсети
+     * @param awardId   - идентифиатор опроса
+     * @param isSuccess - результат шаринга
+     */
+    public static void afterSocialAchivementSharing(String name, String awardId, boolean isSuccess) {
+        Map<String, String> params = new HashMap<String, String>(3);
+        params.put("name", name);
+        params.put("award_id", awardId);
+        params.put("success", String.valueOf(isSuccess));
+        FlurryAgent.endTimedEvent("social_sharing", params);
+    }
+
+    /**
+     * Нажатие кнопки "Поделиться новостью"
+     */
+    public static void shareNews() {
+        FlurryAgent.logEvent("news_sharing");
+    }
+
+    /**
+     * Главный экран, факт заполнения  "адрес работы и род деятельности"
+     */
+    public static void taskFillProfileAddressWork() {
+        FlurryAgent.logEvent("task_fill_profile_address_work");
     }
 }

@@ -6,19 +6,28 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.IntRange;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.List;
+
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.survey.StatusProcessor;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.variants.image.FullImageActivity;

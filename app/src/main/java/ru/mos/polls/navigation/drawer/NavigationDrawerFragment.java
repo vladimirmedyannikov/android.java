@@ -34,8 +34,13 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
+
+import java.io.File;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -227,6 +232,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                         @Override
                         public void onLoadingFailed(String s, View view, FailReason failReason) {
+
                         }
 
                         @Override
@@ -242,7 +248,6 @@ public class NavigationDrawerFragment extends Fragment {
                 }
             }
         });
-
     }
 
     @Override

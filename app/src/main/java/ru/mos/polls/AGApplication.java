@@ -14,7 +14,7 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -158,7 +158,6 @@ public class AGApplication extends MultiDexApplication {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         VKSdk.initialize(this.getApplicationContext());
-
 
 
         BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
@@ -507,11 +506,8 @@ public class AGApplication extends MultiDexApplication {
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .denyCacheImageMultipleSizesInMemory()
                 .memoryCache(new LruMemoryCache(20 * 1024 * 1024))
-                .memoryCacheSize(10 * 1024 * 1024)
-                .discCache(new UnlimitedDiscCache(cacheDir))
-                .discCacheSize(10 * 1024 * 1024)
-                .discCacheFileCount(25)
-                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCacheSize(20 * 1024 * 1024)
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .imageDownloader(new BaseImageDownloader(this))
                 .imageDecoder(new BaseImageDecoder(true))
                 .defaultDisplayImageOptions(getOptions())

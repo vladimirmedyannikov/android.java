@@ -158,8 +158,9 @@ public abstract class AbstractEventsFragment extends PullableFragment {
          * Проверяем включена ли функция определения местоположения,
          * если нет, то показываем диалог с прдложением включить
          */
-        if (!locationController.isLocationProviderEnable(getActivity()))
-            locationController.showDialogEnableGPS(getActivity(), null);
+        if (!locationController.isLocationGPSProviderEnabled(getContext()) && !locationController.isLocationNetworkProviderEnabled(getContext())) {
+            locationController.showDialog(getContext(), null, true);
+        }
     }
 
 

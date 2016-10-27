@@ -134,22 +134,49 @@ public class EventActivity extends ToolbarAbstractActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LocationController.isLocationProviderEnable(this)) {
-            if (!isRuntimePermissionRejected) {
-                getLocationController();
-            }
+//        if (LocationController.isLocationProviderEnable(this)) {
+//
+//            if (!isRuntimePermissionRejected) {
+//                getLocationController();
+//            }
+//        } else {
+//            if (!isGPSEnableDialogShowed) {
+//                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        refreshEvent();
+//                    }
+//                };
+//                LocationController.showDialogEnableGPS(this, cancelListener);
+//                isGPSEnableDialogShowed = true;
+//            } else {
+//                refreshEvent();
+//            }
+//        }
+
+        if (event.isCheckIn()) {
+            refreshEvent();
         } else {
-            if (!isGPSEnableDialogShowed) {
-                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        refreshEvent();
-                    }
-                };
-                LocationController.showDialogEnableGPS(this, cancelListener);
-                isGPSEnableDialogShowed = true;
+            if (LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this)) {
+//                if (!LocationController.isLocationGPSProviderEnabled(this)) {
+//                    LocationController.showDialog(this, null, false);
+//                }
+                if (!isRuntimePermissionRejected) {
+                    getLocationController();
+                }
             } else {
-                refreshEvent();
+                if (!isGPSEnableDialogShowed) {
+                    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            refreshEvent();
+                        }
+                    };
+                    LocationController.showDialog(this, cancelListener, true);
+                    isGPSEnableDialogShowed = true;
+                } else {
+                    refreshEvent();
+                }
             }
         }
     }
@@ -394,8 +421,12 @@ public class EventActivity extends ToolbarAbstractActivity {
                  * Проверяем включена ли функция определения местоположения,
                  * если нет, то показываем диалог с предложением включить
                  */
-                if (!locationController.isLocationProviderEnable(EventActivity.this)) {
-                    locationController.showDialogEnableGPS(EventActivity.this, null);
+//                if (!locationController.isLocationProviderEnable(EventActivity.this)) {
+//                    locationController.showDialogEnableGPS(EventActivity.this, null);
+//                    return;
+//                }
+                if (!locationController.isLocationGPSProviderEnabled(EventActivity.this) && !locationController.isLocationNetworkProviderEnabled(EventActivity.this)) {
+                    locationController.showDialog(EventActivity.this, null, true);
                     return;
                 }
                 /**
@@ -404,13 +435,21 @@ public class EventActivity extends ToolbarAbstractActivity {
                  */
                 if (currentPosition == null || currentPosition.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(EventActivity.this);
-                    String message = EventActivity.this.getString(R.string.current_position_not_detected);
+                    String message = "";
+                    if (LocationController.isLocationGPSProviderEnabled(EventActivity.this) && !LocationController.isLocationNetworkProviderEnabled(EventActivity.this)) {
+                        message = String.format(getResources().getString(R.string.current_position_not_detected), getResources().getString(R.string.location_provader_network));
+                    }
+                    if (LocationController.isLocationNetworkProviderEnabled(EventActivity.this) && !LocationController.isLocationGPSProviderEnabled(EventActivity.this)) {
+                        message = String.format(getResources().getString(R.string.current_position_not_detected), getResources().getString(R.string.location_provader_GPS));
+                    }
                     builder.setMessage(message);
                     builder.setPositiveButton(R.string.survey_done_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            locationController.goToGPSSettings(EventActivity.this);
                         }
                     });
+                    builder.setNegativeButton(R.string.cancel, null);
                     builder.show();
                     return;
                 }

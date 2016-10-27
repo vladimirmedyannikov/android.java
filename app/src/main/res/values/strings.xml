@@ -197,7 +197,7 @@
     <string name="tw">Twitter</string>
     <string name="ok">Одноклассники</string>
     <string name="error_in_posting">Произошла ошибка при попытке рассказать друзьям в социальных сетях. Попробуйте рассказать друзьям позже</string>
-    <string name="post_success"/>
+    <string name="post_success" />
     <string name="error_duplicate_post_ru">Запись уже была добавлена, повторное добавление возможно через некоторое время</string>
     <string name="error_duplicate_post_in_facebook_en">This status update is identical to the last one you posted. Try posting something different, or delete your previous update.</string>
     <string name="post_added">Запись добавлена в социальную сеть. Текущий баланс %1$s %2$s.</string>
@@ -293,7 +293,7 @@
     <string name="poll_decision">Оповещать меня о принятых решениях</string>
     <string name="sms">Sms</string>
     <string name="poll_new">Оповещать меня о новых голосованиях</string>
-    <string name="empty"/>
+    <string name="empty" />
     <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
     <string name="poll_effected">Оповещать меня об исполненных решениях</string>
     <string name="action_rss">Подписки</string>
@@ -324,10 +324,13 @@
     <string name="action_refresh_event_list">Обновить список мероприятий</string>
     <string name="distance_is_too_big">Вы должны находиться не далее  %s м. от места проведения мероприятия</string>
     <string name="subscribe_settings_are_saved">Подписки на оповещения успешно сохранены</string>
-    <string name="current_position_not_detected">Текущие координаты еще не определены, попробуйте отметиться позже</string>
+    <string name="current_position_not_detected" formatted="false">Текущие координаты еще не определены. Улучшить определение местоположения включив %s?</string>
     <string name="current_position_is_setting">Координаты определены</string>
     <string name="distance_km">%s км</string>
+    <string name="location_provader_network">Сеть</string>
+    <string name="location_provader_GPS">ГПС</string>
     <string name="location_provaders_are_not_available">Для работы экрана \"Мероприятие\" требуется включить в настройках функцию определения местоположения</string>
+    <string name="location_provaders_gps">Для более точного определения местоположение включить ГПС?</string>
     <string name="turn_on">Включить</string>
     <string name="action_current_points">Начисленные баллы</string>
     <string name="action_credit_points">Потраченные баллы</string>

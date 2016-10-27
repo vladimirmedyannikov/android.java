@@ -52,7 +52,7 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
     private OnPositionListener listener;
     private Position currentPosition;
 
-    public static  boolean isLocationProviderEnable(final Context context) {
+    public static boolean isLocationProviderEnable(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager != null
                 && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -64,9 +64,28 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         context.startActivity(intent);
     }
 
+    public static boolean isLocationNetworkProviderEnabled(Context context) {
+        LocationManager locationManager = getLocationManaget(context);
+        return locationManager != null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
 
-    public static void showDialogEnableGPS(final Context context) {
-        showDialogEnableGPS(context, null);
+    public static boolean isLocationGPSProviderEnabled(Context context) {
+        LocationManager locationManager = getLocationManaget(context);
+        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    private static LocationManager getLocationManaget(Context context) {
+        return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    public static void showDialog(final Context context, final DialogInterface.OnClickListener cancelListener, boolean isGPSEnabled) {
+        if (!isGPSEnabled) {
+            showDialogEnableLocation(context, cancelListener, R.string.location_provaders_gps);
+        } else {
+            showDialogEnableLocation(context, cancelListener, R.string.location_provaders_are_not_available);
+        }
+
+//        showDialogEnableGPS(context, null);
     }
 
     public static void showDialogEnableGPS(final Context context, final DialogInterface.OnClickListener cancelListener) {
@@ -83,11 +102,25 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         builder.show();
     }
 
+
+    public static void showDialogEnableLocation(final Context context, final DialogInterface.OnClickListener cancelListener, int dialogMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(dialogMessage);
+        builder.setNegativeButton(R.string.cancel, cancelListener);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goToGPSSettings(context);
+            }
+        });
+        builder.show();
+    }
+
     public static synchronized LocationController getInstance(Context context) {
         if (instance == null) {
             instance = new LocationController(context);
         }
-
         return instance;
     }
 

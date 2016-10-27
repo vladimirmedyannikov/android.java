@@ -78,34 +78,9 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public static void showDialog(final Context context, final DialogInterface.OnClickListener cancelListener, boolean isGPSEnabled) {
-        if (!isGPSEnabled) {
-            showDialogEnableLocation(context, cancelListener, R.string.location_provaders_gps);
-        } else {
-            showDialogEnableLocation(context, cancelListener, R.string.location_provaders_are_not_available);
-        }
-
-//        showDialogEnableGPS(context, null);
-    }
-
-    public static void showDialogEnableGPS(final Context context, final DialogInterface.OnClickListener cancelListener) {
+    public static void showDialogEnableLocationProvider(final Context context, final DialogInterface.OnClickListener cancelListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.location_provaders_are_not_available);
-        builder.setNegativeButton(R.string.cancel, cancelListener);
-        builder.setCancelable(false);
-        builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                goToGPSSettings(context);
-            }
-        });
-        builder.show();
-    }
-
-
-    public static void showDialogEnableLocation(final Context context, final DialogInterface.OnClickListener cancelListener, int dialogMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(dialogMessage);
         builder.setNegativeButton(R.string.cancel, cancelListener);
         builder.setCancelable(false);
         builder.setPositiveButton(R.string.turn_on, new DialogInterface.OnClickListener() {

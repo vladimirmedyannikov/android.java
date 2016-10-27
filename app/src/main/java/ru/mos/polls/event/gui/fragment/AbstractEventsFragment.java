@@ -159,7 +159,7 @@ public abstract class AbstractEventsFragment extends PullableFragment {
          * если нет, то показываем диалог с прдложением включить
          */
         if (!locationController.isLocationGPSProviderEnabled(getContext()) && !locationController.isLocationNetworkProviderEnabled(getContext())) {
-            locationController.showDialog(getContext(), null, true);
+            locationController.showDialogEnableLocationProvider(getContext(), null);
         }
     }
 

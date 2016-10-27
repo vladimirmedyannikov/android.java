@@ -330,7 +330,6 @@
     <string name="location_provader_network">Сеть</string>
     <string name="location_provader_GPS">ГПС</string>
     <string name="location_provaders_are_not_available">Для работы экрана \"Мероприятие\" требуется включить в настройках функцию определения местоположения</string>
-    <string name="location_provaders_gps">Для более точного определения местоположение включить ГПС?</string>
     <string name="turn_on">Включить</string>
     <string name="action_current_points">Начисленные баллы</string>
     <string name="action_credit_points">Потраченные баллы</string>

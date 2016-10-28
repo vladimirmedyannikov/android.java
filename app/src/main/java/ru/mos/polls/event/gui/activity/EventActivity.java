@@ -22,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
-import com.android.volley2.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,25 +136,6 @@ public class EventActivity extends ToolbarAbstractActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if (LocationController.isLocationProviderEnable(this)) {
-//
-//            if (!isRuntimePermissionRejected) {
-//                getLocationController();
-//            }
-//        } else {
-//            if (!isGPSEnableDialogShowed) {
-//                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        refreshEvent();
-//                    }
-//                };
-//                LocationController.showDialogEnableLocationProvider(this, cancelListener);
-//                isGPSEnableDialogShowed = true;
-//            } else {
-//                refreshEvent();
-//            }
-//        }
         if (LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this)) {
             if (!isRuntimePermissionRejected) {
                 getLocationController();
@@ -165,7 +148,6 @@ public class EventActivity extends ToolbarAbstractActivity {
                         refreshEvent();
                     }
                 };
-//                LocationController.showDialog(this, cancelListener, true);
                 LocationController.showDialogEnableLocationProvider(this, cancelListener);
                 isGPSEnableDialogShowed = true;
             } else {
@@ -508,9 +490,8 @@ public class EventActivity extends ToolbarAbstractActivity {
             List<String> imageLinks = event.getImgLinks();
             List<View> imageViews = new ArrayList<View>(imageLinks.size());
             if (imageLinks != null && imageLinks.size() > 0) {
-                ImageLoader imageLoader = EventActivity.this.createImageLoader();
                 for (String url : imageLinks) {
-                    View imageView = getImageView(imageLoader, url);
+                    View imageView = getImageView(url);
                     imageViews.add(imageView);
                 }
                 PagerAdapter imagePagerAdapter = new ImagePagerAdapter(imageViews);
@@ -521,31 +502,36 @@ public class EventActivity extends ToolbarAbstractActivity {
             }
         }
 
-        private View getImageView(ImageLoader imageLoader, String url) {
+        private View getImageView(String url) {
             View view = View.inflate(EventActivity.this, R.layout.layout_event_images, null);
             final ProgressBar loadingImageProgress = ButterKnife.findById(view, R.id.loadingImageProgress);
             final ImageView imageView = ButterKnife.findById(view, R.id.image);
-            ImageLoader.ImageListener imageListener = new ImageLoader.ImageListener() {
+            ImageLoader imageLoader = AGApplication.getImageLoader();
+            imageLoader.loadImage(url, new ImageLoadingListener() {
                 @Override
-                public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if (imageContainer != null) {
-                        Bitmap bitmap = imageContainer.getBitmap();
-                        if (bitmap != null) {
-                            imageView.setImageBitmap(bitmap);
-                            loadingImageProgress.setVisibility(View.GONE);
-                            imageView.setVisibility(View.VISIBLE);
-                        }
+                public void onLoadingStarted(String s, View view) {
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                    loadingImageProgress.setVisibility(View.GONE);
+                    String errorMessage = String.format(getString(R.string.error_occurs), failReason.getType().toString());
+                    Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                        loadingImageProgress.setVisibility(View.GONE);
+                        imageView.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    //TODO скрыть loadingImageProgress и установить картинку по умолчанию
-                    String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-                    Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                public void onLoadingCancelled(String s, View view) {
                 }
-            };
-            imageLoader.get(url, imageListener);
+            });
             return view;
         }
 

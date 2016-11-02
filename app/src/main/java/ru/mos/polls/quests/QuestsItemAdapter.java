@@ -27,6 +27,7 @@ import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
+import ru.mos.polls.quests.view.questviewholder.AchievementHolder;
 import ru.mos.polls.quests.view.questviewholder.EventHolder;
 import ru.mos.polls.quests.view.questviewholder.FavoriteSurveysHolder;
 import ru.mos.polls.quests.view.questviewholder.NewsHolder;
@@ -110,6 +111,9 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
             case NOVELTY:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_novelty, parent, false);
                 return new NoveltyHolder(view);
+            case ACHIEVEMENT:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quest_achievement, parent, false);
+                return new AchievementHolder(view);
         }
         return null;
     }

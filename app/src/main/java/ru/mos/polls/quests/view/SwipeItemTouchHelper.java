@@ -29,6 +29,8 @@ public class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        QuestsViewHolder holder = (QuestsViewHolder) viewHolder;
+        if (holder.swipableView.getVisibility() == View.INVISIBLE) return 0;
         return makeMovementFlags(0, ItemTouchHelper.START | ItemTouchHelper.END);
     }
 

@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -271,6 +272,7 @@ public class QuestsFragment extends PullableFragment {
         /**
          * Фильтруем задания {@link ru.mos.polls.quests.controller.QuestStateController}
          */
+        qf.enterQuestFragment(getActivity());
         if (quests != null && adapter != null) {
             List<Quest> filtered = QuestStateController.getInstance().process(quests);
             quests.clear();

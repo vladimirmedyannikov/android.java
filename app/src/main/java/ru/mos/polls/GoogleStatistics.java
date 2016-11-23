@@ -233,7 +233,7 @@ public abstract class GoogleStatistics {
      * Coбытия на главной ленте
      */
     public static class QuestsFragment {
-        private static final String CATEGORY = "Quests_List";
+        private static final String CATEGORY = "Glav_Lenta";
 
         /**
          * Удаление голосования на главной ленте
@@ -242,6 +242,15 @@ public abstract class GoogleStatistics {
          */
         public void deleteSurveyHearing(Activity activity) {
             GoogleStatistics.sendEvent(activity, CATEGORY, "Udalenie_Golosovaniya", "Udalenie_Golosovaniya");
+        }
+
+        /**
+         * Вход на экран
+         *
+         * @param activity
+         */
+        public void enterQuestFragment(Activity activity) {
+            GoogleStatistics.sendEvent(activity, CATEGORY, "Main_Enter", "Main_Enter");
         }
     }
 }

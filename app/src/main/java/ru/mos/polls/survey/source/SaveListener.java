@@ -99,11 +99,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         @Override
         public void onError(int code, String message) {
             dismissProgressDialog();
-            if (survey.getKind().isHearing()) {
                 PguUIController.hearingErrorProcess(activity, code, message);
-            } else {
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-            }
         }
 
         @Override

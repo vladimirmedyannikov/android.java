@@ -123,6 +123,7 @@ public abstract class PguUIController {
                 break;
             case HearingApiController.ERROR_FIELDS_ARE_EMPTY:
             case HearingApiController.ERROR_PGU_FLAT_NOT_MATCH:
+            case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
                 showBindToPGUDialogForInvalidFields(elkActivity, message);
                 break;
             case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:

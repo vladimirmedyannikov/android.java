@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
@@ -29,6 +30,7 @@ import ru.mos.polls.subscribes.controller.SubscribesAPIController;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
+import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
 
 
@@ -99,7 +101,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         @Override
         public void onError(int code, String message) {
             dismissProgressDialog();
-                PguUIController.hearingErrorProcess(activity, code, message);
+            PguUIController.hearingErrorProcess(activity, code, message);
         }
 
         @Override
@@ -258,8 +260,16 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                 activity.finish();
                 return;
             }
-            saveCurrentPage();
-            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            switch (code) {
+                case HearingApiController.ERROR_PGU_NOT_ATTACHED:
+                case HearingApiController.ERROR_PGU_SESSION_EXPIRED:
+                case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
+                case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
+                case HearingApiController.ERROR_PGU_USER_DATA:
+                    break;
+                default:
+                    Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            }
             Statistics.pollsInterrupted(survey.getId(), false);
             activity.finish();
         }

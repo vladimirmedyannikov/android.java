@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -122,9 +123,9 @@ public abstract class PguUIController {
             case HearingApiController.ERROR_PGU_NOT_ATTACHED:
             case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
             case HearingApiController.ERROR_PGU_SESSION_EXPIRED:
+            case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
                 showBindToPGUDialog(elkActivity, message);
                 break;
-            case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
             case HearingApiController.ERROR_FIELDS_ARE_EMPTY:
             case HearingApiController.ERROR_PGU_FLAT_NOT_MATCH:
             case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:

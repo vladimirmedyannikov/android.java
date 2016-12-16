@@ -119,15 +119,17 @@ public abstract class PguUIController {
     public static void hearingErrorProcess(final BaseActivity elkActivity, int code, String message) {
         switch (code) {
             case HearingApiController.ERROR_SESSION_EXPIRED:
+            case HearingApiController.ERROR_PGU_NOT_ATTACHED:
+            case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
+            case HearingApiController.ERROR_PGU_SESSION_EXPIRED:
                 showBindToPGUDialog(elkActivity, message);
                 break;
+            case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
             case HearingApiController.ERROR_FIELDS_ARE_EMPTY:
             case HearingApiController.ERROR_PGU_FLAT_NOT_MATCH:
             case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
+            case HearingApiController.ERROR_PGU_USER_DATA:
                 showBindToPGUDialogForInvalidFields(elkActivity, message);
-                break;
-            case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
-                showBindToPGUDialog(elkActivity, message);
                 break;
             default:
                 Toast.makeText(elkActivity, message, Toast.LENGTH_SHORT).show();

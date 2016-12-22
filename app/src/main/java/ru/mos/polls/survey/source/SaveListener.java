@@ -163,6 +163,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                                 }
                             };
                             SocialUIController.showSocialsDialogForPoll(activity, survey, true, listener);
+                            dialog.dismiss();
                         }
 
                         @Override

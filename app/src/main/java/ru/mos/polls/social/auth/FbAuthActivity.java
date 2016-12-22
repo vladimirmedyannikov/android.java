@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -65,11 +66,12 @@ public class FbAuthActivity extends BaseActivity {
         @Override
         public void onError(FacebookException error) {
             Log.d("FB_CLBCK", error.toString());
-            String message = String.format(getString(R.string.error_auth_fb_message), error.getMessage());
+            AccessToken.refreshCurrentAccessTokenAsync();
+            String message = getString(R.string.error_expired_access_token);
             DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                    manager.logInWithReadPermissions(FbAuthActivity.this, Arrays.asList("email"));
                 }
             };
             GuiUtils.displayOkMessage(FbAuthActivity.this,

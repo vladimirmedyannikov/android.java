@@ -392,6 +392,7 @@
     <string name="title_more">Подробнее</string>
     <string name="title_summary">Голосование</string>
     <string name="you_share_yet">"Вы уже делились информацией \"%s\" и Вам были начислены дополнительные баллы. Баллы начисляются только за первое сообщение. Вы хотите поделиться еще раз?"</string>
+    <string name="you_share_yet_without">"Вы уже делились информацией \"%s\". Вы хотите поделиться еще раз?"</string>
     <string name="title_ag">Активный гражданин</string>
     <string name="subject_support">Тема сообщения</string>
     <string name="dialog_survey_success_title">Ваш голос принят</string>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/buttonContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout android:id="@+id/buttonContainer"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/pd_normal"
-        android:background="@color/white" />
+        android:background="@color/white"/>
 
     <LinearLayout
         android:id="@+id/detailsContainer"
@@ -15,14 +15,15 @@
         android:layout_centerInParent="true">
 
         <ImageView
+
             android:id="@+id/detailsExpand"
             style="@style/wrap"
-            android:src="@drawable/more" />
+            android:background="@drawable/arrow_list_more"/>
 
         <ImageView
             android:id="@+id/detailsCollapse"
             style="@style/wrap"
-            android:src="@drawable/nomore" />
+            android:background="@drawable/arrow_list_nomore"/>
 
     </LinearLayout>
 
@@ -31,12 +32,12 @@
         android:layout_height="@dimen/thin_separator"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@id/detailsContainer"
-        android:background="@color/details_more" />
+        android:background="@color/details_more"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/thin_separator"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@id/detailsContainer"
-        android:background="@color/details_more" />
+        android:background="@color/details_more"/>
 </RelativeLayout>

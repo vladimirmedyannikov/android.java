@@ -66,7 +66,7 @@ import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
-public class QuestsFragment extends PullableFragment {
+public class  QuestsFragment extends PullableFragment {
 
     @BindView(R.id.list)
     RecyclerView listView;

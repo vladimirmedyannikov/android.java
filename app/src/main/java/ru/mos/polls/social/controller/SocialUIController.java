@@ -357,6 +357,9 @@ public abstract class SocialUIController {
         String post = String.format(context.getString(R.string.public_text), socialPostValue.getText());
         if (!socialPostValue.isEnable()) {
             post = String.format(context.getString(R.string.you_share_yet), socialPostValue.getText());
+            if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
+                post = String.format(context.getString(R.string.you_share_yet_without), socialPostValue.getText());
+            }
         }
         message.setText(post);
 

@@ -22,7 +22,7 @@
     <dimen name="thick_separator">2dp</dimen>
 
     <!-- padding size !-->
-    <dimen name="pd_xxxsmall">5dp</dimen>
+    <dimen name="pd_xxxsmall">4dp</dimen>
     <dimen name="pd_xxsmall">8dp</dimen>
     <dimen name="pd_xsmall">12dp</dimen>
     <dimen name="pd_normal">16dp</dimen>
@@ -39,7 +39,7 @@
 
     <!-- view size !-->
     <dimen name="vs_xxxsmall">30dp</dimen>
-    <dimen name="vs_xxsmall">50dp</dimen>
+    <dimen name="vs_xxsmall">40dp</dimen>
     <dimen name="vs_xsmall">60dp</dimen>
     <dimen name="vs_small">75dp</dimen>
     <dimen name="vs_normal">100dp</dimen>

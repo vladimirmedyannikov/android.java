@@ -25,6 +25,7 @@ import ru.mos.elk.profile.flat.Flat;
 
 /**
  * Структура данных для работы с данными пользователя АГ
+ *
  * @since 1.9
  */
 public class AgUser implements Serializable {
@@ -61,6 +62,7 @@ public class AgUser implements Serializable {
     private Flat residenceFlat;
     private Flat workFlat;
 
+
     public static boolean isPguConnected(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         return prefs.getBoolean(AgUser.IS_PGU_CONNECTED, false);
@@ -91,6 +93,7 @@ public class AgUser implements Serializable {
 
     /**
      * Пользователь, сохраненный локально в SharedPreferences
+     *
      * @param context
      */
     public AgUser(Context context) {
@@ -116,8 +119,9 @@ public class AgUser implements Serializable {
 
     /**
      * Данные пользователь из ответа сервиса
+     *
      * @param context
-     * @param json должен содержать данные по пользователю аг: personal, common, flats
+     * @param json    должен содержать данные по пользователю аг: personal, common, flats
      */
     public AgUser(Context context, JSONObject json) {
         if (json != null) {
@@ -234,6 +238,7 @@ public class AgUser implements Serializable {
 
     /**
      * Сохранение пользователя локально на устройстве
+     *
      * @param context
      */
     public void save(Context context) {
@@ -334,6 +339,9 @@ public class AgUser implements Serializable {
              */
             if (isFilledAndChanged(registrationFlat, changedAgUser.registrationFlat)) {
                 changedAgUser.registrationFlat.addToFlatsJson(flats);
+                if (registrationFlat.compareByFullAddress(residenceFlat)) {
+                    changedAgUser.residenceFlat.addToFlatsJson(flats);
+                }
             } else if (isDeleted(registrationFlat, changedAgUser.registrationFlat)) {
                 JSONObject kill = new JSONObject();
                 kill.put("kill", true);
@@ -394,6 +402,7 @@ public class AgUser implements Serializable {
 
     /**
      * Добавления личных данных пользователя у телу запроса
+     *
      * @param requestBody json тело запроса
      */
     public void addPersonal(JSONObject requestBody) {
@@ -420,6 +429,7 @@ public class AgUser implements Serializable {
 
     /**
      * Добавление данных по квартирам к телу запроса
+     *
      * @param requestBody json тело запроса
      */
     public void addFlats(JSONObject requestBody) {
@@ -637,6 +647,7 @@ public class AgUser implements Serializable {
 
     /**
      * Конвертация дат рождения детей
+     *
      * @param jsonObject тег personal, содержащий описание личных данных пользователя и тег childrens_birthdays
      * @return список дат рождения
      */
@@ -651,6 +662,7 @@ public class AgUser implements Serializable {
 
     /**
      * Конвертация списка дат родения, сохраненного в SharedPreference
+     *
      * @param prefs объект SharedPreferences для личных данных пользователя аг
      * @return список дат рождения детей
      */
@@ -678,6 +690,7 @@ public class AgUser implements Serializable {
 
     /**
      * Конвертация дат рождения детей JSONArray для сохрания в SharedPrefernses
+     *
      * @return
      */
     private JSONArray childBirthdaysAsJsonArray() {
@@ -700,6 +713,7 @@ public class AgUser implements Serializable {
 
     /**
      * Парсинг тега common данных по пользователю аг
+     *
      * @param json тег common
      */
     private void parseCommon(JSONObject json) {
@@ -712,6 +726,7 @@ public class AgUser implements Serializable {
 
     /**
      * Парсинг основных данных по пользователю аг
+     *
      * @param json тег personal
      */
     private void parsePersonal(JSONObject json) {
@@ -734,6 +749,7 @@ public class AgUser implements Serializable {
 
     /**
      * Парсинг квартир пользователя аг
+     *
      * @param json тег flats
      */
     private void parseFlats(Context context, JSONObject json) {
@@ -796,7 +812,7 @@ public class AgUser implements Serializable {
         }
 
         public static Gender[] getGenderItems() {
-            return new Gender[] {NULL, MALE, FEMALE};
+            return new Gender[]{NULL, MALE, FEMALE};
         }
 
         public boolean isEmpty() {
@@ -805,6 +821,7 @@ public class AgUser implements Serializable {
 
         /**
          * Адаптер для отображения списка выбора пола
+         *
          * @param context
          * @return
          */
@@ -889,6 +906,7 @@ public class AgUser implements Serializable {
         /**
          * Если пол не указан, то выведется
          * общая метка без учета пола
+         *
          * @return
          */
         @Override
@@ -907,11 +925,12 @@ public class AgUser implements Serializable {
         }
 
         public static MaritalStatus[] getMaritalStatusItems() {
-            return new MaritalStatus[] {NULL, MARRIED, SINGLE};
+            return new MaritalStatus[]{NULL, MARRIED, SINGLE};
         }
 
         /**
          * Адаптер для выбора семейного положения
+         *
          * @param context
          * @param gender
          * @return

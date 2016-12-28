@@ -87,14 +87,12 @@ public class QuestsFragment extends PullableFragment {
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
     private GoogleStatistics.QuestsFragment qf;
-    MediaPlayer mp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_quests, container, false);
         unbinder = ButterKnife.bind(this, root);
         qf = new GoogleStatistics.QuestsFragment();
-        mp = MediaPlayer.create(getContext(), R.raw.click_one);
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
@@ -395,7 +393,6 @@ public class QuestsFragment extends PullableFragment {
     ItemRecyclerViewListener itemListener = new ItemRecyclerViewListener() {
         @Override
         public void onClick(BackQuest quest) {
-            mp.start();
             if (quest != null) {
                 quest.onClick(getActivity(), listener);
                 /**
@@ -409,7 +406,6 @@ public class QuestsFragment extends PullableFragment {
 
         @Override
         public void onDelete(BackQuest quest, final int position) {
-            mp.start();
             if (quest != null) {
                 if (quest.getType().equalsIgnoreCase(FavoriteSurveysHolder.ID_HEARING)) {
                     Statistics.deleteSurveyHearing();
@@ -429,7 +425,6 @@ public class QuestsFragment extends PullableFragment {
 
         @Override
         public void onCancel(QuestsViewHolder holder) {
-            mp.start();
             if (holder != null) {
                 callback.clearView(listView, holder);
             }

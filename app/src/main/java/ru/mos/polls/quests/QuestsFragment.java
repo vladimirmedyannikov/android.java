@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -95,7 +96,7 @@ public class QuestsFragment extends PullableFragment {
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
-        listView.addItemDecoration(new SpacesItemDecoration(3));
+        listView.addItemDecoration(new SpacesItemDecoration(2));
         /*
         * инициализируем аватарку для хэедера
         *

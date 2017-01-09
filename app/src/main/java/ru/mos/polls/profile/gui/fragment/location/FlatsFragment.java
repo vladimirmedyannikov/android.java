@@ -54,7 +54,6 @@ public class FlatsFragment extends AbstractProfileFragment {
     TextView residenceView;
     @BindView(R.id.checkСoincides)
     CheckBox equalsFlats;
-    //    private Unbinder unbinder;
     private Flat registration, residence;
 
     @Override
@@ -64,7 +63,9 @@ public class FlatsFragment extends AbstractProfileFragment {
             if (newFlat.isRegistration()) {
                 registration = newFlat;
                 registration.save(getActivity());
-                if (registration.compareByFullAddress(residence)) {
+//                if (registration.compareByFullAddress(residence)) {
+//                }
+                if (equalsFlats.isChecked()) {
                     cloneResidenceFromRegistration();
                 }
             }
@@ -178,6 +179,7 @@ public class FlatsFragment extends AbstractProfileFragment {
         residenceView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
 
         displayEqualsFlats();
+
     }
 
     private boolean equalsFlats() {
@@ -204,7 +206,7 @@ public class FlatsFragment extends AbstractProfileFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 residence.delete(getActivity());
-                residence = Flat.getResidence(getActivity());
+                cloneResidenceFromRegistration();
                 refreshUI();
                 changeListener.onChange(ADDRESS_ID);
             }

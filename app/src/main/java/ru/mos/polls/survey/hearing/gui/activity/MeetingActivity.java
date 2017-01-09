@@ -132,7 +132,7 @@ public class MeetingActivity extends ToolbarAbstractActivity {
     }
 
     private void refreshAction() {
-        if (meeting.getDate() < System.currentTimeMillis() || meeting.isClosed()) {
+        if (meeting.getDate() < System.currentTimeMillis() || meeting.isClosed() && !meeting.getConditions().isWithoutRegistration()) {
             hintWithoutRegistration.setVisibility(View.VISIBLE);
             hintWithoutRegistration.setText(getString(R.string.meeting_held));
             hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));

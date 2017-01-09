@@ -391,10 +391,10 @@
 
     <style name="quest_container" parent="item.linear">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:paddingBottom">@dimen/pd_xxsmall</item>
+        <item name="android:paddingBottom">@dimen/pd_xxxsmall</item>
         <item name="android:paddingLeft">@dimen/pd_xsmall</item>
         <item name="android:paddingRight">@dimen/pd_xsmall</item>
-        <item name="android:paddingTop">@dimen/pd_xxsmall</item>
+        <item name="android:paddingTop">@dimen/pd_xxxsmall</item>
     </style>
 
     <style name="setting_item" parent="text.large">

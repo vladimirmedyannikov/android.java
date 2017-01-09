@@ -1,5 +1,6 @@
 package ru.mos.polls.survey.hearing.controller;
 
+
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
 
@@ -34,6 +35,11 @@ public abstract class HearingApiController {
     public static final int ERROR_FIELDS_ARE_EMPTY = 5703;
     public static final int ERROR_SESSION_EXPIRED = 5732;
     public static final int ERROR_PGU_FLAT_NOT_MATCH = 5734;
+    public static final int ERROR_AG_FLAT_NOT_MATCH = 15165;
+    public static final int ERROR_PGU_NOT_ATTACHED = 15167;
+    public static final int ERROR_PGU_FLAT_NOT_VALID = 15163;
+    public static final int ERROR_PGU_USER_DATA = 15164;
+    public static final int ERROR_PGU_SESSION_EXPIRED = 15166;
 
     public static void pguBind(final BaseActivity elkActivity, String pguLogin, String pguPassword, final PguAuthListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.PGU, UrlManager.Methods.BINDING));
@@ -136,6 +142,11 @@ public abstract class HearingApiController {
                         case ERROR_SESSION_EXPIRED:
                         case ERROR_FIELDS_ARE_EMPTY:
                         case ERROR_PGU_FLAT_NOT_MATCH:
+                        case ERROR_AG_FLAT_NOT_MATCH:
+                        case ERROR_PGU_NOT_ATTACHED:
+                        case ERROR_PGU_FLAT_NOT_VALID:
+                        case ERROR_PGU_USER_DATA:
+                        case ERROR_PGU_SESSION_EXPIRED:
                             listener.onPguAuthError(volleyError.getErrorCode(), volleyError.getMessage());
                             break;
                         default:

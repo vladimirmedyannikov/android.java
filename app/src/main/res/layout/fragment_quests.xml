@@ -48,7 +48,7 @@
     <LinearLayout
         android:id="@id/empty"
         style="@style/item.linear"
-        android:paddingTop="@dimen/vs_xxxsmall">
+        android:paddingTop="@dimen/vs_xxsmall">
 
         <TextView
             style="@style/text.large.gray"

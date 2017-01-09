@@ -185,6 +185,7 @@ public abstract class PointsManager {
     }
 
     public static String getMessage(Context context, int price, int currentPoints) {
+        if (price == 0) return context.getString(R.string.novelty_result_send_share);
         String suitableString1 = PointsManager.getSuitableString(context, R.array.survey_done_message_1, price);
         String message1 = String.format(suitableString1, price);
         String suitableString2 = PointsManager.getSuitableString(context, R.array.survey_done_message_2, currentPoints);

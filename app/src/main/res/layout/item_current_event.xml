@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/item.linear"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@drawable/ag_list_selector"
-                android:gravity="center_vertical"
-                android:padding="@dimen/pd_xsmall">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/ag_list_selector"
+    android:gravity="center_vertical"
+    android:padding="@dimen/pd_xsmall"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/points"
         style="@style/text.xlarge.green"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        tools:text="+20 баллов"/>
 
     <TextView
         android:id="@+id/name"
         style="@style/text.large"
         android:layout_below="@id/points"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        tools:text="Памятник Пушкину А.С."/>
 
     <TextView
         android:id="@+id/date"
         style="@style/text"
         android:layout_below="@id/name"
-        android:paddingBottom="@dimen/pd_xsmall"/>
+        android:paddingBottom="@dimen/pd_xsmall"
+        tools:text="20.01.2014, 10:15"/>
 
     <RelativeLayout
         android:id="@+id/container"
         style="@style/item"
-        android:layout_below="@id/date">
+        android:layout_below="@id/date"
+        >
 
         <TextView
             android:id="@+id/distance"
             style="@style/text.large.green"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/pd_xsmall"/>
+            android:layout_marginLeft="@dimen/pd_xsmall"
+            tools:text="100 м."/>
 
         <TextView
             android:id="@+id/address"
             style="@style/text.large.gray"
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/distance"/>
+            android:layout_toLeftOf="@id/distance"
+            tools:text="Ул. Арбат, д. 101"/>
     </RelativeLayout>
 </RelativeLayout>

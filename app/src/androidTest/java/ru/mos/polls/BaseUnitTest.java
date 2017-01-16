@@ -2,6 +2,7 @@ package ru.mos.polls;
 
 import android.support.test.InstrumentationRegistry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ import java.io.InputStreamReader;
 /**
  */
 
-public class BaseTest {
+public class BaseUnitTest {
 
     protected JSONObject fromTestRawAsJson(String fileName) {
         JSONObject result = null;
@@ -28,6 +29,24 @@ public class BaseTest {
                 fileContent.append(line).append('\n');
             }
             result = new JSONObject(fileContent.toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    protected JSONArray fromTestRawAsJsonArray(String fileName) {
+        JSONArray result = null;
+        try {
+            InputStream is = InstrumentationRegistry.getContext().getAssets().open(fileName);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder fileContent = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContent.append(line).append('\n');
+            }
+            result = new JSONArray(fileContent.toString());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

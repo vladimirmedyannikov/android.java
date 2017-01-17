@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
+ * Использовать для получения солержимого файлов заглушек из assets<br/>
+ * {@link #fromTestRawAsJson(String)}<br/>
+ * {@link #fromTestRawAsJsonArray(String)}
  */
 
 public class BaseUnitTest {

@@ -37,8 +37,8 @@ public class ShortInnovationUnitTest extends BaseUnitTest {
         Assert.assertNotNull(testValue.getStatus());
         Assert.assertEquals("old", testValue.getStatus().toString());
         Assert.assertEquals(4.4, testValue.getFullRating(), 0);
-        Assert.assertEquals(1480798800, testValue.getBeginDate());
-        Assert.assertEquals(1483131600, testValue.getEndDate());
+        Assert.assertEquals(1480798800000L, testValue.getBeginDate());
+        Assert.assertEquals(1483131600000L, testValue.getEndDate());
     }
 
     @Test

@@ -6,8 +6,10 @@ import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.innovation.model.Innovation;
+import ru.mos.polls.innovation.model.Status;
 
 /**
+ *
  */
 
 public class InnovationUnitTest extends BaseUnitTest {
@@ -18,10 +20,13 @@ public class InnovationUnitTest extends BaseUnitTest {
         Assert.assertNotNull(testValue);
         Assert.assertEquals(150, testValue.getId());
         assertNotNullOrEmpty(testValue.getTitle());
+        assertNotNullOrEmpty(testValue.getTextFullHtml());
+        assertNotNullOrEmpty(testValue.getTextShortHtml());
         Assert.assertNotNull(testValue.getStatus());
-        Assert.assertEquals("old", testValue.getStatus().toString());
-        Assert.assertEquals(4.4, testValue.getFullRating());
-        Assert.assertEquals(1479762000, testValue.getBeginDate());
-        Assert.assertEquals(1483131600, testValue.getEndDate());
+        Assert.assertEquals(Status.OLD, testValue.getStatus());
+        Assert.assertEquals(4.4, testValue.getFullRating(), 0);
+        Assert.assertEquals(1479762000000L, testValue.getBeginDate());
+        Assert.assertEquals(1483131600000L, testValue.getEndDate());
+        Assert.assertNotNull(testValue.getRating());
     }
 }

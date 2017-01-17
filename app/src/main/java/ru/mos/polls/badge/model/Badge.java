@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Структура данных, описывающая окнкретный тип байджев
+ * Структура данных, описывающая конкретный тип байджев
  *
  */
 public class Badge {

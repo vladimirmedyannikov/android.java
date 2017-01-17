@@ -1,11 +1,23 @@
 {
-  "id": 150,
-  "title": "новинка с балами ",
-  "text_full_html": "<p>новинка с балами</p>",
-  "text_short_html": "<p>новинка с балами</p>",
-  "site_description": "новинка с балами",
-  "points": 10,
-  "status": "active",
-  "begin_date": 1479762000,
-  "end_date": 1508533200
+  "id": 151,
+  "title": "тест. новинка без баллов (=0)",
+  "text_full_html": "<p>тест. новинка без баллов (=0)</p>\r\n<p>тест. новинка без баллов (=0)</p>\r\n<p>тест. новинка без баллов (=0)</p>",
+  "text_short_html": "<p>тест. новинка без баллов (=0)</p>\r\n<p>тест. новинка без баллов (=0)</p>\r\n<p><img src=\"http://test.cms.ag.mos.ru/images/1378954176_006.jpg\" alt=\"\" width=\"800\" height=\"614\" /></p>",
+  "site_description": "тест. новинка без баллов (=0)",
+  "points": 0,
+  "status": "old",
+  "begin_date": 1480798800,
+  "end_date": 1483131600,
+  "rating": {
+    "full_count": 8,
+    "full_rating": 4.4,
+    "user_rating": null,
+    "counts": [
+      3,
+      5,
+      0,
+      0,
+      0
+    ]
+  }
 }

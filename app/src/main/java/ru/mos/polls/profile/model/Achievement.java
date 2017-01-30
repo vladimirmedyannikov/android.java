@@ -1,6 +1,7 @@
 package ru.mos.polls.profile.model;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import org.json.JSONArray;
 import org.json.JSONException;

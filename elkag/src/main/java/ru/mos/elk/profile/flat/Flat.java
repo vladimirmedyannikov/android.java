@@ -483,6 +483,10 @@ public class Flat implements Serializable {
         return area;
     }
 
+    public String getFlatId() {
+        return flatId;
+    }
+
     public Flat setArea(String area) {
         this.area = area;
         return this;

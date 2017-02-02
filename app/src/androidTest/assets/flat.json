@@ -1,0 +1,35 @@
+{
+  "registration": {
+    "flat_id": 266200,
+    "flat": null,
+    "street": "Щёлковский пр.",
+    "building": "д. 2",
+    "city": null,
+    "area": "Северное Измайлово",
+    "district": "Восточный",
+    "editing_blocked": false,
+    "building_id": "240097-1"
+  },
+  "residence": {
+    "flat_id": 266200,
+    "flat": null,
+    "street": "Щёлковский пр.",
+    "building": "д. 2",
+    "city": null,
+    "area": "Северное Измайлово",
+    "district": "Восточный",
+    "editing_blocked": false,
+    "building_id": "240097-1"
+  },
+  "work": {
+    "flat_id": 266201,
+    "flat": null,
+    "street": "ул. Докукина",
+    "building": "д. 8, строение 1",
+    "city": null,
+    "area": "Ростокино",
+    "district": "Северо-Восточный",
+    "editing_blocked": false,
+    "building_id": "2200280-1"
+  }
+}

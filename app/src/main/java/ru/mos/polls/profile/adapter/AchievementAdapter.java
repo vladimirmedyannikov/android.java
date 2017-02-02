@@ -49,7 +49,8 @@ public class AchievementAdapter extends ArrayAdapter<Achievement> {
     }
 
     private void displayDescription(AchievementHolder v, Achievement achievement) {
-        v.date.setText(achievement.getSubtitle(getContext()));
+        String subText = achievement.isNext() ? getContext().getString(R.string.achievement_subtitle_is_next) : achievement.getDescription();
+        v.date.setText(subText);
     }
 
     private void displayBadge(View v, Achievement achievement, AchievementHolder holder) {

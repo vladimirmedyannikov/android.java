@@ -1,17 +1,11 @@
 package ru.mos.polls.profile.model;
 
-import android.content.Context;
-import android.content.res.Resources;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.mos.polls.R;
 
 /**
  * Структура данных для хранения информации о достижении пользователя
@@ -51,15 +45,6 @@ public class Achievement implements Serializable {
         }
     }
 
-    public void addId(JSONObject jsonObject) {
-        if (jsonObject != null) {
-            try {
-                jsonObject.put("achievement_id", id);
-            } catch (JSONException ignored) {
-            }
-        }
-    }
-
     public String getId() {
         return id;
     }
@@ -86,14 +71,6 @@ public class Achievement implements Serializable {
 
     public boolean isNeedHideTask() {
         return isNeedHideTask;
-    }
-
-    public String getSubtitle(Context context) {
-        String result = description;
-        if (isNext) {
-            result = context.getString(R.string.achievement_subtitle_is_next);
-        }
-        return result;
     }
 
 }

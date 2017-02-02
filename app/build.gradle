@@ -131,8 +131,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-
+    testCompile(name: 'mockito-all-2.0.2-beta', ext: 'jar')
     compile project(":elkag")
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {

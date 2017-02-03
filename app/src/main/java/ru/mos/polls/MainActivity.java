@@ -182,6 +182,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         switch (id) {
             case NavigationMenuItem.POLLS:
                 Statistics.enterAllPolls();
+                GoogleStatistics.QuestsFragment.enterAllPolls();
                 /**
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
@@ -263,6 +264,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     @Override
                     public void onSocialPost(SocialPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
+                        GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
                         socialController.post(socialPostValue);
                     }
 
@@ -328,6 +330,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     @Override
                     public void onSocialPost(SocialPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
+                        GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
                         socialController.post(socialPostValue);
                     }
                 };
@@ -463,6 +466,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     @Override
                     public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
+                        GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
                         socialController.post(socialPostValue);
                     }
 

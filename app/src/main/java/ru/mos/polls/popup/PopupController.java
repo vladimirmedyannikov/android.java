@@ -64,12 +64,12 @@ public abstract class PopupController {
             public void onPopupItemSelected(PopupWindow popupWindow, int popupItemId) {
                 switch (popupItemId) {
                     case PopupItem.Auth.HOW_IT_WORKS:
-                        new GoogleStatistics.Auth().howItWorksClick((Activity) context);
+                        new GoogleStatistics.Auth().howItWorksClick();
                         InstructionActivity.startActivity(context);
                         popupWindow.dismiss();
                         break;
                     case PopupItem.Auth.FEEDBACK:
-                        new GoogleStatistics.Auth().feedbackClick((Activity) context);
+                        new GoogleStatistics.Auth().feedbackClick();
                         AgSupportActivity.startActivity(context);
                         popupWindow.dismiss();
                         break;
@@ -92,19 +92,19 @@ public abstract class PopupController {
             public void onPopupItemSelected(PopupWindow popupWindow, int popupItemId) {
                 switch (popupItemId) {
                     case PopupItem.Auth.HOW_IT_WORKS:
-                        new GoogleStatistics.Auth().howItWorksClick((Activity) context);
+                        new GoogleStatistics.Auth().howItWorksClick();
                         InstructionActivity.startActivity(context);
                         popupWindow.dismiss();
                         break;
                     case PopupItem.Auth.RECOVERY_PASSWORD:
-                        new GoogleStatistics.Auth().recoveryClick((Activity) context);
+                        new GoogleStatistics.Auth().recoveryClick();
                         Intent intent = new Intent(context, AgRestoreActivity.class);
                         intent.putExtra("phone", phone);
                         context.startActivity(intent);
                         popupWindow.dismiss();
                         break;
                     case PopupItem.Auth.FEEDBACK:
-                        new GoogleStatistics.Auth().feedbackClick((Activity) context);
+                        new GoogleStatistics.Auth().feedbackClick();
                         AgSupportActivity.startActivity(context);
                         popupWindow.dismiss();
                         break;

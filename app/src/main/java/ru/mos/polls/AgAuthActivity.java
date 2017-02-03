@@ -54,7 +54,7 @@ public class AgAuthActivity extends AuthActivity {
         movementMethod.setLinkListener(new OfferLinkMovementMethod.LinkListener() {
             @Override
             public void onClicked() {
-                statistics.offerClick(AgAuthActivity.this);
+                statistics.offerClick();
             }
         });
         offer.setMovementMethod(movementMethod);
@@ -81,7 +81,7 @@ public class AgAuthActivity extends AuthActivity {
         AbstractActivity.hideSoftInput(AgAuthActivity.this, etLogin);
         String phone = etLogin.getText().toString();
         PopupController.authOrRegistry(AgAuthActivity.this, phone);
-        statistics.helpClick(AgAuthActivity.this);
+        statistics.helpClick();
     }
 
     @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -111,7 +111,7 @@ public class AgAuthActivity extends AuthActivity {
 
     @OnClick(R.id.btnRegister)
     void newRegister() {
-        statistics.registryClick(AgAuthActivity.this);
+        statistics.registryClick();
         Intent intent = new Intent(AgAuthActivity.this, AgRegisterActivity.class);
         startActivity(intent);
     }
@@ -134,15 +134,16 @@ public class AgAuthActivity extends AuthActivity {
         }
         startFromUri(getIntent());
         Statistics.auth(etLogin.getText().toString().trim(), true);
-        statistics.check(this, true);
+        statistics.auth(etLogin.getText().toString().trim(), true);
+        statistics.check(true);
     }
 
     @Override
     protected void onLoginFault(String errorMessage) {
         super.onLoginFault(errorMessage);
         Statistics.auth(etLogin.getText().toString().trim(), false);
-        statistics.check(this, false);
-        statistics.errorOccurs(this, errorMessage);
+        statistics.check(false);
+        statistics.errorOccurs(errorMessage);
     }
 
     @Override

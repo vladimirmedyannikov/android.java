@@ -27,7 +27,7 @@ public class AgRestoreActivity extends RestoreActivity {
         findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                statistics.authClick(AgRestoreActivity.this);
+                statistics.authClick();
                 finish();
             }
         });
@@ -35,7 +35,7 @@ public class AgRestoreActivity extends RestoreActivity {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                statistics.helpClick(AgRestoreActivity.this);
+                statistics.helpClick();
                 AbstractActivity.hideSoftInput(AgRestoreActivity.this, help);
                 PopupController.recovery(AgRestoreActivity.this);
             }
@@ -55,14 +55,14 @@ public class AgRestoreActivity extends RestoreActivity {
     @Override
     protected void onRegistrationFail(VolleyError error, ProgressDialog dialog) {
         super.onRegistrationFail(error, dialog);
-        statistics.errorOccurs(this, error.getMessage());
-        statistics.check(this, false);
+        statistics.errorOccurs(error.getMessage());
+        statistics.check(false);
     }
 
     @Override
     protected void onRegistrationSuccess() {
         super.onRegistrationSuccess();
-        statistics.check(this, true);
+        statistics.check(true);
         startAuth();
     }
 

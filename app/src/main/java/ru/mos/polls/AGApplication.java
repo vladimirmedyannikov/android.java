@@ -97,29 +97,29 @@ public class AGApplication extends MultiDexApplication {
      */
     public static final boolean IS_LOCAL_SUBSCRIBE_ENABLE = false;
 
-    private Tracker tracker;
+    private static Tracker tracker;
+    private static GoogleAnalytics googleAnalytics;
 
     private static ImageLoader imageLoader;
     private File cacheDir;
 
-    @Deprecated
-    public synchronized Tracker getTracker() {
-        if (tracker == null) {
-            GoogleAnalytics googleAnalytics = GoogleAnalytics.getInstance(this);
-            googleAnalytics.setLocalDispatchPeriod(1800);
-
-            tracker = googleAnalytics.newTracker("UA-52662983-3"/*R.xml.analytics_global_config*/);
-            tracker.enableExceptionReporting(true);
-            tracker.enableAdvertisingIdCollection(true);
-            tracker.enableAutoActivityTracking(true);
-        }
+    public static synchronized Tracker getTracker() {
         return tracker;
+    }
+
+    private void initGoogleAnalytics() {
+        googleAnalytics = GoogleAnalytics.getInstance(this);
+        googleAnalytics.setLocalDispatchPeriod(1800);
+        tracker = googleAnalytics.newTracker("UA-52662983-3"/*R.xml.analytics_global_config*/);
+        tracker.enableExceptionReporting(true);
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        initGoogleAnalytics();
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();

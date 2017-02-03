@@ -273,7 +273,7 @@ public class QuestsFragment extends PullableFragment {
         /**
          * Фильтруем задания {@link ru.mos.polls.quests.controller.QuestStateController}
          */
-        qf.enterQuestFragment(getActivity());
+        qf.enterQuestFragment();
         if (quests != null && adapter != null) {
             List<Quest> filtered = QuestStateController.getInstance().process(quests);
             quests.clear();
@@ -409,7 +409,7 @@ public class QuestsFragment extends PullableFragment {
             if (quest != null) {
                 if (quest.getType().equalsIgnoreCase(FavoriteSurveysHolder.ID_HEARING)) {
                     Statistics.deleteSurveyHearing();
-                    qf.deleteSurveyHearing(getActivity());
+                    qf.deleteSurveyHearing();
                 }
                 QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
                     @Override

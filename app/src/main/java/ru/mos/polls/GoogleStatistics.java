@@ -1,12 +1,18 @@
 package ru.mos.polls;
 
-import android.app.Activity;
+
 import android.util.Log;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ru.mos.elk.ElkTextUtils;
+
+import static ru.mos.polls.Statistics.isAuthFromPhone;
 
 /**
  * Инкапсулирует методы Google Analytics
@@ -26,74 +32,74 @@ public abstract class GoogleStatistics {
 
         abstract String getAction();
 
-        protected void sendEvent(Activity activity, String label) {
-            GoogleStatistics.sendEvent(activity, getCategory(), getAction(), label);
+        protected void sendEvent(String label) {
+            GoogleStatistics.sendEvent(getCategory(), getAction(), label);
         }
 
         /**
          * Проверка аторизации
          *
-         * @param activity
-         * @param isLogon  прошла ли авторизация
+         * @param
+         * @param isLogon прошла ли авторизация
          */
-        public void check(Activity activity, boolean isLogon) {
-            sendEvent(activity, isLogon ? CHECK_YES : CHECK_NO);
+        public void check(boolean isLogon) {
+            sendEvent(isLogon ? CHECK_YES : CHECK_NO);
         }
 
         /**
          * клик по оферте
          *
-         * @param activity
+         * @param
          */
-        public void offerClick(Activity activity) {
-            sendEvent(activity, "Uslovie_Oferti");
+        public void offerClick() {
+            sendEvent("Uslovie_Oferti");
         }
 
         /**
          * произошла ошибка
          *
-         * @param activity
-         * @param error    отправляем текст ошибки, если передаем пустую строку или null, то отправится "Ок"
+         * @param
+         * @param error отправляем текст ошибки, если передаем пустую строку или null, то отправится "Ок"
          */
-        public void errorOccurs(Activity activity, String error) {
-            sendEvent(activity, ElkTextUtils.isEmpty(error) ? "Ok" : error);
+        public void errorOccurs(String error) {
+            sendEvent(ElkTextUtils.isEmpty(error) ? "Ok" : error);
         }
 
         /**
          * клик по меню "как это работает"
          *
-         * @param activity
+         * @param
          */
-        public void howItWorksClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Nuzhna_Pomosh", "Kak_Eto_Rabotaet");
+        public void howItWorksClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Nuzhna_Pomosh", "Kak_Eto_Rabotaet");
         }
 
         /**
          * клик по меню "Восстановление пароля"
          *
-         * @param activity
+         * @param
          */
-        public void recoveryClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Nuzhna_Pomosh", "Vosstanovlenie_Parolya");
+        public void recoveryClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Nuzhna_Pomosh", "Vosstanovlenie_Parolya");
         }
 
         /**
          * клик по меню "Обратная связь"
          *
-         * @param activity
+         * @param
          */
-        public void feedbackClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Nuzhna_Pomosh", "Obratnaya_Svyaz");
+        public void feedbackClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Nuzhna_Pomosh", "Obratnaya_Svyaz");
         }
 
 
         /**
          * клик по кнопе "нужна помощь?"
          *
-         * @param activity
+         * @param
          */
-        public void helpClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Nuzhna_Pomosh", "Nuzhna_Pomosh");
+        public void helpClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Nuzhna_Pomosh", "Nuzhna_Pomosh");
         }
     }
 
@@ -118,10 +124,26 @@ public abstract class GoogleStatistics {
         /**
          * клик по кнопке "Регистрация"
          *
-         * @param activity
+         * @param
          */
-        public void registryClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Registracia", "Registracia");
+        public void registryClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Registracia", "Registracia");
+        }
+
+        /**
+         * Экран авторизации, авторизация по e-mail или по номеру телефона
+         *
+         * @param login     - логин, введенный ользователем (email или номер телефона)
+         * @param isSuccess - результат авторизации
+         */
+        public void auth(String login, boolean isSuccess) {
+            String event = "Auth_e-mail";
+            if (isAuthFromPhone(login)) {
+                event = "Auth_tel_number";
+            }
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(getCategory(), getCategory(), event, params);
         }
     }
 
@@ -145,10 +167,10 @@ public abstract class GoogleStatistics {
         /**
          * клик по кнопке "Войти"
          *
-         * @param activity
+         * @param
          */
-        public void authClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, getCategory(), "Voiti", "Voiti");
+        public void authClick() {
+            GoogleStatistics.sendEvent(getCategory(), "Voiti", "Voiti");
         }
     }
 
@@ -158,38 +180,38 @@ public abstract class GoogleStatistics {
     public static class Recovery {
         private static final String CATEGORY = "Vosstanovlenie_Parolya";
 
-        public void errorOccurs(Activity activity, String error) {
-            sendEvent(activity, CATEGORY, "Vosstanovit", ElkTextUtils.isEmpty(error) ? "Ok" : error);
+        public void errorOccurs(String error) {
+            sendEvent(CATEGORY, "Vosstanovit", ElkTextUtils.isEmpty(error) ? "Ok" : error);
         }
 
-        public void authClick(Activity activity) {
-            sendEvent(activity, CATEGORY, "Otmena", "Otmena");
+        public void authClick() {
+            sendEvent(CATEGORY, "Otmena", "Otmena");
         }
 
-        public void helpClick(Activity activity) {
-            sendEvent(activity, CATEGORY, "Nuzhna_Pomosh", "Nuzhna_Pomosh");
+        public void helpClick() {
+            sendEvent(CATEGORY, "Nuzhna_Pomosh", "Nuzhna_Pomosh");
         }
 
         /**
          * клик по меню "Обратная связь"
          *
-         * @param activity
+         * @param
          */
-        public void feedbackClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, CATEGORY, "Nuzhna_Pomosh", "Obratnaya_Svyaz");
+        public void feedbackClick() {
+            GoogleStatistics.sendEvent(CATEGORY, "Nuzhna_Pomosh", "Obratnaya_Svyaz");
         }
 
         /**
          * клик по меню "как это работает"
          *
-         * @param activity
+         * @param
          */
-        public void howItWorksClick(Activity activity) {
-            GoogleStatistics.sendEvent(activity, CATEGORY, "Nuzhna_Pomosh", "Kak_Eto_Rabotaet");
+        public void howItWorksClick() {
+            GoogleStatistics.sendEvent(CATEGORY, "Nuzhna_Pomosh", "Kak_Eto_Rabotaet");
         }
 
-        public void check(Activity activity, boolean isLogon) {
-            sendEvent(activity, CATEGORY, "Forma_Vosstanovlenia", isLogon ? CHECK_YES : CHECK_NO);
+        public void check(boolean isLogon) {
+            sendEvent(CATEGORY, "Forma_Vosstanovlenia", isLogon ? CHECK_YES : CHECK_NO);
         }
     }
 
@@ -197,29 +219,29 @@ public abstract class GoogleStatistics {
      * События для экрана обратной связи
      */
     public static class Feedback {
-        public void feedbackSanded(Activity activity, String subject) {
-            sendEvent(activity, subject, null);
+        public void feedbackSanded(String subject) {
+            sendEvent(subject, null);
         }
 
-        public void errorOccurs(Activity activity, String subject, String error) {
-            sendEvent(activity, subject, error);
+        public void errorOccurs(String subject, String error) {
+            sendEvent(subject, error);
         }
 
-        public void sendEvent(Activity activity, String subject, String error) {
-            GoogleStatistics.sendEvent(activity, "Obratnaya_Svyaz", subject, ElkTextUtils.isEmpty(error) ? "Ok" : error);
+        public void sendEvent(String subject, String error) {
+            GoogleStatistics.sendEvent("Obratnaya_Svyaz", subject, ElkTextUtils.isEmpty(error) ? "Ok" : error);
         }
     }
 
     /**
      * Базовый метод для отправки события
      *
-     * @param activity
+     * @param
      * @param category категория
      * @param action   действие
      * @param label    пометка о результате действия
      */
-    public static void sendEvent(Activity activity, String category, String action, String label) {
-        Tracker tracker = ((AGApplication) activity.getApplication()).getTracker();
+    public static void sendEvent(String category, String action, String label) {
+        Tracker tracker = AGApplication.getTracker();
         HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
         eventBuilder.setAction(action)
                 .setCategory(category)
@@ -230,27 +252,146 @@ public abstract class GoogleStatistics {
     }
 
     /**
+     * Базовый метод для отправки события c параметрами
+     *
+     * @param
+     * @param category категория
+     * @param action   действие
+     * @param label    пометка о результате действия
+     * @param pair
+     */
+    public static void sendEvent(String category, String action, String label, Map<String, String> pair) {
+        Tracker tracker = AGApplication.getTracker();
+        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder();
+        eventBuilder.setAction(action)
+                .setCategory(category)
+                .setLabel(label)
+                .setValue(1)
+                .setAll(pair);
+        tracker.send(eventBuilder.build());
+        Log.i("AG_Google_Analytics", "action = " + action + ", category = " + category + ", label = " + label + ", " + getMapLog(pair));
+    }
+
+    /**
+     * Для лога
+     *
+     * @param pair
+     * @return
+     */
+    public static String getMapLog(Map<String, String> pair) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : pair.entrySet()) {
+            sb.append(entry.getKey() + " = " + entry.getValue() + ", ");
+        }
+        return sb.toString();
+    }
+
+    /**
      * Coбытия на главной ленте
      */
+
+
     public static class QuestsFragment {
         private static final String CATEGORY = "Glav_Lenta";
 
         /**
          * Удаление голосования на главной ленте
          *
-         * @param activity
+         * @param
          */
-        public void deleteSurveyHearing(Activity activity) {
-            GoogleStatistics.sendEvent(activity, CATEGORY, "Udalenie_Golosovaniya", "Udalenie_Golosovaniya");
+        public void deleteSurveyHearing() {
+            GoogleStatistics.sendEvent(CATEGORY, "Udalenie_Golosovaniya", "Udalenie_Golosovaniya");
         }
 
         /**
          * Вход на экран
          *
-         * @param activity
+         * @param
          */
-        public void enterQuestFragment(Activity activity) {
-            GoogleStatistics.sendEvent(activity, CATEGORY, "Main_Enter", "Main_Enter");
+        public static void enterQuestFragment() {
+            GoogleStatistics.sendEvent(CATEGORY, "Main_Enter", "Main_Enter");
+        }
+
+        /**
+         * Главный экран, факт перехода в "Пригласить друзей"
+         */
+        public static void inviteFriends() {
+            GoogleStatistics.sendEvent(CATEGORY, "Invite_Friends", "Invite_Friends");
+        }
+
+        /**
+         * Перед отправкой СМС сообщения
+         *
+         * @param count - количество отправителей (на 12.09.2014 у нас вроде можно отправить
+         *              только одно сообщение одному другу за раз,
+         *              на ios реализовали множественный выбор получателей)
+         */
+        public static void beforeSendInviteFriends(int count) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("count", String.valueOf(count));
+            GoogleStatistics.sendEvent(CATEGORY, "Otpravka_Priglasheniy_Druziam", "Otpravka_Priglasheniy_Druziam", params);
+        }
+
+        /**
+         * После отправки смс сообщения пользователю
+         *
+         * @param isSuccess - результат отправки
+         */
+        public static void afterSendInviteFriends(boolean isSuccess) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(CATEGORY, "Otpravka_Priglasheniy_Druziam", "Otpravka_Priglasheniy_Druziam", params);
+        }
+
+        /**
+         * Главный экран, факт перехода в "все вопросы"
+         */
+        public static void enterAllPolls() {
+            enterQuestFragment();
+        }
+
+        /**
+         * Главный экран, шаринг в соц.сети
+         *
+         * @param name - имя социальной сети
+         */
+        public static void taskSocialSharing(String name) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("name", name);
+            GoogleStatistics.sendEvent(CATEGORY, "Tasks_Social_Sharing", "Tasks_Social_Sharing", params);
+        }
+    }
+
+    public static class SocialSharing {
+        private static final String CATEGORY = "Social_Sharing";
+
+        /**
+         * До шаринга о мероприятии (событии)
+         *
+         * @param name    - имя соц сети
+         * @param eventId - идентификатор мероприятия
+         */
+        public static void beforeSocialEventSharing(String name, String eventId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("name", name);
+            params.put("event_id", eventId);
+            FlurryAgent.logEvent("social_sharing", params, true);
+            GoogleStatistics.sendEvent(CATEGORY, "Tasks_Social_Sharing", "Tasks_Social_Sharing", params);
+        }
+    }
+
+    public static class BindSocialFragment {
+        private static final String CATEGORY = "Socialnie_Seti";
+
+        /**
+         * Главный экран, авторизация в соц.сети
+         *
+         * @param name - имя социальной сети
+         */
+        public static void taskSocialLogin(String name, boolean isTask) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("name", name);
+            GoogleStatistics.sendEvent(CATEGORY, "Priviazka", isTask ? "Tasks_Social_Log_In" : "Profile_Social_Log_In", params);
         }
     }
 }

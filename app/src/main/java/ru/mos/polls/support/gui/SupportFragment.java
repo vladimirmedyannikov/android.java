@@ -143,7 +143,7 @@ public class SupportFragment extends Fragment {
         AgSupportApiController.SendListener listener = new AgSupportApiController.SendListener() {
             @Override
             public void onSuccess() {
-                statistics.feedbackSanded(getActivity(), currentSubject.getTitle());
+                statistics.feedbackSanded(currentSubject.getTitle());
                 /**
                  * Очищаем поля при успещной отправке сообщения
                  */
@@ -155,7 +155,7 @@ public class SupportFragment extends Fragment {
 
             @Override
             public void onError(VolleyError error) {
-                statistics.errorOccurs(getActivity(), currentSubject.getTitle(), error.getMessage());
+                statistics.errorOccurs(currentSubject.getTitle(), error.getMessage());
                 processSendingEnabled();
             }
         };

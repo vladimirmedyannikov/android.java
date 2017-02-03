@@ -33,7 +33,7 @@ public class AgRegisterActivity extends RegisterActivity {
         movementMethod.setLinkListener(new AgAuthActivity.OfferLinkMovementMethod.LinkListener() {
             @Override
             public void onClicked() {
-                statistics.offerClick(AgRegisterActivity.this);
+                statistics.offerClick();
             }
         });
         offer.setMovementMethod(movementMethod);
@@ -78,7 +78,7 @@ public class AgRegisterActivity extends RegisterActivity {
             public void onClick(View v) {
                 AbstractActivity.hideSoftInput(AgRegisterActivity.this, help);
                 PopupController.authOrRegistry(AgRegisterActivity.this, phone.getText().toString());
-                statistics.helpClick(AgRegisterActivity.this);
+                statistics.helpClick();
             }
         });
     }
@@ -104,7 +104,7 @@ public class AgRegisterActivity extends RegisterActivity {
     protected void onRegistrationSuccess() {
         super.onRegistrationSuccess();
         startAuth();
-        statistics.check(this, true);
+        statistics.check(true);
     }
 
     private void startAuth() {

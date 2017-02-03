@@ -469,7 +469,7 @@ public class Statistics {
      * @param login - введнный пользователем логин
      * @return -true - если номер телефона
      */
-    private static boolean isAuthFromPhone(String login) {
+    public static boolean isAuthFromPhone(String login) {
         boolean result;
         try {
             Long.parseLong(login);

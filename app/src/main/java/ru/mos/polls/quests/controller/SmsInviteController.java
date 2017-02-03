@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
@@ -41,6 +42,7 @@ public class SmsInviteController {
     public void process(boolean isTask) {
         this.isTask = isTask;
         Statistics.inviteFriends();
+        GoogleStatistics.QuestsFragment.inviteFriends();
         new AlertDialog.Builder(activity).
                 setMessage(R.string.quest_invite_warning).
                 setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -48,6 +50,7 @@ public class SmsInviteController {
                     public void onClick(DialogInterface dialog, int which) {
                         if (activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
                             Statistics.beforeSendInviteFriends();
+                            GoogleStatistics.QuestsFragment.beforeSendInviteFriends(1);
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                             intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
                             activity.startActivityForResult(intent, REQUEST_CODE);
@@ -136,6 +139,7 @@ public class SmsInviteController {
                 builder.setPositiveButton(android.R.string.ok, null);
                 builder.show();
                 Statistics.afterSendInviteFriends(true);
+                GoogleStatistics.QuestsFragment.afterSendInviteFriends(true);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -150,6 +154,7 @@ public class SmsInviteController {
                 });
                 builder.show();
                 Statistics.afterSendInviteFriends(false);
+                GoogleStatistics.QuestsFragment.afterSendInviteFriends(false);
             }
         };
         JsonObjectRequest request = new JsonObjectRequest(url, jsonRequest, listener, errorListener);

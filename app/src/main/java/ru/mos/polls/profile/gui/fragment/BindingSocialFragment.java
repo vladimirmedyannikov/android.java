@@ -22,6 +22,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.CustomDialogController;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -179,6 +180,7 @@ public class BindingSocialFragment extends Fragment {
                 } else {
                     Statistics.profileSocialLogin(loadedSocial.getSocialName());
                 }
+                GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getSocialName(), isTask);
                 social.copy(loadedSocial);
                 social.setIsLogin(true);
                 social.save(getActivity());

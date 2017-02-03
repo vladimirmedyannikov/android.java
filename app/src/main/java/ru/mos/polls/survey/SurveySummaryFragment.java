@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.common.view.VotersView;
@@ -247,7 +248,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
         votersView.display(survey);
         stubView.setVisibility(View.GONE);
         Statistics.enterQuestion(survey.getId());
-
+        GoogleStatistics.Survey.enterQuestion(survey.getId());
         if (survey.getKind().isHearing()) {
             TitleHelper.setTitle(getActivity(), getString(R.string.title_hearing_survey_summary));
         }

@@ -356,7 +356,7 @@ public abstract class GoogleStatistics {
          * @param name - имя социальной сети
          */
         public static void taskSocialSharing(String name) {
-            Map<String, String> params = new HashMap<String, String>(1);
+            Map<String, String> params = new HashMap<>(1);
             params.put("name", name);
             GoogleStatistics.sendEvent(CATEGORY, "Tasks_Social_Sharing", "Tasks_Social_Sharing", params);
         }
@@ -364,6 +364,8 @@ public abstract class GoogleStatistics {
 
     public static class SocialSharing {
         private static final String CATEGORY = "Social_Sharing";
+        private static final String ACTION_BEFORE = "Do_Sharinga";
+        private static final String ACTION_AFTER = "Posle_Sharinga";
 
         /**
          * До шаринга о мероприятии (событии)
@@ -372,11 +374,68 @@ public abstract class GoogleStatistics {
          * @param eventId - идентификатор мероприятия
          */
         public static void beforeSocialEventSharing(String name, String eventId) {
-            Map<String, String> params = new HashMap<String, String>(2);
+            Map<String, String> params = new HashMap<>(2);
             params.put("name", name);
             params.put("event_id", eventId);
-            FlurryAgent.logEvent("social_sharing", params, true);
-            GoogleStatistics.sendEvent(CATEGORY, "Tasks_Social_Sharing", "Tasks_Social_Sharing", params);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_BEFORE, params);
+        }
+
+        /**
+         * После шаринга о мероприятии (событии)
+         *
+         * @param name      - имя соцсети
+         * @param eventId   - идентифиатор мероприятия/события
+         * @param isSuccess -результат шаринга
+         */
+        public static void afterSocialEventSharing(String name, String eventId, boolean isSuccess) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("name", name);
+            params.put("event_id", eventId);
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_AFTER, params);
+        }
+
+        /**
+         * До шаринга результатов опроса
+         *
+         * @param name   - имя соц сети
+         * @param pollId - идентификатор опроса
+         */
+        public static void beforeSocialSurveySharing(String name, String pollId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("name", name);
+            params.put("poll_id", pollId);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_BEFORE, params);
+        }
+
+        /**
+         * После шаринга результатов опроса
+         *
+         * @param name      - имя соцсети
+         * @param pollId    - идентифиатор опроса
+         * @param isSuccess - результат шаринга
+         */
+        public static void afterSocialSurveySharing(String name, String pollId, boolean isSuccess) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("name", name);
+            params.put("poll_id", pollId);
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_AFTER, params);
+        }
+    }
+
+    public static class Survey {
+        private static final String CATEGORY = "Golosovanie";
+
+        /**
+         * Экран список вопросов внутри опроса, факт перехода (открытие опроса)
+         *
+         * @param pollId
+         */
+        public static void enterQuestion(long pollId) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("id", String.valueOf(pollId));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Otkritie_Oprosa", params);
         }
     }
 

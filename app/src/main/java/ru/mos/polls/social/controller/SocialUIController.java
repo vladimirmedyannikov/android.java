@@ -44,6 +44,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.event.model.Event;
@@ -588,8 +589,10 @@ public abstract class SocialUIController {
         try {
             if (socialPostValue.getType() == SocialPostValue.Type.CHECK_IN) {
                 Statistics.beforeSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.POLL) {
                 Statistics.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
                 Statistics.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
@@ -607,8 +610,10 @@ public abstract class SocialUIController {
     private static void processAfterStatistics(SocialPostValue socialPostValue, boolean isSuccess) {
         if (socialPostValue.getType() == SocialPostValue.Type.CHECK_IN) {
             Statistics.afterSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.POLL) {
             Statistics.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
             Statistics.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {

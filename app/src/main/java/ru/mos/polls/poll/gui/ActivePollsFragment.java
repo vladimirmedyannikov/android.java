@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.poll.adapter.ActivePollAdapter;
@@ -87,6 +88,7 @@ public class ActivePollsFragment extends AbstractPollsFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Statistics.enterPollsActive();
+        GoogleStatistics.Survey.enterPollsActive();
     }
 
     @Override

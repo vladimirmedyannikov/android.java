@@ -32,6 +32,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -96,6 +97,7 @@ public class ProfileFragment extends PullableFragment implements AbstractProfile
         changed = new AgUser(getActivity());
         saved = new AgUser(getActivity());
         Statistics.enterProfile();
+        GoogleStatistics.AGNavigation.enterProfile();
     }
 
     @Override

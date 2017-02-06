@@ -13,6 +13,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.profile.model.Achievement;
@@ -29,6 +30,7 @@ public abstract class ProfileApiController {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Statistics.profileFillPersonal();
+                GoogleStatistics.AGNavigation.profileFillPersonal();
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {

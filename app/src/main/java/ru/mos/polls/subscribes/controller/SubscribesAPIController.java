@@ -17,6 +17,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
@@ -296,6 +297,7 @@ public class SubscribesAPIController {
                 for (Channel channel : subscription.getChannels()) {
                     if (channel != null) {
                         Statistics.subscriptionsProfile(subscription, channel);
+                        GoogleStatistics.Subscribe.subscriptionsProfile(subscription, channel);
                     }
                 }
             }
@@ -314,6 +316,7 @@ public class SubscribesAPIController {
                 for (Channel channel : subscription.getChannels()) {
                     if (channel != null) {
                         Statistics.subscriptionsPolls(subscription, channel, pollId);
+                        GoogleStatistics.Subscribe.subscriptionsPolls(subscription, channel, pollId);
                     }
                 }
             }

@@ -190,6 +190,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 break;
             case NavigationMenuItem.SETTINGS:
                 Statistics.propertiesFragment();
+                GoogleStatistics.AGNavigation.propertiesFragment();
                 fr = SettingsFragment.newInstance();
                 tag = TAG_SETTINGS;
                 break;
@@ -296,6 +297,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 break;
             case NavigationMenuItem.MY_FREE_TIME:
                 Statistics.enterEvents();
+                GoogleStatistics.Events.enterEvents();
                 ActionBarNavigationController.setEventNavigation(this);
                 /**
                  * Проверяем есть ли текущие мерпориятяи,
@@ -322,6 +324,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * так как можно исопльзовать не только для новостей
                  */
                 Statistics.enterNews();
+                GoogleStatistics.AGNavigation.enterNews();
                 fr = NewsDynamicFragment.newInstance(getString(R.string.mainmenu_news), "", API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
                 tag = TAG_NEWS;
                 break;
@@ -342,9 +345,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = new ActiveInnovationsFragment();
                 tag = TAG_NOVELTY;
                 Statistics.innovationsListFragment();
+                GoogleStatistics.Innovation.innovationsListFragment();
                 break;
             case NavigationMenuItem.SHOP:
                 Statistics.shopBuy();
+                GoogleStatistics.AGNavigation.shopBuy();
                 fr = WebShopFragment.newInstance();
                 callback = (WebShopFragment) fr;
                 tag = TAG_SHOP;

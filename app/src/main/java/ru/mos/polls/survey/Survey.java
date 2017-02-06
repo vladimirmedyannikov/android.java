@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -377,6 +378,7 @@ public class Survey implements Serializable {
             @Override
             public void onChooseExpert(DetailsExpert detailsExpert) {
                 Statistics.pollsEnterExperts(id, surveyQuestion.getId());
+                GoogleStatistics.Survey.pollsEnterExperts(id, surveyQuestion.getId());
                 DetailsExpertsActivity.startActivityByQuestionId(activity,
                         detailsExpert,
                         surveyQuestion.getId(),

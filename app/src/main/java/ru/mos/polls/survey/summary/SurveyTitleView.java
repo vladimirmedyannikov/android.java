@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -133,6 +134,7 @@ public class SurveyTitleView extends HtmlTitleView {
     protected void onExpanded() {
         super.onExpanded();
         Statistics.pollsEnterMoreInfo(pollId, questionId);
+        GoogleStatistics.Survey.pollsEnterMoreInfo(pollId, questionId);
     }
 
     /**

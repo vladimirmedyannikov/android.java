@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -130,6 +131,7 @@ public class EventActivity extends ToolbarAbstractActivity {
         socialController = new SocialController(this);
 
         Statistics.enterEventTicket(eventId);
+        GoogleStatistics.Events.enterEventTicket(eventId);
         SocialUIController.registerPostingReceiver(this);
     }
 
@@ -170,6 +172,7 @@ public class EventActivity extends ToolbarAbstractActivity {
             @Override
             public void onChecked(int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, Message message) {
                 Statistics.enterCheckIn(eventId, true, false);
+                GoogleStatistics.Events.enterCheckIn(eventId, true, false);
                 if (message != null && !message.isEmpty()) {
                     message.showCustomMessage(EventActivity.this, null, SocialPostValue.Type.CHECK_IN, eventId, new Runnable() {
                         @Override
@@ -442,6 +445,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                     });
                     builder.show();
                     Statistics.enterCheckIn(eventId, false, true);
+                    GoogleStatistics.Events.enterCheckIn(eventId, false, true);
                 }
             }
         };

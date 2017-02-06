@@ -166,6 +166,7 @@ public class WebViewActivity extends ToolbarAbstractActivity {
         switch (item.getItemId()) {
             case R.id.action_share:
                 Statistics.shareNews();
+                GoogleStatistics.AGNavigation.shareNews();
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, shareUrl);

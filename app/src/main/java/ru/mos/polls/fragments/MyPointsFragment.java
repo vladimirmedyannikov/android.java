@@ -22,8 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.android.volley2.Response;
@@ -32,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.PromoController;
 import ru.mos.polls.R;
@@ -64,6 +63,7 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
         TitleHelper.setTitle(getActivity(), R.string.my_points);
         setHasOptionsMenu(true);
         Statistics.enterBonus();
+        GoogleStatistics.AGNavigation.enterBonus();
     }
 
     @Override
@@ -77,6 +77,7 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
             @Override
             public void onClick(View v) {
                 Statistics.shopPromoCode();
+                GoogleStatistics.AGNavigation.shopPromoCode();
                 PromoController.showInputDialog((BaseActivity) getActivity());
             }
         };
@@ -143,6 +144,7 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
     @OnClick(R.id.shop)
     void goToShop() {
         Statistics.shopBuy();
+        GoogleStatistics.AGNavigation.shopBuy();
     }
     @OnClick(R.id.tvCurrentPointsUnit)
     void showPopupPoints(View v){

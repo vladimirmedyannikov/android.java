@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.common.controller.ScrollableController;
@@ -82,6 +83,7 @@ public class EventCommentsListActivity extends BaseActivity {
         setEventId();
         findViews();
         Statistics.enterEventsComments(eventId);
+        GoogleStatistics.Events.enterEventsComments(eventId);
     }
 
     @Override

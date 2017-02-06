@@ -18,6 +18,7 @@ import com.android.volley2.VolleyError;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.event.controller.EventAPIController;
@@ -136,6 +137,7 @@ public class EventCommentAddActivity extends BaseActivity {
          */
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(body)) {
             Statistics.eventRatingSend(eventId);
+            GoogleStatistics.Events.eventRatingSend(eventId);
         }
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -144,6 +146,7 @@ public class EventCommentAddActivity extends BaseActivity {
             @Override
             public void onUpdated(boolean isUpdated) {
                 Statistics.eventSendComment(eventId);
+                GoogleStatistics.Events.eventSendComment(eventId);
                 dismissProgress();
                 if (isNewComment) {
                     Toast.makeText(EventCommentAddActivity.this, getString(R.string.Comment_added_success), Toast.LENGTH_SHORT).show();

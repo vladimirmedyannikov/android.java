@@ -18,6 +18,7 @@ import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarDynamicActivity;
@@ -58,6 +59,7 @@ public class AboutAppFragment extends Fragment {
         super.onCreate(savedInstanceState);
         TitleHelper.setTitle(getActivity(), R.string.title_help);
         Statistics.appsDescription();
+        GoogleStatistics.AGNavigation.appsDescription();
     }
 
     @Override
@@ -105,6 +107,7 @@ public class AboutAppFragment extends Fragment {
                         break;
                     case AboutItem.OUR_APPS:
                         Statistics.ourApps();
+                        GoogleStatistics.AGNavigation.ourApps();
                         intent = new Intent(getActivity(), ToolbarDynamicActivity.class);
                         intent.putExtra(DynamicFragment.BASE_URL, API.getURL(UrlManager.url(UrlManager.Controller.INFORAMTION, UrlManager.Methods.GET_OUR_APPS)));
                         intent.putExtra(DynamicFragment.PARAMS, "{\"user_agent\": \"android\"}");

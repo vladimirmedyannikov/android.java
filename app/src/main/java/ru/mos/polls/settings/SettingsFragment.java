@@ -15,6 +15,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.AgChangePasswordActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -36,6 +37,7 @@ public class SettingsFragment extends Fragment {
                     break;
                 case SettingItem.USER_LOCK:
                     Statistics.blockAccount();
+                    GoogleStatistics.AGNavigation.blockAccount();
                     notifyAboutBlocking();
                     break;
                 case SettingItem.CHANGE_PASSWORD:

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
@@ -169,6 +170,7 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
                 processResults(resultJson);
                 if (taskId.equalsIgnoreCase(ProfileQuest.ID_UPDATE_EXTRA_INFO)) {
                     Statistics.taskFillProfileAddressWork();
+                    GoogleStatistics.AGNavigation.taskFillProfileAddressWork();
                 }
                 stopProgress();
                 QuestStateController.getInstance().add(taskId);

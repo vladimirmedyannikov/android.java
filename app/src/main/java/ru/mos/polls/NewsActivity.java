@@ -23,12 +23,14 @@ public class NewsActivity extends AbstractActivity {
                 .replace(R.id.container, fr, "news")
                 .commit();
         Statistics.enterNews();
+        GoogleStatistics.AGNavigation.enterNews();
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         Statistics.enterNews();
+        GoogleStatistics.AGNavigation.enterNews();
     }
 
     public void onGoToPolls(View view) {

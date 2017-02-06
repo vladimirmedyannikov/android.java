@@ -113,6 +113,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
             @Override
             public void onChooseExpert(DetailsExpert detailsExpert) {
                 Statistics.pollsEnterExperts(survey.getId(), 0);
+                GoogleStatistics.Survey.pollsEnterExperts(survey.getId(), 0);
                 DetailsExpertsActivity.startActivityByPollId(getActivity(),
                         detailsExpert,
                         survey.getId(),

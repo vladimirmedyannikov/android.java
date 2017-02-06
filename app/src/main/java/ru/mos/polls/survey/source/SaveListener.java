@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -81,6 +82,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         public void onSaved(int price, int currentPoints, final SocialPostValue questResultPostValue) {
             if (survey.isInterrupted()) {
                 Statistics.pollsInterruptedToPassed();
+                GoogleStatistics.Survey.pollsInterruptedToPassed();
             }
             SharedPreferencesSurveyManager manager = new SharedPreferencesSurveyManager(activity);
             manager.remove(survey.getId());
@@ -234,6 +236,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
             saveCurrentPage();
 
             Statistics.pollsInterrupted(survey.getId(), true);
+            GoogleStatistics.Survey.pollsInterrupted(survey.getId(), true);
             /**
              * Так как голосование прервано
              * возвращаем его id, чтобы поставить
@@ -272,6 +275,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                     Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
             }
             Statistics.pollsInterrupted(survey.getId(), false);
+            GoogleStatistics.Survey.pollsInterrupted(survey.getId(), false);
             activity.finish();
         }
 

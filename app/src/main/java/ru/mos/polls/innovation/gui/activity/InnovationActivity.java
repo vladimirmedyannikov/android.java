@@ -21,6 +21,7 @@ import com.android.volley2.VolleyError;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.CustomDialogController;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -154,6 +155,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Statistics.innovationsInterrupted();
+                            GoogleStatistics.Innovation.innovationsInterrupted();
                             setResult();
                             finish();
                         }

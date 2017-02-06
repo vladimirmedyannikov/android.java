@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.mos.elk.ElkTextUtils;
+import ru.mos.polls.subscribes.model.Channel;
+import ru.mos.polls.subscribes.model.Subscription;
 
 import static ru.mos.polls.Statistics.isAuthFromPhone;
 
@@ -360,6 +362,14 @@ public abstract class GoogleStatistics {
             params.put("name", name);
             GoogleStatistics.sendEvent(CATEGORY, "Tasks_Social_Sharing", "Tasks_Social_Sharing", params);
         }
+
+        /**
+         * Нажатие кнопки "Прочитать все новости"
+         */
+        public static void hideAllNews() {
+            FlurryAgent.logEvent("read_all_news");
+            GoogleStatistics.sendEvent(CATEGORY, "Spriatat_Novosti", "Spriatat_Novosti");
+        }
     }
 
     public static class SocialSharing {
@@ -422,6 +432,63 @@ public abstract class GoogleStatistics {
             params.put("success", String.valueOf(isSuccess));
             GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_AFTER, params);
         }
+
+        /**
+         * До шаринга городской новинки
+         *
+         * @param name      - имя соц сети
+         * @param noveltyId - идентификатор опроса
+         */
+        public static void beforeSocialInnovationSharing(String name, String noveltyId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("name", name);
+            params.put("novelty_id", noveltyId);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_BEFORE, params);
+        }
+
+        /**
+         * После шаринга результатов опроса
+         *
+         * @param name      - имя соцсети
+         * @param noveltyId - идентифиатор опроса
+         * @param isSuccess - результат шаринга
+         */
+        public static void afterSocialInnovationSharing(String name, String noveltyId, boolean isSuccess) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("name", name);
+            params.put("novelty_id", noveltyId);
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_AFTER, params);
+        }
+
+
+        /**
+         * До шаринга достижения
+         *
+         * @param name    - имя соц сети
+         * @param awardId - идентификатор опроса
+         */
+        public static void beforeSocialAchivementSharing(String name, String awardId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("name", name);
+            params.put("award_id", awardId);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_BEFORE, params);
+        }
+
+        /**
+         * После шаринга достижения
+         *
+         * @param name      - имя соцсети
+         * @param awardId   - идентифиатор опроса
+         * @param isSuccess - результат шаринга
+         */
+        public static void afterSocialAchivementSharing(String name, String awardId, boolean isSuccess) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("name", name);
+            params.put("award_id", awardId);
+            params.put("success", String.valueOf(isSuccess));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, ACTION_AFTER, params);
+        }
     }
 
     public static class Survey {
@@ -435,7 +502,68 @@ public abstract class GoogleStatistics {
         public static void enterQuestion(long pollId) {
             Map<String, String> params = new HashMap<String, String>(3);
             params.put("id", String.valueOf(pollId));
-            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Otkritie_Oprosa", params);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Otkritie_Golosovaniya", params);
+        }
+
+        /**
+         * Опросы, переход в закладку активные
+         */
+        public static void enterPollsActive() {
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Activnie_Golosovaniya");
+        }
+
+
+        /**
+         * Опросы переход в закладку пройденные
+         */
+        public static void enterPollsUnactive() {
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Proshedshie_Golosovaniya");
+        }
+
+        /**
+         * Опросы, ФАКТ ПРЕрывания опроса
+         *
+         * @param pollId        - идентификатор прерванного опроса
+         * @param isInterrupted - true, если прерван
+         */
+        public static void pollsInterrupted(long pollId, boolean isInterrupted) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("poll_id", String.valueOf(pollId));
+            params.put("success", String.valueOf(isInterrupted));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Prerivanie_Golosovaniya", params);
+        }
+
+        /**
+         * опросы, изменение статуса опроса с отложенного на пройденный
+         */
+        public static void pollsInterruptedToPassed() {
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Zavershenie_Prervanogo_Golosovaniya");
+        }
+
+        /**
+         * Мнение экспертов, факт перехода
+         *
+         * @param pollId     - идентификатор опроса
+         * @param questionId - идентификатор вопроса
+         */
+        public static void pollsEnterExperts(long pollId, long questionId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("poll_id", String.valueOf(pollId));
+            params.put("question_id", String.valueOf(questionId));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Mnenie_Expertov", params);
+        }
+
+        /**
+         * Экран подробнее, факт перехода
+         *
+         * @param pollId     - идентификатор опроса
+         * @param questionId - идентификатор вопроса
+         */
+        public static void pollsEnterMoreInfo(long pollId, long questionId) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("poll_id", String.valueOf(pollId));
+            params.put("question_id", String.valueOf(questionId));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Podrobno_O_Golosovanie", params);
         }
     }
 
@@ -451,6 +579,261 @@ public abstract class GoogleStatistics {
             Map<String, String> params = new HashMap<String, String>(1);
             params.put("name", name);
             GoogleStatistics.sendEvent(CATEGORY, "Priviazka", isTask ? "Tasks_Social_Log_In" : "Profile_Social_Log_In", params);
+        }
+    }
+
+    public static class Subscribe {
+        private static final String CATEGORY = "Podpiski";
+
+        /**
+         * Профиль: подписки
+         *
+         * @param subscription - тип подписки
+         * @param channel      - имя канала
+         */
+        public static void subscriptionsProfile(Subscription subscription, Channel channel) {
+            Map<String, String> params = new HashMap<String, String>(2);
+            params.put("type", subscription.getType());
+            params.put("channel", channel.getName());
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Podpiski_Iz_Profile", params);
+        }
+
+        /**
+         * Подписки при прохождении опроса
+         *
+         * @param subscription - тип подписки
+         * @param channel      - имя канала
+         * @param pollId       - идентификатор опроса, покоторому устанавливаем подписку
+         */
+        public static void subscriptionsPolls(Subscription subscription, Channel channel, long pollId) {
+            Map<String, String> params = new HashMap<String, String>(3);
+            params.put("type", subscription.getType());
+            params.put("channel", channel.getName());
+            params.put("poll_id", String.valueOf(pollId));
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, "Podpiski_Dlia_Golosovaniya", params);
+        }
+    }
+
+    public static class AGNavigation {
+        private static final String CATEGORY = "Menu_Navigacii";
+
+        /**
+         * Экран мои баллы, факт перехода
+         */
+        public static void enterBonus() {
+            GoogleStatistics.sendEvent("Moi_balli", "Moi_balli", "Moi_balli");
+        }
+
+        /**
+         * Магазин, клик на кнопку "Потратить баллы"
+         */
+        public static void shopBuy() {
+            GoogleStatistics.sendEvent("Magazin", "Pokupka", "Pokupka");
+        }
+
+
+        /**
+         * мои баллы, добавление промо-кода
+         */
+        public static void shopPromoCode() {
+            GoogleStatistics.sendEvent("Moi_balli", "Dobavlenie_PromoCode", "Dobavlenie_PromoCode");
+        }
+
+        private static final String PROFILE_CAT = "Profile";
+
+        /**
+         * Экран профиль, факт перехода
+         */
+        public static void enterProfile() {
+            GoogleStatistics.sendEvent(PROFILE_CAT, "Vhod_Profile", "Vhod_Profile");
+        }
+
+        /**
+         * Главный экран, факт заполнения  "профиль личные данные"
+         */
+        public static void profileFillPersonal() {
+            GoogleStatistics.sendEvent(PROFILE_CAT, "Zapolnenie_Lichnih_Dannih", "Zapolnenie_Lichnih_Dannih");
+        }
+
+        /**
+         * Главный экран, факт заполнения  "адрес работы и род деятельности"
+         */
+        public static void taskFillProfileAddressWork() {
+            GoogleStatistics.sendEvent(PROFILE_CAT, "Zapolnenie_raboti", "Zapolnenie_raboti");
+        }
+
+        private static final String NEWS = "Novosti";
+
+        /**
+         * Экран новости, факт перехода
+         */
+        public static void enterNews() {
+            GoogleStatistics.sendEvent(NEWS, "Ekran_Hovostei", "Ekran_Hovostei");
+        }
+
+        /**
+         * переход на новость
+         *
+         * @param id - идентификатор новости (у новости нет id, хотя в wiki прописано)
+         */
+        public static void readNews(long id) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("id", String.valueOf(id));
+            GoogleStatistics.sendEvent(NEWS, "Otkritie_Novosti", "Otkritie_Novosti");
+        }
+
+        /**
+         * Нажатие кнопки "Поделиться новостью"
+         */
+        public static void shareNews() {
+            GoogleStatistics.sendEvent(NEWS, "Podelitsia_Novostyu", "Podelitsia_Novostyu");
+        }
+
+        private static final String OURS_APPS = "Our_Apps";
+
+        /**
+         * Наши приложения, факт перехода
+         */
+        public static void ourApps() {
+            GoogleStatistics.sendEvent(OURS_APPS, "Ekran_Nashi_Prilogeniya", "Ekran_Nashi_Prilogeniya");
+        }
+
+        /**
+         * О приложении, факт перехода
+         */
+        public static void appsDescription() {
+            GoogleStatistics.sendEvent(OURS_APPS, "Opisanie_Prilogeniya", "Opisanie_Prilogeniya");
+        }
+
+        /**
+         * Блокировка аккаунта
+         */
+        public static void blockAccount() {
+            GoogleStatistics.sendEvent("Blokirovka_Account", "Blokirovka_Account", "Blokirovka_Account");
+        }
+
+        /**
+         * Экран настройки, факт перехода
+         */
+        public static void propertiesFragment() {
+            GoogleStatistics.sendEvent("Nastroiki", "Nastroiki_Prilogeniya", "Nastroiki_Prilogeniya");
+        }
+    }
+
+    public static class Events {
+        private static final String CATEGORY = "Meropriyatie";
+
+        /**
+         * Экран мероприятия, факт перехода
+         */
+        public static void enterEvents() {
+            GoogleStatistics.sendEvent(CATEGORY, "Ekran_Meropriyatiy", "Ekran_Meropriyatiy");
+        }
+
+        /**
+         * Экран карточка мероприятия, факт перехода
+         *
+         * @param id - идентификатор мкроприятия
+         */
+        public static void enterEventTicket(long id) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("id", String.valueOf(id));
+            GoogleStatistics.sendEvent(CATEGORY, "Otkritie_Meropriyatiya", "Otkritie_Meropriyatiya", params);
+        }
+
+        /**
+         * Экран комментарий, факт перехода
+         *
+         * @param eventId - идентификатр мероприятия , события
+         */
+        public static void enterEventsComments(long eventId) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("event_id", String.valueOf(eventId));
+            GoogleStatistics.sendEvent(CATEGORY, "Komentarii_Meropriyatiya", "Komentarii_Meropriyatiya", params);
+        }
+
+        /**
+         * Клик на кнопку Отметиться здесь
+         *
+         * @param eventId         - идентифиатор мероприятия/события
+         * @param isSuccess       - результат чекина
+         * @param isLocationError - сс вернул ли ошибку по местоположению
+         */
+        public static void enterCheckIn(long eventId, boolean isSuccess, boolean isLocationError) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("event_id", String.valueOf(eventId));
+            if (isSuccess) {
+                params.put("success", String.valueOf(true));
+            } else {
+                params.put("error", isLocationError ? "locationError" : "distanceError");
+            }
+            FlurryAgent.logEvent("event_check_in", params);
+            GoogleStatistics.sendEvent(CATEGORY, "Otmetitsia_Na_Meropriyatiye", "Otmetitsia_Na_Meropriyatiye", params);
+        }
+
+        /**
+         * Отправка комментария
+         *
+         * @param eventId
+         */
+        public static void eventSendComment(long eventId) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("event_id", String.valueOf(eventId));
+            GoogleStatistics.sendEvent(CATEGORY, "Komentirovanie_Meropriyatiya", "Komentirovanie_Meropriyatiya", params);
+        }
+
+        /**
+         * Отправка рейтинга из коммента без коммента
+         *
+         * @param eventId
+         */
+        public static void eventRatingSend(long eventId) {
+            Map<String, String> params = new HashMap<String, String>(1);
+            params.put("event_id", String.valueOf(eventId));
+            GoogleStatistics.sendEvent(CATEGORY, "Reiting_Meropriyatiya", "Reiting_Meropriyatiya", params);
+        }
+    }
+
+    public static class Innovation {
+        private static final String CATEGORY = "Gorodskaya_Novinka";
+
+        /**
+         * Экран городские новинки, факт перехода
+         */
+        public static void innovationsListFragment() {
+            GoogleStatistics.sendEvent(CATEGORY, "Okritie_Lenti_Novinok", "Lenta_Gorodskih_Novinok");
+        }
+
+        /**
+         * Экран карточка городской новинки, факт перехода
+         */
+        public static void innovationsDetail() {
+            GoogleStatistics.sendEvent(CATEGORY, "Okritie_Novinoki", "Okritie_Novinoki");
+        }
+
+        /**
+         * Новинки, ФАКТ ПРЕрывания голосования
+         */
+        public static void innovationsInterrupted() {
+            GoogleStatistics.sendEvent(CATEGORY, "Prerivanie_Novinoki", "Prerivanie_Novinoki");
+        }
+    }
+
+    public static class Achivement {
+        private static final String CATEGORY = "Dostigeniya";
+
+        /**
+         * Экран достижения, факт перехода
+         */
+        public static void achievementsFragment() {
+            GoogleStatistics.sendEvent(CATEGORY, "Ekran_Dostigeniy", "Ekran_Dostigeniy");
+        }
+
+        /**
+         * Экран достижения детали, факт перехода
+         */
+        public static void achievementsDetail() {
+            GoogleStatistics.sendEvent(CATEGORY, "Otkritie_Detaliy_Dostigeniya", "Otkritie_Detaliy_Dostigeniya");
         }
     }
 }

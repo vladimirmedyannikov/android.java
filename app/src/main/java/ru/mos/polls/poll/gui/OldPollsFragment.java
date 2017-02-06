@@ -3,6 +3,7 @@ package ru.mos.polls.poll.gui;
 import android.support.v4.app.Fragment;
 import android.widget.ArrayAdapter;
 
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.poll.adapter.NotActivePollAdapter;
 import ru.mos.polls.poll.controller.PollApiController;
@@ -22,6 +23,12 @@ public class OldPollsFragment extends AbstractPollsFragment implements ActivePol
     @Override
     PollApiController.Filter[] getFilter() {
         return new PollApiController.Filter[]{PollApiController.Filter.OLD, PollApiController.Filter.PASSED};
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleStatistics.Survey.enterPollsUnactive();
     }
 
     @Override

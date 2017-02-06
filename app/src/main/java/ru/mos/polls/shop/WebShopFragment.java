@@ -34,6 +34,7 @@ import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.BuildConfig;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -94,6 +95,7 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
         AppsFlyerLib.sendTrackingWithEvent(activity, AppsFlyerConstants.SHOP_OPENED, "");
         hideActionBarLand();
         Statistics.shopBuy();
+        GoogleStatistics.AGNavigation.shopBuy();
     }
 
     @Override

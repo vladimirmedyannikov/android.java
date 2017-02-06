@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.common.controller.ScrollableController;
@@ -119,6 +120,7 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Statistics.innovationsDetail();
+                GoogleStatistics.Innovation.innovationsDetail();
                 InnovationActivity.startActivity(AbstractInnovationsFragment.this, shortInnovations.get(position));
             }
         });

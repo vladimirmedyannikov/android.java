@@ -7,6 +7,7 @@ import ru.mos.elk.netframework.adapters.ActionInterceptor;
 import ru.mos.elk.netframework.adapters.DynamicManager;
 import ru.mos.elk.netframework.model.results.ResultTableLink;
 import ru.mos.elk.netframework.model.results.ResultType;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.WebViewActivity;
 import ru.mos.polls.quests.controller.QuestsApiController;
@@ -34,6 +35,7 @@ public class AgDynamicFragment extends DynamicFragment {
             @Override
             public boolean onAct(ResultTableLink element, int i) {
                 Statistics.readNews(i);
+                GoogleStatistics.AGNavigation.readNews(i);
                 onBeforeActivityStart(element);
                 if (element.isNeedHideTask()) {
                     QuestsApiController.hideNews((BaseActivity) getActivity(), element.getId(), null);

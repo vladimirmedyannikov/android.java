@@ -595,8 +595,10 @@ public abstract class SocialUIController {
                 GoogleStatistics.SocialSharing.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
                 Statistics.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
                 Statistics.beforeSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
             }
         } catch (Exception ignored) {
         }
@@ -616,8 +618,10 @@ public abstract class SocialUIController {
             GoogleStatistics.SocialSharing.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
             Statistics.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
             Statistics.afterSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
         }
     }
 

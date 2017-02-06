@@ -274,20 +274,6 @@ public class Flat implements Serializable {
      * Данные квартиры в объекте json
      * @return json
      */
-    public JSONObject asJson() {
-        JSONObject result = new JSONObject();
-        try {
-            result.put("flat_id", flatId);
-            result.put("building_id", buildingId);
-            result.put("flat", flat);
-            result.put("building", building);
-            result.put("street", street);
-            result.put("city", city);
-        } catch (JSONException ignored) {
-        }
-        return result;
-    }
-
     public JSONObject asJsonForAdd() {
         JSONObject result = new JSONObject();
         try {

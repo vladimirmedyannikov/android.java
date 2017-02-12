@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
  * появилась вверсии 1.9
  */
 public class Statistics {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private long lastVisit;
     private int passedPolls;
     private int answeredQuestions;
@@ -30,7 +30,7 @@ public class Statistics {
             spentPoints = statisticsJson.optInt("spent_points");
             promoCodes = statisticsJson.optInt("promo_codes");
             socialMessages = statisticsJson.optInt("social_messages");
-            registrationDate = statisticsJson.optInt("registration_date") * 1000;
+            registrationDate = statisticsJson.optLong("registration_date") * 1000;
         }
     }
 

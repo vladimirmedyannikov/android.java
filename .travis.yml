@@ -20,6 +20,11 @@ android:
     - add-on
     - extra
 
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 notifications:
   email:
     - elizarov1988@gmail.com

@@ -6,7 +6,7 @@ jdk: oraclejdk8
 env:
   global:
     - ANDROID_API_LEVEL=23
-    - ANDROID_BUILD_TOOLS_VERSION=23.0.2
+    - ANDROID_BUILD_TOOLS_VERSION=23.0.3
     - ANDROID_ABI=google_apis/armeabi-v7a
     - ANDROID_TAG=google_apis
 
@@ -21,9 +21,7 @@ android:
     - extra
 
 licenses:
-    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
 
 notifications:
   email:

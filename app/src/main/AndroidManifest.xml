@@ -49,6 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name="ru.mos.polls.AgAuthActivity"
             android:configChanges="orientation|screenSize"
@@ -440,6 +441,14 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name="ru.ok.android.sdk.OkPostingActivity"/>
+
+        <activity
+            android:name="ru.mos.polls.tutorial.TutorialActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
 
         <service android:name=".social.service.PostingService"/>
 

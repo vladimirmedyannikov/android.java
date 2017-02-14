@@ -26,6 +26,8 @@ licenses:
 notifications:
   email:
     - elizarov1988@gmail.com
+    - sklyarovdv@mos.ru
+    - fastsilver2009@gmail.com
 
 cache:
   directories:
@@ -34,7 +36,7 @@ cache:
 
 before_script:
   - echo no | android create avd --force -n test -t "android-"$ANDROID_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - emulator -avd test -no-skin -no-audio -no-window -gpu off &
   - android-wait-for-emulator
 
 script: ./gradlew connectedAndroidTest

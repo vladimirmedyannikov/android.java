@@ -722,5 +722,7 @@
     <string name="tutorial_description_1">Участвуйте в общегородских и территориальных голосованиях. Ваше мнение важно для города</string>
     <string name="tutorial_description_2">Получайте баллы за участие и обменивайте их на городские услуги и сувениры</string>
     <string name="tutorial_description_3">Следите за голосованиями и новостями нашего города</string>
+    <string name="tutorial_skip">Пропустить</string>
+    <string name="tutorial_next">Продолжить</string>
 
 </resources>

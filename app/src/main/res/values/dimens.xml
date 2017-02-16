@@ -28,6 +28,7 @@
     <dimen name="pd_normal">16dp</dimen>
     <dimen name="pd_xlarge">20dp</dimen>
     <dimen name="pd_xxlarge">24dp</dimen>
+    <dimen name="pd_xxxlarge">32dp</dimen>
 
     <!-- text size !-->
     <dimen name="ts_small">14sp</dimen>

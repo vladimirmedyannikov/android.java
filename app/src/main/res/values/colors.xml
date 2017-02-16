@@ -100,4 +100,7 @@
     <color name="green_pressed_background_next_or_prev">@color/green_dark</color>
     <color name="red_send_result_button">@color/crimson</color>
     <color name="pressed_red_send_result_button">#c1026b</color>
+
+    <color name="tutorial_background">#f2f2f2</color>
+    <color name="tutorial_description">#96a5ab</color>
 </resources>

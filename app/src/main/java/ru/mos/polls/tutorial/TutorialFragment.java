@@ -19,7 +19,10 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.mos.polls.R;
+import ru.mos.polls.SplashActivity;
+import ru.mos.polls.util.GuiUtils;
 
 public class TutorialFragment extends Fragment {
     public static final String ARG_TUTORIAL = "arg_tutorial";
@@ -34,7 +37,7 @@ public class TutorialFragment extends Fragment {
 
     @BindView(R.id.tutorial_dots_container)
     LinearLayout dotsContainer;
-    @BindView(R.id.tutorial_view_pager)
+    @BindView(R.id.tutorial_slider)
     ViewPager viewPager;
     @BindView(R.id.tutorial_action)
     Button action;
@@ -45,6 +48,9 @@ public class TutorialFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
+        GuiUtils.setStatusBarColor(getActivity(), R.color.tutorial_background);
+
         if (getArguments() != null) {
             content = (Tutorial[]) getArguments().getSerializable(ARG_TUTORIAL);
         }
@@ -55,7 +61,6 @@ public class TutorialFragment extends Fragment {
             dots.add(imageView);
             imageView.setEnabled(false);
             dotsContainer.addView(imageView);
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.tutorial_dot));
         }
 
         viewPager.setAdapter(new PagerAdapter(getChildFragmentManager()));
@@ -64,7 +69,7 @@ public class TutorialFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 action.setText(position == viewPager.getAdapter().getCount() - 1 ?
-                        "Пропустить" : "Продолжить");
+                        R.string.tutorial_next : R.string.tutorial_skip);
             }
 
             @Override
@@ -75,7 +80,7 @@ public class TutorialFragment extends Fragment {
                 if (position != 0){
                     dots.get(position - 1).setEnabled(false);
                 }
-                if (position != viewPager.getAdapter().getCount()-1){
+                if (position != viewPager.getAdapter().getCount() - 1){
                     dots.get(position + 1).setEnabled(false);
                 }
             }
@@ -84,7 +89,13 @@ public class TutorialFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    @OnClick(R.id.tutorial_action)
+    public void onAction() {
         Manager.setShow(getContext());
+        SplashActivity.startApp(getContext());
+        getActivity().finish();
     }
 
     @Nullable

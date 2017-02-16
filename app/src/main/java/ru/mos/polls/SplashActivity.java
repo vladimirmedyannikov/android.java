@@ -1,15 +1,28 @@
 package ru.mos.polls;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.appsflyer.AppsFlyerLib;
 
+import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
 
 public class SplashActivity extends Activity {
+
+    public static void startApp(Context context) {
+        Intent intent = new Intent(context, AgAuthActivity.class);
+        if (Session.isAuthorized(context)) {
+            intent = new Intent(context, MainActivity.class);
+        }
+        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     protected boolean active = true;
     protected int splashTime = 2500;
     private Thread splashTread;
@@ -31,19 +44,7 @@ public class SplashActivity extends Activity {
                         sleep(100);
                         waited += 100;
                     }
-
-
-                    if (!TutorialFragment.Manager.wasShow(SplashActivity.this)) {
-                        TutorialActivity.start(SplashActivity.this);
-                    }
-//                    Intent intent;
-//                    if (Session.isAuthorized(SplashActivity.this)) {
-//                        intent = new Intent(SplashActivity.this, MainActivity.class);
-//                    } else
-//                        intent = new Intent(SplashActivity.this, AgAuthActivity.class);
-//                    intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
-//                    startActivity(intent);
-                    finish();
+                    onSplashShowingComplete();
                 } catch (InterruptedException ignored) {
                 }
             }
@@ -57,6 +58,15 @@ public class SplashActivity extends Activity {
         if (event.getAction() == MotionEvent.ACTION_DOWN)
             active = false;
         return true;
+    }
+
+    private void onSplashShowingComplete() {
+        if (!TutorialFragment.Manager.wasShow(SplashActivity.this)) {
+            TutorialActivity.start(SplashActivity.this);
+        } else {
+            startApp(SplashActivity.this);
+        }
+        finish();
     }
 
     @Override

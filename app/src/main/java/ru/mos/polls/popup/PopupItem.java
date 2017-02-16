@@ -41,25 +41,25 @@ public class PopupItem {
         int YET_HAS_CONFIRMATION_CODE = 5;
 
         PopupItem[] ITEMS_RECOVERY = new PopupItem[]{
-                new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
+                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
 
         PopupItem[] ITEMS = new PopupItem[]{
-                new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
+                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),*/
                 new PopupItem(RECOVERY_PASSWORD, R.string.recovery_password),
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
 
         PopupItem[] REQUEST_CONFIRM_CODE = new PopupItem[]{
                 new PopupItem(YET_HAS_CONFIRMATION_CODE, R.string.has_code),
-                new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
+                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),*/
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
 
         PopupItem[] SET_PASSWORD = new PopupItem[]{
                 new PopupItem(REPEAT_CONFIRMATION_CODE, R.string.repeat_confirmation_code),
-                new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
+                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),*/
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
     }

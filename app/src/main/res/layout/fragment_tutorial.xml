@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/root"
+    android:background="@color/tutorial_background"
     android:fillViewport="true">
 
     <RelativeLayout
-        android:padding="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/pd_normal"
+        style="@style/item">
+
+        <Button
+            style="@style/text.link.green"
+            android:id="@+id/tutorial_action"
+            android:text="@string/tutorial_skip"
+            android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            />
 
         <LinearLayout
             android:id="@+id/tutorial_dots_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/item.linear.horizontal"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:padding="16dp" />
-
-        <Button
-            android:id="@+id/tutorial_action"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Пропустить"
-            android:layout_above="@id/tutorial_dots_container"
-            android:visibility="invisible"/>
+            android:layout_above="@id/tutorial_action"
+            android:padding="@dimen/pd_xxxlarge"/>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/tutorial_view_pager"
+            android:id="@+id/tutorial_slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/tutorial_action"
+            android:layout_above="@id/tutorial_dots_container"
             />
 
     </RelativeLayout>

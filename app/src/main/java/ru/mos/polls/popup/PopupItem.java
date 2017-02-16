@@ -41,7 +41,7 @@ public class PopupItem {
         int YET_HAS_CONFIRMATION_CODE = 5;
 
         PopupItem[] ITEMS_RECOVERY = new PopupItem[]{
-                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),
+                /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),*/
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
 

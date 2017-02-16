@@ -724,5 +724,8 @@
     <string name="tutorial_description_3">Следите за голосованиями и новостями нашего города</string>
     <string name="tutorial_skip">Пропустить</string>
     <string name="tutorial_next">Продолжить</string>
+    <string name="informer_message_about_new_version">Доступна новая версия %s, перейдите в магазин приложений и узнайте о новых возможностях</string>
+    <string name="update_app">Обновите приложение</string>
+    <string name="update">обновить</string>
 
 </resources>

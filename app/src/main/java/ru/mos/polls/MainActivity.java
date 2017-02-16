@@ -23,6 +23,7 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
+import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
@@ -125,6 +126,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         if (PreviewAppActivity.isNeedPreview(this)) {
             PreviewAppActivity.start(this);
         }
+        InformerUIController.process(this);
     }
 
     @Override

@@ -8,9 +8,14 @@ package ru.mos.polls;
 public class UrlManager {
     public static String V210 = "2.1.0";
     public static String V220 = "2.2.0";
+    public static String V230 = "2.3.0";
 
     public static String url(String controller, String method) {
         return String.format("v%s/%s/%s", V220/*BuildConfig.VERSION_NAME*/, controller, method);
+    }
+
+    public static String url(String version, String controller, String method) {
+        return String.format("v%s/%s/%s", version, controller, method);
     }
 
     public interface Controller {
@@ -26,6 +31,7 @@ public class UrlManager {
         String SUPPORT = "support";
         String USER = "user";
         String INFORAMTION = "information";
+        String UTILS = "utils";
     }
 
     public interface Methods {
@@ -74,7 +80,7 @@ public class UrlManager {
         String BLOCK = "block";
         String SMS_INVITATION_NOTICE = "smsInvitationNotice";
         String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
-
+        String APP_VERSION = "appVersion";
     }
 
 }

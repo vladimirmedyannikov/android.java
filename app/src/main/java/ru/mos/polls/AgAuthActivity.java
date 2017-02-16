@@ -9,7 +9,6 @@ import android.text.Layout;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,7 +25,6 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import ru.mos.elk.auth.AuthActivity;
-import ru.mos.elk.auth.RestoreActivity;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
@@ -55,6 +53,12 @@ public class AgAuthActivity extends AuthActivity {
             @Override
             public void onClicked() {
                 statistics.offerClick();
+                WebViewActivity.startActivity(AgAuthActivity.this,
+                        getString(R.string.title_offer),
+                        getString(R.string.url_offer),
+                        null,
+                        true,
+                        false);
             }
         });
         offer.setMovementMethod(movementMethod);

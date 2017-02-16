@@ -23,26 +23,6 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            style="@style/item"
-            android:layout_alignParentTop="true"
-            android:background="@null"
-            android:fitsSystemWindows="true"
-            app:elevation="@dimen/dp_0">
-
-            <LinearLayout
-                android:id="@+id/avatarLayout"
-                style="@style/item"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways">
-
-                <include layout="@layout/quest_user_avatar" />
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout

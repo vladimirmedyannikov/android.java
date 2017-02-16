@@ -1,13 +1,7 @@
 package ru.mos.polls.quests;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,8 +38,6 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
-import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.fragments.PullableFragment;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -77,9 +68,6 @@ public class QuestsFragment extends PullableFragment {
     @BindView(R.id.stubOffline)
     View stubOffline;
     public List<Quest> quests;
-    private ImageView userAvatarImageView;
-    private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
-    private View listHeaderView, headerRoot;
     private Unbinder unbinder;
     private Menu menu;
     public QuestsItemAdapter adapter;
@@ -97,12 +85,6 @@ public class QuestsFragment extends PullableFragment {
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
         listView.addItemDecoration(new SpacesItemDecoration(2));
-        /*
-        * инициализируем аватарку для хэедера
-        *
-         */
-        headerRoot = ButterKnife.findById(root, R.id.headerRoot);
-        userAvatarImageView = ButterKnife.findById(headerRoot, R.id.userAvatar);
 
         quests = new ArrayList<>();
         adapter = new QuestsItemAdapter(quests, itemListener);
@@ -136,7 +118,6 @@ public class QuestsFragment extends PullableFragment {
             actionBar.setCustomView(imageView, layoutParams);
         }
         setHasOptionsMenu(true);
-        doReloadAvatarFromCache();
     }
 
     @OnClick(R.id.refresh)
@@ -149,33 +130,9 @@ public class QuestsFragment extends PullableFragment {
         SubscribeActivity.startActivity(getActivity());
     }
 
-    private void doReloadAvatarFromCache() {
-        Bitmap bitmap = BadgesSource.getInstance().getAvatar();
-        if (bitmap != null) {
-            userAvatarImageView.setImageBitmap(bitmap);
-            headerRoot.setVisibility(View.VISIBLE);
-        } else {
-            headerRoot.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        reloadAvatarFromCacheBroadcastReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                doReloadAvatarFromCache();
-            }
-        };
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(reloadAvatarFromCacheBroadcastReceiver, BadgeManager.RELOAD_AVATAR_FROM_CACHE_INTENT_FILTER);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(reloadAvatarFromCacheBroadcastReceiver);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowCustomEnabled(false);
@@ -185,9 +142,9 @@ public class QuestsFragment extends PullableFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         this.menu = menu;
         inflater.inflate(R.menu.main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
         hideNewsMenu();
     }
 

@@ -27,7 +27,7 @@ public class AboutItem {
 
     public static final AboutItem[] ITEMS = new AboutItem[]{
             new AboutItem(ABOUT_PROJECT, R.string.title_about_project),
-            new AboutItem(INSTRUCTION, R.string.title_instruction),
+            /*new AboutItem(INSTRUCTION, R.string.title_instruction),*/
             new AboutItem(USER_GUIDE, R.string.title_user_guide),
             new AboutItem(OUR_APPS, R.string.our_apps),
             new AboutItem(OFFER, R.string.title_offer),

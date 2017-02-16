@@ -399,7 +399,7 @@
     <string name="survey_dialog_for_share_message">Хотите получить дополнительные баллы, сообщив друзьям о Вашем участии в голосовании?</string>
     <string name="ag_yes">Да</string>
     <string name="ag_no">Нет, спасибо</string>
-    <string name="title_offer">Договор оферты</string>
+    <string name="title_offer">Оферта</string>
     <string name="url_offer">http://ag.mos.ru/oferta.html</string>
     <string name="markSpecial">Специальный вопрос</string>
     <string name="end_date_for_list">, до %s</string>
@@ -414,7 +414,7 @@
     <string name="support_progress_message">Отправка сообщения..</string>
     <string name="email_un_correct">Некорректный формат введенного адреса электронной почты, отправка сообщения невозможна</string>
     <string name="title_add_address">Адрес</string>
-    <string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях, вы должны иметь верифицированный адрес регистрации.\n\nВведите данные вашей учетной записи на Портале городских услуг для проверки наличия верифицированного адреса регистрации</string>
+    <string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях, вы должны иметь верифицированный адрес регистрации.\n\nВведите данные вашей учетной записи на mos.ru для проверки наличия верифицированного адреса регистрации</string>
     <string name="pgu_hint_email">Псевдоним</string>
     <string name="pgu_hint_password">Пароль</string>
     <string name="rempte_service_not_work">Ошибка удаленного сервиса</string>
@@ -428,7 +428,7 @@
     <string name="title_hearing">Слушание</string>
     <string name="title_pgu_auth">Установка связи</string>
     <string name="pgu_link">Перейти на pgu.mos.ru</string>
-    <string name="pgu_title">Портал городских услуг</string>
+    <string name="pgu_title">mos.ru</string>
     <string name="pgu_link_value">https://pgu.mos.ru/</string>
     <string name="empty_quest_list">В настоящее время нет новостей о голосованиях, мероприятиях или городских событиях.\n\nОформите подписку, чтобы всегда быть в курсе событий!</string>
     <string name="do_subscribe">Оформить подписку</string>
@@ -471,7 +471,7 @@
     <string name="achievement_subtitle_was_add">получено %s</string>
     <string name="subscribe_ag_special">специальные акции и мероприятия</string>
     <string name="subscribe_polls_effeccted">исполненные решения</string>
-    <string name="profile_pgu">Связь с pgu.mos.ru</string>
+    <string name="profile_pgu">Связь с mos.ru</string>
     <string name="innovation_active">Активные новинки</string>
     <string name="innovation_passed">Мои новинки</string>
     <string name="innovation_old">Прошедшие новинки</string>
@@ -492,7 +492,7 @@
     <string name="error_for_not_available_hearing">Этот функционал недоступен. Обновите приложение до последней версии.</string>
     <string name="ag_update">Обновить</string>
     <string name="app_google_play">https://play.google.com/store/apps/details?id=%s</string>
-    <string name="pgu_rebind_message">Установлена связь между вашим профилем в «Активном гражданине» и вашим профилем на Портале городских услуг</string>
+    <string name="pgu_rebind_message">Установлена связь между вашим профилем в «Активном гражданине» и вашим профилем на mos.ru</string>
     <string name="pgu_binding_title">Профили связаны</string>
     <string name="pgu_bind">Связать</string>
     <string name="title_bind_pgu">Связь с pgu.mos.ru</string>

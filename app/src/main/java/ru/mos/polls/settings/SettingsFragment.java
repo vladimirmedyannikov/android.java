@@ -19,6 +19,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
@@ -75,6 +76,7 @@ public class SettingsFragment extends Fragment {
         builder.setPositiveButton(R.string.logout, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                GeotargetManager.stop(getContext());
                 ProfileManager
                         .logOut((BaseActivity) getActivity(), AgAuthActivity.class, MainActivity.class);
             }

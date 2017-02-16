@@ -452,6 +452,8 @@
 
         <service android:name=".social.service.PostingService"/>
 
+        <receiver android:name=".geotarget.manager.GeotargetManager"/>
+
         <receiver android:name=".broadcast.SmsBroadcastReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>

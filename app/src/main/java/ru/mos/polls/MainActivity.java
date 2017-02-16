@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.polls.about.AboutAppFragment;
@@ -22,6 +24,11 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
+import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.manager.AreasManager;
+import ru.mos.polls.geotarget.manager.GeotargetManager;
+import ru.mos.polls.geotarget.manager.PrefsAreasManager;
+import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
@@ -117,6 +124,21 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         instance = this;
         AgSocialApiController.loadSocials(this, null);
         runtimePermissionController = new RuntimePermissionController(this);
+
+        updateGeotargetAreas();
+        GeotargetManager.stop(this);
+        GeotargetManager.start(this);
+    }
+
+    private void updateGeotargetAreas() {
+        GeotargetApiController.OnAreasListener listener = new GeotargetApiController.OnAreasListener() {
+            @Override
+            public void onLoaded(List<Area> loadedAreas) {
+                AreasManager areasManager = new PrefsAreasManager(MainActivity.this);
+                areasManager.save(loadedAreas);
+            }
+        };
+        GeotargetApiController.loadAreas(this, listener);
     }
 
     @Override

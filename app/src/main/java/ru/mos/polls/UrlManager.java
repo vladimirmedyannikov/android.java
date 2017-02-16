@@ -32,6 +32,7 @@ public class UrlManager {
         String USER = "user";
         String INFORAMTION = "information";
         String UTILS = "utils";
+        String GEOTARGET = "geotarget";
     }
 
     public interface Methods {
@@ -81,6 +82,8 @@ public class UrlManager {
         String SMS_INVITATION_NOTICE = "smsInvitationNotice";
         String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
         String APP_VERSION = "appVersion";
+        String AREAS = "areas";
+        String USER_IN_AREA = "userInArea";
     }
 
 }

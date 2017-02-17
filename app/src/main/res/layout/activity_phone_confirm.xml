@@ -23,7 +23,7 @@
         <EditText
             android:id="@+id/etCode"
             style="@style/input.phone"
-            android:hint="@string/ag_hint_phone_email"
+            android:hint="@string/ag_hint_code"
             android:imeOptions="actionNext"/>
 
         <TextView
@@ -35,7 +35,7 @@
             android:id="@+id/btnAction"
             style="@style/button.centered.action"
             android:layout_width="@dimen/vs_xxxlarge"
-            android:text="@string/elk_authorize"/>
+            android:text="@string/code_confirm_send"/>
 
         <include layout="@layout/layout_empty_view"/>
 

@@ -25,7 +25,6 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
-import ru.mos.elk.auth.AuthActivity;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
@@ -78,7 +77,18 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 .registerReceiver(smsAuthReceiver, new IntentFilter(SmsBroadcastReceiver.ACTION_CODE_CONFIRMATION_RECEIVED));
 
         phone = getIntent().getStringExtra(EXTRA_PHONE);
-        tvPhone.setText(phone);
+        tvPhone.setText(formatPhone());
+    }
+
+    private String formatPhone() {
+        return "+7 (" +
+                phone.substring(0, 3) +
+                ") " +
+                phone.substring(3, 6) +
+                "-" +
+                phone.substring(6, 8) +
+                "-" +
+                phone.substring(8);
     }
 
     @Override
@@ -99,13 +109,8 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             public void onLoaded(AgUser agUser) {
                 dialog.dismiss();
                 ru.mos.elk.Statistics.logon();
-                Bundle extras = getIntent().getExtras();
-                if (!extras.getBoolean(AuthActivity.JUST_AUTHORIZE, false)) {
-                    Intent intent = new Intent(AgPhoneConfirmActivity.this, (Class<?>) extras.getSerializable(AuthActivity.PASSED_ACTIVITY));
-                    intent.putExtras(extras);
-                    startActivity(intent);
-                }
-
+                Intent activity = new Intent(AgPhoneConfirmActivity.this, MainActivity.class);
+                startActivity(activity);
                 finish();
             }
 
@@ -124,7 +129,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         JSONObject params = new JSONObject();
         JSONObject auth = new JSONObject();
         try {
-            auth.put("login", "+7" + phone);
+            auth.put("login", "7" + phone);
             auth.put("password", etCode.getText().toString());
             auth.put(GCMHelper.GUID, getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE).getString(GCMHelper.GUID, null));
             params.put(Session.AUTH, auth);
@@ -146,7 +151,9 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
-
+        GuiUtils.displayOkMessage(this,
+                "Находиться в разработке!",
+                null);
     }
 
     @OnTextChanged(R.id.etCode)

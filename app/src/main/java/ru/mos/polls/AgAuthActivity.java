@@ -1,9 +1,11 @@
 package ru.mos.polls;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.text.Html;
 import android.text.Layout;
 import android.text.Spanned;
@@ -15,7 +17,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.android.volley2.Response;
+import com.android.volley2.VolleyError;
 import com.appsflyer.AppsFlyerLib;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +31,10 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
+import ru.mos.elk.Dialogs;
+import ru.mos.elk.api.API;
 import ru.mos.elk.auth.AuthActivity;
+import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
@@ -32,6 +42,7 @@ import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.survey.SurveyActivity;
+import ru.mos.polls.util.GuiUtils;
 
 
 public class AgAuthActivity extends AuthActivity {
@@ -70,6 +81,53 @@ public class AgAuthActivity extends AuthActivity {
         }
     }
 
+    @Override
+    public void onClickLogin(View view) {
+        GuiUtils.hideKeyboard(view);
+
+        tvError.setVisibility(View.GONE);
+
+        final ProgressDialog dialog = Dialogs.showProgressDialog(this, "Ожидайте..");
+        Response.Listener<String> listener = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getText().toString());
+            }
+
+        };
+        Response.ErrorListener errListener = new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                if (error != null) {
+                    if (error.getErrorCode() != ERROR_CODE_423)
+                        onLoginFault(error.getMessage());
+                    showErrorDialog(error.getErrorCode());
+                }
+            }
+        };
+        String url = API.getURL("json/v0.3/auth/user/recoverypassword");
+        addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
+    }
+
+    private JSONObject getQueryParams() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("msisdn", "7" + etLogin.getText().toString());
+            JSONObject deviceInfo = new JSONObject();
+            deviceInfo.put("os", "Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")");
+            deviceInfo.put("device", Build.MODEL + " (" + Build.MANUFACTURER + ")");
+            params.put("client_info", deviceInfo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return params;
+    }
+
     @OnEditorAction(R.id.etPassword)
     boolean actionListener(int actionId) {
         if ((cbAgreeOffer.isChecked() && etLogin.getText().length() > 0 && etPassword.getText().length() > 0) &&
@@ -100,7 +158,8 @@ public class AgAuthActivity extends AuthActivity {
     }
 
     private void checkForEnable() {
-        btnLogin.setEnabled(cbAgreeOffer.isChecked() && etLogin.getText().length() > 0 && etPassword.getText().length() > 0);
+        btnLogin.setEnabled(cbAgreeOffer.isChecked()
+                && etLogin.getText().length() > 0 /*&& etPassword.getText().length() > 0*/);
     }
 
     @Override

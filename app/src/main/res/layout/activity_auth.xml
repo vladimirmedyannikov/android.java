@@ -23,7 +23,8 @@
         <EditText
             android:id="@+id/etPassword"
             style="@style/input.password"
-            android:hint="@string/elk_password"/>
+            android:hint="@string/elk_password"
+            android:visibility="gone"/>
 
         <include layout="@layout/layout_offerta"/>
 
@@ -50,7 +51,8 @@
             android:id="@+id/btnRegister"
             style="@style/text.link.green"
             android:layout_marginTop="@dimen/pd_xxlarge"
-            android:text="@string/elk_register"/>
+            android:text="@string/elk_register"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnRestorePassword"

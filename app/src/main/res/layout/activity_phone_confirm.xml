@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/scrollView"
+    style="@style/root.padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/topContainer"
+        style="@style/linear">
+
+        <include layout="@layout/layout_auth_logo"/>
+
+        <TextView
+            style="@style/text.gray"
+            android:text="Мы отправили SMS с кодом на ваш номер"/>
+
+        <TextView
+            android:id="@+id/tvPhone"
+            style="@style/text.medium"
+            tools:text="+7 (917) 814-69-80"/>
+
+        <EditText
+            android:id="@+id/etCode"
+            style="@style/input.phone"
+            android:hint="@string/ag_hint_phone_email"
+            android:imeOptions="actionNext"/>
+
+        <TextView
+            android:id="@+id/tvError"
+            style="@style/text.center.red"
+            android:layout_margin="@dimen/pd_xxsmall"/>
+
+        <Button
+            android:id="@+id/btnAction"
+            style="@style/button.centered.action"
+            android:layout_width="@dimen/vs_xxxlarge"
+            android:text="@string/elk_authorize"/>
+
+        <include layout="@layout/layout_empty_view"/>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            style="@style/text.link.green"
+            android:id="@+id/help"
+            android:layout_marginBottom="@dimen/pd_xxsmall"
+            android:layout_marginTop="@dimen/pd_xxlarge"
+            android:text="Неправильный номер?"
+            />
+
+    </LinearLayout>
+</ScrollView>

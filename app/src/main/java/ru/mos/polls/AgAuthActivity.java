@@ -41,8 +41,8 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
-import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
+import ru.mos.polls.support.gui.AgSupportActivity;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 
@@ -153,9 +153,11 @@ public class AgAuthActivity extends AuthActivity {
     @OnClick(R.id.help)
     void help() {
         AbstractActivity.hideSoftInput(AgAuthActivity.this, etLogin);
-        String phone = etLogin.getText().toString();
-        PopupController.authOrRegistry(AgAuthActivity.this, phone);
+//        String phone = etLogin.getText().toString();
+//        PopupController.authOrRegistry(AgAuthActivity.this, phone);
         statistics.helpClick();
+        new GoogleStatistics.Auth().feedbackClick();
+        AgSupportActivity.startActivity(this);
     }
 
     @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

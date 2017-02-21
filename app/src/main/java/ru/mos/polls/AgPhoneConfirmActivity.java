@@ -151,9 +151,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
-        GuiUtils.displayOkMessage(this,
-                "Находиться в разработке!",
-                null);
+        finish();
     }
 
     @OnTextChanged(R.id.etCode)

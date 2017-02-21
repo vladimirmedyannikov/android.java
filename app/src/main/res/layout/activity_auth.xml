@@ -12,7 +12,8 @@
 
         <TextView
             style="@style/header.green"
-            android:text="@string/elk_authorization"/>
+            android:text="@string/elk_authorization"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/etLogin"
@@ -60,7 +61,16 @@
 
         <include layout="@layout/layout_empty_view"/>
 
-        <include layout="@layout/layout_help"/>
+        <TextView
+            style="@style/text.link.green"
+            android:id="@+id/help"
+            android:layout_marginBottom="@dimen/pd_xxsmall"
+            android:layout_marginTop="@dimen/pd_xxlarge"
+            android:text="@string/help"
+            android:paddingLeft="0dp"
+            android:minWidth="0dp"
+            android:layout_gravity="left"
+            />
 
     </LinearLayout>
 </ScrollView>

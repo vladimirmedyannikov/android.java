@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/text.gray"
-            android:text="Мы отправили SMS с кодом на ваш номер"/>
+            android:text="@string/hint_sms_sent"/>
 
         <TextView
             android:id="@+id/tvPhone"
@@ -39,12 +39,15 @@
 
         <include layout="@layout/layout_empty_view"/>
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        <TextView
             style="@style/text.link.green"
             android:id="@+id/help"
             android:layout_marginBottom="@dimen/pd_xxsmall"
             android:layout_marginTop="@dimen/pd_xxlarge"
-            android:text="Неправильный номер?"
+            android:text="@string/help_phone_not_correct"
+            android:paddingLeft="0dp"
+            android:minWidth="0dp"
+            android:layout_gravity="left"
             />
 
     </LinearLayout>

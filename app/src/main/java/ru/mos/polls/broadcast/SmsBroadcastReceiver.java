@@ -11,6 +11,8 @@ import android.telephony.SmsMessage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ru.mos.polls.R;
+
 /**
  * Инкапсулирует логику обработки получения смс с кодом подтверждения<br/>
  * Полученный код отправляется интентом {@link LocalBroadcastManager} на экран
@@ -19,16 +21,15 @@ import java.util.regex.Pattern;
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     public static final String ACTION_CODE_CONFIRMATION_RECEIVED = "ACTION_CODE_CONFIRMATION_RECEIVED";
     public static final String EXTRA_CODE = "extra_code";
-    public static final String SMS_SENDER = "DIT_EMP";
     private static final String PDUS = "pdus";
-    private static final String SMS_CODE_FROM_BODY_PATTERN = "(\\d+)";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equalsIgnoreCase(intent.getAction())) {
             SmsMessage smsMessage = get(intent);
-            if (fromBenefitService(smsMessage)) {
-                String code = parse(smsMessage.getDisplayMessageBody(), SMS_CODE_FROM_BODY_PATTERN);
+            if (checkServiceFrom(context, smsMessage)) {
+                String code = parse(smsMessage.getDisplayMessageBody(),
+                        context.getString(R.string.sms_code_from_body_pattern));
                 notify(context, code);
             }
         }
@@ -48,12 +49,13 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
     /**
      * Проверка от кого пришло смс<br/>
-     * ОБрабатываем смс отправителя {@link #SMS_SENDER}
+     * ОБрабатываем смс отправителя
      * @param smsMessage смс
-     * @return true - смс от отправителя, заданного константой {@link #SMS_SENDER}
+     * @return true - смс от отправителя, заданного константой
      */
-    private boolean fromBenefitService(SmsMessage smsMessage) {
-        return smsMessage != null && SMS_SENDER.equalsIgnoreCase(smsMessage.getOriginatingAddress());
+    private boolean checkServiceFrom(Context context, SmsMessage smsMessage) {
+        return smsMessage != null &&
+                context.getString(R.string.sms_sender).equalsIgnoreCase(smsMessage.getOriginatingAddress());
     }
 
     /**
@@ -82,7 +84,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
     /**
      * Получение пода из тела смс
      * @param target строка текста смс
-     * @param p паттерн, описывающий искомый код {@link #SMS_CODE_FROM_BODY_PATTERN}
+     * @param p паттерн, описывающий искомый код
      * @return код подтверждения
      */
     private String parse(String target, String p) {

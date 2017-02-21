@@ -163,6 +163,8 @@ dependencies {
     compile(name: 'ok-sdk', ext: 'aar')
     compile 'com.android.support:recyclerview-v7:23.+'
     compile 'com.android.support:cardview-v7:23.+'
+    compile 'pub.devrel:easypermissions:0.1.9'
+
 }
 
 configurations.all {

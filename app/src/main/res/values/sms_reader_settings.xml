@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_sender">DIT_EMP</string>
+    <string name="sms_code_from_body_pattern">(\\d+)</string>
+</resources>

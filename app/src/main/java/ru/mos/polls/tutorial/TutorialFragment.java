@@ -69,7 +69,7 @@ public class TutorialFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 action.setText(position == viewPager.getAdapter().getCount() - 1 ?
-                        R.string.tutorial_next : R.string.tutorial_skip);
+                        R.string.tutorial_cancel : R.string.tutorial_skip);
             }
 
             @Override

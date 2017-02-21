@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.polls.about.AboutAppFragment;
@@ -27,6 +28,7 @@ import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.GeotargetManager;
+import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.helpers.FunctionalHelper;
@@ -74,6 +76,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private static final String TAG_SUPPORT = "support";
     private static final String TAG_NOVELTY = "novelty";
     private static final String TAG_SHOP = "shop";
+
+    private static final int GPS_PERMISSION_REQUEST = 9824;
+    private static final String[] GPS_PERMS = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     private SmsInviteController smsInviteController;
     private SocialController socialController;
@@ -149,6 +156,15 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             PreviewAppActivity.start(this);
         }
         InformerUIController.process(this);
+        if (!EasyPermissions.hasPermissions(this, GPS_PERMS)
+                && GpsRequestPermsManager.isNeedRequestGps(this)) {
+            GpsRequestPermsManager.incrementSyncTime(this);
+            EasyPermissions.requestPermissions(this,
+                    getString(R.string.get_permission),
+                    GPS_PERMISSION_REQUEST,
+                    GPS_PERMS);
+
+        }
     }
 
     @Override

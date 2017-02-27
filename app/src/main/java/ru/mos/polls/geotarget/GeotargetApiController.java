@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.polls.UrlManager;
@@ -24,7 +23,7 @@ import ru.mos.polls.geotarget.model.Area;
 
 public class GeotargetApiController {
 
-    public static void loadAreas(BaseActivity baseActivity, final OnAreasListener listener) {
+    public static void loadAreas(Context context, final OnAreasListener listener) {
         String method = UrlManager.url(UrlManager.V230,
                 UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.AREAS);
@@ -48,10 +47,11 @@ public class GeotargetApiController {
                 responseListener,
                 null);
 
-        baseActivity.addRequest(jsonObjectRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonObjectRequest);
     }
 
-    public static void notifyAboutUserInArea(Context context, int areaId, final OnNotifUserInAreaListener listener) {
+    public static void notifyAboutUserInArea(Context context, int areaId, final OnNotifyUserInAreaListener listener) {
         String method = UrlManager.url(UrlManager.V230,
                 UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.USER_IN_AREA);
@@ -83,7 +83,7 @@ public class GeotargetApiController {
         void onLoaded(List<Area> loadedAreas);
     }
 
-    public interface OnNotifUserInAreaListener {
+    public interface OnNotifyUserInAreaListener {
         void onSuccess();
     }
 }

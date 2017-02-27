@@ -45,4 +45,16 @@ public class PrefsAreasManager implements AreasManager {
     public void clear() {
         prefs.edit().clear().apply();
     }
+
+    @Override
+    public void remove(int id) {
+        List<Area> areas = get();
+        for (Area iterator : areas) {
+            if (iterator.getId() == id) {
+                areas.remove(iterator);
+                break;
+            }
+        }
+        save(areas);
+    }
 }

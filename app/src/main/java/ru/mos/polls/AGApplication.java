@@ -14,7 +14,6 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -39,6 +38,9 @@ import ru.mos.elk.api.Token;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.push.GCMBroadcastReceiver;
+import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.manager.AreasManager;
+import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
@@ -152,6 +154,8 @@ public class AGApplication extends MultiDexApplication {
         GCMBroadcastReceiver.addAction("achievement_recd", getNewAchievementAction());
         GCMBroadcastReceiver.addAction("hearing_new", getNewHearing());
         GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew());
+        GCMBroadcastReceiver.addAction("geotarget_area_remove", removeGeotargetArea());
+        GCMBroadcastReceiver.addAction("geotarget_areas_update", updateGeotargetAreas());
 
         getContentResolver().query(UserDataProvider.getContentWithLimitUri(UserData.Cars.URI_CONTENT, 1), null, null, null, null).close(); //work around falling when query db before created
 
@@ -483,6 +487,88 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            public boolean isSilent() {
+                return false;
+            }
+        };
+    }
+
+    public GCMBroadcastReceiver.PushAction removeGeotargetArea() {
+        return new GCMBroadcastReceiver.PushAction() {
+            private int id;
+
+
+            @Override
+            public void onPushRecived(Intent intent) {
+                id = intent.getIntExtra("id", -1);
+                AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
+                areasManager.remove(id);
+            }
+
+            @Override
+            public Intent getNotifyIntent() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthRequired() {
+                return true;
+            }
+
+            @Override
+            public int getSmallIcon() {
+                return getNotificationIcon();
+            }
+
+            @Override
+            public int getLargeIcon() {
+                return getLargeNotificationIcon();
+            }
+
+            @Override
+            public boolean isPushNotValid() {
+                return true;
+            }
+
+        };
+    }
+
+    public GCMBroadcastReceiver.PushAction updateGeotargetAreas() {
+        return new GCMBroadcastReceiver.PushAction() {
+
+            @Override
+            public void onPushRecived(Intent intent) {
+                AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
+                areasManager.clear();
+                GeotargetApiController.loadAreas(getApplicationContext(), null);
+            }
+
+            @Override
+            public Intent getNotifyIntent() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthRequired() {
+                return true;
+            }
+
+            @Override
+            public int getSmallIcon() {
+                return getNotificationIcon();
+            }
+
+            @Override
+            public int getLargeIcon() {
+                return getLargeNotificationIcon();
+            }
+
+            @Override
+            public boolean isPushNotValid() {
+                return true;
+            }
+
         };
     }
 

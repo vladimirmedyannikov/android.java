@@ -16,4 +16,6 @@ public interface AreasManager {
 
     void clear();
 
+    void remove(int id);
+
 }

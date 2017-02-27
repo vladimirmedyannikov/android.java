@@ -53,7 +53,7 @@ public class GeotargetManager extends BroadcastReceiver {
              * информирование о том, что пользователь в указанной зоне
              */
             if (selected != null) {
-                GeotargetApiController.OnNotifUserInAreaListener listener = new GeotargetApiController.OnNotifUserInAreaListener() {
+                GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
                     @Override
                     public void onSuccess() {
                     }

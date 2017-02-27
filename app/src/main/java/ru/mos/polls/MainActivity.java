@@ -141,8 +141,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         GeotargetApiController.OnAreasListener listener = new GeotargetApiController.OnAreasListener() {
             @Override
             public void onLoaded(List<Area> loadedAreas) {
-                AreasManager areasManager = new PrefsAreasManager(MainActivity.this);
-                areasManager.save(loadedAreas);
+                try {
+                    AreasManager areasManager = new PrefsAreasManager(MainActivity.this);
+                    areasManager.save(loadedAreas);
+                } catch (Exception ignored) {
+                }
             }
         };
         GeotargetApiController.loadAreas(this, listener);

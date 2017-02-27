@@ -89,7 +89,11 @@ public class InformerUIController {
         int maxIndex = Math.min(oldNumbers.length, newNumbers.length);
         for (int i = 0; i < maxIndex; i ++) {
             int oldVersionPart = Integer.valueOf(oldNumbers[i]);
-            int newVersionPart = Integer.valueOf(newNumbers[i]);
+            int newVersionPart = oldVersionPart;
+            try {
+                newVersionPart = Integer.valueOf(newNumbers[i]);
+            } catch (Exception ignored) {
+            }
             if (oldVersionPart < newVersionPart) {
                 res = Compare.MORE;
                 break;

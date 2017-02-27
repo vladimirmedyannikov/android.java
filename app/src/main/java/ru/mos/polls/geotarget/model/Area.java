@@ -19,7 +19,7 @@ public class Area implements Serializable {
     public static List<Area> from(JSONArray array) {
         List<Area> result = new ArrayList<>();
         if (array != null) {
-            for (int i = 0; i <= array.length(); ++i) {
+            for (int i = 0; i <= array.length() - 1; ++i) {
                 result.add(new Area(array.optJSONObject(i)));
             }
         }

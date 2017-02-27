@@ -78,6 +78,8 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
         phone = getIntent().getStringExtra(EXTRA_PHONE);
         tvPhone.setText(formatPhone());
+
+        GuiUtils.showKeyboard(etCode);
     }
 
     private String formatPhone() {

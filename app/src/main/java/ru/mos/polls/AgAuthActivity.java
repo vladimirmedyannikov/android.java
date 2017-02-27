@@ -5,11 +5,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
-import android.text.Html;
 import android.text.Layout;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.MotionEvent;
@@ -69,12 +68,14 @@ public class AgAuthActivity extends AuthActivity {
 
     @Override
     protected void configureEdits() {
-        Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer));
+
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
-        OfferLinkMovementMethod movementMethod = OfferLinkMovementMethod.getInstance();
-        movementMethod.setLinkListener(new OfferLinkMovementMethod.LinkListener() {
+        offer.setPaintFlags(offer.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        offer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClicked() {
+            public void onClick(View v) {
+                GuiUtils.hideKeyboard(v);
                 statistics.offerClick();
                 WebViewActivity.startActivity(AgAuthActivity.this,
                         getString(R.string.title_offer),
@@ -84,13 +85,11 @@ public class AgAuthActivity extends AuthActivity {
                         false);
             }
         });
-        offer.setMovementMethod(movementMethod);
-        offer.setText(spanned);
         String phone = AgUser.getPhone(this);
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));
-            etPassword.requestFocus();
         }
+        GuiUtils.showKeyboard(etLogin);
     }
 
     @Override

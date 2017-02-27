@@ -10,13 +10,25 @@
         android:checked="false"
         android:paddingRight="@dimen/thick_separator"/>
 
-    <TextView
-        android:id="@+id/tvOffer"
-        style="@style/text"
+    <LinearLayout
+        style="@style/item.linear.horizontal"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/cbAgreeOffer"
         android:layout_toRightOf="@+id/cbAgreeOffer"
         android:paddingBottom="@dimen/pd_xsmall"
-        android:paddingTop="@dimen/pd_xxsmall"
-        android:text="@string/ag_agree_offer"/>
+        android:paddingTop="@dimen/pd_xxsmall">
+
+        <TextView
+            style="@style/text"
+            android:text="@string/ag_agree"
+            android:layout_marginRight="4dp"/>
+
+        <TextView
+            android:id="@+id/tvOffer"
+            style="@style/text"
+            android:text="@string/offerta_offer"
+            android:textColor="@color/accent_material_light"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

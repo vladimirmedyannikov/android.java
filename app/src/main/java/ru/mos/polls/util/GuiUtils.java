@@ -52,6 +52,16 @@ public class GuiUtils {
         }
     }
 
+    public static void showKeyboard(View v) {
+        if (v != null && v.getContext() != null) {
+            if (!v.isFocused()) {
+                v.requestFocus();
+            }
+            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
+    }
+
     /**
      * Добавление слушателя {@link OnSoftInputStateListener} на состояние клавиатуры<br/>
      *

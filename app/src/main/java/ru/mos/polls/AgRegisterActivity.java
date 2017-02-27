@@ -27,7 +27,7 @@ public class AgRegisterActivity extends RegisterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer));
+        Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer_link));
         TextView offer = (TextView) findViewById(R.id.tvOffer);
         AgAuthActivity.OfferLinkMovementMethod movementMethod = AgAuthActivity.OfferLinkMovementMethod.getInstance();
         movementMethod.setLinkListener(new AgAuthActivity.OfferLinkMovementMethod.LinkListener() {

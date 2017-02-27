@@ -124,7 +124,7 @@
     <string name="elk_authorization">Вход</string>
     <string name="elk_restoreTitle">Восстановление пароля</string>
 
-    <string name="ag_agree_offer">Я согласен с
+    <string name="ag_agree_offer_link">Я согласен с
         &lt;a href="http://ag.mos.ru/oferta.html" style="text-decoration: none;">условиями оферты&lt;/a></string>
 
     <string-array name="socials">
@@ -733,5 +733,8 @@
     <string name="help_phone_not_correct">Неправильный номер?</string>
     <string name="hint_sms_sent">Мы отправили SMS с кодом на ваш номер</string>
     <string name="tutorial_cancel">Завершить</string>
+    <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
+    <string name="ag_agree">я согласен с</string>
+    <string name="offerta_offer">условиями оферты</string>
 
 </resources>

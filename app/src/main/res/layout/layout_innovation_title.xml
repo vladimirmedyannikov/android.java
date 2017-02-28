@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/root">
+    style="@style/root"
+    android:background="@color/white">
 
     <LinearLayout
         style="@style/linear">
@@ -8,8 +9,7 @@
         <LinearLayout
             style="@style/linear"
             android:id="@+id/contentContainer"
-            android:background="@color/white"
-            android:layout_marginBottom="@dimen/pd_normal"
+            android:layout_marginBottom="42dp"
             android:paddingLeft="@dimen/pd_xxsmall"
             android:paddingRight="@dimen/pd_xxsmall"
             android:paddingTop="@dimen/pd_xxsmall">
@@ -42,12 +42,17 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include
-        android:id="@+id/buttonContainer"
-        layout="@layout/layout_details_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+    <TextView
+        style="@style/text.green"
+        android:id="@+id/action"
+        android:text="@string/title_more"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/pd_normal"/>
 
     <View
         android:id="@+id/divider"

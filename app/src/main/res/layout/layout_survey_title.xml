@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root"
+    android:background="@color/white">
 
     <LinearLayout
         style="@style/linear">
@@ -8,9 +9,8 @@
         <LinearLayout
             android:id="@+id/contentContainer"
             style="@style/linear"
-            android:layout_marginBottom="@dimen/pd_normal"
             android:background="@color/white"
-            android:paddingBottom="@dimen/pd_normal">
+            android:layout_marginBottom="42dp">
 
             <TextView
                 android:id="@+id/title"
@@ -60,12 +60,17 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include
-        android:id="@+id/buttonContainer"
-        layout="@layout/layout_details_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+    <TextView
+        style="@style/text.green"
+        android:id="@+id/action"
+        android:text="@string/title_more"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/pd_normal"/>
 
     <View
         android:id="@+id/divider"

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,14 +36,18 @@ public class HtmlTitleView extends LinearLayout {
 
     private WebView shortContainer, fullContainer;
     protected TextView title;
-    private ImageView detailsExpand, detailsCollapse;
-    private View detailContainer, divider;
+//    private ImageView detailsExpand, detailsCollapse;
+    private View /*detailContainer,*/ divider;
     private LinearLayout contentContainer;
     private RelativeLayout buttonContainer;
+    private TextView action;
+
+    private String moreValue, lessValue;
 
     private int contentChangingType = SIMPLE;
 
     private StateListener stateListener = StateListener.STUB;
+
 
     public HtmlTitleView(Context context) {
         super(context);
@@ -97,16 +100,13 @@ public class HtmlTitleView extends LinearLayout {
     private void prepare() {
         shortContainer.setVisibility(GONE);
         fullContainer.setVisibility(GONE);
-        detailsExpand.setVisibility(View.VISIBLE);
-        detailsCollapse.setVisibility(View.GONE);
+        action.setText(getContext().getString(R.string.title_more));
     }
 
     protected void onExpanded() {
-
     }
 
     protected void onCollapsed() {
-
     }
 
     /**
@@ -126,103 +126,98 @@ public class HtmlTitleView extends LinearLayout {
         } else {
             algorithm = new HasShortTextAlgorithm(titleValue, shortValue, fullValue);
         }
+
+        action.setVisibility(VISIBLE);
         if (ElkTextUtils.isEmpty(fullValue)) {
-            buttonContainer.setVisibility(GONE);
+            action.setVisibility(GONE);
             divider.setVisibility(View.VISIBLE);
             removePaddingFromContent();
-        } else {
-            buttonContainer.setVisibility(VISIBLE);
         }
-        detailsExpand.setOnClickListener(new OnClickListener() {
+
+        View.OnClickListener onActionClick = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (contentChangingType == EXPAND_COLLAPSE) {
-                    AnimationHelper.collapse(algorithm.getShortContainer(), new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
+                if (!isMoreAction()) {
+                    if (contentChangingType == EXPAND_COLLAPSE) {
+                        AnimationHelper.collapse(algorithm.getFullContainer(), new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                            }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            algorithm.displayExpended();
-                            AnimationHelper.expand(algorithm.getFullContainer(), new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                algorithm.displayCollapsed();
+                                AnimationHelper.expand(algorithm.getShortContainer(), new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+                                    }
 
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    stateListener.onExpand();
-                                    onExpanded();
-                                }
+                                    @Override
+                                    public void onAnimationEnd(Animation animation) {
+                                        stateListener.onCollapse();
+                                        onCollapsed();
+                                    }
 
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                }
-                            });
-                        }
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+                                });
+                            }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
 
-                    });
+                        });
+                    } else {
+                        algorithm.displayCollapsed();
+                        stateListener.onCollapse();
+                        onCollapsed();
+                    }
                 } else {
-                    algorithm.displayExpended();
-                    stateListener.onExpand();
-                    onExpanded();
+                    if (contentChangingType == EXPAND_COLLAPSE) {
+                        AnimationHelper.collapse(algorithm.getShortContainer(), new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                algorithm.displayExpended();
+                                AnimationHelper.expand(algorithm.getFullContainer(), new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animation animation) {
+                                        stateListener.onExpand();
+                                        onExpanded();
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
+
+                        });
+                    } else {
+                        algorithm.displayExpended();
+                        stateListener.onExpand();
+                        onExpanded();
+                    }
+
                 }
             }
-        });
-        detailsCollapse.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (contentChangingType == EXPAND_COLLAPSE) {
-                    AnimationHelper.collapse(algorithm.getFullContainer(), new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            algorithm.displayCollapsed();
-                            AnimationHelper.expand(algorithm.getShortContainer(), new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    stateListener.onCollapse();
-                                    onCollapsed();
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                    });
-                } else {
-                    algorithm.displayCollapsed();
-                    stateListener.onCollapse();
-                    onCollapsed();
-                }
-            }
-        });
+        };
+        action.setOnClickListener(onActionClick);
         algorithm.init();
         algorithm.displayCollapsed();
-    }
-
-    private void removePaddingFromContent() {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) contentContainer.getLayoutParams();
-        params.setMargins(0, 0, 0, 0);
-        contentContainer.setLayoutParams(params);
     }
 
     private abstract class Algorithm {
@@ -241,14 +236,12 @@ public class HtmlTitleView extends LinearLayout {
 
         @CallSuper
         protected void displayCollapsed() {
-            detailsExpand.setVisibility(View.VISIBLE);
-            detailsCollapse.setVisibility(View.GONE);
+            action.setText(moreValue);
         }
 
         @CallSuper
         protected void displayExpended() {
-            detailsExpand.setVisibility(View.GONE);
-            detailsCollapse.setVisibility(View.VISIBLE);
+            action.setText(lessValue);
         }
 
         public abstract View getShortContainer();
@@ -374,12 +367,24 @@ public class HtmlTitleView extends LinearLayout {
         /**
          * Все что относится к  кнопке "Подробнее/свернуть"
          */
-        detailsExpand = ButterKnife.findById(result,R.id.detailsExpand);
-        detailsCollapse =  ButterKnife.findById(result,R.id.detailsCollapse);
-        detailContainer = ButterKnife.findById(result,R.id.detailsContainer);
         divider = ButterKnife.findById(result,R.id.divider);
         contentContainer = ButterKnife.findById(result,R.id.contentContainer);
+        action = ButterKnife.findById(result, R.id.action);
+
+        moreValue = getContext().getString(R.string.title_more);
+        lessValue = getContext().getString(R.string.title_less);
+
         return result;
+    }
+
+    private boolean isMoreAction() {
+        return moreValue.equalsIgnoreCase(action.getText().toString());
+    }
+
+    private void removePaddingFromContent() {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) contentContainer.getLayoutParams();
+        params.setMargins(0, 0, 0, 0);
+        contentContainer.setLayoutParams(params);
     }
 
     public interface StateListener {

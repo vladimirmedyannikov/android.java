@@ -27,7 +27,49 @@ import ru.mos.polls.geotarget.model.Area;
  */
 
 public class GeotargetManager extends BroadcastReceiver {
-    private static final long UPDATE_INTERVAL = 10 * 1000;
+
+    private static final long SECOND = 1000;
+    private static final long MINUTE = 60 * SECOND;
+    /**
+     * Интервал времени срабатывания проверки попадания пользователя в одну из геозон {@link Area}
+     */
+    private static final long UPDATE_INTERVAL = 10 * SECOND;
+
+    /**
+     * Использовать для запуска механизма геотаргетированных голосований
+     * @param context {@link Context}
+     */
+    public static void start(Context context) {
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, GeotargetManager.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis(), UPDATE_INTERVAL, pi);
+    }
+
+    /**
+     * Использовать для отсановки механизма геотаргетированных голосований
+     * @param context
+     */
+    public static void stop(Context context) {
+        Intent intent = new Intent(context, GeotargetManager.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(sender);
+    }
+
+    public static boolean hasFineLocationPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean hasCoarseLocationPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
     private LocationManager locationManager;
     private Context context;
 
@@ -36,32 +78,8 @@ public class GeotargetManager extends BroadcastReceiver {
         public void onLocationChanged(Location location) {
             Position position = new Position(location);
             Log.d("Geotarget manager", position.asJson().toString());
-            /**
-             * поиск попадания в одну из зон
-             */
-            AreasManager areasManager = new PrefsAreasManager(context);
-            List<Area> areas = areasManager.get();
-            Area selected = null;
-            for (Area area : areas) {
-                int distance = Position.distance(area.getPosition(), position);
-                if (area.getR() >= distance) {
-                    selected = area;
-                    break;
-                }
-            }
-            /**
-             * информирование о том, что пользователь в указанной зоне
-             */
-            if (selected != null) {
-                GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
-                    @Override
-                    public void onSuccess() {
-                    }
-                };
-                GeotargetApiController.notifyAboutUserInArea(context,
-                        selected.getId(),
-                        listener);
-            }
+            processUserInArea(position);
+            unSubscribeOnLocation();
         }
 
         @Override
@@ -83,11 +101,45 @@ public class GeotargetManager extends BroadcastReceiver {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
-        execute(context);
+        subscribeOnLocation();
         wl.release();
     }
 
-    private void execute(final Context context) {
+    /**
+     * Поиск {@link AreasManager} геозоны {@link Area}, в которой  может находиться пользлователь
+     *
+     * @param position текущее местоположение пользователя {@link Position}
+     */
+    private void processUserInArea(Position position) {
+        /**
+         * поиск попадания в одну из зон
+         */
+        AreasManager areasManager = new PrefsAreasManager(context);
+        List<Area> areas = areasManager.get();
+        Area selected = null;
+        for (Area area : areas) {
+            int distance = Position.distance(area.getPosition(), position);
+            if (area.getR() >= distance) {
+                selected = area;
+                break;
+            }
+        }
+        /**
+         * информирование о том, что пользователь в указанной зоне
+         */
+        if (selected != null) {
+            GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+                @Override
+                public void onSuccess() {
+                }
+            };
+            GeotargetApiController.notifyAboutUserInArea(context,
+                    selected.getId(),
+                    listener);
+        }
+    }
+
+    private void subscribeOnLocation() {
         if (locationManager == null) {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             if (hasFineLocationPermission(context) && hasCoarseLocationPermission(context)) {
@@ -100,30 +152,10 @@ public class GeotargetManager extends BroadcastReceiver {
         }
     }
 
-    public static void start(Context context) {
-        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, GeotargetManager.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis(), UPDATE_INTERVAL, pi);
+    private void unSubscribeOnLocation() {
+        if (locationManager != null && hasFineLocationPermission(context) && hasCoarseLocationPermission(context)) {
+            locationManager.removeUpdates(locationListener);
+        }
     }
 
-    public static void stop(Context context) {
-        Intent intent = new Intent(context, GeotargetManager.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(sender);
-    }
-
-    public static boolean hasFineLocationPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
-    }
-
-    public static boolean hasCoarseLocationPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
-    }
 }

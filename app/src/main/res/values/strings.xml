@@ -736,5 +736,6 @@
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
     <string name="offerta_offer">условиями оферты</string>
+    <string name="title_less">Свернуть</string>
 
 </resources>

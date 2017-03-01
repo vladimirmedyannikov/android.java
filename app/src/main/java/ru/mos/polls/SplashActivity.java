@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import com.appsflyer.AppsFlyerLib;
 
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.tutorial.TutorialActivity;
+import ru.mos.polls.tutorial.TutorialFragment;
 
 public class SplashActivity extends Activity {
 
@@ -59,8 +61,12 @@ public class SplashActivity extends Activity {
     }
 
     private void onSplashShowingComplete() {
-        startApp(SplashActivity.this);
-        finish();
+        if (!TutorialFragment.Manager.wasShow(this)) {
+            TutorialActivity.start(this);
+        } else {
+            startApp(SplashActivity.this);
+            finish();
+        }
     }
 
     @Override

@@ -54,8 +54,6 @@ import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
-import ru.mos.polls.tutorial.TutorialActivity;
-import ru.mos.polls.tutorial.TutorialFragment;
 
 public class MainActivity extends ToolbarAbstractActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String IS_TASK = "is_task";
@@ -137,10 +135,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         updateGeotargetAreas();
         GeotargetManager.stop(this);
         GeotargetManager.start(this);
-
-        if (!TutorialFragment.Manager.wasShow(this)) {
-            TutorialActivity.start(this);
-        }
     }
 
     private void updateGeotargetAreas() {

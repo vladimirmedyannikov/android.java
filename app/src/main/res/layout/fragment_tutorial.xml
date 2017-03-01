@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/root"
-    android:background="@color/tutorial_background"
     android:fillViewport="true">
 
     <RelativeLayout

@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.polls.R;
 import ru.mos.polls.SplashActivity;
-import ru.mos.polls.util.GuiUtils;
 
 public class TutorialFragment extends Fragment {
     public static final String ARG_TUTORIAL = "arg_tutorial";
@@ -48,8 +47,6 @@ public class TutorialFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        GuiUtils.setStatusBarColor(getActivity(), R.color.tutorial_background);
 
         if (getArguments() != null) {
             content = (Tutorial[]) getArguments().getSerializable(ARG_TUTORIAL);

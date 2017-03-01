@@ -120,7 +120,7 @@
     <string name="action_home">Место жительства</string>
     <string name="action_quit">Выход</string>
     <string name="action_change_password">Изменить пароль</string>
-    <string name="ag_hint_phone_email">Телефон (10 цифр)</string>
+    <string name="ag_hint_phone_email">Ваш телефон (10 цифр)</string>
     <string name="elk_authorization">Вход</string>
     <string name="elk_restoreTitle">Восстановление пароля</string>
 

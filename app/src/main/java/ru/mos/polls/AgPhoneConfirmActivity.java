@@ -30,6 +30,7 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
+import ru.mos.polls.support.gui.AgSupportActivity;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -91,6 +92,11 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 phone.substring(6, 8) +
                 "-" +
                 phone.substring(8);
+    }
+
+    @OnClick(R.id.feedback)
+    public void onFeedback() {
+        AgSupportActivity.startActivity(this);
     }
 
     @Override

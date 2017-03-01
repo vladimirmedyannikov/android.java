@@ -41,7 +41,7 @@
         <Button
             android:id="@+id/btnAction"
             style="@style/button.centered.action"
-            android:layout_width="@dimen/vs_xxxlarge"
+            android:layout_width="160dp"
             android:text="@string/elk_authorize"/>
 
         <TextView
@@ -66,11 +66,7 @@
             android:id="@+id/help"
             android:layout_marginBottom="@dimen/pd_xxsmall"
             android:layout_marginTop="@dimen/pd_xxlarge"
-            android:text="@string/help"
-            android:paddingLeft="0dp"
-            android:minWidth="0dp"
-            android:layout_gravity="left"
-            />
+            android:text="@string/help"/>
 
     </LinearLayout>
 </ScrollView>

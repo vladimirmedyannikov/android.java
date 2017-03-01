@@ -8,7 +8,8 @@
         android:id="@+id/cbAgreeOffer"
         style="@style/text"
         android:checked="false"
-        android:paddingRight="@dimen/thick_separator"/>
+        android:paddingRight="@dimen/thick_separator"
+        android:layout_centerVertical="true"/>
 
     <LinearLayout
         style="@style/item.linear.horizontal"
@@ -16,7 +17,9 @@
         android:layout_toEndOf="@+id/cbAgreeOffer"
         android:layout_toRightOf="@+id/cbAgreeOffer"
         android:paddingBottom="@dimen/pd_xsmall"
-        android:paddingTop="@dimen/pd_xxsmall">
+        android:paddingTop="@dimen/pd_xxsmall"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical">
 
         <TextView
             style="@style/text"

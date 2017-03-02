@@ -1,0 +1,126 @@
+[
+  {
+    "type": "social",
+    "id": "postInSocial",
+    "points": 5,
+    "title": "Рассказать друзьям",
+    "details": "ВКонтакте, Facebook, Twitter, Одноклассники",
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=tasks&task_id=postInSocial",
+      "android": "iSuperCitizen://task?task_id=postInSocial",
+      "wp": "isupercitizen://Views/Pages/SocialNetworkLinksPage.xaml?IsTask=true&IsPostTask=true"
+    }
+  },
+  {
+    "type": "social",
+    "id": "inviteFriends",
+    "points": 5,
+    "title": "Пригласить друзей",
+    "details": "Контакты в телефонной книге",
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=tasks&task_id=inviteFriends",
+      "android": "iSuperCitizen://task?task_id=inviteFriends"
+    }
+  },
+  {
+    "type": "profile",
+    "id": "bindToPGU",
+    "points": 10,
+    "title": "Профиль",
+    "details": "Связь с Порталом городских услуг",
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=tasks&task_id=bindToPGU",
+      "android": "iSuperCitizen://task?task_id=bindToPGU",
+      "wp": "isupercitizen://Views/Pages/PguAuthPage.xaml?IsTask=true&IsPguBinding=true"
+    }
+  },
+  {
+    "type": "events",
+    "id": 60,
+    "priority": 2000000091,
+    "title": "Выборы в Государственную Думу РФ 2016",
+    "points": 100,
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=events&event_id=60",
+      "android": "iSuperCitizen://event?event_id=60",
+      "wp": "isupercitizen://Views/Pages/EventPage.xaml?EventId=60"
+    }
+  },
+  {
+    "type": "poll",
+    "id": 647,
+    "title": "Опрос для проверки урл-схем 2",
+    "details": "",
+    "points": 1,
+    "kind": "standart",
+    "priority": 100000000,
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=pollTasks&poll_id=647",
+      "android": "iSuperCitizen://poll?poll_id=647",
+      "wp": "isupercitizen://Views/Pages/PollPage.xaml?PollId=647"
+    }
+  },
+  {
+    "type": "poll",
+    "id": 1130,
+    "title": "скрытый active опрос 2",
+    "details": "",
+    "points": 1,
+    "kind": "standart",
+    "priority": 1111111,
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=pollTasks&poll_id=1130",
+      "android": "iSuperCitizen://poll?poll_id=1130",
+      "wp": "isupercitizen://Views/Pages/PollPage.xaml?PollId=1130"
+    }
+  },
+  {
+    "type": "poll",
+    "id": 738,
+    "title": "Голосовалка с интервалами",
+    "details": "",
+    "points": 3,
+    "kind": "standart",
+    "priority": 1000000,
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=pollTasks&poll_id=738",
+      "android": "iSuperCitizen://poll?poll_id=738",
+      "wp": "isupercitizen://Views/Pages/PollPage.xaml?PollId=738"
+    }
+  },
+  {
+    "type": "poll",
+    "id": 574,
+    "title": "Опрос для проверки ветвления",
+    "details": "",
+    "points": 0,
+    "kind": "special",
+    "priority": 1000000,
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=pollTasks&poll_id=574",
+      "android": "iSuperCitizen://poll?poll_id=574",
+      "wp": "isupercitizen://Views/Pages/PollPage.xaml?PollId=574"
+    }
+  },
+  {
+    "type": "profile",
+    "id": "updateSocial",
+    "points": 10,
+    "title": "Профиль",
+    "details": "Социальные сети",
+    "hidden": false,
+    "url_schemes": {
+      "ios": "isupercitizen://open?action=tasks&task_id=updateSocial",
+      "android": "iSuperCitizen://task?task_id=updateSocial",
+      "wp": "isupercitizen://Views/Pages/SocialNetworkLinksPage.xaml?IsTask=true&CanRemoveSocialNetwork=true"
+    }
+  }
+]

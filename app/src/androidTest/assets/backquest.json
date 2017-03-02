@@ -1,0 +1,13 @@
+{
+  "type": "social",
+  "id": "postInSocial",
+  "points": 5,
+  "title": "Рассказать друзьям",
+  "details": "ВКонтакте, Facebook, Twitter, Одноклассники",
+  "hidden": false,
+  "url_schemes": {
+    "ios": "isupercitizen://open?action=tasks&task_id=postInSocial",
+    "android": "iSuperCitizen://task?task_id=postInSocial",
+    "wp": "isupercitizen://Views/Pages/SocialNetworkLinksPage.xaml?IsTask=true&IsPostTask=true"
+  }
+}

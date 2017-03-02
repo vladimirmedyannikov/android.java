@@ -24,4 +24,10 @@
         <attr name="color_bar_four" format="color" />
         <attr name="color_bar_five" format="color" />
     </declare-styleable>
+    <declare-styleable name="MaskedEditText">
+        <attr name="mask" format="string" />
+        <attr name="allowed_chars" format="string" />
+        <attr name="denied_chars" format="string" />
+        <attr name="char_representation" format="string" />
+    </declare-styleable>
 </resources>

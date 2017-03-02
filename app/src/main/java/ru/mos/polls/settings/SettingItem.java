@@ -15,7 +15,7 @@ public class SettingItem {
     public static final SettingItem[] SETTINGS = new SettingItem[] {
             new SettingItem(SUBSCRIBE, R.drawable.rss, R.string.subscribes),
             new SettingItem(USER_LOCK, R.drawable.elk_block, R.string.user_lock),
-            new SettingItem(CHANGE_PASSWORD, R.drawable.elk_change_password, R.string.change_password),
+            /*new SettingItem(CHANGE_PASSWORD, R.drawable.elk_change_password, R.string.change_password),*/
             new SettingItem(LOGOUT, R.drawable.elk_logout, R.string.logout),
     };
 

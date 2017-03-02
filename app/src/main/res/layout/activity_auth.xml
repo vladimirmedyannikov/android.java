@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:id="@+id/scrollView"
-            style="@style/root.padding"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:fillViewport="true">
+    style="@style/root.padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/topContainer"
@@ -15,11 +15,22 @@
             android:text="@string/elk_authorization"
             android:visibility="gone"/>
 
+        <!--<ru.mos.polls.maskedettext.MaskedEditText-->
+            <!--android:id="@+id/et_login"-->
+            <!--style="@style/input.phone"-->
+            <!--mask:allowed_chars="1234567890"-->
+            <!--mask:mask="### ###-##-##"-->
+            <!--android:hint="@string/ag_hint_phone_email"-->
+            <!--android:inputType="phone"-->
+            <!--android:imeOptions="actionNext"-->
+            <!--/>-->
+
         <EditText
             android:id="@+id/etLogin"
             style="@style/input.phone"
             android:hint="@string/ag_hint_phone_email"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext" />
+
 
         <EditText
             android:id="@+id/etPassword"

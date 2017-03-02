@@ -531,7 +531,7 @@
     <string name="quest_title_location">Место жительства</string>
     <string name="quest_title_extra_info">Дополнительные данные</string>
     <string name="questions_and_answers">Помощь и ответы на вопросы</string>
-    <string name="go_to_pgu_mos_ru">Перейти на pgu.mos.ru</string>
+    <string name="go_to_pgu_mos_ru">Перейти на mos.ru</string>
     <string name="pgu_link_questions_and_answers">http://ag.mos.ru/pgu</string>
     <string name="state_pgu_disconnected">Профили не связаны</string>
     <string name="state_pgu_connected">Профили связаны</string>

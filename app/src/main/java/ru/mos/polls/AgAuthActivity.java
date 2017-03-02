@@ -47,11 +47,7 @@ import ru.mos.polls.util.GuiUtils;
 
 
 public class AgAuthActivity extends AuthActivity {
-//    private static final int GPS_PERMISSION_REQUEST = 9824;
     private static final int SMS_PERMISSION_REQUEST = 9825;
-//    private static final String[] GPS_PERMS = {
-//            Manifest.permission.ACCESS_FINE_LOCATION
-//    };
 
     private static final String[] SMS_PERMS = {
             Manifest.permission.RECEIVE_SMS
@@ -172,7 +168,7 @@ public class AgAuthActivity extends AuthActivity {
 
     private void checkForEnable() {
         btnLogin.setEnabled(cbAgreeOffer.isChecked()
-                && etLogin.getText().length() == 10 /*&& etPassword.getText().length() > 0*/);
+                && etLogin.getText().toString().length() == 10);
     }
 
     @Override
@@ -182,12 +178,6 @@ public class AgAuthActivity extends AuthActivity {
     }
 
     private void checkPermissions() {
-//        if (!EasyPermissions.hasPermissions(this, GPS_PERMS)) {
-//           EasyPermissions.requestPermissions(this,
-//                   getString(R.string.get_permission),
-//                   GPS_PERMISSION_REQUEST,
-//                   GPS_PERMS);
-//        }
         if (!EasyPermissions.hasPermissions(this, SMS_PERMS)) {
             EasyPermissions.requestPermissions(this,
                     getString(R.string.get_permission),

@@ -31,6 +31,8 @@ import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
 import ru.mos.polls.support.gui.AgSupportActivity;
+import ru.mos.polls.tutorial.TutorialActivity;
+import ru.mos.polls.tutorial.TutorialFragment;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -79,8 +81,6 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
         phone = getIntent().getStringExtra(EXTRA_PHONE);
         tvPhone.setText(formatPhone());
-
-        GuiUtils.showKeyboard(etCode);
     }
 
     private String formatPhone() {
@@ -117,9 +117,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             public void onLoaded(AgUser agUser) {
                 dialog.dismiss();
                 ru.mos.elk.Statistics.logon();
-                Intent activity = new Intent(AgPhoneConfirmActivity.this, MainActivity.class);
-                startActivity(activity);
-                finish();
+                onAuthCompleted();
             }
 
             @Override
@@ -131,6 +129,16 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             }
         };
         ProfileManager.getProfile(this, getQueryParams(), agUserListener);
+    }
+
+    private void onAuthCompleted() {
+        if (!TutorialFragment.Manager.wasShow(this)) {
+            TutorialActivity.start(this);
+        } else {
+            Intent activity = new Intent(this, MainActivity.class);
+            startActivity(activity);
+        }
+        finish();
     }
 
     private JSONObject getQueryParams() {

@@ -83,4 +83,12 @@ public class QuestStateController {
     public void updateSocialUnavaible() {
         isUpdateSocialAvaible = false;
     }
+
+    public void clearList() {
+        executedQuestQueue.clear();
+    }
+
+    public List<Object> getExecutedQuestQueue() {
+        return executedQuestQueue;
+    }
 }

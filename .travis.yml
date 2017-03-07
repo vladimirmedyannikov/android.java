@@ -28,8 +28,8 @@ licenses:
 notifications:
   email:
     - elizarov1988@gmail.com
-    - sklyarovdv@mos.ru
-    - fastsilver2009@gmail.com
+#    - sklyarovdv@mos.ru
+#    - fastsilver2009@gmail.com
 
 cache:
   directories:

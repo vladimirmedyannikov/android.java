@@ -6,6 +6,7 @@ import com.android.volley2.RequestQueue;
 import com.android.volley2.Response;
 import com.android.volley2.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,14 +52,18 @@ public class GeotargetApiController {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public static void notifyAboutUserInArea(Context context, int areaId, final OnNotifyUserInAreaListener listener) {
+    public static void notifyAboutUserInArea(Context context, List<Area> areas, final OnNotifyUserInAreaListener listener) {
         String method = UrlManager.url(UrlManager.V230,
                 UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.USER_IN_AREA);
         String url = API.getURL(method);
         JSONObject body = new JSONObject();
         try {
-            body.put("id", areaId);
+            JSONArray areasIds = new JSONArray();
+            for (Area area : areas) {
+                areasIds.put(area.getId());
+            }
+            body.put("ids", areasIds);
         } catch (JSONException ignored) {
         }
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {

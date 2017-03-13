@@ -40,6 +40,7 @@ import ru.mos.polls.util.GuiUtils;
  */
 
 public class AgPhoneConfirmActivity extends BaseActivity {
+    public static final int CONFIRM_CODE_NOT_VALID = 401;
     public static final String EXTRA_PHONE = "extra_phone";
 
     public static void start(Context context, String phone) {
@@ -123,7 +124,11 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             @Override
             public void onError(VolleyError error) {
                 dialog.dismiss();
-                tvError.setText(error.getMessage());
+                String errorMessage =  error.getMessage();
+                if (error.getErrorCode() == CONFIRM_CODE_NOT_VALID) {
+                    errorMessage = getString(R.string.auth_error_confirm_code_not_correct);
+                }
+                tvError.setText(errorMessage);
                 tvError.setVisibility(View.VISIBLE);
                 tvError.requestFocus();
             }
@@ -167,6 +172,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
+        AgAuthActivity.start(this);
         finish();
     }
 

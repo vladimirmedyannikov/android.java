@@ -738,5 +738,6 @@
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
+    <string name="auth_error_confirm_code_not_correct">Неверный код подтверждения</string>
 
 </resources>

@@ -3,6 +3,7 @@ package ru.mos.polls;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -63,6 +64,11 @@ public class AgAuthActivity extends AuthActivity {
         checkForEnable();
     }
 
+    public static void start(Context context) {
+        Intent activity = new Intent(context, AgAuthActivity.class);
+        context.startActivity(activity);
+    }
+
     @Override
     protected void configureEdits() {
 
@@ -102,6 +108,7 @@ public class AgAuthActivity extends AuthActivity {
             @Override
             public void onResponse(String response) {
                 dialog.dismiss();
+                finish();
                 AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getText().toString());
             }
 

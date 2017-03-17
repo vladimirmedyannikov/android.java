@@ -138,14 +138,14 @@ public abstract class GoogleStatistics {
          * @param login     - логин, введенный ользователем (email или номер телефона)
          * @param isSuccess - результат авторизации
          */
-        public void auth(String login, boolean isSuccess) {
+        public static void auth(String login, boolean isSuccess) {
             String event = "Auth_e-mail";
             if (isAuthFromPhone(login)) {
                 event = "Auth_tel_number";
             }
             Map<String, String> params = new HashMap<String, String>();
             params.put("success", String.valueOf(isSuccess));
-            GoogleStatistics.sendEvent(getCategory(), getCategory(), event, params);
+            GoogleStatistics.sendEvent(CATEGORY, CATEGORY, event, params);
         }
     }
 
@@ -301,7 +301,7 @@ public abstract class GoogleStatistics {
          *
          * @param
          */
-        public void deleteSurveyHearing() {
+        public static void deleteSurveyHearing() {
             GoogleStatistics.sendEvent(CATEGORY, "Udalenie_Golosovaniya", "Udalenie_Golosovaniya");
         }
 
@@ -367,7 +367,6 @@ public abstract class GoogleStatistics {
          * Нажатие кнопки "Прочитать все новости"
          */
         public static void hideAllNews() {
-            FlurryAgent.logEvent("read_all_news");
             GoogleStatistics.sendEvent(CATEGORY, "Spriatat_Novosti", "Spriatat_Novosti");
         }
     }

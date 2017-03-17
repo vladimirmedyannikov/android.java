@@ -172,6 +172,9 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
                     Statistics.taskFillProfileAddressWork();
                     GoogleStatistics.AGNavigation.taskFillProfileAddressWork();
                 }
+                if (taskId.equalsIgnoreCase(ProfileQuest.ID_UPDATE_PERSONAL)){
+                    GoogleStatistics.AGNavigation.profileFillPersonal();
+                }
                 stopProgress();
                 QuestStateController.getInstance().add(taskId);
             }

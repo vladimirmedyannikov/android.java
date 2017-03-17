@@ -59,7 +59,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
     TextView help;
     @BindView(R.id.tvError)
     TextView tvError;
-
+    private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();
     private String phone;
 
     private BroadcastReceiver smsAuthReceiver = new BroadcastReceiver() {
@@ -116,6 +116,9 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
             @Override
             public void onLoaded(AgUser agUser) {
+                Statistics.auth(phone, true);
+                GoogleStatistics.Auth.auth(phone, true);
+                statistics.check(true);
                 dialog.dismiss();
                 ru.mos.elk.Statistics.logon();
                 onAuthCompleted();
@@ -124,7 +127,10 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             @Override
             public void onError(VolleyError error) {
                 dialog.dismiss();
-                String errorMessage =  error.getMessage();
+                Statistics.auth(phone, false);
+                statistics.check(false);
+                statistics.errorOccurs(error.getMessage());
+                String errorMessage = error.getMessage();
                 if (error.getErrorCode() == CONFIRM_CODE_NOT_VALID) {
                     errorMessage = getString(R.string.auth_error_confirm_code_not_correct);
                 }

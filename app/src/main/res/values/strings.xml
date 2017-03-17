@@ -724,12 +724,12 @@
     <string name="tutorial_description_3">Следите за голосованиями и новостями нашего города</string>
     <string name="tutorial_skip">Пропустить</string>
     <string name="tutorial_next">Продолжить</string>
-    <string name="informer_message_about_new_version">Доступна новая версия %s, перейдите в магазин приложений и узнайте о новых возможностях!</string>
-    <string name="update_app">Обновите приложение</string>
+    <string name="informer_message_about_new_version">Доступна новая версия %s. Перейдите в магазин приложений и узнайте о новых возможностях!</string>
+    <string name="update_app">Обновите приложение!</string>
     <string name="update">обновить</string>
     <string name="ag_hint_code">Код</string>
     <string name="code_confirm_send">Подтвердить</string>
-    <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения разрешения</string>
+    <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения</string>
     <string name="help_phone_not_correct">Неправильный номер?</string>
     <string name="hint_sms_sent">Мы отправили SMS с кодом на ваш номер</string>
     <string name="tutorial_cancel">Завершить</string>

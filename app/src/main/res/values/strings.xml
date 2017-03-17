@@ -726,7 +726,7 @@
     <string name="tutorial_next">Продолжить</string>
     <string name="informer_message_about_new_version">Доступна новая версия %s. Перейдите в магазин приложений и узнайте о новых возможностях!</string>
     <string name="update_app">Обновите приложение!</string>
-    <string name="update">обновить</string>
+    <string name="update">Обновить</string>
     <string name="ag_hint_code">Код</string>
     <string name="code_confirm_send">Подтвердить</string>
     <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения</string>

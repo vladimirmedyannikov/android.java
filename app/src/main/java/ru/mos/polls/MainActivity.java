@@ -1,5 +1,6 @@
 package ru.mos.polls;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -28,6 +30,7 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
@@ -84,6 +87,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             android.Manifest.permission.ACCESS_FINE_LOCATION
     };
 
+    private static final int REQUEST_IGNORE_BATTERY_OPTIMIZATION_PERMISSION_REQUEST = 9825;
+    private static final String[] IGNORE_BATTERY_OPTIMIZATION_PERM = {
+            Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+    };
+
     private SmsInviteController smsInviteController;
     private SocialController socialController;
     private QuestStateController questStateController;
@@ -136,8 +144,26 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         runtimePermissionController = new RuntimePermissionController(this);
 
         updateGeotargetAreas();
-        GeotargetManager.stop(this);
-        GeotargetManager.start(this);
+//..        if (EasyPermissions.hasPermissions(this, IGNORE_BATTERY_OPTIMIZATION_PERM)) {
+//            GeotargetManager.stop(this);
+//            GeotargetManager.start(this);
+            new GeotargetJobManager(this).start();
+//        } else {
+//            EasyPermissions.requestPermissions(this,
+//                    getString(R.string.get_permission),
+//                    REQUEST_IGNORE_BATTERY_OPTIMIZATION_PERMISSION_REQUEST,
+//                    IGNORE_BATTERY_OPTIMIZATION_PERM);
+//        }
+
+//        GeotargetManager.requestIgnoreBatteryOptimization(this);
+    }
+
+    @AfterPermissionGranted(REQUEST_IGNORE_BATTERY_OPTIMIZATION_PERMISSION_REQUEST)
+    public void onAddedWhiteList() {
+        if (EasyPermissions.hasPermissions(this, IGNORE_BATTERY_OPTIMIZATION_PERM)) {
+            GeotargetManager.stop(this);
+            GeotargetManager.start(this);
+        }
     }
 
     private void updateGeotargetAreas() {

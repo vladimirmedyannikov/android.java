@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <!--<uses-permission-->
+        <!--android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>-->
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
@@ -458,6 +460,14 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <service android:name=".social.service.PostingService"/>
+
+        <service
+            android:exported="false"
+            android:name=".geotarget.job.GeotargetJobService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>"
+            </intent-filter>
+        </service>
 
         <receiver android:name=".geotarget.manager.GeotargetManager"/>
 

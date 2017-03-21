@@ -121,6 +121,10 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         }
     }
 
+    public void connect() {
+        locationClient.connect();
+    }
+
     public void disconnect() {
         if (locationClient != null && locationClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(locationClient, this);

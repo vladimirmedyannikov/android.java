@@ -10,8 +10,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -36,6 +40,19 @@ public class GeotargetManager extends BroadcastReceiver {
      */
     private static final long UPDATE_INTERVAL = 10 * SECOND;
 
+    public static void requestIgnoreBatteryOptimization(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent intent = new Intent();
+            String packageName = context.getPackageName();
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+                context.startActivity(intent);
+            }
+        }
+    }
+
     /**
      * Использовать для запуска механизма геотаргетированных голосований
      * @param context {@link Context}
@@ -44,8 +61,16 @@ public class GeotargetManager extends BroadcastReceiver {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, GeotargetManager.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis(), UPDATE_INTERVAL, pi);
+//        am.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+//                System.currentTimeMillis(), UPDATE_INTERVAL, pi);
+        long durationTime = SystemClock.elapsedRealtime() + UPDATE_INTERVAL;
+        if (Build.VERSION.SDK_INT >= 23) {
+            am.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, durationTime, pi);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, durationTime, pi);
+        } else {
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, durationTime, pi);
+        }
     }
 
     /**
@@ -73,14 +98,16 @@ public class GeotargetManager extends BroadcastReceiver {
 
     private LocationManager locationManager;
     private Context context;
+    private PowerManager.WakeLock wakeLock;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
-        public void onLocationChanged(Location location) {
-            Position position = new Position(location);
+        public void onLocationChanged(Location location) {Position position = new Position(location);
             Log.d("Geotarget manager", position.asJson().toString());
             processUserInArea(position);
             unSubscribeOnLocation();
+            wakeLock.release();
+            start(context);
         }
 
         @Override
@@ -100,10 +127,9 @@ public class GeotargetManager extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-        wl.acquire();
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+        wakeLock.acquire();
         subscribeOnLocation();
-        wl.release();
     }
 
     /**

@@ -197,6 +197,7 @@ public class QuestsFragment extends PullableFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Statistics.hideAllNews();
+                GoogleStatistics.QuestsFragment.hideAllNews();
                 QuestsApiController.HideQuestListner hideListener = new QuestsApiController.HideQuestListner() {
                     @Override
                     public void hideQuests(ArrayList<String> idsList) {
@@ -364,7 +365,7 @@ public class QuestsFragment extends PullableFragment {
         @Override
         public void onDelete(BackQuest quest, final int position) {
             if (quest != null) {
-                if (quest.getType().equalsIgnoreCase(FavoriteSurveysHolder.ID_HEARING)) {
+                if (quest.getType().equalsIgnoreCase(FavoriteSurveysQuest.ID_POLL)) {
                     Statistics.deleteSurveyHearing();
                     qf.deleteSurveyHearing();
                 }

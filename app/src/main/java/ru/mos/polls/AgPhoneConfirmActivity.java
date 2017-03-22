@@ -31,6 +31,8 @@ import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
 import ru.mos.polls.support.gui.AgSupportActivity;
+import ru.mos.polls.tutorial.TutorialActivity;
+import ru.mos.polls.tutorial.TutorialFragment;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -38,6 +40,7 @@ import ru.mos.polls.util.GuiUtils;
  */
 
 public class AgPhoneConfirmActivity extends BaseActivity {
+    public static final int CONFIRM_CODE_NOT_VALID = 401;
     public static final String EXTRA_PHONE = "extra_phone";
 
     public static void start(Context context, String phone) {
@@ -56,7 +59,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
     TextView help;
     @BindView(R.id.tvError)
     TextView tvError;
-
+    private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();
     private String phone;
 
     private BroadcastReceiver smsAuthReceiver = new BroadcastReceiver() {
@@ -79,8 +82,6 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
         phone = getIntent().getStringExtra(EXTRA_PHONE);
         tvPhone.setText(formatPhone());
-
-        GuiUtils.showKeyboard(etCode);
     }
 
     private String formatPhone() {
@@ -115,22 +116,40 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
             @Override
             public void onLoaded(AgUser agUser) {
+                Statistics.auth(phone, true);
+                GoogleStatistics.Auth.auth(phone, true);
+                statistics.check(true);
                 dialog.dismiss();
                 ru.mos.elk.Statistics.logon();
-                Intent activity = new Intent(AgPhoneConfirmActivity.this, MainActivity.class);
-                startActivity(activity);
-                finish();
+                onAuthCompleted();
             }
 
             @Override
             public void onError(VolleyError error) {
                 dialog.dismiss();
-                tvError.setText(error.getMessage());
+                Statistics.auth(phone, false);
+                statistics.check(false);
+                statistics.errorOccurs(error.getMessage());
+                String errorMessage = error.getMessage();
+                if (error.getErrorCode() == CONFIRM_CODE_NOT_VALID) {
+                    errorMessage = getString(R.string.auth_error_confirm_code_not_correct);
+                }
+                tvError.setText(errorMessage);
                 tvError.setVisibility(View.VISIBLE);
                 tvError.requestFocus();
             }
         };
         ProfileManager.getProfile(this, getQueryParams(), agUserListener);
+    }
+
+    private void onAuthCompleted() {
+        if (!TutorialFragment.Manager.wasShow(this)) {
+            TutorialActivity.start(this);
+        } else {
+            Intent activity = new Intent(this, MainActivity.class);
+            startActivity(activity);
+        }
+        finish();
     }
 
     private JSONObject getQueryParams() {
@@ -159,6 +178,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
+        AgAuthActivity.start(this);
         finish();
     }
 

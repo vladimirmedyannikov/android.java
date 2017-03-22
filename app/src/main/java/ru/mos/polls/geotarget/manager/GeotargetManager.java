@@ -15,6 +15,7 @@ import android.os.PowerManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.common.controller.LocationController;
@@ -116,27 +117,25 @@ public class GeotargetManager extends BroadcastReceiver {
          */
         AreasManager areasManager = new PrefsAreasManager(context);
         List<Area> areas = areasManager.get();
-        Area selected = null;
+        List<Area> selectedAreas = new ArrayList<>();
         for (Area area : areas) {
             int distance = Position.distance(area.getPosition(), position);
             if (area.getR() >= distance) {
-                selected = area;
-                break;
+                selectedAreas.add(area);
             }
         }
         /**
          * информирование о том, что пользователь в указанной зоне
          */
-        if (selected != null) {
-            GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
-                @Override
-                public void onSuccess() {
-                }
-            };
-            GeotargetApiController.notifyAboutUserInArea(context,
-                    selected.getId(),
-                    listener);
-        }
+        GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+            @Override
+            public void onSuccess() {
+            }
+        };
+        GeotargetApiController.notifyAboutUserInArea(context,
+                selectedAreas,
+                listener);
+
     }
 
     private void subscribeOnLocation() {

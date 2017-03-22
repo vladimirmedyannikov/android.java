@@ -282,7 +282,7 @@
         <item name="android:minWidth">@dimen/vs_xxxlarge</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/pd_xsmall</item>
+        <item name="android:padding">@dimen/pd_xxsmall</item>
         <item name="android:background">@drawable/ag_list_selector</item>
     </style>
 

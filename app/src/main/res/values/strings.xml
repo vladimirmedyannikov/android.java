@@ -329,7 +329,7 @@
     <string name="distance_km">%s км</string>
     <string name="location_provader_network">Сеть</string>
     <string name="location_provader_GPS">ГПС</string>
-    <string name="location_provaders_are_not_available">Для работы экрана \"Мероприятие\" требуется включить в настройках функцию определения местоположения</string>
+    <string name="location_provaders_are_not_available">Для корретной работы приложения требуется включить в настройках функцию определения местоположения</string>
     <string name="turn_on">Включить</string>
     <string name="action_current_points">Начисленные баллы</string>
     <string name="action_credit_points">Потраченные баллы</string>
@@ -724,12 +724,12 @@
     <string name="tutorial_description_3">Следите за голосованиями и новостями нашего города</string>
     <string name="tutorial_skip">Пропустить</string>
     <string name="tutorial_next">Продолжить</string>
-    <string name="informer_message_about_new_version">Доступна новая версия %s, перейдите в магазин приложений и узнайте о новых возможностях</string>
-    <string name="update_app">Обновите приложение</string>
-    <string name="update">обновить</string>
+    <string name="informer_message_about_new_version">Доступна новая версия %s. Перейдите в магазин приложений и узнайте о новых возможностях.</string>
+    <string name="update_app">Обновите приложение!</string>
+    <string name="update">Обновить</string>
     <string name="ag_hint_code">Код</string>
     <string name="code_confirm_send">Подтвердить</string>
-    <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения разрешения</string>
+    <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения</string>
     <string name="help_phone_not_correct">Неправильный номер?</string>
     <string name="hint_sms_sent">Мы отправили SMS с кодом на ваш номер</string>
     <string name="tutorial_cancel">Завершить</string>
@@ -737,5 +737,7 @@
     <string name="ag_agree">я согласен с</string>
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
+    <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
+    <string name="auth_error_confirm_code_not_correct">Неверный код подтверждения</string>
 
 </resources>

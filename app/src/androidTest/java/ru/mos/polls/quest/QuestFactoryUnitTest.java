@@ -28,6 +28,6 @@ public class QuestFactoryUnitTest extends BaseUnitTest {
             testlist.add(quest);
         }
 
-        Assert.assertEquals(8, testlist.size());
+        Assert.assertEquals(9, testlist.size());
     }
 }

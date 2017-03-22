@@ -3,6 +3,7 @@ package ru.mos.polls;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.polls.about.AboutAppFragment;
+import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.event.controller.EventAPIController;
 import ru.mos.polls.event.gui.activity.EventActivity;
@@ -92,6 +94,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
      * так как откатили android sdk {@link RuntimePermissionController}
      */
     private RuntimePermissionController runtimePermissionController;
+    private boolean isGPSEnableDialogShowed;
 
     private Callback callback;
 
@@ -160,14 +163,28 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             PreviewAppActivity.start(this);
         }
         InformerUIController.process(this);
-        if (!EasyPermissions.hasPermissions(this, GPS_PERMS)
-                && GpsRequestPermsManager.isNeedRequestGps(this)) {
-            GpsRequestPermsManager.incrementSyncTime(this);
-            EasyPermissions.requestPermissions(this,
-                    getString(R.string.get_permission),
-                    GPS_PERMISSION_REQUEST,
-                    GPS_PERMS);
+        if (LocationController.isLocationNetworkProviderEnabled(this)
+                || LocationController.isLocationGPSProviderEnabled(this)) {
+            if (!EasyPermissions.hasPermissions(this, GPS_PERMS)
+                    && GpsRequestPermsManager.isNeedRequestGps(this)) {
+                GpsRequestPermsManager.incrementSyncTime(this);
+                EasyPermissions.requestPermissions(this,
+                        getString(R.string.get_permission),
+                        GPS_PERMISSION_REQUEST,
+                        GPS_PERMS);
 
+            }
+        } else {
+            if (!isGPSEnableDialogShowed && GpsRequestPermsManager.isNeedRequestGps(this)) {
+                DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GpsRequestPermsManager.incrementSyncTime(MainActivity.this);
+                    }
+                };
+                LocationController.showDialogEnableLocationProvider(this, cancelListener);
+                isGPSEnableDialogShowed = true;
+            }
         }
     }
 

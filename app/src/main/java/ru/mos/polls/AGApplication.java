@@ -30,6 +30,7 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.vk.sdk.VKSdk;
 
 import java.io.File;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import ru.mos.elk.BaseActivity;
@@ -41,6 +42,7 @@ import ru.mos.elk.push.GCMBroadcastReceiver;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
+import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
@@ -501,7 +503,10 @@ public class AGApplication extends MultiDexApplication {
 
             @Override
             public void onPushRecived(Intent intent) {
-                id = intent.getIntExtra("id", -1);
+                try {
+                    id = Integer.parseInt(intent.getStringExtra("id"));
+                } catch (Exception ignored) {
+                }
                 AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
                 areasManager.remove(id);
             }
@@ -541,7 +546,13 @@ public class AGApplication extends MultiDexApplication {
             public void onPushRecived(Intent intent) {
                 AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
                 areasManager.clear();
-                GeotargetApiController.loadAreas(getApplicationContext(), null);
+                GeotargetApiController.loadAreas(getApplicationContext(), new GeotargetApiController.OnAreasListener() {
+                    @Override
+                    public void onLoaded(List<Area> loadedAreas) {
+                        AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
+                        areasManager.save(loadedAreas);
+                    }
+                });
             }
 
             @Override

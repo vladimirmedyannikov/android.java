@@ -35,6 +35,7 @@ public class InformerUIController {
                 public void onGet(String actualAppVersion) {
                     if (actualAppVersion != null
                             && compareVersionNames(BuildConfig.VERSION_NAME, actualAppVersion) == Compare.MORE) {
+                        Manager.setShow(elkActivity);
                         displayNotification(elkActivity, actualAppVersion);
                     }
                 }
@@ -71,7 +72,7 @@ public class InformerUIController {
         builder.setTitle(R.string.update_app)
                 .setMessage(message)
                 .setCancelable(false)
-                .setNegativeButton(R.string.cancel, cancelListener)
+                .setNegativeButton(R.string.close, cancelListener)
                 .setPositiveButton(R.string.update, okListener)
                 .show();
     }

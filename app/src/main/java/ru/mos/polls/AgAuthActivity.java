@@ -3,11 +3,13 @@ package ru.mos.polls;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
@@ -62,6 +64,11 @@ public class AgAuthActivity extends AuthActivity {
         checkForEnable();
     }
 
+    public static void start(Context context) {
+        Intent activity = new Intent(context, AgAuthActivity.class);
+        context.startActivity(activity);
+    }
+
     @Override
     protected void configureEdits() {
 
@@ -85,7 +92,8 @@ public class AgAuthActivity extends AuthActivity {
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));
         }
-        GuiUtils.showKeyboard(etLogin);
+
+        checkPermissions();
     }
 
     @Override
@@ -100,6 +108,7 @@ public class AgAuthActivity extends AuthActivity {
             @Override
             public void onResponse(String response) {
                 dialog.dismiss();
+                finish();
                 AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getText().toString());
             }
 
@@ -171,19 +180,25 @@ public class AgAuthActivity extends AuthActivity {
                 && etLogin.getText().toString().length() == 10);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkPermissions();
-    }
-
     private void checkPermissions() {
         if (!EasyPermissions.hasPermissions(this, SMS_PERMS)) {
             EasyPermissions.requestPermissions(this,
-                    getString(R.string.get_permission),
+                    getString(R.string.get_permission_sms),
                     SMS_PERMISSION_REQUEST,
                     SMS_PERMS);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        etLogin.post(new Runnable() {
+            @Override
+            public void run() {
+                etLogin.requestFocus();
+            }
+        });
     }
 
     @Override

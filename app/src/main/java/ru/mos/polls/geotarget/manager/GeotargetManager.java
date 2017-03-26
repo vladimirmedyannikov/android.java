@@ -61,8 +61,6 @@ public class GeotargetManager extends BroadcastReceiver {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, GeotargetManager.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-//        am.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-//                System.currentTimeMillis(), UPDATE_INTERVAL, pi);
         long durationTime = SystemClock.elapsedRealtime() + UPDATE_INTERVAL;
         if (Build.VERSION.SDK_INT >= 23) {
             am.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, durationTime, pi);
@@ -129,7 +127,23 @@ public class GeotargetManager extends BroadcastReceiver {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wakeLock.acquire();
-        subscribeOnLocation();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && pm.isDeviceIdleMode()) {
+            Log.d("Geotarget manager", "doze mode = idle");
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            if (hasFineLocationPermission(context) && hasCoarseLocationPermission(context)) {
+                Position position = new Position(locationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                );
+                Log.d("Geotarget manager", position.asJson().toString());
+                processUserInArea(position);
+            }
+            wakeLock.release();
+            start(context);
+        } else {
+            Log.d("Geotarget manager", "doze mode active");
+            subscribeOnLocation();
+        }
     }
 
     /**

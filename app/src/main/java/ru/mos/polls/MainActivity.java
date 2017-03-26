@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -30,7 +29,6 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
-import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
@@ -145,9 +143,9 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
         updateGeotargetAreas();
 //..        if (EasyPermissions.hasPermissions(this, IGNORE_BATTERY_OPTIMIZATION_PERM)) {
-//            GeotargetManager.stop(this);
-//            GeotargetManager.start(this);
-            new GeotargetJobManager(this).start();
+            GeotargetManager.stop(this);
+            GeotargetManager.start(this);
+//            new GeotargetJobManager(this).start();
 //        } else {
 //            EasyPermissions.requestPermissions(this,
 //                    getString(R.string.get_permission),
@@ -158,13 +156,13 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 //        GeotargetManager.requestIgnoreBatteryOptimization(this);
     }
 
-    @AfterPermissionGranted(REQUEST_IGNORE_BATTERY_OPTIMIZATION_PERMISSION_REQUEST)
-    public void onAddedWhiteList() {
-        if (EasyPermissions.hasPermissions(this, IGNORE_BATTERY_OPTIMIZATION_PERM)) {
-            GeotargetManager.stop(this);
-            GeotargetManager.start(this);
-        }
-    }
+//    @AfterPermissionGranted(REQUEST_IGNORE_BATTERY_OPTIMIZATION_PERMISSION_REQUEST)
+//    public void onAddedWhiteList() {
+//        if (EasyPermissions.hasPermissions(this, IGNORE_BATTERY_OPTIMIZATION_PERM)) {
+//            GeotargetManager.stop(this);
+//            GeotargetManager.start(this);
+//        }
+//    }
 
     private void updateGeotargetAreas() {
         GeotargetApiController.OnAreasListener listener = new GeotargetApiController.OnAreasListener() {

@@ -88,61 +88,61 @@ public class SocialPostValue implements Serializable {
         }
     }
 
-    public Bundle getFbParams() {
-        Bundle result = new Bundle(2);
-        result.putString("message", text);
-        result.putString("link", link);
-        return result;
-    }
-
-    public List<NameValuePair> getVkParams(TokenData tokenData) {
-        final List<NameValuePair> result = new ArrayList<NameValuePair>();
-        result.add(new BasicNameValuePair("message", text));
-        String attms = link;
-        if (!TextUtils.isEmpty(image)) {
-            if (!TextUtils.isEmpty(attms)) {
-                attms = "," + image;
-            } else {
-                attms = image;
-            }
-        }
-        result.add(new BasicNameValuePair("attachments", attms));
-        result.add(new BasicNameValuePair("access_token", tokenData.getAccessToken()));
-        return result;
-    }
-
-    /**
-     * Формирование параметров для постинга в ОК.ru метода mediatopic.post
-     *
-     * @return
-     * @since 1.9.2
-     */
-    public Map<String, String> getOkAttachments() {
-        Map<String, String> result = new HashMap<String, String>();
-        JSONObject attachments = new JSONObject();
-        JSONArray media = new JSONArray();
-        JSONObject param = new JSONObject();
-        try {
-            /**
-             * add link
-             */
-            param.put("type", "link");
-            param.put("url", link);
-            media.put(param);
-            /**
-             * add text
-             */
-            param = new JSONObject();
-            param.put("type", "text");
-            param.put("text", text);
-            media.put(param);
-
-            attachments.put("media", media);
-        } catch (JSONException ignored) {
-        }
-        result.put("attachment", attachments.toString());
-        return result;
-    }
+//    public Bundle getFbParams() {
+//        Bundle result = new Bundle(2);
+//        result.putString("message", text);
+//        result.putString("link", link);
+//        return result;
+//    }
+//
+//    public List<NameValuePair> getVkParams(TokenData tokenData) {
+//        final List<NameValuePair> result = new ArrayList<NameValuePair>();
+//        result.add(new BasicNameValuePair("message", text));
+//        String attms = link;
+//        if (!TextUtils.isEmpty(image)) {
+//            if (!TextUtils.isEmpty(attms)) {
+//                attms = "," + image;
+//            } else {
+//                attms = image;
+//            }
+//        }
+//        result.add(new BasicNameValuePair("attachments", attms));
+//        result.add(new BasicNameValuePair("access_token", tokenData.getAccessToken()));
+//        return result;
+//    }
+//
+//    /**
+//     * Формирование параметров для постинга в ОК.ru метода mediatopic.post
+//     *
+//     * @return
+//     * @since 1.9.2
+//     */
+//    public Map<String, String> getOkAttachments() {
+//        Map<String, String> result = new HashMap<String, String>();
+//        JSONObject attachments = new JSONObject();
+//        JSONArray media = new JSONArray();
+//        JSONObject param = new JSONObject();
+//        try {
+//            /**
+//             * add link
+//             */
+//            param.put("type", "link");
+//            param.put("url", link);
+//            media.put(param);
+//            /**
+//             * add text
+//             */
+//            param = new JSONObject();
+//            param.put("type", "text");
+//            param.put("text", text);
+//            media.put(param);
+//
+//            attachments.put("media", media);
+//        } catch (JSONException ignored) {
+//        }
+//        result.put("attachment", attachments.toString());
+//        return result;
+//    }
 
     public JSONObject getOkAttachmentsJson() {
         JSONObject attachments = new JSONObject();
@@ -169,20 +169,20 @@ public class SocialPostValue implements Serializable {
         return attachments;
     }
 
-    /**
-     * Формирование параметров для постинга в ok.ru для метода share.addLink
-     * Устарел с изменением api ok.ru
-     * Вместо него теперь исопльзуется метод {@link SocialPostValue#getOkAttachments()}
-     *
-     * @return
-     */
-    @Deprecated
-    public Map<String, String> getOkParams() {
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("linkUrl", link);
-        result.put("comment", text);
-        return result;
-    }
+//    /**
+//     * Формирование параметров для постинга в ok.ru для метода share.addLink
+//     * Устарел с изменением api ok.ru
+//     * Вместо него теперь исопльзуется метод {@link SocialPostValue#getOkAttachments()}
+//     *
+//     * @return
+//     */
+//    @Deprecated
+//    public Map<String, String> getOkParams() {
+//        Map<String, String> result = new HashMap<String, String>();
+//        result.put("linkUrl", link);
+//        result.put("comment", text);
+//        return result;
+//    }
 
     public Bundle prepareFbPost() {
         Bundle result = new Bundle(2);
@@ -275,11 +275,11 @@ public class SocialPostValue implements Serializable {
         this.type = type;
         return this;
     }
-
-    public SocialPostValue setSocialId(int socialId) {
-        this.socialId = socialId;
-        return this;
-    }
+//
+//    public SocialPostValue setSocialId(int socialId) {
+//        this.socialId = socialId;
+//        return this;
+//    }
 
     public SocialPostValue setSocialId(String socialName) {
         this.socialId = SocialManager.getSocialId(socialName);
@@ -295,22 +295,22 @@ public class SocialPostValue implements Serializable {
         this.id = id;
         return this;
     }
-
-    public String getPostingUrlForOk(Context context) {
-        String result = "";
-        if (forOk()) {
-            final String id = context.getString(R.string.ok_app_id);
-            final String secret = context.getString(R.string.ok_app_secret);
-            final String key = context.getString(R.string.ok_app_key);
-            final String attachment = getOkAttachmentsJson().toString();
-            final String returnUrl = "http://google.com";
-            final String signature = TextHelper.md5("st.attachment=" + attachment + key);
-            String accessToken = SocialManager.getAccessToken(context, socialId);
-            result = String.format(URL_OK_WIDGET_MEDIATOPIC_POST,
-                    id, attachment, signature, accessToken);
-        }
-        return result;
-    }
+//
+//    public String getPostingUrlForOk(Context context) {
+//        String result = "";
+//        if (forOk()) {
+//            final String id = context.getString(R.string.ok_app_id);
+//            final String secret = context.getString(R.string.ok_app_secret);
+//            final String key = context.getString(R.string.ok_app_key);
+//            final String attachment = getOkAttachmentsJson().toString();
+//            final String returnUrl = "http://google.com";
+//            final String signature = TextHelper.md5("st.attachment=" + attachment + key);
+//            String accessToken = SocialManager.getAccessToken(context, socialId);
+//            result = String.format(URL_OK_WIDGET_MEDIATOPIC_POST,
+//                    id, attachment, signature, accessToken);
+//        }
+//        return result;
+//    }
 
     @Override
     public boolean equals(Object o) {

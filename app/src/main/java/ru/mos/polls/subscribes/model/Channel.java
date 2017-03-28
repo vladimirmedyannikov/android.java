@@ -13,7 +13,7 @@ public class Channel {
     private boolean enabled = false;
 
     public Channel(String name) {
-        this.name = name;
+        this(name, false);
     }
 
     public Channel(String name, boolean enabled) {

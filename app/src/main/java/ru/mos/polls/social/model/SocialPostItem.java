@@ -106,23 +106,23 @@ public class SocialPostItem {
         return socialPostValue;
     }
 
-    private static SocialPostValue getVkSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
+    public static SocialPostValue getVkSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
         return getSocialPostValue(SocialManager.SOCIAL_NAME_VK, jsonObject, type, id);
     }
 
-    private static SocialPostValue getFbSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
+    public static SocialPostValue getFbSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
         return getSocialPostValue(SocialManager.SOCIAL_NAME_FB, jsonObject, type, id);
     }
 
-    private static SocialPostValue getTwSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
+    public static SocialPostValue getTwSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
         return getSocialPostValue(SocialManager.SOCIAL_NAME_TW, jsonObject, type, id);
     }
 
-    private static SocialPostValue getOkSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
+    public static SocialPostValue getOkSocialPostValue(JSONObject jsonObject, SocialPostValue.Type type, Object id) {
         return getSocialPostValue(SocialManager.SOCIAL_NAME_OK, jsonObject, type, id);
     }
 
-    private static SocialPostValue getSocialPostValue(String socialName, JSONObject jsonObject, SocialPostValue.Type type, Object id) {
+    public static SocialPostValue getSocialPostValue(String socialName, JSONObject jsonObject, SocialPostValue.Type type, Object id) {
         SocialPostValue result = new SocialPostValue();
         if (jsonObject != null) {
             JSONObject socialJson = jsonObject.optJSONObject(socialName);

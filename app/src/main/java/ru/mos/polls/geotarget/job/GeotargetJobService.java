@@ -1,11 +1,17 @@
 package ru.mos.polls.geotarget.job;
 
+import android.Manifest;
+import android.util.Log;
+
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.model.Position;
 import ru.mos.polls.geotarget.GeotargetApiController;
@@ -19,18 +25,41 @@ import ru.mos.polls.geotarget.model.Area;
  */
 
 public class GeotargetJobService extends JobService {
+    public static final String TAG = "geotarget job service";
+    public static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
     private LocationController locationController;
+    private boolean isYetLocationSent;
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        locationController = LocationController.getInstance(this);
-        locationController.connect();
-        locationController.setOnPositionListener(new LocationController.OnPositionListener() {
-            @Override
-            public void onGet(Position position) {
-                processUserInArea(position);
-            }
-        });
+        toLog("start");
+        isYetLocationSent = false;
+        boolean isLocationEnable = LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this);
+        boolean hasGPSPermissions = EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        toLog(String.format("settings location enable = %s, has GPS permission = %s", isLocationEnable, hasGPSPermissions));
+        if (isLocationEnable && hasGPSPermissions) {
+            locationController = LocationController.getInstance(this);
+            locationController.connect();
+            locationController.setOnPositionListener(new LocationController.OnPositionListener() {
+                @Override
+                public void onGet(Position position) {
+                    toLog(position != null ? position.asJson().toString() : "location null");
+                    toLog("location receive in " + SDF.format(System.currentTimeMillis()));
+                    if (!isYetLocationSent) {
+                        isYetLocationSent = true;
+                        try {
+                            processUserInArea(position);
+                            locationController.disconnect();
+                            locationController = null;
+                        } catch (Exception ignored) {
+                        }
+                    }
+                }
+            });
+        } else {
+            stopSelf();
+        }
         return false;
     }
 
@@ -42,7 +71,14 @@ public class GeotargetJobService extends JobService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        locationController.disconnect();
+        if (locationController != null) {
+            locationController.disconnect();
+        }
+        toLog("stop");
+    }
+
+    private void toLog(String state) {
+        Log.d(TAG, state + " in " + SDF.format(System.currentTimeMillis()));
     }
 
     /**
@@ -54,6 +90,7 @@ public class GeotargetJobService extends JobService {
         /**
          * поиск попадания в одну из зон
          */
+
         AreasManager areasManager = new PrefsAreasManager(this);
         List<Area> areas = areasManager.get();
         List<Area> selectedAreas = new ArrayList<>();
@@ -75,6 +112,5 @@ public class GeotargetJobService extends JobService {
         GeotargetApiController.notifyAboutUserInArea(this,
                 selectedAreas,
                 listener);
-
     }
 }

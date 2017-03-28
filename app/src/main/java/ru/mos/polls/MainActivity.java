@@ -28,8 +28,8 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
-import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
@@ -141,8 +141,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     private void initGeotargetManager() {
         if (EasyPermissions.hasPermissions(this, GPS_PERMS)) {
-            GeotargetManager.stop(this);
-            GeotargetManager.start(this);
+//            GeotargetManager.stop(this);
+//            GeotargetManager.start(this);
+            GeotargetJobManager geotargetJobManager = new GeotargetJobManager(this);
+            geotargetJobManager.start();
         }
     }
 

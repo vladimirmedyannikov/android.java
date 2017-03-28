@@ -34,9 +34,10 @@ import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.model.Area;
 
 /**
+ * Not use, see {@link ru.mos.polls.geotarget.job.GeotargetJobManager}
  * @since 2.3.0
  */
-
+@Deprecated
 public class GeotargetManager extends BroadcastReceiver {
 
     private static final long SECOND = 1000;
@@ -205,6 +206,9 @@ public class GeotargetManager extends BroadcastReceiver {
         Manager.save(context, logs);
     }
 
+    /**
+     * только для теста
+     */
     public static class Manager {
         private static final String PREFS = "GeotargetManagerPrefs";
         private static final String DATA = "data";

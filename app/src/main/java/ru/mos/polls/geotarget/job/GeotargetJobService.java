@@ -36,8 +36,13 @@ public class GeotargetJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        locationController.disconnect();
         return false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        locationController.disconnect();
     }
 
     /**
@@ -64,6 +69,7 @@ public class GeotargetJobService extends JobService {
         GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
             @Override
             public void onSuccess() {
+                stopSelf();
             }
         };
         GeotargetApiController.notifyAboutUserInArea(this,

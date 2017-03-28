@@ -45,7 +45,6 @@ public class GeotargetJobService extends JobService {
                 @Override
                 public void onGet(Position position) {
                     toLog(position != null ? position.asJson().toString() : "location null");
-                    toLog("location receive in " + SDF.format(System.currentTimeMillis()));
                     if (!isYetLocationSent) {
                         isYetLocationSent = true;
                         try {
@@ -94,12 +93,17 @@ public class GeotargetJobService extends JobService {
         AreasManager areasManager = new PrefsAreasManager(this);
         List<Area> areas = areasManager.get();
         List<Area> selectedAreas = new ArrayList<>();
+        StringBuilder areasToLog = new StringBuilder("areas: ");
         for (Area area : areas) {
             int distance = Position.distance(area.getPosition(), position);
             if (area.getR() >= distance) {
                 selectedAreas.add(area);
+                areasToLog.append(area.getId())
+                        .append(" ");
             }
         }
+        toLog(areasToLog.toString());
+
         /**
          * информирование о том, что пользователь в указанной зоне
          */

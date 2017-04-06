@@ -25,6 +25,7 @@ import ru.mos.polls.geotarget.model.Area;
  */
 
 public class GeotargetJobService extends JobService {
+    private static int counter = 0;
     public static final String TAG = "geotarget job service";
     public static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
@@ -33,7 +34,8 @@ public class GeotargetJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        toLog("start");
+        ++counter;
+        toLog("start" + String.valueOf(counter));
         isYetLocationSent = false;
         boolean isLocationEnable = LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this);
         boolean hasGPSPermissions = EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -56,8 +58,6 @@ public class GeotargetJobService extends JobService {
                     }
                 }
             });
-        } else {
-            stopSelf();
         }
         return false;
     }
@@ -70,10 +70,7 @@ public class GeotargetJobService extends JobService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (locationController != null) {
-            locationController.disconnect();
-        }
-        toLog("stop");
+        toLog("stop" + String.valueOf(counter));
     }
 
     private void toLog(String state) {
@@ -102,19 +99,22 @@ public class GeotargetJobService extends JobService {
                         .append(" ");
             }
         }
-        toLog(areasToLog.toString());
 
         /**
          * информирование о том, что пользователь в указанной зоне
          */
-        GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
-            @Override
-            public void onSuccess() {
-                stopSelf();
-            }
-        };
-        GeotargetApiController.notifyAboutUserInArea(this,
-                selectedAreas,
-                listener);
+        if (selectedAreas.size() > 0) {
+            toLog(areasToLog.toString());
+            GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+                @Override
+                public void onSuccess() {
+                }
+            };
+            GeotargetApiController.notifyAboutUserInArea(this,
+                    selectedAreas,
+                    listener);
+        } else {
+            toLog("not found any arias!");
+        }
     }
 }

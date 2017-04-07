@@ -25,7 +25,7 @@ import ru.mos.elk.netframework.request.Session;
  * For all emp pushed notification will be shown in notification bar*/
 public class GCMBroadcastReceiver extends BroadcastReceiver{
 
-    public static final int MESSAGE_NOTIFY_ID = 1;
+    public static int messageNotifyId = 1;
     private static final String ACTION = "action";
     private static final String MSG_BODY = "msgBody";
     private static final String MSG_TITLE = "msgTitle";
@@ -100,7 +100,7 @@ public class GCMBroadcastReceiver extends BroadcastReceiver{
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(MESSAGE_NOTIFY_ID, notification);
+        mNotifyMgr.notify(++messageNotifyId, notification);
 
     }
 

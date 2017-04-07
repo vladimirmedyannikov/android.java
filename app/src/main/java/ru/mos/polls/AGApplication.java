@@ -29,6 +29,8 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.vk.sdk.VKSdk;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.util.List;
 
@@ -308,11 +310,24 @@ public class AGApplication extends MultiDexApplication {
     public GCMBroadcastReceiver.PushAction getNewPollAction() {
         return new GCMBroadcastReceiver.PushAction() {
             public long pollId;
+            private String areaIds;
 
             @Override
             public void onPushRecived(Intent intent) {
                 if (!"null".equals(intent.getStringExtra("poll_id"))) {
                     pollId = Long.parseLong(intent.getStringExtra("poll_id"));
+                }
+                if (!"null".equalsIgnoreCase(intent.getStringExtra("area_ids"))) {
+                    areaIds = intent.getStringExtra("area_ids");
+                    try {
+                        JSONArray areaIdsJsonArray = new JSONArray(areaIds);
+                        AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
+                        for (int i = 0; i < areaIdsJsonArray.length(); ++i) {
+                            int id = areaIdsJsonArray.optInt(i);
+                            areasManager.remove(id);
+                        }
+                    } catch (Exception ignored) {
+                    }
                 }
             }
 
@@ -584,11 +599,11 @@ public class AGApplication extends MultiDexApplication {
     }
 
     private int getNotificationIcon() {
-        return R.drawable.ic_push_white;
+        return R.drawable.ic_push_white_v230;
     }
 
     private int getLargeNotificationIcon() {
-        return R.drawable.nb_top_icon;
+        return R.drawable.nb_top_icon_v230;
     }
 
     public static ImageLoader getImageLoader() {

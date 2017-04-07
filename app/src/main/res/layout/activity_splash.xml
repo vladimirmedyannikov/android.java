@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView style="@style/root"
-           xmlns:android="http://schemas.android.com/apk/res/android"
-           android:layout_centerInParent="true"
-           android:background="@drawable/ag_splash_old"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root"
+    android:background="#007A6C">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ag_splash_v230" />
+</RelativeLayout>

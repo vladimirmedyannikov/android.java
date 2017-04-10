@@ -166,7 +166,8 @@ public class GeotargetManager extends BroadcastReceiver {
          */
         GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(boolean success, List<Integer> disableAreaIds) {
+
             }
         };
         GeotargetApiController.notifyAboutUserInArea(context,

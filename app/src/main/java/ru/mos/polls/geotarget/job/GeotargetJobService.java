@@ -87,7 +87,7 @@ public class GeotargetJobService extends JobService {
          * поиск попадания в одну из зон
          */
 
-        AreasManager areasManager = new PrefsAreasManager(this);
+        final PrefsAreasManager areasManager = new PrefsAreasManager(this);
         List<Area> areas = areasManager.get();
         List<Area> selectedAreas = new ArrayList<>();
         StringBuilder areasToLog = new StringBuilder("areas: ");
@@ -106,9 +106,21 @@ public class GeotargetJobService extends JobService {
         if (selectedAreas.size() > 0) {
             toLog(areasToLog.toString());
             GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+
                 @Override
-                public void onSuccess() {
+                public void onSuccess(boolean success, List<Integer> disableAreaIds) {
+                    try {
+                        areasManager.removeAll(disableAreaIds);
+                        StringBuilder removedAreasToLog = new StringBuilder("removed areas: ");
+                        for (int id : disableAreaIds) {
+                            removedAreasToLog.append(id)
+                                    .append(" ");
+                        }
+                        toLog(removedAreasToLog.toString());
+                    } catch (Exception ignored) {
+                    }
                 }
+
             };
             GeotargetApiController.notifyAboutUserInArea(this,
                     selectedAreas,

@@ -141,8 +141,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     private void initGeotargetManager() {
         if (EasyPermissions.hasPermissions(this, GPS_PERMS)) {
-//            GeotargetManager.stop(this);
-//            GeotargetManager.start(this);
             GeotargetJobManager geotargetJobManager = new GeotargetJobManager(this);
             geotargetJobManager.start();
         }

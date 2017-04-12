@@ -11,12 +11,11 @@ import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 
 /**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 21.03.17 12:09.
+ *
+ * @since 2.3.0
  */
 
 public class GeotargetJobManager {
-
     private static int MINUTE = 60;
     private static int START_WINDOW = 5 * MINUTE;
     private static int STOP_WINDOW = (int) 5.5 * MINUTE;

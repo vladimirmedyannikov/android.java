@@ -16,6 +16,11 @@ import com.firebase.jobdispatcher.Trigger;
  */
 
 public class GeotargetJobManager {
+
+    private static int MINUTE = 60;
+    private static int START_WINDOW = 5 * MINUTE;
+    private static int STOP_WINDOW = (int) 5.5 * MINUTE;
+
     private Context context;
     private FirebaseJobDispatcher dispatcher;
     private Job currentJob;
@@ -26,7 +31,7 @@ public class GeotargetJobManager {
         currentJob = dispatcher.newJobBuilder()
                 .setService(GeotargetJobService.class)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(5, 10))
+                .setTrigger(Trigger.executionWindow(START_WINDOW, STOP_WINDOW))
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 .setTag("location-update-job")
                 .setLifetime(Lifetime.FOREVER)

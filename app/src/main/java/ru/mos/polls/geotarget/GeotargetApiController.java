@@ -25,8 +25,7 @@ import ru.mos.polls.geotarget.model.Area;
 public class GeotargetApiController {
 
     public static void loadAreas(Context context, final OnAreasListener listener) {
-        String method = UrlManager.url(UrlManager.V230,
-                UrlManager.Controller.GEOTARGET,
+        String method = UrlManager.url(UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.AREAS);
         String url = API.getURL(method);
 
@@ -53,8 +52,7 @@ public class GeotargetApiController {
     }
 
     public static void notifyAboutUserInArea(Context context, final List<Area> areas, final OnNotifyUserInAreaListener listener) {
-        String method = UrlManager.url(UrlManager.V230,
-                UrlManager.Controller.GEOTARGET,
+        String method = UrlManager.url(UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.USER_IN_AREA);
         String url = API.getURL(method);
         JSONObject body = new JSONObject();

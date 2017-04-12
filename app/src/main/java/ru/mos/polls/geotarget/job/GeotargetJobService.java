@@ -36,28 +36,34 @@ public class GeotargetJobService extends JobService {
     public boolean onStartJob(JobParameters job) {
         ++counter;
         toLog("start" + String.valueOf(counter));
-        isYetLocationSent = false;
-        boolean isLocationEnable = LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this);
-        boolean hasGPSPermissions = EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-        toLog(String.format("settings location enable = %s, has GPS permission = %s", isLocationEnable, hasGPSPermissions));
-        if (isLocationEnable && hasGPSPermissions) {
-            locationController = LocationController.getInstance(this);
-            locationController.connect();
-            locationController.setOnPositionListener(new LocationController.OnPositionListener() {
-                @Override
-                public void onGet(Position position) {
-                    toLog(position != null ? position.asJson().toString() : "location null");
-                    if (!isYetLocationSent) {
-                        isYetLocationSent = true;
-                        try {
-                            processUserInArea(position);
-                            locationController.disconnect();
-                            locationController = null;
-                        } catch (Exception ignored) {
+        PrefsAreasManager prefsAreasManager = new PrefsAreasManager(this);
+        List<Area> ares = prefsAreasManager.get();
+        if (ares.size() > 0) {
+            isYetLocationSent = false;
+            boolean isLocationEnable = LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this);
+            boolean hasGPSPermissions = EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            toLog(String.format("settings location enable = %s, has GPS permission = %s", isLocationEnable, hasGPSPermissions));
+            if (isLocationEnable && hasGPSPermissions) {
+                locationController = LocationController.getInstance(this);
+                locationController.connect();
+                locationController.setOnPositionListener(new LocationController.OnPositionListener() {
+                    @Override
+                    public void onGet(Position position) {
+                        toLog(position != null ? position.asJson().toString() : "location null");
+                        if (!isYetLocationSent) {
+                            isYetLocationSent = true;
+                            try {
+                                processUserInArea(position);
+                                locationController.disconnect();
+                                locationController = null;
+                            } catch (Exception ignored) {
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+        } else {
+            toLog("has not any arias in storage");
         }
         return false;
     }

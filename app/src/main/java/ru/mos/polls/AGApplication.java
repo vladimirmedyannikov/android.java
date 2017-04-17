@@ -148,7 +148,7 @@ public class AGApplication extends MultiDexApplication {
 
         API.registerPush(this);
 
-        API.setBuildVersionName(UrlManager.V220);
+        API.setBuildVersionName(UrlManager.V230);
 
         GCMBroadcastReceiver.addAction("promo", getPromoAction());
         GCMBroadcastReceiver.addAction("share", getShareAction());

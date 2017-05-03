@@ -17,7 +17,7 @@ public class EqualsFilter extends AnswersFilter {
      * проверка происходит содержит ли массив ответов значение фильтра
      */
     @Override
-    protected boolean onContains(String variantId, String[] variantsIds) {
+    public boolean onContains(String variantId, String[] variantsIds) {
         if (variantId == null) {
             return false; //зачем это? убирать страшно - оставлю. 10.07.2014
         }

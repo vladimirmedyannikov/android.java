@@ -10,7 +10,7 @@ public class LessTimeFilter extends TimeFilter {
     }
 
     @Override
-    protected boolean compare(long actualTime, long expectedTime) {
+    public boolean compare(long actualTime, long expectedTime) {
         return actualTime < expectedTime;
     }
 

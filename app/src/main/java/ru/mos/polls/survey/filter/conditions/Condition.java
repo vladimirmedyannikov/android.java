@@ -9,7 +9,7 @@ import java.util.List;
  */
 public abstract class Condition implements Serializable {
 
-    private List<Boolean> values = new ArrayList<Boolean>();
+    public List<Boolean> values = new ArrayList<Boolean>();
 
     /**
      * Добавляет значение к услвоия.

@@ -31,7 +31,7 @@ public abstract class AnswersFilter extends ConditionFilter {
         return getCondition().get();
     }
 
-    protected abstract boolean onContains(String variantId, String[] variantsIds);
+    public abstract boolean onContains(String variantId, String[] variantsIds);
 
     public static abstract class Factory extends ConditionFilter.Factory {
 

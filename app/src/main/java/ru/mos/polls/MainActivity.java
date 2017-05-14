@@ -28,8 +28,8 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
-import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
@@ -136,8 +136,14 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         runtimePermissionController = new RuntimePermissionController(this);
 
         updateGeotargetAreas();
-        GeotargetManager.stop(this);
-        GeotargetManager.start(this);
+        initGeotargetManager();
+    }
+
+    private void initGeotargetManager() {
+        if (EasyPermissions.hasPermissions(this, GPS_PERMS)) {
+            GeotargetJobManager geotargetJobManager = new GeotargetJobManager(this);
+            geotargetJobManager.start();
+        }
     }
 
     private void updateGeotargetAreas() {
@@ -163,6 +169,9 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             PreviewAppActivity.start(this);
         }
         InformerUIController.process(this);
+        /**
+         * Проверка доступности работы с местоположением
+         */
         if (LocationController.isLocationNetworkProviderEnabled(this)
                 || LocationController.isLocationGPSProviderEnabled(this)) {
             if (!EasyPermissions.hasPermissions(this, GPS_PERMS)
@@ -198,7 +207,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         super.onStop();
         SocialUIController.unregisterPostingReceiver(this);
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -475,6 +483,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         if (runtimePermissionController.smsReceivePermissionGranted(requestCode, grantResults)) {
             smsInviteController.process(true);
         }
+        initGeotargetManager();
     }
 
     @Override

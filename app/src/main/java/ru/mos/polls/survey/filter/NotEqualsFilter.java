@@ -15,7 +15,7 @@ public class NotEqualsFilter extends AnswersFilter {
 
 
     @Override
-    protected boolean onContains(String variantId, String[] variantsIds) {
+    public boolean onContains(String variantId, String[] variantsIds) {
         final boolean contains;
         if (variantsIds.length == 1) {
             contains = !variantsIds[0].equals(variantId);

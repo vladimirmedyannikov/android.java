@@ -1,0 +1,60 @@
+{
+  "subscriptions": [
+    {
+      "subscription_type": "ag_new",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "poll_special",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "poll_results",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "poll_decisions",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "poll_effected",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "event_new",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    },
+    {
+      "subscription_type": "event_approaching",
+      "channels": {
+        "sms": true,
+        "email": false,
+        "push": false
+      }
+    }
+  ]
+}

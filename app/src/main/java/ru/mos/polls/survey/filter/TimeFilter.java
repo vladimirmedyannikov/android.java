@@ -47,7 +47,7 @@ public abstract class TimeFilter extends Filter {
         return result;
     }
 
-    protected abstract boolean compare(long actualTime, long expectedTime);
+    public abstract boolean compare(long actualTime, long expectedTime);
 
     public static abstract class Factory extends Filter.Factory {
 

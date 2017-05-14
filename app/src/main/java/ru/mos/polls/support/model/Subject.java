@@ -11,6 +11,10 @@ import java.util.List;
  * <p/>
  */
 public class Subject {
+    public static final int ID_SUBJECT_NOT_SELECTED = 0;
+    public static final String TITLE_SUBJECT_NOT_SELECTED = "Не выбрана";
+    public static final Subject SUBJECT_NOT_SELECTED = new Subject(ID_SUBJECT_NOT_SELECTED, TITLE_SUBJECT_NOT_SELECTED);
+
     public final static int ID_SHOPS_BONUS = 5;
     public final static String WORD_SHOP_BONUS = "Магазин поощрений";
     private int id;
@@ -27,7 +31,7 @@ public class Subject {
 
     public static List<Subject> fromJson(JSONArray subjectsJson) {
         List<Subject> result = new ArrayList<Subject>();
-        result.add(new Subject(0, "Не выбрана"));
+        result.add(SUBJECT_NOT_SELECTED);
         if (subjectsJson != null) {
             for (int i = 0; i < subjectsJson.length(); ++i) {
                 JSONObject subjectJson = subjectsJson.optJSONObject(i);

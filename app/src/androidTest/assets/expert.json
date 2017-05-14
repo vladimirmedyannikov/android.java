@@ -1,0 +1,16 @@
+[
+  {
+    "id": 230,
+    "img_url": "test.230",
+    "title": "test 230",
+    "description": "Должность",
+    "body": "Мнение"
+  },
+  {
+    "id": 300,
+    "img_url": "test.300",
+    "title": "test 300",
+    "description": "Должность",
+    "body": "Мнение"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "subscription_type": "poll_results",
+  "channels": {
+    "sms": true,
+    "email": false,
+    "push": false
+  }
+}

@@ -329,7 +329,7 @@
     <string name="distance_km">%s км</string>
     <string name="location_provader_network">Сеть</string>
     <string name="location_provader_GPS">ГПС</string>
-    <string name="location_provaders_are_not_available">Для корретной работы приложения требуется включить в настройках функцию определения местоположения</string>
+    <string name="location_provaders_are_not_available">Для корректной работы приложения требуется включить в настройках функцию определения местоположения</string>
     <string name="turn_on">Включить</string>
     <string name="action_current_points">Начисленные баллы</string>
     <string name="action_credit_points">Потраченные баллы</string>
@@ -429,7 +429,7 @@
     <string name="title_pgu_auth">Установка связи</string>
     <string name="pgu_link">Перейти на pgu.mos.ru</string>
     <string name="pgu_title">mos.ru</string>
-    <string name="pgu_link_value">https://pgu.mos.ru/</string>
+    <string name="pgu_link_value">https://mos.ru/</string>
     <string name="empty_quest_list">В настоящее время нет новостей о голосованиях, мероприятиях или городских событиях.\n\nОформите подписку, чтобы всегда быть в курсе событий!</string>
     <string name="do_subscribe">Оформить подписку</string>
     <string name="ag_continue">Продолжить</string>
@@ -604,7 +604,7 @@
     <string name="title_pgu_verify">Верификация</string>
     <string name="bind">Привязать</string>
     <string name="bind_other">Привязать другой профиль</string>
-    <string name="go_to_pgu">Перейти на ПГУ</string>
+    <string name="go_to_pgu">Перейти на mos.ru</string>
     <string name="title_registration">Адрес регистрации</string>
     <string name="title_residance">Адрес проживания</string>
     <string name="title_work">Адрес работы</string>

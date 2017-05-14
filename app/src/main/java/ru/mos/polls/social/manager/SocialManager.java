@@ -358,7 +358,7 @@ public class SocialManager {
      * @param socialId - идентификатор социальной сети, определеяющий какой токен доступа запрашивается
      * @return -строка имени параметра сохранения в SharedPreferences
      */
-    private static String getAvatarName(int socialId) {
+    public static String getAvatarName(int socialId) {
         switch (socialId) {
             case SOCIAL_ID_FB:
                 return AVATAR_URL_FB;
@@ -397,7 +397,7 @@ public class SocialManager {
      * @param socialId - идентификатор социальной сети, определеяющий какой токен доступа запрашивается
      * @return -строка имени параметра сохранения в SharedPreferences
      */
-    private static String getAccessTokenKey(int socialId) {
+    public static String getAccessTokenKey(int socialId) {
         switch (socialId) {
             case SOCIAL_ID_FB:
                 return FB_ACCESS_TOKEN;
@@ -414,7 +414,7 @@ public class SocialManager {
         }
     }
 
-    private static String getLogonKey(int socialId) {
+    public static String getLogonKey(int socialId) {
         switch (socialId) {
             case SOCIAL_ID_FB:
                 return FB_IS_LOGON;
@@ -453,7 +453,7 @@ public class SocialManager {
      * @param socialId - идентификатор социальной сети, определеяющий какой токен доступа запрашивается
      * @return -строка имени параметра сохранения в SharedPreferences
      */
-    private static String getRefreshTokenKey(int socialId) {
+    public static String getRefreshTokenKey(int socialId) {
         switch (socialId) {
             case SOCIAL_ID_FB:
                 return FB_REFRESH_TOKEN;
@@ -477,7 +477,7 @@ public class SocialManager {
      * @param socialId - идентификатор социальной сети, определеяющий какой токен доступа запрашивается
      * @return -строка имени параметра сохранения в SharedPreferences
      */
-    private static String getExpireDateKey(int socialId) {
+    public static String getExpireDateKey(int socialId) {
         switch (socialId) {
             case SOCIAL_ID_FB:
                 return FB_EXPIRE_TIME;

@@ -27,8 +27,7 @@ public class InformetApiController {
      * @param callback {@link Callback}
      */
     public static void loadActualAppVersion(BaseActivity elkActivity, final Callback callback) {
-        String method = UrlManager.url(UrlManager.V230,
-                UrlManager.Controller.UTILS,
+        String method = UrlManager.url(UrlManager.Controller.UTILS,
                 UrlManager.Methods.APP_VERSION);
         String url = API.getURL(method);
 

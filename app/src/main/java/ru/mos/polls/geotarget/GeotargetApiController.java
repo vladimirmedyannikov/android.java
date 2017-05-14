@@ -25,8 +25,7 @@ import ru.mos.polls.geotarget.model.Area;
 public class GeotargetApiController {
 
     public static void loadAreas(Context context, final OnAreasListener listener) {
-        String method = UrlManager.url(UrlManager.V230,
-                UrlManager.Controller.GEOTARGET,
+        String method = UrlManager.url(UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.AREAS);
         String url = API.getURL(method);
 
@@ -52,9 +51,8 @@ public class GeotargetApiController {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public static void notifyAboutUserInArea(Context context, List<Area> areas, final OnNotifyUserInAreaListener listener) {
-        String method = UrlManager.url(UrlManager.V230,
-                UrlManager.Controller.GEOTARGET,
+    public static void notifyAboutUserInArea(Context context, final List<Area> areas, final OnNotifyUserInAreaListener listener) {
+        String method = UrlManager.url(UrlManager.Controller.GEOTARGET,
                 UrlManager.Methods.USER_IN_AREA);
         String url = API.getURL(method);
         JSONObject body = new JSONObject();
@@ -70,7 +68,16 @@ public class GeotargetApiController {
             @Override
             public void onResponse(JSONObject response) {
                 if (listener != null) {
-                    listener.onSuccess();
+                    List<Integer> disableAreaIds = new ArrayList<>();
+                    if (response.has("disable_area_ids")) {
+                        JSONArray array = response.optJSONArray("disable_area_ids");
+                        if (array != null) {
+                            for (int i = 0; i < array.length(); ++i) {
+                                disableAreaIds.add(array.optInt(i));
+                            }
+                        }
+                    }
+                    listener.onSuccess(response.optBoolean("success"), disableAreaIds);
                 }
             }
         };
@@ -89,6 +96,6 @@ public class GeotargetApiController {
     }
 
     public interface OnNotifyUserInAreaListener {
-        void onSuccess();
+        void onSuccess(boolean success, List<Integer> disableAreaIds);
     }
 }

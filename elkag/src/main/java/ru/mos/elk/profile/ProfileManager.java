@@ -177,7 +177,12 @@ public abstract class ProfileManager {
         elkActivity.finish();
 
         NotificationManager notificationmanager = (NotificationManager) elkActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationmanager.cancel(GCMBroadcastReceiver.MESSAGE_NOTIFY_ID);
+        try {
+            for (int i = 0; i <= GCMBroadcastReceiver.messageNotifyId; ++i) {
+                notificationmanager.cancel(i);
+            }
+        } catch (Exception ignored) {
+        }
 
         ProfileManager.clearStoredData(elkActivity);
 

@@ -67,7 +67,6 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String code = intent.getStringExtra(SmsBroadcastReceiver.EXTRA_CODE);
             etCode.setText(code);
-            onAction();
         }
     };
 

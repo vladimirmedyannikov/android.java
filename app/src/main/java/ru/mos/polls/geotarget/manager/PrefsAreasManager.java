@@ -57,4 +57,17 @@ public class PrefsAreasManager implements AreasManager {
         }
         save(areas);
     }
+
+    public void removeAll(List<Integer> ids) {
+        List<Area> areas = get();
+        for (Integer id : ids) {
+            for (Area area : areas) {
+                if (area.getId() == id) {
+                    areas.remove(area);
+                    break;
+                }
+            }
+        }
+        save(areas);
+    }
 }

@@ -1,0 +1,36 @@
+{
+  "id": 2,
+  "question": "Выберите категорию замечания из предложенного списка?",
+  "question_full_html": null,
+  "question_short_html": null,
+  "type": "simple",
+  "filter_id": 1,
+  "variants": [
+    {
+      "id": "6",
+      "text": "Небо слишком синее",
+      "kind": "text"
+    },
+    {
+      "id": "7",
+      "text": "Трава слишком зелёная",
+      "kind": "text"
+    },
+    {
+      "id": "8",
+      "text": "Солнце слишком круглое",
+      "kind": "text"
+    },
+    {
+      "id": "9",
+      "text": "Пчёлы слишком полосатые",
+      "kind": "text"
+    },
+    {
+      "id": "10",
+      "kind": "input",
+      "text": "Свой вариант",
+      "input_type": "char"
+    }
+  ]
+}

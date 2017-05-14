@@ -11,7 +11,7 @@ public class UrlManager {
     public static String V230 = "2.3.0";
 
     public static String url(String controller, String method) {
-        return String.format("v%s/%s/%s", V220/*BuildConfig.VERSION_NAME*/, controller, method);
+        return String.format("v%s/%s/%s", BuildConfig.VERSION_NAME, controller, method);
     }
 
     public static String url(String version, String controller, String method) {

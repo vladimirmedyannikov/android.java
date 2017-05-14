@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- The application version. Defaults to android:versionName specified in the AndroidManifest.xml -->
-    <string name="ga_appVersion">1.9</string>
+    <string name="ga_appVersion">2.4.0</string>
 
     <!-- The dispatching period in seconds when Google Play services is
          unavailable. The default period is 1800 seconds or 30 minutes -->

@@ -17,8 +17,10 @@ import ru.mos.polls.survey.filter.conditions.AndCondition;
 import ru.mos.polls.survey.filter.conditions.OrCondition;
 import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
+import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SimpleSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
+import ru.mos.polls.survey.variants.SurveyVariant;
 
 /**
  * Created by Trunks on 11.05.2017.
@@ -27,6 +29,7 @@ import ru.mos.polls.survey.questions.SurveyQuestion;
 public class SurveyUnitTest extends BaseUnitTest {
     Survey testSurvey;
     long surveyId = 1;
+    final int SIMPLE_QUEST_ID = 1;
 
     @Before
     public void init() {
@@ -38,29 +41,35 @@ public class SurveyUnitTest extends BaseUnitTest {
 
     @Test
     public void getSurveyQuestionTest() {
-        SurveyQuestion surveyQuestion = testSurvey.getQuestion(2);
-        Assert.assertEquals(surveyQuestion.getId(), 2);
+        SurveyQuestion surveyQuestion = testSurvey.getQuestion(SIMPLE_QUEST_ID);
+        Assert.assertEquals(surveyQuestion.getId(), SIMPLE_QUEST_ID);
     }
 
     @Test
     public void getCurrentQuestionIdTest() {
         testSurvey.setCurrentPageIndex(0);
         Assert.assertEquals(testSurvey.getCurrentPageIndex(), 0);
-        Assert.assertEquals(testSurvey.getCurrentQuestionId(), 2);
+        Assert.assertEquals(testSurvey.getCurrentQuestionId(), SIMPLE_QUEST_ID);
     }
 
     @Test
     public void pageIndexTest() {
         List<SurveyQuestion> testListSQ = new ArrayList<>();
         SimpleSurveyQuestion sq = (SimpleSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_simple.json"), surveyId);
+        RadioboxSurveyQuestion rsq = (RadioboxSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_radiobutton.json"), surveyId);
         CheckboxSurveyQuestion csq = (CheckboxSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_checkbox.json"), surveyId);
-
         testListSQ.add(sq);
+        testListSQ.add(rsq);
         testListSQ.add(csq);
         testSurvey = new Survey(surveyId, Survey.Status.ACTIVE, testListSQ);
         testSurvey.setCurrentPageIndex(0);
         Assert.assertEquals(testSurvey.getCurrentPageIndex(), 0);
+
         testSurvey.doNext(true);
+        testSurvey.doNext(true);
+        Assert.assertEquals(testSurvey.getCurrentPageIndex(), 2);
+
+        testSurvey.setCurrentPageIndex(testSurvey.doPrev());
         Assert.assertEquals(testSurvey.getCurrentPageIndex(), 1);
     }
 
@@ -78,7 +87,7 @@ public class SurveyUnitTest extends BaseUnitTest {
 
     @Test
     public void startTimingEndTimingTest() {
-        SurveyQuestion surveyQuestion = testSurvey.getQuestion(2);
+        SurveyQuestion surveyQuestion = testSurvey.getQuestion(SIMPLE_QUEST_ID);
         Assert.assertEquals(surveyQuestion.getStartTime(), 0);
         Assert.assertEquals(surveyQuestion.getEndTime(), 0);
 
@@ -92,9 +101,30 @@ public class SurveyUnitTest extends BaseUnitTest {
     public void getFilteredQuestionListTest() {
         List<SurveyQuestion> list = testSurvey.getFilteredQuestionList();
         Assert.assertEquals(list.size(), 1);
-        testSurvey.filterAdd(new LessTimeFilter(1, 0, 2));
+        testSurvey.filterAdd(new LessTimeFilter(1, 0, SIMPLE_QUEST_ID));
         Assert.assertEquals(testSurvey.getFilteredQuestionList().size(), 0);
     }
 
 
+    @Test
+    public void getFirstNotCheckedQuestionTest() {
+        List<SurveyQuestion> testListSQ = new ArrayList<>();
+        SimpleSurveyQuestion sq = (SimpleSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_simple.json"), surveyId);
+        RadioboxSurveyQuestion rsq = (RadioboxSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_radiobutton.json"), surveyId);
+        CheckboxSurveyQuestion csq = (CheckboxSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_checkbox.json"), surveyId);
+        testListSQ.add(rsq);
+        testListSQ.add(csq);
+        testListSQ.add(sq);
+        testSurvey = new Survey(surveyId, Survey.Status.ACTIVE, testListSQ);
+
+        SurveyQuestion question = testSurvey.getFirstNotCheckedQuestion();
+        Assert.assertEquals(question, rsq);
+
+        question = testSurvey.getFirstNotCheckedQuestion();
+
+        question.getVariantsList().get(0).setChecked(true);
+
+        question = testSurvey.getFirstNotCheckedQuestion();
+        Assert.assertEquals(question, csq);
+    }
 }

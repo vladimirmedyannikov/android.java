@@ -8,15 +8,17 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
+import ru.mos.polls.survey.variants.IntervalSurveyVariant;
 import ru.mos.polls.survey.variants.SelectSurveyVariant;
 import ru.mos.polls.survey.variants.select.GorodSelectActivity;
 import ru.mos.polls.survey.variants.select.GorodSelectObject;
+import ru.mos.polls.survey.variants.values.IntVariantValue;
 
 /**
  * Created by Trunks on 17.05.2017.
  */
 
-public class SurveyVariant extends BaseUnitTest {
+public class SurveyVariantUnitTest extends BaseUnitTest {
 
     String UID = "uid";
     long INNER_ID = 0;
@@ -58,6 +60,7 @@ public class SurveyVariant extends BaseUnitTest {
 
     @Test
     public void intervalSurveyVariantTest() {
+        IntervalSurveyVariant isv = new IntervalSurveyVariant(UID, INNER_ID, PERCENT, VOTERS, "text", new IntVariantValue(1, 10), new IntVariantValue(10, 20), "3", "15");
 
     }
 }

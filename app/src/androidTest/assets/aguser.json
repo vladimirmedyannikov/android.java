@@ -1,0 +1,111 @@
+{
+  "personal": {
+    "firstname": "Фаргус",
+    "surname": "Адмирал",
+    "middlename": "Хесон",
+    "birthday": "17.01.1990",
+    "sex": null,
+    "email": "vivalatrunks@gmail.com",
+    "phone": "79637502152",
+    "marital_status": "single",
+    "childrens_count": 3,
+    "childrens_birthdays": [
+      "01.01.1996",
+      "01.01.1998",
+      "01.01.2002"
+    ],
+    "car_exists": null,
+    "social_status": null
+  },
+  "flats": {
+    "registration": {
+      "flat_id": 266566,
+      "flat": null,
+      "street": "Люблинская ул.",
+      "building": "д. 33/2",
+      "city": null,
+      "area": "Текстильщики",
+      "district": "Юго-Восточный",
+      "editing_blocked": false,
+      "building_id": "13498-3"
+    },
+    "residence": {
+      "flat_id": 266566,
+      "flat": null,
+      "street": "Люблинская ул.",
+      "building": "д. 33/2",
+      "city": null,
+      "area": "Текстильщики",
+      "district": "Юго-Восточный",
+      "editing_blocked": false,
+      "building_id": "13498-3"
+    },
+    "work": {
+      "flat_id": 266567,
+      "flat": null,
+      "street": "ул. Докукина",
+      "building": "д. 8, строение 1",
+      "city": null,
+      "area": "Ростокино",
+      "district": "Северо-Восточный",
+      "editing_blocked": false,
+      "building_id": "2200280-1"
+    }
+  },
+  "common": {
+    "email_confirmed": false,
+    "is_pgu_connected": false
+  },
+  "professions_catalog": {
+    "social_statuses": [
+      {
+        "id": 1,
+        "title": "Служащий"
+      },
+      {
+        "id": 2,
+        "title": "Учащийся"
+      },
+      {
+        "id": 3,
+        "title": "Студент"
+      },
+      {
+        "id": 4,
+        "title": "Предприниматель"
+      },
+      {
+        "id": 5,
+        "title": "Военнослужащий"
+      },
+      {
+        "id": 6,
+        "title": "Безработный"
+      },
+      {
+        "id": 7,
+        "title": "Пенсионер"
+      },
+      {
+        "id": 8,
+        "title": "Рабочий"
+      },
+      {
+        "id": 9,
+        "title": "Врач"
+      },
+      {
+        "id": 10,
+        "title": "Мед. работник"
+      },
+      {
+        "id": 11,
+        "title": "Учитель"
+      },
+      {
+        "id": 12,
+        "title": "Другое"
+      }
+    ]
+  }
+}

@@ -128,7 +128,7 @@ public class IntVariantValue implements VariantValue {
         int result = 0;
         if (another instanceof IntVariantValue) {
             int anotherValue = ((IntVariantValue) another).value;
-            result = Integer.valueOf(value).compareTo(Integer.valueOf(anotherValue));
+            result = Integer.valueOf(value).compareTo(anotherValue);
         }
         return result;
     }

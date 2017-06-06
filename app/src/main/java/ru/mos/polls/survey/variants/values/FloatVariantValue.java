@@ -128,9 +128,9 @@ public class FloatVariantValue implements VariantValue {
     @Override
     public int compareTo(VariantValue another) {
         int result = 0;
-        if (another instanceof DateVariantValue) {
+        if (another instanceof FloatVariantValue) {
             double anotherValue = ((FloatVariantValue) another).value;
-            result = Double.valueOf(value).compareTo(Double.valueOf(anotherValue));
+            result = Double.valueOf(value).compareTo(anotherValue);
         }
         return result;
     }

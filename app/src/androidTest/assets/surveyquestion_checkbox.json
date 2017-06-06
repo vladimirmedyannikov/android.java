@@ -1,0 +1,56 @@
+{
+  "id": 3,
+  "question": "Какие книги вы читали?",
+  "question_full_html": "Какие книги вы читали? <br><br><p>респект что читали<\p>",
+  "question_short_html": "Книги читали?",
+  "type": "checkbox",
+  "hint": "Выберите самый подходящий вариант. Можно написать свой вариант",
+  "min_allowed": 1,
+  "max_allowed": 4,
+  "voters_count": 3304,
+  "voters_variants_count": 10000,
+  "filter_id": 1,
+  "variants": [
+    {
+      "id": "1",
+      "kind": "text",
+      "text": "Азбука",
+      "services": null,
+      "percent": 6,
+      "voters_count": 500
+    },
+    {
+      "id": "2",
+      "kind": "text",
+      "text": "Чиполлино",
+      "services": null,
+      "percent": 3,
+      "voters_count": 200
+    },
+    {
+      "id": "3",
+      "kind": "text",
+      "text": "Пиноккио",
+      "services": null,
+      "percent": 1,
+      "voters_count": 100
+    },
+    {
+      "id": "4",
+      "kind": "input",
+      "text": "Другое",
+      "input_type": "char",
+      "hint": "Название книги",
+      "percent": 90,
+      "voters_count": 2503
+    },
+    {
+      "id": "5",
+      "kind": "text",
+      "text": "фрукт",
+      "services": null,
+      "percent": 1,
+      "voters_count": 400
+    }
+  ]
+}

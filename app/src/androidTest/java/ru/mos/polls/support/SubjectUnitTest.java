@@ -42,7 +42,7 @@ public class SubjectUnitTest extends BaseUnitTest {
     @Test
     public void hasTitle() {
         Subject testValue = getSubjectTestValue();
-        Assert.assertEquals("Отзыа о работе", testValue.getTitle());
+        Assert.assertEquals("Отзыв о работе", testValue.getTitle());
     }
 
     @Test

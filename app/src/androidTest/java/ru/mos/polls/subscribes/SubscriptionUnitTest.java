@@ -55,7 +55,7 @@ public class SubscriptionUnitTest extends BaseUnitTest {
         Channel channel = testValue.getChannels().get(0);
         Assert.assertEquals(true,  channel.isEnabled());
         channel.setEnabled(false);
-        Assert.assertEquals(true,  channel.isEnabled());
+        Assert.assertEquals(false,  channel.isEnabled());
     }
 
     @Test

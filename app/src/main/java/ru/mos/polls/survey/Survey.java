@@ -516,7 +516,7 @@ public class Survey implements Serializable {
      * @param changePage Изменить ли текущую страницу
      * @return
      */
-    private boolean doNext(boolean changePage) {
+    public boolean doNext(boolean changePage) {
         final boolean result;
         int total = questionsOrder.size();
         if (total - 1 == currentPageIndex || currentPageIndex == -1) {

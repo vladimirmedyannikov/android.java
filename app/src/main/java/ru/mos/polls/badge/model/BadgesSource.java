@@ -57,6 +57,10 @@ public class BadgesSource {
     private BadgesSource() {
     }
 
+    public List<Badge> getBadgeList() {
+        return badgeList;
+    }
+
     @Nullable
     public String get(String bageTag) {
         final String s;

@@ -199,7 +199,7 @@ public class CharVariantValue implements VariantValue {
     @Override
     public int compareTo(VariantValue another) {
         int result = 0;
-        if (another instanceof DateVariantValue) {
+        if (another instanceof CharVariantValue) {
             String anotherValue = ((CharVariantValue) another).value;
             if (anotherValue != null && value != null) {
                 result = value.compareTo(anotherValue);

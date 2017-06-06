@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,12 +21,13 @@ import com.flurry.android.FlurryAgent;
 import java.util.HashSet;
 import java.util.Set;
 
+import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.actionmode.ActionDescription;
 import ru.mos.elk.actionmode.SearchDescription;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.utils.BitmapLruCache;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends JugglerActivity {
 	public static final String INTENT_LOGOUT = "ru.mos.elk.pages.LOGOUT";
 
     private RequestQueue requestQueue;

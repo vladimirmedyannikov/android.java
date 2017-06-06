@@ -33,7 +33,7 @@ public class SocialAuthActivity extends ToolbarAbstractActivity implements OkLis
     private boolean authRequested = false;
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_SOCIAL_ID, socialId);
         outState.putBoolean(STATE_AUTH, authRequested);
         /**

@@ -41,6 +41,7 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
+import ru.mos.polls.newprofile.ProfileFtagment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
@@ -362,7 +363,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
                 fr = PagerFragment.Profile.newInstance();
+                fr = ProfileFtagment.newInstance();
                 tag = TAG_PROFILE;
+//                navigateTo().state(Add.deeper(new ProfileState(null)));
+
                 break;
             case NavigationMenuItem.MY_FREE_TIME:
                 Statistics.enterEvents();

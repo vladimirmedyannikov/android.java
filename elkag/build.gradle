@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    compile 'me.ilich:juggler:0.1.20'
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.0'

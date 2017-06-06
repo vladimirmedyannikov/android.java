@@ -135,7 +135,7 @@ public class SurveyActivity extends BaseActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_ACTIVITY_RESTARTED, true);
     }

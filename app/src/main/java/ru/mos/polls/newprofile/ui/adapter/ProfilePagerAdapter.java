@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import ru.mos.polls.R;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
@@ -13,6 +14,13 @@ import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
  */
 
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
+    private String tabTitles[] = new String[]{"Tab1", "Tab2", "Tab3"};
+    private int[] tabIcons = {
+            R.drawable.icon01,
+            R.drawable.icon02,
+            R.drawable.icon03
+    };
+    final int PAGE_COUNT = 3;
     public ProfilePagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -32,6 +40,11 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return PAGE_COUNT;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
     }
 }

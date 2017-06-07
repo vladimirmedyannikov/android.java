@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile;
+package ru.mos.polls.newprofile.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,9 +20,5 @@ public class MainFragment extends JugglerFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, this, "main")
-                .commit();
     }
 }

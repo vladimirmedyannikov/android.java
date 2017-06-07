@@ -41,7 +41,7 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.newprofile.ProfileFtagment;
+import ru.mos.polls.newprofile.ui.fragment.ProfileFtagment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;

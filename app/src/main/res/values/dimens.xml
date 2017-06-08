@@ -36,6 +36,7 @@
     <dimen name="ts_large">18sp</dimen>
     <dimen name="ts_xlarge">20sp</dimen>
     <dimen name="ts_xxlarge">22sp</dimen>
+    <dimen name="ts_xxxlarge">32sp</dimen>
     <dimen name="ts_main_header">50sp</dimen>
 
     <!-- view size !-->

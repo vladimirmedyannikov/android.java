@@ -24,8 +24,7 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
     private Bundle savedInstanceState;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, getLayoutResources(), container, false);
         return binding.getRoot();
     }

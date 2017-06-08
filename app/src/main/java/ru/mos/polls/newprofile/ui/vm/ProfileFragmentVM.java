@@ -2,9 +2,7 @@ package ru.mos.polls.newprofile.ui.vm;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 
-import com.astuetz.PagerSlidingTabStrip;
 
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewProfileBinding;
@@ -31,7 +29,14 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Layout
         slidingTabs = binding.slidingTabs;
         mAdapter = new ProfilePagerAdapter(getFragment().getActivity().getSupportFragmentManager());
         pager.setAdapter(mAdapter);
-        pager.setCurrentItem(0);
-        slidingTabs.getTabAt(0).setIcon(R.drawable.icon01);
+        slidingTabs.setupWithViewPager(pager);
+        int[] tabIcons = {
+                R.drawable.icon01,
+                R.drawable.icon02,
+                R.drawable.icon03
+        };
+        for (int i = 0; i < tabIcons.length; i++) {
+            slidingTabs.getTabAt(i).setIcon(tabIcons[i]);
+        }
     }
 }

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <!--<variable-->
-        <!--name="profile_pager"-->
-        <!--type="android.support.v4.view.ViewPager" />-->
-
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.ui.vm.ProfileFragmentVM" />
+            type="ru.mos.polls.newprofile.ui.vm.ProfileFragmentVM"/>
     </data>
 
     <LinearLayout
@@ -19,14 +15,14 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <!--<com.astuetz.PagerSlidingTabStrip-->
-        <!--android:id="@+id/slidingTabs"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/vs_xxsmall"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--app:pstsIndicatorColor="@color/white"-->
-        <!--app:pstsShouldExpand="true"-->
-        <!--app:pstsTabTextColor="@drawable/tabs_selector" />-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/slidingTabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabIndicatorColor="@color/yellow"
+            app:tabBackground="@color/actionbar_background"
+            app:tabMode="fixed"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -34,11 +30,6 @@
             android:layout_height="@dimen/dp_0"
             android:layout_weight="1">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/slidingTabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top" />
         </android.support.v4.view.ViewPager>
     </LinearLayout>
 </layout>

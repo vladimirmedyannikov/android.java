@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="agUser"
+            type="ru.mos.elk.profile.AgUser"/>
+    </data>
+
+    <LinearLayout
+        style="@style/linear"
+        android:layout_marginBottom="@dimen/pd_normal"
+        android:layout_marginTop="@dimen/pd_normal"
+        android:background="@color/actionbar_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/agUser_fi"
+            style="@style/text.normal.white"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="Имя не заполнено"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/agUser_registration_date"
+            style="@style/text.small.white"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="активный гражданин с 8 июня 2017"/>
+
+
+        <TextView
+            android:id="@+id/agUser_rating_title"
+            style="@style/text.small.white"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/pd_normal"
+            android:gravity="center_horizontal"
+            android:text="общий рейтинг"/>
+
+        <TextView
+            android:id="@+id/agUser_rating_value"
+            style="@style/text.large.white"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="50"
+            android:textSize="@dimen/ts_xxxlarge"/>
+
+        <TextView
+            android:id="@+id/agUser_status_title"
+            style="@style/text.small.white"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/pd_normal"
+            android:gravity="center_horizontal"
+            android:text="статус"/>
+
+        <TextView
+            android:id="@+id/agUser_status_value"
+            style="@style/text.large.white"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="Новис"
+            android:textSize="@dimen/ts_xxlarge"/>
+    </LinearLayout>
+</layout>

@@ -42,6 +42,7 @@ android {
         multiDexEnabled true
         resConfigs "en"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
         jackOptions {
             enabled false
         }

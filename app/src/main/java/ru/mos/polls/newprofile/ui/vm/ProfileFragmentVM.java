@@ -31,7 +31,7 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Layout
         pager.setAdapter(mAdapter);
         slidingTabs.setupWithViewPager(pager);
         int[] tabIcons = {
-                R.drawable.icon01,
+                R.drawable.ic_user,
                 R.drawable.icon02,
                 R.drawable.icon03
         };

@@ -8,7 +8,7 @@ import ru.mos.polls.R;
 
 public class AchievementTabFragment extends BaseTabFragment {
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResources() {
         return R.layout.activity_achievement;
     }
 }

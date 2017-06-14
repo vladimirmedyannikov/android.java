@@ -50,6 +50,7 @@ import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.newdb.AppDatabase;
+import ru.mos.polls.newprofile.base.rxjava.RxEventBus;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 import ru.mos.polls.rxhttp.api.session.Session;
@@ -200,10 +201,16 @@ public class AGApplication extends MultiDexApplication {
          * {@link android.arch.persistence.room.RoomDatabase} в {@link AppComponent}
          */
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "opencity-database").build();
+        bus = new RxEventBus();
     }
 
     public static AppDatabase db;
     public static AppComponent component;
+    private static RxEventBus bus;
+
+    public static RxEventBus bus() {
+        return bus;
+    }
 
     @Override
     protected void attachBaseContext(Context base) {

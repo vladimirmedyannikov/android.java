@@ -7,5 +7,5 @@ import android.support.v4.app.Fragment;
  */
 
 public abstract class BaseTabFragment extends Fragment {
-    protected abstract int getLayoutId();
+    protected abstract int getLayoutResources();
 }

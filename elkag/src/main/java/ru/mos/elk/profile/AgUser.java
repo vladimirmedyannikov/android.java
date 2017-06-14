@@ -454,6 +454,10 @@ public class AgUser implements Serializable {
         return surname;
     }
 
+    public String getSurnameAndFirstName() {
+        return String.format("%s %s", surname, firstName);
+    }
+
     public String getFirstName() {
         return firstName;
     }

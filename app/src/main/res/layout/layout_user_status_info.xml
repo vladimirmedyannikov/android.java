@@ -5,7 +5,7 @@
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser"/>
+            type="ru.mos.elk.profile.AgUser" />
     </data>
 
     <LinearLayout
@@ -20,15 +20,15 @@
             style="@style/text.normal.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="Имя не заполнено"
-            android:textStyle="bold"/>
+            android:text="@{agUser.getSurnameAndFirstName()}"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/agUser_registration_date"
             style="@style/text.small.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="активный гражданин с 8 июня 2017"/>
+            android:text="активный гражданин с 8 июня 2017" />
 
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/pd_normal"
             android:gravity="center_horizontal"
-            android:text="общий рейтинг"/>
+            android:text="общий рейтинг" />
 
         <TextView
             android:id="@+id/agUser_rating_value"
@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:text="50"
-            android:textSize="@dimen/ts_xxxlarge"/>
+            android:textSize="@dimen/ts_xxxlarge" />
 
         <TextView
             android:id="@+id/agUser_status_title"
@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/pd_normal"
             android:gravity="center_horizontal"
-            android:text="статус"/>
+            android:text="статус" />
 
         <TextView
             android:id="@+id/agUser_status_value"
@@ -61,6 +61,6 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:text="Новис"
-            android:textSize="@dimen/ts_xxlarge"/>
+            android:textSize="@dimen/ts_xxlarge" />
     </LinearLayout>
 </layout>

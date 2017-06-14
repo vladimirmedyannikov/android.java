@@ -25,7 +25,7 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new UserTabFragment();
+                return UserTabFragment.newInstance();
             case 1:
                 return new AchievementTabFragment();
             case 2:

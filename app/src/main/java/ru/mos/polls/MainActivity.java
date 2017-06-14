@@ -365,7 +365,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = PagerFragment.Profile.newInstance();
                 fr = ProfileFragment.newInstance();
                 tag = TAG_PROFILE;
-//                navigateTo().state(Add.deeper(new ProfileState(null)));
+//                navigateTo().state(Add.deeper(new EditProfileState(null)));
 
                 break;
             case NavigationMenuItem.MY_FREE_TIME:

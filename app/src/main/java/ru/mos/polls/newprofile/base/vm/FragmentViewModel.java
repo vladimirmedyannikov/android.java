@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base;
+package ru.mos.polls.newprofile.base.vm;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,11 +6,14 @@ import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.Fragment;
 
+import me.ilich.juggler.gui.JugglerFragment;
+import ru.mos.polls.newprofile.base.ui.BindingFragment;
+
 /**
  * Created by wlTrunks on 07.06.2017.
  */
 
-public abstract class FragmentViewModel<F extends BindingFragment, B extends ViewDataBinding> extends BaseObservable {
+public abstract class FragmentViewModel<F extends JugglerFragment, B extends ViewDataBinding> extends BaseObservable {
 
     protected abstract void initialize(B binding);
 

@@ -3,7 +3,7 @@ package ru.mos.polls.newprofile.ui.fragment;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
-import ru.mos.polls.newprofile.base.BindingFragment;
+import ru.mos.polls.newprofile.base.ui.BindingFragment;
 import ru.mos.polls.newprofile.ui.vm.UserTabFragmentVM;
 
 /**
@@ -11,6 +11,11 @@ import ru.mos.polls.newprofile.ui.vm.UserTabFragmentVM;
  */
 
 public class UserTabFragment extends BindingFragment<UserTabFragmentVM, LayoutUserTabProfileBinding> {
+
+    public static UserTabFragment newInstance() {
+        UserTabFragment f = new UserTabFragment();
+        return f;
+    }
 
 
     public UserTabFragment() {

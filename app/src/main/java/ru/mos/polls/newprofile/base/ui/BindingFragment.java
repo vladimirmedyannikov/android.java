@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base;
+package ru.mos.polls.newprofile.base.ui;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -8,13 +8,15 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.ilich.juggler.gui.JugglerFragment;
+import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+
 public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding>
-        extends Fragment {
+        extends JugglerFragment {
 
     protected abstract VM onCreateViewModel(B binding);
 
@@ -25,6 +27,7 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, getLayoutResources(), container, false);
         return binding.getRoot();
     }

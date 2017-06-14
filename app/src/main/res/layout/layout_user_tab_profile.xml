@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.ui.vm.UserTabFragmentVM"/>
-
+            type="ru.mos.polls.newprofile.ui.vm.UserTabFragmentVM" />
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser"/>
+            type="ru.mos.elk.profile.AgUser" />
+        <variable
+            name="clickListener"
+            type="ru.mos.polls.newprofile.ui.fragment.UserTabClickListener"/>
     </data>
-
 
     <ScrollView
         style="@style/root"
@@ -21,7 +22,6 @@
 
         <LinearLayout
             style="@style/item.linear"
-
             android:gravity="top">
 
             <LinearLayout
@@ -33,17 +33,18 @@
                 <include
                     android:id="@+id/agUser_avatar_panel"
                     layout="@layout/layout_user_avatar_panel"
-                    bind:agUser="@{agUser}"/>
+                    bind:agUser="@{agUser}"
+                    bind:clickListener="@{clickListener}"/>
 
                 <include
                     android:id="@+id/agUser_status_info_panel"
                     layout="@layout/layout_user_status_info"
-                    bind:agUser="@{agUser}"/>
+                    bind:agUser="@{agUser}" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/agUser_statistics_list"
-                style="@style/item"/>
+                style="@style/item" />
         </LinearLayout>
     </ScrollView>
 </layout>

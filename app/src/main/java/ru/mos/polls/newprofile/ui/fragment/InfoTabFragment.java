@@ -8,7 +8,7 @@ import ru.mos.polls.R;
 
 public class InfoTabFragment extends BaseTabFragment {
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResources() {
         return R.layout.layout_info_tab_profile;
     }
 }

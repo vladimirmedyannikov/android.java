@@ -1,6 +1,4 @@
-package ru.mos.polls.newprofile.ui.vm;
-
-import android.databinding.ViewDataBinding;
+package ru.mos.polls.newprofile.vm;
 
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;

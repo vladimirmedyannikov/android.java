@@ -7,7 +7,7 @@ import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.R;
-import ru.mos.polls.newprofile.base.ui.BindingToolbarFragment;
+import ru.mos.polls.newprofile.base.ui.CommonToolbarFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 
 /**
@@ -26,7 +26,7 @@ public class EditProfileState extends ContentBelowToolbarState<VoidParams> {
 
     @Override
     protected JugglerFragment onConvertToolbar(VoidParams params, @Nullable JugglerFragment fragment) {
-        return BindingToolbarFragment.createBack();
+        return CommonToolbarFragment.createBack();
     }
 
     @Nullable

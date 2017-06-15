@@ -10,26 +10,24 @@ import android.view.ViewGroup;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.gui.JugglerToolbarFragment;
 import ru.mos.polls.R;
-import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 
 /**
  * Created by wlTrunks on 14.06.2017.
  */
 
-public class BindingToolbarFragment extends JugglerToolbarFragment {
+public class CommonToolbarFragment extends JugglerToolbarFragment {
 
     public static JugglerFragment createBack() {
-        EditProfileFragment f = new EditProfileFragment();
-        Bundle b = addDisplayOptionsToBundle(null, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP);
-        f.setArguments(b);
+        CommonToolbarFragment f = new CommonToolbarFragment();
+        f.setArguments(addDisplayOptionsToBundle(null, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP));
         return f;
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.toolbar, container, false);
-//    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.toolbar, container, false);
+    }
 
     @Override
     protected int getToolbarId() {

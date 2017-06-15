@@ -9,4 +9,5 @@ public interface UserTabClickListener {
 
     void editUserInfo();
 
+    void enableProfileVisibility(boolean enable);
 }

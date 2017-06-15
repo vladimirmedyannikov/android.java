@@ -6,17 +6,18 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.ui.vm.UserTabFragmentVM" />
+            type="ru.mos.polls.newprofile.vm.UserTabFragmentVM" />
 
         <variable
             name="agUser"
             type="ru.mos.elk.profile.AgUser" />
+
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.ui.fragment.UserTabClickListener"/>
+            type="ru.mos.polls.newprofile.ui.fragment.UserTabClickListener" />
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         style="@style/root"
         android:fillViewport="true">
 
@@ -34,7 +35,7 @@
                     android:id="@+id/agUser_avatar_panel"
                     layout="@layout/layout_user_avatar_panel"
                     bind:agUser="@{agUser}"
-                    bind:clickListener="@{clickListener}"/>
+                    bind:clickListener="@{clickListener}" />
 
                 <include
                     android:id="@+id/agUser_status_info_panel"
@@ -45,6 +46,24 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/agUser_statistics_list"
                 style="@style/item" />
+
+            <RelativeLayout
+                style="@style/item.linear.horizontal"
+                android:padding="@dimen/pd_xsmall">
+
+                <TextView
+                    style="@style/text.normal.black"
+                    android:text="Профиль виден всем" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/agUser_profile_visibility"
+                    style="@style/wrap.centered"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"
+                    android:textOff="@string/empty"
+                    android:textOn="@string/empty"
+                    android:thumbTextPadding="@dimen/pd_xlarge" />
+            </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

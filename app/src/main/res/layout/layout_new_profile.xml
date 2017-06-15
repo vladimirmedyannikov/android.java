@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.ui.vm.ProfileFragmentVM"/>
+            type="ru.mos.polls.newprofile.vm.ProfileFragmentVM"/>
     </data>
 
     <LinearLayout

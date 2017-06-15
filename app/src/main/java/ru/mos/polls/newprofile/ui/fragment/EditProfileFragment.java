@@ -4,7 +4,7 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
-import ru.mos.polls.newprofile.ui.vm.EditProfileFragmentVM;
+import ru.mos.polls.newprofile.vm.EditProfileFragmentVM;
 
 /**
  * Created by wlTrunks on 14.06.2017.

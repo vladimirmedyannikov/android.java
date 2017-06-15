@@ -15,8 +15,7 @@ import android.view.ViewGroup;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 
-public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding>
-        extends JugglerFragment {
+public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment {
 
     protected abstract VM onCreateViewModel(B binding);
 

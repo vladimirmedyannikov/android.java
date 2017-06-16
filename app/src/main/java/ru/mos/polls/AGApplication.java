@@ -43,7 +43,6 @@ import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.push.GCMBroadcastReceiver;
 import ru.mos.polls.di.AppComponent;
-import ru.mos.polls.di.DaggerAppComponent;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
@@ -195,7 +194,7 @@ public class AGApplication extends MultiDexApplication {
 
 
         Session.init(getApplicationContext());
-        component = DaggerAppComponent.builder().build();
+//        component = DaggerAppComponent.builder().build();
         /**
          * Пока не удалось перенести инициализацию
          * {@link android.arch.persistence.room.RoomDatabase} в {@link AppComponent}

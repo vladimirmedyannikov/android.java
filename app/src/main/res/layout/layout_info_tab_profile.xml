@@ -12,6 +12,10 @@
             name="agUser"
             type="ru.mos.elk.profile.AgUser"/>
 
+        <variable
+            name="clickListener"
+            type="ru.mos.polls.newprofile.ui.fragment.UserTabClickListener"/>
+
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -59,7 +63,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/agUser_statistics_list"
+                android:id="@+id/agUser_info_list"
                 style="@style/item"/>
 
         </LinearLayout>

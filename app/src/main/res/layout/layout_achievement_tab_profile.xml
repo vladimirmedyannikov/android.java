@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AchievementTabFragmentVM"/>
+
+    </data>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/agUser_achievement_list"
+        style="@style/item"
+        android:padding="@dimen/pd_normal"/>
+</layout>

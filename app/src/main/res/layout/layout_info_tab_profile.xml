@@ -1,12 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.InfoTabFragmentVM"/>
+
+        <variable
+            name="agUser"
+            type="ru.mos.elk.profile.AgUser"/>
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        style="@style/root"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="top">
+
+            <LinearLayout
+                style="@style/item"
+                android:background="@color/actionbar_background"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/pd_normal"
+                android:paddingTop="@dimen/pd_normal">
+
+                <include
+                    android:id="@+id/agUser_avatar_panel"
+                    layout="@layout/layout_user_avatar_panel"
+                    bind:agUser="@{agUser}"
+                    bind:clickListener="@{clickListener}"/>
 
 
-    <TextView
-        android:text="info"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/agUser_profile_percent_fill_title"
+                    style="@style/text.small.white"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_normal"
+                    android:text="профиль заполнен на %s"/>
+
+                <ProgressBar
+                    android:id="@+id/agUser_profile_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:paddingLeft="@dimen/pd_normal"
+                    android:paddingRight="@dimen/pd_normal"
+                    android:progress="77"
+                    android:progressDrawable="@drawable/progressbar_yellow"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/agUser_statistics_list"
+                style="@style/item"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

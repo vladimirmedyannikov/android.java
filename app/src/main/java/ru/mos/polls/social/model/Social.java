@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mos.polls.R;
 import ru.mos.polls.social.manager.SocialManager;
 
 /**
@@ -266,5 +267,21 @@ public class Social implements Serializable {
             }
         }
         return result;
+    }
+
+    public static int getSocialIcon(int socialId) {
+        switch (socialId) {
+            case SocialManager.SOCIAL_ID_FB:
+                return R.drawable.fb;
+            case SocialManager.SOCIAL_ID_VK:
+                return R.drawable.vk;
+            case SocialManager.SOCIAL_ID_TW:
+                return R.drawable.tw;
+            case SocialManager.SOCIAL_ID_OK:
+                return R.drawable.odnklsnk;
+            case SocialManager.SOCIAL_ID_GP:
+                return R.drawable.google;
+        }
+        return -1;
     }
 }

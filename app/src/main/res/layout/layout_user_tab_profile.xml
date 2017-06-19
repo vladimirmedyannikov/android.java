@@ -45,7 +45,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/agUser_statistics_list"
+                android:id="@+id/agUser_profile_list"
                 style="@style/item"/>
 
             <RelativeLayout

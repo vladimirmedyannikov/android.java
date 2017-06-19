@@ -1,24 +1,16 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
 import ru.mos.polls.newprofile.model.UserStatistics;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.ui.adapter.UserStatsAdapter;
+import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabClickListener;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 
@@ -26,10 +18,8 @@ import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
  * Created by Trunks on 08.06.2017.
  */
 
-public class UserTabFragmentVM extends FragmentViewModel<UserTabFragment, LayoutUserTabProfileBinding> implements UserTabClickListener {
+public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements UserTabClickListener {
 
-    private AgUser changed, saved;
-    private RecyclerView recyclerView;
     private SwitchCompat enableProfileVisibility;
 
     public UserTabFragmentVM(UserTabFragment fragment, LayoutUserTabProfileBinding binding) {
@@ -38,13 +28,13 @@ public class UserTabFragmentVM extends FragmentViewModel<UserTabFragment, Layout
 
     @Override
     protected void initialize(LayoutUserTabProfileBinding binding) {
-        saved = new AgUser(getActivity());
-        recyclerView = binding.agUserStatisticsList;
+        recyclerView = binding.agUserProfileList;
+        super.initialize(binding);
         enableProfileVisibility = binding.agUserProfileVisibility;
         binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList();
-        mockUserStatsList();
+//        mockUserStatsList();
     }
 
     private void mockUserStatsList() {
@@ -58,18 +48,15 @@ public class UserTabFragmentVM extends FragmentViewModel<UserTabFragment, Layout
         list.add(new UserStatistics("Активность в социальных сетях", "0"));
         list.add(new UserStatistics("Получено баллов", "0"));
         list.add(new UserStatistics("Потрачено баллов", "0"));
-        UserStatsAdapter adapter = new UserStatsAdapter(list);
-        recyclerView.setAdapter(adapter);
+        UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
+        recyclerView.setAdapter(userStatisticsAdapter);
     }
 
-    private void setRecyclerList() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
-        Drawable dividerDrawable = ContextCompat.getDrawable(getFragment().getContext(), R.drawable.divider);
-        DividerItemDecoration did = new DividerItemDecoration(getFragment().getContext(), DividerItemDecoration.VERTICAL);
-        did.setDrawable(dividerDrawable);
-        recyclerView.addItemDecoration(did);
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mockUserStatsList();
     }
 
     @Override

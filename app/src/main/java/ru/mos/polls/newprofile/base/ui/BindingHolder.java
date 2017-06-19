@@ -24,6 +24,10 @@ public class BindingHolder<B extends ViewDataBinding> extends RecyclerView.ViewH
         this.binding = binding;
     }
 
+    public void setBinding(B binding){
+        this.binding = binding;
+    }
+
     public B getBinding() {
         return binding;
     }

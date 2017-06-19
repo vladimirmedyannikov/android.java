@@ -63,9 +63,25 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/agUser_info_list"
+                android:id="@+id/agUser_profile_list"
                 style="@style/item"/>
 
+            <LinearLayout
+                style="@style/linear"
+                android:padding="@dimen/pd_xsmall">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/agUser_stat_title"
+                    style="@style/text.small.gray"
+                    android:text="социальные сети"/>
+
+                <LinearLayout
+                    android:id="@+id/ag_user_social_binding_layer"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="@dimen/pd_xxlarge">
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

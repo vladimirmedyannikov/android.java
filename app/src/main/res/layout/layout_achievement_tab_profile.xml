@@ -11,7 +11,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/agUser_achievement_list"
+        android:id="@+id/agUser_profile_list"
         style="@style/item"
         android:padding="@dimen/pd_normal"/>
 </layout>

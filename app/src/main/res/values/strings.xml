@@ -739,5 +739,6 @@
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
     <string name="auth_error_confirm_code_not_correct">Неверный код подтверждения</string>
+    <string name="permission_camera_gallery">Для корректной работы необходимо предоставить доступ к камере и внутренней памяти устройства</string>
 
 </resources>

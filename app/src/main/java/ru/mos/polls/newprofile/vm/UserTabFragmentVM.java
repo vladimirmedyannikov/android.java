@@ -6,13 +6,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
 import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabClickListener;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
+import ru.mos.polls.util.ImagePickerController;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -34,7 +38,6 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList();
-//        mockUserStatsList();
     }
 
     private void mockUserStatsList() {
@@ -62,6 +65,7 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
     @Override
     public void makePhoto() {
         Toast.makeText(getFragment().getContext(), "make photo", Toast.LENGTH_SHORT).show();
+        showChooseMediaDialog();
     }
 
     @Override
@@ -72,5 +76,16 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
     @Override
     public void enableProfileVisibility(boolean enable) {
         Toast.makeText(getFragment().getContext(), "enableProfileVisibility = " + enable, Toast.LENGTH_SHORT).show();
+    }
+
+    @AfterPermissionGranted(ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE)
+    protected void showChooseMediaDialog() {
+        if (EasyPermissions.hasPermissions(getFragment().getContext(), ImagePickerController.MEDIA_PERMS)) {
+            ImagePickerController.showDialog(getFragment());
+        } else {
+            EasyPermissions.requestPermissions(getFragment(),
+                    getFragment().getResources().getString(R.string.permission_camera_gallery),
+                    ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE, ImagePickerController.MEDIA_PERMS);
+        }
     }
 }

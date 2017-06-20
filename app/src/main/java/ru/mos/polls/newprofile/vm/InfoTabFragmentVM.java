@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
 import ru.mos.polls.newprofile.model.UserInfo;
@@ -23,6 +26,7 @@ import ru.mos.polls.social.model.Social;
 public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, LayoutInfoTabProfileBinding> {
     LinearLayout socialBindingLayer;
     List<Social> savedSocial;
+    Observable<List<Social>> socialListObserable;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, LayoutInfoTabProfileBinding binding) {
         super(fragment, binding);
@@ -34,6 +38,7 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         socialBindingLayer = binding.agUserSocialBindingLayer;
         super.initialize(binding);
         savedSocial = Social.getSavedSocials(getFragment().getContext());
+        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
     }
 
     private void mockUserInfoList() {
@@ -68,19 +73,24 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         linearLayout.addView(civ);
     }
 
-    public void setSocialBindingLayer(List<Social> list) {
-        for (Social social : list) {
-            if (social.isLogon()) {
-                int socialIcon = Social.getSocialIcon(social.getSocialId());
-                addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
-            }
-        }
+    public void addSocialToLayer(Social social) {
+        int socialIcon = Social.getSocialIcon(social.getSocialId());
+        addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mockUserInfoList();
-        setSocialBindingLayer(savedSocial);
+        setSocialBindingLayerRx();
+    }
+
+    public void setSocialBindingLayerRx() {
+        disposables.add(socialListObserable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(Observable::fromIterable)
+                .filter(social -> social.isLogon())
+                .subscribe(this::addSocialToLayer));
     }
 }

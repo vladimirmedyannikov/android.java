@@ -20,7 +20,6 @@ import ru.mos.polls.newprofile.base.ui.BindingHolder;
 
 public abstract class BaseAdapter<VM extends BaseObservable, VH extends BindingHolder, B extends ViewDataBinding, F> extends RecyclerView.Adapter<VH> {
     protected VM viewModel;
-    protected int layoutResourcesID;
     protected VH viewHolder;
     protected B binding;
     protected List<F> list;

@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.Fragment;
 
+import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
 
@@ -17,6 +18,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
 
     protected abstract void initialize(B binding);
 
+    protected CompositeDisposable disposables;
     private F fragment;
     private B binding;
     private Activity activity;
@@ -25,6 +27,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
         this.fragment = fragment;
         this.binding = binding;
         this.activity = this.fragment.getActivity();
+        disposables = new CompositeDisposable();
         initialize(binding);
     }
 
@@ -54,7 +57,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     }
 
     public void onDestroy() {
-
+        disposables.clear();
     }
 
     public void onPause() {

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import ru.mos.polls.R;
 import ru.mos.polls.social.manager.SocialManager;
 
@@ -65,6 +66,10 @@ public class Social implements Serializable {
         socials.add(social);
 
         return socials;
+    }
+
+    public static Observable<List<Social>> getObservableSavedSocials(Context context) {
+        return Observable.just(getSavedSocials(context));
     }
 
     public Social() {

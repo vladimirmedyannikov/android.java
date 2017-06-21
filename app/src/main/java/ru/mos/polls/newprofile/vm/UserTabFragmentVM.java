@@ -1,11 +1,13 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
@@ -25,6 +27,7 @@ import ru.mos.polls.util.ImagePickerController;
 public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements UserTabClickListener {
 
     private SwitchCompat enableProfileVisibility;
+    protected CircleImageView circleImageView;
 
     public UserTabFragmentVM(UserTabFragment fragment, LayoutUserTabProfileBinding binding) {
         super(fragment, binding);
@@ -35,6 +38,7 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         recyclerView = binding.agUserProfileList;
         super.initialize(binding);
         enableProfileVisibility = binding.agUserProfileVisibility;
+        circleImageView = binding.agUserAvatarPanel.agUserImage;
         binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList();
@@ -64,7 +68,6 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
 
     @Override
     public void makePhoto() {
-        Toast.makeText(getFragment().getContext(), "make photo", Toast.LENGTH_SHORT).show();
         showChooseMediaDialog();
     }
 
@@ -78,14 +81,9 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         Toast.makeText(getFragment().getContext(), "enableProfileVisibility = " + enable, Toast.LENGTH_SHORT).show();
     }
 
-    @AfterPermissionGranted(ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE)
-    protected void showChooseMediaDialog() {
-        if (EasyPermissions.hasPermissions(getFragment().getContext(), ImagePickerController.MEDIA_PERMS)) {
-            ImagePickerController.showDialog(getFragment());
-        } else {
-            EasyPermissions.requestPermissions(getFragment(),
-                    getFragment().getResources().getString(R.string.permission_camera_gallery),
-                    ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE, ImagePickerController.MEDIA_PERMS);
-        }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCropedUri(requestCode, resultCode, data);
     }
 }

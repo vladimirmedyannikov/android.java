@@ -23,6 +23,7 @@ public class Events {
 
     public static class ProfileEvents {
         public static final int EDIT_USER_INFO = 1;
+        public static final int UPDATE_AVATAR = 2;
         private int action;
 
         public ProfileEvents(int action) {

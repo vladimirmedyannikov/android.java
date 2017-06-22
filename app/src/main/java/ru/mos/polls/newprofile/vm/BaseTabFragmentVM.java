@@ -14,21 +14,24 @@ import android.support.v7.widget.RecyclerView;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
+
+import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.profile.AgUser;
-import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
-import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 
 /**
@@ -81,6 +84,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             Uri uri = ImagePickerController.getCropedUri(data);
             setAvatar(uri);
+            updateAvatar(uri);
         }
     }
 
@@ -88,8 +92,30 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
         circleImageView.setImageURI(uri);
     }
 
+    void setAvatar() {
+        circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
+    }
+
     void updateAvatar(Uri uri) {
-        AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.EDIT_USER_INFO));
+        Observable<Uri> observable = Observable.create((ObservableOnSubscribe<Uri>) e -> {
+            e.onNext(uri);
+            e.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(this::test, throwable -> System.out.println(throwable.getMessage()));
+    }
+
+
+    private void test(@NonNull Uri uri) {
+        Bitmap bitmap = FileUtils.getBitmap(getFragment().getContext(), uri);
+        File file = FileUtils.getFileFromUri(getFragment().getContext(), uri, "aguser_avatar.jpg");
+        BadgesSource.getInstance().setAvatar(file.getAbsolutePath(), bitmap);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_AVATAR_FROM_CACHE));
+        sendAvatar(file);
+    }
+
+    protected void sendAvatar(File file) {
+        System.out.println("File send to server = " + file.getName());
+        System.out.println("File send to server = " + file.getAbsolutePath());
     }
 }

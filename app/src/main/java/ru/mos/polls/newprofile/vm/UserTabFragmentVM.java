@@ -2,32 +2,25 @@ package ru.mos.polls.newprofile.vm;
 
 import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
 import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
-import ru.mos.polls.newprofile.ui.fragment.UserTabClickListener;
+import ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
-import ru.mos.polls.util.ImagePickerController;
 
 /**
  * Created by Trunks on 08.06.2017.
  */
 
-public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements UserTabClickListener {
+public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements AvatarPanelClickListener {
 
     private SwitchCompat enableProfileVisibility;
-    protected CircleImageView circleImageView;
 
     public UserTabFragmentVM(UserTabFragment fragment, LayoutUserTabProfileBinding binding) {
         super(fragment, binding);
@@ -59,13 +52,12 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         recyclerView.setAdapter(userStatisticsAdapter);
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated() {
+        super.onViewCreated();
         mockUserStatsList();
+        setAvatar();
     }
-
     @Override
     public void makePhoto() {
         showChooseMediaDialog();
@@ -74,11 +66,6 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
     @Override
     public void editUserInfo() {
         AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.EDIT_USER_INFO));
-    }
-
-    @Override
-    public void enableProfileVisibility(boolean enable) {
-        Toast.makeText(getFragment().getContext(), "enableProfileVisibility = " + enable, Toast.LENGTH_SHORT).show();
     }
 
     @Override

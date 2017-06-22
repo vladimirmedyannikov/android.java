@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.ui.fragment.UserTabClickListener" />
+            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener" />
     </data>
 
     <LinearLayout

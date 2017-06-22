@@ -2,6 +2,7 @@ package ru.mos.polls.newprofile.vm;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.widget.LinearLayout;
 
@@ -12,10 +13,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
+import ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.social.model.Social;
 
@@ -23,7 +27,7 @@ import ru.mos.polls.social.model.Social;
  * Created by Trunks on 16.06.2017.
  */
 
-public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, LayoutInfoTabProfileBinding> {
+public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, LayoutInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
     List<Social> savedSocial;
     Observable<List<Social>> socialListObserable;
@@ -36,7 +40,9 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
     protected void initialize(LayoutInfoTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
         socialBindingLayer = binding.agUserSocialBindingLayer;
+        circleImageView = binding.agUserAvatarPanel.agUserImage;
         super.initialize(binding);
+        binding.setClickListener(this);
         savedSocial = Social.getSavedSocials(getFragment().getContext());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
     }
@@ -81,8 +87,15 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
         mockUserInfoList();
         setSocialBindingLayerRx();
+        setAvatar();
     }
 
     public void setSocialBindingLayerRx() {
@@ -92,5 +105,21 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())
                 .subscribe(this::addSocialToLayer));
+    }
+
+    @Override
+    public void makePhoto() {
+        showChooseMediaDialog();
+    }
+
+    @Override
+    public void editUserInfo() {
+        AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.EDIT_USER_INFO));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCropedUri(requestCode, resultCode, data);
     }
 }

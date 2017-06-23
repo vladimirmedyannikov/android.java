@@ -29,7 +29,6 @@ import ru.mos.polls.social.model.Social;
 
 public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, LayoutInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
-    List<Social> savedSocial;
     Observable<List<Social>> socialListObserable;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, LayoutInfoTabProfileBinding binding) {
@@ -43,7 +42,6 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         super.initialize(binding);
         binding.setClickListener(this);
-        savedSocial = Social.getSavedSocials(getFragment().getContext());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
     }
 

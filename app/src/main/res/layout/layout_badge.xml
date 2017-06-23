@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="@dimen/vs_xxsmall"
-              android:layout_height="@dimen/vs_xxsmall"
-              android:layout_centerVertical="true"
-              android:gravity="center"
-              android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ProgressBar
-        android:id="@+id/loadingBadge"
-        style="@style/wrap"/>
+    <data>
 
-    <ImageView
-        android:id="@+id/badge"
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
+
+    </data>
+
+    <LinearLayout
         android:layout_width="@dimen/vs_xxsmall"
         android:layout_height="@dimen/vs_xxsmall"
-        android:visibility="gone"/>
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/loadingBadge"
+            style="@style/wrap"/>
+
+        <ImageView
+            android:id="@+id/badge"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:visibility="gone"
+            app:imageUrl="@{viewModel.getImageUrl}"/>
+    </LinearLayout>
+</layout>

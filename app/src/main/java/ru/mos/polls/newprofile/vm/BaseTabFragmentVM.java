@@ -16,6 +16,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 
 import java.io.File;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
@@ -31,6 +32,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.profile.model.Achievement;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 
@@ -42,6 +44,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     protected RecyclerView recyclerView;
     protected AgUser changed, saved;
     protected CircleImageView circleImageView;
+    protected Observable<List<Achievement>> achievementList;
 
     public BaseTabFragmentVM(F fragment, B binding) {
         super(fragment, binding);
@@ -98,15 +101,16 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
     void updateAvatar(Uri uri) {
         Observable<Uri> observable = Observable.create((ObservableOnSubscribe<Uri>) e -> {
+            sendAndUpdateNavigatorIcon(uri);
             e.onNext(uri);
             e.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(this::test, throwable -> System.out.println(throwable.getMessage()));
+        disposables.add(observable.subscribe(this::setAvatar, throwable -> System.out.println(throwable.getMessage())));
     }
 
 
-    private void test(@NonNull Uri uri) {
+    private void sendAndUpdateNavigatorIcon(@NonNull Uri uri) {
         Bitmap bitmap = FileUtils.getBitmap(getFragment().getContext(), uri);
         File file = FileUtils.getFileFromUri(getFragment().getContext(), uri, "aguser_avatar.jpg");
         BadgesSource.getInstance().setAvatar(file.getAbsolutePath(), bitmap);

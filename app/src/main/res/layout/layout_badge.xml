@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
+            type="ru.mos.polls.newprofile.vm.AchievementVM" />
 
     </data>
 
@@ -19,13 +18,12 @@
 
         <ProgressBar
             android:id="@+id/loadingBadge"
-            style="@style/wrap"/>
+            style="@style/wrap" />
 
         <ImageView
             android:id="@+id/badge"
             android:layout_width="@dimen/vs_xxsmall"
             android:layout_height="@dimen/vs_xxsmall"
-            android:visibility="gone"
-            app:imageUrl="@{viewModel.getImageUrl}"/>
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

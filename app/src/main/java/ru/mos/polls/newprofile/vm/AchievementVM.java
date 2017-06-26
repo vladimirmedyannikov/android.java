@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.widget.ImageView;
@@ -12,9 +13,11 @@ import ru.mos.polls.newprofile.model.Achievement;
 
 public class AchievementVM extends BaseObservable {
     private Achievement achievement;
-    public final ObservableField<ImageView> celsius = new ObservableField<>();
-    public AchievementVM(Achievement achievement) {
+    private final Context context;
+
+    public AchievementVM(Achievement achievement, Context context) {
         this.achievement = achievement;
+        this.context = context;
     }
 
     public String getId() {

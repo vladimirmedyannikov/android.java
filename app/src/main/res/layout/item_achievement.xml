@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
+            type="ru.mos.polls.newprofile.vm.AchievementVM" />
 
     </data>
 
@@ -15,8 +16,9 @@
         android:padding="@dimen/pd_xsmall">
 
         <include
+            bind:viewModel="@{viewModel}"
             android:id="@+id/badgeContainer"
-            layout="@layout/layout_badge"/>
+            layout="@layout/layout_badge" />
 
         <LinearLayout
             style="@style/item.linear"
@@ -27,12 +29,14 @@
             <TextView
                 android:id="@+id/title"
                 style="@style/text.large"
-                android:layout_width="match_parent"/>
+                android:layout_width="match_parent"
+                android:text="@{viewModel.title}" />
 
             <TextView
                 android:id="@+id/subtitle"
                 style="@style/text.normal"
-                android:textColor="@color/greyHint"/>
+                android:text="@{viewModel.body}"
+                android:textColor="@color/greyHint" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

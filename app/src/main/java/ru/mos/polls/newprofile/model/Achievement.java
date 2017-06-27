@@ -15,6 +15,16 @@ public class Achievement implements Serializable {
     private boolean isNext;
     private boolean isNeedHideTask;
 
+    public Achievement(String id, String imageUrl, String title, String description, String body, boolean isNext, boolean isNeedHideTask) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.description = description;
+        this.body = body;
+        this.isNext = isNext;
+        this.isNeedHideTask = isNeedHideTask;
+    }
+
     public String getId() {
         return id;
     }

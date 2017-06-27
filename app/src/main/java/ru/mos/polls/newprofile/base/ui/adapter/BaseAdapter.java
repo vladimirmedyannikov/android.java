@@ -34,12 +34,13 @@ public abstract class BaseAdapter<VM extends BaseObservable, VH extends BindingH
 
     public abstract VH getVH(B binding);
 
-    public abstract VM getVM(F obj);
+    public abstract VM getVM(F obj, B binding);
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
         F obj = list.get(position);
-        holder.getBinding().setVariable(getVariable(), getVM(obj));
+        binding = (B) holder.getBinding();
+        holder.getBinding().setVariable(getVariable(), getVM(obj, binding));
         holder.getBinding().executePendingBindings();
     }
 

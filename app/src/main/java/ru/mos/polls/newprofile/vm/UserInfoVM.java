@@ -2,6 +2,7 @@ package ru.mos.polls.newprofile.vm;
 
 import android.databinding.BaseObservable;
 
+import ru.mos.polls.databinding.UserInfoItemBinding;
 import ru.mos.polls.newprofile.model.UserInfo;
 
 /**
@@ -10,9 +11,11 @@ import ru.mos.polls.newprofile.model.UserInfo;
 
 public class UserInfoVM extends BaseObservable {
     private UserInfo userData;
+    private UserInfoItemBinding binding;
 
-    public UserInfoVM(UserInfo userData) {
+    public UserInfoVM(UserInfo userData, UserInfoItemBinding binding) {
         this.userData = userData;
+        this.binding = binding;
     }
 
     public String getValue() {

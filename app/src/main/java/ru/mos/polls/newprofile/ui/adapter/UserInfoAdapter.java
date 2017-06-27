@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.UserInfoItemBinding;
+import ru.mos.polls.databinding.UserStatsItemBinding;
 import ru.mos.polls.newprofile.base.ui.BindingHolder;
 import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.newprofile.model.UserInfo;
@@ -25,8 +26,8 @@ public class UserInfoAdapter extends BaseAdapter<UserInfoVM, BindingHolder<UserI
     }
 
     @Override
-    public UserInfoVM getVM(UserInfo obj) {
-        return new UserInfoVM(obj);
+    public UserInfoVM getVM(UserInfo obj, UserInfoItemBinding binding) {
+        return new UserInfoVM(obj, binding);
     }
 
     @Override

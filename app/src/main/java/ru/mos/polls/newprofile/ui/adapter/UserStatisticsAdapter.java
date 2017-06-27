@@ -23,8 +23,8 @@ public class UserStatisticsAdapter extends BaseAdapter<UserStatisticsVM, UserSta
     }
 
     @Override
-    public UserStatisticsVM getVM(UserStatistics obj) {
-        return new UserStatisticsVM(obj);
+    public UserStatisticsVM getVM(UserStatistics obj, UserStatsItemBinding binding) {
+        return new UserStatisticsVM(obj, binding);
     }
 
     @Override

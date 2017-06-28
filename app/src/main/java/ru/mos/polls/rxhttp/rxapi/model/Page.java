@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp;
+package ru.mos.polls.rxhttp.rxapi.model;
 
 import com.google.gson.annotations.SerializedName;
 

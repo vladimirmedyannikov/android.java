@@ -1,9 +1,10 @@
-package ru.mos.polls.rxhttp.api;
+package ru.mos.polls.rxhttp.rxapi.handle.error;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import ru.mos.polls.BuildConfig;
-import ru.mos.polls.rxhttp.api.session.Session;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -25,6 +26,9 @@ public class DefaultResponseErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void onServerError(int code, String message) {
+        if (TextUtils.isEmpty(message)) {
+            message = "Произошла непредвиденная ошибка. Попробуйте повторить операцию позже.";
+        }
         GuiUtils.displayOkMessage(context, message, null);
     }
 
@@ -35,7 +39,7 @@ public class DefaultResponseErrorHandler implements ResponseErrorHandler {
             errorMessage = String.format("Попробуйте повторить операцию позже. Произошла непредвиденная ошибка: %s",
                     throwable.getMessage());
         }
-        GuiUtils.displayOkMessage(context, errorMessage, null);
+        GuiUtils.displayUnknownError(context/*, errorMessage*/);
     }
 
     @Override

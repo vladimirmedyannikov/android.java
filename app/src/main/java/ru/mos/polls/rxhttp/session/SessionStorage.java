@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.api.session;
+package ru.mos.polls.rxhttp.session;
 
 import android.support.annotation.Nullable;
 

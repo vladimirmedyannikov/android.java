@@ -1,4 +1,6 @@
-package ru.mos.polls.rxhttp.api;
+package ru.mos.polls.rxhttp.rxapi.handle.error;
+
+import ru.mos.polls.rxhttp.session.Session;
 
 /**
  * Спецификация объекта-обработчика ошибок выполнения запроса
@@ -37,7 +39,7 @@ public interface ResponseErrorHandler {
     void onSystemError(Throwable throwable);
 
     /**
-     * Обработка ошибки потери сессии {@link ru.mnenie.mysmr.http.Session}
+     * Обработка ошибки потери сессии {@link Session}
      */
     void onNotAuthorizedServerError();
 

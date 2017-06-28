@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import ru.mos.polls.newinnovation.Innovation;
+import ru.mos.polls.rxhttp.rxapi.model.novelty.Innovation;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

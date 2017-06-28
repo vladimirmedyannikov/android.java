@@ -3,7 +3,7 @@ package ru.mos.polls.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import ru.mos.polls.rxhttp.api.AgApi;
+import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

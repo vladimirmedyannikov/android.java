@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.api;
+package ru.mos.polls.rxhttp.rxapi.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.mos.polls.BuildConfig;
-import ru.mos.polls.rxhttp.api.session.Session;
+import ru.mos.polls.rxhttp.session.Session;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

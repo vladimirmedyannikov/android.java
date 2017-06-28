@@ -4,8 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.mos.polls.rxhttp.api.AgApi;
-import ru.mos.polls.rxhttp.api.AgApiBuilder;
+import ru.mos.polls.rxhttp.rxapi.config.AgApi;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

@@ -147,6 +147,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         initGeotargetManager();
 
         subscribeEventsBus();
+
+//        new ExampleApi().testLoadInnovationDetails(this);
     }
 
     @SuppressWarnings("VisibleForTests")

@@ -1,4 +1,4 @@
-package ru.mos.polls.newinnovation;
+package ru.mos.polls.rxhttp.rxapi.model.novelty;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

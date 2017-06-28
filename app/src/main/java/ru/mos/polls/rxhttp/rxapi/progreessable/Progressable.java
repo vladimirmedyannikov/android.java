@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.api.progreessable;
+package ru.mos.polls.rxhttp.rxapi.progreessable;
 
 /**
  * Супертип,определяющий поведение прогресса при загрузке

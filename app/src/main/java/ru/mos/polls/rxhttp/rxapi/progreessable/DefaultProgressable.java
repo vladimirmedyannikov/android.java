@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.api.progreessable;
+package ru.mos.polls.rxhttp.rxapi.progreessable;
 
 import android.app.ProgressDialog;
 import android.content.Context;

@@ -13,6 +13,7 @@ import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
+import ru.mos.polls.rxhttp.ExampleApi;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -50,6 +51,7 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         list.add(new UserStatistics("Потрачено баллов", "0"));
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
+        new ExampleApi().testLoadInnovationDetails(getFragment().getContext());
     }
 
     @Override

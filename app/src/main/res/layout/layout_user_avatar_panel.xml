@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser" />
+            type="ru.mos.elk.profile.AgUser"/>
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener" />
+            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener"/>
     </data>
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="@{()->clickListener.makePhoto()}"
-            android:src="@drawable/shop_white" />
+            app:srcCompat="@drawable/ic_photo_camera"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/agUser_image"
@@ -35,7 +35,7 @@
             android:src="@drawable/unlogin2"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/agUser_edit"
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="@{()->clickListener.editUserInfo()}"
-            android:src="@drawable/news" />
+            app:srcCompat="@drawable/ic_new_file"/>
 
     </LinearLayout>
 </layout>

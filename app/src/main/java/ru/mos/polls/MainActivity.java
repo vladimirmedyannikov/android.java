@@ -16,6 +16,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -41,6 +45,10 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
+import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.BaseActivity;
+import ru.mos.polls.newprofile.state.EditProfileState;
+import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
@@ -137,6 +145,25 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
         updateGeotargetAreas();
         initGeotargetManager();
+
+        subscribeEventsBus();
+    }
+
+    @SuppressWarnings("VisibleForTests")
+    private void subscribeEventsBus() { //переснести
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.ProfileEvents) {
+                        Events.ProfileEvents action = (Events.ProfileEvents) o;
+                        switch (action.getAction()) {
+                            case Events.ProfileEvents.EDIT_USER_INFO:
+                                navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
+                                break;
+                        }
+                    }
+                });
     }
 
     private void initGeotargetManager() {
@@ -362,7 +389,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
                 fr = PagerFragment.Profile.newInstance();
+                fr = ProfileFragment.newInstance();
                 tag = TAG_PROFILE;
+//                navigateTo().state(Add.deeper(new EditProfileState(null)));
+
                 break;
             case NavigationMenuItem.MY_FREE_TIME:
                 Statistics.enterEvents();

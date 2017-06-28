@@ -1,5 +1,6 @@
 package ru.mos.polls;
 
+import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,13 +42,17 @@ import ru.mos.elk.api.Token;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.push.GCMBroadcastReceiver;
+import ru.mos.polls.di.AppComponent;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
+import ru.mos.polls.newdb.AppDatabase;
+import ru.mos.polls.newprofile.base.rxjava.RxEventBus;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
+import ru.mos.polls.rxhttp.api.session.Session;
 import ru.mos.polls.social.manager.SocialManager;
 import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
@@ -187,6 +192,23 @@ public class AGApplication extends MultiDexApplication {
         cacheDir = StorageUtils.getCacheDirectory(this);
         imageLoader.init(getLoaderConfig());
 
+
+        Session.init(getApplicationContext());
+//        component = DaggerAppComponent.builder().build();
+        /**
+         * Пока не удалось перенести инициализацию
+         * {@link android.arch.persistence.room.RoomDatabase} в {@link AppComponent}
+         */
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "opencity-database").build();
+        bus = new RxEventBus();
+    }
+
+    public static AppDatabase db;
+    public static AppComponent component;
+    private static RxEventBus bus;
+
+    public static RxEventBus bus() {
+        return bus;
     }
 
     @Override

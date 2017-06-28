@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.UserTabFragmentVM"/>
+
+        <variable
+            name="agUser"
+            type="ru.mos.elk.profile.AgUser"/>
+
+        <variable
+            name="clickListener"
+            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        style="@style/root"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:descendantFocusability="blocksDescendants"
+            android:gravity="top">
+
+            <LinearLayout
+                style="@style/item"
+                android:background="@color/actionbar_background"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/pd_normal">
+
+                <include
+                    android:id="@+id/agUser_avatar_panel"
+                    layout="@layout/layout_user_avatar_panel"
+                    bind:agUser="@{agUser}"
+                    bind:clickListener="@{clickListener}"/>
+
+                <include
+                    android:id="@+id/agUser_status_info_panel"
+                    layout="@layout/layout_user_status_info"
+                    bind:agUser="@{agUser}"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/agUser_profile_list"
+                style="@style/item"/>
+
+            <RelativeLayout
+                style="@style/item.linear.horizontal"
+                android:padding="@dimen/pd_xsmall">
+
+                <TextView
+                    style="@style/text.normal.black"
+                    android:text="Профиль виден всем"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/agUser_profile_visibility"
+                    style="@style/wrap.centered"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"
+                    android:textOff="@string/empty"
+                    android:textOn="@string/empty"
+                    android:thumbTextPadding="@dimen/pd_xlarge"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.UserInfoVM"/>
+    </data>
+
+    <LinearLayout
+        style="@style/item"
+        android:orientation="vertical"
+        android:padding="@dimen/pd_xsmall">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/agUser_stat_title"
+            style="@style/text.small.gray"
+            android:text="@{viewModel.title}"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/agUser_stat_value"
+            style="@style/text.normal.black"
+            android:textStyle="bold"
+            android:text="@{viewModel.value}"/>
+    </LinearLayout>
+</layout>

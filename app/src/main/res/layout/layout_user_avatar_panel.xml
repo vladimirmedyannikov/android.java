@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="agUser"
+            type="ru.mos.elk.profile.AgUser" />
+
+        <variable
+            name="clickListener"
+            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener" />
+    </data>
+
+    <LinearLayout
+        style="@style/item"
+
+        android:background="@color/actionbar_background"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/agUser_camera"
+            style="@style/wrap"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="@{()->clickListener.makePhoto()}"
+            android:src="@drawable/shop_white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/agUser_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:src="@drawable/unlogin2"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/agUser_edit"
+            style="@style/wrap"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="@{()->clickListener.editUserInfo()}"
+            android:src="@drawable/news" />
+
+    </LinearLayout>
+</layout>

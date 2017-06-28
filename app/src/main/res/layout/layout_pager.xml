@@ -5,7 +5,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.astuetz.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.astuetz.PagerSlidingTabStrip
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/vs_xxsmall"

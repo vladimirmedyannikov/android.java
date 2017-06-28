@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.List;
 
 import ru.mos.polls.BaseUnitTest;
+import ru.mos.polls.R;
 import ru.mos.polls.social.manager.SocialManager;
 import ru.mos.polls.social.model.Social;
 
@@ -77,5 +78,26 @@ public class SocialUnitTest extends BaseUnitTest {
         Social test = Social.fromPreference(appContext, SocialManager.SOCIAL_ID_FB);
         Assert.assertNotNull(test);
 
+    }
+
+    @Test
+    public void getSocialIconId() {
+        int vkIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_VK);
+        Assert.assertEquals(R.drawable.vk, vkIcon);
+
+        int fbIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_FB);
+        Assert.assertEquals(R.drawable.fb, fbIcon);
+
+        int twIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_TW);
+        Assert.assertEquals(R.drawable.tw, twIcon);
+
+        int okIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_OK);
+        Assert.assertEquals(R.drawable.odnklsnk, okIcon);
+
+        int gpIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_GP);
+        Assert.assertEquals(R.drawable.google, gpIcon);
+
+        int defaultRed = Social.getSocialIcon(0);
+        Assert.assertEquals(-1, defaultRed);
     }
 }

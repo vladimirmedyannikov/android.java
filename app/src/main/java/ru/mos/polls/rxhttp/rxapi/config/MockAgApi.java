@@ -8,8 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import io.reactivex.Observable;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import rx.Observable;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

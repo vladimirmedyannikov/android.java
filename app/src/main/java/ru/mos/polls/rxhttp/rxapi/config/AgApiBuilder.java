@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.UUID;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -76,8 +78,7 @@ public class AgApiBuilder {
                         request.writeTo(buffer);
                     }
                     result = buffer.readUtf8();
-                }
-                catch (IOException ignored) {
+                } catch (IOException ignored) {
                 }
                 return result;
             }
@@ -86,6 +87,7 @@ public class AgApiBuilder {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
 //                .addInterceptor(authInterceptor)
                 .addInterceptor(logInterceptor)
+                .addInterceptor(getUUIDInterceptor())
                 .build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -99,5 +101,32 @@ public class AgApiBuilder {
                 .build();
 
         return retrofit.create(AgApi.class);
+    }
+
+    /**
+     * Добавляем UUID для каждого запросы
+     */
+    public static Interceptor getUUIDInterceptor() {
+        Interceptor authInterceptor = chain -> {
+            Request original = chain.request();
+            HttpUrl originalHttpUrl = original.url();
+
+            HttpUrl url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("client_req_id", getUUID())
+                    .build();
+
+            Request.Builder requestBuilder = original.newBuilder()
+                    .url(url);
+
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
+        };
+        return authInterceptor;
+    }
+
+    public static String getUUID() {
+        UUID uuid = UUID.randomUUID();
+        String uuidInString = uuid.toString();
+        return uuidInString;
     }
 }

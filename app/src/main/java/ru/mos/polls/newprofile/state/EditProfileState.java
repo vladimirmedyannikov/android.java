@@ -32,6 +32,6 @@ public class EditProfileState extends ContentBelowToolbarState<VoidParams> {
     @Nullable
     @Override
     public String getTitle(Context context, VoidParams params) {
-        return context.getString(R.string.edit);
+        return context.getString(R.string.edit_profile);
     }
 }

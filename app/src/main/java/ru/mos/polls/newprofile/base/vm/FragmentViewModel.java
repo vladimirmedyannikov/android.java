@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 
 import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
-import ru.mos.polls.newprofile.base.ui.BindingFragment;
 
 /**
  * Created by wlTrunks on 07.06.2017.

@@ -783,7 +783,8 @@ public class AgUser implements Serializable {
     public enum Gender {
         NULL("null", "Не установлено"),
         MALE("male", "Мужской"),
-        FEMALE("female", "Женский");
+        FEMALE("female", "Женский"),
+        HINT("null", "Пол");
 
         private String value, label;
 

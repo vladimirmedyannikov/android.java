@@ -264,6 +264,13 @@
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
     </style>
 
+    <style name="edit_profile" parent="text.normal.black">
+        <item name="android:paddingTop">@dimen/pd_xsmall</item>
+        <item name="android:paddingBottom">@dimen/pd_xsmall</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <!--Для отображения заголовков-->
     <style name="header" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>

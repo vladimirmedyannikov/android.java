@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatCheckedTextView
+    android:id="@+id/spinner_item"
+    style="@style/edit_profile"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="@dimen/pd_xxsmall"
+    android:background="@color/white"/>

@@ -744,4 +744,6 @@
     <string name="crop_image_menu_flip_horizontally">Перевернуть по горизонтали</string>
     <string name="crop_image_menu_flip_vertically">Перевернуть по вертикали</string>
 
+    <string name="edit_profile">Редактирование профиля</string>
+
 </resources>

@@ -161,7 +161,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/edit_user_work_card"
                 style="@style/linear"
-                android:layout_below="@+id/edit_user_family_card"
+                android:layout_below="@+id/edit_user_flat_card"
                 android:layout_marginTop="@dimen/pd_normal">
 
                 <LinearLayout

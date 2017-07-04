@@ -1,9 +1,13 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
+import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
+import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.vm.EditProfileFragmentVM;
 
 /**
@@ -35,4 +39,7 @@ public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, 
     }
 
 
+    public void navigateToActivityForResult(State state, int code) {
+        navigateTo().state(Add.newActivityForResult(state, BaseActivity.class, code));
+    }
 }

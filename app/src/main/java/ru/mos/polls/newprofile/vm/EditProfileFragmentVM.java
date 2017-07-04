@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
@@ -17,10 +18,13 @@ import java.util.List;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
 import ru.mos.elk.profile.DatePickerFragment;
+import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
+import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -31,11 +35,14 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     AppCompatSpinner martialStatus;
     ArrayAdapter genderAdapter;
     AgUser.MaritalStatus.MaritalStatusAdapter martialStatusAdapter;
-    AgUser agUser;
+    AgUser savedUser, changedUser;
     LinearLayout kidsLayer;
     View kidsDateLayer;
     TextView birthdayDate;
     BirthDateParser dbp;
+    TextView registration;
+    TextView residence;
+    TextView email;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -43,26 +50,76 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     @Override
     protected void initialize(LayoutNewEditProfileBinding binding) {
-        agUser = new AgUser(getFragment().getContext());
+        savedUser = new AgUser(getFragment().getContext());
+        changedUser = new AgUser(getFragment().getContext());
         dbp = new BirthDateParser(getActivity());
         gender = binding.editGender;
         martialStatus = binding.editMartialStatus;
         kidsLayer = binding.editKidsLayer;
         kidsDateLayer = binding.editKidsDateLayer;
         birthdayDate = binding.editBirthdayDate;
+        registration = binding.editFlatRegistration;
+        residence = binding.editFlatResidence;
+        email = binding.editEmail;
     }
 
     @Override
     public void onViewCreated() {
         setGenderView();
-        setMartialStatusView(agUser.getGender());
+        setMartialStatusView(savedUser.getGender());
         displayBirthday();
+        registration.setOnClickListener(v -> {
+            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
+        });
+        residence.setOnClickListener(v -> {
+            NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
+        });
+        setRegistationFlatView(savedUser.getRegistration());
+        setResidenceFlatView(savedUser.getRegistration(), savedUser.getResidence());
+
+        email.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
+        });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Flat newFlat = NewAddressActivity.onResult(requestCode, resultCode, data);
+        if (newFlat != null) {
+            if (newFlat.isRegistration()) {
+                setRegistationFlatView(newFlat);
+                changedUser.setRegistrationFlat(newFlat);
+            }
+            if (newFlat.isResidence()) {
+                setResidenceFlatView(savedUser.getRegistration(), newFlat);
+                changedUser.setResidenceFlat(newFlat);
+            }
+        }
+    }
+
+
+    public void setRegistationFlatView(Flat flat) {
+        setFlatView(flat, registration);
+    }
+
+    public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
+        if (registationFlat.compareByFullAddress(residenceFlat)) {
+            if (!registationFlat.isEmpty())
+                residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
+        } else setFlatView(residenceFlat, residence);
+    }
+
+
+    public void setFlatView(Flat flat, TextView view) {
+        if (!flat.isEmpty())
+            view.setText(flat.getAddressTitle(getFragment().getContext()));
     }
 
     public void displayBirthday() {
         birthdayDate.setOnClickListener(v -> setBirthDayDate());
-        birthdayDate.setText(dbp.format(agUser.getBirthday()));
-        String tag = agUser.getBirthday();
+        birthdayDate.setText(dbp.format(savedUser.getBirthday()));
+        String tag = savedUser.getBirthday();
         if (TextUtils.isEmpty(tag)) {
             tag = "01.01.1990";
         }

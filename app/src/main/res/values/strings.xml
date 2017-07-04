@@ -197,7 +197,7 @@
     <string name="tw">Twitter</string>
     <string name="ok">Одноклассники</string>
     <string name="error_in_posting">Произошла ошибка при попытке рассказать друзьям в социальных сетях. Попробуйте рассказать друзьям позже</string>
-    <string name="post_success" />
+    <string name="post_success"/>
     <string name="error_duplicate_post_ru">Запись уже была добавлена, повторное добавление возможно через некоторое время</string>
     <string name="error_duplicate_post_in_facebook_en">This status update is identical to the last one you posted. Try posting something different, or delete your previous update.</string>
     <string name="post_added">Запись добавлена в социальную сеть. Текущий баланс %1$s %2$s.</string>
@@ -221,6 +221,8 @@
     <string name="action_survey_close">Закрыть</string>
     <string name="social_update_success">Спасибо! Данные скоро обновятся</string>
     <string name="coincidesAddresses">Адрес регистрации совпадает с адресом проживания</string>
+    <string name="coincidesAddressRegistration">совпадает с адресом регистрации</string>
+    <string name="address_not_specified">не указан</string>
     <string name="add_new_address">Добавить новый адрес</string>
     <string name="title_select_address">Добавление адреса</string>
     <string name="last_post_time_not_allow_do_new_post">Вы уже сделали пост на стене в %s, попробуйте повторить операцию позже</string>
@@ -293,7 +295,7 @@
     <string name="poll_decision">Оповещать меня о принятых решениях</string>
     <string name="sms">Sms</string>
     <string name="poll_new">Оповещать меня о новых голосованиях</string>
-    <string name="empty" />
+    <string name="empty"/>
     <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
     <string name="poll_effected">Оповещать меня об исполненных решениях</string>
     <string name="action_rss">Подписки</string>
@@ -745,5 +747,6 @@
     <string name="crop_image_menu_flip_vertically">Перевернуть по вертикали</string>
 
     <string name="edit_profile">Редактирование профиля</string>
-
+    <string name="contact_info_title">Контактная информация</string>
+    <string name="full_user_name_title">ФИО</string>
 </resources>

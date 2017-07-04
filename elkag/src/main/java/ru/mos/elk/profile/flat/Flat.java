@@ -361,7 +361,13 @@ public class Flat implements Serializable {
         }
         return result;
     }
-
+    public String getAddressTitle(Context context) {
+        String result = context.getString(R.string.address_not_specified);
+        if (!isEmpty()) {
+            result = String.format(context.getString(R.string.title_formatted_address), street, building);
+        }
+        return result;
+    }
     public String getBuildingId() {
         return buildingId;
     }

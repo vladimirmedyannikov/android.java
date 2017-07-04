@@ -55,13 +55,13 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         list.add(new UserInfo("дата рождения", saved.getBirthday()));
         list.add(new UserInfo("пол", saved.getGender().toString()));
         list.add(new UserInfo("семейное положение", saved.getMaritalStatus().toString()));
-        list.add(new UserInfo("адрес регистрации", saved.getRegistration().getViewTitle(getFragment().getContext())));
+        list.add(new UserInfo("адрес регистрации", saved.getRegistration().getAddressTitle(getFragment().getContext())));
         String residenceFlat = saved.getRegistration().compareByFullAddress(saved.getResidence()) || saved.getResidence().isEmpty()
-                ? "совпадает с адресом регистрации" : saved.getResidence().getViewTitle(getFragment().getContext());
+                ? "совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getFragment().getContext());
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", "sds"));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getViewTitle(getFragment().getContext())));
-        String pguConnected = saved.isPguConnected() ? "подключенов" : "не указано";
+        String pguConnected = saved.isPguConnected() ? "подключено" : "не указано";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
         UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);

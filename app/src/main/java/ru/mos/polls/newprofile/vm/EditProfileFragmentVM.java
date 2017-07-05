@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -15,15 +16,23 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.OnItemSelected;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
 import ru.mos.elk.profile.DatePickerFragment;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
+import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
+import ru.mos.polls.newprofile.state.EditProfileState;
+import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
 
@@ -66,23 +75,45 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     @Override
     public void onViewCreated() {
-        setGenderView();
-        setMartialStatusView(savedUser.getGender());
-        displayBirthday();
         registration.setOnClickListener(v -> {
             NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
         });
         residence.setOnClickListener(v -> {
             NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
         });
-        setRegistationFlatView(savedUser.getRegistration());
-        setResidenceFlatView(savedUser.getRegistration(), savedUser.getResidence());
-
         email.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
         });
+        refresView(savedUser);
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.ProfileEvents) {
+                        Events.ProfileEvents action = (Events.ProfileEvents) o;
+                        switch (action.getAction()) {
+                            case Events.ProfileEvents.UPDATE_USER_INFO:
+                                AgUser changed = action.getAgUser();
+                                this.changedUser = changed;
+                                refresView(changed);
+                                break;
+                        }
+                    }
+                });
     }
 
+    public void refresView(AgUser agUser) {
+        setGenderView();
+        setMartialStatusView(agUser.getGender());
+        displayBirthday();
+        setRegistationFlatView(agUser.getRegistration());
+        setResidenceFlatView(agUser.getRegistration(), agUser.getResidence());
+        setEmailView(agUser.getEmail());
+    }
+
+    public void setEmailView(String userEmail) {
+        email.setText(userEmail);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,6 +126,15 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             if (newFlat.isResidence()) {
                 setResidenceFlatView(savedUser.getRegistration(), newFlat);
                 changedUser.setResidenceFlat(newFlat);
+            }
+        }
+        if (requestCode == Activity.RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            AgUser newAgUser = (AgUser) bundle.getSerializable(EditPersonalInfoFragment.ARG_AGUSER);
+            if (newAgUser != null) {
+                System.out.println("newAgUser != null = ");
+                changedUser = newAgUser;
+                refresView(newAgUser);
             }
         }
     }

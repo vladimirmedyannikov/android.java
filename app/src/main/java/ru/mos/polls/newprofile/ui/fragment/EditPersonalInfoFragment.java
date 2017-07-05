@@ -1,6 +1,8 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
 import android.os.Bundle;
+
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditPersonalInfoBinding;
@@ -14,11 +16,13 @@ import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalInfoFragmentVM, LayoutNewEditPersonalInfoBinding> {
 
     public static final String ARG_PERSONAL_INFO = "arg_personal_info";
+    public static final String ARG_AGUSER = "arg_aguser";
 
-    public static EditPersonalInfoFragment newInstance(int type) {
+    public static EditPersonalInfoFragment newInstance(AgUser agUser, int personalType) {
         EditPersonalInfoFragment f = new EditPersonalInfoFragment();
-        Bundle args = new Bundle(1);
-        args.putSerializable(ARG_PERSONAL_INFO, type);
+        Bundle args = new Bundle(2);
+        args.putInt(ARG_PERSONAL_INFO, personalType);
+        args.putSerializable(ARG_AGUSER, agUser);
         f.setArguments(args);
         return f;
     }

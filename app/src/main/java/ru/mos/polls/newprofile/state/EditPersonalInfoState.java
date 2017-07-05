@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.newprofile.base.ui.CommonToolbarFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
@@ -16,13 +17,13 @@ import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
  */
 
 public class EditPersonalInfoState extends ContentBelowToolbarState<EditPersonalInfoState.PesonalInfoParams> {
-    public EditPersonalInfoState(int params) {
-        super(new PesonalInfoParams(params));
+    public EditPersonalInfoState(AgUser agUser, int personalType) {
+        super(new PesonalInfoParams(agUser, personalType));
     }
 
     @Override
     protected JugglerFragment onConvertContent(PesonalInfoParams params, @Nullable JugglerFragment fragment) {
-        return EditPersonalInfoFragment.newInstance(params.personalType);
+        return EditPersonalInfoFragment.newInstance(params.agUser, params.personalType);
     }
 
     @Override
@@ -46,9 +47,11 @@ public class EditPersonalInfoState extends ContentBelowToolbarState<EditPersonal
     static class PesonalInfoParams extends State.Params {
 
         int personalType;
+        AgUser agUser;
 
-        public PesonalInfoParams(int personalType) {
+        public PesonalInfoParams(AgUser agUser, int personalType) {
             this.personalType = personalType;
+            this.agUser = agUser;
         }
     }
 }

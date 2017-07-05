@@ -32,12 +32,8 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_confirm:
-                getViewModel().confirmAction();
-                return true;
-        }
-        return false;
+        getViewModel().confirmAction(item.getItemId());
+        return true;
     }
 
 }

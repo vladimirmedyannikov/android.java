@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.OnItemSelected;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
 import ru.mos.elk.profile.DatePickerFragment;

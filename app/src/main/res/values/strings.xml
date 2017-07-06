@@ -751,4 +751,5 @@
     <string name="full_user_name_title">ФИО</string>
     <string name="childs">Дети</string>
     <string name="menu_confirm">подтвердить</string>
+    <string name="mainmenu_friends">Мои друзья</string>
 </resources>

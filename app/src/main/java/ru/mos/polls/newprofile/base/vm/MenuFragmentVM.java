@@ -16,6 +16,6 @@ public abstract class MenuFragmentVM<F extends JugglerFragment, B extends ViewDa
         super(fragment, binding);
     }
 
-    public void confirmAction(int menuItemId) {
+    public void onOptionsItemSelected(int menuItemId) {
     }
 }

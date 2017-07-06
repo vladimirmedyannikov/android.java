@@ -32,7 +32,8 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        getViewModel().confirmAction(item.getItemId());
+        hideKeyboard(this);
+        getViewModel().onOptionsItemSelected(item.getItemId());
         return true;
     }
 

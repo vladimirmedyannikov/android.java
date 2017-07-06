@@ -18,8 +18,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
 import ru.mos.elk.profile.DatePickerFragment;
@@ -28,11 +26,8 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
-import ru.mos.polls.newprofile.state.EditProfileState;
-import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
 
@@ -53,6 +48,10 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView registration;
     TextView residence;
     TextView email;
+    TextView fio;
+    TextView phone;
+    TextView kidsCount;
+    TextView kidsCountTitle;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -71,20 +70,16 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         registration = binding.editFlatRegistration;
         residence = binding.editFlatResidence;
         email = binding.editEmail;
+        fio = binding.editFio;
+        phone = binding.editPhone;
+        kidsCount = binding.editKidsValue;
+        kidsCountTitle = binding.editKidsTitle;
     }
 
     @Override
     public void onViewCreated() {
-        registration.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
-        });
-        residence.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
-        });
-        email.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
-        });
-        refresView(savedUser);
+        setClickListener();
+        refreshView(savedUser);
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,24 +90,58 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
                                 this.changedUser = changed;
-                                refresView(changed);
+                                refreshView(changed);
                                 break;
                         }
                     }
                 });
     }
 
-    public void refresView(AgUser agUser) {
-        setGenderView();
+    public void setClickListener() {
+        registration.setOnClickListener(v -> {
+            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
+        });
+        residence.setOnClickListener(v -> {
+            NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
+        });
+        email.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
+        });
+        fio.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
+        });
+        kidsCountTitle.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_CHILDS), EditPersonalInfoFragmentVM.PERSONAL_CHILDS);
+        });
+
+    }
+
+    public void refreshView(AgUser agUser) {
+        setGenderView(agUser.getGender());
         setMartialStatusView(agUser.getGender());
         displayBirthday();
         setRegistationFlatView(agUser.getRegistration());
         setResidenceFlatView(agUser.getRegistration(), agUser.getResidence());
         setEmailView(agUser.getEmail());
+        setFioView(agUser.getFullUserName());
+        setPhoneView(agUser.getPhone());
+        setKidsCountView(agUser.getChildCount());
+    }
+
+    public void setKidsCountView(int kidsCountValue) {
+        kidsCount.setText(String.valueOf(kidsCountValue));
     }
 
     public void setEmailView(String userEmail) {
         email.setText(userEmail);
+    }
+
+    public void setFioView(String text) {
+        fio.setText(text);
+    }
+
+    public void setPhoneView(String text) {
+        phone.setText(text);
     }
 
     @Override
@@ -129,13 +158,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             }
         }
         if (requestCode == Activity.RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            AgUser newAgUser = (AgUser) bundle.getSerializable(EditPersonalInfoFragment.ARG_AGUSER);
-            if (newAgUser != null) {
-                System.out.println("newAgUser != null = ");
-                changedUser = newAgUser;
-                refresView(newAgUser);
-            }
         }
     }
 
@@ -167,14 +189,15 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         birthdayDate.setTag(tag);
     }
 
-    public void setGenderView() {
+    public void setGenderView(AgUser.Gender userGender) {
         genderAdapter = getGenderAdapter();
         gender.setAdapter(genderAdapter);
         gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
-                setMartialStatusView(gender);
+                martialStatusAdapter.setGender(gender);
+                martialStatusAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -182,6 +205,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
             }
         });
+        int selected = genderAdapter.getPosition(userGender);
+        gender.setSelection(selected);
     }
 
     public void setMartialStatusView(AgUser.Gender gender) {
@@ -190,11 +215,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    kidsLayer.setVisibility(View.GONE);
-                } else {
-                    kidsLayer.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -202,6 +222,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
             }
         });
+        int selectedMarital = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
+        martialStatus.setSelection(selectedMarital);
     }
 
 

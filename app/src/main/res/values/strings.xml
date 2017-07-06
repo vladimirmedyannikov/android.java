@@ -749,5 +749,6 @@
     <string name="edit_profile">Редактирование профиля</string>
     <string name="contact_info_title">Контактная информация</string>
     <string name="full_user_name_title">ФИО</string>
+    <string name="childs">Дети</string>
     <string name="menu_confirm">подтвердить</string>
 </resources>

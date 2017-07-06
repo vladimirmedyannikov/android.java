@@ -40,6 +40,8 @@ public class EditPersonalInfoState extends ContentBelowToolbarState<EditPersonal
                 return context.getString(R.string.contact_info_title);
             case EditPersonalInfoFragmentVM.PERSONAL_FIO:
                 return context.getString(R.string.full_user_name_title);
+            case EditPersonalInfoFragmentVM.PERSONAL_CHILDS:
+                return context.getString(R.string.childs);
         }
         return super.getTitle(context, params);
     }

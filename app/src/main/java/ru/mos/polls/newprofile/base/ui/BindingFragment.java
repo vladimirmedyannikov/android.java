@@ -4,17 +4,19 @@ package ru.mos.polls.newprofile.base.ui;
  * Created by wlTrunks on 07.06.2017.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
@@ -106,4 +108,22 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
     public abstract int getVariable();
 
     public abstract int getLayoutResources();
+
+    public static void hideKeyboard(Fragment fragment) {
+        IBinder view = fragment.getView().getRootView().getWindowToken();
+        InputMethodManager imm = (InputMethodManager) fragment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view, 0);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        hideKeyboard(this);
+        return super.onBackPressed();
+    }
+
+    @Override
+    public boolean onUpPressed() {
+        hideKeyboard(this);
+        return super.onUpPressed();
+    }
 }

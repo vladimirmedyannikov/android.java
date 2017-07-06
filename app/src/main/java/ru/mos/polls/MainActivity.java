@@ -55,7 +55,6 @@ import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
-import ru.mos.polls.rxhttp.ExampleApi;
 import ru.mos.polls.settings.SettingsFragment;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
@@ -148,8 +147,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         initGeotargetManager();
 
         subscribeEventsBus();
-
-        new ExampleApi().testLoadInnovationDetails(this);
     }
 
     @SuppressWarnings("VisibleForTests")

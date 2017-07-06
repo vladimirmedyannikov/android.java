@@ -3,25 +3,17 @@ package ru.mos.polls.rxhttp.rxapi.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.UUID;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.mos.polls.BuildConfig;
-import ru.mos.polls.rxhttp.session.Session;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -29,7 +21,7 @@ import ru.mos.polls.rxhttp.session.Session;
  */
 
 public class AgApiBuilder {
-    public static final String URL_AG = "https://emp.mos.ru:443/?token=ag_test_token";
+    public static final String URL_AG = "https://emp.mos.ru:443/";
 
     public static AgApi build() {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -37,57 +29,10 @@ public class AgApiBuilder {
                 ? HttpLoggingInterceptor.Level.BODY
                 : HttpLoggingInterceptor.Level.NONE);
 
-        /**
-         * Используется для автоматической подстановки сесии в запрос</br>
-         * не используется, пока оставим
-         */
-        Interceptor authInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                RequestBody requestBody = request.body();
-                if (requestBody.contentType().subtype().contains("json")) {
-                    requestBody = processAuth(requestBody);
-                    if (requestBody != null) {
-                        request = request.newBuilder()
-                                .post(requestBody)
-                                .build();
-                    }
-                }
-                return chain.proceed(request);
-            }
-
-            private RequestBody processAuth(RequestBody requestBody) {
-                RequestBody result = null;
-                String body = asString(requestBody);
-                try {
-                    JSONObject jsonBody = new JSONObject(body);
-                    JSONObject authJson = new JSONObject();
-                    authJson.put("session_id", Session.get().getSession());
-                    result = RequestBody.create(requestBody.contentType(), jsonBody.toString().getBytes());
-                } catch (JSONException ignored) {
-                }
-                return result;
-            }
-
-            private String asString(final RequestBody request) {
-                String result = null;
-                try {
-                    final Buffer buffer = new Buffer();
-                    if (request != null) {
-                        request.writeTo(buffer);
-                    }
-                    result = buffer.readUtf8();
-                } catch (IOException ignored) {
-                }
-                return result;
-            }
-        };
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(authInterceptor)
                 .addInterceptor(logInterceptor)
-                .addInterceptor(getUUIDInterceptor())
+                .addInterceptor(getDefaultURLParamsInterceptor())
                 .build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -104,14 +49,15 @@ public class AgApiBuilder {
     }
 
     /**
-     * Добавляем UUID для каждого запросы
+     * Добавляем  {@link UUID}, {@link Token} для каждого запроса
      */
-    public static Interceptor getUUIDInterceptor() {
+    public static Interceptor getDefaultURLParamsInterceptor() {
         Interceptor authInterceptor = chain -> {
             Request original = chain.request();
             HttpUrl originalHttpUrl = original.url();
 
             HttpUrl url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("token", token().get())
                     .addQueryParameter("client_req_id", getUUID())
                     .build();
 
@@ -124,9 +70,38 @@ public class AgApiBuilder {
         return authInterceptor;
     }
 
-    public static String getUUID() {
+    public static Token token() {
+        Token result = Token.RELEASE;
+        if (BuildConfig.BUILD_TYPE.equals("customer")) {
+            result = Token.UAT;
+        } else if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            result = Token.TEST;
+        }
+        return result;
+    }
+
+    private static String getUUID() {
         UUID uuid = UUID.randomUUID();
-        String uuidInString = uuid.toString();
-        return uuidInString;
+        return uuid.toString();
+    }
+
+    /**
+     * Константы токенов приложения для контуров
+     */
+    public enum Token {
+        TEST("ag_test_token"),
+        UAT("ag_uat_token3"),
+        RELEASE("35e59a5eaab111e3b266416c74617269");
+
+        private String value;
+
+        Token(String value) {
+            this.value = value;
+        }
+
+        public String get() {
+            return value;
+        }
+
     }
 }

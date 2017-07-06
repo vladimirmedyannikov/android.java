@@ -31,6 +31,7 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
+import ru.mos.polls.friend.ui.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
@@ -393,6 +394,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_PROFILE;
 //                navigateTo().state(Add.deeper(new EditProfileState(null)));
 
+                break;
+            case NavigationMenuItem.FRIENDS:
+                fr = FriendsFragment.instance();
+                tag = TAG_PROFILE;
                 break;
             case NavigationMenuItem.MY_FREE_TIME:
                 Statistics.enterEvents();

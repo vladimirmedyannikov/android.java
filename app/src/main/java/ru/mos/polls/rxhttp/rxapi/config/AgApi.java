@@ -61,5 +61,5 @@ public interface AgApi {
     Observable<FriendMy.Response> friendMy(@Body FriendMy.Request body);
 
     @POST("/" + Api.Versions.V_2_4_0 + "/"+ Api.Controllers.FRIEND + "/" + Api.Methods.PROFILE)
-    Observable<FriendProfile.Response> friendMy(@Body FriendProfile.Request body);
+    Observable<FriendProfile.Response> friendProfile(@Body FriendProfile.Request body);
 }

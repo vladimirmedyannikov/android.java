@@ -86,7 +86,8 @@ public class AgApiBuilder {
     }
 
     /**
-     * Константы токенов приложения для контуров
+     * Константы токенов приложения для контуров,
+     * todo вынести в productFlavors
      */
     public enum Token {
         TEST("ag_test_token"),
@@ -104,4 +105,5 @@ public class AgApiBuilder {
         }
 
     }
+
 }

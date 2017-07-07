@@ -2,28 +2,35 @@ package ru.mos.polls.newprofile.vm;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
+import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
+import ru.mos.polls.newprofile.ui.adapter.SocialStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
+import ru.mos.polls.social.model.Social;
 
 /**
  * Created by Trunks on 04.07.2017.
  */
 
-public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoFragment, LayoutNewEditPersonalInfoBinding> {
+public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoFragment, LayoutNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
     public static final int PERSONAL_EMAIL = 33344;
     public static final int PERSONAL_FIO = 44333;
     public static final int PERSONAL_CHILDS = 43678;
+    public static final int SOCIAL_STATUS = 12333;
     public int personalType;
     AgUser agUser;
     TextInputEditText email, lastname, firstname, middlename, childsCount;
     View emailContainer, fioContainer, childsCountContainer;
+    RecyclerView recyclerView;
 
     public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, LayoutNewEditPersonalInfoBinding binding) {
         super(fragment, binding);
@@ -42,6 +49,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         firstname = binding.fioContainer.firstname;
         middlename = binding.fioContainer.middlename;
         childsCount = binding.childsCountContainer.childsCount;
+        recyclerView = binding.root;
     }
 
     @Override
@@ -64,6 +72,11 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
             case PERSONAL_CHILDS:
                 childsCountContainer.setVisibility(View.VISIBLE);
                 childsCount.setText(String.valueOf(agUser.getChildCount()));
+                break;
+            case SOCIAL_STATUS:
+                SocialStatusAdapter adapter = new SocialStatusAdapter(AgSocialStatus.fromPreferences(getFragment().getContext()), this);
+                setRecyclerList(recyclerView);
+                recyclerView.setAdapter(adapter);
                 break;
         }
     }
@@ -93,5 +106,12 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         }
         AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
         getActivity().finish();
+    }
+
+    @Override
+    public void onSocialStatusClick(AgSocialStatus agSocialStatus) {
+        agUser.setAgSocialStatus(agSocialStatus.getId());
+        Toast.makeText(getFragment().getContext(), agSocialStatus.getTitle(), Toast.LENGTH_SHORT).show();
+        confirmaAction(SOCIAL_STATUS);
     }
 }

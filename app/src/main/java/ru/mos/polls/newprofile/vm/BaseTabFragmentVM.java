@@ -53,17 +53,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
     protected void initialize(B binding) {
         saved = new AgUser(getActivity());
-        setRecyclerList();
-    }
-
-    protected void setRecyclerList() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
-//        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
-        Drawable dividerDrawable = ContextCompat.getDrawable(getFragment().getContext(), R.drawable.divider);
-        DividerItemDecoration did = new DividerItemDecoration(getFragment().getContext(), DividerItemDecoration.VERTICAL);
-        did.setDrawable(dividerDrawable);
-        recyclerView.addItemDecoration(did);
+        setRecyclerList(recyclerView);
     }
 
     @Override

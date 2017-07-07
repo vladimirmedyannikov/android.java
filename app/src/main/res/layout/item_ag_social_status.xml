@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.SocialStatusVM"/>
+
+        <variable
+            name="clicklistener"
+            type="ru.mos.polls.newprofile.vm.OnSocialStatusItemClick"/>
+    </data>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/social_status_title"
+        style="@style/edit_profile"
+        android:background="@drawable/selector_item_list"
+        android:hint="техт"
+        android:onClick="@{(view) -> clicklistener.onSocialStatusClick(viewModel.getAgSocialStatus)}"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:text="@{viewModel.title}"/>
+
+</layout>

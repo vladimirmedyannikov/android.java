@@ -52,6 +52,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView phone;
     TextView kidsCount;
     TextView kidsCountTitle;
+    TextView socialStatus;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -74,6 +75,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         phone = binding.editPhone;
         kidsCount = binding.editKidsValue;
         kidsCountTitle = binding.editKidsTitle;
+        socialStatus = binding.editSocialStatus;
     }
 
     @Override
@@ -113,7 +115,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         kidsCountTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_CHILDS), EditPersonalInfoFragmentVM.PERSONAL_CHILDS);
         });
-
+        socialStatus.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+        });
     }
 
     public void refreshView(AgUser agUser) {

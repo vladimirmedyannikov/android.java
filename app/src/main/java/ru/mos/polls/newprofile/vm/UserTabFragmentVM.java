@@ -35,7 +35,7 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         binding.setAgUser(saved);
         binding.setClickListener(this);
-        setRecyclerList();
+        setRecyclerList(recyclerView);
     }
 
     private void mockUserStatsList() {

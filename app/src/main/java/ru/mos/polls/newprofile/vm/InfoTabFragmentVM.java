@@ -55,9 +55,9 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         list.add(new UserInfo("дата рождения", saved.getBirthday()));
         list.add(new UserInfo("пол", saved.getGender().toString()));
         list.add(new UserInfo("семейное положение", saved.getMaritalStatus().toString()));
-        list.add(new UserInfo("адрес регистрации", saved.getRegistration().getAddressTitle(getFragment().getContext())));
+        list.add(new UserInfo("адрес регистрации", saved.getRegistration().getAddressTitle(getActivity().getBaseContext())));
         String residenceFlat = saved.getRegistration().compareByFullAddress(saved.getResidence()) || saved.getResidence().isEmpty()
-                ? "совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getFragment().getContext());
+                ? "совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getActivity().getBaseContext());
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", "sds"));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getViewTitle(getFragment().getContext())));

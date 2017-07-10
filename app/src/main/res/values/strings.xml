@@ -171,6 +171,24 @@
         <item>Пятнадцатый ребенок</item>
     </string-array>
 
+    <string-array name="child_birthdays_hints">
+        <item>первого</item>
+        <item>Второго</item>
+        <item>третьего</item>
+        <item>четвертого</item>
+        <item>пятого</item>
+        <item>шестого</item>
+        <item>седьмого</item>
+        <item>восьмого</item>
+        <item>девятого</item>
+        <item>десятого</item>
+        <item>одиннадцатого</item>
+        <item>двенадцатого</item>
+        <item>тринадцатого</item>
+        <item>четырнадцатого</item>
+        <item>пятнадцатого</item>
+    </string-array>
+    <string name="child_birthdays_hints_format" formatted="false">Год рождения %s ребенка</string>
     <string name="elk_register">Регистрация</string>
     <string name="elk_hint_phone">Номер Вашего телефона</string>
     <string name="elk_info_register">Для регистрации укажите свой номер телефона, на который будет выслан пароль для входа в систему. В дальнейшем пароль можно будет изменить в личном кабинете</string>
@@ -752,4 +770,5 @@
     <string name="childs">Дети</string>
     <string name="menu_confirm">подтвердить</string>
     <string name="mainmenu_friends">Мои друзья</string>
+    <string name="kids_birthdays">Возраст детей</string>
 </resources>

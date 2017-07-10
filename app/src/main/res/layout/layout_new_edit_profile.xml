@@ -109,19 +109,21 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"/>
                         </RelativeLayout>
-
-                        <include layout="@layout/ag_separator"/>
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/edit_kids_date_layer"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <include layout="@layout/ag_separator"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_kids_date"
                             style="@style/edit_profile"
-                            android:hint="Возраст детей"/>
+                            android:text="@string/kids_birthdays"
+                            android:hint="@string/kids_birthdays"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_kids_date_value"

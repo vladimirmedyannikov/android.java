@@ -1,6 +1,5 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -8,8 +7,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,14 +17,15 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
-import ru.mos.elk.profile.DatePickerFragment;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
@@ -41,18 +41,21 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     ArrayAdapter genderAdapter;
     AgUser.MaritalStatus.MaritalStatusAdapter martialStatusAdapter;
     AgUser savedUser, changedUser;
-    LinearLayout kidsLayer;
-    View kidsDateLayer;
+    View kidsLayer;
     TextView birthdayDate;
     BirthDateParser dbp;
     TextView registration;
     TextView residence;
+    TextView work;
     TextView email;
     TextView fio;
     TextView phone;
     TextView kidsCount;
     TextView kidsCountTitle;
     TextView socialStatus;
+    TextView kidsDateValue;
+    TextView kidsDate;
+    View kidsDateLayer;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -70,12 +73,16 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         birthdayDate = binding.editBirthdayDate;
         registration = binding.editFlatRegistration;
         residence = binding.editFlatResidence;
+        work = binding.editFlatWork;
         email = binding.editEmail;
         fio = binding.editFio;
         phone = binding.editPhone;
         kidsCount = binding.editKidsValue;
         kidsCountTitle = binding.editKidsTitle;
         socialStatus = binding.editSocialStatus;
+        kidsDateValue = binding.editKidsDateValue;
+        kidsDate = binding.editKidsDate;
+        kidsDateLayer = binding.editKidsDateLayer;
     }
 
     @Override
@@ -106,6 +113,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         residence.setOnClickListener(v -> {
             NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
         });
+        work.setOnClickListener(v -> {
+            NewAddressActivity.startActivity(getFragment(), savedUser.getWork());
+        });
         email.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
         });
@@ -113,10 +123,13 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
         });
         kidsCountTitle.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_CHILDS), EditPersonalInfoFragmentVM.PERSONAL_CHILDS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
         });
         socialStatus.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+        });
+        kidsDate.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
         });
     }
 
@@ -126,10 +139,32 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         displayBirthday();
         setRegistationFlatView(agUser.getRegistration());
         setResidenceFlatView(agUser.getRegistration(), agUser.getResidence());
+        setWorkFlatView(agUser.getWork());
         setEmailView(agUser.getEmail());
         setFioView(agUser.getFullUserName());
         setPhoneView(agUser.getPhone());
         setKidsCountView(agUser.getChildCount());
+        setSocialStatusView(agUser.getAgSocialStatus());
+        setKidsDateLayerView(agUser);
+    }
+
+    public void setKidsDateLayerView(AgUser agUser) {
+        if (agUser.getChildCount() > 0) {
+            kidsDateLayer.setVisibility(View.VISIBLE);
+            if (agUser.isChildBirthdaysFilled()) {
+                kidsDate.setText(getFragment().getString(R.string.kids_birthdays));
+                kidsDateValue.setText("указан");
+            } else {
+                kidsDateValue.setText("не указан");
+            }
+        } else {
+            kidsDateLayer.setVisibility(View.GONE);
+        }
+    }
+
+    public void setSocialStatusView(int idSocialStatus) {
+        List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getFragment().getContext());
+        socialStatus.setText(list.get(idSocialStatus).getTitle());
     }
 
     public void setKidsCountView(int kidsCountValue) {
@@ -160,8 +195,10 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 setResidenceFlatView(savedUser.getRegistration(), newFlat);
                 changedUser.setResidenceFlat(newFlat);
             }
-        }
-        if (requestCode == Activity.RESULT_OK) {
+            if (newFlat.isWork()) {
+                setWorkFlatView(newFlat);
+                changedUser.setWorkFlat(newFlat);
+            }
         }
     }
 
@@ -177,10 +214,14 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         } else setFlatView(residenceFlat, residence);
     }
 
+    public void setWorkFlatView(Flat flat) {
+        setFlatView(flat, work);
+    }
+
 
     public void setFlatView(Flat flat, TextView view) {
         if (!flat.isEmpty())
-            view.setText(flat.getAddressTitle(getFragment().getContext()));
+            view.setText(flat.getAddressTitle(getActivity().getBaseContext()));
     }
 
     public void displayBirthday() {
@@ -201,6 +242,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
                 martialStatusAdapter.setGender(gender);
+                changedUser.setGender(gender);
                 martialStatusAdapter.notifyDataSetChanged();
             }
 
@@ -219,6 +261,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
+                changedUser.setMaritalStatus(maritalStatus);
             }
 
             @Override
@@ -247,12 +291,12 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void setBirthDayDate() {
+        OnDateSetCallback listener = () -> Toast.makeText(getFragment().getContext(), "OK", Toast.LENGTH_SHORT).show();
         /**
          * Откатываем время назад
          */
         Calendar cal = Calendar.getInstance();
         BirthDateParser dbp = new BirthDateParser(getActivity());
-
         DatePickerFragment birthDayDialogFragment = new DatePickerFragment();
         Bundle extras = new Bundle();
         /**
@@ -269,6 +313,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         cal.set(Calendar.YEAR, 1900);
         extras.putLong(DatePickerFragment.MINDATE, cal.getTimeInMillis());
         birthDayDialogFragment.setArguments(extras);
+        birthDayDialogFragment.setOkButtomListener(listener);
         birthDayDialogFragment.show(getFragment().getChildFragmentManager(), "SdatePicker");
     }
 }

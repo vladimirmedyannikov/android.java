@@ -3,11 +3,11 @@ package ru.mos.polls.newprofile.vm;
 import android.support.v4.app.FragmentManager;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
 import android.view.View;
 
 import java.util.Calendar;
 
+import ru.mos.polls.BR;
 import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.newprofile.base.ui.dialog.YearDialogFragment;
 import ru.mos.polls.newprofile.model.BirthdayKids;
@@ -19,7 +19,6 @@ import ru.mos.polls.newprofile.model.BirthdayKids;
 public class BirthdayKidsVM extends BaseObservable {
     BirthdayKids birthdayKids;
     ItemBirthdayKidsBinding binding;
-    ObservableField<BirthdayKids> birthdayKidsField = new ObservableField<>();
     FragmentManager fr;
 
     public BirthdayKidsVM(BirthdayKids birthdayKids, ItemBirthdayKidsBinding binding, FragmentManager fr) {
@@ -28,29 +27,47 @@ public class BirthdayKidsVM extends BaseObservable {
         this.fr = fr;
     }
 
-    @Bindable
-    public String getDate() {
-        return Long.toString(birthdayKids.getBirthdayYear());
-    }
-
     public String getHint() {
         return birthdayKids.getBirtdayHints();
     }
 
+    @Bindable
     public String getTitle() {
         return birthdayKids.getBirthdayYear() == 0 ? "" : birthdayKids.getBirthDayTitle();
     }
 
+    @Bindable
     public String getYear() {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(birthdayKids.getBirthdayYear());
-        String yearString = String.valueOf(c.get(Calendar.YEAR));
+        String yearString = getYearString(birthdayKids.getBirthdayYear());
         return birthdayKids.getBirthdayYear() == 0 ? "" : yearString;
+    }
+
+    public void setYear(long year) {
+        birthdayKids.setBirthdayYear(year);
+        notifyPropertyChanged(BR.year);
+        notifyPropertyChanged(BR.title);
     }
 
     public void onClick(View view) {
         YearDialogFragment ydf = new YearDialogFragment();
-        ydf.show(fr, "kid_year");
+        YearDialogFragment.OnItemClick listener = year -> {
+            ydf.dismiss();
+            setYear(getLongDate(year));
+        };
+        ydf.setListener(listener);
+        ydf.show(fr, "birthdayKid");
     }
 
+    public long getLongDate(int year) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.DAY_OF_YEAR, 1);
+        return c.getTimeInMillis();
+    }
+
+    public String getYearString(long year) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(year);
+        return String.valueOf(c.get(Calendar.YEAR));
+    }
 }

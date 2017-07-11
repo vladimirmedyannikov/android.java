@@ -7,9 +7,6 @@
             name="viewModel"
             type="ru.mos.polls.newprofile.vm.BirthdayKidsVM"/>
 
-        <variable
-            name="clicklistener"
-            type="ru.mos.polls.newprofile.vm.OnBirthdayKidsClick"/>
     </data>
 
     <RelativeLayout

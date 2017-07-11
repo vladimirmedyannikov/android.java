@@ -5,9 +5,9 @@ package ru.mos.polls.newprofile.model;
  */
 
 public class BirthdayKids {
-    long birthdayYear;
-    String birtdayHints;
-    String birthDayTitle;
+    private long birthdayYear;
+    private String birtdayHints;
+    private String birthDayTitle;
 
     public BirthdayKids(long birthdayYear, String birtdayHints, String birthDayTitle) {
         this.birthdayYear = birthdayYear;

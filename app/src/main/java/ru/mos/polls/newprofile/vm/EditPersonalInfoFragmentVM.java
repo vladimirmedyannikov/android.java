@@ -35,6 +35,8 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     TextInputEditText email, lastname, firstname, middlename, childsCount;
     View emailContainer, fioContainer, childsCountContainer;
     RecyclerView recyclerView;
+    List<BirthdayKids> birthdayKidsList;
+
 
     public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, LayoutNewEditPersonalInfoBinding binding) {
         super(fragment, binding);
@@ -90,7 +92,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
 
     public void setKidsBirthdayDateView() {
         List<Long> kidsYearList = agUser.getChildBirthdays();
-        List<BirthdayKids> list = new ArrayList<>();
+        birthdayKidsList = new ArrayList<>();
         String[] hints = getFragment().getResources().getStringArray(R.array.child_birthdays_hints);
         String[] title = getFragment().getResources().getStringArray(R.array.child_birthdays_hint);
 
@@ -108,9 +110,9 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         }
         for (int i = 0; i < kidsYearList.size(); i++) {
             String hint = String.format(getFragment().getString(R.string.child_birthdays_hints_format), hints[i]);
-            list.add(new BirthdayKids(kidsYearList.get(i), hint, title[i]));
+            birthdayKidsList.add(new BirthdayKids(kidsYearList.get(i), hint, title[i]));
         }
-        BirthdayKidsAdapter adapter = new BirthdayKidsAdapter(list, getFragment().getChildFragmentManager());
+        BirthdayKidsAdapter adapter = new BirthdayKidsAdapter(birthdayKidsList, getFragment().getChildFragmentManager());
         setRecyclerList(recyclerView);
         recyclerView.setAdapter(adapter);
     }
@@ -137,7 +139,14 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 break;
             case COUNT_KIDS:
                 agUser.setChildCount(Integer.valueOf(childsCount.getText().toString()));
-
+                break;
+            case BIRTHDAY_KIDS:
+                List<Long> list = new ArrayList<>();
+                for (BirthdayKids birthdayKids : birthdayKidsList) {
+                    list.add(birthdayKids.getBirthdayYear());
+                }
+                agUser.setChildBirthdays(list);
+                break;
         }
         AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
         getActivity().finish();

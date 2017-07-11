@@ -100,7 +100,7 @@
                                 android:id="@+id/edit_kids_title"
                                 style="@style/edit_profile"
                                 android:layout_width="wrap_content"
-                                android:hint="Количество детей"/>
+                                android:text="Количество детей"/>
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_kids_value"
@@ -122,8 +122,8 @@
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_kids_date"
                             style="@style/edit_profile"
-                            android:text="@string/kids_birthdays"
-                            android:hint="@string/kids_birthdays"/>
+                            android:hint="@string/kids_birthdays"
+                            android:text="@string/kids_birthdays"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_kids_date_value"

@@ -163,7 +163,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void setSocialStatusView(int idSocialStatus) {
-        List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getFragment().getContext());
+        List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getActivity().getBaseContext());
         socialStatus.setText(list.get(idSocialStatus).getTitle());
     }
 
@@ -277,7 +277,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     public ArrayAdapter getGenderAdapter() {
         List<AgUser.Gender> list = new ArrayList<>(Arrays.asList(AgUser.Gender.getGenderItems()));
-//        list.add(AgUser.Gender.HINT);
+//        mBirthdayKidsList.add(AgUser.Gender.HINT);
         ArrayAdapter<AgUser.Gender> ad = new ArrayAdapter<>(getActivity(), R.layout.layout_spinner_view, list);
         ad.setDropDownViewResource(R.layout.layout_spinner_item);
         return ad;

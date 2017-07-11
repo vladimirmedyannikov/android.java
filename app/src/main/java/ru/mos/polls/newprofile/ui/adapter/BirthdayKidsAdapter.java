@@ -11,7 +11,6 @@ import ru.mos.polls.newprofile.base.ui.BindingHolder;
 import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 import ru.mos.polls.newprofile.vm.BirthdayKidsVM;
-import ru.mos.polls.newprofile.vm.OnBirthdayKidsClick;
 
 /**
  * Created by Trunks on 07.07.2017.
@@ -19,13 +18,11 @@ import ru.mos.polls.newprofile.vm.OnBirthdayKidsClick;
 
 public class BirthdayKidsAdapter extends BaseAdapter<BirthdayKidsVM, BindingHolder<ItemBirthdayKidsBinding>, ItemBirthdayKidsBinding, BirthdayKids> {
 
-    OnBirthdayKidsClick listener;
     FragmentManager fr;
 
     public BirthdayKidsAdapter(List<BirthdayKids> list, FragmentManager fr) {
         this.list = list;
         this.fr = fr;
-        this.listener = listener;
     }
 
     @Override
@@ -35,7 +32,6 @@ public class BirthdayKidsAdapter extends BaseAdapter<BirthdayKidsVM, BindingHold
 
     @Override
     public BirthdayKidsVM getVM(BirthdayKids obj, ItemBirthdayKidsBinding binding) {
-//        binding.setClicklistener(listener);
         return new BirthdayKidsVM(obj, binding, fr);
     }
 

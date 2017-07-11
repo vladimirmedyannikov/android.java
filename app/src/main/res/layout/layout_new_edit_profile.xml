@@ -220,12 +220,12 @@
                         android:layout_height="wrap_content">
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/edit_social_title"
+                            android:id="@+id/edit_social_bind_title"
                             style="@style/edit_profile"
                             android:hint="Социальные сети"/>
 
                         <LinearLayout
-                            android:id="@+id/edit_social_layer"
+                            android:id="@+id/edit_social_bind_layer"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/pd_xxlarge"
                             android:orientation="horizontal"/>

@@ -17,8 +17,11 @@ import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 import ru.mos.polls.newprofile.ui.adapter.BirthdayKidsAdapter;
+import ru.mos.polls.newprofile.ui.adapter.SocialBindAdapter;
 import ru.mos.polls.newprofile.ui.adapter.SocialStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
+import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.social.model.Social;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -30,6 +33,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     public static final int COUNT_KIDS = 43678;
     public static final int BIRTHDAY_KIDS = 13453;
     public static final int SOCIAL_STATUS = 12333;
+    public static final int SOCIAL_BINDINGS = 14035;
     public int personalType;
     AgUser agUser;
     TextInputEditText email, lastname, firstname, middlename, childsCount;
@@ -81,13 +85,26 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 break;
             case SOCIAL_STATUS:
                 SocialStatusAdapter adapter = new SocialStatusAdapter(AgSocialStatus.fromPreferences(getFragment().getContext()), this);
-                setRecyclerList(recyclerView);
-                recyclerView.setAdapter(adapter);
+                setRecyclerViewAdapter(adapter);
                 break;
             case BIRTHDAY_KIDS:
                 setKidsBirthdayDateView();
                 break;
+            case SOCIAL_BINDINGS:
+                setSocialBindView();
+                break;
         }
+    }
+
+    public void setSocialBindView() {
+        List<Social> list = Social.getSavedSocials(getActivity().getBaseContext());
+        SocialBindAdapter adapter = new SocialBindAdapter(list);
+        setRecyclerViewAdapter(adapter);
+    }
+
+    public void setRecyclerViewAdapter(RecyclerView.Adapter adapter) {
+        setRecyclerList(recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 
     public void setKidsBirthdayDateView() {
@@ -113,8 +130,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
             birthdayKidsList.add(new BirthdayKids(kidsYearList.get(i), hint, title[i]));
         }
         BirthdayKidsAdapter adapter = new BirthdayKidsAdapter(birthdayKidsList, getFragment().getChildFragmentManager());
-        setRecyclerList(recyclerView);
-        recyclerView.setAdapter(adapter);
+        setRecyclerViewAdapter(adapter);
     }
 
 

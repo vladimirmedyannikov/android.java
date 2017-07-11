@@ -56,6 +56,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView kidsDateValue;
     TextView kidsDate;
     View kidsDateLayer;
+    TextView socialBindTitle;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -83,6 +84,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         kidsDateValue = binding.editKidsDateValue;
         kidsDate = binding.editKidsDate;
         kidsDateLayer = binding.editKidsDateLayer;
+        socialBindTitle = binding.editSocialBindTitle;
     }
 
     @Override
@@ -130,6 +132,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         });
         kidsDate.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
+        });
+        socialBindTitle.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_BINDINGS), EditPersonalInfoFragmentVM.SOCIAL_BINDINGS);
         });
     }
 

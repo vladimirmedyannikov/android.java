@@ -14,7 +14,7 @@
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener"/>
+            type="ru.mos.polls.newprofile.vm.AvatarPanelClickListener"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView

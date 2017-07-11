@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.ui.fragment;
+package ru.mos.polls.newprofile.vm;
 
 /**
  * Created by Trunks on 22.06.2017.

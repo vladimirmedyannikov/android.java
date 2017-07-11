@@ -31,7 +31,6 @@ public class YearDialogFragment extends DialogFragment {
 
     @NonNull
     @Override
-
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
                 .setNegativeButton("Закрыть", (dialog1, which) -> dialog1.dismiss());
@@ -108,7 +107,7 @@ public class YearDialogFragment extends DialogFragment {
         }
     }
 
-   public interface OnItemClick {
+    public interface OnItemClick {
         void onYearClick(int year);
     }
 }

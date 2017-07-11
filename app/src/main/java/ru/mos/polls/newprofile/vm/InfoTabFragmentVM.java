@@ -19,7 +19,6 @@ import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
-import ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.social.model.Social;
 

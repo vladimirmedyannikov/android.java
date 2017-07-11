@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.ui.fragment.AvatarPanelClickListener"/>
+            type="ru.mos.polls.newprofile.vm.AvatarPanelClickListener"/>
     </data>
 
     <LinearLayout
@@ -25,12 +25,13 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="@{()->clickListener.makePhoto()}"
+            android:padding="@dimen/pd_xxsmall"
             app:srcCompat="@drawable/ic_photo_camera"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/agUser_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/vs_normal"
+            android:layout_height="@dimen/vs_normal"
             android:layout_weight="1"
             android:src="@drawable/unlogin2"
             app:civ_border_color="@color/white"
@@ -43,6 +44,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="@{()->clickListener.editUserInfo()}"
+            android:padding="@dimen/pd_xxsmall"
             app:srcCompat="@drawable/ic_new_file"/>
 
     </LinearLayout>

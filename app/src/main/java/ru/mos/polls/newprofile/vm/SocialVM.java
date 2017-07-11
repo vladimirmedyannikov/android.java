@@ -1,8 +1,8 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.databinding.BaseObservable;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
-import android.widget.Toast;
 
 import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.social.model.Social;
@@ -15,10 +15,13 @@ import ru.mos.polls.social.model.SocialBindItem;
 public class SocialVM extends BaseObservable {
     private Social social;
     private ItemBindSocialNewBinding binding;
+    AppCompatImageView unbindIcon;
 
     public SocialVM(Social social, ItemBindSocialNewBinding binding) {
         this.social = social;
         this.binding = binding;
+        unbindIcon = binding.socialUnbind;
+        setUnbindIconVisibilyty();
     }
 
     public int getIcon() {
@@ -34,6 +37,9 @@ public class SocialVM extends BaseObservable {
     }
 
     public void unBindSocial(View view) {
-        Toast.makeText(view.getContext(), "unbind", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setUnbindIconVisibilyty() {
+        unbindIcon.setVisibility(social.isLogon() ? View.VISIBLE : View.INVISIBLE);
     }
 }

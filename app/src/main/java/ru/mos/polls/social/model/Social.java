@@ -23,6 +23,7 @@ public class Social implements Serializable {
     private TokenData tokenData;
     private long expired;
     private boolean isLogon;
+    private String socialTitle;
 
     /**
      * Получаем сохраненную соцсеть

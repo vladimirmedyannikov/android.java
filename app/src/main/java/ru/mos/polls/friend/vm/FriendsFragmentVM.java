@@ -1,9 +1,16 @@
 package ru.mos.polls.friend.vm;
 
+import android.support.v7.widget.LinearLayoutManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
+import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.friend.ui.FriendsFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -11,6 +18,7 @@ import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
  */
 
 public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
+    private List<Friend> friends = new ArrayList<>();
 
     public FriendsFragmentVM(FriendsFragment fragment, LayoutFriendsBinding binding) {
         super(fragment, binding);
@@ -19,5 +27,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     @Override
     protected void initialize(LayoutFriendsBinding binding) {
         getFragment().getActivity().setTitle(R.string.mainmenu_friends);
+        binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.list.setAdapter(FriendsAdapter.createStub(getActivity()));
     }
 }

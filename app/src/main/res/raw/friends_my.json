@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "phone": "79178146911",
+    "surname": "Тестов",
+    "name": "Тест",
+    "avatar": "/media/1.jpg",
+    "status": "Новичок"
+  },
+  {
+    "id": 2,
+    "phone": "79178146912",
+    "avatar": "/media/2.jpg",
+    "status": "Активный гражданин"
+  },
+  {
+    "id": 1,
+    "phone": "79178146911",
+    "surname": "Тестов",
+    "name": "Тест",
+    "avatar": "/media/1.jpg",
+    "status": "Новичок"
+  },
+  {
+    "id": 2,
+    "phone": "79178146912",
+    "avatar": "/media/2.jpg",
+    "status": "Активный гражданин"
+  },
+  {
+    "id": 1,
+    "phone": "79178146911",
+    "surname": "Тестов",
+    "name": "Тест",
+    "avatar": "/media/1.jpg",
+    "status": "Новичок"
+  },
+  {
+    "id": 2,
+    "phone": "79178146912",
+    "avatar": "/media/2.jpg",
+    "status": "Активный гражданин"
+  }
+]
+

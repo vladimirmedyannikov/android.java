@@ -1,12 +1,15 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
@@ -29,7 +34,9 @@ import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
+import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
+import ru.mos.polls.social.model.Social;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -57,6 +64,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView kidsDate;
     View kidsDateLayer;
     TextView socialBindTitle;
+    LinearLayout socialBindingLayer;
+    Observable<List<Social>> socialListObserable;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -85,12 +94,12 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         kidsDate = binding.editKidsDate;
         kidsDateLayer = binding.editKidsDateLayer;
         socialBindTitle = binding.editSocialBindTitle;
+        socialBindingLayer = binding.editSocialBindLayer;
     }
 
     @Override
     public void onViewCreated() {
         setClickListener();
-        refreshView(savedUser);
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -106,6 +115,13 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+        refreshView(changedUser);
     }
 
     public void setClickListener() {
@@ -134,7 +150,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
         });
         socialBindTitle.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_BINDINGS), EditPersonalInfoFragmentVM.SOCIAL_BINDINGS);
+            UpdateSocialActivity.startActivity(getActivity());
         });
     }
 
@@ -151,6 +167,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         setKidsCountView(agUser.getChildCount());
         setSocialStatusView(agUser.getAgSocialStatus());
         setKidsDateLayerView(agUser);
+        setSocialBindingLayerRx();
     }
 
     public void setKidsDateLayerView(AgUser agUser) {
@@ -260,6 +277,16 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         gender.setSelection(selected);
     }
 
+    public void setSocialBindingLayerRx() {
+        socialBindingLayer.removeAllViews();
+        disposables.add(socialListObserable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(Observable::fromIterable)
+                .filter(social -> social.isLogon())
+                .subscribe(this::addSocialToLayer));
+    }
+
     public void setMartialStatusView(AgUser.Gender gender) {
         martialStatusAdapter = (AgUser.MaritalStatus.MaritalStatusAdapter) getMartialStatusAdapter(gender);
         martialStatus.setAdapter(martialStatusAdapter);
@@ -320,5 +347,20 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         birthDayDialogFragment.setArguments(extras);
         birthDayDialogFragment.setOkButtomListener(listener);
         birthDayDialogFragment.show(getFragment().getChildFragmentManager(), "SdatePicker");
+    }
+
+    public void addSocialBindingIcon(LinearLayout linearLayout, @DrawableRes int res, Context context) {
+        CircleImageView civ = new CircleImageView(context);
+        int sizeInPixel = context.getResources().getDimensionPixelSize(R.dimen.pd_xlarge);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeInPixel, sizeInPixel);
+        layoutParams.setMargins(6, 6, 6, 6);
+        civ.setLayoutParams(layoutParams);
+        civ.setImageResource(res);
+        linearLayout.addView(civ);
+    }
+
+    public void addSocialToLayer(Social social) {
+        int socialIcon = Social.getSocialIcon(social.getSocialId());
+        addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
     }
 }

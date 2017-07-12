@@ -20,10 +20,9 @@
             android:textOn="@string/empty"/>
     </LinearLayout>
 
-    <GridView
+    <ListView
         android:id="@id/list"
         style="@style/linear"
         android:layout_above="@id/notifyContainer"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="2"/>
+        android:listSelector="@android:color/transparent"/>
 </RelativeLayout>

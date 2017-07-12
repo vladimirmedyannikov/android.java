@@ -96,6 +96,7 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
     }
 
     public void setSocialBindingLayerRx() {
+        socialBindingLayer.removeAllViews();
         disposables.add(socialListObserable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

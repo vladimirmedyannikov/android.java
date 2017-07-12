@@ -1,16 +1,17 @@
 package ru.mos.polls.social.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import ru.mos.polls.R;
 import ru.mos.polls.social.model.Social;
 import ru.mos.polls.social.model.SocialBindItem;
@@ -60,7 +61,7 @@ public class SocialBindAdapter extends ArrayAdapter<Social> {
         }
         v.icon.setEnabled(enable);
         v.icon.setImageResource(drawableId);
-        v.icon.setOnClickListener(new View.OnClickListener() {
+        v.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!social.isLogon() && listener != null) {
@@ -81,11 +82,11 @@ public class SocialBindAdapter extends ArrayAdapter<Social> {
 
     static class SocialHolder {
         @BindView(R.id.socialTitle)
-        TextView title;
+        AppCompatTextView title;
         @BindView(R.id.socialIcon)
-        ImageView icon;
+        CircleImageView icon;
         @BindView(R.id.socialIconClose)
-        ImageView iconClose;
+        AppCompatImageView iconClose;
 
         SocialHolder(View v) {
             ButterKnife.bind(this, v);

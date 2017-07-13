@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class BindingSocialFragment extends Fragment {
     private void findViews(View v) {
         notifyContainer.setVisibility(isTask ? View.GONE : View.VISIBLE);
         socialShareNotify.setChecked(CustomDialogController.isShareEnable(getActivity()));
-        GridView gridView = ButterKnife.findById(v, R.id.list);
+        ListView gridView = ButterKnife.findById(v, R.id.list);
         gridView.setAdapter(socialBindAdapter);
         socialBindAdapter.setListener(new SocialBindAdapter.Listener() {
             @Override

@@ -228,6 +228,10 @@
                             android:id="@+id/edit_social_bind_layer"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/pd_xxlarge"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
                             android:orientation="horizontal"/>
                     </RelativeLayout>
                 </LinearLayout>

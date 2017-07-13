@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/linear"
+<LinearLayout style="@style/item.linear.horizontal"
               xmlns:android="http://schemas.android.com/apk/res/android"
-              android:paddingTop="@dimen/pd_xlarge">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:padding="@dimen/pd_xsmall">
 
-    <RelativeLayout
-        android:layout_width="@dimen/vs_xnormal"
-        android:layout_height="@dimen/vs_xnormal"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/socialIcon"
-            style="@style/social_icon"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/socialIcon"
+        android:layout_width="@dimen/vs_xxsmall"
+        android:layout_height="@dimen/vs_xxsmall"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0"/>
 
-        <ImageView
-            android:id="@+id/socialIconClose"
-            style="@style/social_icon_close"
-            android:src="@drawable/social_close"
-            android:visibility="gone"/>
-    </RelativeLayout>
-
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/socialTitle"
-        android:layout_gravity="center"
-        style="@style/text.normal.black"/>
+        style="@style/text.normal.black"
+        android:layout_width="match_parent"
+        android:padding="@dimen/pd_xxsmall"
+        android:layout_marginLeft="@dimen/pd_xsmall"
+        android:layout_weight="1"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/socialIconClose"
+        style="@style/wrap"
+        android:layout_weight="0"
+        android:padding="@dimen/pd_xxsmall"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_inr_cross_circle"/>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
 import me.ilich.juggler.change.Add;
+import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
@@ -41,5 +42,9 @@ public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, 
 
     public void navigateToActivityForResult(State state, int code) {
         navigateTo().state(Add.newActivityForResult(state, BaseActivity.class, code));
+    }
+
+    public void navigateTo(State state, Class<? extends JugglerActivity> activityClass) {
+        navigateTo().state(Add.newActivity(state, activityClass));
     }
 }

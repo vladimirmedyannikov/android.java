@@ -21,7 +21,7 @@ public class SocialVM extends BaseObservable {
         this.social = social;
         this.binding = binding;
         unbindIcon = binding.socialUnbind;
-        setUnbindIconVisibilyty();
+        setUnbindIconVisibility();
     }
 
     public int getIcon() {
@@ -39,7 +39,7 @@ public class SocialVM extends BaseObservable {
     public void unBindSocial(View view) {
     }
 
-    public void setUnbindIconVisibilyty() {
+    public void setUnbindIconVisibility() {
         unbindIcon.setVisibility(social.isLogon() ? View.VISIBLE : View.INVISIBLE);
     }
 }

@@ -392,8 +392,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = PagerFragment.Profile.newInstance();
                 fr = ProfileFragment.newInstance();
                 tag = TAG_PROFILE;
-//                navigateTo().state(Add.deeper(new EditProfileState(null)));
-
                 break;
             case NavigationMenuItem.FRIENDS:
                 fr = FriendsFragment.instance();

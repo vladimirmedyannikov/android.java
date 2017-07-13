@@ -19,10 +19,13 @@
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
+        android:padding="@dimen/pd_normal"
         android:onClick="@{(view) -> callback.onClick(friend)}">
         <de.hdodenhof.circleimageview.CircleImageView
-            style="@style/wrap"
-            android:padding="8dp"
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_margin="8dp"
             tools:src="@drawable/ic_launcher_v230"
             />
         <LinearLayout
@@ -31,10 +34,14 @@
             <TextView
                 style="@style/text.large.black"
                 android:text="@{FriendGuiUtils.getTitle(friend)}"
+                android:lines="1"
+                android:ellipsize="end"
                 tools:text="Иван Иваноы"/>
             <TextView
                 style="@style/text.gray"
                 android:text="@{friend.status}"
+                android:lines="1"
+                android:ellipsize="end"
                 tools:text="активный гражданин"/>
         </LinearLayout>
     </LinearLayout>

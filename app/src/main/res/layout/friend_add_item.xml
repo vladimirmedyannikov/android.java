@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <LinearLayout
+        style="@style/ripple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/pd_normal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_margin="8dp"
+            tools:src="@drawable/ic_launcher_v230" />
+
+        <TextView
+            style="@style/text.large.green"
+            android:text="Добавить друга" />
+    </LinearLayout>
+</layout>

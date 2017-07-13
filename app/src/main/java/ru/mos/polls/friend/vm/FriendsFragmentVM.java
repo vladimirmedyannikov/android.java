@@ -1,6 +1,7 @@
 package ru.mos.polls.friend.vm;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     protected void initialize(LayoutFriendsBinding binding) {
         getFragment().getActivity().setTitle(R.string.mainmenu_friends);
         binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.list.setAdapter(FriendsAdapter.createStub(getActivity()));
+        RecyclerView.Adapter adapter = FriendsAdapter.createStub(getActivity());//new NewFriendsAdapter(getActivity());
+        binding.list.setAdapter(adapter);
     }
 }

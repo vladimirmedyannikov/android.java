@@ -3,20 +3,15 @@ package ru.mos.polls.newprofile.vm;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
 
 import java.io.File;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
@@ -28,11 +23,14 @@ import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
-import ru.mos.polls.profile.model.Achievement;
+import ru.mos.polls.newprofile.model.Achievement;
+import ru.mos.polls.newprofile.service.Media;
+import ru.mos.polls.newprofile.service.UploadMedia;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 
@@ -44,7 +42,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     protected RecyclerView recyclerView;
     protected AgUser changed, saved;
     protected CircleImageView circleImageView;
-    protected Observable<List<Achievement>> achievementList;
+    protected Observable<Achievement> achievementList;
 
     public BaseTabFragmentVM(F fragment, B binding) {
         super(fragment, binding);
@@ -96,7 +94,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
             e.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(observable.subscribe(this::setAvatar, throwable -> System.out.println(throwable.getMessage())));
+        disposables.add(observable.subscribe(this::setAvatar));
     }
 
 
@@ -109,7 +107,22 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     }
 
     protected void sendAvatar(File file) {
-        System.out.println("File send to server = " + file.getName());
-        System.out.println("File send to server = " + file.getAbsolutePath());
+        Observable<Media> media = Observable.just(file)
+                .subscribeOn(Schedulers.io())
+                .flatMap(f -> { //конвертируем в base64
+                    Media m = new Media(FileUtils.getFileExtension(f.getName()), FileUtils.getStringFile(f));
+                    return Observable.just(m);
+                });
+        disposables.add(media.subscribe(
+                media1 -> {
+                    Observable<UploadMedia.Response> responseObservable = AGApplication.api.uploadFile(new UploadMedia.Request().setBase64(media1.getBase64()).setExtension(media1.getExtension()));
+                    disposables.add(responseObservable.observeOn(Schedulers.io()).subscribe(response -> {
+                        System.out.println("response = " + response.getResult().getId());
+                        System.out.println("response = " + response.getResult().getUrl());
+                    }, throwable -> throwable.printStackTrace()));
+                },
+                throwable -> throwable.printStackTrace()
+        ));
+
     }
 }

@@ -3,6 +3,10 @@ package ru.mos.polls.rxhttp.rxapi.config;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ru.mos.polls.newprofile.service.AchievementsGet;
+import ru.mos.polls.newprofile.service.AchievementsSelect;
+import ru.mos.polls.newprofile.service.UploadMedia;
+import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
@@ -25,13 +29,15 @@ public interface AgApi {
 
         interface Versions {
             String V_2_3_0 = "v2.3.0";
-            String V_2_4_0 =  "v2.4.0";
+            String V_2_4_0 = "v2.4.0";
             String CURRENT = V_2_3_0;
         }
 
         interface Controllers {
             String NOVELTY = "novelty";
             String FRIEND = "friend";
+            String AGPROFILE = "agprofile";
+            String MEDIA = "media";
         }
 
         interface Methods {
@@ -41,25 +47,38 @@ public interface AgApi {
             String FIND = "find";
             String MY = "my";
             String PROFILE = "profile";
+            String AVATAR = "avatar";
+            String UPLOAD = "upload";
+            String SELECT_ACHIEVEMENTS = "selectAchievements";
+            String GET_ACHIEVEMENTS = "getAchievement";
         }
 
     }
 
-    @POST("/" + Api.Versions.CURRENT + "/"+ Api.Controllers.NOVELTY + "/" + Api.Methods.SELECT)
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.NOVELTY + "/" + Api.Methods.SELECT)
     Observable<NoveltySelect.Response> noveltySelect(@Body NoveltySelect.Request body);
 
-    @POST("/" + Api.Versions.CURRENT + "/"+ Api.Controllers.NOVELTY + "/" + Api.Methods.GET)
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.NOVELTY + "/" + Api.Methods.GET)
     Observable<NoveltyGet.Response> noveltyGet(@Body NoveltyGet.Request body);
 
-    @POST("/" + Api.Versions.CURRENT + "/"+ Api.Controllers.NOVELTY + "/" + Api.Methods.FILL)
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.NOVELTY + "/" + Api.Methods.FILL)
     Observable<NoveltyFill.Response> noveltyFill(@Body NoveltyFill.Request body);
 
-    @POST("/" + Api.Versions.V_2_4_0 + "/"+ Api.Controllers.FRIEND + "/" + Api.Methods.FIND)
+    @POST("/" + Api.Versions.V_2_4_0 + "/" + Api.Controllers.FRIEND + "/" + Api.Methods.FIND)
     Observable<FriendFind.Response> friendFind(@Body FriendFind.Request body);
 
-    @POST("/" + Api.Versions.V_2_4_0 + "/"+ Api.Controllers.FRIEND + "/" + Api.Methods.MY)
+    @POST("/" + Api.Versions.V_2_4_0 + "/" + Api.Controllers.FRIEND + "/" + Api.Methods.MY)
     Observable<FriendMy.Response> friendMy(@Body FriendMy.Request body);
 
-    @POST("/" + Api.Versions.V_2_4_0 + "/"+ Api.Controllers.FRIEND + "/" + Api.Methods.PROFILE)
+    @POST("/" + Api.Versions.V_2_4_0 + "/" + Api.Controllers.FRIEND + "/" + Api.Methods.PROFILE)
     Observable<FriendProfile.Response> friendProfile(@Body FriendProfile.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.MEDIA + "/" + AgApi.Api.Methods.UPLOAD)
+    Observable<UploadMedia.Response> uploadFile(@Body UploadMedia.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.SELECT_ACHIEVEMENTS)
+    Observable<AchievementsSelect.Response> selectAchievements(Page page);
+
+    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
+    Observable<AchievementsGet.Response> getAchievement(String id);
 }

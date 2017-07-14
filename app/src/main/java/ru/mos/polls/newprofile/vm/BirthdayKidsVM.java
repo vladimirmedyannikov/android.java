@@ -1,7 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.support.v4.app.FragmentManager;
-import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.view.View;
 
@@ -10,40 +9,38 @@ import java.util.Calendar;
 import ru.mos.polls.BR;
 import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.newprofile.base.ui.dialog.YearDialogFragment;
+import ru.mos.polls.newprofile.base.vm.BaseVM;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 
 /**
  * Created by Trunks on 10.07.2017.
  */
 
-public class BirthdayKidsVM extends BaseObservable {
-    BirthdayKids birthdayKids;
-    ItemBirthdayKidsBinding binding;
+public class BirthdayKidsVM extends BaseVM<BirthdayKids, ItemBirthdayKidsBinding> {
     FragmentManager fr;
 
     public BirthdayKidsVM(BirthdayKids birthdayKids, ItemBirthdayKidsBinding binding, FragmentManager fr) {
-        this.birthdayKids = birthdayKids;
-        this.binding = binding;
+        super(birthdayKids, binding);
         this.fr = fr;
     }
 
     public String getHint() {
-        return birthdayKids.getBirtdayHints();
+        return model.getBirtdayHints();
     }
 
     @Bindable
     public String getTitle() {
-        return birthdayKids.getBirthdayYear() == 0 ? "" : birthdayKids.getBirthDayTitle();
+        return model.getBirthdayYear() == 0 ? "" : model.getBirthDayTitle();
     }
 
     @Bindable
     public String getYear() {
-        String yearString = getYearString(birthdayKids.getBirthdayYear());
-        return birthdayKids.getBirthdayYear() == 0 ? "" : yearString;
+        String yearString = getYearString(model.getBirthdayYear());
+        return model.getBirthdayYear() == 0 ? "" : yearString;
     }
 
     public void setYear(long year) {
-        birthdayKids.setBirthdayYear(year);
+        model.setBirthdayYear(year);
         notifyPropertyChanged(BR.year);
         notifyPropertyChanged(BR.title);
     }
@@ -70,4 +67,5 @@ public class BirthdayKidsVM extends BaseObservable {
         c.setTimeInMillis(year);
         return String.valueOf(c.get(Calendar.YEAR));
     }
+
 }

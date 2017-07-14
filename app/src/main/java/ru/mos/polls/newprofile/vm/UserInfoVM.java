@@ -1,28 +1,26 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.databinding.BaseObservable;
 
 import ru.mos.polls.databinding.UserInfoItemBinding;
+import ru.mos.polls.newprofile.base.vm.BaseVM;
 import ru.mos.polls.newprofile.model.UserInfo;
 
 /**
  * Created by Trunks on 19.06.2017.
  */
 
-public class UserInfoVM extends BaseObservable {
-    private UserInfo userData;
-    private UserInfoItemBinding binding;
+public class UserInfoVM extends BaseVM<UserInfo, UserInfoItemBinding> {
 
     public UserInfoVM(UserInfo userData, UserInfoItemBinding binding) {
-        this.userData = userData;
-        this.binding = binding;
+        super(userData, binding);
     }
 
     public String getValue() {
-        return userData.getValue();
+        return model.getValue();
     }
 
     public String getTitle() {
-        return userData.getTitle();
+        return model.getTitle();
     }
+
 }

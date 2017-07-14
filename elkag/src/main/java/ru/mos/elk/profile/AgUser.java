@@ -709,6 +709,14 @@ public class AgUser implements Serializable {
         return result;
     }
 
+    public List<String> childBirthdaysAsList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < childBirthdays.size(); ++i) {
+            list.add(birthdayToString(childBirthdays.get(i)));
+        }
+        return list;
+    }
+
     private String birthdayToString(long birthday) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         return sdf.format(birthday);

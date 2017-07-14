@@ -5,6 +5,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
+import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.UploadMedia;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
@@ -50,8 +51,8 @@ public interface AgApi {
             String UPLOAD = "upload";
             String SELECT_ACHIEVEMENTS = "selectAchievements";
             String GET_ACHIEVEMENTS = "getAchievement";
+            String SET_PROFILE = "setProfile";
         }
-
     }
 
     @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.NOVELTY + "/" + Api.Methods.SELECT)
@@ -80,4 +81,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
     Observable<AchievementsGet.Response> getAchievement(@Body AchievementsGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
+    Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
 }

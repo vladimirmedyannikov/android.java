@@ -1,6 +1,5 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.databinding.BaseObservable;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,52 +11,50 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.databinding.ItemAchievementBinding;
+import ru.mos.polls.newprofile.base.vm.BaseVM;
 import ru.mos.polls.newprofile.model.Achievement;
 
 /**
  * Created by Trunks on 23.06.2017.
  */
 
-public class AchievementVM extends BaseObservable {
-    private Achievement achievement;
-    private ItemAchievementBinding binding;
+public class AchievementVM extends BaseVM<Achievement, ItemAchievementBinding> {
     ImageView badge;
     ProgressBar pb;
 
     public AchievementVM(Achievement achievement, ItemAchievementBinding binding) {
-        this.achievement = achievement;
-        this.binding = binding;
-        badge = binding.badgeContainer.badge;
-        pb = binding.badgeContainer.loadingBadge;
+        super(achievement, binding);
+        badge = viewDataBinding.badgeContainer.badge;
+        pb = viewDataBinding.badgeContainer.loadingBadge;
         loadImage(getImageUrl());
     }
 
     public String getId() {
-        return achievement.getId();
+        return model.getId();
     }
 
     public String getImageUrl() {
-        return achievement.getImageUrl();
+        return model.getImageUrl();
     }
 
     public String getTitle() {
-        return achievement.getTitle();
+        return model.getTitle();
     }
 
     public String getDescription() {
-        return achievement.getDescription();
+        return model.getDescription();
     }
 
     public String getBody() {
-        return achievement.getBody();
+        return model.getBody();
     }
 
     public boolean isNext() {
-        return achievement.isNext();
+        return model.isNext();
     }
 
     public boolean isNeedHideTask() {
-        return achievement.isNeedHideTask();
+        return model.isNeedHideTask();
     }
 
 

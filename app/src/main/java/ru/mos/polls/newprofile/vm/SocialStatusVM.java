@@ -1,32 +1,30 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.databinding.BaseObservable;
 
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.polls.databinding.ItemAgSocialStatusBinding;
+import ru.mos.polls.newprofile.base.vm.BaseVM;
 
 /**
  * Created by Trunks on 07.07.2017.
  */
 
-public class SocialStatusVM extends BaseObservable {
-    AgSocialStatus agSocialStatus;
-    ItemAgSocialStatusBinding binding;
+public class SocialStatusVM extends BaseVM<AgSocialStatus, ItemAgSocialStatusBinding> {
 
     public SocialStatusVM(AgSocialStatus agSocialStatus, ItemAgSocialStatusBinding binding) {
-        this.agSocialStatus = agSocialStatus;
-        this.binding = binding;
+        super(agSocialStatus, binding);
     }
 
     public String getTitle() {
-        return agSocialStatus.getTitle();
+        return model.getTitle();
     }
 
     public int getId() {
-        return agSocialStatus.getId();
+        return model.getId();
     }
 
     public AgSocialStatus getAgSocialStatus() {
-        return agSocialStatus;
+        return model;
     }
+
 }

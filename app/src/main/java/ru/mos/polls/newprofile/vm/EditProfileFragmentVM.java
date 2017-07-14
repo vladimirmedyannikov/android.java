@@ -21,6 +21,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
@@ -32,6 +35,8 @@ import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.newprofile.service.ProfileSet;
+import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
@@ -111,10 +116,39 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                                 AgUser changed = action.getAgUser();
                                 this.changedUser = changed;
                                 refreshView(changed);
+                                sendProfile(changed);
                                 break;
                         }
                     }
                 });
+    }
+
+    public void sendProfile(AgUser agUser) {
+        Observable<ProfileSet.Response> responseObservabl =
+                AGApplication.api.setProfile(new ProfileSet.Request(new Personal(agUser)))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        DisposableObserver disposable = new DisposableObserver<ProfileSet.Response>() {
+            @Override
+            public void onNext(@NonNull ProfileSet.Response response) {
+                System.out.printf("onNext");
+                System.out.printf("response " + response.toString());
+                System.out.printf("response " + response.getErrorMessage());
+                System.out.printf("response " + response.getErrorCode());
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.printf("onComplete");
+            }
+        };
+        disposables.add(responseObservabl.subscribeWith(disposable));
     }
 
     @Override
@@ -174,7 +208,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         if (agUser.getChildCount() > 0) {
             kidsDateLayer.setVisibility(View.VISIBLE);
             if (agUser.isChildBirthdaysFilled()) {
-                kidsDate.setText(getFragment().getString(R.string.kids_birthdays));
+                kidsDate.setText(getActivity().getString(R.string.kids_birthdays));
                 kidsDateValue.setText("указан");
             } else {
                 kidsDateValue.setText("не указан");
@@ -281,9 +315,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         socialBindingLayer.removeAllViews();
         disposables.add(socialListObserable
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::addSocialToLayer));
     }
 

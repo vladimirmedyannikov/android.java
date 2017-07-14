@@ -6,7 +6,6 @@ import retrofit2.http.POST;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.service.UploadMedia;
-import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
@@ -77,8 +76,8 @@ public interface AgApi {
     Observable<UploadMedia.Response> uploadFile(@Body UploadMedia.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.SELECT_ACHIEVEMENTS)
-    Observable<AchievementsSelect.Response> selectAchievements(Page page);
+    Observable<AchievementsSelect.Response> selectAchievements(@Body AchievementsSelect.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
-    Observable<AchievementsGet.Response> getAchievement(String id);
+    Observable<AchievementsGet.Response> getAchievement(@Body AchievementsGet.Request body);
 }

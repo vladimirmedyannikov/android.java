@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
-import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
@@ -23,6 +24,7 @@ import ru.mos.polls.rxhttp.rxapi.model.Page;
 
 public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements AvatarPanelClickListener {
 
+    private Page page = new Page();
     private SwitchCompat enableProfileVisibility;
 
     public UserTabFragmentVM(UserTabFragment fragment, LayoutUserTabProfileBinding binding) {
@@ -60,9 +62,11 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
         super.onViewCreated();
         mockUserStatsList();
         setAvatar();
-        Observable<AchievementsSelect.Response> achievementRe = AGApplication.api.selectAchievements(new Page());
+        Observable<AchievementsSelect.Response> achievementRe
+                = AGApplication.api.selectAchievements(new AchievementsSelect.Request(page));
         achievementRe
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     System.out.println("respone = " + response.getResult().getAchievements());
                     for (ru.mos.polls.newprofile.model.Achievement achievement : response.getResult().getAchievements()) {

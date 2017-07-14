@@ -10,6 +10,7 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 public class AchievementsGet {
     public static class Request extends AuthRequest {
+        private int id;
     }
 
     public static class Response extends GeneralResponse<Response.Result> {

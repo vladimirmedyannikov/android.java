@@ -8,15 +8,18 @@ import ru.mos.polls.newprofile.base.ui.BindingHolder;
 import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.newprofile.model.Achievement;
 import ru.mos.polls.newprofile.vm.AchievementVM;
+import ru.mos.polls.newprofile.vm.OnAchievementClickListener;
 
 /**
  * Created by Trunks on 23.06.2017.
  */
 
 public class AchievementAdapter extends BaseAdapter<AchievementVM, BindingHolder<ItemAchievementBinding>, ItemAchievementBinding, Achievement> {
+    OnAchievementClickListener listener;
 
-    public AchievementAdapter(List<Achievement> list) {
+    public AchievementAdapter(List<Achievement> list, OnAchievementClickListener listener) {
         this.list = list;
+        this.listener = listener;
     }
 
     @Override
@@ -26,6 +29,7 @@ public class AchievementAdapter extends BaseAdapter<AchievementVM, BindingHolder
 
     @Override
     public AchievementVM getVM(Achievement obj, ItemAchievementBinding binding) {
+        binding.setListener(listener);
         return new AchievementVM(obj, binding);
     }
 

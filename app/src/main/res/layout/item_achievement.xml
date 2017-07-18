@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
+        xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.AchievementVM" />
+            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
 
+        <variable
+            name="listener"
+            type="ru.mos.polls.newprofile.vm.OnAchievementClickListener"/>
     </data>
 
     <RelativeLayout
@@ -16,27 +19,28 @@
         android:padding="@dimen/pd_xsmall">
 
         <include
-            bind:viewModel="@{viewModel}"
             android:id="@+id/badgeContainer"
-            layout="@layout/layout_badge" />
+            layout="@layout/layout_badge"
+            bind:viewModel="@{viewModel}"/>
 
         <LinearLayout
             style="@style/item.linear"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/pd_xxsmall"
-            android:layout_toRightOf="@id/badgeContainer">
+            android:layout_toRightOf="@id/badgeContainer"
+            android:onClick="@{()-> listener.onAchivementClick(viewModel.getId)}">
 
             <TextView
                 android:id="@+id/title"
                 style="@style/text.large"
                 android:layout_width="match_parent"
-                android:text="@{viewModel.title}" />
+                android:text="@{viewModel.title}"/>
 
             <TextView
                 android:id="@+id/subtitle"
                 style="@style/text.normal"
                 android:text="@{viewModel.body}"
-                android:textColor="@color/greyHint" />
+                android:textColor="@color/greyHint"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

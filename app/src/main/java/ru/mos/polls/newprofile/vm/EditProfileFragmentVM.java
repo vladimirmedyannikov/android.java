@@ -2,8 +2,10 @@ package ru.mos.polls.newprofile.vm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,6 +33,7 @@ import ru.mos.elk.profile.BirthDateParser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
@@ -71,6 +74,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
     Observable<List<Social>> socialListObserable;
+    public static final String PREFS = "profile_prefs";
+    public static final String TIME_SYNQ = "time_synq";
+    public static final long INTERVAL_SYNQ = 15 * 60 * 1000;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -116,6 +122,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                                 AgUser changed = action.getAgUser();
                                 this.changedUser = changed;
                                 refreshView(changed);
+                                changedUser.save(getActivity().getBaseContext());
                                 sendProfile(changed);
                                 break;
                         }
@@ -132,10 +139,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         DisposableObserver disposable = new DisposableObserver<ProfileSet.Response>() {
             @Override
             public void onNext(@NonNull ProfileSet.Response response) {
-                System.out.printf("onNext");
-                System.out.printf("response " + response.toString());
-                System.out.printf("response " + response.getErrorMessage());
-                System.out.printf("response " + response.getErrorCode());
             }
 
             @Override
@@ -145,7 +148,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
             @Override
             public void onComplete() {
-                System.out.printf("onComplete");
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
             }
         };
         disposables.add(responseObservabl.subscribeWith(disposable));
@@ -255,6 +260,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 setWorkFlatView(newFlat);
                 changedUser.setWorkFlat(newFlat);
             }
+            changedUser.save(getActivity().getBaseContext());
         }
     }
 
@@ -357,7 +363,11 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void setBirthDayDate() {
-        OnDateSetCallback listener = () -> Toast.makeText(getFragment().getContext(), "OK", Toast.LENGTH_SHORT).show();
+        OnDateSetCallback listener = () -> {
+            changedUser.setBirthday(birthdayDate.getText().toString());
+            changedUser.save(getActivity().getBaseContext());
+            sendProfile(changedUser);
+        };
         /**
          * Откатываем время назад
          */

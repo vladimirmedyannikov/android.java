@@ -13,6 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
@@ -41,10 +42,10 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         super.initialize(binding);
         binding.setClickListener(this);
-        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+
     }
 
-    private void mockUserInfoList() {
+    private void userInfoList() {
         List<UserInfo> list = new ArrayList<>();
         list.add(new UserInfo("телефон", saved.getPhone()));
         list.add(new UserInfo("e-mail", saved.getEmail()));
@@ -58,7 +59,7 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
         String residenceFlat = saved.getRegistration().compareByFullAddress(saved.getResidence()) || saved.getResidence().isEmpty()
                 ? "совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getActivity().getBaseContext());
         list.add(new UserInfo("адрес проживания", residenceFlat));
-        list.add(new UserInfo("род деятельности", "sds"));
+        list.add(new UserInfo("род деятельности", AgSocialStatus.fromPreferences(getActivity().getBaseContext()).get(saved.getAgSocialStatus()).getTitle()));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getViewTitle(getFragment().getContext())));
         String pguConnected = saved.isPguConnected() ? "подключено" : "не указано";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
@@ -84,24 +85,24 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
     @Override
     public void onResume() {
         super.onResume();
-
+        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+        userInfoList();
+        setSocialBindingLayerRx();
+        setAvatar();
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        mockUserInfoList();
-        setSocialBindingLayerRx();
-        setAvatar();
     }
 
     public void setSocialBindingLayerRx() {
         socialBindingLayer.removeAllViews();
         disposables.add(socialListObserable
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::addSocialToLayer));
     }
 

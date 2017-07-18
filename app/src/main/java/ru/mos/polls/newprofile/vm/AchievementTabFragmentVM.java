@@ -1,18 +1,27 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.databinding.LayoutAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.model.Achievement;
+import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
+import ru.mos.polls.rxhttp.rxapi.model.Page;
 
 /**
  * Created by Trunks on 16.06.2017.
  */
 
-public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFragment, LayoutAchievementTabProfileBinding> {
+public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFragment, LayoutAchievementTabProfileBinding> implements OnAchievementClickListener {
+    private Page achivementPage = new Page();
     public AchievementTabFragmentVM(AchievementTabFragment fragment, LayoutAchievementTabProfileBinding binding) {
         super(fragment, binding);
     }
@@ -37,7 +46,28 @@ public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFr
         list.add(new Achievement("8", "https://img3.goodfon.ru/original/1024x1024/7/3e/koshki-milye-kotiki.jpg", "кот8", "кот8 тело", "описание", false, false));
         list.add(new Achievement("9", "http://cdn.fishki.net/upload/post/201604/06/1909969/tn/cdc7cafbfe7efb922855d268fcb51df9.jpg", "кот9", "кот9 тело", "описание", false, false));
 
-        AchievementAdapter adapter = new AchievementAdapter(list);
+        AchievementAdapter adapter = new AchievementAdapter(list, this);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onAchivementClick(String id) {
+        Toast.makeText(getActivity().getBaseContext(), "id = " + id, Toast.LENGTH_SHORT).show();
+    }
+    public void loadAchivements() {
+        Observable<AchievementsSelect.Response> achievementRe
+                = AGApplication.api.selectAchievements(new AchievementsSelect.Request(achivementPage));
+        achievementRe
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    achievementList = Observable.fromIterable(response.getResult().getAchievements());
+                }, throwable -> throwable.printStackTrace());
+    }
+
 }

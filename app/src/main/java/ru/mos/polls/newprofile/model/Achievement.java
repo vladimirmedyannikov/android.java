@@ -1,5 +1,7 @@
 package ru.mos.polls.newprofile.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -8,10 +10,12 @@ import java.io.Serializable;
 
 public class Achievement implements Serializable {
     private String id;
+    @SerializedName("img_url")
     private String imageUrl;
     private String title;
     private String description;
     private String body;
+    @SerializedName("is_next")
     private boolean isNext;
     private boolean isNeedHideTask;
 

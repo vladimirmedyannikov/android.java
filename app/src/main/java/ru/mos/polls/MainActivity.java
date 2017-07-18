@@ -390,7 +390,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
                 fr = PagerFragment.Profile.newInstance();
-//                fr = ProfileFragment.newInstance();
+                fr = ProfileFragment.newInstance();
                 tag = TAG_PROFILE;
                 break;
             case NavigationMenuItem.FRIENDS:

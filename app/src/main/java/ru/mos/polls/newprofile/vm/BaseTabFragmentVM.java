@@ -50,8 +50,13 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
 
     protected void initialize(B binding) {
-        saved = new AgUser(getActivity());
         setRecyclerList(recyclerView);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        saved = new AgUser(getActivity());
     }
 
     @Override
@@ -84,7 +89,8 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     }
 
     void setAvatar() {
-        circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
+        if (BadgesSource.getInstance().getAvatar() != null)
+            circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
     }
 
     void updateAvatar(Uri uri) {

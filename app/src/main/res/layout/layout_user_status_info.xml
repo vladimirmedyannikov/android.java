@@ -44,26 +44,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="@dimen/vs_xxsmall"
-                    android:layout_height="@dimen/vs_xxsmall"
-                    android:layout_margin="@dimen/pd_xxxsmall"
-                    android:src="@drawable/com_facebook_button_icon"/>
-
-                <ImageView
-                    android:layout_width="@dimen/vs_xxsmall"
-                    android:layout_height="@dimen/vs_xxsmall"
-                    android:layout_margin="@dimen/pd_xxxsmall"
-                    android:src="@drawable/com_facebook_button_icon"/>
-
-                <ImageView
-                    android:layout_width="@dimen/vs_xxsmall"
-                    android:layout_height="@dimen/vs_xxsmall"
-                    android:layout_margin="@dimen/pd_xxxsmall"
-                    android:src="@drawable/com_facebook_button_icon"/>
-            </LinearLayout>
+                android:orientation="horizontal"
+                android:gravity="center"/>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/agUser_achivement_value"
@@ -73,7 +55,7 @@
                 android:layout_marginLeft="@dimen/pd_normal"
                 android:layout_toEndOf="@+id/agUser_achivement_layer"
                 android:layout_toRightOf="@+id/agUser_achivement_layer"
-                android:text="+6"/>
+                android:text="+0"/>
         </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView

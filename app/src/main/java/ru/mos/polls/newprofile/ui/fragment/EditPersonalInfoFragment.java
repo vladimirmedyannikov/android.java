@@ -1,6 +1,10 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.BR;
@@ -36,6 +40,11 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public int getVariable() {
         return BR.viewModel;
     }
@@ -45,4 +54,8 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
         return R.layout.layout_new_edit_personal_info;
     }
 
+    @Override
+    public int getMenuResource() {
+        return R.menu.confirm;
+    }
 }

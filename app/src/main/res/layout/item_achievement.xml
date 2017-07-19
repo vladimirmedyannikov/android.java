@@ -39,7 +39,7 @@
             <TextView
                 android:id="@+id/subtitle"
                 style="@style/text.normal"
-                android:text="@{viewModel.body}"
+                android:text="@{viewModel.getDescription}"
                 android:textColor="@color/greyHint"/>
         </LinearLayout>
     </RelativeLayout>

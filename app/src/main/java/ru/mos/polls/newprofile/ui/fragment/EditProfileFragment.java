@@ -8,7 +8,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
-import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.vm.EditProfileFragmentVM;
 
 /**

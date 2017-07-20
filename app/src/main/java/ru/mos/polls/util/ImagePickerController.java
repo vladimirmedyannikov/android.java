@@ -12,7 +12,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -45,24 +46,11 @@ public class ImagePickerController {
     public static Uri cameraPictureUrl;
 
     public static void showDialog(final Fragment fragment) {
-        final Context context = fragment.getContext();
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                context,
-                R.layout.dialog_item, R.id.item);
-        arrayAdapter.addAll("Камера", "Галерея");
-        builder.setAdapter(
-                arrayAdapter,
-                (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            getPicture(fragment, TAKE_PHOTO);
-                            break;
-                        case 1:
-                            getPicture(fragment, SELECT_PHOTO);
-                            break;
-                    }
-                });
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+        View view = LayoutInflater.from(fragment.getContext()).inflate(R.layout.dialog_image_picker_conroller, null, false);
+        builder.setView(view);
+        view.findViewById(R.id.src_gallery).setOnClickListener((v) -> getPicture(fragment, SELECT_PHOTO));
+        view.findViewById(R.id.src_camera).setOnClickListener((v) -> getPicture(fragment, TAKE_PHOTO));
         builder.show();
     }
 

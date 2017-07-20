@@ -64,7 +64,9 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/agUser_profile_list"
-                style="@style/item"/>
+                style="@style/item"
+                android:paddingLeft="@dimen/pd_xsmall"
+                android:paddingRight="@dimen/pd_xsmall"/>
 
             <LinearLayout
                 style="@style/linear"
@@ -73,13 +75,15 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/agUser_stat_title"
                     style="@style/text.small.gray"
+                    android:paddingLeft="@dimen/pd_xsmall"
                     android:text="социальные сети"/>
 
                 <LinearLayout
                     android:id="@+id/ag_user_social_binding_layer"
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/pd_xxlarge"
                     android:orientation="horizontal"
-                    android:layout_height="@dimen/pd_xxlarge">
+                    android:paddingLeft="@dimen/pd_xsmall">
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

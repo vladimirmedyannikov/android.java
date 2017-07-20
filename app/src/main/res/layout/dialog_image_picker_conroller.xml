@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/text.normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/pd_xsmall"
+        android:gravity="center"
+        android:padding="@dimen/pd_xxsmall"
+        android:text="@string/avatar_sources_title"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/src_gallery"
+        style="@style/text.large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/pd_xlarge"
+        android:layout_marginTop="@dimen/pd_normal"
+        android:background="@drawable/ag_list_selector"
+        android:gravity="center"
+        android:padding="@dimen/pd_xxsmall"
+        android:text="@string/src_gallery"
+        android:textColor="@color/greenText"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/src_camera"
+        style="@style/text.large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/pd_xxlarge"
+        android:background="@drawable/ag_list_selector"
+        android:gravity="center"
+        android:padding="@dimen/pd_xxsmall"
+        android:text="@string/src_camera"
+        android:textColor="@color/greenText"/>
+</LinearLayout>

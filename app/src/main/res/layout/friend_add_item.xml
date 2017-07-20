@@ -12,7 +12,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/pd_normal">
+        android:padding="@dimen/pd_xxsmall">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon"

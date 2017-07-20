@@ -32,15 +32,14 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/text.large"
+                style="@style/text.large.black"
                 android:layout_width="match_parent"
                 android:text="@{viewModel.title}"/>
 
             <TextView
                 android:id="@+id/subtitle"
-                style="@style/text.normal"
-                android:text="@{viewModel.getDescription}"
-                android:textColor="@color/greyHint"/>
+                style="@style/text.gray"
+                android:text="@{viewModel.getDescription}"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -771,4 +771,7 @@
     <string name="menu_confirm">подтвердить</string>
     <string name="mainmenu_friends">Мои друзья</string>
     <string name="kids_birthdays">Возраст детей</string>
+    <string name="avatar_sources_title">Выберите источник фотографии</string>
+    <string name="src_gallery">ГАЛЕРЕЯ</string>
+    <string name="src_camera">КАМЕРА</string>
 </resources>

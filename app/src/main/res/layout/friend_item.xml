@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:padding="@dimen/pd_normal"
+        android:padding="@dimen/pd_xxsmall"
         android:onClick="@{(view) -> callback.onClick(friend)}">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"

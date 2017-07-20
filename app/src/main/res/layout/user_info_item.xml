@@ -21,7 +21,6 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/agUser_stat_value"
             style="@style/text.normal.black"
-            android:textStyle="bold"
             android:text="@{viewModel.value}"/>
     </LinearLayout>
 </layout>

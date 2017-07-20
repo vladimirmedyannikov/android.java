@@ -39,6 +39,7 @@ import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.ProfileSet;
+import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
@@ -123,20 +124,29 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                                 this.changedUser = changed;
                                 refreshView(changed);
                                 changedUser.save(getActivity().getBaseContext());
-                                sendProfile(changed);
+//                                sendProfile(changed);
+                                sendProfile(new ProfileSet.Request(new Personal(changedUser)));
                                 break;
                         }
                     }
                 });
     }
 
-    public void sendProfile(AgUser agUser) {
+    public void sendProfile(ProfileSet.Request request) {
         Observable<ProfileSet.Response> responseObservabl =
-                AGApplication.api.setProfile(new ProfileSet.Request(new Personal(agUser)))
+                AGApplication.api.setProfile(request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
+    }
 
-        DisposableObserver disposable = new DisposableObserver<ProfileSet.Response>() {
+    /**
+     * обсервер для сохранения профиля
+     *
+     */
+
+    DisposableObserver setProfileObserver = new DisposableObserver<ProfileSet.Response>() {
+
             @Override
             public void onNext(@NonNull ProfileSet.Response response) {
             }
@@ -153,7 +163,14 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
             }
         };
-        disposables.add(responseObservabl.subscribeWith(disposable));
+
+    public void sendProfile(AgUser agUser) {
+        Observable<ProfileSet.Response> responseObservabl =
+                AGApplication.api.setProfile(new ProfileSet.Request(new Personal(agUser)))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
     }
 
     @Override
@@ -260,7 +277,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 setWorkFlatView(newFlat);
                 changedUser.setWorkFlat(newFlat);
             }
+            sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
             changedUser.save(getActivity().getBaseContext());
+
         }
     }
 

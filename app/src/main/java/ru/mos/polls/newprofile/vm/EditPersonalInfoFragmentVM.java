@@ -64,17 +64,6 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         middlename = binding.fioContainer.middlename;
         childsCount = binding.childsCountContainer.childsCount;
         recyclerView = binding.root;
-        validateTWListener = new ValidateTW.ValidateTWListener() {
-            @Override
-            public void show() {
-//                getFragment().showMenuItem(R.id.action_confirm);
-            }
-
-            @Override
-            public void hide() {
-//                getFragment().hideMenuItem(R.id.action_confirm);
-            }
-        };
     }
 
     @Override

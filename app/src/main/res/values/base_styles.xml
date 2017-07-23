@@ -158,11 +158,21 @@
     </style>
 
     <style name="text.small.white">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.normal.white">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="text.large.white">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.xlarge.white">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
         <item name="android:textColor">@color/white</item>
     </style>
@@ -257,6 +267,13 @@
     <style name="text.up.green.medium">
         <item name="android:textColor">@color/greenText</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="edit_profile" parent="text.normal.black">
+        <item name="android:paddingTop">@dimen/pd_xsmall</item>
+        <item name="android:paddingBottom">@dimen/pd_xsmall</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
     <!--Для отображения заголовков-->
@@ -402,7 +419,7 @@
         <item name="android:drawablePadding">@dimen/pd_xxsmall</item>
         <item name="android:gravity">center_vertical</item>
     </style>
-    
+
     <style name="cardview" parent="root">
         <item name="android:layout_margin">2dp</item>
         <item name="cardCornerRadius">@dimen/quest_background_round</item>

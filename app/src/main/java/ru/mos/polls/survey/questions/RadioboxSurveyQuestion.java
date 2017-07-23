@@ -52,7 +52,7 @@ public class RadioboxSurveyQuestion extends ListViewSurveyQuestion {
         }
     }
 
-    private boolean isChecked() {
+    public boolean isChecked() {
         boolean result = false;
         for (SurveyVariant variant : getVariantsList()) {
             if (variant.isChecked()) {

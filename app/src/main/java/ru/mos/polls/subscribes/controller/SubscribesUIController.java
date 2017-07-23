@@ -203,14 +203,9 @@ public class SubscribesUIController {
 
     private void findViewsForEvent(final Context context, View view, final Event event) {
         title = ButterKnife.findById(view, R.id.eventTitle);
-//                (TextView) view.findViewById(R.id.eventTitle);
-
         emailEvent =  ButterKnife.findById(view, R.id.emailEvent);
-//                (SwitchCompat) view.findViewById(R.id.emailEvent);
         pushEvent =  ButterKnife.findById(view, R.id.pushEvent);
-//                (SwitchCompat) view.findViewById(R.id.pushEvent);
         switchContainer = ButterKnife.findById(view, R.id.switchContainer);
-//                (LinearLayout) view.findViewById(R.id.switchContainer);
 
         pushEvent.setOnCheckedChangeListener(NotificationController.checkingEnablePush(context));
 
@@ -281,23 +276,14 @@ public class SubscribesUIController {
 
     private void findViewsForPoll(View view) {
         emailResult = ButterKnife.findById(view, R.id.emailResult);
-//                (SwitchCompat) view.findViewById(R.id.emailResult);
         smsResult = ButterKnife.findById(view, R.id.smsResult);
-//                (SwitchCompat) view.findViewById(R.id.smsResult);
         pushResult = ButterKnife.findById(view, R.id.smsResult);
-//                (SwitchCompat) view.findViewById(R.id.pushResult);
         emailDecision = ButterKnife.findById(view, R.id.smsResult);
-//                (SwitchCompat) view.findViewById(R.id.smsResult);
         smsDecision = ButterKnife.findById(view, R.id.smsDecision);
-//                (SwitchCompat) view.findViewById(R.id.smsDecision);
         pushDecision = ButterKnife.findById(view, R.id.pushDecision);
-//                (SwitchCompat) view.findViewById(R.id.pushDecision);
         emailEffected = ButterKnife.findById(view, R.id.emailEffected);
-//                (SwitchCompat) view.findViewById(R.id.emailEffected);
         smsEffected = ButterKnife.findById(view, R.id.smsEffected);
-//                (SwitchCompat) view.findViewById(R.id.smsEffected);
         pushEffected = ButterKnife.findById(view, R.id.pushEffected);
-//                (SwitchCompat) view.findViewById(R.id.pushEffected);
     }
 
     private void initViewsForPoll(Context context) {

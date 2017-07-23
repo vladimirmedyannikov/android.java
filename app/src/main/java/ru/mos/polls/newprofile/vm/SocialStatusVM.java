@@ -1,0 +1,30 @@
+package ru.mos.polls.newprofile.vm;
+
+
+import ru.mos.elk.profile.AgSocialStatus;
+import ru.mos.polls.databinding.ItemAgSocialStatusBinding;
+import ru.mos.polls.newprofile.base.vm.BaseVM;
+
+/**
+ * Created by Trunks on 07.07.2017.
+ */
+
+public class SocialStatusVM extends BaseVM<AgSocialStatus, ItemAgSocialStatusBinding> {
+
+    public SocialStatusVM(AgSocialStatus agSocialStatus, ItemAgSocialStatusBinding binding) {
+        super(agSocialStatus, binding);
+    }
+
+    public String getTitle() {
+        return model.getTitle();
+    }
+
+    public int getId() {
+        return model.getId();
+    }
+
+    public AgSocialStatus getAgSocialStatus() {
+        return model;
+    }
+
+}

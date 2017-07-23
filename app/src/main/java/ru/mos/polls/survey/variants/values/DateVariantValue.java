@@ -19,8 +19,8 @@ import ru.mos.polls.R;
 
 public class DateVariantValue implements VariantValue {
 
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy");
-    private static final SimpleDateFormat JSON_SDF = new SimpleDateFormat("dd.MM.yyyy");
+    public static final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy");
+    public static final SimpleDateFormat JSON_SDF = new SimpleDateFormat("dd.MM.yyyy");
 
     private String title;
     private Date value;

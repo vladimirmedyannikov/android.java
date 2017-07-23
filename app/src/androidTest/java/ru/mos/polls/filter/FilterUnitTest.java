@@ -79,9 +79,8 @@ public class FilterUnitTest extends BaseUnitTest {
         List<SurveyQuestion> testListSQ = new ArrayList<>();
         long surveyId = 1;
         SimpleSurveyQuestion sq = (SimpleSurveyQuestion) SurveyQuestionFactory.fromJson(fromTestRawAsJson("surveyquestion_simple.json"), surveyId);
-        Assert.assertEquals(sq.getId(), 2);
+        Assert.assertEquals(sq.getId(), 1);
         testListSQ.add(sq);
-        Survey testSurvey = new Survey(surveyId, Survey.Status.ACTIVE, testListSQ);
 
     }
 

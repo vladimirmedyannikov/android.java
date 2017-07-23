@@ -22,10 +22,31 @@ public class BadgeSourceUnitTest extends BaseUnitTest {
         testValue = BadgesSource.getInstance();
         Assert.assertNotNull(testValue);
     }
+    @Test
+    public void getBadgeByStringTest() {
+        testValue.storeState(state);
+        String newsCount = testValue.get(BadgesSource.TAG_NEWS);
+        Assert.assertEquals(newsCount, "19");
+        String noveltyCount = testValue.get(BadgesSource.TAG_NOVELTY);
+        Assert.assertEquals(noveltyCount, "1");
+        String pollsCount = testValue.get(BadgesSource.TAG_POLLS);
+        Assert.assertEquals(pollsCount, "28");
+        String pointsCount = testValue.get(BadgesSource.TAG_POINTS);
+        Assert.assertEquals(pointsCount, "+2061");
+    }
+
+    @Test
+    public void markNewsAsReadTest() {
+        testValue.markNewsAsReaded(255);
+        long[] newsId = testValue.getReadedNewsIds();
+        Assert.assertEquals(newsId[0], 255);
+    }
 
     @Test
     public void storeBadges() {
         testValue.storeState(state);
-        //TODO check
+        if (testValue.getBadgeList().size() <= 0) throw new RuntimeException();
     }
+
+
 }

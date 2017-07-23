@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM"/>
+    </data>
+
+    <LinearLayout
+        style="@style/linear"
+        android:background="@color/white"
+        android:padding="@dimen/pd_xxsmall">
+
+        <include
+            android:id="@+id/email_container"
+            layout="@layout/layout_email_contact"/>
+
+        <include
+            android:id="@+id/fio_container"
+            layout="@layout/layout_fio"/>
+
+        <include
+            android:id="@+id/childs_count_container"
+            layout="@layout/layout_childs_count"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/root"
+            style="@style/item"/>
+    </LinearLayout>
+</layout>

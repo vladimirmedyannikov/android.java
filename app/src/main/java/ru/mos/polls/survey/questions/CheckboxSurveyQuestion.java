@@ -80,7 +80,7 @@ public class CheckboxSurveyQuestion extends ListViewSurveyQuestion {
         }
     }
 
-    private boolean isChecked() {
+    public boolean isChecked() {
         int cc = 0;
         for (SurveyVariant variant : getVariantsList()) {
             if (variant.isChecked()) {

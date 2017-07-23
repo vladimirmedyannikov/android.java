@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.EditProfileFragmentVM"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        style="@style/linear">
+
+        <RelativeLayout
+            style="@style/linear">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_contact_card"
+                style="@style/linear">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_phone"
+                        style="@style/edit_profile"
+                        android:drawableRight="@drawable/ic_lock_4"
+                        android:hint="+7(000)000-00-00"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_email"
+                        style="@style/edit_profile"
+                        android:hint="@string/email"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_user_info_card"
+                style="@style/linear"
+                android:layout_below="@+id/edit_contact_card"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_fio"
+                        style="@style/edit_profile"
+                        android:hint="Фамилия Имя Отчество"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_birthday_date"
+                        style="@style/edit_profile"
+                        android:clickable="true"
+                        android:hint="Дата рождения"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/edit_gender"
+                        style="@style/edit_profile"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_user_family_card"
+                style="@style/linear"
+                android:layout_below="@+id/edit_user_info_card"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/edit_martial_status"
+                        style="@style/edit_profile"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <LinearLayout
+                        android:id="@+id/edit_kids_layer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/edit_kids_title"
+                                style="@style/edit_profile"
+                                android:layout_width="wrap_content"
+                                android:text="Количество детей"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/edit_kids_value"
+                                style="@style/edit_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/edit_kids_date_layer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <include layout="@layout/ag_separator"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_kids_date"
+                            style="@style/edit_profile"
+                            android:hint="@string/kids_birthdays"
+                            android:text="@string/kids_birthdays"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_kids_date_value"
+                            style="@style/edit_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:text="не указан"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_user_flat_card"
+                style="@style/linear"
+                android:layout_below="@+id/edit_user_family_card"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_flat_registration"
+                        style="@style/edit_profile"
+                        android:hint="Адрес регистрации"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_flat_residence"
+                        style="@style/edit_profile"
+                        android:hint="Адрес проживания"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_user_work_card"
+                style="@style/linear"
+                android:layout_below="@+id/edit_user_flat_card"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_social_status"
+                        style="@style/edit_profile"
+                        android:hint="Род деятельности"/>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_flat_work"
+                        style="@style/edit_profile"
+                        android:hint="Адрес работы/учебы"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/edit_social_binding_card"
+                style="@style/linear"
+                android:layout_below="@+id/edit_user_work_card"
+                android:layout_marginBottom="@dimen/pd_normal"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:padding="@dimen/pd_xxsmall">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_binding_mos_title"
+                            style="@style/edit_profile"
+                            android:hint="Связь с mos.ru"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_binding_mos_status"
+                            style="@style/edit_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:text="не установлена"/>
+                    </RelativeLayout>
+
+                    <include layout="@layout/ag_separator"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_social_bind_title"
+                            style="@style/edit_profile"
+                            android:hint="Социальные сети"/>
+
+                        <LinearLayout
+                            android:id="@+id/edit_social_bind_layer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/pd_xxlarge"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>

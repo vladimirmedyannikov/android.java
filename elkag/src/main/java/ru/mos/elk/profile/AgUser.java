@@ -454,6 +454,14 @@ public class AgUser implements Serializable {
         return surname;
     }
 
+    public String getSurnameAndFirstName() {
+        return String.format("%s %s", surname, firstName);
+    }
+
+    public String getFullUserName() {
+        return String.format("%s %s %s", surname, firstName, middleName);
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -701,6 +709,14 @@ public class AgUser implements Serializable {
         return result;
     }
 
+    public List<String> childBirthdaysAsList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < childBirthdays.size(); ++i) {
+            list.add(birthdayToString(childBirthdays.get(i)));
+        }
+        return list;
+    }
+
     private String birthdayToString(long birthday) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         return sdf.format(birthday);
@@ -779,7 +795,8 @@ public class AgUser implements Serializable {
     public enum Gender {
         NULL("null", "Не установлено"),
         MALE("male", "Мужской"),
-        FEMALE("female", "Женский");
+        FEMALE("female", "Женский"),
+        HINT("null", "Пол");
 
         private String value, label;
 

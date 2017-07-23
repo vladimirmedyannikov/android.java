@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.BirthdayKidsVM"/>
+
+    </data>
+
+    <RelativeLayout
+        style="@style/item"
+        android:padding="@dimen/pd_xxsmall">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/birthday_kids"
+            style="@style/edit_profile"
+            android:background="@drawable/selector_item_list"
+            android:hint="@{viewModel.hint}"
+            android:onClick="@{(v)->viewModel.onClick(v)}"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:text="@{viewModel.title}"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/birthday_kids_date"
+            style="@style/edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@{viewModel.year}"/>
+    </RelativeLayout>
+</layout>

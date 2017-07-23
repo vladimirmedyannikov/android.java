@@ -91,7 +91,7 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(CHANGED_AG_USER, changed);
         if (fragment != null) {

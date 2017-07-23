@@ -5,7 +5,7 @@
   "question_short_html": "Книги читали?",
   "type": "checkbox",
   "hint": "Выберите самый подходящий вариант. Можно написать свой вариант",
-  "min_allowed": 0,
+  "min_allowed": 1,
   "max_allowed": 4,
   "voters_count": 3304,
   "voters_variants_count": 10000,
@@ -43,6 +43,14 @@
       "hint": "Название книги",
       "percent": 90,
       "voters_count": 2503
+    },
+    {
+      "id": "5",
+      "kind": "text",
+      "text": "фрукт",
+      "services": null,
+      "percent": 1,
+      "voters_count": 400
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "id": 2,
+  "question": "Довольны ли вы качеством?",
+  "question_full_html": "<b>Теперь давайте поговорим о качестве.<\b> Насколько это для вас является актуальным - <b>Вам решать<\b><br><br>А тут дополнение небольшое.",
+  "question_short_html": "Вы довольны?",
+  "type": "radiobutton",
+  "hint": "Выберите самый подходящий вариант",
+  "voters_count": 3300,
+  "voters_variants_count": 6300,
+  "variants": [
+    {
+      "id": "1",
+      "kind": "text",
+      "text": "Вполне",
+      "services": null,
+      "percent": 3,
+      "voters_count": 300
+    },
+    {
+      "id": "2",
+      "kind": "text",
+      "text": "Нет",
+      "services": null,
+      "percent": 87,
+      "voters_count": 2500
+    },
+    {
+      "id": "3",
+      "kind": "input",
+      "text": "Не совсем",
+      "input_type": "char",
+      "hint": "подсказка",
+      "services": null,
+      "percent": 20,
+      "voters_count": 500
+    }
+  ]
+}

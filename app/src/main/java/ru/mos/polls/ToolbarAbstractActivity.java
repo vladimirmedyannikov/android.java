@@ -58,9 +58,14 @@ public abstract class ToolbarAbstractActivity extends BaseActivity {
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setHome(true);
-        findViews();
+        try {
+            setSupportActionBar(toolbar);
+            setHome(true);
+            findViews();
+
+        } catch (NullPointerException e) {
+
+        }
     }
 
     protected void findViews() {

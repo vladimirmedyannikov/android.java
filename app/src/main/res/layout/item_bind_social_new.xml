@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.SocialVM"/>
+
+    </data>
+
+    <LinearLayout
+        style="@style/item.linear.horizontal"
+        android:padding="@dimen/pd_xsmall">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/social_icon"
+            imageSrc="@{viewModel.icon}"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:id="@+id/social_title"
+            style="@style/text.large"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/pd_xsmall"
+            android:layout_weight="2"
+            android:text="@{viewModel.socialName}"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/social_unbind"
+            style="@style/wrap"
+            android:layout_weight="0"
+            android:onClick="@{(v)->viewModel.unBindSocial(v)}"
+            android:padding="@dimen/pd_xxsmall"
+            app:srcCompat="@drawable/ic_inr_cross_circle"/>
+    </LinearLayout>
+</layout>

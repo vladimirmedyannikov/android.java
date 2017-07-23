@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:padding="@dimen/pd_xsmall">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/badgeContainer"
-        layout="@layout/layout_badge"/>
+    <data>
 
-    <LinearLayout
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
+
+        <variable
+            name="listener"
+            type="ru.mos.polls.newprofile.vm.OnAchievementClickListener"/>
+    </data>
+
+    <RelativeLayout
         style="@style/item.linear"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/pd_xxsmall"
-        android:layout_toRightOf="@id/badgeContainer">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/text.large"
-            android:layout_width="match_parent"/>
+        android:padding="@dimen/pd_xsmall">
 
-        <TextView
-            android:id="@+id/subtitle"
-            style="@style/text.normal"
-            android:textColor="@color/greyHint"/>
-    </LinearLayout>
-</RelativeLayout>
+        <include
+            android:id="@+id/badgeContainer"
+            layout="@layout/layout_badge"
+            bind:viewModel="@{viewModel}"/>
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pd_xxsmall"
+            android:layout_toRightOf="@id/badgeContainer"
+            android:onClick="@{()-> listener.onAchivementClick(viewModel.getId)}">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/text.large.black"
+                android:layout_width="match_parent"
+                android:text="@{viewModel.title}"/>
+
+            <TextView
+                android:id="@+id/subtitle"
+                style="@style/text.gray"
+                android:text="@{viewModel.getDescription}"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import
+            type="ru.mos.polls.friend.ui.FriendGuiUtils"/>
+        <variable
+            name="friend"
+            type="ru.mos.polls.rxhttp.rxapi.model.friends.Friend"/>
+        <variable
+            name="callback"
+            type="ru.mos.polls.friend.ui.FriendsAdapter.Callback"/>
+    </data>
+    <LinearLayout
+        style="@style/ripple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:padding="@dimen/pd_xxsmall"
+        android:onClick="@{(view) -> callback.onClick(friend)}">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_margin="8dp"
+            tools:src="@drawable/ic_launcher_v230"
+            />
+        <LinearLayout
+            style="@style/item.linear"
+            >
+            <TextView
+                style="@style/text.large.black"
+                android:text="@{FriendGuiUtils.getTitle(friend)}"
+                android:lines="1"
+                android:ellipsize="end"
+                tools:text="Иван Иваноы"/>
+            <TextView
+                style="@style/text.gray"
+                android:text="@{friend.status}"
+                android:lines="1"
+                android:ellipsize="end"
+                tools:text="активный гражданин"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

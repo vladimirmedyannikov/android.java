@@ -1,6 +1,7 @@
 package ru.mos.polls.newprofile.base.vm;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
@@ -27,6 +28,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     private F fragment;
     private B binding;
     private Activity activity;
+    public ProgressDialog pd;
 
     public FragmentViewModel(F fragment, B binding) {
         this.fragment = fragment;
@@ -58,7 +60,8 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     }
 
     public void onViewCreated() {
-
+        pd = new ProgressDialog(getActivity(), R.style.ProgressBar);
+        pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
     }
 
     public void onDestroy() {

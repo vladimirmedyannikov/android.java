@@ -1,6 +1,7 @@
 package ru.mos.polls.util;
 
 import java.nio.CharBuffer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -11,6 +12,8 @@ public abstract class AgTextUtil {
     public static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
                     "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    public static final String RUSSIAN_REG = "([А-ЯЁ][а-яё]+[\\-\\s]?){1,}";
+    public static final Pattern russianPattern = Pattern.compile(RUSSIAN_REG);
 
     public static String stripNonDigits(CharSequence input) {
         if (input == null)
@@ -45,5 +48,10 @@ public abstract class AgTextUtil {
                 .compile(EMAIL_PATTERN)
                 .matcher(email)
                 .matches();
+    }
+
+    public static boolean validateRus(String text) {
+        Matcher matcher = russianPattern.matcher(text);
+        return matcher.matches();
     }
 }

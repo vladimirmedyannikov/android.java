@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Trunks on 22.06.2017.
@@ -103,5 +105,11 @@ public class FileUtils {
 
     public static String getFileExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+    }
+
+    public static <T extends Comparable> boolean equalList(List<T> a, List<T> b) {
+        Collections.sort(a);
+        Collections.sort(b);
+        return a.equals(b);
     }
 }

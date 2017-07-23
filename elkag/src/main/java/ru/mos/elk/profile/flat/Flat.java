@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,20 +21,23 @@ import ru.mos.elk.db.UserDataProvider;
 
 /**
  * Структура данных для работы с данными по квартирам пользователя
+ *
  * @since 1.9
  */
 public class Flat implements Serializable {
     private static final Uri URI = UserDataProvider.getContentUri(UserData.Flats.URI_CONTENT);
-    private static final String[] ARGS = new String[] {"1"};
+    private static final String[] ARGS = new String[]{"1"};
     private static final String WHERE = "%s = ?";
-
+    @SerializedName("flat_id")
     private String flatId;
+    @SerializedName("building_id")
     private String buildingId;
     private String flat;
     private String building;
     private String street;
     private String city;
     private Type type;
+    @SerializedName("editing_blocked")
     private boolean enable;
 
     public static void clearAll(Context context) {
@@ -42,16 +47,19 @@ public class Flat implements Serializable {
 
     /**
      * Наименование округа
+     *
      * @since 2.0.0
      */
     private String district;
     /**
      * Наименование района
+     *
      * @since 2.0.0
      */
     private String area;
     /**
      * Идентификатор района
+     *
      * @since 2.0.0
      */
     private String areaId;
@@ -70,6 +78,7 @@ public class Flat implements Serializable {
 
     /**
      * Парсинг данных квартиры по адресу регистрации
+     *
      * @param flatsJson тег flats
      * @return объект квартиры с данными по адресу регистрации
      */
@@ -79,6 +88,7 @@ public class Flat implements Serializable {
 
     /**
      * Парсинг данных квартиры по адресу проживания
+     *
      * @param flatsJson тег flats
      * @return объект квартиры с данными по адресу проживания
      */
@@ -88,6 +98,7 @@ public class Flat implements Serializable {
 
     /**
      * Парсинг данных квартиры по адресу работы
+     *
      * @param flatsJson тег flats
      * @return объект квартиры с данными по адресу работы
      */
@@ -97,8 +108,9 @@ public class Flat implements Serializable {
 
     /**
      * Объект квартиры из json ответа  сервера
+     *
      * @param flatsJson тег flats, содержащий описание квартиры
-     * @param type тип квартиры
+     * @param type      тип квартиры
      * @return объект квартиры пользоватля вг
      */
     public static Flat fromJson(JSONObject flatsJson, Type type) {
@@ -130,6 +142,7 @@ public class Flat implements Serializable {
 
     /**
      * Квартира с адресом регистрации из локальной бд
+     *
      * @param context
      * @return объект квартиры регистрации
      */
@@ -139,6 +152,7 @@ public class Flat implements Serializable {
 
     /**
      * Квартира с адресом проживания из локальной бд
+     *
      * @param context
      * @return объект квартиры проживания
      */
@@ -148,6 +162,7 @@ public class Flat implements Serializable {
 
     /**
      * Квартира с адресом работы из локальной бд
+     *
      * @param context
      * @return объект квартиры работы
      */
@@ -157,8 +172,9 @@ public class Flat implements Serializable {
 
     /**
      * Объект квартиы, сохраненный локально на устройстве
+     *
      * @param context
-     * @param type тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
+     * @param type    тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      * @return
      */
     public static Flat fromDb(Context context, Type type) {
@@ -198,6 +214,7 @@ public class Flat implements Serializable {
 
     /**
      * Удаление квартиры регистрации из локальной бд
+     *
      * @param context
      */
     public static void deleteRegistration(Context context) {
@@ -206,6 +223,7 @@ public class Flat implements Serializable {
 
     /**
      * Удаление квартиры проживания из локальной бд
+     *
      * @param context
      */
     public static void deleteResidence(Context context) {
@@ -214,6 +232,7 @@ public class Flat implements Serializable {
 
     /**
      * Удаление адреса работы
+     *
      * @param context
      */
     public static void deleteWork(Context context) {
@@ -222,8 +241,9 @@ public class Flat implements Serializable {
 
     /**
      * Удаление адреса из локальной бд
+     *
      * @param context
-     * @param type тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
+     * @param type    тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      */
     public static void delete(Context context, Type type) {
         ContentResolver cr = context.getContentResolver();
@@ -234,8 +254,9 @@ public class Flat implements Serializable {
 
     /**
      * Квартира пользователя
+     *
      * @param cursor курсор таблицы flat
-     * @param type тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
+     * @param type   тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      */
     public Flat(Cursor cursor, Type type) {
         if (cursor != null) {
@@ -255,6 +276,7 @@ public class Flat implements Serializable {
 
     /**
      * Добавление данных квартиры к телу запроса, для сохранения данных квартиры на сервере аг
+     *
      * @param flatsJson тело запроса
      */
     public void addToFlatsJson(JSONObject flatsJson) {
@@ -272,6 +294,7 @@ public class Flat implements Serializable {
 
     /**
      * Данные квартиры в объекте json
+     *
      * @return json
      */
     public JSONObject asJsonForAdd() {
@@ -309,6 +332,7 @@ public class Flat implements Serializable {
 
     /**
      * Данные квартиры для сохранения в бд
+     *
      * @return объект ContentValues
      */
     public ContentValues asContentValues() {
@@ -331,6 +355,7 @@ public class Flat implements Serializable {
 
     /**
      * Локальное сохранение данных в бд
+     *
      * @param context
      * @return uri записи
      */
@@ -361,6 +386,7 @@ public class Flat implements Serializable {
         }
         return result;
     }
+
     public String getAddressTitle(Context context) {
         String result = context.getString(R.string.address_not_specified);
         if (!isEmpty()) {
@@ -368,6 +394,7 @@ public class Flat implements Serializable {
         }
         return result;
     }
+
     public String getBuildingId() {
         return buildingId;
     }

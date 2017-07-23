@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +46,9 @@ import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltySelect;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.Social;
 
 /**
@@ -111,6 +115,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     @Override
     public void onViewCreated() {
+        super.onViewCreated();
         setClickListener();
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
@@ -124,7 +129,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                                 this.changedUser = changed;
                                 refreshView(changed);
                                 changedUser.save(getActivity().getBaseContext());
-//                                sendProfile(changed);
                                 sendProfile(new ProfileSet.Request(new Personal(changedUser)));
                                 break;
                         }
@@ -133,45 +137,63 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void sendProfile(ProfileSet.Request request) {
-        Observable<ProfileSet.Response> responseObservabl =
-                AGApplication.api.setProfile(request)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
-    }
-
-    /**
-     * обсервер для сохранения профиля
-     *
-     */
-
-    DisposableObserver setProfileObserver = new DisposableObserver<ProfileSet.Response>() {
-
-            @Override
-            public void onNext(@NonNull ProfileSet.Response response) {
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                e.printStackTrace();
-            }
-
+        /**
+         * обсервер для сохранения профиля
+         */
+        HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             public void onComplete() {
+                super.onComplete();
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
                 prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
             }
-        };
 
-    public void sendProfile(AgUser agUser) {
+            @Override
+            protected void onResult(ProfileSet.Response.Result result) {
+                System.out.println("registarion " + (result.getFlats().getRegistration() == null));
+                if (result.getFlats().getRegistration() == null) {
+                    Flat registration = result.getFlats().getRegistration();
+                    registration.save(getActivity());
+                }
+                if (result.getFlats().getResidence() == null) {
+                    Flat residence = result.getFlats().getRegistration();
+                    residence.save(getActivity());
+                }
+                if (result.getFlats().getWork() == null) {
+                    Flat work = result.getFlats().getRegistration();
+                    work.save(getActivity());
+                }
+                System.out.println("residence " + (result.getFlats().getResidence() == null));
+                System.out.println("work " + (result.getFlats().getWork() == null));
+            }
+        };
         Observable<ProfileSet.Response> responseObservabl =
-                AGApplication.api.setProfile(new ProfileSet.Request(new Personal(agUser)))
+                AGApplication.api.setProfile(request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
-
-        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
+        disposables.add(responseObservabl.subscribeWith(handler));
     }
+
+    public void sendProfile(AgUser agUser) {
+        sendProfile(new ProfileSet.Request(new Personal(agUser)));
+    }
+
+    Progressable progressable = new Progressable() {
+        @Override
+        public void begin() {
+            if (pd != null)
+                pd.show();
+        }
+
+        @Override
+        public void end() {
+            if (pd != null)
+                pd.dismiss();
+        }
+    };
+
 
     @Override
     public void onResume() {
@@ -279,7 +301,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             }
             sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
             changedUser.save(getActivity().getBaseContext());
-
         }
     }
 
@@ -368,7 +389,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     public ArrayAdapter getGenderAdapter() {
         List<AgUser.Gender> list = new ArrayList<>(Arrays.asList(AgUser.Gender.getGenderItems()));
-//        mBirthdayKidsList.add(AgUser.Gender.HINT);
         ArrayAdapter<AgUser.Gender> ad = new ArrayAdapter<>(getActivity(), R.layout.layout_spinner_view, list);
         ad.setDropDownViewResource(R.layout.layout_spinner_item);
         return ad;

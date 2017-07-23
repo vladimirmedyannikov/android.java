@@ -1,9 +1,7 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import ru.mos.elk.profile.AgUser;
@@ -12,6 +10,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
+import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -57,5 +56,34 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     @Override
     public int getMenuResource() {
         return R.menu.confirm;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return onUpPressed();
+    }
+
+    @Override
+    public boolean onUpPressed() {
+        if (getViewModel().isDataChanged()) {
+            DialogInterface.OnClickListener okListener = (dialogInterface, i) -> {
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        getViewModel().confirmaAction(getViewModel().getPersonalType());
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        getActivity().finish();
+                        break;
+                }
+            };
+            GuiUtils.displayAreYouSureDialogTitle(getContext(),
+                    "Вы хотите сохранить введенные данные?",
+                    null,
+                    okListener
+            );
+            return true;
+        } else {
+            return false;
+        }
     }
 }

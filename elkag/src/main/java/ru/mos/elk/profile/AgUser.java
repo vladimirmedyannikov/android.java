@@ -459,6 +459,9 @@ public class AgUser implements Serializable {
     }
 
     public String getFullUserName() {
+        if (ElkTextUtils.isEmpty(surname) && ElkTextUtils.isEmpty(firstName) && ElkTextUtils.isEmpty(middleName)) {
+            return "";
+        }
         return String.format("%s %s %s", surname, firstName, middleName);
     }
 

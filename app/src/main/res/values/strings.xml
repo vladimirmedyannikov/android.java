@@ -769,9 +769,13 @@
     <string name="full_user_name_title">ФИО</string>
     <string name="childs">Дети</string>
     <string name="menu_confirm">подтвердить</string>
+    <string name="menu_delet_flat">удалить адрес</string>
     <string name="mainmenu_friends">Мои друзья</string>
     <string name="kids_birthdays">Возраст детей</string>
     <string name="avatar_sources_title">Выберите источник фотографии</string>
     <string name="src_gallery">ГАЛЕРЕЯ</string>
     <string name="src_camera">КАМЕРА</string>
+    <string name="flat_title_registration">Адрес регистрации</string>
+    <string name="flat_title_residence">Адрес проживания</string>
+    <string name="flat_title_work">Адрес работы</string>
 </resources>

@@ -76,19 +76,19 @@ public class FlatsEntity {
          */
         public BaseFlat(Flat flat) {
             setBuilding_id(flat.getBuildingId());
-            setFlat_id(flat.getFlatId());
+//            setFlat_id(flat.getFlatId());
         }
 
-        private String flat_id;
+//        private String flat_id;
         private String building_id;
 
-        public String getFlat_id() {
-            return flat_id;
-        }
+//        public String getFlat_id() {
+//            return flat_id;
+//        }
 
-        public void setFlat_id(String flat_id) {
-            this.flat_id = flat_id;
-        }
+//        public void setFlat_id(String flat_id) {
+//            this.flat_id = flat_id;
+//        }
 
         public String getBuilding_id() {
             return building_id;

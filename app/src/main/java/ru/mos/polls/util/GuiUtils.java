@@ -192,6 +192,15 @@ public class GuiUtils {
         }
     }
 
+    public static void displayAreYouSureDialogTitle(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setTitle(title);
+        builder.setPositiveButton("Да", okListener);
+        builder.setNegativeButton("Нет", okListener);
+        builder.create().show();
+    }
+
     public static void browseAppInGooglePlayMarket(Context context) {
         final String appPackageName = context.getPackageName();
         try {

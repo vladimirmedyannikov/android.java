@@ -126,7 +126,9 @@
                     android:text="@string/ag_add_flat"
                     android:visibility="gone"/>
 
-                <include layout="@layout/layout_flat_warning_block"/>
+                <include
+                    android:id="@+id/layout_flat_warning_block"
+                    layout="@layout/layout_flat_warning_block"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -41,9 +41,9 @@ public class Personal {
         firstname = agUser.getFirstName();
         middlename = agUser.getMiddleName();
         birthday = agUser.getBirthday();
-        sex = agUser.getGender().getValue();
+        sex = agUser.getGender() == AgUser.Gender.NULL ? "" : agUser.getGender().getValue();
         email = agUser.getEmail();
-        marital_status = agUser.getMaritalStatus().getValue();
+        marital_status = agUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : agUser.getMaritalStatus().getValue();
         childrens_count = agUser.getChildCount();
         social_status = agUser.getAgSocialStatus();
         childrens_birthdays = agUser.childBirthdaysAsList();

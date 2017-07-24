@@ -1,6 +1,5 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +22,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
@@ -37,17 +32,18 @@ import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
+import ru.mos.polls.newprofile.state.NewFlatState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltySelect;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.Social;
 
@@ -143,14 +139,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
-            public void onComplete() {
-                super.onComplete();
-                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
-                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
-            }
-
-            @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 System.out.println("registarion " + (result.getFlats().getRegistration() == null));
                 if (result.getFlats().getRegistration() == null) {
@@ -167,6 +155,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 }
                 System.out.println("residence " + (result.getFlats().getResidence() == null));
                 System.out.println("work " + (result.getFlats().getWork() == null));
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
             }
         };
         Observable<ProfileSet.Response> responseObservabl =
@@ -204,7 +195,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     public void setClickListener() {
         registration.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
+//            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION);
         });
         residence.setOnClickListener(v -> {
             NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());

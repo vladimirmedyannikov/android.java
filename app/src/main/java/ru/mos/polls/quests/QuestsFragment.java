@@ -338,8 +338,8 @@ public class QuestsFragment extends PullableFragment {
                 if (listView != null) {
                     listView.setVisibility(View.GONE);
                 }
-                empty.setVisibility(View.GONE);
-                stubOffline.setVisibility(View.VISIBLE);
+                if (empty != null) empty.setVisibility(View.GONE);
+                if (stubOffline != null) stubOffline.setVisibility(View.VISIBLE);
                 getPullToRefreshLayout().setRefreshing(false);
             }
         };

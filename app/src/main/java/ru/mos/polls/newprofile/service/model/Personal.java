@@ -30,11 +30,14 @@ public class Personal {
     private String email;
     private String phone;
     private String marital_status;
-    private int childrens_count;
+    private Integer childrens_count;
     private transient boolean car_exists;
     private String social_status;
     private transient String troika_card_number;
     private List<String> childrens_birthdays;
+
+    public Personal() {
+    }
 
     public Personal(AgUser agUser) {
         surname = agUser.getSurname();
@@ -85,8 +88,9 @@ public class Personal {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public Personal setSex(String sex) {
         this.sex = sex;
+        return this;
     }
 
     public String getEmail() {
@@ -109,8 +113,9 @@ public class Personal {
         return marital_status;
     }
 
-    public void setMarital_status(String marital_status) {
+    public Personal setMarital_status(String marital_status) {
         this.marital_status = marital_status;
+        return this;
     }
 
     public int getChildrens_count() {

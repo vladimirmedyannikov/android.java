@@ -2,7 +2,9 @@ package ru.mos.polls.newprofile.vm;
 
 import android.animation.Animator;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +25,7 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutNewFlatBinding;
+import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
@@ -38,7 +40,7 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
  * Created by Trunks on 23.07.2017.
  */
 
-public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNewFlatBinding> {
+public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentNewFlatBinding> {
     public static final int FLAT_TYPE_REGISTRATION = 12234;
     public static final int FLAT_TYPE_RESIDENCE = 11223;
     public static final int FLAT_TYPE_WORK = 11132;
@@ -47,9 +49,11 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
     Flat flat;
     AutoCompleteTextView etStreet;
     AutoCompleteTextView etBuilding;
+    SwitchCompat residenceToggle;
     View streetNotFoundView;
     View buildingNotFoundView;
     View warningContainer;
+    View residenceToggleLayout;
     TextView areaFlat;
     TextView districtFlat;
     TextView tvWarningEditingBlocked;
@@ -57,12 +61,12 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
     LinearLayout areaAndDistrictLayout;
     private boolean isAddressSelected;
 
-    public NewFlatFragmentVM(NewFlatFragment fragment, LayoutNewFlatBinding binding) {
+    public NewFlatFragmentVM(NewFlatFragment fragment, FragmentNewFlatBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutNewFlatBinding binding) {
+    protected void initialize(FragmentNewFlatBinding binding) {
         Bundle extras = getFragment().getArguments();
         flatType = extras.getInt(NewFlatFragment.ARG_FLAT_TYPE);
         flat = (Flat) extras.get(NewFlatFragment.ARG_FLAT);
@@ -76,6 +80,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
         tvWarningEditingBlocked = binding.layoutFlatWarningBlock.tvWarningEditingBlocked;
         tvErrorEditingBlocked = binding.layoutFlatWarningBlock.tvErrorEditingBlocked;
         warningContainer = binding.layoutFlatWarningBlock.warningContainer;
+        residenceToggleLayout = binding.layoutFlatResidenceToggle.flatResidenceToggleView;
+        residenceToggle = binding.layoutFlatResidenceToggle.flatResidenceToggle;
     }
 
     @Override
@@ -86,7 +92,6 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
 
     @Override
     public void onCreateOptionsMenu() {
-        System.out.println("flat is enable = " + flat.isEnable());
         processMenuIcon();
     }
 
@@ -130,7 +135,25 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
     }
 
     public void confirmaAction() {
-        sendFlat(new ProfileSet.Request(new FlatsEntity(flat, !flat.isEmpty())));// тоже почему то при первом надо только building_id, а при обновлении flat_id
+        FlatsEntity entity = null;
+        if (flat.isRegistration()) {
+            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
+            if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
+                registrationEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(registrationEntity);
+        }
+        if (flat.isResidence()) {
+            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
+            if (!TextUtils.isEmpty(flat.getFlatId())) residenceEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(residenceEntity);
+        }
+
+        if (flat.isWork()) {
+            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
+            if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(workEntity);
+        }
+        sendFlat(new ProfileSet.Request(entity));
     }
 
     void changeFlat() {
@@ -168,22 +191,12 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
                 }
                 if (flat != null) {
                     flat.setEnable(!flat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
-
-                    System.out.println("flat = " + flat.isWork());
-                    System.out.println("flat = " + flat.isResidence());
-                    System.out.println("flat = " + flat.isRegistration());
-                    System.out.println("flat = " + flat.getArea());
-                    System.out.println("flat = " + flat.getDistrict());
-                    System.out.println("flat = " + flat.getBuilding());
-                    System.out.println("flat = " + flat.getAreaId());
-                    System.out.println("flat = " + flat.getViewTitle(getActivity().getBaseContext()));
-                    System.out.println("flat = " + flat.isEnable());
                     flat.save(getActivity());
                 }
+                setupViewIfNotEmpty();
                 showDeleteMenuIcon();
-//                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
-//                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-//                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
+                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                getActivity().finish();
             }
         };
         Observable<ProfileSet.Response> responseObservabl =
@@ -202,6 +215,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, LayoutNew
         if (!flat.isEmpty()) {
             setupViewIfNotEmpty();
         }
+
+        if (flat.isResidence()) residenceToggleLayout.setVisibility(View.VISIBLE);
 
         etStreet.setText(flat.getStreet());
         etBuilding.setText(flat.getBuilding());

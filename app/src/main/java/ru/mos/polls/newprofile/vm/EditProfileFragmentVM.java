@@ -30,7 +30,7 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
+import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
@@ -38,6 +38,7 @@ import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.state.NewFlatState;
+import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -47,11 +48,11 @@ import ru.mos.polls.social.model.Social;
  * Created by wlTrunks on 14.06.2017.
  */
 
-public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment, LayoutNewEditProfileBinding> {
+public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
     AppCompatSpinner gender;
     AppCompatSpinner martialStatus;
     ArrayAdapter genderAdapter;
-    AgUser.MaritalStatus.MaritalStatusAdapter martialStatusAdapter;
+    MaritalStatusAdapter martialStatusAdapter;
     AgUser savedUser, changedUser;
     View kidsLayer;
     TextView birthdayDate;
@@ -75,12 +76,12 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     public static final String TIME_SYNQ = "time_synq";
     public static final long INTERVAL_SYNQ = 15 * 60 * 1000;
 
-    public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
+    public EditProfileFragmentVM(EditProfileFragment fragment, FragmentNewEditProfileBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutNewEditProfileBinding binding) {
+    protected void initialize(FragmentNewEditProfileBinding binding) {
         savedUser = new AgUser(getFragment().getContext());
         changedUser = new AgUser(getFragment().getContext());
         dbp = new BirthDateParser(getActivity());
@@ -121,7 +122,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                                 this.savedUser = changed;
                                 refreshView(changed);
                                 savedUser.save(getActivity().getBaseContext());
-                                sendProfile(new ProfileSet.Request(new Personal(savedUser)));
                                 break;
                         }
                     }
@@ -136,9 +136,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
-                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
-                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
+                savedUser.save(getActivity());
+                sendBroadcastReLoadBadges(getActivity());
             }
         };
         Observable<ProfileSet.Response> responseObservabl =
@@ -148,15 +147,21 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         disposables.add(responseObservabl.subscribeWith(handler));
     }
 
-    public void sendProfile(AgUser agUser) {
-        sendProfile(new ProfileSet.Request(new Personal(agUser)));
+    public static void sendBroadcastReLoadBadges(Context context) {
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+        SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
+    }
+
+    public void sendProfile(Personal personal) {
+        sendProfile(new ProfileSet.Request(personal));
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        savedUser =  new AgUser(getFragment().getContext());
+        savedUser = new AgUser(getFragment().getContext());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
         refreshView(savedUser);
     }
@@ -242,28 +247,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         phone.setText(text);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Flat newFlat = NewAddressActivity.onResult(requestCode, resultCode, data);
-//        if (newFlat != null) {
-//            if (newFlat.isRegistration()) {
-//                setRegistationFlatView(newFlat);
-//                changedUser.setRegistrationFlat(newFlat);
-//            }
-//            if (newFlat.isResidence()) {
-//                setResidenceFlatView(savedUser.getRegistration(), newFlat);
-//                changedUser.setResidenceFlat(newFlat);
-//            }
-//            if (newFlat.isWork()) {
-//                setWorkFlatView(newFlat);
-//                changedUser.setWorkFlat(newFlat);
-//            }
-//            sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
-//            changedUser.save(getActivity().getBaseContext());
-//        }
-    }
-
-
     public void setRegistationFlatView(Flat flat) {
         setFlatView(flat, registration);
     }
@@ -295,26 +278,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         birthdayDate.setTag(tag);
     }
 
-    public void setGenderView(AgUser.Gender userGender) {
-        genderAdapter = getGenderAdapter();
-        gender.setAdapter(genderAdapter);
-        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
-                martialStatusAdapter.setGender(gender);
-                savedUser.setGender(gender);
-                martialStatusAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        int selected = genderAdapter.getPosition(userGender);
-        gender.setSelection(selected);
-    }
 
     public void setSocialBindingLayerRx() {
         socialBindingLayer.removeAllViews();
@@ -326,14 +289,24 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 .subscribe(this::addSocialToLayer));
     }
 
-    public void setMartialStatusView(AgUser.Gender gender) {
-        martialStatusAdapter = (AgUser.MaritalStatus.MaritalStatusAdapter) getMartialStatusAdapter(gender);
-        martialStatus.setAdapter(martialStatusAdapter);
-        martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    int selectedGender;
+
+    public void setGenderView(AgUser.Gender userGender) {
+        genderAdapter = getGenderAdapter();
+        gender.setAdapter(genderAdapter);
+        selectedGender = genderAdapter.getPosition(userGender);
+        gender.setSelection(selectedGender, false);
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
-                savedUser.setMaritalStatus(maritalStatus);
+                if (position != selectedGender) {
+                    AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
+                    martialStatusAdapter.setGender(gender);
+                    savedUser.setGender(gender);
+                    martialStatusAdapter.notifyDataSetChanged();
+                    selectedGender = position;
+                    sendProfile(new Personal().setSex(savedUser.getGender() == AgUser.Gender.NULL ? "" : savedUser.getGender().getValue()));
+                }
             }
 
             @Override
@@ -341,8 +314,31 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
             }
         });
-        int selectedMarital = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
-        martialStatus.setSelection(selectedMarital);
+    }
+
+    int selectedMartial;
+
+    public void setMartialStatusView(AgUser.Gender gender) {
+        martialStatusAdapter = (MaritalStatusAdapter) getMartialStatusAdapter(gender);
+        martialStatus.setAdapter(martialStatusAdapter);
+        selectedMartial = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
+        martialStatus.setSelection(selectedMartial, false);
+        martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != selectedMartial) {
+                    AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
+                    savedUser.setMaritalStatus(maritalStatus);
+                    selectedMartial = position;
+                    sendProfile(new Personal().setMarital_status(savedUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : savedUser.getMaritalStatus().getValue()));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -354,17 +350,18 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public ArrayAdapter getMartialStatusAdapter(AgUser.Gender gender) {
-        ArrayAdapter<AgUser.MaritalStatus> ad = (AgUser.MaritalStatus.MaritalStatusAdapter)
-                AgUser.MaritalStatus.getMaritalStatusAdapter(getActivity(), gender);
-        ad.setDropDownViewResource(R.layout.layout_spinner_item);
-        return ad;
+        List<AgUser.MaritalStatus> list = new ArrayList<>(Arrays.asList(AgUser.MaritalStatus.getMaritalStatusItems()));
+        MaritalStatusAdapter newAd = new MaritalStatusAdapter(getActivity(), R.layout.layout_spinner_item, list, gender);
+        newAd.setDropDownViewResource(R.layout.layout_spinner_item);
+        return newAd;
     }
 
     public void setBirthDayDate() {
         OnDateSetCallback listener = () -> {
             savedUser.setBirthday(birthdayDate.getText().toString());
-            savedUser.save(getActivity().getBaseContext());
-            sendProfile(savedUser);
+            Personal personal = new Personal();
+            personal.setBirthday(savedUser.getBirthday());
+            sendProfile(personal);
         };
         /**
          * Откатываем время назад

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/flat_residence_toggle_view"
+        android:visibility="gone"
+        style="@style/item.linear.horizontal"
+        android:padding="@dimen/pd_xsmall">
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/flat_residence_toggle"
+            style="@style/wrap.centered"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty"
+            android:thumbTextPadding="@dimen/pd_xlarge"/>
+
+        <TextView
+            style="@style/text.normal.black"
+            android:layout_toLeftOf="@+id/flat_residence_toggle"
+            android:layout_toStartOf="@+id/flat_residence_toggle"
+            android:ellipsize="middle"
+            android:text="@string/flat_residence_equal_flat_registration"/>
+
+    </RelativeLayout>
+</layout>

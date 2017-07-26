@@ -3,7 +3,7 @@ package ru.mos.polls.newprofile.ui.fragment;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
+import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
 import ru.mos.polls.newprofile.vm.InfoTabFragmentVM;
 
@@ -11,11 +11,11 @@ import ru.mos.polls.newprofile.vm.InfoTabFragmentVM;
  * Created by wlTrunks on 07.06.2017.
  */
 
-public class InfoTabFragment extends BindingFragment<InfoTabFragmentVM, LayoutInfoTabProfileBinding> {
+public class InfoTabFragment extends BindingFragment<InfoTabFragmentVM, FragmentInfoTabProfileBinding> {
 
 
     @Override
-    protected InfoTabFragmentVM onCreateViewModel(LayoutInfoTabProfileBinding binding) {
+    protected InfoTabFragmentVM onCreateViewModel(FragmentInfoTabProfileBinding binding) {
         return new InfoTabFragmentVM(this, binding);
     }
 
@@ -26,7 +26,7 @@ public class InfoTabFragment extends BindingFragment<InfoTabFragmentVM, LayoutIn
 
     @Override
     public int getLayoutResources() {
-        return R.layout.layout_info_tab_profile;
+        return R.layout.fragment_info_tab_profile;
     }
 
 

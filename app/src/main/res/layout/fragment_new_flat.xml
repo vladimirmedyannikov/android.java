@@ -21,6 +21,10 @@
                 style="@style/linear"
                 android:padding="@dimen/pd_xsmall">
 
+                <include
+                    android:id="@+id/layout_flat_residence_toggle"
+                    layout="@layout/layout_flat_residence_toggle"/>
+
                 <LinearLayout
                     android:id="@+id/areaAndDistrictLayout"
                     style="@style/item.linear"

@@ -2,8 +2,6 @@ package ru.mos.polls.newprofile.service.model;
 
 
 
-import ru.mos.elk.profile.flat.Flat;
-
 /**
  * Created by Trunks on 20.07.2017.
  */
@@ -15,16 +13,16 @@ public class FlatsEntity {
     private WorkEntity work;
     private ResidenceEntity residence;
 
-    public FlatsEntity(Flat flat, boolean update) {
-        if (flat.isResidence()) {
-            setResidence(new FlatsEntity.ResidenceEntity(flat, update));
-        }
-        if (flat.isRegistration()) {
-            setRegistration(new FlatsEntity.RegistrationEntity(flat, update));
-        }
-        if (flat.isWork()) {
-            setWork(new FlatsEntity.WorkEntity(flat, update));
-        }
+    public FlatsEntity(RegistrationEntity registration) {
+        this.registration = registration;
+    }
+
+    public FlatsEntity(WorkEntity work) {
+        this.work = work;
+    }
+
+    public FlatsEntity(ResidenceEntity residence) {
+        this.residence = residence;
     }
 
     public RegistrationEntity getRegistration() {
@@ -51,34 +49,49 @@ public class FlatsEntity {
         this.work = work;
     }
 
-    public class RegistrationEntity extends BaseFlat {
-        public RegistrationEntity(Flat flat, boolean update) {
-            super(flat, update);
+    public static class RegistrationEntity extends BaseFlat {
+        public RegistrationEntity(String building_id) {
+            super(building_id);
+        }
+
+    }
+
+    public static class WorkEntity extends BaseFlat {
+        public WorkEntity(String building_id) {
+            super(building_id);
+        }
+
+        public WorkEntity(String flat_id, String building_id) {
+            super(flat_id, building_id);
         }
     }
 
-    public class WorkEntity extends BaseFlat {
-        public WorkEntity(Flat flat, boolean update) {
-            super(flat, update);
+
+    public static class ResidenceEntity extends BaseFlat {
+        public ResidenceEntity(String building_id) {
+            super(building_id);
         }
+
+        public ResidenceEntity(String flat_id, String building_id) {
+            super(flat_id, building_id);
+        }
+
     }
 
-
-    public class ResidenceEntity extends BaseFlat {
-        public ResidenceEntity(Flat flat, boolean update) {
-            super(flat, update);
+     static abstract class BaseFlat {
+        public BaseFlat(String building_id) {
+            this.building_id = building_id;
         }
-    }
 
-    abstract class BaseFlat {
+        public BaseFlat(String flat_id, String building_id) {
+            this.flat_id = flat_id;
+            this.building_id = building_id;
+        }
+
         /**
          * flat_id : 266574
          * building_id : 29419-2
          */
-        public BaseFlat(Flat flat, boolean update) {
-            setBuilding_id(flat.getBuildingId());
-            if (update) setFlat_id(flat.getFlatId());
-        }
 
         private String flat_id;
         private String building_id;

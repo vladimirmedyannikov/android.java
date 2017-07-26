@@ -20,7 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutUserTabProfileBinding;
+import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
@@ -30,7 +30,7 @@ import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
  * Created by Trunks on 08.06.2017.
  */
 
-public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, LayoutUserTabProfileBinding> implements AvatarPanelClickListener {
+public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
 
 
     private SwitchCompat enableProfileVisibility;
@@ -38,12 +38,12 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Layout
     LinearLayout achivementLayer;
     AppCompatTextView achivementsValue;
 
-    public UserTabFragmentVM(UserTabFragment fragment, LayoutUserTabProfileBinding binding) {
+    public UserTabFragmentVM(UserTabFragment fragment, FragmentUserTabProfileBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutUserTabProfileBinding binding) {
+    protected void initialize(FragmentUserTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
         super.initialize(binding);
         enableProfileVisibility = binding.agUserProfileVisibility;

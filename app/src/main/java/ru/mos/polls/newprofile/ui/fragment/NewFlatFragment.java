@@ -1,12 +1,11 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
 import android.os.Bundle;
-import android.view.View;
 
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutNewFlatBinding;
+import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 
@@ -14,7 +13,7 @@ import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
  * Created by Trunks on 04.07.2017.
  */
 
-public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, LayoutNewFlatBinding> {
+public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, FragmentNewFlatBinding> {
 
     public static final String ARG_FLAT = "arg_flat";
     public static final String ARG_FLAT_TYPE = "arg_flat_type";
@@ -42,7 +41,7 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Layo
     }
 
     @Override
-    protected NewFlatFragmentVM onCreateViewModel(LayoutNewFlatBinding binding) {
+    protected NewFlatFragmentVM onCreateViewModel(FragmentNewFlatBinding binding) {
         return new NewFlatFragmentVM(this, getBinding());
     }
 
@@ -53,7 +52,7 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Layo
 
     @Override
     public int getLayoutResources() {
-        return R.layout.layout_new_flat;
+        return R.layout.fragment_new_flat;
     }
 
     @Override

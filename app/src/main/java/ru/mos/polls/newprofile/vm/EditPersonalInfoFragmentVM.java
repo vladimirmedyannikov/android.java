@@ -11,19 +11,23 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutNewEditPersonalInfoBinding;
+import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.model.BirthdayKids;
+import ru.mos.polls.newprofile.service.ProfileSet;
+import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.ui.adapter.BirthdayKidsAdapter;
-import ru.mos.polls.newprofile.ui.adapter.SocialBindAdapter;
 import ru.mos.polls.newprofile.ui.adapter.SocialStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
-import ru.mos.polls.social.model.Social;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.InputFilterMinMax;
@@ -32,7 +36,7 @@ import ru.mos.polls.util.InputFilterMinMax;
  * Created by Trunks on 04.07.2017.
  */
 
-public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoFragment, LayoutNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
+public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoFragment, FragmentNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
     public static final int PERSONAL_EMAIL = 33344;
     public static final int PERSONAL_FIO = 44333;
     public static final int COUNT_KIDS = 43678;
@@ -46,12 +50,12 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     List<BirthdayKids> birthdayKidsList;
     boolean isDataChanged;
 
-    public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, LayoutNewEditPersonalInfoBinding binding) {
+    public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, FragmentNewEditPersonalInfoBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutNewEditPersonalInfoBinding binding) {
+    protected void initialize(FragmentNewEditPersonalInfoBinding binding) {
         Bundle extras = getFragment().getArguments();
         personalType = extras.getInt(EditPersonalInfoFragment.ARG_PERSONAL_INFO);
         agUser = (AgUser) extras.get(EditPersonalInfoFragment.ARG_AGUSER);
@@ -66,11 +70,6 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         recyclerView = binding.root;
     }
 
-    @Override
-    public void onViewCreated() {
-        setView(personalType);
-    }
-
     public int getPersonalType() {
         return personalType;
     }
@@ -78,6 +77,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     @Override
     public void onResume() {
         super.onResume();
+        setView(personalType);
     }
 
     public void setView(int personalType) {
@@ -95,7 +95,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
             case COUNT_KIDS:
                 childsCountContainer.setVisibility(View.VISIBLE);
                 childsCount.setText(String.valueOf(agUser.getChildCount()));
-                childsCount.setFilters(new InputFilter[]{new InputFilterMinMax("0", "15")});
+                childsCount.setFilters(new InputFilter[]{new InputFilterMinMax(0, 15)});
                 break;
             case SOCIAL_STATUS:
                 SocialStatusAdapter adapter = new SocialStatusAdapter(AgSocialStatus.fromPreferences(getFragment().getContext()), this);
@@ -148,28 +148,36 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         }
     }
 
-    public void confirmaAction(int personalType) {
+    public void confirmaAction(int personalType) { //каждые данные сохранятьются отдельно
         boolean validationOk = false;
+        Personal personal = new Personal();
         switch (personalType) {
             case PERSONAL_EMAIL:
                 validationOk = checkEmailValid();
+                personal.setEmail(agUser.getEmail());
                 break;
             case PERSONAL_FIO:
-                checkFIOValid();
+                validationOk = checkFIOValid();
+                personal.setSurname(agUser.getSurname());
+                personal.setFirstname(agUser.getFirstName());
+                personal.setMiddlename(agUser.getMiddleName());
                 break;
             case COUNT_KIDS:
                 agUser.setChildCount(Integer.valueOf(childsCount.getText().toString()));
                 validationOk = true;
+                personal.setChildrens_count(agUser.getChildCount());
                 break;
             case BIRTHDAY_KIDS:
                 agUser.setChildBirthdays(getBirthdayKidsLong());
                 validationOk = true;
+                personal.setChildrens_birthdays(agUser.childBirthdaysAsList());
                 break;
             case SOCIAL_STATUS:
+                personal.setSocial_status(String.valueOf(agUser.getAgSocialStatus()));
                 validationOk = true;
                 break;
         }
-        if (validationOk) saveUser();
+        if (validationOk) saveUser(personal);
     }
 
     public boolean checkFIOValid() {
@@ -186,9 +194,28 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         }
     }
 
-    public void saveUser() {
-        AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
-        getActivity().finish();
+    public void saveUser(Personal personal) {
+        sendData(new ProfileSet.Request(personal));
+    }
+
+    public void sendData(ProfileSet.Request request) {
+        /**
+         * отправляем личные данные профиля
+         */
+        HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+            @Override
+            protected void onResult(ProfileSet.Response.Result result) {
+                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
+                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                getActivity().finish();
+            }
+        };
+        Observable<ProfileSet.Response> responseObservabl =
+                AGApplication.api.setProfile(request)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservabl.subscribeWith(handler));
     }
 
     public boolean checkEmailValid() {

@@ -38,6 +38,7 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
         inflater.inflate(getMenuResource(), menu);
         this.menu = menu;
         super.onCreateOptionsMenu(menu, inflater);
+        getViewModel().onCreateOptionsMenu();
     }
 
     @Override

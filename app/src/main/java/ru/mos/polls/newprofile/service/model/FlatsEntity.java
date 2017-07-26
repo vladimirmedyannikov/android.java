@@ -1,6 +1,7 @@
 package ru.mos.polls.newprofile.service.model;
 
 
+
 import ru.mos.elk.profile.flat.Flat;
 
 /**
@@ -14,15 +15,15 @@ public class FlatsEntity {
     private WorkEntity work;
     private ResidenceEntity residence;
 
-    public FlatsEntity(Flat flat) {
+    public FlatsEntity(Flat flat, boolean update) {
         if (flat.isResidence()) {
-            setResidence(new FlatsEntity.ResidenceEntity(flat));
+            setResidence(new FlatsEntity.ResidenceEntity(flat, update));
         }
         if (flat.isRegistration()) {
-            setRegistration(new FlatsEntity.RegistrationEntity(flat));
+            setRegistration(new FlatsEntity.RegistrationEntity(flat, update));
         }
         if (flat.isWork()) {
-            setWork(new FlatsEntity.WorkEntity(flat));
+            setWork(new FlatsEntity.WorkEntity(flat, update));
         }
     }
 
@@ -51,21 +52,21 @@ public class FlatsEntity {
     }
 
     public class RegistrationEntity extends BaseFlat {
-        public RegistrationEntity(Flat flat) {
-            super(flat);
+        public RegistrationEntity(Flat flat, boolean update) {
+            super(flat, update);
         }
     }
 
     public class WorkEntity extends BaseFlat {
-        public WorkEntity(Flat flat) {
-            super(flat);
+        public WorkEntity(Flat flat, boolean update) {
+            super(flat, update);
         }
     }
 
 
     public class ResidenceEntity extends BaseFlat {
-        public ResidenceEntity(Flat flat) {
-            super(flat);
+        public ResidenceEntity(Flat flat, boolean update) {
+            super(flat, update);
         }
     }
 
@@ -74,21 +75,21 @@ public class FlatsEntity {
          * flat_id : 266574
          * building_id : 29419-2
          */
-        public BaseFlat(Flat flat) {
+        public BaseFlat(Flat flat, boolean update) {
             setBuilding_id(flat.getBuildingId());
-//            setFlat_id(flat.getFlatId());
+            if (update) setFlat_id(flat.getFlatId());
         }
 
-//        private String flat_id;
+        private String flat_id;
         private String building_id;
 
-//        public String getFlat_id() {
-//            return flat_id;
-//        }
+        public String getFlat_id() {
+            return flat_id;
+        }
 
-//        public void setFlat_id(String flat_id) {
-//            this.flat_id = flat_id;
-//        }
+        public void setFlat_id(String flat_id) {
+            this.flat_id = flat_id;
+        }
 
         public String getBuilding_id() {
             return building_id;

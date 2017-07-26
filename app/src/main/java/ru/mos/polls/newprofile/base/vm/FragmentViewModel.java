@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.R;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -60,7 +61,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     }
 
     public void onViewCreated() {
-        pd = new ProgressDialog(getActivity(), R.style.ProgressBar);
+        pd = new ProgressDialog(getFragment().getContext(), R.style.ProgressBar);
         pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
     }
 
@@ -90,4 +91,18 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
         did.setDrawable(dividerDrawable);
         recyclerView.addItemDecoration(did);
     }
+
+    public Progressable progressable = new Progressable() {
+        @Override
+        public void begin() {
+            if (pd != null)
+                pd.show();
+        }
+
+        @Override
+        public void end() {
+            if (pd != null)
+                pd.dismiss();
+        }
+    };
 }

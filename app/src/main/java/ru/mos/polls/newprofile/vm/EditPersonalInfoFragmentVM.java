@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -164,6 +165,9 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 agUser.setChildBirthdays(getBirthdayKidsLong());
                 validationOk = true;
                 break;
+            case SOCIAL_STATUS:
+                validationOk = true;
+                break;
         }
         if (validationOk) saveUser();
     }
@@ -214,7 +218,8 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                         || !agUser.getMiddleName().equalsIgnoreCase(middlename.getText().toString()));
                 break;
             case COUNT_KIDS:
-                isDataChanged = !(agUser.getChildCount() == Integer.valueOf(childsCount.getText().toString()));
+                int value = TextUtils.isEmpty(childsCount.getText()) ? 0 : Integer.valueOf(childsCount.getText().toString());
+                isDataChanged = !(agUser.getChildCount() == value);
                 break;
             case BIRTHDAY_KIDS:
                 isDataChanged = !FileUtils.equalList(getBirthdayKidsLong(), agUser.getChildBirthdays());

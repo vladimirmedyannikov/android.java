@@ -18,12 +18,22 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Layo
 
     public static final String ARG_FLAT = "arg_flat";
     public static final String ARG_FLAT_TYPE = "arg_flat_type";
+    public static final String ARG_HIDE_WARNING_FOR_ADD_FLATS = "arg_hide_warning_for_add_flats";
 
     public static NewFlatFragment newInstance(Flat flat, int flatType) {
+        return newInstance(flat, flatType, false);
+    }
+
+    public static NewFlatFragment newInstanceHideWarning(Flat flat, int flatType) {
+        return newInstance(flat, flatType, true);
+    }
+
+    public static NewFlatFragment newInstance(Flat flat, int flatType, boolean hideWarning) {
         NewFlatFragment f = new NewFlatFragment();
-        Bundle args = new Bundle(2);
+        Bundle args = new Bundle(3);
         args.putInt(ARG_FLAT_TYPE, flatType);
         args.putSerializable(ARG_FLAT, flat);
+        args.putBoolean(ARG_HIDE_WARNING_FOR_ADD_FLATS, hideWarning);
         f.setArguments(args);
         return f;
     }
@@ -34,11 +44,6 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Layo
     @Override
     protected NewFlatFragmentVM onCreateViewModel(LayoutNewFlatBinding binding) {
         return new NewFlatFragmentVM(this, getBinding());
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

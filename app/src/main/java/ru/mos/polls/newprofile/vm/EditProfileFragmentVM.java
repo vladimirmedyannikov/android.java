@@ -32,19 +32,15 @@ import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.ProfileSet;
-import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.state.NewFlatState;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
-import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.Social;
 
 /**
@@ -122,10 +118,10 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                         switch (action.getAction()) {
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
-                                this.changedUser = changed;
+                                this.savedUser = changed;
                                 refreshView(changed);
-                                changedUser.save(getActivity().getBaseContext());
-                                sendProfile(new ProfileSet.Request(new Personal(changedUser)));
+                                savedUser.save(getActivity().getBaseContext());
+                                sendProfile(new ProfileSet.Request(new Personal(savedUser)));
                                 break;
                         }
                     }
@@ -140,21 +136,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
-                System.out.println("registarion " + (result.getFlats().getRegistration() == null));
-                if (result.getFlats().getRegistration() == null) {
-                    Flat registration = result.getFlats().getRegistration();
-                    registration.save(getActivity());
-                }
-                if (result.getFlats().getResidence() == null) {
-                    Flat residence = result.getFlats().getRegistration();
-                    residence.save(getActivity());
-                }
-                if (result.getFlats().getWork() == null) {
-                    Flat work = result.getFlats().getRegistration();
-                    work.save(getActivity());
-                }
-                System.out.println("residence " + (result.getFlats().getResidence() == null));
-                System.out.println("work " + (result.getFlats().getWork() == null));
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
                 prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
@@ -171,53 +152,39 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         sendProfile(new ProfileSet.Request(new Personal(agUser)));
     }
 
-    Progressable progressable = new Progressable() {
-        @Override
-        public void begin() {
-            if (pd != null)
-                pd.show();
-        }
-
-        @Override
-        public void end() {
-            if (pd != null)
-                pd.dismiss();
-        }
-    };
-
 
     @Override
     public void onResume() {
         super.onResume();
+        savedUser =  new AgUser(getFragment().getContext());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
-        refreshView(changedUser);
+        refreshView(savedUser);
     }
 
     public void setClickListener() {
         registration.setOnClickListener(v -> {
-//            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
             getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION);
         });
         residence.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE);
         });
         work.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getWork());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getWork(), NewFlatFragmentVM.FLAT_TYPE_WORK), NewFlatFragmentVM.FLAT_TYPE_WORK);
         });
         email.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
         });
         fio.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
         });
         kidsCountTitle.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
         });
         socialStatus.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
         });
         kidsDate.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
         });
         socialBindTitle.setOnClickListener(v -> {
             UpdateSocialActivity.startActivity(getActivity());
@@ -277,23 +244,23 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Flat newFlat = NewAddressActivity.onResult(requestCode, resultCode, data);
-        if (newFlat != null) {
-            if (newFlat.isRegistration()) {
-                setRegistationFlatView(newFlat);
-                changedUser.setRegistrationFlat(newFlat);
-            }
-            if (newFlat.isResidence()) {
-                setResidenceFlatView(savedUser.getRegistration(), newFlat);
-                changedUser.setResidenceFlat(newFlat);
-            }
-            if (newFlat.isWork()) {
-                setWorkFlatView(newFlat);
-                changedUser.setWorkFlat(newFlat);
-            }
-            sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
-            changedUser.save(getActivity().getBaseContext());
-        }
+//        Flat newFlat = NewAddressActivity.onResult(requestCode, resultCode, data);
+//        if (newFlat != null) {
+//            if (newFlat.isRegistration()) {
+//                setRegistationFlatView(newFlat);
+//                changedUser.setRegistrationFlat(newFlat);
+//            }
+//            if (newFlat.isResidence()) {
+//                setResidenceFlatView(savedUser.getRegistration(), newFlat);
+//                changedUser.setResidenceFlat(newFlat);
+//            }
+//            if (newFlat.isWork()) {
+//                setWorkFlatView(newFlat);
+//                changedUser.setWorkFlat(newFlat);
+//            }
+//            sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
+//            changedUser.save(getActivity().getBaseContext());
+//        }
     }
 
 
@@ -336,7 +303,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
                 martialStatusAdapter.setGender(gender);
-                changedUser.setGender(gender);
+                savedUser.setGender(gender);
                 martialStatusAdapter.notifyDataSetChanged();
             }
 
@@ -366,7 +333,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
-                changedUser.setMaritalStatus(maritalStatus);
+                savedUser.setMaritalStatus(maritalStatus);
             }
 
             @Override
@@ -395,9 +362,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     public void setBirthDayDate() {
         OnDateSetCallback listener = () -> {
-            changedUser.setBirthday(birthdayDate.getText().toString());
-            changedUser.save(getActivity().getBaseContext());
-            sendProfile(changedUser);
+            savedUser.setBirthday(birthdayDate.getText().toString());
+            savedUser.save(getActivity().getBaseContext());
+            sendProfile(savedUser);
         };
         /**
          * Откатываем время назад

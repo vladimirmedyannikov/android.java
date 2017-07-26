@@ -32,7 +32,7 @@ public class Personal {
     private String marital_status;
     private int childrens_count;
     private transient boolean car_exists;
-    private int social_status;
+    private String social_status;
     private transient String troika_card_number;
     private List<String> childrens_birthdays;
 
@@ -45,7 +45,7 @@ public class Personal {
         email = agUser.getEmail();
         marital_status = agUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : agUser.getMaritalStatus().getValue();
         childrens_count = agUser.getChildCount();
-        social_status = agUser.getAgSocialStatus();
+        social_status = agUser.getAgSocialStatus() == 0 ? "" : String.valueOf(agUser.getAgSocialStatus());
         childrens_birthdays = agUser.childBirthdaysAsList();
     }
 
@@ -129,11 +129,11 @@ public class Personal {
         this.car_exists = car_exists;
     }
 
-    public int getSocial_status() {
+    public String getSocial_status() {
         return social_status;
     }
 
-    public void setSocial_status(int social_status) {
+    public void setSocial_status(String social_status) {
         this.social_status = social_status;
     }
 

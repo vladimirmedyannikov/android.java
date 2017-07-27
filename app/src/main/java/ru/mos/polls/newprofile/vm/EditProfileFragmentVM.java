@@ -252,10 +252,11 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
-        if (registationFlat.compareByFullAddress(residenceFlat)) {
-            if (!registationFlat.isEmpty())
-                residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
-        } else setFlatView(residenceFlat, residence);
+        if (!registationFlat.isEmpty() && residenceFlat.isEmpty()) {
+            residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
+            return;
+        }
+        setFlatView(residenceFlat, residence);
     }
 
     public void setWorkFlatView(Flat flat) {

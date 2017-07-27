@@ -54,6 +54,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     View buildingNotFoundView;
     View warningContainer;
     View residenceToggleLayout;
+    View addFlatLayout;
     TextView areaFlat;
     TextView districtFlat;
     TextView tvWarningEditingBlocked;
@@ -70,159 +71,35 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
         Bundle extras = getFragment().getArguments();
         flatType = extras.getInt(NewFlatFragment.ARG_FLAT_TYPE);
         flat = (Flat) extras.get(NewFlatFragment.ARG_FLAT);
-        etStreet = binding.etStreet;
-        etBuilding = binding.etBuilding;
-        streetNotFoundView = binding.streetNotFoundContainer;
-        buildingNotFoundView = binding.buildingNotFoundContainer;
-        areaFlat = binding.areaFlat;
-        districtFlat = binding.districtFlat;
-        areaAndDistrictLayout = binding.areaAndDistrictLayout;
+        etStreet = binding.layoutAddFlat.etStreet;
+        etBuilding = binding.layoutAddFlat.etBuilding;
+        streetNotFoundView = binding.layoutAddFlat.streetNotFoundContainer;
+        buildingNotFoundView = binding.layoutAddFlat.buildingNotFoundContainer;
+        areaFlat = binding.layoutAddFlat.areaFlat;
+        districtFlat = binding.layoutAddFlat.districtFlat;
+        areaAndDistrictLayout = binding.layoutAddFlat.areaAndDistrictLayout;
         tvWarningEditingBlocked = binding.layoutFlatWarningBlock.tvWarningEditingBlocked;
         tvErrorEditingBlocked = binding.layoutFlatWarningBlock.tvErrorEditingBlocked;
         warningContainer = binding.layoutFlatWarningBlock.warningContainer;
         residenceToggleLayout = binding.layoutFlatResidenceToggle.flatResidenceToggleView;
         residenceToggle = binding.layoutFlatResidenceToggle.flatResidenceToggle;
+        addFlatLayout = binding.layoutAddFlat.layoutAddFlat;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        configViews();
+    public void onViewCreated() {
+        super.onViewCreated();
+        setListener();
     }
 
-    @Override
-    public void onCreateOptionsMenu() {
-        processMenuIcon();
-    }
-
-    public void processMenuIcon() {
-        if (!flat.isEmpty() && flat.isEnable()) {
-            showDeleteMenuIcon();
-        }
-        if (!flat.isEnable()) {
-            hideAllMenuIcon();
-        }
-        if (flat.isEmpty()) {
-            showConfirmMenuIcon();
-        }
-    }
-
-    public void showConfirmMenuIcon() {
-        getFragment().hideMenuItem(R.id.action_delet_flat);
-        getFragment().showMenuItem(R.id.action_confirm);
-    }
-
-    public void showDeleteMenuIcon() {
-        getFragment().hideMenuItem(R.id.action_confirm);
-        getFragment().showMenuItem(R.id.action_delet_flat);
-    }
-
-    public void hideAllMenuIcon() {
-        getFragment().hideMenuItem(R.id.action_confirm);
-        getFragment().hideMenuItem(R.id.action_delet_flat);
-    }
-
-    @Override
-    public void onOptionsItemSelected(int menuItemId) {
-        switch (menuItemId) {
-            case R.id.action_delet_flat:
-                changeFlat();
-                break;
-            case R.id.action_confirm:
-                confirmaAction();
-                break;
-        }
-    }
-
-    public void confirmaAction() {
-        FlatsEntity entity = null;
-        if (flat.isRegistration()) {
-            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
-            if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
-                registrationEntity.setFlat_id(flat.getFlatId());
-            entity = new FlatsEntity(registrationEntity);
-        }
-        if (flat.isResidence()) {
-            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
-            if (!TextUtils.isEmpty(flat.getFlatId())) residenceEntity.setFlat_id(flat.getFlatId());
-            entity = new FlatsEntity(residenceEntity);
-        }
-
-        if (flat.isWork()) {
-            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
-            if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
-            entity = new FlatsEntity(workEntity);
-        }
-        sendFlat(new ProfileSet.Request(entity));
-    }
-
-    void changeFlat() {
-        showConfirmMenuIcon();
-        etBuilding.getText().clear();
-        etBuilding.setEnabled(true);
-        etBuilding.setTextColor(getFragment().getResources().getColor(R.color.editTextColor));
-        etStreet.getText().clear();
-        etStreet.setEnabled(true);
-        etStreet.setTextColor(getFragment().getResources().getColor(R.color.editTextColor));
-        hideAreaDistrict();
-    }
-
-
-    /**
-     * Отправляем адрес
-     */
-    public void sendFlat(ProfileSet.Request request) {
-        HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
-                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
-            @Override
-            protected void onResult(ProfileSet.Response.Result result) {
-                Flat flat = null;
-                if (result.getFlats().getRegistration() != null) {
-                    flat = result.getFlats().getRegistration();
-                    flat.setType(Flat.Type.REGISTRATION);
-                }
-                if (result.getFlats().getResidence() != null) {
-                    flat = result.getFlats().getResidence();
-                    flat.setType(Flat.Type.RESIDENCE);
-                }
-                if (result.getFlats().getWork() != null) {
-                    flat = result.getFlats().getWork();
-                    flat.setType(Flat.Type.WORK);
-                }
-                if (flat != null) {
-                    flat.setEnable(!flat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
-                    flat.save(getActivity());
-                }
-                setupViewIfNotEmpty();
-                showDeleteMenuIcon();
-                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                getActivity().finish();
+    public void setListener() {
+        residenceToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                visibilityFlatInput(View.GONE);
+            } else {
+                visibilityFlatInput(View.VISIBLE);
             }
-        };
-        Observable<ProfileSet.Response> responseObservabl =
-                AGApplication.api.setProfile(request)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(responseObservabl.subscribeWith(handler));
-    }
-
-    private void configViews() {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        /**
-         * Если адрес проживания совпадает с адресом регистрации
-         * то не отображаем адрес проживания, очищаем поля
-         */
-        if (!flat.isEmpty()) {
-            setupViewIfNotEmpty();
-        }
-
-        if (flat.isResidence()) residenceToggleLayout.setVisibility(View.VISIBLE);
-
-        etStreet.setText(flat.getStreet());
-        etBuilding.setText(flat.getBuilding());
-        districtFlat.setText(flat.getDistrict());
-        areaFlat.setText(flat.getArea());
-
+        });
         etStreet.addTextChangedListener(new StreetWatcher((BaseActivity) getActivity(), etStreet, getFragment().getView().findViewById(R.id.pbStreet), new StreetWatcher.Listener() {
             @Override
             public void onDataLoaded(int count) {
@@ -314,6 +191,177 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 }
             }
         });
+    }
+
+    public void visibilityFlatInput(int gone) {
+        addFlatLayout.setVisibility(gone);
+        warningContainer.setVisibility(gone);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        configViews(flatType);
+    }
+
+    @Override
+    public void onCreateOptionsMenu() {
+        processMenuIcon();
+    }
+
+    public void processMenuIcon() {
+        if (!flat.isEmpty() && flat.isEnable()) {
+            showDeleteMenuIcon();
+        }
+        if (!flat.isEnable()) {
+            hideAllMenuIcon();
+        }
+        if (flat.isEmpty()) {
+            showConfirmMenuIcon();
+        }
+    }
+
+    public void showConfirmMenuIcon() {
+        getFragment().hideMenuItem(R.id.action_delet_flat);
+        getFragment().showMenuItem(R.id.action_confirm);
+    }
+
+    public void showDeleteMenuIcon() {
+        getFragment().hideMenuItem(R.id.action_confirm);
+        getFragment().showMenuItem(R.id.action_delet_flat);
+    }
+
+    public void hideAllMenuIcon() {
+        getFragment().hideMenuItem(R.id.action_confirm);
+        getFragment().hideMenuItem(R.id.action_delet_flat);
+    }
+
+    @Override
+    public void onOptionsItemSelected(int menuItemId) {
+        switch (menuItemId) {
+            case R.id.action_delet_flat:
+                changeFlat();
+                break;
+            case R.id.action_confirm:
+                confirmaAction();
+                break;
+        }
+    }
+
+    public void confirmaAction() {
+        FlatsEntity entity = null;
+        if (flat.isRegistration()) {
+            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
+            if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
+                registrationEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(registrationEntity);
+        }
+        if (flat.isResidence()) {
+            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity();
+            if (residenceToggle.isChecked()) {
+                residenceEntity.setKill(true);
+            } else {
+                residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
+                if (!TextUtils.isEmpty(flat.getFlatId()))
+                    residenceEntity.setFlat_id(flat.getFlatId());
+            }
+            entity = new FlatsEntity(residenceEntity);
+        }
+
+        if (flat.isWork()) {
+            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
+            if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(workEntity);
+        }
+        sendFlat(new ProfileSet.Request(entity));
+    }
+
+    void changeFlat() {
+        showConfirmMenuIcon();
+        etBuilding.getText().clear();
+        etBuilding.setEnabled(true);
+        etBuilding.setTextColor(getFragment().getResources().getColor(R.color.editTextColor));
+        etStreet.getText().clear();
+        etStreet.setEnabled(true);
+        etStreet.setTextColor(getFragment().getResources().getColor(R.color.editTextColor));
+        hideAreaDistrict();
+    }
+
+
+    /**
+     * Отправляем адрес
+     */
+    public void sendFlat(ProfileSet.Request request) {
+        HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+            @Override
+            protected void onResult(ProfileSet.Response.Result result) {
+                Flat newFlat = null;
+                if (result.getFlats().getRegistration() != null) {
+                    newFlat = result.getFlats().getRegistration();
+                    newFlat.setType(Flat.Type.REGISTRATION);
+                }
+                if (result.getFlats().getResidence() != null) {
+                    newFlat = result.getFlats().getResidence();
+                    newFlat.setType(Flat.Type.RESIDENCE);
+                }
+                if (result.getFlats().getWork() != null) {
+                    newFlat = result.getFlats().getWork();
+                    newFlat.setType(Flat.Type.WORK);
+                }
+                if (newFlat != null) {
+                    newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
+                    newFlat.save(getActivity());
+                }
+                if (flatType == FLAT_TYPE_RESIDENCE && residenceToggle.isChecked()) {
+                    flat.delete(getActivity());
+                }
+                setupViewIfNotEmpty();
+                showDeleteMenuIcon();
+                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                getActivity().finish();
+            }
+        };
+        Observable<ProfileSet.Response> responseObservabl =
+                AGApplication.api.setProfile(request)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservabl.subscribeWith(handler));
+    }
+
+    private void configViews(int flatType) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        /**
+         * Если адрес проживания совпадает с адресом регистрации
+         * то не отображаем адрес проживания, очищаем поля
+         */
+        if (!flat.isEmpty()) {
+            setupViewIfNotEmpty();
+        }
+        /**
+         * показываем переключатель для адреса прожиывания
+         */
+        if (flat.isResidence()) residenceToggleLayout.setVisibility(View.VISIBLE);
+        /**
+         * определяем вид для заполнения адреса прохивания
+         */
+        switch (flatType) {
+            case FLAT_TYPE_RESIDENCE:
+                if (flat.isEmpty()) {
+                    visibilityFlatInput(View.GONE);
+                    residenceToggle.setChecked(true);
+                } else {
+                    visibilityFlatInput(View.VISIBLE);
+                    residenceToggle.setChecked(false);
+                }
+                break;
+        }
+
+        etStreet.setText(flat.getStreet());
+        etBuilding.setText(flat.getBuilding());
+        districtFlat.setText(flat.getDistrict());
+        areaFlat.setText(flat.getArea());
+
         setEditingBlocked();
     }
 

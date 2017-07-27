@@ -352,6 +352,11 @@ public class QuestsFragment extends PullableFragment {
         @Override
         public void onClick(BackQuest quest) {
             if (quest != null) {
+                //на отладку
+                if (quest.getId().equalsIgnoreCase("updateExtraInfo")) {
+                    listener.onOther("","");
+                    return;
+                }
                 quest.onClick(getActivity(), listener);
                 /**
                  * Скрываем блок из ленты

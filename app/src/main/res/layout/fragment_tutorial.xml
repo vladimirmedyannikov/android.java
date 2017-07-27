@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/root"
-    android:fillViewport="true">
+<ScrollView style="@style/root"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:fillViewport="true">
 
     <RelativeLayout
-        android:padding="@dimen/pd_normal"
-        style="@style/item">
+        style="@style/item"
+        android:padding="@dimen/pd_normal">
 
         <Button
-            style="@style/text.link.green"
             android:id="@+id/tutorial_action"
-            android:text="@string/tutorial_skip"
-            android:textAllCaps="true"
-            android:layout_centerHorizontal="true"
+            style="@style/text.link.green"
             android:layout_alignParentBottom="true"
-            />
+            android:layout_centerHorizontal="true"
+            android:text="@string/tutorial_skip"
+            android:textAllCaps="true"/>
 
         <LinearLayout
             android:id="@+id/tutorial_dots_container"
             style="@style/item.linear.horizontal"
-            android:gravity="center_horizontal"
             android:layout_above="@id/tutorial_action"
+            android:gravity="center_horizontal"
             android:padding="@dimen/pd_xxxlarge"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/tutorial_slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/tutorial_dots_container"
-            />
+            android:layout_above="@id/tutorial_dots_container"/>
 
     </RelativeLayout>
 </ScrollView>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/wizard_profile_fill_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/actionbar_background"
+            android:paddingBottom="@dimen/pd_normal"
+            android:paddingTop="@dimen/pd_xxsmall">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/wizard_percentage_value"
+                style="@style/text.small.white"
+                android:paddingLeft="@dimen/pd_normal"
+                android:text="15%"/>
+
+            <ProgressBar
+                android:id="@+id/wizard_profile_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_below="@id/wizard_percentage_value"
+                android:paddingLeft="@dimen/pd_normal"
+                android:paddingRight="@dimen/pd_normal"
+                android:progress="15"
+                android:progressDrawable="@drawable/progressbar_yellow"/>
+
+        </RelativeLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/wizard_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/yellow"
+            app:tabBackground="@drawable/wizard_profile_dot_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="7dp"/>
+
+        <Button
+            android:id="@+id/wizard_action"
+            style="@style/text.link.green"
+            android:layout_marginBottom="@dimen/pd_normal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/ag_continue"
+            android:textAllCaps="true"/>
+    </LinearLayout>
+</layout>

@@ -1,7 +1,6 @@
 package ru.mos.polls.newprofile.service.model;
 
 
-
 /**
  * Created by Trunks on 20.07.2017.
  */
@@ -76,11 +75,16 @@ public class FlatsEntity {
             super(flat_id, building_id);
         }
 
+        public ResidenceEntity() {
+        }
     }
 
-     static abstract class BaseFlat {
+    static abstract class BaseFlat {
         public BaseFlat(String building_id) {
             this.building_id = building_id;
+        }
+
+        public BaseFlat() {
         }
 
         public BaseFlat(String flat_id, String building_id) {
@@ -95,6 +99,11 @@ public class FlatsEntity {
 
         private String flat_id;
         private String building_id;
+        private Boolean kill;
+
+        public void setKill(Boolean kill) {
+            this.kill = kill;
+        }
 
         public String getFlat_id() {
             return flat_id;

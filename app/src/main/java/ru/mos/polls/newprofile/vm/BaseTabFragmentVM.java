@@ -50,7 +50,8 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
 
     protected void initialize(B binding) {
-        setRecyclerList(recyclerView);
+        if (recyclerView != null)
+            setRecyclerList(recyclerView);
     }
 
     @Override

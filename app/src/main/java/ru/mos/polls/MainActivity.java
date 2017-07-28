@@ -377,6 +377,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         EventActivity.startActivity(MainActivity.this, eventId);
                     }
 
+
+                    /**
+                     * TODO убрать!!!! пока повесил сюда вызова визарда "Профиль Допонительные данные" в галвное ленте при клик в QuestFragment
+                     */
                     @Override
                     public void onOther(String title, String linkUrl) {
                         navigateTo().state(Add.newActivity(new WizardProfileState(), BaseActivity.class));

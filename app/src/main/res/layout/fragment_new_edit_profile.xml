@@ -53,7 +53,7 @@
                         style="@style/edit_profile"
                         android:hint="Фамилия Имя Отчество"/>
 
-                    <!--<include layout="@layout/ag_separator"/>-->
+                    <include layout="@layout/ag_separator"/>
 
                     <include layout="@layout/layout_date_gender" android:id="@+id/layout_date_gender"/>
 

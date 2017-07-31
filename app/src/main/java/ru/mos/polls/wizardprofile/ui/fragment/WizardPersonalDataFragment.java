@@ -1,9 +1,13 @@
 package ru.mos.polls.wizardprofile.ui.fragment;
 
+import android.os.Bundle;
+
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
+import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.wizardprofile.vm.WizardPersonalDataFragmentVM;
 
 /**
@@ -11,6 +15,16 @@ import ru.mos.polls.wizardprofile.vm.WizardPersonalDataFragmentVM;
  */
 
 public class WizardPersonalDataFragment extends BindingFragment<WizardPersonalDataFragmentVM, FragmentWizardPersonalDataBinding> {
+    public static final String ARG_AGUSER = "arg_aguser";
+
+    public static WizardPersonalDataFragment newInstance(AgUser agUser) {
+        WizardPersonalDataFragment f = new WizardPersonalDataFragment();
+        Bundle args = new Bundle(1);
+        args.putSerializable(ARG_AGUSER, agUser);
+        f.setArguments(args);
+        return f;
+    }
+
     @Override
     protected WizardPersonalDataFragmentVM onCreateViewModel(FragmentWizardPersonalDataBinding binding) {
         return new WizardPersonalDataFragmentVM(this, binding);

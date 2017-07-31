@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,9 +22,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
@@ -34,28 +30,29 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
+import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.ProfileSet;
-import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
+import ru.mos.polls.newprofile.state.NewFlatState;
+import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
-import ru.mos.polls.profile.gui.fragment.location.NewAddressActivity;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.Social;
 
 /**
  * Created by wlTrunks on 14.06.2017.
  */
 
-public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment, LayoutNewEditProfileBinding> {
+public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
     AppCompatSpinner gender;
     AppCompatSpinner martialStatus;
     ArrayAdapter genderAdapter;
-    AgUser.MaritalStatus.MaritalStatusAdapter martialStatusAdapter;
+    MaritalStatusAdapter martialStatusAdapter;
     AgUser savedUser, changedUser;
     View kidsLayer;
     TextView birthdayDate;
@@ -79,20 +76,20 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     public static final String TIME_SYNQ = "time_synq";
     public static final long INTERVAL_SYNQ = 15 * 60 * 1000;
 
-    public EditProfileFragmentVM(EditProfileFragment fragment, LayoutNewEditProfileBinding binding) {
+    public EditProfileFragmentVM(EditProfileFragment fragment, FragmentNewEditProfileBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutNewEditProfileBinding binding) {
+    protected void initialize(FragmentNewEditProfileBinding binding) {
         savedUser = new AgUser(getFragment().getContext());
         changedUser = new AgUser(getFragment().getContext());
         dbp = new BirthDateParser(getActivity());
-        gender = binding.editGender;
+        gender = binding.layoutDateGender.editGender;
         martialStatus = binding.editMartialStatus;
         kidsLayer = binding.editKidsLayer;
         kidsDateLayer = binding.editKidsDateLayer;
-        birthdayDate = binding.editBirthdayDate;
+        birthdayDate = binding.layoutDateGender.editBirthdayDate;
         registration = binding.editFlatRegistration;
         residence = binding.editFlatResidence;
         work = binding.editFlatWork;
@@ -111,6 +108,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
     @Override
     public void onViewCreated() {
+        super.onViewCreated();
         setClickListener();
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
@@ -121,11 +119,9 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                         switch (action.getAction()) {
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
-                                this.changedUser = changed;
+                                this.savedUser = changed;
                                 refreshView(changed);
-                                changedUser.save(getActivity().getBaseContext());
-//                                sendProfile(changed);
-                                sendProfile(new ProfileSet.Request(new Personal(changedUser)));
+                                savedUser.save(getActivity().getBaseContext());
                                 break;
                         }
                     }
@@ -133,77 +129,67 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void sendProfile(ProfileSet.Request request) {
+        /**
+         * обсервер для сохранения профиля
+         */
+        HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+            @Override
+            protected void onResult(ProfileSet.Response.Result result) {
+                savedUser.save(getActivity());
+                sendBroadcastReLoadBadges(getActivity());
+            }
+        };
         Observable<ProfileSet.Response> responseObservabl =
                 AGApplication.api.setProfile(request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
+        disposables.add(responseObservabl.subscribeWith(handler));
     }
 
-    /**
-     * обсервер для сохранения профиля
-     *
-     */
-
-    DisposableObserver setProfileObserver = new DisposableObserver<ProfileSet.Response>() {
-
-            @Override
-            public void onNext(@NonNull ProfileSet.Response response) {
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onComplete() {
-                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
-                SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-                prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
-            }
-        };
-
-    public void sendProfile(AgUser agUser) {
-        Observable<ProfileSet.Response> responseObservabl =
-                AGApplication.api.setProfile(new ProfileSet.Request(new Personal(agUser)))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-
-        disposables.add(responseObservabl.subscribeWith(setProfileObserver));
+    public static void sendBroadcastReLoadBadges(Context context) {
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+        SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        prefs.edit().putLong(TIME_SYNQ, System.currentTimeMillis() + INTERVAL_SYNQ).apply();
     }
+
+    public void sendProfile(Personal personal) {
+        sendProfile(new ProfileSet.Request(personal));
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
+        savedUser = new AgUser(getFragment().getContext());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
-        refreshView(changedUser);
+        refreshView(savedUser);
     }
 
     public void setClickListener() {
         registration.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getRegistration());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION);
         });
         residence.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getResidence());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE);
         });
         work.setOnClickListener(v -> {
-            NewAddressActivity.startActivity(getFragment(), savedUser.getWork());
+            getFragment().navigateToActivityForResult(new NewFlatState(savedUser.getWork(), NewFlatFragmentVM.FLAT_TYPE_WORK), NewFlatFragmentVM.FLAT_TYPE_WORK);
         });
         email.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL), EditPersonalInfoFragmentVM.PERSONAL_EMAIL);
         });
         fio.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
         });
         kidsCountTitle.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
         });
         socialStatus.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
         });
         kidsDate.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(changedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
         });
         socialBindTitle.setOnClickListener(v -> {
             UpdateSocialActivity.startActivity(getActivity());
@@ -261,38 +247,16 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         phone.setText(text);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Flat newFlat = NewAddressActivity.onResult(requestCode, resultCode, data);
-        if (newFlat != null) {
-            if (newFlat.isRegistration()) {
-                setRegistationFlatView(newFlat);
-                changedUser.setRegistrationFlat(newFlat);
-            }
-            if (newFlat.isResidence()) {
-                setResidenceFlatView(savedUser.getRegistration(), newFlat);
-                changedUser.setResidenceFlat(newFlat);
-            }
-            if (newFlat.isWork()) {
-                setWorkFlatView(newFlat);
-                changedUser.setWorkFlat(newFlat);
-            }
-            sendProfile(new ProfileSet.Request(new FlatsEntity(newFlat)));
-            changedUser.save(getActivity().getBaseContext());
-
-        }
-    }
-
-
     public void setRegistationFlatView(Flat flat) {
         setFlatView(flat, registration);
     }
 
     public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
-        if (registationFlat.compareByFullAddress(residenceFlat)) {
-            if (!registationFlat.isEmpty())
-                residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
-        } else setFlatView(residenceFlat, residence);
+        if (!registationFlat.isEmpty() && residenceFlat.isEmpty()) {
+            residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
+            return;
+        }
+        setFlatView(residenceFlat, residence);
     }
 
     public void setWorkFlatView(Flat flat) {
@@ -315,26 +279,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         birthdayDate.setTag(tag);
     }
 
-    public void setGenderView(AgUser.Gender userGender) {
-        genderAdapter = getGenderAdapter();
-        gender.setAdapter(genderAdapter);
-        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
-                martialStatusAdapter.setGender(gender);
-                changedUser.setGender(gender);
-                martialStatusAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        int selected = genderAdapter.getPosition(userGender);
-        gender.setSelection(selected);
-    }
 
     public void setSocialBindingLayerRx() {
         socialBindingLayer.removeAllViews();
@@ -346,14 +290,24 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 .subscribe(this::addSocialToLayer));
     }
 
-    public void setMartialStatusView(AgUser.Gender gender) {
-        martialStatusAdapter = (AgUser.MaritalStatus.MaritalStatusAdapter) getMartialStatusAdapter(gender);
-        martialStatus.setAdapter(martialStatusAdapter);
-        martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    int selectedGender;
+
+    public void setGenderView(AgUser.Gender userGender) {
+        genderAdapter = getGenderAdapter();
+        gender.setAdapter(genderAdapter);
+        selectedGender = genderAdapter.getPosition(userGender);
+        gender.setSelection(selectedGender, false);
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
-                changedUser.setMaritalStatus(maritalStatus);
+                if (position != selectedGender) {
+                    AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
+                    martialStatusAdapter.setGender(gender);
+                    savedUser.setGender(gender);
+                    martialStatusAdapter.notifyDataSetChanged();
+                    selectedGender = position;
+                    sendProfile(new Personal().setSex(savedUser.getGender() == AgUser.Gender.NULL ? "" : savedUser.getGender().getValue()));
+                }
             }
 
             @Override
@@ -361,31 +315,54 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
 
             }
         });
-        int selectedMarital = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
-        martialStatus.setSelection(selectedMarital);
+    }
+
+    int selectedMartial;
+
+    public void setMartialStatusView(AgUser.Gender gender) {
+        martialStatusAdapter = (MaritalStatusAdapter) getMartialStatusAdapter(gender);
+        martialStatus.setAdapter(martialStatusAdapter);
+        selectedMartial = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
+        martialStatus.setSelection(selectedMartial, false);
+        martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != selectedMartial) {
+                    AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
+                    savedUser.setMaritalStatus(maritalStatus);
+                    selectedMartial = position;
+                    sendProfile(new Personal().setMarital_status(savedUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : savedUser.getMaritalStatus().getValue()));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
     public ArrayAdapter getGenderAdapter() {
         List<AgUser.Gender> list = new ArrayList<>(Arrays.asList(AgUser.Gender.getGenderItems()));
-//        mBirthdayKidsList.add(AgUser.Gender.HINT);
         ArrayAdapter<AgUser.Gender> ad = new ArrayAdapter<>(getActivity(), R.layout.layout_spinner_view, list);
         ad.setDropDownViewResource(R.layout.layout_spinner_item);
         return ad;
     }
 
     public ArrayAdapter getMartialStatusAdapter(AgUser.Gender gender) {
-        ArrayAdapter<AgUser.MaritalStatus> ad = (AgUser.MaritalStatus.MaritalStatusAdapter)
-                AgUser.MaritalStatus.getMaritalStatusAdapter(getActivity(), gender);
-        ad.setDropDownViewResource(R.layout.layout_spinner_item);
-        return ad;
+        List<AgUser.MaritalStatus> list = new ArrayList<>(Arrays.asList(AgUser.MaritalStatus.getMaritalStatusItems()));
+        MaritalStatusAdapter newAd = new MaritalStatusAdapter(getActivity(), R.layout.layout_spinner_item, list, gender);
+        newAd.setDropDownViewResource(R.layout.layout_spinner_item);
+        return newAd;
     }
 
     public void setBirthDayDate() {
         OnDateSetCallback listener = () -> {
-            changedUser.setBirthday(birthdayDate.getText().toString());
-            changedUser.save(getActivity().getBaseContext());
-            sendProfile(changedUser);
+            savedUser.setBirthday(birthdayDate.getText().toString());
+            Personal personal = new Personal();
+            personal.setBirthday(savedUser.getBirthday());
+            sendProfile(personal);
         };
         /**
          * Откатываем время назад

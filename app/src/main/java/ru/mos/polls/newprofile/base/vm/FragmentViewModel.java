@@ -1,6 +1,7 @@
 package ru.mos.polls.newprofile.base.vm;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.R;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -27,6 +29,7 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     private F fragment;
     private B binding;
     private Activity activity;
+    public ProgressDialog pd;
 
     public FragmentViewModel(F fragment, B binding) {
         this.fragment = fragment;
@@ -58,7 +61,8 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     }
 
     public void onViewCreated() {
-
+        pd = new ProgressDialog(getFragment().getContext(), R.style.ProgressBar);
+        pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
     }
 
     public void onDestroy() {
@@ -79,6 +83,10 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
+    public void doRequest() {
+
+    }
+
     protected void setRecyclerList(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
         recyclerView.setNestedScrollingEnabled(false);
@@ -87,4 +95,18 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
         did.setDrawable(dividerDrawable);
         recyclerView.addItemDecoration(did);
     }
+
+    public Progressable progressable = new Progressable() {
+        @Override
+        public void begin() {
+            if (pd != null)
+                pd.show();
+        }
+
+        @Override
+        public void end() {
+            if (pd != null)
+                pd.dismiss();
+        }
+    };
 }

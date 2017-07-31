@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <!--<fragment-->
+            <!--android:id="@+id/wizard_personal_data"-->
+            <!--android:name="ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--tools:layout="@layout/fragment_new_edit_personal_info"/>-->
+
+        <FrameLayout
+            android:id="@+id/your_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <include
+            android:id="@+id/layout_date_gender"
+            layout="@layout/layout_date_gender"/>
+    </LinearLayout>
+</layout>

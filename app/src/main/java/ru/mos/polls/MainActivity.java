@@ -1,5 +1,6 @@
 package ru.mos.polls;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -65,6 +66,7 @@ import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
+import ru.mos.polls.wizardprofile.state.WizardProfileState;
 
 public class MainActivity extends ToolbarAbstractActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String IS_TASK = "is_task";
@@ -375,8 +377,13 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         EventActivity.startActivity(MainActivity.this, eventId);
                     }
 
+
+                    /**
+                     * TODO убрать!!!! пока повесил сюда вызова визарда "Профиль Допонительные данные" в галвное ленте при клик в QuestFragment
+                     */
                     @Override
                     public void onOther(String title, String linkUrl) {
+                        navigateTo().state(Add.newActivity(new WizardProfileState(), BaseActivity.class));
                     }
 
                     @Override

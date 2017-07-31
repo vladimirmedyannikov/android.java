@@ -30,22 +30,25 @@ public class Personal {
     private String email;
     private String phone;
     private String marital_status;
-    private int childrens_count;
+    private Integer childrens_count;
     private transient boolean car_exists;
-    private int social_status;
+    private String social_status;
     private transient String troika_card_number;
     private List<String> childrens_birthdays;
+
+    public Personal() {
+    }
 
     public Personal(AgUser agUser) {
         surname = agUser.getSurname();
         firstname = agUser.getFirstName();
         middlename = agUser.getMiddleName();
         birthday = agUser.getBirthday();
-        sex = agUser.getGender().getValue();
+        sex = agUser.getGender() == AgUser.Gender.NULL ? "" : agUser.getGender().getValue();
         email = agUser.getEmail();
-        marital_status = agUser.getMaritalStatus().getValue();
+        marital_status = agUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : agUser.getMaritalStatus().getValue();
         childrens_count = agUser.getChildCount();
-        social_status = agUser.getAgSocialStatus();
+        social_status = agUser.getAgSocialStatus() == 0 ? "" : String.valueOf(agUser.getAgSocialStatus());
         childrens_birthdays = agUser.childBirthdaysAsList();
     }
 
@@ -85,8 +88,9 @@ public class Personal {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public Personal setSex(String sex) {
         this.sex = sex;
+        return this;
     }
 
     public String getEmail() {
@@ -109,8 +113,9 @@ public class Personal {
         return marital_status;
     }
 
-    public void setMarital_status(String marital_status) {
+    public Personal setMarital_status(String marital_status) {
         this.marital_status = marital_status;
+        return this;
     }
 
     public int getChildrens_count() {
@@ -129,11 +134,11 @@ public class Personal {
         this.car_exists = car_exists;
     }
 
-    public int getSocial_status() {
+    public String getSocial_status() {
         return social_status;
     }
 
-    public void setSocial_status(int social_status) {
+    public void setSocial_status(String social_status) {
         this.social_status = social_status;
     }
 

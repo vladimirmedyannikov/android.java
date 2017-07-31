@@ -13,7 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutAchievementTabProfileBinding;
+import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.base.ui.RecyclerScrollableController;
 import ru.mos.polls.newprofile.model.Achievement;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
@@ -27,18 +27,18 @@ import ru.mos.polls.util.StubUtils;
  * Created by Trunks on 16.06.2017.
  */
 
-public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFragment, LayoutAchievementTabProfileBinding> implements OnAchievementClickListener {
+public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding> implements OnAchievementClickListener {
     private Page achivementPage;
     AchievementAdapter adapter;
     List<Achievement> list;
     boolean isPaginationEnable;
 
-    public AchievementTabFragmentVM(AchievementTabFragment fragment, LayoutAchievementTabProfileBinding binding) {
+    public AchievementTabFragmentVM(AchievementTabFragment fragment, FragmentAchievementTabProfileBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutAchievementTabProfileBinding binding) {
+    protected void initialize(FragmentAchievementTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
         super.initialize(binding);
         list = new ArrayList<>();

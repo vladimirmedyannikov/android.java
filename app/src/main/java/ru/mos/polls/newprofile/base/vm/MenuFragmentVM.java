@@ -18,4 +18,6 @@ public abstract class MenuFragmentVM<F extends JugglerFragment, B extends ViewDa
 
     public void onOptionsItemSelected(int menuItemId) {
     }
+
+    public void onCreateOptionsMenu(){}
 }

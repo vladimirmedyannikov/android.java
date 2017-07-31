@@ -338,8 +338,8 @@ public class QuestsFragment extends PullableFragment {
                 if (listView != null) {
                     listView.setVisibility(View.GONE);
                 }
-                empty.setVisibility(View.GONE);
-                stubOffline.setVisibility(View.VISIBLE);
+                if (empty != null) empty.setVisibility(View.GONE);
+                if (stubOffline != null) stubOffline.setVisibility(View.VISIBLE);
                 getPullToRefreshLayout().setRefreshing(false);
             }
         };
@@ -352,6 +352,11 @@ public class QuestsFragment extends PullableFragment {
         @Override
         public void onClick(BackQuest quest) {
             if (quest != null) {
+                //на отладку
+                if (quest.getId().equalsIgnoreCase("updateExtraInfo")) {
+                    listener.onOther("","");
+                    return;
+                }
                 quest.onClick(getActivity(), listener);
                 /**
                  * Скрываем блок из ленты

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutInfoTabProfileBinding;
+import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
@@ -27,16 +27,16 @@ import ru.mos.polls.social.model.Social;
  * Created by Trunks on 16.06.2017.
  */
 
-public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, LayoutInfoTabProfileBinding> implements AvatarPanelClickListener {
+public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
     Observable<List<Social>> socialListObserable;
 
-    public InfoTabFragmentVM(InfoTabFragment fragment, LayoutInfoTabProfileBinding binding) {
+    public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
         super(fragment, binding);
     }
 
     @Override
-    protected void initialize(LayoutInfoTabProfileBinding binding) {
+    protected void initialize(FragmentInfoTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
         socialBindingLayer = binding.agUserSocialBindingLayer;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
@@ -60,7 +60,7 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Layout
                 ? "совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getActivity().getBaseContext());
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", AgSocialStatus.fromPreferences(getActivity().getBaseContext()).get(saved.getAgSocialStatus()).getTitle()));
-        list.add(new UserInfo("адрес работы/учебы", saved.getWork().getViewTitle(getFragment().getContext())));
+        list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
         String pguConnected = saved.isPguConnected() ? "подключено" : "не указано";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
         UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(list);

@@ -142,7 +142,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    testCompile(name: 'mockito-all-2.0.2-beta', ext: 'jar')
     compile project(":elkag")
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
@@ -186,6 +185,8 @@ dependencies {
 
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'

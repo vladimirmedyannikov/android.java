@@ -5,7 +5,7 @@ import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutNewEditProfileBinding;
+import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
 import ru.mos.polls.newprofile.vm.EditProfileFragmentVM;
@@ -14,7 +14,7 @@ import ru.mos.polls.newprofile.vm.EditProfileFragmentVM;
  * Created by wlTrunks on 14.06.2017.
  */
 
-public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, LayoutNewEditProfileBinding> {
+public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, FragmentNewEditProfileBinding> {
     public static EditProfileFragment newInstance() {
         EditProfileFragment f = new EditProfileFragment();
         return f;
@@ -24,7 +24,7 @@ public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, 
     }
 
     @Override
-    protected EditProfileFragmentVM onCreateViewModel(LayoutNewEditProfileBinding binding) {
+    protected EditProfileFragmentVM onCreateViewModel(FragmentNewEditProfileBinding binding) {
         return new EditProfileFragmentVM(this, getBinding());
     }
 
@@ -35,7 +35,7 @@ public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, 
 
     @Override
     public int getLayoutResources() {
-        return R.layout.layout_new_edit_profile;
+        return R.layout.fragment_new_edit_profile;
     }
 
 

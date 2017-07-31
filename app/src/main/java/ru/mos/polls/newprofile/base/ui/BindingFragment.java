@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import butterknife.ButterKnife;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
@@ -33,6 +34,7 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, inflater.inflate(getLayoutResources(), container, false));
         binding = DataBindingUtil.inflate(inflater, getLayoutResources(), container, false);
         return binding.getRoot();
     }
@@ -103,6 +105,10 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    public void doRequest() {
+        viewModel.doRequest();
     }
 
     public abstract int getVariable();

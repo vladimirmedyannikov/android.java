@@ -1,23 +1,22 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.LayoutNewEditPersonalInfoBinding;
+import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
+import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Trunks on 04.07.2017.
  */
 
-public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalInfoFragmentVM, LayoutNewEditPersonalInfoBinding> {
+public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalInfoFragmentVM, FragmentNewEditPersonalInfoBinding> {
 
     public static final String ARG_PERSONAL_INFO = "arg_personal_info";
     public static final String ARG_AGUSER = "arg_aguser";
@@ -35,7 +34,7 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     }
 
     @Override
-    protected EditPersonalInfoFragmentVM onCreateViewModel(LayoutNewEditPersonalInfoBinding binding) {
+    protected EditPersonalInfoFragmentVM onCreateViewModel(FragmentNewEditPersonalInfoBinding binding) {
         return new EditPersonalInfoFragmentVM(this, getBinding());
     }
 
@@ -51,11 +50,40 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
 
     @Override
     public int getLayoutResources() {
-        return R.layout.layout_new_edit_personal_info;
+        return R.layout.fragment_new_edit_personal_info;
     }
 
     @Override
     public int getMenuResource() {
         return R.menu.confirm;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return onUpPressed();
+    }
+
+    @Override
+    public boolean onUpPressed() {
+        if (getViewModel().isDataChanged()) {
+            DialogInterface.OnClickListener okListener = (dialogInterface, i) -> {
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        getViewModel().confirmaAction(getViewModel().getPersonalType());
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        getActivity().finish();
+                        break;
+                }
+            };
+            GuiUtils.displayAreYouSureDialogTitle(getContext(),
+                    "Вы хотите сохранить введенные данные?",
+                    null,
+                    okListener
+            );
+            return true;
+        } else {
+            return false;
+        }
     }
 }

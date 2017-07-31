@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-    </data>
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/linear"
         android:background="@color/white"
         android:orientation="vertical">
 
-        <!--<fragment-->
-            <!--android:id="@+id/wizard_personal_data"-->
-            <!--android:name="ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--tools:layout="@layout/fragment_new_edit_personal_info"/>-->
-
         <FrameLayout
-            android:id="@+id/your_placeholder"
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </FrameLayout>
+            android:layout_height="wrap_content" />
 
-        <include
-            android:id="@+id/layout_date_gender"
-            layout="@layout/layout_date_gender"/>
+        <LinearLayout
+            style="@style/linear"
+            android:padding="@dimen/pd_xxsmall"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/layout_date_gender"
+                layout="@layout/layout_date_gender" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

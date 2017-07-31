@@ -7,7 +7,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/ag_separator"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/edit_birthday_date"

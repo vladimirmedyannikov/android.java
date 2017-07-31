@@ -9,6 +9,8 @@ import ru.mos.polls.BR;
 import ru.mos.polls.newprofile.base.ui.BindingHolder;
 
 /**
+ * Базовый адаптер для отображения списка {@link RecyclerBaseViewModel}
+ *
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
  * on 13.07.17 10:22.
  */
@@ -24,8 +26,9 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
         RVM viewModel = list.get(position);
-        holder.getBinding().setVariable(BR.viewModel, viewModel.model);
+        holder.getBinding().setVariable(viewModel.getVariableId(), viewModel.model);
         holder.getBinding().executePendingBindings();
+        viewModel.onBind(holder.getBinding());
     }
 
     @Override
@@ -46,11 +49,18 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
         return new DefaultViewHolderProvider(list).getBindingHolder(viewGroup, viewType);
     }
 
+    /**
+     * Спецификация для предоставления {@link android.support.v7.widget.RecyclerView.ViewHolder}
+     */
     public interface BindingViewHolderProvider {
         BindingHolder getBindingHolder(ViewGroup parent, int viewType);
     }
 
-    class DefaultViewHolderProvider implements BindingViewHolderProvider{
+    /**
+     * Реализация {@link BindingViewHolderProvider} по умолчанию,
+     * поддреживает различные типы разметок, определяемых {@link RecyclerBaseViewModel}
+     */
+     public class DefaultViewHolderProvider implements BindingViewHolderProvider{
         private List<RVM> list;
 
         public DefaultViewHolderProvider(List<RVM> list) {

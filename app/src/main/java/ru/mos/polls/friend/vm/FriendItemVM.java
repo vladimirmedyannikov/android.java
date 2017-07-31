@@ -1,8 +1,10 @@
 package ru.mos.polls.friend.vm;
 
+import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendItemBinding;
+import ru.mos.polls.friend.ui.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
@@ -31,5 +33,15 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
         return TYPE;
     }
 
+    @Override
+    public void onBind(FriendItemBinding viewDataBinding) {
+        super.onBind(viewDataBinding);
+        FriendGuiUtils.loadAvatar(viewDataBinding.avatar, model.getAvatar());
+    }
+
+    @Override
+    public int getVariableId() {
+        return BR.viewModel;
+    }
 
 }

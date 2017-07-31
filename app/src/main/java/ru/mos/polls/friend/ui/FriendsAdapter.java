@@ -52,7 +52,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriedIte
     @Override
     public void onBindViewHolder(final FriedItemViewHolder holder, int position) {
         Friend friend = getContent().get(position);
-        holder.binding.setFriend(friend);
+        holder.binding.setViewModel(friend);
         FriendGuiUtils.loadAvatar(holder.binding.avatar, friend.getAvatar());
         holder.binding.setCallback(selectedFriend -> {
 

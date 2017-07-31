@@ -3,6 +3,7 @@ package ru.mos.polls.friend.vm;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendAddItemBinding;
+import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -19,7 +20,7 @@ public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItem
 
     @Override
     public int getViewType() {
-        return TYPE;
+        return FriendsAdapter.Type.ITEM_ADD_FRIEND_BUTTON;
     }
 
     @Override

@@ -5,6 +5,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendItemBinding;
 import ru.mos.polls.friend.ui.FriendGuiUtils;
+import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
@@ -13,8 +14,6 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
  */
 
 public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBinding> {
-    public static final int TYPE = 0;
-
     public FriendItemVM(Friend model, FriendItemBinding viewDataBinding) {
         super(model, viewDataBinding);
     }
@@ -30,7 +29,7 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
 
     @Override
     public int getViewType() {
-        return TYPE;
+        return FriendsAdapter.Type.ITEM_FRIEND;
     }
 
     @Override

@@ -8,8 +8,8 @@ import java.util.List;
 
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
+import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.friend.ui.FriendsFragment;
-import ru.mos.polls.friend.ui.MyFriendsAdapter;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
@@ -29,7 +29,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     protected void initialize(LayoutFriendsBinding binding) {
         getFragment().getActivity().setTitle(R.string.mainmenu_friends);
         binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RecyclerView.Adapter adapter = new MyFriendsAdapter(getActivity());
+        RecyclerView.Adapter adapter = new FriendsAdapter(getActivity());
         binding.list.setAdapter(adapter);
     }
 }

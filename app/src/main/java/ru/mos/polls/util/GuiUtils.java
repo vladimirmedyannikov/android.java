@@ -148,7 +148,7 @@ public class GuiUtils {
             ignored.printStackTrace();
         }
     }
-
+    
     public static void displayOkMessage(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);

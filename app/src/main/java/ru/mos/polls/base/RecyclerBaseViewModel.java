@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import ru.mos.polls.newprofile.base.ui.BindingHolder;
 
 /**
+ * ViewModel для элементов списков<br/>
+ * Используется для отображения в {@link BaseRecyclerAdapter}
+ *
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
  * on 13.07.17 12:45.
  */
@@ -41,7 +44,7 @@ public abstract class RecyclerBaseViewModel<M, VDB extends ViewDataBinding> exte
     /**
      * Отрисовка элемента списка в "ручном режиме",
      * то есть тут можно выполнить те действия,
-     * которые не получается выполнить в методе по каким-либо причинам {@link ViewDataBinding#setVariable(int, Object)}
+     * которые не получается выполнить по каким-либо причинам в методе {@link ViewDataBinding#setVariable(int, Object)}
      * при inflate элемента списка, см. {@link BaseRecyclerAdapter#onBindViewHolder(BindingHolder, int)}
      *
      * @param viewDataBinding объект {@link ViewDataBinding}
@@ -49,6 +52,10 @@ public abstract class RecyclerBaseViewModel<M, VDB extends ViewDataBinding> exte
     public void onBind(VDB viewDataBinding) {
     }
 
+    /**
+     * Использовать для указания типа разметки элемента списка
+     * @return число
+     */
     public abstract int getViewType();
 
 }

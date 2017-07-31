@@ -8,9 +8,6 @@
         <variable
             name="viewModel"
             type="ru.mos.polls.rxhttp.rxapi.model.friends.Friend"/>
-        <variable
-            name="callback"
-            type="ru.mos.polls.friend.ui.FriendsAdapter.Callback"/>
     </data>
     <LinearLayout
         style="@style/ripple"
@@ -20,7 +17,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:padding="@dimen/pd_xxsmall"
-        android:onClick="@{(view) -> callback.onClick(viewModel)}">
+        >
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
             android:layout_width="@dimen/vs_xxsmall"

@@ -85,11 +85,11 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         savedUser = new AgUser(getFragment().getContext());
         changedUser = new AgUser(getFragment().getContext());
         dbp = new BirthDateParser(getActivity());
-        gender = binding.editGender;
+        gender = binding.layoutDateGender.editGender;
         martialStatus = binding.editMartialStatus;
         kidsLayer = binding.editKidsLayer;
         kidsDateLayer = binding.editKidsDateLayer;
-        birthdayDate = binding.editBirthdayDate;
+        birthdayDate = binding.layoutDateGender.editBirthdayDate;
         registration = binding.editFlatRegistration;
         residence = binding.editFlatResidence;
         work = binding.editFlatWork;

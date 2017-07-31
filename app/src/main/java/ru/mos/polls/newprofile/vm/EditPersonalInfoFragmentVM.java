@@ -57,8 +57,12 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     @Override
     protected void initialize(FragmentNewEditPersonalInfoBinding binding) {
         Bundle extras = getFragment().getArguments();
-        personalType = extras.getInt(EditPersonalInfoFragment.ARG_PERSONAL_INFO);
-        agUser = (AgUser) extras.get(EditPersonalInfoFragment.ARG_AGUSER);
+        if (extras != null) {
+            personalType = extras.getInt(EditPersonalInfoFragment.ARG_PERSONAL_INFO);
+            agUser = (AgUser) extras.get(EditPersonalInfoFragment.ARG_AGUSER);
+        } else {
+            agUser = new AgUser(getActivity());
+        }
         emailContainer = binding.emailContainer.emailContainer;
         fioContainer = binding.fioContainer.fioContainer;
         childsCountContainer = binding.childsCountContainer.childsCountContainer;

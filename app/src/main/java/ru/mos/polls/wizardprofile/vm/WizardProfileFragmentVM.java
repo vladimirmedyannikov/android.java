@@ -23,6 +23,7 @@ import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
 import ru.mos.polls.wizardprofile.ui.adapter.WizardProfilePagerAdapter;
 import ru.mos.polls.wizardprofile.ui.fragment.MakeAvatarFragment;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**
@@ -60,7 +61,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         list = new ArrayList<>();
         list.add(new MakeAvatarFragment());
         list.add(EditPersonalInfoFragment.newInstance(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
-        list.add(EditPersonalInfoFragment.newInstance(agUser, EditPersonalInfoFragmentVM.PERSONAL_FIO));
+        list.add(new WizardPersonalDataFragment());
         list.add(EditPersonalInfoFragment.newInstance(agUser, EditPersonalInfoFragmentVM.COUNT_KIDS));
         list.add(EditPersonalInfoFragment.newInstance(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
         list.add(NewFlatFragment.newInstance(agUser.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));

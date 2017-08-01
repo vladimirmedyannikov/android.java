@@ -11,14 +11,14 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 public class UploadMedia {
     public static class Request extends AuthRequest {
-        @SerializedName("base64")
-        private String base64;
+        @SerializedName("content")
+        private String content;
         @SerializedName("extension")
         private String extension;
 
 
-        public Request setBase64(String base64) {
-            this.base64 = base64;
+        public Request setContent(String content ) {
+            this.content  = content ;
             return this;
         }
 

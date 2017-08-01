@@ -30,6 +30,7 @@
             style="@style/button.centered.action"
             android:layout_width="160dp"
             android:enabled="true"
+            android:onClick="@{(v)->viewModel.showChooseMediaDialog()}"
             android:text="Загрузить фото"/>
     </LinearLayout>
 </layout>

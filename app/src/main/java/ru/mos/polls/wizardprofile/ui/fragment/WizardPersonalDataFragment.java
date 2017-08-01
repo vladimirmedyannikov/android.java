@@ -7,7 +7,6 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.newprofile.base.ui.BindingFragment;
-import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.wizardprofile.vm.WizardPersonalDataFragmentVM;
 
 /**

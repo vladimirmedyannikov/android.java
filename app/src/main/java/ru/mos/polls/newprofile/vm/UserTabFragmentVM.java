@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -16,6 +18,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
@@ -23,8 +26,12 @@ import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserStatistics;
+import ru.mos.polls.newprofile.service.EmptyResponse;
+import ru.mos.polls.newprofile.service.VisibilitySet;
+import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -54,6 +61,38 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList(recyclerView);
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        enableProfileVisibility.setChecked(saved.isProfileVisible());
+        setListener();
+    }
+
+    public void setListener() {
+        enableProfileVisibility.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            sendVisibilityProfileRequest(isChecked);
+        });
+    }
+
+    public void sendVisibilityProfileRequest(boolean visibility) {
+        HandlerApiResponseSubscriber<EmptyResult[]> handler
+                = new HandlerApiResponseSubscriber<EmptyResult[]>(getActivity(), progressable) {
+            @Override
+            protected void onResult(EmptyResult[] result) {
+                String message = "Профиль скрыт";
+                if (visibility) message = "Профиль доступен для просмотра";
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                saved.setProfileVisible(visibility);
+                saved.setProfileVisible(getActivity(), visibility);
+            }
+        };
+        Observable<EmptyResponse> responseObservable = AGApplication.api
+                .setProfileVisibility(new VisibilitySet.Request(visibility))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservable.subscribeWith(handler));
     }
 
     private void mockUserStatsList() {

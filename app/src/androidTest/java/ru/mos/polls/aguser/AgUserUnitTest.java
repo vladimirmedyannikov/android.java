@@ -87,5 +87,18 @@ public class AgUserUnitTest extends BaseUnitTest {
         Assert.assertEquals(agUser1.isEmptyWork(), false);
         Assert.assertEquals(agUser1.equalsWork(agUser2), false);
 
+
+        Assert.assertEquals(agUser1.isProfileVisible(), false);
+        agUser1.setProfileVisible(true);
+        Assert.assertEquals(agUser1.isProfileVisible(), true);
+
+        assertNotNullOrEmpty(agUser1.getFullUserName());
+        assertNotNullOrEmpty(agUser1.getSurnameAndFirstName());
+
+        Assert.assertEquals(agUser1.birthdayToLongFromView("2000"), 2000);
+
+        Assert.assertEquals(agUser1.isCarExist(), false);
+        agUser1.setCarExist(true);
+        Assert.assertEquals(agUser1.isCarExist(), true);
     }
 }

@@ -147,12 +147,12 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     public void onOptionsItemSelected(int menuItemId) {
         switch (menuItemId) {
             case R.id.action_confirm:
-                confirmaAction(personalType);
+                confirmAction();
                 break;
         }
     }
 
-    public void confirmaAction(int personalType) { //каждые данные сохранятьются отдельно
+    public void confirmAction() { //каждые данные сохранятьются отдельно
         boolean validationOk = false;
         Personal personal = new Personal();
         switch (personalType) {
@@ -235,7 +235,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     @Override
     public void onSocialStatusClick(AgSocialStatus agSocialStatus) {
         agUser.setAgSocialStatus(agSocialStatus.getId());
-        confirmaAction(SOCIAL_STATUS);
+        confirmAction();
     }
 
     public boolean isDataChanged() {

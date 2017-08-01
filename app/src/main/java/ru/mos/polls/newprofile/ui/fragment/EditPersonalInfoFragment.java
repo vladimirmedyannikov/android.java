@@ -69,7 +69,7 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
             DialogInterface.OnClickListener okListener = (dialogInterface, i) -> {
                 switch (i) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        getViewModel().confirmaAction(getViewModel().getPersonalType());
+                        getViewModel().confirmAction();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         getActivity().finish();

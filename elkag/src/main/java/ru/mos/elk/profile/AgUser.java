@@ -44,6 +44,7 @@ public class AgUser implements Serializable {
     public static final String MARITAL_STATUS = "marital_status";
     public static final String CHILDRENS_COUNT = "childrens_count";
     public static final String IS_PGU_CONNECTED = "is_pgu_connected";
+    public static final String IS_PROFILE_VISIBLE = "is_profile_visible";
     public static final String HAS_CAR = "has_car";
     public static final String CHILDREN_BIRTHDAYS = "children_birthdays";
     public static final String SOCIAL_STATUS = "social_status";
@@ -57,7 +58,7 @@ public class AgUser implements Serializable {
     private int childCount;
     private List<Long> childBirthdays;
     private int agSocialStatus;
-    private boolean isCarExist, isEmailConfirmed, isPguConnected;
+    private boolean isCarExist, isEmailConfirmed, isPguConnected, isProfileVisible;
     private Flat registrationFlat;
     private Flat residenceFlat;
     private Flat workFlat;
@@ -81,6 +82,10 @@ public class AgUser implements Serializable {
         prefs.edit().putBoolean(AgUser.IS_PGU_CONNECTED, isConnected).apply();
     }
 
+    public static void setProfileVisible(Context context, boolean isConnected) {
+        SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
+        prefs.edit().putBoolean(AgUser.IS_PROFILE_VISIBLE, isConnected).apply();
+    }
     public static String getPhone(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         return prefs.getString(AgUser.PHONE, null);
@@ -111,6 +116,7 @@ public class AgUser implements Serializable {
         isCarExist = prefs.getBoolean(HAS_CAR, false);
         isEmailConfirmed = prefs.getBoolean(IS_EMAIL_CONFIRMED, false);
         isPguConnected = prefs.getBoolean(IS_PGU_CONNECTED, false);
+        isProfileVisible = prefs.getBoolean(IS_PROFILE_VISIBLE, false);
         registrationFlat = Flat.getRegistration(context);
         residenceFlat = Flat.getResidence(context);
         workFlat = Flat.getWork(context);
@@ -259,6 +265,7 @@ public class AgUser implements Serializable {
         editor.putLong(PERSONAL_EXPIRED, System.currentTimeMillis() + Constants.MINUTE * 10);
         editor.putBoolean(IS_EMAIL_CONFIRMED, isEmailConfirmed);
         editor.putBoolean(IS_PGU_CONNECTED, isPguConnected);
+        editor.putBoolean(IS_PROFILE_VISIBLE, isProfileVisible);
         editor.putString(SEX, gender.getValue());
         editor.putString(MARITAL_STATUS, maritalStatus.getValue());
         editor.putInt(SOCIAL_STATUS, agSocialStatus);
@@ -534,6 +541,14 @@ public class AgUser implements Serializable {
         return this;
     }
 
+    public boolean isProfileVisible() {
+        return isProfileVisible;
+    }
+
+    public void setProfileVisible(boolean profileVisible) {
+        isProfileVisible = profileVisible;
+    }
+
     public int getChildCount() {
         return childCount;
     }
@@ -575,7 +590,7 @@ public class AgUser implements Serializable {
         return this;
     }
 
-    private long birthdayToLongFromView(String birthday) {
+    public long birthdayToLongFromView(String birthday) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         long result = 0;
         try {
@@ -740,6 +755,7 @@ public class AgUser implements Serializable {
         if (commonJson != null) {
             isEmailConfirmed = commonJson.optBoolean("email_confirmed");
             isPguConnected = commonJson.optBoolean("is_pgu_connected");
+            isProfileVisible = commonJson.optBoolean("is_profile_visible");
         }
     }
 

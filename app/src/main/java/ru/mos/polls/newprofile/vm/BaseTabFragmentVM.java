@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -29,8 +30,12 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.model.Achievement;
-import ru.mos.polls.newprofile.service.Media;
+import ru.mos.polls.newprofile.service.AvatarSet;
+import ru.mos.polls.newprofile.service.EmptyResponse;
+import ru.mos.polls.newprofile.service.model.EmptyResult;
+import ru.mos.polls.newprofile.service.model.Media;
 import ru.mos.polls.newprofile.service.UploadMedia;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 
@@ -67,7 +72,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     }
 
     @AfterPermissionGranted(ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE)
-    protected void showChooseMediaDialog() {
+    public void showChooseMediaDialog() {
         if (EasyPermissions.hasPermissions(getFragment().getContext(), ImagePickerController.MEDIA_PERMS)) {
             ImagePickerController.showDialog(getFragment());
         } else {
@@ -110,26 +115,50 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
         File file = FileUtils.getFileFromUri(getFragment().getContext(), uri, "aguser_avatar.jpg");
         BadgesSource.getInstance().setAvatar(file.getAbsolutePath(), bitmap);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_AVATAR_FROM_CACHE));
-        sendAvatar(file);
+        uploadAvatarRequest(file);
     }
 
-    protected void sendAvatar(File file) {
+    public void uploadAvatarRequest(File file) {
         Observable<Media> media = Observable.just(file)
                 .subscribeOn(Schedulers.io())
                 .flatMap(f -> { //конвертируем в base64
                     Media m = new Media(FileUtils.getFileExtension(f.getName()), FileUtils.getStringFile(f));
                     return Observable.just(m);
-                });
+                }).observeOn(AndroidSchedulers.mainThread());
+
         disposables.add(media.subscribe(
                 media1 -> {
-                    Observable<UploadMedia.Response> responseObservable = AGApplication.api.uploadFile(new UploadMedia.Request().setBase64(media1.getBase64()).setExtension(media1.getExtension()));
-                    disposables.add(responseObservable.observeOn(Schedulers.io()).subscribe(response -> {
-                        System.out.println("response = " + response.getResult().getId());
-                        System.out.println("response = " + response.getResult().getUrl());
-                    }, throwable -> throwable.printStackTrace()));
+                    HandlerApiResponseSubscriber<UploadMedia.Response.Result> handler
+                            = new HandlerApiResponseSubscriber<UploadMedia.Response.Result>(getActivity(), progressable) {
+                        @Override
+                        protected void onResult(UploadMedia.Response.Result result) {
+                            setAvatarRequest(result.getId());
+                        }
+                    };
+                    Observable<UploadMedia.Response> responseObservable = AGApplication.api
+                            .uploadFile(new UploadMedia.Request()
+                                    .setContent(media1.getBase64())
+                                    .setExtension(media1.getExtension()))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread());
+                    disposables.add(responseObservable.subscribeWith(handler));
                 },
                 throwable -> throwable.printStackTrace()
         ));
+    }
 
+    public void setAvatarRequest(String id) {
+        HandlerApiResponseSubscriber<EmptyResult[]> handler
+                = new HandlerApiResponseSubscriber<EmptyResult[]>(getActivity(), progressable) {
+            @Override
+            protected void onResult(EmptyResult[] result) {
+                Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
+            }
+        };
+        Observable<EmptyResponse> responseObservable = AGApplication.api
+                .setAvatar(new AvatarSet.Request(id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservable.subscribeWith(handler));
     }
 }

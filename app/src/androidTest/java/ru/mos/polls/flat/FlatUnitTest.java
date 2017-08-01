@@ -1,5 +1,8 @@
 package ru.mos.polls.flat;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +15,7 @@ import ru.mos.polls.BaseUnitTest;
  */
 
 public class FlatUnitTest extends BaseUnitTest {
-
+    Context appContext = InstrumentationRegistry.getTargetContext();
     @Test
     public void parse() {
         Flat test = Flat.fromJson(fromTestRawAsJson("flat.json"), Flat.Type.REGISTRATION);
@@ -83,6 +86,8 @@ public class FlatUnitTest extends BaseUnitTest {
         test.setStreet(testString);
         Assert.assertEquals(testString, test.getStreet());
 
+        Assert.assertNotNull(test.getAddressTitle(appContext));
+        Assert.assertNotNull(test.getViewTitle(appContext));
     }
 
     @Test

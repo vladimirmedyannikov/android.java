@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.service;
+package ru.mos.polls.newprofile.service.model;
 
 /**
  * Created by Trunks on 13.07.2017.

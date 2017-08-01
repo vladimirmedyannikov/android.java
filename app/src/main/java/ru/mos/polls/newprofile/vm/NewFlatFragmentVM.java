@@ -243,12 +243,12 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 changeFlat();
                 break;
             case R.id.action_confirm:
-                confirmaAction();
+                confirmAction();
                 break;
         }
     }
 
-    public void confirmaAction() {
+    public void confirmAction() {
         FlatsEntity entity = null;
         if (flat.isRegistration()) {
             FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());

@@ -5,9 +5,12 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
+import ru.mos.polls.newprofile.service.AvatarSet;
+import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.StreetGet;
 import ru.mos.polls.newprofile.service.UploadMedia;
+import ru.mos.polls.newprofile.service.VisibilitySet;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
@@ -54,6 +57,7 @@ public interface AgApi {
             String GET_ACHIEVEMENTS = "getAchievement";
             String SET_PROFILE = "setProfile";
             String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
+            String VISIBLE = "visible";
         }
     }
 
@@ -90,5 +94,9 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
     Observable<StreetGet.Response> getAddressStreetList(@Body StreetGet.Request body);
 
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.AVATAR)
+    Observable<EmptyResponse> setAvatar(@Body AvatarSet.Request body);
 
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.VISIBLE)
+    Observable<EmptyResponse> setProfileVisibility(@Body VisibilitySet.Request body);
 }

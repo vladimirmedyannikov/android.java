@@ -49,9 +49,15 @@ public class ImagePickerController {
         AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
         View view = LayoutInflater.from(fragment.getContext()).inflate(R.layout.dialog_image_picker_conroller, null, false);
         builder.setView(view);
-        view.findViewById(R.id.src_gallery).setOnClickListener((v) -> getPicture(fragment, SELECT_PHOTO));
-        view.findViewById(R.id.src_camera).setOnClickListener((v) -> getPicture(fragment, TAKE_PHOTO));
-        builder.show();
+        final AlertDialog show = builder.show();
+        view.findViewById(R.id.src_gallery).setOnClickListener((v) -> {
+            getPicture(fragment, SELECT_PHOTO);
+            show.dismiss();
+        });
+        view.findViewById(R.id.src_camera).setOnClickListener((v) -> {
+            getPicture(fragment, TAKE_PHOTO);
+            show.dismiss();
+        });
     }
 
     public static void getPicture(final Fragment fragment, int sourceType) {

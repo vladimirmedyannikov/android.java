@@ -28,18 +28,29 @@ public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         int ITEM_FRIEND = 1;
     }
 
-    public FriendsAdapter(Context context) {
-        Gson gson = new Gson();
-        List<Friend> friends = gson.fromJson(
+    public static List<RecyclerBaseViewModel> getStubRVM(Context context) {
+        List<Friend> friends = getStub(context);
+        List<RecyclerBaseViewModel> result = new ArrayList<>();
+        result.add(new FriendAddItemVW());
+        for (Friend friend : friends) {
+            result.add(new FriendItemVM(friend));
+        }
+        return result;
+    }
+
+    public static List<Friend> getStub(Context context) {
+        return new Gson().fromJson(
                 StubUtils.fromRawAsJsonArray(context, R.raw.friends_my).toString(),
                 new TypeToken<List<Friend>>() {}.getType()
         );
+    }
+
+    public void add(List<Friend> friends) {
         List<RecyclerBaseViewModel> content = new ArrayList<>();
-        content.add(new FriendAddItemVW());
         for (Friend friend : friends) {
             content.add(new FriendItemVM(friend));
         }
-        list = content;
+        addData(content);
     }
 
 }

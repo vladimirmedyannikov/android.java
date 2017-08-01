@@ -2,7 +2,6 @@ package ru.mos.polls.rxhttp.rxapi.handle.response;
 
 import android.content.Context;
 
-
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
 import ru.mos.polls.rxhttp.rxapi.handle.error.DefaultResponseErrorHandler;
@@ -36,7 +35,6 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
     }
 
     protected abstract void onResult(R result);
-
 
     @Override
     public void onNext(@NonNull GeneralResponse<R> generalResponse) {

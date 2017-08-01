@@ -3,6 +3,7 @@ package ru.mos.polls.base;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.BR;
@@ -16,7 +17,7 @@ import ru.mos.polls.newprofile.base.ui.BindingHolder;
  */
 
 public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends RecyclerView.Adapter<BindingHolder> {
-    protected List<RVM> list;
+    protected List<RVM> list = new ArrayList<>();
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,6 +44,31 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
 
     public int getVariable() {
         return BR.viewModel;
+    }
+
+    public boolean hasData() {
+        return getItemCount() > 0;
+    }
+
+    public void setData(List<RVM> list) {
+        clear();
+        addData(list);
+    }
+
+    public void addData(List<RVM> list) {
+        this.list.addAll(list);
+    }
+
+    public void add(RVM item) {
+        list.add(item);
+    }
+
+    public boolean remove(RVM item) {
+        return list.remove(item);
+    }
+
+    public void clear() {
+        list.clear();
     }
 
     protected BindingHolder getBindingHolder(ViewGroup viewGroup, int viewType) {

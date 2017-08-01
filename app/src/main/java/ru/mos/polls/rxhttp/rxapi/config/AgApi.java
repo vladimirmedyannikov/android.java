@@ -36,7 +36,7 @@ public interface AgApi {
 
         interface Controllers {
             String NOVELTY = "novelty";
-            String FRIEND = "friend";
+            String FRIEND = "friends";
             String AGPROFILE = "agprofile";
             String MEDIA = "media";
         }

@@ -61,4 +61,21 @@ public class FriendGuiUtils {
             }
         });
     }
+
+    public static void formatPhone(String number) {
+        if (number != null) {
+            number = number.replace("+", "").replace("(", "").replace(")", "").replace(" ", "");
+            switch (number.length()) {
+                case 10:
+                    number = "7" + number;
+                    break;
+                case 11:
+                    if (number.charAt(0) != '7') {
+                        number = "7" + number.substring(1);
+                    }
+                    break;
+            }
+
+        }
+    }
 }

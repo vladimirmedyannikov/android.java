@@ -22,6 +22,11 @@ import ru.mos.polls.BuildConfig;
 
 public class AgApiBuilder {
     public static final String URL_AG = "https://emp.mos.ru:443/";
+    private static final String URL_AG_FORMATTED = "https://emp.mos.ru:443%s";
+
+    public static String url(String method) {
+        return  String.format(URL_AG_FORMATTED, method);
+    }
 
     public static AgApi build() {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();

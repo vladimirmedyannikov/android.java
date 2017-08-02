@@ -4,7 +4,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendAddItemBinding;
 import ru.mos.polls.friend.ui.FriendsAdapter;
-import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -12,10 +11,14 @@ import ru.mos.polls.util.GuiUtils;
  */
 
 public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItemBinding> {
+
     public static final int TYPE = 1;
 
-    public FriendAddItemVW() {
+    private Callback callback;
+
+    public FriendAddItemVW(Callback callback) {
         super(null);
+        this.callback = callback;
     }
 
     @Override
@@ -32,7 +35,14 @@ public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItem
     public void onBind(FriendAddItemBinding viewDataBinding) {
         super.onBind(viewDataBinding);
         viewDataBinding.root.setOnClickListener(v -> {
-            GuiUtils.displayOkMessage(v.getContext(), "В разработке", null);
+            if (callback != null) {
+                callback.onClick();
+            }
         });
     }
+
+    public interface Callback {
+        void onClick();
+    }
+
 }

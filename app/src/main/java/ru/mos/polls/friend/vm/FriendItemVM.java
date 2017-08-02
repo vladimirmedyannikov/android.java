@@ -6,6 +6,7 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendItemBinding;
 import ru.mos.polls.friend.ui.FriendGuiUtils;
 import ru.mos.polls.friend.ui.FriendsAdapter;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
@@ -35,7 +36,7 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
     @Override
     public void onBind(FriendItemBinding viewDataBinding) {
         super.onBind(viewDataBinding);
-        FriendGuiUtils.loadAvatar(viewDataBinding.avatar, model.getAvatar());
+        FriendGuiUtils.loadAvatar(viewDataBinding.avatar, AgApiBuilder.url(model.getAvatar()));
     }
 
     @Override

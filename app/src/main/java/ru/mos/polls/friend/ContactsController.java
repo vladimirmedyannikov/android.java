@@ -1,16 +1,17 @@
 package ru.mos.polls.friend;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.app.Fragment;
 import android.telephony.SmsManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Работа с контактами устройства {@link ContactsContract}
@@ -23,16 +24,25 @@ public class ContactsController {
     private static final int REQUEST_CODE = 1234;
 
     private Fragment fragment;
+    private Callback callback;
 
     public ContactsController(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setCallback(Callback callback) {
+        if (callback == null) {
+            this.callback = Callback.STUB;
+        } else {
+            this.callback = callback;
+        }
     }
 
     /**
      * Выбор одного контакта из телефонной книги, используется
      * в сочетании с {@link #onActivityResult(int, int, Intent)}
      */
-    public void chooseOneContact() {
+    public void chooseContact() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
         fragment.startActivityForResult(intent, REQUEST_CODE);
@@ -42,9 +52,9 @@ public class ContactsController {
      * Отправка {@link android.provider.Telephony.Sms}
      *
      * @param phoneNumber {@link String} телефонный номер
-     * @param text массив строк сообщения
+     * @param text        массив строк сообщения
      */
-    private void sms(String phoneNumber, String[] text) {
+    public void sms(String phoneNumber, String[] text) {
         SmsManager sms = SmsManager.getDefault();
         ArrayList<String> smsBody = new ArrayList<>();
         Collections.addAll(smsBody, text);
@@ -62,33 +72,24 @@ public class ContactsController {
                 if (data != null) {
                     Uri uri = data.getData();
                     if (uri != null) {
-                        Cursor c = null;
+                        Cursor cursor = null;
                         try {
-                            /**
-                             * на android c API 10 замечена особенность в поле
-                             * ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER
-                             * - храниться номер в обратном порядке; видимо, так в обратном порядке
-                             * быстрее хранить удобнее для ускорение выборки
-                             *
-                             * @see <a href="http://stackoverflow.com/questions/4579009/android-why-number-key-return-the-number-in-reverse-order">* на android c API 10 замечена особенность в поле ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER - храниться номер в обратном порядке; видимо, так в обратном порядке быстрее хранить удобнее для ускорение выборки </a>
-                             */
                             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
                                     ContactsContract.CommonDataKinds.Phone.TYPE};
-                            c = fragment.getActivity().getContentResolver().query(uri,
+                            cursor = fragment.getActivity().getContentResolver().query(uri,
                                     projection,
                                     null,
                                     null,
                                     null);
-                            if (c != null && c.moveToFirst()) {
-                                String number = c.getString(0);
-                                try {
-                                    //todo
-                                } catch (Exception ignored) {
-                                }
+                            if (cursor != null && cursor.moveToFirst()) {
+                                String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                callback.onChooseContacts(number);
                             }
+                        } catch (Exception e) {
+                            callback.onError(e);
                         } finally {
-                            if (c != null) {
-                                c.close();
+                            if (cursor != null) {
+                                cursor.close();
                             }
                         }
                     }
@@ -97,6 +98,28 @@ public class ContactsController {
             }
         }
         return result;
+    }
+
+    public interface Callback {
+        Callback STUB = new Callback() {
+            @Override
+            public void onChooseContacts(String number) {
+            }
+
+            @Override
+            public void onGetAllContacts(List<String> numbers) {
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+        };
+
+        void onChooseContacts(String number);
+
+        void onGetAllContacts(List<String> numbers);
+
+        void onError(Exception e);
     }
 
 }

@@ -20,6 +20,10 @@ public abstract class BaseViewModel<M, VDB extends ViewDataBinding> {
         this.model = model;
     }
 
+    public M getModel() {
+        return model;
+    }
+
     protected abstract int getLayoutId();
 
 }

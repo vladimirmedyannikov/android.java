@@ -31,7 +31,7 @@ public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     public static List<RecyclerBaseViewModel> getStubRVM(Context context) {
         List<Friend> friends = getStub(context);
         List<RecyclerBaseViewModel> result = new ArrayList<>();
-        result.add(new FriendAddItemVW());
+        result.add(new FriendAddItemVW(null));
         for (Friend friend : friends) {
             result.add(new FriendItemVM(friend));
         }
@@ -53,4 +53,21 @@ public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         addData(content);
     }
 
+    public void add(Friend friend) {
+        add(new FriendItemVM(friend));
+    }
+
+    public boolean has(String phone) {
+        boolean result = false;
+        for (RecyclerBaseViewModel item : list) {
+            if (item instanceof FriendItemVM) {
+                FriendItemVM friendItemVM = (FriendItemVM) item;
+                if (friendItemVM.getModel().getPhone().equalsIgnoreCase(phone)) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }

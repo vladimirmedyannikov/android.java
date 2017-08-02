@@ -2,6 +2,7 @@ package ru.mos.polls.newprofile.ui.adapter;
 
 import java.util.List;
 
+import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.UserStatsItemBinding;
 import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
@@ -12,8 +13,8 @@ import ru.mos.polls.newprofile.vm.UserStatisticsVM;
  * Created by Trunks on 19.06.2017.
  */
 
-public class UserStatisticsAdapter extends BaseAdapter<UserStatisticsVM, UserStatisticsHolder, UserStatsItemBinding, UserStatistics> {
-    public UserStatisticsAdapter(List<UserStatistics> list) {
+public class UserStatisticsAdapter extends BaseAdapter<UserStatisticsVM, UserStatisticsHolder, UserStatsItemBinding, Statistics> {
+    public UserStatisticsAdapter(List<Statistics> list) {
         this.list = list;
     }
 
@@ -23,7 +24,7 @@ public class UserStatisticsAdapter extends BaseAdapter<UserStatisticsVM, UserSta
     }
 
     @Override
-    public UserStatisticsVM getVM(UserStatistics obj, UserStatsItemBinding binding) {
+    public UserStatisticsVM getVM(Statistics obj, UserStatsItemBinding binding) {
         return new UserStatisticsVM(obj, binding);
     }
 

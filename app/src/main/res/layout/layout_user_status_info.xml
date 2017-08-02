@@ -28,34 +28,36 @@
             style="@style/text.small.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="активный гражданин с 8 июня 2017"/>
+            android:hint="активный гражданин с 8 июня 2017"
+            android:text="@{agUser.getRegistrationDate()}"/>
 
         <RelativeLayout
-            android:id="@+id/agUser_achivement_panel"
+            android:id="@+id/agUser_achievement_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/pd_xsmall"
             android:paddingTop="@dimen/pd_xsmall">
 
             <LinearLayout
-                android:id="@+id/agUser_achivement_layer"
+                android:id="@+id/agUser_achievement_layer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:orientation="horizontal"/>
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/agUser_achivement_value"
+                android:id="@+id/agUser_achievement_value"
                 style="@style/text.normal.white"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/pd_normal"
-                android:layout_toEndOf="@+id/agUser_achivement_layer"
-                android:layout_toRightOf="@+id/agUser_achivement_layer"
-                android:text="+0"/>
+                android:layout_toEndOf="@+id/agUser_achievement_layer"
+                android:layout_toRightOf="@+id/agUser_achievement_layer"
+                android:hint="+0"
+                android:text="@{agUser.getCount()}"/>
         </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView
@@ -71,7 +73,8 @@
             style="@style/text.large.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="50"
+            android:hint="50"
+            android:text="@{agUser.getRating()}"
             android:textSize="@dimen/ts_xxxlarge"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -87,7 +90,8 @@
             style="@style/text.large.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="Новис"
+            android:text="@{agUser.getStatus()}"
+            android:hint="Новичок"
             android:textSize="@dimen/ts_xxlarge"/>
     </LinearLayout>
 </layout>

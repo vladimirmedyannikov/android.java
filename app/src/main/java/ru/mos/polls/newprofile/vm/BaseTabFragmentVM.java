@@ -45,9 +45,8 @@ import ru.mos.polls.util.ImagePickerController;
 
 public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends FragmentViewModel<F, B> {
     protected RecyclerView recyclerView;
-    protected AgUser changed, saved;
+    protected AgUser saved;
     protected CircleImageView circleImageView;
-    protected Observable<Achievement> achievementList;
 
     public BaseTabFragmentVM(F fragment, B binding) {
         super(fragment, binding);

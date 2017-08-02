@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,6 +20,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.elk.profile.Achievements;
+import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
@@ -42,8 +43,9 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
 
     private SwitchCompat enableProfileVisibility;
     AppCompatTextView fi;
-    LinearLayout achivementLayer;
-    AppCompatTextView achivementsValue;
+    LinearLayout achievementLayer;
+    AppCompatTextView achievementsValue;
+    View achievementPanel;
 
     public UserTabFragmentVM(UserTabFragment fragment, FragmentUserTabProfileBinding binding) {
         super(fragment, binding);
@@ -56,8 +58,9 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         enableProfileVisibility = binding.agUserProfileVisibility;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         fi = binding.agUserStatusInfoPanel.agUserFi;
-        achivementLayer = binding.agUserStatusInfoPanel.agUserAchivementLayer;
-        achivementsValue = binding.agUserStatusInfoPanel.agUserAchivementValue;
+        achievementLayer = binding.agUserStatusInfoPanel.agUserAchievementLayer;
+        achievementsValue = binding.agUserStatusInfoPanel.agUserAchievementValue;
+        achievementPanel = binding.agUserStatusInfoPanel.agUserAchievementPanel;
         binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList(recyclerView);
@@ -66,8 +69,10 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+    }
+
+    public void setView() {
         enableProfileVisibility.setChecked(saved.isProfileVisible());
-        setListener();
     }
 
     public void setListener() {
@@ -96,16 +101,19 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     }
 
     private void mockUserStatsList() {
-        List<UserStatistics> list = new ArrayList<>();
-        list.add(new UserStatistics("Заполненность профиля", "95%"));
-        list.add(new UserStatistics("Пройдено голосований", "257"));
-        list.add(new UserStatistics("Оценено новинок", "257"));
-        list.add(new UserStatistics("Оценено новинок", "17"));
-        list.add(new UserStatistics("Посещено мероприятий", "5"));
-        list.add(new UserStatistics("Приглашено друзей", "0"));
-        list.add(new UserStatistics("Активность в социальных сетях", "0"));
-        list.add(new UserStatistics("Получено баллов", "0"));
-        list.add(new UserStatistics("Потрачено баллов", "0"));
+        List<Statistics> list = new ArrayList<>();
+        list.addAll(saved.getStatisticList(getActivity()));
+        if (list.size() == 0) {
+            list.add(new Statistics("Заполненность профиля", "95%"));
+            list.add(new Statistics("Пройдено голосований", "257"));
+            list.add(new Statistics("Оценено новинок", "257"));
+            list.add(new Statistics("Оценено новинок", "17"));
+            list.add(new Statistics("Посещено мероприятий", "5"));
+            list.add(new Statistics("Приглашено друзей", "0"));
+            list.add(new Statistics("Активность в социальных сетях", "0"));
+            list.add(new Statistics("Получено баллов", "0"));
+            list.add(new Statistics("Потрачено баллов", "0"));
+        }
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
     }
@@ -116,22 +124,23 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         fi.setText(saved.getSurnameAndFirstName());
         mockUserStatsList();
         setAvatar();
+        setView();
+        setListener();
+        setAchievementLayerView();
     }
 
-    public void setAchivementLayerView() {
-        achivementLayer.removeAllViews();
-        achievementList.subscribeOn(Schedulers.io())
-                .take(4)
-                .filter(achievement -> {
-                    return !achievement.isNext();
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(achievement -> {
-                    addAchivements(achivementLayer, achievement.getImageUrl(), getActivity().getBaseContext());
-                }, throwable -> throwable.printStackTrace());
+    public void setAchievementLayerView() {
+        List<Achievements> list = saved.getAchievementsList(getActivity());
+        if (list.size() > 0) {
+            for (Achievements achievements : list) {
+                addAchievements(achievementLayer, achievements.getImg_url(), getActivity().getBaseContext());
+            }
+        } else {
+            achievementPanel.setVisibility(View.GONE);
+        }
     }
 
-    public void addAchivements(LinearLayout linearLayout, String url, Context context) {
+    public void addAchievements(LinearLayout linearLayout, String url, Context context) {
         ImageView image = new ImageView(context);
         int sizeInPixel = context.getResources().getDimensionPixelSize(R.dimen.vs_xxsmall);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeInPixel, sizeInPixel);

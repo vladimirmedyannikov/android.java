@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,7 +51,12 @@ public class AgUser implements Serializable {
     public static final String HAS_CAR = "has_car";
     public static final String CHILDREN_BIRTHDAYS = "children_birthdays";
     public static final String SOCIAL_STATUS = "social_status";
-
+    public static final String STATUS = "status";
+    public static final String RATING = "rating";
+    public static final String PERCENT_FILL_PROFILE = "percent_fill_profile";
+    public static final String ACHIEVEMENTS_COUNT = "achievements_count";
+    public static final String REGISTRATION_DATE = "registration_date";
+    public static final String AVATAR = "avatar";
     private String surname, firstName, middleName;
     private String birthday;
     private Gender gender;
@@ -62,7 +70,12 @@ public class AgUser implements Serializable {
     private Flat registrationFlat;
     private Flat residenceFlat;
     private Flat workFlat;
-
+    private String status;
+    private long rating;
+    private int percentFillProfile;
+    private int count;
+    private String registrationDate;
+    private String avatar;
 
     public static boolean isPguConnected(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
@@ -86,6 +99,7 @@ public class AgUser implements Serializable {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         prefs.edit().putBoolean(AgUser.IS_PROFILE_VISIBLE, isConnected).apply();
     }
+
     public static String getPhone(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         return prefs.getString(AgUser.PHONE, null);
@@ -121,6 +135,11 @@ public class AgUser implements Serializable {
         residenceFlat = Flat.getResidence(context);
         workFlat = Flat.getWork(context);
         agSocialStatus = prefs.getInt(SOCIAL_STATUS, -1);
+        status = prefs.getString(STATUS, "Новичок");//убрать
+        rating = prefs.getLong(RATING, 345);//убрать
+        percentFillProfile = prefs.getInt(PERCENT_FILL_PROFILE, 0);
+        count = prefs.getInt(ACHIEVEMENTS_COUNT, 0);
+        registrationDate = prefs.getString(REGISTRATION_DATE, "дата регистрации в сервисе, 20.07.2017");//убрать
     }
 
     /**
@@ -142,6 +161,8 @@ public class AgUser implements Serializable {
             parseCommon(json);
             parsePersonal(json);
             parseFlats(context, json);
+            parseStatistic(context, json);
+            parseAchievements(context, json);
         }
     }
 
@@ -269,7 +290,12 @@ public class AgUser implements Serializable {
         editor.putString(SEX, gender.getValue());
         editor.putString(MARITAL_STATUS, maritalStatus.getValue());
         editor.putInt(SOCIAL_STATUS, agSocialStatus);
-
+        editor.putString(STATUS, status);
+        editor.putLong(RATING, rating);
+        editor.putInt(ACHIEVEMENTS_COUNT, count);
+        editor.putInt(PERCENT_FILL_PROFILE, percentFillProfile);
+        editor.putString(REGISTRATION_DATE, registrationDate);
+        editor.putString(AVATAR, avatar);
         editor.apply();
 
         /**
@@ -494,6 +520,10 @@ public class AgUser implements Serializable {
         return birthday;
     }
 
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
     public AgUser setBirthday(String birthday) {
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMMM yyyy г.р.", new Locale("ru"));
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy");
@@ -653,6 +683,26 @@ public class AgUser implements Serializable {
         return this;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public String getRating() {
+        return String.valueOf(rating);
+    }
+
+    public int getPercentFillProfile() {
+        return percentFillProfile;
+    }
+
+    public String getCount() {
+        return String.valueOf(count);
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
     public boolean isPguConnected() {
         return isPguConnected;
     }
@@ -745,6 +795,53 @@ public class AgUser implements Serializable {
         return sdf.format(birthday);
     }
 
+    public void parseAchievements(Context context, JSONObject json) {
+        JSONObject achievements = json.optJSONObject("achievements");
+        if (achievements != null) {
+            count = achievements.optInt("count");
+            saveJsonArray(context, json, Achievements.LAST_ACHIEVEMENTS);
+        }
+    }
+
+    public void parseStatistic(Context context, JSONObject json) {
+        JSONObject statistics = json.optJSONObject("statistics");
+        if (statistics != null) {
+            status = ElkTextUtils.getString(statistics, "status", "Новичок");
+            rating = statistics.optLong("rating");
+            percentFillProfile = statistics.optInt("percent_fill_profile");
+            saveJsonArray(context, json, Statistics.STATISTICS_PARAMS);
+        }
+    }
+
+
+    public static void saveJsonArray(Context context, JSONObject json, String params) {
+        if (json != null) {
+            JSONArray array = json.optJSONArray(params);
+            SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Context.MODE_PRIVATE);
+            prefs.edit().putString(params, array.toString()).apply();
+        }
+    }
+
+    public List<Statistics> getStatisticList(Context context) {
+        return getListFromPreferences(context, Statistics.STATISTICS_PARAMS, Statistics[].class);
+    }
+
+    public List<Achievements> getAchievementsList(Context context) {
+        return getListFromPreferences(context, Achievements.LAST_ACHIEVEMENTS, Achievements[].class);
+    }
+
+
+    public static <T> List<T> getListFromPreferences(Context context, String params, Class<T[]> clazz) {
+        List<T> result = new ArrayList<>();
+        SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Context.MODE_PRIVATE);
+        try {
+            JSONArray array = new JSONArray(prefs.getString(params, ""));
+            result.addAll(getDataList(array.toString(), clazz));
+        } catch (JSONException ignored) {
+        }
+        return result;
+    }
+
     /**
      * Парсинг тега common данных по пользователю аг
      *
@@ -779,6 +876,8 @@ public class AgUser implements Serializable {
             childBirthdays = childBirthdaysFromJson(personalJson);
             isCarExist = personalJson.optBoolean("car_exist");
             agSocialStatus = personalJson.optInt("social_status");
+            registrationDate = ElkTextUtils.getString(personalJson, "registration_date", "");
+            avatar = ElkTextUtils.getString(personalJson, "avatar", "");
         }
     }
 
@@ -1014,5 +1113,10 @@ public class AgUser implements Serializable {
                 title.setText(maritalStatus.toString());
             }
         }
+    }
+
+    public static <T> List<T> getDataList(String result, Class<T[]> clazz) {
+        T[] jsonToObject = new Gson().fromJson(result, clazz);
+        return new ArrayList<>(Arrays.asList(jsonToObject));
     }
 }

@@ -779,4 +779,5 @@
     <string name="flat_title_residence">Адрес проживания</string>
     <string name="flat_title_work">Адрес работы</string>
     <string name="flat_residence_equal_flat_registration">Адрес проживания совпадает с адресом регистрации</string>
+    <string name="profile_filled_title" formatted="false">профиль заполнен на %d%%</string>
 </resources>

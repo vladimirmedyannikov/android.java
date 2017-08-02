@@ -48,7 +48,7 @@
                     android:gravity="center"
                     android:paddingBottom="@dimen/pd_xxsmall"
                     android:paddingTop="@dimen/pd_normal"
-                    android:text="профиль заполнен на %s"/>
+                    android:text="@string/profile_filled_title"/>
 
                 <ProgressBar
                     android:id="@+id/agUser_profile_progressbar"
@@ -57,7 +57,7 @@
                     android:layout_height="6dp"
                     android:paddingLeft="@dimen/pd_normal"
                     android:paddingRight="@dimen/pd_normal"
-                    android:progress="77"
+                    android:progress="@{agUser.getPercentFillProfile()}"
                     android:progressDrawable="@drawable/progressbar_yellow"/>
 
             </LinearLayout>

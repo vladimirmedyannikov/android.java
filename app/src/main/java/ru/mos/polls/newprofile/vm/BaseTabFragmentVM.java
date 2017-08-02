@@ -29,7 +29,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
-import ru.mos.polls.newprofile.model.Achievement;
 import ru.mos.polls.newprofile.service.AvatarSet;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.model.EmptyResult;

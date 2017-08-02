@@ -26,7 +26,6 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.model.UserStatistics;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.VisibilitySet;
 import ru.mos.polls.newprofile.service.model.EmptyResult;
@@ -61,7 +60,6 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         achievementLayer = binding.agUserStatusInfoPanel.agUserAchievementLayer;
         achievementsValue = binding.agUserStatusInfoPanel.agUserAchievementValue;
         achievementPanel = binding.agUserStatusInfoPanel.agUserAchievementPanel;
-        binding.setAgUser(saved);
         binding.setClickListener(this);
         setRecyclerList(recyclerView);
     }
@@ -121,7 +119,8 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     @Override
     public void onResume() {
         super.onResume();
-        fi.setText(saved.getSurnameAndFirstName());
+        getBinding().setAgUser(saved);
+        getBinding().executePendingBindings();
         mockUserStatsList();
         setAvatar();
         setView();
@@ -131,9 +130,15 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
 
     public void setAchievementLayerView() {
         List<Achievements> list = saved.getAchievementsList(getActivity());
+        if (list.size() == 0) {
+            for (Achievements achievements : AchievementTabFragmentVM.mockList(getActivity())) {
+                if (list.size() > 2) break;
+                list.add(achievements);
+            }
+        }
         if (list.size() > 0) {
             for (Achievements achievements : list) {
-                addAchievements(achievementLayer, achievements.getImg_url(), getActivity().getBaseContext());
+                addAchievements(achievementLayer, achievements.getImageUrl(), getActivity().getBaseContext());
             }
         } else {
             achievementPanel.setVisibility(View.GONE);

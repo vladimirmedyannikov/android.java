@@ -41,8 +41,10 @@ import ru.mos.polls.newprofile.state.NewFlatState;
 import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
+import ru.mos.polls.profile.gui.fragment.ProfileBindItemsFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.Social;
+import ru.mos.polls.survey.hearing.controller.PguUIController;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -68,6 +70,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView socialStatus;
     TextView kidsDateValue;
     TextView kidsDate;
+    TextView bindingMostTitle;
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
@@ -104,6 +107,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         kidsDateLayer = binding.editKidsDateLayer;
         socialBindTitle = binding.editSocialBindTitle;
         socialBindingLayer = binding.editSocialBindLayer;
+        bindingMostTitle = binding.editBindingMosTitle;
     }
 
     @Override
@@ -194,6 +198,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         socialBindTitle.setOnClickListener(v -> {
             UpdateSocialActivity.startActivity(getActivity());
         });
+        bindingMostTitle.setOnClickListener(v -> PguUIController.startPguBinding(getFragment()));
     }
 
     public void refreshView(AgUser agUser) {

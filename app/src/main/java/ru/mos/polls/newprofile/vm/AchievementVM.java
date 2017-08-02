@@ -9,20 +9,20 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.databinding.ItemAchievementBinding;
 import ru.mos.polls.newprofile.base.vm.BaseVM;
-import ru.mos.polls.newprofile.model.Achievement;
 
 /**
  * Created by Trunks on 23.06.2017.
  */
 
-public class AchievementVM extends BaseVM<Achievement, ItemAchievementBinding> {
+public class AchievementVM extends BaseVM<Achievements, ItemAchievementBinding> {
     ImageView badge;
     ProgressBar pb;
 
-    public AchievementVM(Achievement achievement, ItemAchievementBinding binding) {
+    public AchievementVM(Achievements achievement, ItemAchievementBinding binding) {
         super(achievement, binding);
         badge = viewDataBinding.badgeContainer.badge;
         pb = viewDataBinding.badgeContainer.loadingBadge;

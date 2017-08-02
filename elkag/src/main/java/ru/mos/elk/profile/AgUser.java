@@ -135,11 +135,11 @@ public class AgUser implements Serializable {
         residenceFlat = Flat.getResidence(context);
         workFlat = Flat.getWork(context);
         agSocialStatus = prefs.getInt(SOCIAL_STATUS, -1);
-        status = prefs.getString(STATUS, "Новичок");//убрать
-        rating = prefs.getLong(RATING, 345);//убрать
+        status = prefs.getString(STATUS, "");
+        rating = prefs.getLong(RATING, 0);
         percentFillProfile = prefs.getInt(PERCENT_FILL_PROFILE, 0);
         count = prefs.getInt(ACHIEVEMENTS_COUNT, 0);
-        registrationDate = prefs.getString(REGISTRATION_DATE, "дата регистрации в сервисе, 20.07.2017");//убрать
+        registrationDate = prefs.getString(REGISTRATION_DATE, "0");
     }
 
     /**
@@ -488,7 +488,8 @@ public class AgUser implements Serializable {
     }
 
     public String getSurnameAndFirstName() {
-        return String.format("%s %s", surname, firstName);
+        String surAndFis = String.format("%s %s", surname, firstName);
+        return surAndFis.equalsIgnoreCase("") ? "Имя не заполнено" : surAndFis;
     }
 
     public String getFullUserName() {
@@ -684,7 +685,7 @@ public class AgUser implements Serializable {
     }
 
     public String getStatus() {
-        return status;
+        return status.equalsIgnoreCase("") ? "Новичок" : status;
     }
 
     public String getRating() {
@@ -695,8 +696,12 @@ public class AgUser implements Serializable {
         return percentFillProfile;
     }
 
-    public String getCount() {
-        return String.valueOf(count);
+    public int getCount() {
+        return count;
+    }
+
+    public String getAchievementsCount() {
+        return String.format("+%d", getCount());
     }
 
     public String getAvatar() {

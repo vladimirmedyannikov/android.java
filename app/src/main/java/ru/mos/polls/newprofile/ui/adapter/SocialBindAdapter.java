@@ -3,12 +3,9 @@ package ru.mos.polls.newprofile.ui.adapter;
 import java.util.List;
 
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.ItemAchievementBinding;
 import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.newprofile.base.ui.BindingHolder;
 import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
-import ru.mos.polls.newprofile.model.Achievement;
-import ru.mos.polls.newprofile.vm.AchievementVM;
 import ru.mos.polls.newprofile.vm.SocialVM;
 import ru.mos.polls.social.model.Social;
 

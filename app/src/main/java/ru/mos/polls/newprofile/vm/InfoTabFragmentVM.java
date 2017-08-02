@@ -4,6 +4,7 @@ package ru.mos.polls.newprofile.vm;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
+import android.support.v7.widget.AppCompatTextView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import ru.mos.polls.social.model.Social;
 public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
     Observable<List<Social>> socialListObserable;
+    AppCompatTextView percentFilledTitle;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
         super(fragment, binding);
@@ -40,9 +42,9 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
         recyclerView = binding.agUserProfileList;
         socialBindingLayer = binding.agUserSocialBindingLayer;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
+        percentFilledTitle = binding.agUserProfilePercentFillTitle;
         super.initialize(binding);
         binding.setClickListener(this);
-
     }
 
     private void userInfoList() {
@@ -86,9 +88,12 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
     public void onResume() {
         super.onResume();
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+        getBinding().setAgUser(saved);
+        getBinding().executePendingBindings();
         userInfoList();
         setSocialBindingLayerRx();
         setAvatar();
+        percentFilledTitle.setText(String.format(getActivity().getString(R.string.profile_filled_title), saved.getPercentFillProfile()));
     }
 
     @Override

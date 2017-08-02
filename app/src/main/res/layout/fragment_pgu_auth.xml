@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v4.widget.NestedScrollView
+        style="@style/root"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/authContainer"
+            style="@style/item.linear">
+
+            <include layout="@layout/layout_pgu_auth_header"/>
+
+            <TextView
+                android:id="@+id/pguTitle"
+                style="@style/text.normal.black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="@dimen/pd_xsmall"
+                android:text="@string/pgu_auth_message"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

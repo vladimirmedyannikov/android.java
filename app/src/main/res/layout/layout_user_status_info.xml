@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="agUser"
             type="ru.mos.elk.profile.AgUser"/>
@@ -57,7 +59,8 @@
                 android:layout_toEndOf="@+id/agUser_achievement_layer"
                 android:layout_toRightOf="@+id/agUser_achievement_layer"
                 android:hint="+0"
-                android:text="@{agUser.getCount()}"/>
+                android:text="@{agUser.getAchievementsCount()}"
+                android:visibility="@{agUser.count > 0 ? View.VISIBLE : View.GONE}"/>
         </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView
@@ -90,8 +93,8 @@
             style="@style/text.large.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="@{agUser.getStatus()}"
             android:hint="Новичок"
+            android:text="@{agUser.getStatus()}"
             android:textSize="@dimen/ts_xxlarge"/>
     </LinearLayout>
 </layout>

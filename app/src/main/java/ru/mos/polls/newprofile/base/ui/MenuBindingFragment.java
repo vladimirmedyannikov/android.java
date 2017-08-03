@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 
@@ -15,7 +16,7 @@ import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
  * Created by Trunks on 05.07.2017.
  */
 
-public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends ViewDataBinding> extends BindingFragment<VM, B> {
+public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends ViewDataBinding> extends NavigateFragment<VM, B> {
     /**
      * Базовый фрагмент с меню
      */
@@ -39,6 +40,11 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
         this.menu = menu;
         super.onCreateOptionsMenu(menu, inflater);
         getViewModel().onCreateOptionsMenu();
+    }
+
+    @Override
+    public int getVariable() {
+        return BR.viewModel;
     }
 
     @Override

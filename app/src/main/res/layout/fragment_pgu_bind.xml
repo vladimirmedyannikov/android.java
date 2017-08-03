@@ -1,41 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/container"
-              style="@style/item.linear"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout android:id="@+id/container"
+                style="@style/item.linear"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/white"
+                android:padding="@dimen/pd_xsmall">
 
     <LinearLayout
-        style="@style/item.linear"
-        android:background="@drawable/background_text_field"
-        android:padding="@dimen/pd_xsmall">
+        android:id="@+id/et_auth_layer"
+        style="@style/item.linear">
 
-        <EditText
-            android:id="@+id/etLogin"
-            style="@style/input.email"
-            android:hint="@string/pgu_hint_email"
-            android:imeOptions="actionNext"/>
+        <TextView
+            style="@style/text.normal.black"
+            android:layout_marginBottom="@dimen/pd_xsmall"
+            android:text="Ваш логин и пароль на mos.ru:"/>
 
-        <EditText
-            android:id="@+id/etPassword"
-            style="@style/input.password"
-            android:hint="@string/pgu_hint_password"/>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/etLogin_wrapper"
+            style="@style/item">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etLogin"
+                style="@style/input.email"
+                android:hint="@string/pgu_hint_email"
+                android:imeOptions="actionNext"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/etPassword_wrapper"
+            style="@style/item">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etPassword"
+                style="@style/input.password"
+                android:hint="@string/pgu_hint_password"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <!---->
+        <!--<EditText-->
+        <!--android:id="@+id/etLogin"-->
+        <!--style="@style/input.email"-->
+        <!--android:hint="@string/pgu_hint_email"-->
+        <!--android:imeOptions="actionNext"/>-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etPassword"-->
+        <!--style="@style/input.password"-->
+        <!--android:hint="@string/pgu_hint_password"/>-->
 
         <TextView
             android:id="@+id/tvError"
             style="@style/auth_error"
-            android:paddingTop="@dimen/pd_xsmall"/>
+            android:paddingTop="@dimen/pd_xsmall"
+            android:visibility="invisible"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/auth"
         style="@style/button.centered.disabled"
         android:layout_width="@dimen/vs_xxxlarge"
+        android:layout_below="@id/et_auth_layer"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/pd_xlarge"
-        android:text="@string/pgu_bind"/>
+        android:text="@string/pgu_bind"
+        android:visibility="invisible"/>
 
     <TextView
         style="@style/text.gray"
-        android:layout_marginTop="@dimen/pd_xlarge"
-        android:gravity="center"
+        android:layout_below="@id/et_auth_layer"
         android:text="@string/hint_not_auth_pgu"/>
-</LinearLayout>
+
+    <LinearLayout
+        style="@style/wrap"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <include
+            android:id="@+id/help"
+            layout="@layout/layout_help"/>
+    </LinearLayout>
+</RelativeLayout>

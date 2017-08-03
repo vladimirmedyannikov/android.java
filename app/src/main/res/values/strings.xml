@@ -780,4 +780,6 @@
     <string name="flat_title_work">Адрес работы</string>
     <string name="flat_residence_equal_flat_registration">Адрес проживания совпадает с адресом регистрации</string>
     <string name="profile_filled_title" formatted="false">профиль заполнен на %d%%</string>
+    <string name="connection_mos_pgu_title">Связь с mos.ru</string>
+    <string name="connection_mos_pgu_connected">установлена</string>
 </resources>

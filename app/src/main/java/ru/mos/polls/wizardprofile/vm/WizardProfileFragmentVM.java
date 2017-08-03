@@ -1,7 +1,6 @@
 package ru.mos.polls.wizardprofile.vm;
 
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +18,7 @@ import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
+import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
@@ -69,6 +69,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         list.add(NewFlatFragment.newInstance(agUser.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
         list.add(NewFlatFragment.newInstance(agUser.getWork(), NewFlatFragmentVM.FLAT_TYPE_WORK));
         list.add(BindingSocialFragment.newInstance(true));
+        list.add(PguAuthFragment.newInstanceForWizard());
         adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), agUser, list);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager, true);
@@ -134,7 +135,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         setDotCustomView();
     }
 
-    private void doNext() {
+    public void doNext() {
     }
 
     public View getTabView() {

@@ -38,6 +38,7 @@ import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.state.NewFlatState;
+import ru.mos.polls.newprofile.state.PguAuthState;
 import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
@@ -71,6 +72,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     TextView kidsDateValue;
     TextView kidsDate;
     TextView bindingMostTitle;
+    TextView bindingMostStatus;
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
@@ -108,6 +110,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         socialBindTitle = binding.editSocialBindTitle;
         socialBindingLayer = binding.editSocialBindLayer;
         bindingMostTitle = binding.editBindingMosTitle;
+        bindingMostStatus = binding.editBindingMosStatus;
     }
 
     @Override
@@ -198,7 +201,10 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         socialBindTitle.setOnClickListener(v -> {
             UpdateSocialActivity.startActivity(getActivity());
         });
-        bindingMostTitle.setOnClickListener(v -> PguUIController.startPguBinding(getFragment()));
+        bindingMostTitle.setOnClickListener(v -> {
+//            PguUIController.startPguBinding(getFragment());
+            getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
+        });
     }
 
     public void refreshView(AgUser agUser) {
@@ -215,6 +221,14 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         setSocialStatusView(agUser.getAgSocialStatus());
         setKidsDateLayerView(agUser);
         setSocialBindingLayerRx();
+        setPguStatusView(agUser);
+    }
+
+    public void setPguStatusView(AgUser agUser) {
+        if (agUser.isPguConnected()) {
+            bindingMostTitle.setText(getActivity().getString(R.string.connection_mos_pgu_title));
+            bindingMostStatus.setText(getActivity().getString(R.string.connection_mos_pgu_connected));
+        }
     }
 
     public void setKidsDateLayerView(AgUser agUser) {
@@ -293,6 +307,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 .filter(social -> social.isLogon())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::addSocialToLayer));
+        if (socialBindingLayer.getChildCount()>0)  socialBindTitle.setText(getActivity().getString(R.string.socials));
     }
 
     int selectedGender;

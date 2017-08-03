@@ -99,6 +99,11 @@ public class FlatsEntity {
 
         private String flat_id;
         private String building_id;
+        private String flat;
+        private String building;
+        private String street;
+        private String city;
+        private String area_id;
         private Boolean kill;
 
         public void setKill(Boolean kill) {

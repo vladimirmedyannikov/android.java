@@ -2,6 +2,7 @@ package ru.mos.polls.newprofile.vm;
 
 import android.animation.Animator;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.BaseActivity;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.AGApplication;
@@ -29,6 +31,9 @@ import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
+import ru.mos.polls.newprofile.state.CustomFlatState;
+import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
+import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.profile.controller.FlatApiController;
 import ru.mos.polls.profile.gui.fragment.location.BuildingWatcher;
@@ -60,6 +65,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     TextView tvWarningEditingBlocked;
     TextView tvErrorEditingBlocked;
     LinearLayout areaAndDistrictLayout;
+    LinearLayout streetNotFoundContainer;
+    LinearLayout buildingNotFoundContainer;
     private boolean isAddressSelected;
 
     public NewFlatFragmentVM(NewFlatFragment fragment, FragmentNewFlatBinding binding) {
@@ -84,6 +91,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
         residenceToggleLayout = binding.layoutFlatResidenceToggle.flatResidenceToggleView;
         residenceToggle = binding.layoutFlatResidenceToggle.flatResidenceToggle;
         addFlatLayout = binding.layoutAddFlat.layoutAddFlat;
+        streetNotFoundContainer = binding.layoutAddFlat.streetNotFoundContainer;
+        buildingNotFoundContainer = binding.layoutAddFlat.buildingNotFoundContainer;
     }
 
     @Override
@@ -93,6 +102,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     }
 
     public void setListener() {
+        streetNotFoundContainer.setOnClickListener(v -> customFlat());
+        buildingNotFoundContainer.setOnClickListener(v -> customFlat());
         residenceToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 visibilityFlatInput(View.GONE);
@@ -191,6 +202,19 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 }
             }
         });
+    }
+
+    void customFlat() {
+        boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
+        String street = etStreet.getText().toString();
+        String house = etBuilding.getText().toString();
+//        CustomFlatActivity.startActivity(NewAddressActivity.this, street, house, flat, isHideWarnings);
+//        CustomFlatFragment.newInstance(flat, isHideWarnings, street, house, false);
+//        FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
+//        CustomFlatFragment cff = CustomFlatFragment.newInstance(flat, isHideWarnings, street, house, false);
+//        ft.replace(R.id.layout_main, cff);
+//        ft.commit();
+        getFragment().navigateToActivityForResult(new CustomFlatState(street, house, flat, isHideWarnings, false), CustomFlatFragment.REQUEST_FLAT);
     }
 
     public void visibilityFlatInput(int gone) {

@@ -44,11 +44,6 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     }
 
     @Override
-    public int getVariable() {
-        return BR.viewModel;
-    }
-
-    @Override
     public int getLayoutResources() {
         return R.layout.fragment_new_edit_personal_info;
     }

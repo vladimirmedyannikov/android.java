@@ -53,11 +53,18 @@ public class FlatsEntity {
             super(building_id);
         }
 
+        public RegistrationEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
+        }
     }
 
     public static class WorkEntity extends BaseFlat {
         public WorkEntity(String building_id) {
             super(building_id);
+        }
+
+        public WorkEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
         }
 
         public WorkEntity(String flat_id, String building_id) {
@@ -75,11 +82,15 @@ public class FlatsEntity {
             super(flat_id, building_id);
         }
 
+        public ResidenceEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
+        }
+
         public ResidenceEntity() {
         }
     }
 
-    static abstract class BaseFlat {
+    public static class BaseFlat {
         public BaseFlat(String building_id) {
             this.building_id = building_id;
         }
@@ -90,6 +101,13 @@ public class FlatsEntity {
         public BaseFlat(String flat_id, String building_id) {
             this.flat_id = flat_id;
             this.building_id = building_id;
+        }
+
+        public BaseFlat(String building_id, String building, String street, String area_id) {
+            this.building_id = building_id;
+            this.building = building;
+            this.street = street;
+            this.area_id = area_id;
         }
 
         /**
@@ -124,6 +142,26 @@ public class FlatsEntity {
 
         public void setBuilding_id(String building_id) {
             this.building_id = building_id;
+        }
+
+        public void setFlat(String flat) {
+            this.flat = flat;
+        }
+
+        public void setBuilding(String building) {
+            this.building = building;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public void setArea_id(String area_id) {
+            this.area_id = area_id;
         }
     }
 }

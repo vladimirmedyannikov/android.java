@@ -26,6 +26,7 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentCustomFlatBinding;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
@@ -92,49 +93,76 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu() {
+        super.onCreateOptionsMenu();
+        if (forWizard) hideAllMenuIcon();
+        showConfirmMenuIcon();
+    }
+
     public void confirmAction() {
         if (checkForEnabled()) {
-
+            prepareRequest();
         } else {
             Toast.makeText(getActivity(), "Заполните все поля", Toast.LENGTH_SHORT).show();
         }
     }
 
-
+    //    {
+//        "personal":{
+//    },
+//        "flats":{
+//        "residence":{
+//            "building_id":"userid",
+//                    "flat":"",
+//                    "building":"Коаоаоаь",
+//                    "street":"вовоуооу",
+//                    "city":"",
+//                    "area_id":"1004"
+//        }
+//    },
+//        "auth":{
+//        "session_id":"9af8dfc0cb1dd63d3b6a1c68fce593f7"
+//    }
+//    }
     public void prepareRequest() {
-//        FlatsEntity entity = null;
-//        Reference areaReference = (Reference) areaSpinner.getSelectedItem();
-//        flat.setDistrict(districtSpinner.getSelectedItem().toString().trim())
-//                .setArea(areaReference.getLabel())
-//                .setStreet(street.getText().toString().trim())
-//                .setBuilding(building.getText().toString().trim())
-//                .setAreaId(areaReference.getValue())
-//                .setBuildingId(USER_ID);
-//        getActivity().setResult(Activity.RESULT_OK);
-//        if (flat.isRegistration()) {
-//            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
-//            if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
-//                registrationEntity.setFlat_id(flat.getFlatId());
-//            entity = new FlatsEntity(registrationEntity);
-//        }
-//        if (flat.isResidence()) {
-//            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity();
-//            if (residenceToggle.isChecked()) {
-//                residenceEntity.setKill(true);
-//            } else {
-//                residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
-//                if (!TextUtils.isEmpty(flat.getFlatId()))
-//                    residenceEntity.setFlat_id(flat.getFlatId());
-//            }
-//            entity = new FlatsEntity(residenceEntity);
-//        }
-//
-//        if (flat.isWork()) {
-//            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
-//            if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
-//            entity = new FlatsEntity(workEntity);
-//        }
-//        sendFlat(new ProfileSet.Request(entity));
+        FlatsEntity entity = null;
+        Reference areaReference = (Reference) areaSpinner.getSelectedItem();
+        flat.setDistrict(districtSpinner.getSelectedItem().toString().trim())
+                .setArea(areaReference.getLabel())
+                .setStreet(street.getText().toString().trim())
+                .setBuilding(building.getText().toString().trim())
+                .setAreaId(areaReference.getValue())
+                .setBuildingId(USER_ID);
+        System.out.println("flat id " + flat.getFlatId());
+        if (flat.isRegistration()) {
+            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(USER_ID
+                    , building.getText().toString().trim()
+                    , street.getText().toString().trim()
+                    , areaReference.getValue());
+            if (!TextUtils.isEmpty(flat.getFlatId()))
+                registrationEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(registrationEntity);
+        }
+        if (flat.isResidence()) {
+            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity(USER_ID
+                    , building.getText().toString().trim()
+                    , street.getText().toString().trim()
+                    , areaReference.getValue());
+            if (!TextUtils.isEmpty(flat.getFlatId()))
+                residenceEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(residenceEntity);
+        }
+        if (flat.isWork()) {
+            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(USER_ID
+                    , building.getText().toString().trim()
+                    , street.getText().toString().trim()
+                    , areaReference.getValue());
+            if (!TextUtils.isEmpty(flat.getFlatId()))
+                workEntity.setFlat_id(flat.getFlatId());
+            entity = new FlatsEntity(workEntity);
+        }
+        sendFlat(new ProfileSet.Request(entity));
     }
 
     /**
@@ -164,6 +192,8 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                 }
                 showDeleteMenuIcon();
                 EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_FLAT, newFlat));
+                getActivity().setResult(Activity.RESULT_OK);
                 getActivity().finish();
             }
         };
@@ -172,11 +202,6 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservabl.subscribeWith(handler));
-    }
-
-    public void addFlat() {
-//        AbstractActivity.hideSoftInput(this, street);
-
     }
 
     @Override

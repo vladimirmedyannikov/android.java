@@ -8,18 +8,17 @@
             type="ru.mos.polls.newprofile.vm.NewFlatFragmentVM"/>
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/layout_main"
         style="@style/linear"
         android:animateLayoutChanges="true">
 
         <ScrollView
             style="@style/root"
-            android:background="@drawable/ag_back">
+            android:background="@color/white">
 
             <LinearLayout
                 style="@style/linear"
-                android:background="@color/white"
                 android:padding="@dimen/pd_xsmall">
 
                 <include
@@ -35,5 +34,5 @@
                     layout="@layout/layout_flat_warning_block"/>
             </LinearLayout>
         </ScrollView>
-    </FrameLayout>
+    </LinearLayout>
 </layout>

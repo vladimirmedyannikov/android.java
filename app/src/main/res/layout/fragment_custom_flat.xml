@@ -9,9 +9,9 @@
     </data>
 
     <LinearLayout
-        android:background="@color/white"
         android:id="@+id/layout_main"
-        style="@style/root">
+        style="@style/root"
+        android:background="@color/white">
 
 
         <ScrollView
@@ -24,17 +24,20 @@
 
                 <TextView
                     style="@style/text.xsmall.green"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
                     android:text="@string/flat_district"/>
 
                 <Spinner
                     android:id="@+id/districtSpinner"
                     style="@style/item"
-                    android:layout_marginTop="@dimen/pd_xxsmall"/>
+                    android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:paddingLeft="@dimen/pd_xxxsmall"/>
 
                 <TextView
                     android:id="@+id/areaLabel"
                     style="@style/text.xsmall.green"
                     android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
                     android:text="@string/flat_area"
                     android:visibility="gone"/>
 
@@ -43,7 +46,9 @@
                     style="@style/item"
                     android:layout_marginTop="@dimen/pd_xxsmall"
                     android:clickable="false"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
                     android:visibility="gone"/>
+
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/street_wrapper"
                     style="@style/item">
@@ -65,14 +70,6 @@
                         android:hint="@string/flat_building"/>
 
                 </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:id="@+id/save"
-                    style="@style/button.centered.disabled"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/pd_xlarge"
-                    android:minWidth="@dimen/vs_xxlarge"
-                    android:text="@string/select"/>
 
                 <include layout="@layout/layout_flat_warning_block"/>
             </LinearLayout>

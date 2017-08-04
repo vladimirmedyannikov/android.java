@@ -46,6 +46,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     protected RecyclerView recyclerView;
     protected AgUser saved;
     protected CircleImageView circleImageView;
+    public boolean isAvatarLoaded;
 
     public BaseTabFragmentVM(F fragment, B binding) {
         super(fragment, binding);
@@ -151,6 +152,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
             @Override
             protected void onResult(EmptyResult[] result) {
                 Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
+                isAvatarLoaded = true;
             }
         };
         Observable<EmptyResponse> responseObservable = AGApplication.api

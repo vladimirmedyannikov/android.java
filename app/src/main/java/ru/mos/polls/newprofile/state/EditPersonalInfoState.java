@@ -23,7 +23,7 @@ public class EditPersonalInfoState extends ContentBelowToolbarState<EditPersonal
 
     @Override
     protected JugglerFragment onConvertContent(PesonalInfoParams params, @Nullable JugglerFragment fragment) {
-        return EditPersonalInfoFragment.newInstance(params.agUser, params.personalType);
+        return EditPersonalInfoFragment.newInstance(params.agUser, params.personalType, false);
     }
 
     @Override

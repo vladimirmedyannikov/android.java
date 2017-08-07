@@ -1,7 +1,9 @@
 package ru.mos.polls.wizardprofile.vm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
@@ -14,13 +16,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
 import ru.mos.polls.databinding.FragmentWizardFlatBinding;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.model.Personal;
+import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
@@ -39,11 +47,12 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     NewFlatFragment newFlatFragment;
     CustomFlatFragment customFlatFragment;
     AgUser agUser;
-    Personal personal;
     int wizardFlatType;
     Flat flat;
     TextInputEditText socialStatus;
     AppCompatTextView wizardFlatTitle;
+    TextInputLayout socialStatusWrapper;
+    Personal personal;
 
     public WizardFlatFragmentVM(WizardFlatFragment fragment, FragmentWizardFlatBinding binding) {
         super(fragment, binding);
@@ -60,6 +69,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
         }
         personal = new Personal();
         socialStatus = binding.socialStatus;
+        socialStatusWrapper = binding.socialStatusWrapper;
         wizardFlatTitle = binding.wizardFlatTitle;
     }
 
@@ -67,7 +77,35 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     public void onViewCreated() {
         super.onViewCreated();
         setView();
+        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK) {
+            setRxEventBusListener();
+            setListener();
+        }
+    }
 
+    public void setListener() {
+        socialStatus.setOnClickListener(v -> {
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(agUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+        });
+    }
+
+    public void setRxEventBusListener() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.ProfileEvents) {
+                        Events.ProfileEvents action = (Events.ProfileEvents) o;
+                        switch (action.getAction()) {
+                            case Events.ProfileEvents.UPDATE_USER_INFO:
+                                AgUser changed = action.getAgUser();
+                                agUser = changed;
+                                agUser.save(getActivity().getBaseContext());
+                                setView();
+                                break;
+                        }
+                    }
+                });
     }
 
     public void setView() {
@@ -88,12 +126,22 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 flatType = NewFlatFragmentVM.FLAT_TYPE_WORK;
                 wizardFlatTitle.setText(getActivity().getString(R.string.flat_title_work));
                 socialStatus.setVisibility(View.VISIBLE);
+                socialStatusWrapper.setVisibility(View.VISIBLE);
+                personal = new Personal();
+                if (agUser.getAgSocialStatus() != 0) {
+                    setSocialStatusView(agUser.getAgSocialStatus());
+                }
                 break;
         }
         newFlatFragment = NewFlatFragment.newInstanceForWizard(flat, flatType);
         FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
         ft.replace(R.id.container, newFlatFragment);
         ft.commit();
+    }
+
+    public void setSocialStatusView(int idSocialStatus) {
+        List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getActivity().getBaseContext());
+        socialStatus.setText(list.get(idSocialStatus).getTitle());
     }
 
     @Override
@@ -104,10 +152,12 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
 
 
     public boolean checkField() {
-//        if (selectedMartial == 0) {
-//            Toast.makeText(getActivity(), "Укажите семейное положение", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
+        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && socialStatus.getText().length() < 0) {
+            Toast.makeText(getActivity(), "Укажите род деятельности", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+
+        }
         return true;
     }
 
@@ -119,9 +169,14 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
 
     @Override
     public void onCustomFlatListener(String street, String building) {
-        customFlatFragment = CustomFlatFragment.newInstanceForWizard(flat, true, "asdas", "asdas");
+        customFlatFragment = CustomFlatFragment.newInstanceForWizard(flat, true, street, building, wizardFlatType);
         FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
         ft.replace(R.id.container, customFlatFragment);
         ft.commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

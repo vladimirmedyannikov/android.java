@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
@@ -164,7 +165,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     @Override
     public void onCreateOptionsMenu() {
         super.onCreateOptionsMenu();
-        if (forWizard) {
+        if (forWizard || personalType == SOCIAL_STATUS) {
             hideAllMenuIcon();
         }
     }
@@ -246,10 +247,14 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                         case PERSONAL_FIO:
                             wizardType = Events.WizardEvents.WIZARD_PERSONAL;
                             break;
+                        case COUNT_KIDS:
+                            wizardType = Events.WizardEvents.WIZARD_FAMALY;
+                            break;
                         case BIRTHDAY_KIDS:
                             wizardType = Events.WizardEvents.WIZARD_KIDS;
                             break;
                     }
+                    agUser.save(getActivity());
                     int percent = 0;
                     if (result != null) percent = result.getPercentFillProfile();
                     AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));

@@ -16,13 +16,13 @@ import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
 
 public class CustomFlatState extends ContentBelowToolbarState<CustomFlatState.CustomFlatParams> {
 
-    public CustomFlatState(String street, String house, Flat flat, boolean hideWarning, boolean forWizard) {
-        super(new CustomFlatParams(street, house, flat, hideWarning, forWizard));
+    public CustomFlatState(String street, String house, Flat flat, boolean hideWarning, boolean forWizard, int flatType) {
+        super(new CustomFlatParams(street, house, flat, hideWarning, forWizard,flatType));
     }
 
     @Override
     protected JugglerFragment onConvertContent(CustomFlatParams params, @Nullable JugglerFragment fragment) {
-        return CustomFlatFragment.newInstance(params.flat, params.hideWarning, params.street, params.house, params.forWizard);
+        return CustomFlatFragment.newInstance(params.flat, params.hideWarning, params.street, params.house, params.forWizard, params.flatType);
     }
 
     @Override
@@ -42,13 +42,15 @@ public class CustomFlatState extends ContentBelowToolbarState<CustomFlatState.Cu
         Flat flat;
         boolean hideWarning;
         boolean forWizard;
+        int flatType;
 
-        public CustomFlatParams(String street, String house, Flat flat, boolean hideWarning, boolean forWizard) {
+        public CustomFlatParams(String street, String house, Flat flat, boolean hideWarning, boolean forWizard, int flatType) {
             this.street = street;
             this.house = house;
             this.flat = flat;
             this.hideWarning = hideWarning;
             this.forWizard = forWizard;
+            this.flatType = flatType;
         }
     }
 }

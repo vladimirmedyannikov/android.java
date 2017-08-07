@@ -22,11 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialController;
@@ -58,7 +60,7 @@ public class BindingSocialFragment extends Fragment {
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
     private List<Social> changedSocials, savedSocials;
-
+    boolean isAnySocialBinded;
     @BindView(R.id.socialShareNotify)
     SwitchCompat socialShareNotify;
     @BindView(R.id.notifyContainer)
@@ -177,6 +179,10 @@ public class BindingSocialFragment extends Fragment {
             public void onSaved(final Social loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
+                    if (!isAnySocialBinded) {
+                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 0));
+                        isAnySocialBinded = true;
+                    }
                     Statistics.taskSocialLogin(loadedSocial.getSocialName());
                 } else {
                     Statistics.profileSocialLogin(loadedSocial.getSocialName());

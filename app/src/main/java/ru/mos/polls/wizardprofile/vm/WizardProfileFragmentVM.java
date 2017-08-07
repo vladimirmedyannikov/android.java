@@ -2,16 +2,19 @@ package ru.mos.polls.wizardprofile.vm;
 
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,15 +44,43 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFragment, FragmentWizardProfileBinding> {
 
+
     ViewPager pager;
     TabLayout tabLayout;
     AgUser agUser;
     Button nextButton;
-    ArrayMap<String, Fragment> list;
-
+    List<Fragment> list;
+    List<String> tagFr;
+    SparseBooleanArray frViewedList;
     WizardProfilePagerAdapter adapter;
     ArrayMap<String, Boolean> wizardFilledList;
+    static final String AVATAR = "avatar";
+    static final String EMAIL = "updateEmail";
+    static final String PERSONAL = "updatePersonal";
+    static final String FAMILY = "updateFamilyInfo";
+    static final String LOCATION = "updateLocation";
+    static final String EXTRAINFO = "updateExtraInfo";
+    static final String SOCIAL = "updateSocial";
+    static final String PGU = "bindToPGU";
 
+
+    static final String TAG_BIRTHDAYKIDS = "birthdaykids";
+    static final String TAG_REGISTRATION = "registration";
+    static final String TAG_RESIDENCE = "residence";
+
+    boolean isLastPage;
+    int listSize;
+
+    /*
+    updatePersonal
+   updateFamilyInfo
+   updateEmail
+   updateLocation
+   updateExtraInfo
+   updateSocial
+   bindToPGU
+   avatar - установка аватарки пользователя
+     */
     public WizardProfileFragmentVM(WizardProfileFragment fragment, FragmentWizardProfileBinding binding) {
         super(fragment, binding);
     }
@@ -70,31 +101,21 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         nextButton.setOnClickListener(v -> {
             doNext();
         });
-        String[] profileFragment = new String[]{"avatar", "email", "updatePersonal", "family", "birthdaykids", "registration", "residence", "work", "updateSocial", "bindToPGU"};
-        list = new ArrayMap<>();
-//        list.add(new MakeAvatarFragment());
-//        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
-//        list.add(new WizardPersonalDataFragment());
-//        list.add(new WizardFamilyFragment());
-//        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
-//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
-//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
-//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
-//        list.add(BindingSocialFragment.newInstance(true));
-//        list.add(PguAuthFragment.newInstanceForWizard());
-        list.put("avatar", new MakeAvatarFragment());
-        list.put("email", EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
-        list.put("updatePersonal", new WizardPersonalDataFragment());
-        list.put("family", new WizardFamilyFragment());
-        list.put("birthdaykids", EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
-        list.put("registration", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
-        list.put("residence", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
-        list.put("work", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
-        list.put("updateSocial", BindingSocialFragment.newInstance(true));
-        list.put("bindToPGU", PguAuthFragment.newInstanceForWizard());
-        for (int i = 0; i < list.size(); i++) {
-            wizardFilledList.put(profileFragment[i], false);
+        ArrayList<String> mockIds = new ArrayList<>(Arrays.asList(getActivity().getResources().getStringArray(R.array.profile_sub_ids)));
+        list = new ArrayList<>();
+        tagFr = new ArrayList<>();
+        frViewedList = new SparseBooleanArray();
+        setFragmentListByIds(mockIds, list, tagFr);
+
+
+        for (int i = 0; i < tagFr.size(); i++) {
+            wizardFilledList.put(tagFr.get(i), false);
+            frViewedList.put(i, false);
         }
+//        for (String s : tagFr) {
+//            wizardFilledList.put(s, false);
+//        }
+        listSize = list.size();
         adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), agUser, list);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager, true);
@@ -119,18 +140,38 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                int tabPos = tab.getPosition() + 1;
+                System.out.println("tab = " + tabPos);
+                System.out.println("listsize = " + list.size());
+                if (tabPos == listSize) {
+                    isLastPage = true;
+                }
+                if (tabPos < listSize) {
+                    if (isLastPage) {
+                        nextButton.setText("Продолжить");
+                    }
+                    isLastPage = false;
+                }
+                if (isLastPage) {
+                    nextButton.setText("Завершить");
+                }
+                try {
+                    setDotColor(tab, R.drawable.wizard_profile_selected_dot);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                frViewedList.put(tab.getPosition(), true);
                 try {
-                    boolean currWizardFilled = wizardFilledList.get(list.keyAt(tab.getPosition()));
-                    if (currWizardFilled) {
-                        ImageView dot = (ImageView) tab.getCustomView().findViewById(R.id.wizard_dot);
-                        Drawable myDrawable = getFragment().getResources().getDrawable(R.drawable.wizard_profile_default_dot);
-                        dot.setImageDrawable(myDrawable);
+                    boolean preWizardFr = wizardFilledList.get(tagFr.get(tab.getPosition()));
+                    if (preWizardFr) {
+                        setDotColor(tab, R.drawable.wizard_profile_default_dot);
+                    } else {
+                        setDotColor(tab, R.drawable.wizard_profile_warning_dot);
                     }
-
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -142,6 +183,43 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         });
     }
 
+    public void setFragmentListByIds(ArrayList<String> mockIds, List<Fragment> frList, List<String> tagList) {
+        if (mockIds.contains(AVATAR)) {
+            frList.add(new MakeAvatarFragment());
+            tagList.add(AVATAR);
+        }
+        if (mockIds.contains(EMAIL)) {
+            frList.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
+            tagList.add(EMAIL);
+        }
+        if (mockIds.contains(PERSONAL)) {
+            list.add(new WizardPersonalDataFragment());
+            tagList.add(PERSONAL);
+        }
+        if (mockIds.contains(FAMILY)) {
+            list.add(new WizardFamilyFragment());
+            tagList.add(FAMILY);
+        }
+        if (mockIds.contains(LOCATION)) {
+            list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
+            list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
+            tagList.add(TAG_REGISTRATION);
+            tagList.add(TAG_RESIDENCE);
+        }
+        if (mockIds.contains(EXTRAINFO)) {
+            list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
+            tagList.add(EXTRAINFO);
+        }
+        if (mockIds.contains(SOCIAL)) {
+            list.add(BindingSocialFragment.newInstance(true));
+            tagList.add(SOCIAL);
+        }
+        if (mockIds.contains(PGU)) {
+            list.add(PguAuthFragment.newInstanceForWizard());
+            tagList.add(SOCIAL);
+        }
+    }
+
     public void setRxEventsBusListener() {
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
@@ -149,20 +227,98 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                 .subscribe(o -> {
                     if (o instanceof Events.WizardEvents) {
                         Events.WizardEvents events = (Events.WizardEvents) o;
+                        agUser = new AgUser(getActivity());
                         switch (events.getWizardType()) {
                             case Events.WizardEvents.WIZARD_AVATAR:
-                                wizardFilledList.put("avatar", true);
+                                wizardFilledList.put(AVATAR, true);
                                 break;
                             case Events.WizardEvents.WIZARD_EMAIL:
-                                wizardFilledList.put("email", true);
+                                wizardFilledList.put(EMAIL, true);
                                 break;
                             case Events.WizardEvents.WIZARD_PERSONAL:
+                                wizardFilledList.put(PERSONAL, true);
                                 break;
                             case Events.WizardEvents.WIZARD_FAMALY:
+                                wizardFilledList.put(FAMILY, true);
+                                checkBirthdayKidsFr();
+                                break;
+                            case Events.WizardEvents.WIZARD_KIDS:
+                                wizardFilledList.put(TAG_BIRTHDAYKIDS, true);
+                                break;
+                            case Events.WizardEvents.WIZARD_REGISTRATION:
+                                wizardFilledList.put(TAG_REGISTRATION, true);
+                                break;
+                            case Events.WizardEvents.WIZARD_RESIDENCE:
+                                wizardFilledList.put(TAG_RESIDENCE, true);
+                                break;
+                            case Events.WizardEvents.WIZARD_WORK:
+                                wizardFilledList.put(EXTRAINFO, true);
+                                break;
+                            case Events.WizardEvents.WIZARD_SOCIAL:
+                                wizardFilledList.put(SOCIAL, true);
+                                break;
+                            case Events.WizardEvents.WIZARD_PGU:
+                                wizardFilledList.put(PGU, true);
                                 break;
                         }
                     }
                 });
+    }
+
+    public void checkPageNumber() {
+        int nextPage = pager.getCurrentItem() + 1;
+        System.out.println("next page = " + nextPage);
+        if (nextPage <= list.size()) {
+            pager.setCurrentItem(nextPage);
+            if (nextPage == list.size()) {
+                nextButton.setText("Завершить");
+            } else {
+                nextButton.setText("Продолжить");
+            }
+        }
+    }
+
+    public void checkBirthdayKidsFr() {
+        if (agUser.getChildCount() > 0) {
+            if (!tagFr.contains(TAG_BIRTHDAYKIDS)) {
+                int nextPosition = pager.getCurrentItem() + 1;
+                System.out.println("nextPosition = " + nextPosition);
+                addFragment(nextPosition, EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
+                System.out.println("tagFr size = " + tagFr.size());
+                tagFr.add(nextPosition, TAG_BIRTHDAYKIDS);
+                System.out.println("tagFr size after= " + tagFr.size());
+                wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
+                System.out.println("pager.getChildCount() = " + pager.getChildCount());
+                System.out.println("frViewedList size = " + frViewedList.size());
+                frViewedList.put(frViewedList.size() + 1, false);
+                System.out.println("frViewedList size after = " + frViewedList.size());
+                reDrawDots();
+            }
+        }
+        if (tagFr.contains(TAG_BIRTHDAYKIDS) && agUser.getChildCount() == 0) {
+            int nextPosition = pager.getCurrentItem() + 1;
+            removeFragment(nextPosition);
+            tagFr.remove(TAG_BIRTHDAYKIDS);
+            wizardFilledList.remove(TAG_BIRTHDAYKIDS);
+            frViewedList.delete(nextPosition);
+            reDrawDots();
+        }
+    }
+
+    public void reDrawDots() {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            boolean isViewed = frViewedList.get(i);
+            String tag = tagFr.get(i);
+            boolean isFilled = wizardFilledList.get(tag);
+            System.out.println("i = " + i);
+            System.out.println("isViewed = " + isViewed);
+            System.out.println("tag = " + tag);
+            System.out.println("isFilled = " + isFilled);
+            if (isViewed && !isFilled) {
+                setDotColor(tab, R.drawable.wizard_profile_warning_dot);
+            }
+        }
     }
 
     public void setDotCustomView() {
@@ -174,14 +330,22 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 
     public void removeFragment(int index) {
         list.remove(index);
+        listSize = list.size();
         adapter.notifyDataSetChanged();
         setDotCustomView();
     }
 
     public void addFragment(int index, Fragment fragment) {
-//        list.add(index, fragment);
+        list.add(index, fragment);
+        listSize = list.size();
         adapter.notifyDataSetChanged();
         setDotCustomView();
+    }
+
+    public void setDotColor(TabLayout.Tab tab, @DrawableRes int res) {
+        ImageView dot = (ImageView) tab.getCustomView().findViewById(R.id.wizard_dot);
+        Drawable myDrawable = getActivity().getResources().getDrawable(res);
+        dot.setImageDrawable(myDrawable);
     }
 
     public void doNext() {

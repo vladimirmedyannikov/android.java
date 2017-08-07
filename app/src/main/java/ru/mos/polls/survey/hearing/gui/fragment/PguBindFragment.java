@@ -24,9 +24,11 @@ import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.model.QuestMessage;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.util.GuiUtils;
@@ -149,6 +151,7 @@ public class PguBindFragment extends JugglerFragment {
                 }
                 AgUser.setPguConnected(getActivity());
                 pguBindingListener.onSuccess(questMessage);
+                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, 0));
             }
 
             @Override

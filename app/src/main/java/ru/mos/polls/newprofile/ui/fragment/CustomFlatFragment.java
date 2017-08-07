@@ -19,11 +19,11 @@ public class CustomFlatFragment extends MenuBindingFragment<CustomFlatFragmentVM
     public static final String EXTRA_HOUSE = "extra_house";
     public static final int REQUEST_FLAT = 101;
 
-    public static CustomFlatFragment newInstanceForWizard(Flat flat, boolean hideWarning, String street, String house) {
-        return newInstance(flat, hideWarning, street, house, true);
+    public static CustomFlatFragment newInstanceForWizard(Flat flat, boolean hideWarning, String street, String house, int flatType) {
+        return newInstance(flat, hideWarning, street, house, true, flatType);
     }
 
-    public static CustomFlatFragment newInstance(Flat flat, boolean hideWarning, String street, String house, boolean forWizard) {
+    public static CustomFlatFragment newInstance(Flat flat, boolean hideWarning, String street, String house, boolean forWizard, int flatType) {
         CustomFlatFragment f = new CustomFlatFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_STREET, street);
@@ -31,6 +31,7 @@ public class CustomFlatFragment extends MenuBindingFragment<CustomFlatFragmentVM
         args.putSerializable(EXTRA_FLAT, flat);
         args.putBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, hideWarning);
         args.putBoolean(WizardProfileFragment.ARG_FOR_WIZARD, forWizard);
+        args.putInt(NewFlatFragment.ARG_FLAT_TYPE, flatType);
         f.setArguments(args);
         return f;
     }

@@ -45,4 +45,15 @@
         <item quantity="one">начислен</item>
         <item quantity="other">начислено</item>
     </plurals>
+
+    <string-array name="profile_sub_ids">
+        <item>avatar</item>
+        <item>updateEmail</item>
+        <item>updatePersonal</item>
+        <item>updateFamilyInfo</item>
+        <item>updateLocation</item>
+        <item>updateExtraInfo</item>
+        <item>updateSocial</item>
+        <item>bindToPGU</item>
+    </string-array>
 </resources>

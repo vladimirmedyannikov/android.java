@@ -31,6 +31,7 @@ import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
+import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.profile.controller.FlatApiController;
 import ru.mos.polls.profile.model.Reference;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -54,6 +55,7 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
     public static final String USER_ID = "userid";
     String savedStreet;
     String savedBuilding;
+    int flatType;
 
     public CustomFlatFragmentVM(CustomFlatFragment fragment, FragmentCustomFlatBinding binding) {
         super(fragment, binding);
@@ -72,6 +74,7 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
             savedStreet = extras.getString(CustomFlatFragment.EXTRA_STREET);
             savedBuilding = extras.getString(CustomFlatFragment.EXTRA_HOUSE);
             flat = (Flat) extras.getSerializable(CustomFlatFragment.EXTRA_FLAT);
+            flatType = extras.getInt(NewFlatFragment.ARG_FLAT_TYPE);
         }
     }
 
@@ -96,8 +99,8 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
     @Override
     public void onCreateOptionsMenu() {
         super.onCreateOptionsMenu();
-        if (forWizard) hideAllMenuIcon();
         showConfirmMenuIcon();
+        if (forWizard) hideAllMenuIcon();
     }
 
     public void confirmAction() {
@@ -134,7 +137,6 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                 .setBuilding(building.getText().toString().trim())
                 .setAreaId(areaReference.getValue())
                 .setBuildingId(USER_ID);
-        System.out.println("flat id " + flat.getFlatId());
         if (flat.isRegistration()) {
             FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(USER_ID
                     , building.getText().toString().trim()
@@ -190,11 +192,30 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                     newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
                     newFlat.save(getActivity());
                 }
-                showDeleteMenuIcon();
-                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_FLAT, newFlat));
-                getActivity().setResult(Activity.RESULT_OK);
-                getActivity().finish();
+                if (!forWizard) {
+                    showDeleteMenuIcon();
+                    EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                    AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_FLAT, newFlat));
+                    getActivity().setResult(Activity.RESULT_OK);
+                    getActivity().finish();
+                } else {
+                    int wizardType = 0;
+                    switch (flatType) {
+                        case NewFlatFragmentVM.FLAT_TYPE_REGISTRATION:
+                            wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
+                            break;
+                        case NewFlatFragmentVM.FLAT_TYPE_RESIDENCE:
+                            wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
+                            break;
+                        case NewFlatFragmentVM.FLAT_TYPE_WORK:
+                            wizardType = Events.WizardEvents.WIZARD_WORK;
+                            break;
+                    }
+                    int percent = 0;
+                    if (result != null) percent = result.getPercentFillProfile();
+                    AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                    disableView();
+                }
             }
         };
         Observable<ProfileSet.Response> responseObservabl =
@@ -202,6 +223,13 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservabl.subscribeWith(handler));
+    }
+
+    public void disableView() {
+        areaSpinner.setEnabled(false);
+        districtSpinner.setEnabled(false);
+        street.setEnabled(false);
+        building.setEnabled(false);
     }
 
     @Override

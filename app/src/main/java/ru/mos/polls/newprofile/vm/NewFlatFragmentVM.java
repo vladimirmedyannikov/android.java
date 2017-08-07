@@ -236,7 +236,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
         String building = etBuilding.getText().toString();
         if (!forWizard) {
             boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
-            getFragment().navigateToActivityForResult(new CustomFlatState(street, building, flat, isHideWarnings, false), CustomFlatFragment.REQUEST_FLAT);
+            getFragment().navigateToActivityForResult(new CustomFlatState(street, building, flat, isHideWarnings, false, flatType), CustomFlatFragment.REQUEST_FLAT);
         } else {
             if (wizardCustomFlatListener != null) {
                 wizardCustomFlatListener.onCustomFlatListener(street, building);

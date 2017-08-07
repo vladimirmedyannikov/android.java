@@ -43,6 +43,7 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.support.gui.AgSupportActivity;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
@@ -229,6 +230,12 @@ public class AgAuthActivity extends AuthActivity {
             super.onLogon();
         } catch (Exception ignored) {
         }
+        /**
+         * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}
+         * в {@link Session}
+         */
+        Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(this));
+
         startFromUri(getIntent());
         Statistics.auth(etLogin.getText().toString().trim(), true);
         statistics.auth(etLogin.getText().toString().trim(), true);

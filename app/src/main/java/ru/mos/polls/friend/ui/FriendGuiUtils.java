@@ -62,9 +62,15 @@ public class FriendGuiUtils {
         });
     }
 
-    public static void formatPhone(String number) {
+    public static String formatPhone(String number) {
         if (number != null) {
-            number = number.replace("+", "").replace("(", "").replace(")", "").replace(" ", "");
+            number = number.replace("+", "")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .replace(" ", "")
+                    .replace("#", "")
+                    .replace("-", "")
+                    .replace("*", "");
             switch (number.length()) {
                 case 10:
                     number = "7" + number;
@@ -77,5 +83,6 @@ public class FriendGuiUtils {
             }
 
         }
+        return number;
     }
 }

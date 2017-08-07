@@ -15,6 +15,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.ContactsController;
+import ru.mos.polls.friend.ContactsManager;
 import ru.mos.polls.friend.ui.FriendGuiUtils;
 import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.friend.ui.FriendsFragment;
@@ -36,7 +37,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     };
 
     private FriendsAdapter adapter;
-    private ContactsController contactsController;
+    private ContactsManager contactsManager;
 
     public FriendsFragmentVM(FriendsFragment fragment, LayoutFriendsBinding binding) {
         super(fragment, binding);
@@ -47,16 +48,23 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
         getFragment().getActivity().setTitle(R.string.mainmenu_friends_title);
         binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FriendsAdapter();
-        adapter.add(new FriendAddItemVW(this::chooseContact));
+        adapter.add(new FriendAddItemVW(new FriendAddItemVW.Callback() {
+            @Override
+            public void onClick() {
+                contactsManager.chooseContact();
+            }
+        }));
         binding.list.setAdapter(adapter);
         loadMyFriends();
         initContactsController();
+        chooseContact();
     }
 
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void chooseContact() {
         if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
-            contactsController.chooseContact();
+            ContactsController contactsController = new ContactsController(getFragment());
+            contactsController.silentFindFriends();
         } else {
             EasyPermissions.requestPermissions(getFragment(),
                     getFragment().getResources().getString(R.string.permission_contacts),
@@ -69,15 +77,15 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        contactsController.onActivityResult(requestCode, resultCode, data);
+        contactsManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initContactsController() {
-        contactsController = new ContactsController(getFragment());
-        contactsController.setCallback(new ContactsController.Callback() {
+        contactsManager = new ContactsManager(getFragment());
+        contactsManager.setCallback(new ContactsManager.Callback() {
             @Override
             public void onChooseContacts(String number) {
-                FriendGuiUtils.formatPhone(number);
+                number = FriendGuiUtils.formatPhone(number);
                 if (!adapter.has(number)) {
                     findFriend(number);
                 } else {
@@ -145,7 +153,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
                             "Я - Активный гражданин - А ТЫ? Давай вместе сделаем город лучше!",
                             "http://ag.mos.ru"
                     };
-                    contactsController.sms(phone, messages);
+                    contactsManager.sms(phone, messages);
                 })
                 .setNegativeButton(R.string.ag_no, null)
                 .show();

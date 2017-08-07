@@ -17,8 +17,11 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver<GeneralResponse<R>>{
 
-    private final ResponseErrorHandler errorHandler;
-    private final Progressable progressable;
+    private ResponseErrorHandler errorHandler =  ResponseErrorHandler.STUB;
+    private Progressable progressable = Progressable.STUB;
+
+    public HandlerApiResponseSubscriber() {
+    }
 
     public HandlerApiResponseSubscriber(final Context context) {
         this(new DefaultResponseErrorHandler(context), new DefaultProgressable(context));
@@ -29,9 +32,17 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
     }
 
     public HandlerApiResponseSubscriber(final ResponseErrorHandler errorHandler, final Progressable progressable) {
-        this.errorHandler = errorHandler;
-        this.progressable = progressable;
-        progressable.begin();
+        if (errorHandler == null) {
+            this.errorHandler = ResponseErrorHandler.STUB;
+        } else {
+            this.errorHandler = errorHandler;
+        }
+        if (progressable == null) {
+            this.progressable = Progressable.STUB;
+        } else {
+            this.progressable = progressable;
+        }
+        this.progressable.begin();
     }
 
     protected abstract void onResult(R result);

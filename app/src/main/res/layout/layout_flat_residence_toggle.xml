@@ -9,7 +9,9 @@
         android:id="@+id/flat_residence_toggle_view"
         android:visibility="gone"
         style="@style/item.linear.horizontal"
-        android:padding="@dimen/pd_xsmall">
+        android:paddingTop="@dimen/pd_xsmall"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingLeft="@dimen/pd_xxsmall">
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/flat_residence_toggle"

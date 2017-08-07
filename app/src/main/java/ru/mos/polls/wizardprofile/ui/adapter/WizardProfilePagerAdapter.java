@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -21,9 +22,9 @@ import ru.mos.polls.wizardprofile.ui.fragment.MakeAvatarFragment;
 
 public class WizardProfilePagerAdapter extends FragmentStatePagerAdapter {
     AgUser agUser;
-    List<Fragment> list;
+    ArrayMap<String, Fragment> list;
 
-    public WizardProfilePagerAdapter(FragmentManager fm, AgUser agUser, List<Fragment> list) {
+    public WizardProfilePagerAdapter(FragmentManager fm, AgUser agUser, ArrayMap<String, Fragment> list) {
         super(fm);
         this.agUser = agUser;
         this.list = list;
@@ -36,7 +37,8 @@ public class WizardProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return list.get(position);
+       return list.valueAt(position);
+//        return list.get(position);
     }
 
     @Override

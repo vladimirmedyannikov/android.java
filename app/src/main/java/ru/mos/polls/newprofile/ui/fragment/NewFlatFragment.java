@@ -8,6 +8,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -23,7 +24,7 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Frag
         return newInstance(flat, flatType, false);
     }
 
-    public static NewFlatFragment newInstanceHideWarning(Flat flat, int flatType) {
+    public static NewFlatFragment newInstanceForWizard(Flat flat, int flatType) {
         return newInstance(flat, flatType, true);
     }
 
@@ -32,7 +33,7 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Frag
         Bundle args = new Bundle(3);
         args.putInt(ARG_FLAT_TYPE, flatType);
         args.putSerializable(ARG_FLAT, flat);
-        args.putBoolean(ARG_HIDE_WARNING_FOR_ADD_FLATS, hideWarning);
+        args.putBoolean(WizardProfileFragment.ARG_FOR_WIZARD, hideWarning);
         f.setArguments(args);
         return f;
     }

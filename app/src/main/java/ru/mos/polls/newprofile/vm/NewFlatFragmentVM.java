@@ -43,6 +43,8 @@ import ru.mos.polls.profile.gui.fragment.location.BuildingWatcher;
 import ru.mos.polls.profile.gui.fragment.location.StreetWatcher;
 import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
+import ru.mos.polls.wizardprofile.vm.WizardCustomFlatListener;
 
 /**
  * Created by Trunks on 23.07.2017.
@@ -72,6 +74,8 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     LinearLayout buildingNotFoundContainer;
     private boolean isAddressSelected;
     boolean forWizard;
+    WizardCustomFlatListener wizardCustomFlatListener;
+
 
     public NewFlatFragmentVM(NewFlatFragment fragment, FragmentNewFlatBinding binding) {
         super(fragment, binding);
@@ -80,8 +84,11 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     @Override
     protected void initialize(FragmentNewFlatBinding binding) {
         Bundle extras = getFragment().getArguments();
-        flatType = extras.getInt(NewFlatFragment.ARG_FLAT_TYPE);
-        flat = (Flat) extras.get(NewFlatFragment.ARG_FLAT);
+        if (extras != null) {
+            flatType = extras.getInt(NewFlatFragment.ARG_FLAT_TYPE);
+            flat = (Flat) extras.get(NewFlatFragment.ARG_FLAT);
+            forWizard = extras.getBoolean(WizardProfileFragment.ARG_FOR_WIZARD);
+        }
         etStreet = binding.layoutAddFlat.etStreet;
         etBuilding = binding.layoutAddFlat.etBuilding;
         streetNotFoundView = binding.layoutAddFlat.streetNotFoundContainer;
@@ -112,7 +119,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                         switch (action.getAction()) {
                             case Events.ProfileEvents.UPDATE_FLAT:
                                 Flat upDateFlat = action.getFlat();
-                                if (upDateFlat!= null) {
+                                if (upDateFlat != null) {
                                     flat = upDateFlat;
                                 }
                                 break;
@@ -225,16 +232,17 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     }
 
     void customFlat() {
-        boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
         String street = etStreet.getText().toString();
-        String house = etBuilding.getText().toString();
-//        CustomFlatActivity.startActivity(NewAddressActivity.this, street, house, flat, isHideWarnings);
-//        CustomFlatFragment.newInstance(flat, isHideWarnings, street, house, false);
-//        FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
-//        CustomFlatFragment cff = CustomFlatFragment.newInstance(flat, isHideWarnings, street, house, false);
-//        ft.replace(R.id.layout_main, cff);
-//        ft.commit();
-        getFragment().navigateToActivityForResult(new CustomFlatState(street, house, flat, isHideWarnings, false), CustomFlatFragment.REQUEST_FLAT);
+        String building = etBuilding.getText().toString();
+        if (!forWizard) {
+            boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
+            getFragment().navigateToActivityForResult(new CustomFlatState(street, building, flat, isHideWarnings, false), CustomFlatFragment.REQUEST_FLAT);
+        } else {
+            if (wizardCustomFlatListener != null) {
+                wizardCustomFlatListener.onCustomFlatListener(street, building);
+            }
+        }
+
     }
 
     public void visibilityFlatInput(int gone) {
@@ -251,6 +259,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
     @Override
     public void onCreateOptionsMenu() {
         processMenuIcon();
+        if (forWizard) hideAllMenuIcon();
     }
 
     public void processMenuIcon() {
@@ -300,6 +309,10 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 getActivity().finish();
             }
         }
+    }
+
+    public void setWizardCustomFlatListener(WizardCustomFlatListener wizardCustomFlatListener) {
+        this.wizardCustomFlatListener = wizardCustomFlatListener;
     }
 
     public void confirmAction() {
@@ -371,9 +384,27 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                     flat.delete(getActivity());
                 }
                 setupViewIfNotEmpty();
-                showDeleteMenuIcon();
                 EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                getActivity().finish();
+                if (!forWizard) {
+                    showDeleteMenuIcon();
+                    getActivity().finish();
+                } else {
+                    int wizardType = 0;
+                    switch (flatType) {
+                        case FLAT_TYPE_REGISTRATION:
+                            wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
+                            break;
+                        case FLAT_TYPE_RESIDENCE:
+                            wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
+                            break;
+                        case FLAT_TYPE_WORK:
+                            wizardType = Events.WizardEvents.WIZARD_WORK;
+                            break;
+                    }
+                    int percent = 0;
+                    if (result != null) percent = result.getPercentFillProfile();
+                    AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                }
             }
         };
         Observable<ProfileSet.Response> responseObservabl =

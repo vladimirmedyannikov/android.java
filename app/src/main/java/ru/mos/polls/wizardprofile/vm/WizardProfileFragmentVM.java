@@ -4,8 +4,8 @@ package ru.mos.polls.wizardprofile.vm;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +17,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
@@ -25,13 +24,14 @@ import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.NavigateFragment;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
-import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
 import ru.mos.polls.wizardprofile.ui.adapter.WizardProfilePagerAdapter;
 import ru.mos.polls.wizardprofile.ui.fragment.MakeAvatarFragment;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
@@ -45,10 +45,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     TabLayout tabLayout;
     AgUser agUser;
     Button nextButton;
-    List<Fragment> list;
+    ArrayMap<String, Fragment> list;
 
     WizardProfilePagerAdapter adapter;
-    SparseArray<Boolean> wizardFilledList;
+    ArrayMap<String, Boolean> wizardFilledList;
 
     public WizardProfileFragmentVM(WizardProfileFragment fragment, FragmentWizardProfileBinding binding) {
         super(fragment, binding);
@@ -60,7 +60,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         tabLayout = binding.wizardTabLayout;
         agUser = new AgUser(getActivity());
         nextButton = binding.wizardAction;
-        wizardFilledList = new SparseArray<>();
+        wizardFilledList = new ArrayMap<>();
     }
 
     @Override
@@ -70,25 +70,34 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         nextButton.setOnClickListener(v -> {
             doNext();
         });
-        list = new ArrayList<>();
-        list.add(new MakeAvatarFragment());
-        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
-        list.add(new WizardPersonalDataFragment());
-        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.COUNT_KIDS));
-        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
-        list.add(NewFlatFragment.newInstance(agUser.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
-        list.add(NewFlatFragment.newInstance(agUser.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
-        list.add(NewFlatFragment.newInstance(agUser.getWork(), NewFlatFragmentVM.FLAT_TYPE_WORK));
-        list.add(BindingSocialFragment.newInstance(true));
-        list.add(PguAuthFragment.newInstanceForWizard());
-
+        String[] profileFragment = new String[]{"avatar", "email", "updatePersonal", "family", "birthdaykids", "registration", "residence", "work", "updateSocial", "bindToPGU"};
+        list = new ArrayMap<>();
+//        list.add(new MakeAvatarFragment());
+//        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
+//        list.add(new WizardPersonalDataFragment());
+//        list.add(new WizardFamilyFragment());
+//        list.add(EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
+//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
+//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
+//        list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
+//        list.add(BindingSocialFragment.newInstance(true));
+//        list.add(PguAuthFragment.newInstanceForWizard());
+        list.put("avatar", new MakeAvatarFragment());
+        list.put("email", EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.PERSONAL_EMAIL));
+        list.put("updatePersonal", new WizardPersonalDataFragment());
+        list.put("family", new WizardFamilyFragment());
+        list.put("birthdaykids", EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
+        list.put("registration", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
+        list.put("residence", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
+        list.put("work", WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
+        list.put("updateSocial", BindingSocialFragment.newInstance(true));
+        list.put("bindToPGU", PguAuthFragment.newInstanceForWizard());
         for (int i = 0; i < list.size(); i++) {
-            wizardFilledList.put(i, false);
+            wizardFilledList.put(profileFragment[i], false);
         }
         adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), agUser, list);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager, true);
-
         setDotCustomView();
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -115,11 +124,11 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 try {
-                    boolean currWizardFilled = wizardFilledList.get(tab.getPosition());
+                    boolean currWizardFilled = wizardFilledList.get(list.keyAt(tab.getPosition()));
                     if (currWizardFilled) {
-                    ImageView dot = (ImageView) tab.getCustomView().findViewById(R.id.wizard_dot);
-                    Drawable myDrawable = getFragment().getResources().getDrawable(R.drawable.wizard_profile_default_dot);
-                    dot.setImageDrawable(myDrawable);
+                        ImageView dot = (ImageView) tab.getCustomView().findViewById(R.id.wizard_dot);
+                        Drawable myDrawable = getFragment().getResources().getDrawable(R.drawable.wizard_profile_default_dot);
+                        dot.setImageDrawable(myDrawable);
                     }
 
                 } catch (NullPointerException e) {
@@ -142,8 +151,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                         Events.WizardEvents events = (Events.WizardEvents) o;
                         switch (events.getWizardType()) {
                             case Events.WizardEvents.WIZARD_AVATAR:
+                                wizardFilledList.put("avatar", true);
                                 break;
                             case Events.WizardEvents.WIZARD_EMAIL:
+                                wizardFilledList.put("email", true);
                                 break;
                             case Events.WizardEvents.WIZARD_PERSONAL:
                                 break;
@@ -168,7 +179,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     }
 
     public void addFragment(int index, Fragment fragment) {
-        list.add(index, fragment);
+//        list.add(index, fragment);
         adapter.notifyDataSetChanged();
         setDotCustomView();
     }

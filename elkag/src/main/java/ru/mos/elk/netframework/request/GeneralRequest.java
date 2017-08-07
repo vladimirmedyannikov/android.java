@@ -59,7 +59,7 @@ public abstract class GeneralRequest<T> extends JsonRequest<T> {
             if(response.headers.containsKey(CACHE_FLAG))
             	return Response.success(parseResult(json), null);
             
-            Session.setSession(json.isNull(Session.SESSION_ID) ? null : json.getString(Session.SESSION_ID)); 
+            Session.setSession(json.isNull(Session.SESSION_ID) ? null : json.getString(Session.SESSION_ID));
             int errorCode = json.optInt(ERROR_CODE);
             if (errorCode != ResponseErrorCode.OK) {
             	VolleyError error = new VolleyError(errorCode == ResponseErrorCode.UNAUTHORIZED? "Логин или пароль указаны неверно.":json.optString(ERROR_MESSAGE));

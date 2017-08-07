@@ -1,125 +1,83 @@
 package ru.mos.polls.friend;
 
-import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.telephony.SmsManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
+import ru.mos.polls.friend.ui.FriendGuiUtils;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
+import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
+import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
+
 /**
- * Работа с контактами устройства {@link ContactsContract}
- *
  * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 01.08.17 22:14.
+ *         on 07.08.17 17:35.
  */
 
 public class ContactsController {
-    private static final int REQUEST_CODE = 1234;
-
-    private Fragment fragment;
-    private Callback callback;
+    private ContactsManager contactsManager;
 
     public ContactsController(Fragment fragment) {
-        this.fragment = fragment;
+        contactsManager = new ContactsManager(fragment);
     }
 
-    public void setCallback(Callback callback) {
-        if (callback == null) {
-            this.callback = Callback.STUB;
-        } else {
-            this.callback = callback;
-        }
-    }
-
-    /**
-     * Выбор одного контакта из телефонной книги, используется
-     * в сочетании с {@link #onActivityResult(int, int, Intent)}
-     */
-    public void chooseContact() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-        fragment.startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    /**
-     * Отправка {@link android.provider.Telephony.Sms}
-     *
-     * @param phoneNumber {@link String} телефонный номер
-     * @param text        массив строк сообщения
-     */
-    public void sms(String phoneNumber, String[] text) {
-        SmsManager sms = SmsManager.getDefault();
-        ArrayList<String> smsBody = new ArrayList<>();
-        Collections.addAll(smsBody, text);
-        sms.sendMultipartTextMessage(phoneNumber,
-                null,
-                smsBody,
-                new ArrayList<PendingIntent>(),
-                new ArrayList<PendingIntent>());
-    }
-
-    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        boolean result = false;
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri != null) {
-                        Cursor cursor = null;
-                        try {
-                            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
-                                    ContactsContract.CommonDataKinds.Phone.TYPE};
-                            cursor = fragment.getActivity().getContentResolver().query(uri,
-                                    projection,
-                                    null,
-                                    null,
-                                    null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                callback.onChooseContacts(number);
-                            }
-                        } catch (Exception e) {
-                            callback.onError(e);
-                        } finally {
-                            if (cursor != null) {
-                                cursor.close();
-                            }
-                        }
-                    }
-                    result = true;
-                }
+    public void silentFindFriends() {
+        HandlerApiResponseSubscriber<FriendMy.Response.Result> handler = new HandlerApiResponseSubscriber<FriendMy.Response.Result>() {
+            @Override
+            protected void onResult(FriendMy.Response.Result result) {
+                onMyFriendsLoaded(result.getFriends());
             }
-        }
-        return result;
+        };
+
+        AGApplication
+                .api
+                .friendMy(new FriendMy.Request())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(handler);
+
     }
 
-    public interface Callback {
-        Callback STUB = new Callback() {
+    private void onMyFriendsLoaded(List<Friend> friends) {
+        contactsManager.setCallback(new ContactsManager.Callback() {
             @Override
             public void onChooseContacts(String number) {
             }
 
             @Override
             public void onGetAllContacts(List<String> numbers) {
+                List<String> result = new ArrayList<>();
+                for (String number : numbers) {
+                    number = FriendGuiUtils.formatPhone(number);
+                    boolean yetHas = false;
+                    for (Friend friend : friends) {
+                        if (number.equalsIgnoreCase(friend.getPhone())) {
+                            yetHas = true;
+                            break;
+                        }
+                    }
+                    if (!yetHas) {
+                        result.add(number);
+                    }
+                }
+                if (result.size() > 0) {
+                    AGApplication
+                            .api
+                            .friendFind(new FriendFind.Request(result.subList(0, 20)))
+                            .subscribeOn(Schedulers.newThread())
+                            .subscribe();
+                }
             }
 
             @Override
             public void onError(Exception e) {
             }
-        };
-
-        void onChooseContacts(String number);
-
-        void onGetAllContacts(List<String> numbers);
-
-        void onError(Exception e);
+        });
+        contactsManager.loadContacs();
     }
-
 }

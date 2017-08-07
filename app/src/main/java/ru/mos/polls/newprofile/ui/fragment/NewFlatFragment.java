@@ -46,11 +46,6 @@ public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, Frag
     }
 
     @Override
-    public int getVariable() {
-        return BR.viewModel;
-    }
-
-    @Override
     public int getLayoutResources() {
         return R.layout.fragment_new_flat;
     }

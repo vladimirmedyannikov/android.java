@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mos.polls.R;
+
 /**
  * Класс для ответа по запросу Округа или Района
  *
@@ -61,13 +63,13 @@ public class Reference {
     public static class Adapter extends ArrayAdapter<Reference> {
 
         public Adapter(Context context, List<Reference> objects) {
-            super(context, -1, objects);
+            super(context, R.layout.layout_spinner_view, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = View.inflate(getContext(), android.R.layout.simple_spinner_item, null);
+                convertView = View.inflate(getContext(), R.layout.layout_spinner_view, null);
             }
             ((TextView) convertView).setText(getItem(position).getLabel());
             return convertView;

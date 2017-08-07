@@ -21,8 +21,9 @@ import butterknife.ButterKnife;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.newprofile.vm.RequestInterfaceListener;
 
-public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment {
+public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment  {
 
     protected abstract VM onCreateViewModel(B binding);
 
@@ -132,4 +133,5 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         hideKeyboard(this);
         return super.onUpPressed();
     }
+
 }

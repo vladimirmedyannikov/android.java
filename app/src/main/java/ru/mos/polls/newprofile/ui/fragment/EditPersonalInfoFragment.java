@@ -11,6 +11,7 @@ import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.util.GuiUtils;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -21,11 +22,16 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     public static final String ARG_PERSONAL_INFO = "arg_personal_info";
     public static final String ARG_AGUSER = "arg_aguser";
 
-    public static EditPersonalInfoFragment newInstance(AgUser agUser, int personalType) {
+    public static EditPersonalInfoFragment newInstanceForWizard(AgUser agUser, int personalType) {
+        return newInstance(agUser, personalType, true);
+    }
+
+    public static EditPersonalInfoFragment newInstance(AgUser agUser, int personalType, boolean forWizard) {
         EditPersonalInfoFragment f = new EditPersonalInfoFragment();
-        Bundle args = new Bundle(2);
+        Bundle args = new Bundle();
         args.putInt(ARG_PERSONAL_INFO, personalType);
         args.putSerializable(ARG_AGUSER, agUser);
+        args.putBoolean(WizardProfileFragment.ARG_FOR_WIZARD, forWizard);
         f.setArguments(args);
         return f;
     }
@@ -41,11 +47,6 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public int getVariable() {
-        return BR.viewModel;
     }
 
     @Override
@@ -85,5 +86,10 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void doRequestAction() {
+        getViewModel().confirmAction();
     }
 }

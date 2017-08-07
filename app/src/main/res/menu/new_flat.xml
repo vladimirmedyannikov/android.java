@@ -10,6 +10,6 @@
         android:id="@+id/action_delet_flat"
         android:title="@string/menu_delet_flat"
         android:orderInCategory="101"
-        android:icon="@drawable/ic_new_file"
+        android:icon="@drawable/ic_lnr_trash"
         app:showAsAction="ifRoom" />
 </menu>

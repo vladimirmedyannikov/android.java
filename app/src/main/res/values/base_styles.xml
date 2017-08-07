@@ -131,6 +131,10 @@
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
 
+    <style name="text.xsmall">
+        <item name="android:textSize">@dimen/ts_xsmall</item>
+    </style>
+
     <style name="text.small">
         <item name="android:textSize">@dimen/ts_small</item>
     </style>
@@ -230,6 +234,10 @@
     </style>
 
     <style name="text.green">
+        <item name="android:textColor">@color/greenText</item>
+    </style>
+
+    <style name="text.xsmall.green">
         <item name="android:textColor">@color/greenText</item>
     </style>
 

@@ -31,6 +31,7 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.InputFilterMinMax;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -49,10 +50,13 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     RecyclerView recyclerView;
     List<BirthdayKids> birthdayKidsList;
     boolean isDataChanged;
+    boolean forWizard;
+    Personal personal;
 
     public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, FragmentNewEditPersonalInfoBinding binding) {
         super(fragment, binding);
     }
+
 
     @Override
     protected void initialize(FragmentNewEditPersonalInfoBinding binding) {
@@ -60,6 +64,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         if (extras != null) {
             personalType = extras.getInt(EditPersonalInfoFragment.ARG_PERSONAL_INFO);
             agUser = (AgUser) extras.get(EditPersonalInfoFragment.ARG_AGUSER);
+            forWizard = extras.getBoolean(WizardProfileFragment.ARG_FOR_WIZARD);
         } else {
             agUser = new AgUser(getActivity());
         }
@@ -116,6 +121,10 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         recyclerView.setAdapter(adapter);
     }
 
+    public void setPersonal(Personal personal) {
+        this.personal = personal;
+    }
+
     public void setKidsBirthdayDateView() {
         List<Long> kidsYearList = agUser.getChildBirthdays();
         birthdayKidsList = new ArrayList<>();
@@ -152,9 +161,23 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu() {
+        super.onCreateOptionsMenu();
+        if (forWizard) {
+            hideAllMenuIcon();
+        }
+    }
+
+    public void hideAllMenuIcon() {
+        getFragment().hideMenuItem(R.id.action_confirm);
+    }
+
     public void confirmAction() { //каждые данные сохранятьются отдельно
         boolean validationOk = false;
-        Personal personal = new Personal();
+        if (personal == null) {
+            personal = new Personal();
+        }
         switch (personalType) {
             case PERSONAL_EMAIL:
                 validationOk = checkEmailValid();
@@ -181,7 +204,14 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 validationOk = true;
                 break;
         }
-        if (validationOk) saveUser(personal);
+        System.out.println("doRequestAction " + "EditPersonalInfoFragmentVM");
+        System.out.println("personal " + personal.getSex());
+        System.out.println("personal " + personal.getBirthday());
+        System.out.println("personal " + personal.getSurname());
+        System.out.println("personal " + personal.getMiddlename());
+        System.out.println("personal " + personal.getFirstname());
+
+//        if (validationOk) saveUser(personal);
     }
 
     public boolean checkFIOValid() {
@@ -210,9 +240,22 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
-                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
-                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                getActivity().finish();
+                if (!forWizard) {
+                    AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
+                    EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                    getActivity().finish();
+                } else {
+                    int wizardType = 0;
+                    switch (personalType) {
+                        case PERSONAL_EMAIL:
+                            wizardType = Events.WizardEvents.WIZARD_EMAIL;
+                            break;
+                        case PERSONAL_FIO:
+                            wizardType = Events.WizardEvents.WIZARD_PERSONAL;
+                            break;
+                    }
+                    AGApplication.bus().send(new Events.WizardEvents(wizardType));
+                }
             }
         };
         Observable<ProfileSet.Response> responseObservabl =

@@ -53,11 +53,18 @@ public class FlatsEntity {
             super(building_id);
         }
 
+        public RegistrationEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
+        }
     }
 
     public static class WorkEntity extends BaseFlat {
         public WorkEntity(String building_id) {
             super(building_id);
+        }
+
+        public WorkEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
         }
 
         public WorkEntity(String flat_id, String building_id) {
@@ -75,11 +82,15 @@ public class FlatsEntity {
             super(flat_id, building_id);
         }
 
+        public ResidenceEntity(String building_id, String building, String street, String area_id) {
+            super(building_id, building, street, area_id);
+        }
+
         public ResidenceEntity() {
         }
     }
 
-    static abstract class BaseFlat {
+    public static class BaseFlat {
         public BaseFlat(String building_id) {
             this.building_id = building_id;
         }
@@ -92,6 +103,13 @@ public class FlatsEntity {
             this.building_id = building_id;
         }
 
+        public BaseFlat(String building_id, String building, String street, String area_id) {
+            this.building_id = building_id;
+            this.building = building;
+            this.street = street;
+            this.area_id = area_id;
+        }
+
         /**
          * flat_id : 266574
          * building_id : 29419-2
@@ -99,6 +117,11 @@ public class FlatsEntity {
 
         private String flat_id;
         private String building_id;
+        private String flat;
+        private String building;
+        private String street;
+        private String city;
+        private String area_id;
         private Boolean kill;
 
         public void setKill(Boolean kill) {
@@ -119,6 +142,26 @@ public class FlatsEntity {
 
         public void setBuilding_id(String building_id) {
             this.building_id = building_id;
+        }
+
+        public void setFlat(String flat) {
+            this.flat = flat;
+        }
+
+        public void setBuilding(String building) {
+            this.building = building;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public void setArea_id(String area_id) {
+            this.area_id = area_id;
         }
     }
 }

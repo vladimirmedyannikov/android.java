@@ -5,19 +5,62 @@
         style="@style/root"
         android:fillViewport="true">
 
-        <LinearLayout
-            android:id="@+id/authContainer"
-            style="@style/item.linear">
 
-            <include layout="@layout/layout_pgu_auth_header"/>
+        <RelativeLayout
+            android:id="@+id/authContainer"
+            style="@style/root"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/pgu_state_layer"
+                layout="@layout/layout_pgu_auth_header"/>
 
             <TextView
                 android:id="@+id/pguTitle"
                 style="@style/text.normal.black"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pgu_state_layer"
+                android:layout_marginTop="22dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:padding="@dimen/pd_xsmall"
                 android:text="@string/pgu_auth_message"/>
-        </LinearLayout>
+
+
+            <Button
+                android:id="@+id/pgu_connect_btn"
+                style="@style/button.centered"
+                android:layout_below="@id/pguTitle"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:minWidth="@dimen/vs_xxlarge"
+                android:text="Связать профили"
+                android:textSize="@dimen/ts_normal"/>
+
+            <TextView
+                android:id="@+id/rebind"
+                style="@style/text.small.green"
+                android:layout_below="@id/pguTitle"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pd_xsmall"
+                android:minWidth="@dimen/vs_xxxlarge"
+                android:padding="@dimen/pd_xsmall"
+                android:paddingBottom="@dimen/pd_xxsmall"
+                android:paddingTop="@dimen/pd_xxsmall"
+                android:text="@string/pgu_rebind"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                style="@style/wrap"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <include
+                    android:id="@+id/help"
+                    layout="@layout/layout_help"/>
+            </LinearLayout>
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

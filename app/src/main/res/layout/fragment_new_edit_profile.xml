@@ -204,7 +204,7 @@
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_binding_mos_title"
                             style="@style/edit_profile"
-                            android:hint="Связь с mos.ru"/>
+                            android:hint="@string/connection_mos_pgu_title"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/edit_binding_mos_status"

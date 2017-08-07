@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/text.link.green"
-    android:id="@+id/help"
-    android:layout_marginBottom="@dimen/pd_xxsmall"
-    android:layout_marginTop="@dimen/pd_xxlarge"
-    android:text="@string/help"
-    />
-<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/help"-->
-    <!--android:layout_width="@dimen/vs_xxxlarge"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginBottom="@dimen/pd_xxsmall"-->
-    <!--android:layout_marginTop="@dimen/pd_xxlarge"-->
-    <!--android:background="@drawable/ag_list_selector"-->
-    <!--android:gravity="center"-->
-    <!--android:padding="@dimen/pd_xsmall"-->
-    <!--android:text="@string/help"-->
-    <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-    <!--android:textColor="@color/greenText" />-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/help"
+        style="@style/text.link.green"
+        android:layout_marginBottom="@dimen/pd_xxsmall"
+        android:layout_marginTop="@dimen/pd_xxlarge"
+        android:text="@string/help"/>
+</layout>

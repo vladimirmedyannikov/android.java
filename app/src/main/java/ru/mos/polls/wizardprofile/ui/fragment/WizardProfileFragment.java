@@ -11,6 +11,9 @@ import ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM;
  */
 
 public class WizardProfileFragment extends BindingFragment<WizardProfileFragmentVM, FragmentWizardProfileBinding> {
+
+    public static final String ARG_FOR_WIZARD = "for_wizard";
+
     @Override
     protected WizardProfileFragmentVM onCreateViewModel(FragmentWizardProfileBinding binding) {
         return new WizardProfileFragmentVM(this, binding);

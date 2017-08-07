@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.CustomFlatFragmentVM"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        style="@style/root"
+        android:background="@color/white">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/linear"
+                android:padding="@dimen/pd_xsmall">
+
+                <TextView
+                    style="@style/text.xsmall.green"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
+                    android:text="@string/flat_district"/>
+
+                <Spinner
+                    android:id="@+id/districtSpinner"
+                    style="@style/item"
+                    android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:paddingLeft="@dimen/pd_xxxsmall"/>
+
+                <TextView
+                    android:id="@+id/areaLabel"
+                    style="@style/text.xsmall.green"
+                    android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
+                    android:text="@string/flat_area"
+                    android:visibility="gone"/>
+
+                <Spinner
+                    android:id="@+id/areaSpinner"
+                    style="@style/item"
+                    android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:clickable="false"
+                    android:paddingLeft="@dimen/pd_xxxsmall"
+                    android:visibility="gone"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/street_wrapper"
+                    style="@style/item">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/street"
+                        style="@style/input"
+                        android:hint="@string/flat_street"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/building_wrapper"
+                    style="@style/item">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/building"
+                        style="@style/input"
+                        android:hint="@string/flat_building"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <include layout="@layout/layout_flat_warning_block"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

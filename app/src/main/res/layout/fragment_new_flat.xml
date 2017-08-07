@@ -15,7 +15,7 @@
 
         <ScrollView
             style="@style/root"
-            android:background="@drawable/ag_back">
+            android:background="@color/white">
 
             <LinearLayout
                 style="@style/linear"

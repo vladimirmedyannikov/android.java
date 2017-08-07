@@ -1,5 +1,6 @@
 package ru.mos.polls.friend.vm;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
@@ -27,6 +30,11 @@ import ru.mos.polls.util.GuiUtils;
  */
 
 public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
+    public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;
+    public static final String[] CONTACTS_PERMS = {
+            Manifest.permission.READ_CONTACTS
+    };
+
     private FriendsAdapter adapter;
     private ContactsController contactsController;
 
@@ -36,15 +44,26 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
 
     @Override
     protected void initialize(LayoutFriendsBinding binding) {
-        getFragment().getActivity().setTitle(R.string.mainmenu_friends);
+        getFragment().getActivity().setTitle(R.string.mainmenu_friends_title);
         binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FriendsAdapter();
-        adapter.add(new FriendAddItemVW(() -> {
-            contactsController.chooseContact();
-        }));
+        adapter.add(new FriendAddItemVW(this::chooseContact));
         binding.list.setAdapter(adapter);
         loadMyFriends();
         initContactsController();
+    }
+
+    @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
+    private void chooseContact() {
+        if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
+            contactsController.chooseContact();
+        } else {
+            EasyPermissions.requestPermissions(getFragment(),
+                    getFragment().getResources().getString(R.string.permission_contacts),
+                    CONTACTS_PERMISSION_REQUEST_CODE,
+                    CONTACTS_PERMS);
+        }
+
     }
 
     @Override

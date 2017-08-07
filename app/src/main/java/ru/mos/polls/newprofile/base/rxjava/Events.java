@@ -73,9 +73,19 @@ public class Events {
         public static final int WIZARD_PGU = 10;
 
         private int wizardType;
+        private int percentFillProfile;
+
+        public WizardEvents(int wizardType, int percentFillProfile) {
+            this.wizardType = wizardType;
+            this.percentFillProfile = percentFillProfile;
+        }
 
         public WizardEvents(int wizardType) {
             this.wizardType = wizardType;
+        }
+
+        public int getPercentFillProfile() {
+            return percentFillProfile;
         }
 
         public int getWizardType() {

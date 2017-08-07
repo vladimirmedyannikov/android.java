@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        style="@style/linear"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/item"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/pd_xxxsmall"
+            android:paddingLeft="@dimen/pd_small"
+            android:paddingRight="@dimen/pd_small">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/text.small.gray"
+                android:text="Семейное положение"
+                android:textSize="@dimen/ts_xsmall"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/edit_martial_status"
+                style="@style/edit_profile"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/black_lightest"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>

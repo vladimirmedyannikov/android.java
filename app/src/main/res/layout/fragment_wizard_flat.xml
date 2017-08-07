@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        style="@style/linear"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/pd_normal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/social_status_wrapper"
+                style="@style/item">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/social_status"
+                    style="@style/edit_profile"
+                    android:layout_marginBottom="@dimen/pd_xsmall"
+                    android:focusable="false"
+                    android:hint="@string/title_social_status"
+                    android:visibility="gone"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/wizard_flat_title"
+                style="@style/text.normal.black"
+                android:paddingLeft="@dimen/pd_xxxsmall"
+                android:text="@string/flat_title_registration"/>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>

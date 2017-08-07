@@ -204,14 +204,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 validationOk = true;
                 break;
         }
-        System.out.println("doRequestAction " + "EditPersonalInfoFragmentVM");
-        System.out.println("personal " + personal.getSex());
-        System.out.println("personal " + personal.getBirthday());
-        System.out.println("personal " + personal.getSurname());
-        System.out.println("personal " + personal.getMiddlename());
-        System.out.println("personal " + personal.getFirstname());
-
-//        if (validationOk) saveUser(personal);
+        if (validationOk) saveUser(personal);
     }
 
     public boolean checkFIOValid() {
@@ -253,8 +246,13 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                         case PERSONAL_FIO:
                             wizardType = Events.WizardEvents.WIZARD_PERSONAL;
                             break;
+                        case BIRTHDAY_KIDS:
+                            wizardType = Events.WizardEvents.WIZARD_KIDS;
+                            break;
                     }
-                    AGApplication.bus().send(new Events.WizardEvents(wizardType));
+                    int percent = 0;
+                    if (result != null) percent = result.getPercentFillProfile();
+                    AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
                 }
             }
         };

@@ -25,7 +25,6 @@ import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.OnDateSetCallback;
-import ru.mos.polls.newprofile.vm.RequestInterfaceListener;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 
 /**
@@ -163,7 +162,6 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
     }
 
     public void wizardAction() {
-        System.out.println("doRequestAction " + "WizardPersonalDataFragmentVM");
         if (checkField()) {
             personalInfoFragment.getViewModel().setPersonal(personal);
             personalInfoFragment.getViewModel().confirmAction();

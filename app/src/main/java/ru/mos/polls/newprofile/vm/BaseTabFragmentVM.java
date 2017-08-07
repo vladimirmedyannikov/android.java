@@ -28,6 +28,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.AvatarSet;
 import ru.mos.polls.newprofile.service.EmptyResponse;
@@ -153,6 +154,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
             protected void onResult(EmptyResult[] result) {
                 Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
                 isAvatarLoaded = true;
+                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, 3));
             }
         };
         Observable<EmptyResponse> responseObservable = AGApplication.api

@@ -1,6 +1,8 @@
 package ru.mos.polls.newprofile.service;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
@@ -31,6 +33,16 @@ public class ProfileSet extends AuthRequest {
         public static class Result {
             private FlatsEntity flats;
             private StatusEntity status;
+            @SerializedName("percent_fill_profile")
+            private int percentFillProfile;
+
+            public int getPercentFillProfile() {
+                return percentFillProfile;
+            }
+
+            public void setPercentFillProfile(int percentFillProfile) {
+                this.percentFillProfile = percentFillProfile;
+            }
 
             public FlatsEntity getFlats() {
                 return flats;

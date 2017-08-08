@@ -85,4 +85,12 @@ public class FriendGuiUtils {
         }
         return number;
     }
+
+    public static boolean isPhoneValid(String phone) {
+        return !TextUtils.isEmpty(phone)
+                && phone.length() == 11
+                && phone.charAt(0) == '7'
+                && TextUtils.isDigitsOnly(phone);
+
+    }
 }

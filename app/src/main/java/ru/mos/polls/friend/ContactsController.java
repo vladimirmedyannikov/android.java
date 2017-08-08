@@ -1,6 +1,7 @@
 package ru.mos.polls.friend;
 
-import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 
 /**
+ * Логика поиска друзей {@link #silentFindFriends()}
+ *
  * @author Sergey Elizarov (elizarov1988@gmail.com)
  *         on 07.08.17 17:35.
  */
@@ -22,10 +25,15 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 public class ContactsController {
     private ContactsManager contactsManager;
 
-    public ContactsController(Fragment fragment) {
-        contactsManager = new ContactsManager(fragment);
+    public ContactsController(Context context) {
+        contactsManager = new ContactsManager(context);
     }
 
+    /**
+     * Поиск друзей {@link Friend} {@link FriendFind} по номерам телефонов из справочника {@link ContactsManager}
+     * </br>
+     * Поиск осуществляется только по номерам телефонов, которые найдены среди аккаунтов друзей
+     */
     public void silentFindFriends() {
         HandlerApiResponseSubscriber<FriendMy.Response.Result> handler = new HandlerApiResponseSubscriber<FriendMy.Response.Result>() {
             @Override
@@ -54,21 +62,17 @@ public class ContactsController {
                 List<String> result = new ArrayList<>();
                 for (String number : numbers) {
                     number = FriendGuiUtils.formatPhone(number);
-                    boolean yetHas = false;
-                    for (Friend friend : friends) {
-                        if (number.equalsIgnoreCase(friend.getPhone())) {
-                            yetHas = true;
-                            break;
-                        }
-                    }
-                    if (!yetHas) {
+                    if (!isPhoneFriend(number, friends)
+                            && FriendGuiUtils.isPhoneValid(number)
+                            && !result.contains(number)) {
                         result.add(number);
                     }
                 }
-                if (result.size() > 0) {
+                List<List<String>> subLists = toSubLists(result, 20);
+                for (List<String> subList : subLists) {
                     AGApplication
                             .api
-                            .friendFind(new FriendFind.Request(result.subList(0, 20)))
+                            .friendFind(new FriendFind.Request(subList))
                             .subscribeOn(Schedulers.newThread())
                             .subscribe();
                 }
@@ -78,6 +82,53 @@ public class ContactsController {
             public void onError(Exception e) {
             }
         });
-        contactsManager.loadContacs();
+        contactsManager.loadContacts();
+    }
+
+    private boolean isPhoneFriend(String phone, List<Friend> friends) {
+        for (Friend friend : friends) {
+            if (friend.getPhone().equalsIgnoreCase(phone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Разбиение списка объектов на список списков объектов
+     * @param source исходный список объектов
+     * @param offset количество элементов в подсписке
+     * @return список списков
+     */
+    private List<List<String>> toSubLists(List<String> source, int offset) {
+        List<List<String>> result = new ArrayList<>();
+        int index = 0;
+        List<String> subList = new ArrayList<>();
+        for (String item : source) {
+            subList.add(item);
+            if (index >= offset - 1) {
+                index = 0;
+                result.add(subList);
+                subList = new ArrayList<>();
+            }
+            ++index;
+        }
+        return result;
+    }
+
+    public static class Manager {
+        private static final String PREFS = "contacts_controller_prefs";
+        private static final String UPDATE_TIME = "update_time";
+        private static final int INTERVAL = 24 * 60 * 1000;
+
+        public static boolean isNeedUpdate(Context context) {
+            SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+            return prefs.getLong(UPDATE_TIME, System.currentTimeMillis()) <= System.currentTimeMillis();
+        }
+
+        public static void increment(Context context) {
+            SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+            prefs.edit().putLong(UPDATE_TIME, System.currentTimeMillis() + INTERVAL);
+        }
     }
 }

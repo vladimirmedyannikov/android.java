@@ -1,6 +1,5 @@
 package ru.mos.polls;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -32,6 +31,7 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
+import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ui.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
@@ -67,6 +67,8 @@ import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
+
+import static ru.mos.polls.friend.vm.FriendsFragmentVM.CONTACTS_PERMS;
 
 public class MainActivity extends ToolbarAbstractActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String IS_TASK = "is_task";
@@ -150,6 +152,16 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         initGeotargetManager();
 
         subscribeEventsBus();
+    }
+
+    private void findFriends() {
+        if (ContactsController.Manager.isNeedUpdate(this)) {
+            if (EasyPermissions.hasPermissions(this, CONTACTS_PERMS)) {
+                ContactsController contactsController = new ContactsController(this);
+                contactsController.silentFindFriends();
+                ContactsController.Manager.increment(this);
+            }
+        }
     }
 
     @SuppressWarnings("VisibleForTests")

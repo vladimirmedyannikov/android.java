@@ -2,7 +2,7 @@ package ru.mos.polls.friend;
 
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,11 +24,11 @@ import java.util.List;
 public class ContactsManager {
     private static final int REQUEST_CODE = 1234;
 
-    private Fragment fragment;
+    private Context context;
     private Callback callback;
 
-    public ContactsManager(Fragment fragment) {
-        this.fragment = fragment;
+    public ContactsManager(Context context) {
+        this.context = context;
     }
 
     public void setCallback(Callback callback) {
@@ -43,7 +43,7 @@ public class ContactsManager {
      * Выбор одного контакта из телефонной книги, используется
      * в сочетании с {@link #onActivityResult(int, int, Intent)}
      */
-    public void chooseContact() {
+    public void chooseContact(Fragment fragment) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
         fragment.startActivityForResult(intent, REQUEST_CODE);
@@ -77,7 +77,7 @@ public class ContactsManager {
                         try {
                             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
                                     ContactsContract.CommonDataKinds.Phone.TYPE};
-                            cursor = fragment.getActivity().getContentResolver().query(uri,
+                            cursor = context.getContentResolver().query(uri,
                                     projection,
                                     null,
                                     null,
@@ -105,10 +105,9 @@ public class ContactsManager {
      * Получение списка контактов {@link Callback#onGetAllContacts(List)}
      * Необхоимо наличие {@link android.Manifest.permission#READ_CONTACTS}
      */
-    public void loadContacs() {
+    public List<String> loadContacts() {
         List<String> result = new ArrayList<>();
-        Cursor cursor = fragment.getActivity()
-                .getContentResolver()
+        Cursor cursor = context.getContentResolver()
                 .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -120,6 +119,7 @@ public class ContactsManager {
         if (callback != null) {
             callback.onGetAllContacts(result);
         }
+        return result;
     }
 
     public interface Callback {

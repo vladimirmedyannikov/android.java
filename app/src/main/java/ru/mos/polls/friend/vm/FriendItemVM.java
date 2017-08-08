@@ -36,7 +36,7 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
     @Override
     public void onBind(FriendItemBinding viewDataBinding) {
         super.onBind(viewDataBinding);
-        FriendGuiUtils.loadAvatar(viewDataBinding.avatar, AgApiBuilder.url(model.getAvatar()));
+        FriendGuiUtils.loadAvatar(viewDataBinding.avatar, AgApiBuilder.resourceURL(model.getAvatar()));
     }
 
     @Override

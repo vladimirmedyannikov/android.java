@@ -784,4 +784,5 @@
     <string name="permission_contacts">Для поиска друзей требуется предоставить доступ к контактам</string>
     <string name="connection_mos_pgu_title">Связь с mos.ru</string>
     <string name="connection_mos_pgu_connected">установлена</string>
+    <string name="title_item_add_friend">Добавить друга</string>
 </resources>

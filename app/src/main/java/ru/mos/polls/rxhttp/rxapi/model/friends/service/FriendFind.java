@@ -40,7 +40,7 @@ public class FriendFind {
             }
 
             public boolean hasInAdded(String phone) {
-                return find(add, phone) != null;
+                return add != null && find(add, phone) != null;
             }
 
             public boolean hasInFailed(String phone) {

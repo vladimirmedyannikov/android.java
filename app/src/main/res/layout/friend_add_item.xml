@@ -20,10 +20,11 @@
             android:layout_width="@dimen/vs_xxsmall"
             android:layout_height="@dimen/vs_xxsmall"
             android:layout_margin="8dp"
-            tools:src="@drawable/ic_launcher_v230" />
+            tools:src="@drawable/plus" />
 
         <TextView
             style="@style/text.large.green"
-            android:text="Добавить друга" />
+            android:layout_width="wrap_content"
+            android:text="@string/title_item_add_friend" />
     </LinearLayout>
 </layout>

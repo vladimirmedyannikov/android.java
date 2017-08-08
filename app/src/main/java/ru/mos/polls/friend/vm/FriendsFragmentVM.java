@@ -48,12 +48,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
         getFragment().getActivity().setTitle(R.string.mainmenu_friends_title);
         binding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FriendsAdapter();
-        adapter.add(new FriendAddItemVW(new FriendAddItemVW.Callback() {
-            @Override
-            public void onClick() {
-                contactsManager.chooseContact();
-            }
-        }));
+        adapter.add(new FriendAddItemVW(() -> contactsManager.chooseContact(getFragment())));
         binding.list.setAdapter(adapter);
         loadMyFriends();
         initContactsController();
@@ -62,14 +57,17 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
 
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void chooseContact() {
-        if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
-            ContactsController contactsController = new ContactsController(getFragment());
-            contactsController.silentFindFriends();
-        } else {
-            EasyPermissions.requestPermissions(getFragment(),
-                    getFragment().getResources().getString(R.string.permission_contacts),
-                    CONTACTS_PERMISSION_REQUEST_CODE,
-                    CONTACTS_PERMS);
+        if (ContactsController.Manager.isNeedUpdate(getActivity())) {
+            if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
+                ContactsController contactsController = new ContactsController(getActivity());
+                contactsController.silentFindFriends();
+                ContactsController.Manager.increment(getActivity());
+            } else {
+                EasyPermissions.requestPermissions(getFragment(),
+                        getFragment().getResources().getString(R.string.permission_contacts),
+                        CONTACTS_PERMISSION_REQUEST_CODE,
+                        CONTACTS_PERMS);
+            }
         }
 
     }
@@ -81,7 +79,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
     }
 
     private void initContactsController() {
-        contactsManager = new ContactsManager(getFragment());
+        contactsManager = new ContactsManager(getActivity());
         contactsManager.setCallback(new ContactsManager.Callback() {
             @Override
             public void onChooseContacts(String number) {

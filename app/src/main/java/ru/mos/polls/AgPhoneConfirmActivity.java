@@ -121,6 +121,11 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 dialog.dismiss();
                 ru.mos.elk.Statistics.logon();
                 onAuthCompleted();
+                /**
+                 * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}
+                 * в {@link ru.mos.polls.rxhttp.session.Session}
+                 */
+                ru.mos.polls.rxhttp.session.Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(AgPhoneConfirmActivity.this));
             }
 
             @Override

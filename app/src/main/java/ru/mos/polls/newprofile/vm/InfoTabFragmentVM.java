@@ -15,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgSocialStatus;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
@@ -43,6 +44,7 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
         socialBindingLayer = binding.agUserSocialBindingLayer;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         percentFilledTitle = binding.agUserProfilePercentFillTitle;
+        saved = new AgUser(getActivity());
         super.initialize(binding);
         binding.setClickListener(this);
     }
@@ -87,12 +89,17 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
     @Override
     public void onResume() {
         super.onResume();
+        saved = new AgUser(getActivity());
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
         userInfoList();
         setSocialBindingLayerRx();
         setAvatar();
+        setProfileFillPercentView();
+    }
+
+    public void setProfileFillPercentView() {
         percentFilledTitle.setText(String.format(getActivity().getString(R.string.profile_filled_title), saved.getPercentFillProfile()));
     }
 

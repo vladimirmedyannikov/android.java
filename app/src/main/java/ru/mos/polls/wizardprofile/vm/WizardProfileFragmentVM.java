@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,9 +113,6 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             wizardFilledList.put(tagFr.get(i), false);
             frViewedList.put(i, false);
         }
-//        for (String s : tagFr) {
-//            wizardFilledList.put(s, false);
-//        }
         listSize = list.size();
         adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), agUser, list);
         pager.setAdapter(adapter);
@@ -141,8 +139,6 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabPos = tab.getPosition() + 1;
-                System.out.println("tab = " + tabPos);
-                System.out.println("listsize = " + list.size());
                 if (tabPos == listSize) {
                     isLastPage = true;
                 }
@@ -216,7 +212,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         }
         if (mockIds.contains(PGU)) {
             list.add(PguAuthFragment.newInstanceForWizard());
-            tagList.add(SOCIAL);
+            tagList.add(PGU);
         }
     }
 
@@ -267,10 +263,9 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 
     public void checkPageNumber() {
         int nextPage = pager.getCurrentItem() + 1;
-        System.out.println("next page = " + nextPage);
-        if (nextPage <= list.size()) {
+        if (nextPage <= listSize) {
             pager.setCurrentItem(nextPage);
-            if (nextPage == list.size()) {
+            if (nextPage == listSize) {
                 nextButton.setText("Завершить");
             } else {
                 nextButton.setText("Продолжить");
@@ -282,16 +277,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         if (agUser.getChildCount() > 0) {
             if (!tagFr.contains(TAG_BIRTHDAYKIDS)) {
                 int nextPosition = pager.getCurrentItem() + 1;
-                System.out.println("nextPosition = " + nextPosition);
                 addFragment(nextPosition, EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
-                System.out.println("tagFr size = " + tagFr.size());
                 tagFr.add(nextPosition, TAG_BIRTHDAYKIDS);
-                System.out.println("tagFr size after= " + tagFr.size());
                 wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
-                System.out.println("pager.getChildCount() = " + pager.getChildCount());
-                System.out.println("frViewedList size = " + frViewedList.size());
                 frViewedList.put(frViewedList.size() + 1, false);
-                System.out.println("frViewedList size after = " + frViewedList.size());
                 reDrawDots();
             }
         }
@@ -311,10 +300,6 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             boolean isViewed = frViewedList.get(i);
             String tag = tagFr.get(i);
             boolean isFilled = wizardFilledList.get(tag);
-            System.out.println("i = " + i);
-            System.out.println("isViewed = " + isViewed);
-            System.out.println("tag = " + tag);
-            System.out.println("isFilled = " + isFilled);
             if (isViewed && !isFilled) {
                 setDotColor(tab, R.drawable.wizard_profile_warning_dot);
             }
@@ -353,6 +338,13 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         if (bd instanceof NavigateFragment) {
             NavigateFragment wpdf = (NavigateFragment) bd;
             wpdf.doRequestAction();
+        }
+        if (isLastPage) {
+            if (wizardFilledList.containsValue(false)) {
+                Toast.makeText(getActivity(), "Вы не доконца заполнили профиль", Toast.LENGTH_SHORT).show();
+            } else {
+                //            getActivity().finish();
+            }
         }
     }
 

@@ -192,13 +192,13 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 break;
             case COUNT_KIDS:
                 agUser.setChildCount(Integer.valueOf(childsCount.getText().toString()));
-                validationOk = true;
                 personal.setChildrens_count(agUser.getChildCount());
+                validationOk = true;
                 break;
             case BIRTHDAY_KIDS:
                 agUser.setChildBirthdays(getBirthdayKidsLong());
-                validationOk = true;
                 personal.setChildrens_birthdays(agUser.childBirthdaysAsList());
+                validationOk = true;
                 break;
             case SOCIAL_STATUS:
                 personal.setSocial_status(String.valueOf(agUser.getAgSocialStatus()));
@@ -240,14 +240,19 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                     getActivity().finish();
                 } else {
                     int wizardType = 0;
+                    int percent = 0;
+                    if (result != null) percent = result.getPercentFillProfile();
                     switch (personalType) {
                         case PERSONAL_EMAIL:
                             wizardType = Events.WizardEvents.WIZARD_EMAIL;
                             break;
                         case PERSONAL_FIO:
+                            agUser.setGender(AgUser.Gender.parse(personal.getSex()));
+                            AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_UPDATE_GENDER, percent));
                             wizardType = Events.WizardEvents.WIZARD_PERSONAL;
                             break;
                         case COUNT_KIDS:
+                            agUser.setMaritalStatus(AgUser.MaritalStatus.parse(personal.getMarital_status()));
                             wizardType = Events.WizardEvents.WIZARD_FAMALY;
                             break;
                         case BIRTHDAY_KIDS:
@@ -255,8 +260,6 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                             break;
                     }
                     agUser.save(getActivity());
-                    int percent = 0;
-                    if (result != null) percent = result.getPercentFillProfile();
                     AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
                 }
             }

@@ -126,9 +126,6 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != selectedGender) {
                     AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
-//                    martialStatusAdapter.setGender(gender);
-//                    savedUser.setGender(gender);
-//                    martialStatusAdapter.notifyDataSetChanged();
                     selectedGender = position;
                     personal.setSex(gender == AgUser.Gender.NULL ? "" : gender.getValue());
                 }

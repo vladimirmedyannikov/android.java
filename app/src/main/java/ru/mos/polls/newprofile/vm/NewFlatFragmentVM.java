@@ -326,7 +326,11 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
         if (flat.isResidence()) {
             FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity();
             if (residenceToggle.isChecked()) {
-                residenceEntity.setKill(true);
+                if (!TextUtils.isEmpty(flat.getFlatId())) {
+                    residenceEntity.setKill(true);
+                } else {
+                    residenceEntity.setBuilding_id(Flat.getRegistration(getActivity()).getBuildingId());
+                }
             } else {
                 residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
                 if (!TextUtils.isEmpty(flat.getFlatId()))
@@ -334,7 +338,6 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
             }
             entity = new FlatsEntity(residenceEntity);
         }
-
         if (flat.isWork()) {
             FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
             if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
@@ -364,21 +367,23 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;
-                if (result.getFlats().getRegistration() != null) {
-                    newFlat = result.getFlats().getRegistration();
-                    newFlat.setType(Flat.Type.REGISTRATION);
-                }
-                if (result.getFlats().getResidence() != null) {
-                    newFlat = result.getFlats().getResidence();
-                    newFlat.setType(Flat.Type.RESIDENCE);
-                }
-                if (result.getFlats().getWork() != null) {
-                    newFlat = result.getFlats().getWork();
-                    newFlat.setType(Flat.Type.WORK);
-                }
-                if (newFlat != null) {
-                    newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
-                    newFlat.save(getActivity());
+                if (result != null) {
+                    if (result.getFlats().getRegistration() != null) {
+                        newFlat = result.getFlats().getRegistration();
+                        newFlat.setType(Flat.Type.REGISTRATION);
+                    }
+                    if (result.getFlats().getResidence() != null) {
+                        newFlat = result.getFlats().getResidence();
+                        newFlat.setType(Flat.Type.RESIDENCE);
+                    }
+                    if (result.getFlats().getWork() != null) {
+                        newFlat = result.getFlats().getWork();
+                        newFlat.setType(Flat.Type.WORK);
+                    }
+                    if (newFlat != null) {
+                        newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
+                        newFlat.save(getActivity());
+                    }
                 }
                 if (flatType == FLAT_TYPE_RESIDENCE && residenceToggle.isChecked()) {
                     flat.delete(getActivity());

@@ -1,6 +1,7 @@
 package ru.mos.polls.wizardprofile.vm;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
@@ -357,4 +358,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         super.onResume();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment currFr = list.get(pager.getCurrentItem());
+        currFr.onActivityResult(requestCode, resultCode, data);
+    }
 }

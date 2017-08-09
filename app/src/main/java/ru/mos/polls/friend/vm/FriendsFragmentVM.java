@@ -13,16 +13,20 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ContactsManager;
 import ru.mos.polls.friend.ui.FriendGuiUtils;
 import ru.mos.polls.friend.ui.FriendsAdapter;
 import ru.mos.polls.friend.ui.FriendsFragment;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -30,7 +34,7 @@ import ru.mos.polls.util.GuiUtils;
  * on 06.07.17 13:18.
  */
 
-public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
+public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
     public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;
     public static final String[] CONTACTS_PERMS = {
             Manifest.permission.READ_CONTACTS
@@ -38,9 +42,23 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
 
     private FriendsAdapter adapter;
     private ContactsManager contactsManager;
+    private Progressable progressable;
 
     public FriendsFragmentVM(FriendsFragment fragment, LayoutFriendsBinding binding) {
         super(fragment, binding);
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    loadMyFriends();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
     @Override
@@ -50,6 +68,12 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
         adapter = new FriendsAdapter();
         adapter.add(new FriendAddItemVW(() -> contactsManager.chooseContact(getFragment())));
         binding.list.setAdapter(adapter);
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        progressable = getProgressable();
         loadMyFriends();
         initContactsController();
         chooseContact();
@@ -105,7 +129,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
 
     private void loadMyFriends() {
         HandlerApiResponseSubscriber<FriendMy.Response.Result> handler
-                = new HandlerApiResponseSubscriber<FriendMy.Response.Result>(getFragment().getContext()) {
+                = new HandlerApiResponseSubscriber<FriendMy.Response.Result>(getFragment().getContext(), progressable) {
 
             @Override
             protected void onResult(FriendMy.Response.Result result) {
@@ -124,7 +148,7 @@ public class FriendsFragmentVM extends FragmentViewModel<FriendsFragment, Layout
 
     private void findFriend(final String phone) {
         HandlerApiResponseSubscriber<FriendFind.Response.Result> handler
-                = new HandlerApiResponseSubscriber<FriendFind.Response.Result>(getActivity()) {
+                = new HandlerApiResponseSubscriber<FriendFind.Response.Result>(getActivity(), getProgressable()) {
             @Override
             protected void onResult(FriendFind.Response.Result result) {
                 if (result.hasInAdded(phone)) {

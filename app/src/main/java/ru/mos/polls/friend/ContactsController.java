@@ -132,7 +132,9 @@ public class ContactsController {
 
         public static void increment(Context context) {
             SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-            prefs.edit().putLong(UPDATE_TIME, System.currentTimeMillis() + INTERVAL);
+            prefs.edit()
+                    .putLong(UPDATE_TIME, System.currentTimeMillis() + INTERVAL)
+                    .apply();
         }
     }
 }

@@ -2,18 +2,35 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendsFragmentVM"/>
+            type="ru.mos.polls.friend.vm.FriendsFragmentVM" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <RelativeLayout
+        style="@style/root">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list"
-            style="@style/root"/>
-    </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                style="@style/root">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    style="@style/root" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
 </layout>

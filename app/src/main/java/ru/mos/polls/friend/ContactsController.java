@@ -68,7 +68,7 @@ public class ContactsController {
                         result.add(number);
                     }
                 }
-                List<List<String>> subLists = toSubLists(result, 20);
+                List<List<String>> subLists = toSubLists(result, FriendFind.Request.MAX_PHONES_FOR_FINDING);
                 for (List<String> subList : subLists) {
                     AGApplication
                             .api
@@ -102,16 +102,20 @@ public class ContactsController {
      */
     private List<List<String>> toSubLists(List<String> source, int offset) {
         List<List<String>> result = new ArrayList<>();
-        int index = 0;
-        List<String> subList = new ArrayList<>();
-        for (String item : source) {
-            subList.add(item);
-            if (index >= offset - 1) {
-                index = 0;
-                result.add(subList);
-                subList = new ArrayList<>();
+        if (source.size() <= offset) {
+            result.add(source);
+        } else {
+            int index = 0;
+            List<String> subList = new ArrayList<>();
+            for (String item : source) {
+                subList.add(item);
+                if (index >= offset - 1) {
+                    index = 0;
+                    result.add(subList);
+                    subList = new ArrayList<>();
+                }
+                ++index;
             }
-            ++index;
         }
         return result;
     }

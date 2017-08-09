@@ -14,6 +14,8 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 public class FriendFind {
     public static class Request extends AuthRequest {
+        public static final int MAX_PHONES_FOR_FINDING = 20;
+
         private List<String> phones;
 
         public Request(String phone) {

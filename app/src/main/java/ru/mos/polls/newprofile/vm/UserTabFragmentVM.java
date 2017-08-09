@@ -21,6 +21,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
@@ -60,6 +61,7 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         achievementLayer = binding.agUserStatusInfoPanel.agUserAchievementLayer;
         achievementsValue = binding.agUserStatusInfoPanel.agUserAchievementValue;
         achievementPanel = binding.agUserStatusInfoPanel.agUserAchievementPanel;
+        saved = new AgUser(getActivity());
         binding.setClickListener(this);
         setRecyclerList(recyclerView);
     }
@@ -67,6 +69,9 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        setView();
+        setListener();
+        setAchievementLayerView();
     }
 
     public void setView() {
@@ -119,17 +124,16 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     @Override
     public void onResume() {
         super.onResume();
+        saved = new AgUser(getActivity());
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
         mockUserStatsList();
         setAvatar();
-        setView();
-        setListener();
-        setAchievementLayerView();
     }
 
     public void setAchievementLayerView() {
         List<Achievements> list = saved.getAchievementsList(getActivity());
+        achievementLayer.removeAllViews();
         if (list.size() == 0) {
             for (Achievements achievements : AchievementTabFragmentVM.mockList(getActivity())) {
                 if (list.size() > 2) break;

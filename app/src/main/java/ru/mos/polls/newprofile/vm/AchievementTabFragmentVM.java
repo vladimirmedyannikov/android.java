@@ -68,7 +68,8 @@ public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFr
     }
 
     public void loadAchivements() {
-        HandlerApiResponseSubscriber<AchievementsSelect.Response.Result> handler = new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), progressable) {
+        HandlerApiResponseSubscriber<AchievementsSelect.Response.Result> handler =
+                new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(AchievementsSelect.Response.Result result) {
                 list.addAll(result.getAchievements());

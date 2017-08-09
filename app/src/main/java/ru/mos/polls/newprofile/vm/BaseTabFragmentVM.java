@@ -62,7 +62,6 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     @Override
     public void onResume() {
         super.onResume();
-        saved = new AgUser(getActivity());
     }
 
     @Override
@@ -101,7 +100,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
     void updateAvatar(Uri uri) {
         Observable<Uri> observable = Observable.create((ObservableOnSubscribe<Uri>) e -> {
-            sendAndUpdateNavigatorIcon(uri);
+            sendAndUpdateNavigatorAvatar(uri);
             e.onNext(uri);
             e.onComplete();
         }).subscribeOn(Schedulers.io())
@@ -110,7 +109,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
     }
 
 
-    private void sendAndUpdateNavigatorIcon(@NonNull Uri uri) {
+    private void sendAndUpdateNavigatorAvatar(@NonNull Uri uri) {
         Bitmap bitmap = FileUtils.getBitmap(getFragment().getContext(), uri);
         File file = FileUtils.getFileFromUri(getFragment().getContext(), uri, "aguser_avatar.jpg");
         BadgesSource.getInstance().setAvatar(file.getAbsolutePath(), bitmap);

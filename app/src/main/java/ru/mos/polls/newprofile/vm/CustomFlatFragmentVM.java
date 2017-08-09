@@ -49,6 +49,7 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
     Spinner districtSpinner;
     Spinner areaSpinner;
     TextView areaLabel;
+    View arealayout;
     private List<String> districtList;
     private List<Reference> districtReference;
     private List<Reference> areaReference;
@@ -68,6 +69,7 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
         areaSpinner = binding.areaSpinner;
         districtSpinner = binding.districtSpinner;
         areaLabel = binding.areaLabel;
+        arealayout = binding.areaLayout;
         Bundle extras = getFragment().getArguments();
         if (extras != null) {
             forWizard = extras.getBoolean(WizardProfileFragment.ARG_FOR_WIZARD);
@@ -254,9 +256,10 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    areaSpinner.setVisibility(View.VISIBLE);
+//                    areaSpinner.setVisibility(View.VISIBLE);
                     areaSpinner.setClickable(true);
-                    areaLabel.setVisibility(View.VISIBLE);
+                    arealayout.setVisibility(View.VISIBLE);
+//                    areaLabel.setVisibility(View.VISIBLE);
                     if (districtReference != null) {
                         for (Reference reference : districtReference) {
                             if (districtList.get(position).equals(reference.getLabel())) {
@@ -268,8 +271,9 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
                     areaSpinner.setClickable(false);
                     areaReference = new ArrayList<Reference>();
                     refreshAreas();
-                    areaLabel.setVisibility(View.GONE);
-                    areaSpinner.setVisibility(View.GONE);
+                    arealayout.setVisibility(View.GONE);
+//                    areaLabel.setVisibility(View.GONE);
+//                    areaSpinner.setVisibility(View.GONE);
                 }
             }
 

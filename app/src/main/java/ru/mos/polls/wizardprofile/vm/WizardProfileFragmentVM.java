@@ -342,7 +342,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         }
         if (isLastPage) {
             if (wizardFilledList.containsValue(false)) {
-                Toast.makeText(getActivity(), "Вы не доконца заполнили профиль", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
             } else {
                 //            getActivity().finish();
             }

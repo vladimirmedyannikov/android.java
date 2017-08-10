@@ -1,0 +1,22 @@
+{
+  "type": "profile",
+  "id": "personalWizard",
+  "sub_ids": [
+    "avatar",
+    "updateEmail",
+    "updatePersonal",
+    "updateLocation",
+    "updateExtraInfo",
+    "updateSocial",
+    "bindToPGU"
+  ],
+  "percent_fill_profile": 50,
+  "points": 100,
+  "title": "Заполните профиль и получите +25 баллов",
+  "hidden": false,
+  "url_schemes": {
+    "ios": "isupercitizen://open?action=tasks&task_id=personalWizard",
+    "android": "iSuperCitizen://task?task_id=personalWizard",
+    "wp": "isupercitizen://Views/Pages/PersonalWizardPage.xaml"
+  }
+}

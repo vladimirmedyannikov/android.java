@@ -1,5 +1,6 @@
 package ru.mos.polls.quests;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +50,7 @@ import ru.mos.polls.quests.quest.BackQuest;
 import ru.mos.polls.quests.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
 import ru.mos.polls.quests.quest.OtherQuest;
+import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.quests.quest.Quest;
 import ru.mos.polls.quests.quest.RateAppQuest;
 import ru.mos.polls.quests.quest.ResultsQuest;
@@ -57,6 +61,7 @@ import ru.mos.polls.quests.view.questviewholder.FavoriteSurveysHolder;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
+import ru.mos.polls.util.StubUtils;
 
 public class QuestsFragment extends PullableFragment {
 
@@ -260,6 +265,17 @@ public class QuestsFragment extends PullableFragment {
         };
     }
 
+    //загрузка заглушки убрать
+    public Quest getWizardQuest(Context context) {
+        Gson gson = new Gson();
+        ProfileQuest content = gson.fromJson(
+                StubUtils.fromRawAsJsonObject(context, R.raw.wizard_quest).toString(),
+                new TypeToken<ProfileQuest>() {
+                }.getType()
+        );
+        return content;
+    }
+
     private void update(final Response.Listener<Object> addRespListener, final Response.ErrorListener addErrListener) {
         final BaseActivity activity = ((BaseActivity) getActivity());
         stubOffline.setVisibility(View.GONE);
@@ -282,6 +298,7 @@ public class QuestsFragment extends PullableFragment {
                 loadedListQuests = QuestStateController.getInstance().process(loadedListQuests);
                 quests.clear();
                 quests.addAll(loadedListQuests);
+                quests.add(0, getWizardQuest(getActivity())); //убрать
                 adapter.notifyDataSetChanged();
                 hideNewsMenu();
                 adapter.getItemCount();
@@ -353,8 +370,8 @@ public class QuestsFragment extends PullableFragment {
         public void onClick(BackQuest quest) {
             if (quest != null) {
                 //на отладку
-                if (quest.getId().equalsIgnoreCase("updateExtraInfo")) {
-                    listener.onOther("","");
+                if (quest.getId().equalsIgnoreCase("personalWizard")) {
+                    listener.onOther("", "");
                     return;
                 }
                 quest.onClick(getActivity(), listener);

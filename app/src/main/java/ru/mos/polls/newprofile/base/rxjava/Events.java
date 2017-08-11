@@ -71,7 +71,7 @@ public class Events {
         public static final int WIZARD_WORK = 8;
         public static final int WIZARD_SOCIAL = 9;
         public static final int WIZARD_PGU = 10;
-
+        public static final int WIZARD_UPDATE_GENDER = 11;
         private int wizardType;
         private int percentFillProfile;
 

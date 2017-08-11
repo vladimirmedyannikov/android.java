@@ -12,9 +12,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
+import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
@@ -54,6 +58,7 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        setRxEventsBusListener();
         FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
         personalInfoFragment = EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.COUNT_KIDS);
         ft.replace(R.id.container, personalInfoFragment);
@@ -66,6 +71,27 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
         setMartialStatusView(agUser.getGender());
     }
 
+    /**
+     * слушатель для проставления семейного положения взависимости от пола
+     */
+
+    public void setRxEventsBusListener() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.WizardEvents) {
+                        Events.WizardEvents events = (Events.WizardEvents) o;
+                        agUser = new AgUser(getActivity());
+                        switch (events.getWizardType()) {
+                            case Events.WizardEvents.WIZARD_UPDATE_GENDER:
+                                agUser = new AgUser(getActivity());
+                                setMartialStatusView(agUser.getGender());
+                                break;
+                        }
+                    }
+                });
+    }
 
     public void setMartialStatusView(AgUser.Gender gender) {
         martialStatusAdapter = (MaritalStatusAdapter) getMartialStatusAdapter(gender);

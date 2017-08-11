@@ -1,6 +1,5 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +20,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 import ru.mos.polls.newprofile.service.ProfileSet;
@@ -118,7 +118,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     }
 
     public void setRecyclerViewAdapter(RecyclerView.Adapter adapter) {
-        setRecyclerList(recyclerView);
+        UIhelper.setRecyclerList(recyclerView, getActivity());
         recyclerView.setAdapter(adapter);
     }
 

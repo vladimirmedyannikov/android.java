@@ -63,7 +63,6 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         achievementPanel = binding.agUserStatusInfoPanel.agUserAchievementPanel;
         saved = new AgUser(getActivity());
         binding.setClickListener(this);
-        setRecyclerList(recyclerView);
     }
 
     @Override

@@ -28,7 +28,9 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.newprofile.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.AvatarSet;
 import ru.mos.polls.newprofile.service.EmptyResponse;
@@ -56,7 +58,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
     protected void initialize(B binding) {
         if (recyclerView != null)
-            setRecyclerList(recyclerView);
+            UIhelper.setRecyclerList(recyclerView,getActivity());
     }
 
     @Override

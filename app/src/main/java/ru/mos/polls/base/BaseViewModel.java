@@ -16,6 +16,10 @@ public abstract class BaseViewModel<M, VDB extends ViewDataBinding> {
         this.viewDataBinding = viewDataBinding;
     }
 
+    public VDB getViewDataBinding() {
+        return viewDataBinding;
+    }
+
     public BaseViewModel(M model) {
         this.model = model;
     }

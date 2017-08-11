@@ -87,15 +87,6 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
 
     }
 
-    protected void setRecyclerList(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getFragment().getContext()));
-        recyclerView.setNestedScrollingEnabled(false);
-        Drawable dividerDrawable = ContextCompat.getDrawable(getFragment().getContext(), R.drawable.divider);
-        DividerItemDecoration did = new DividerItemDecoration(getFragment().getContext(), DividerItemDecoration.VERTICAL);
-        did.setDrawable(dividerDrawable);
-        recyclerView.addItemDecoration(did);
-    }
-
     public Progressable progressable = new Progressable() {
         @Override
         public void begin() {

@@ -12,7 +12,7 @@ import ru.mos.polls.friend.ui.FriendsAdapter;
 
 public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItemBinding> {
 
-    public static final int TYPE = 1;
+
 
     private Callback callback;
 

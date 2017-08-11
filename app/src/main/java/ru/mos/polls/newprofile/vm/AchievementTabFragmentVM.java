@@ -15,6 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.base.ui.RecyclerScrollableController;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
@@ -29,11 +33,12 @@ import ru.mos.polls.util.StubUtils;
  * Created by Trunks on 16.06.2017.
  */
 
-public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding> implements OnAchievementClickListener {
+public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<AchievementTabFragment, FragmentAchievementTabProfileBinding> implements OnAchievementClickListener {
     private Page achivementPage;
     AchievementAdapter adapter;
     List<Achievements> list;
     boolean isPaginationEnable;
+    RecyclerView recyclerView;
 
     public AchievementTabFragmentVM(AchievementTabFragment fragment, FragmentAchievementTabProfileBinding binding) {
         super(fragment, binding);
@@ -42,7 +47,7 @@ public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFr
     @Override
     protected void initialize(FragmentAchievementTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
-        super.initialize(binding);
+//        super.initialize(binding);
         list = new ArrayList<>();
         achivementPage = new Page();
         isPaginationEnable = true;
@@ -63,6 +68,19 @@ public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFr
     }
 
     @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+//                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    loadAchivements();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
+    }
+
+    @Override
     public void onAchivementClick(String id) {
         AchievementActivity.startActivity(getActivity(), id);
     }
@@ -70,14 +88,16 @@ public class AchievementTabFragmentVM extends BaseTabFragmentVM<AchievementTabFr
     public void loadAchivements() {
         HandlerApiResponseSubscriber<AchievementsSelect.Response.Result> handler =
                 new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), progressable) {
-            @Override
-            protected void onResult(AchievementsSelect.Response.Result result) {
-                list.addAll(result.getAchievements());
-                list.addAll(mockList(getActivity()));
-                adapter.notifyDataSetChanged();
-                isPaginationEnable = true;
-            }
-        };
+                    @Override
+                    protected void onResult(AchievementsSelect.Response.Result result) {
+                        adapter.add(result.getAchievements());
+                        list.addAll(mockList(getActivity()));
+                        adapter.notifyDataSetChanged();
+//                        list.addAll(result.getAchievements());
+//                        adapter.notifyDataSetChanged();
+                        isPaginationEnable = true;
+                    }
+                };
         Observable<AchievementsSelect.Response> responseObservable = AGApplication.api
                 .selectAchievements(new AchievementsSelect.Request(achivementPage))
                 .subscribeOn(Schedulers.io())

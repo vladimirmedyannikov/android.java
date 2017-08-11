@@ -37,8 +37,12 @@ public class AchievementVM extends RecyclerBaseViewModel<Achievements, ItemAchie
 
     public AchievementVM(Achievements achievement, ItemAchievementBinding binding) {
         super(achievement, binding);
-        badge = viewDataBinding.badgeContainer.badge;
-        pb = viewDataBinding.badgeContainer.loadingBadge;
+        setView(binding);
+    }
+
+    private void setView(ItemAchievementBinding binding) {
+        badge = binding.badgeContainer.badge;
+        pb = binding.badgeContainer.loadingBadge;
         loadImage(getImageUrl());
     }
 
@@ -55,6 +59,7 @@ public class AchievementVM extends RecyclerBaseViewModel<Achievements, ItemAchie
     @Override
     public void onBind(ItemAchievementBinding viewDataBinding) {
         super.onBind(viewDataBinding);
+        setView(viewDataBinding);
         viewDataBinding.setListener(listener);
     }
 

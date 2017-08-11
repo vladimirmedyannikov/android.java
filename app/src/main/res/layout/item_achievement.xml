@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.AchievementVM"/>
+            type="ru.mos.elk.profile.Achievements"/>
 
         <variable
             name="listener"

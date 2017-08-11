@@ -21,6 +21,7 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.base.ui.RecyclerScrollableController;
+import ru.mos.polls.newprofile.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
@@ -47,6 +48,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
     @Override
     protected void initialize(FragmentAchievementTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
+        UIhelper.setRecyclerList(recyclerView, getActivity());
 //        super.initialize(binding);
         list = new ArrayList<>();
         achivementPage = new Page();
@@ -62,6 +64,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        progressable = getProgressable();
         adapter = new AchievementAdapter(list, this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(getScrollableListener());
@@ -72,7 +75,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
         return new UIComponentHolder.Builder()
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
-//                    adapter.clear();
+                    adapter.clear();
                     adapter.notifyDataSetChanged();
                     loadAchivements();
                 }))
@@ -91,10 +94,11 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
                     @Override
                     protected void onResult(AchievementsSelect.Response.Result result) {
                         adapter.add(result.getAchievements());
-                        list.addAll(mockList(getActivity()));
+                        adapter.add(mockList(getActivity()));
                         adapter.notifyDataSetChanged();
+//                        list.addAll(mockList(getActivity()));
 //                        list.addAll(result.getAchievements());
-//                        adapter.notifyDataSetChanged();
+                        progressable.end();
                         isPaginationEnable = true;
                     }
                 };

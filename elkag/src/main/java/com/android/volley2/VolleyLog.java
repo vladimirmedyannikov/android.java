@@ -26,7 +26,11 @@ import java.util.List;
 public class VolleyLog {
     public static String TAG = "Volley";
 
-    public static final boolean DEBUG = Log.isLoggable(TAG, Log.VERBOSE);
+    public static boolean DEBUG = Log.isLoggable(TAG, Log.VERBOSE);
+
+    public static void setIsDebug(boolean isDebug) {
+        DEBUG = isDebug;
+    }
 
     public static void v(String format, Object... args) {
         if (DEBUG) {

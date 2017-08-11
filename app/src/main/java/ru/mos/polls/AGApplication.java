@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.android.volley2.VolleyLog;
 import com.appsflyer.AppsFlyerLib;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -116,7 +117,7 @@ public class AGApplication extends MultiDexApplication {
     private void initGoogleAnalytics() {
         googleAnalytics = GoogleAnalytics.getInstance(this);
         googleAnalytics.setLocalDispatchPeriod(1800);
-        tracker = googleAnalytics.newTracker("UA-52662983-3"/*R.xml.analytics_global_config*/);
+        tracker = googleAnalytics.newTracker(/*"UA-52662983-3"*/R.xml.analytics_global_config);
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
@@ -149,6 +150,7 @@ public class AGApplication extends MultiDexApplication {
         API.registerPush(this);
 
         API.setBuildVersionName(UrlManager.V230);
+        VolleyLog.setIsDebug(!BuildConfig.BUILD_TYPE.equals("release"));
 
         GCMBroadcastReceiver.addAction("promo", getPromoAction());
         GCMBroadcastReceiver.addAction("share", getShareAction());

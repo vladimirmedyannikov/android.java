@@ -53,6 +53,14 @@ public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         addData(content);
     }
 
+    @Override
+    public void clear() {
+        RecyclerBaseViewModel friendAddItemVW = list.get(0);
+        list.clear();
+        list.add(friendAddItemVW);
+
+    }
+
     public void add(Friend friend) {
         add(new FriendItemVM(friend));
     }

@@ -12,8 +12,6 @@ import ru.mos.polls.friend.ui.FriendsAdapter;
 
 public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItemBinding> {
 
-
-
     private Callback callback;
 
     public FriendAddItemVW(Callback callback) {

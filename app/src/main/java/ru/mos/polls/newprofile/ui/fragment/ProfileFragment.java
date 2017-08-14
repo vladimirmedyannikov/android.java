@@ -14,8 +14,7 @@ import ru.mos.polls.newprofile.vm.ProfileFragmentVM;
 public class ProfileFragment extends BindingFragment<ProfileFragmentVM, FragmentNewProfileBinding> {
 
     public static ProfileFragment newInstance() {
-        ProfileFragment f = new ProfileFragment();
-        return f;
+        return new ProfileFragment();
     }
 
     public ProfileFragment() {

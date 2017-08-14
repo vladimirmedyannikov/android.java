@@ -32,7 +32,7 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
-import ru.mos.polls.friend.ui.FriendsFragment;
+import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;

@@ -1,4 +1,4 @@
-package ru.mos.polls.friend.ui;
+package ru.mos.polls.friend.ui.adapter;
 
 import android.content.Context;
 
@@ -11,8 +11,8 @@ import java.util.List;
 import ru.mos.polls.R;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
-import ru.mos.polls.friend.vm.FriendAddItemVW;
-import ru.mos.polls.friend.vm.FriendItemVM;
+import ru.mos.polls.friend.vm.list.FriendAddItemVW;
+import ru.mos.polls.friend.vm.list.FriendItemVM;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 import ru.mos.polls.util.StubUtils;
 

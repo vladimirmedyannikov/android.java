@@ -1,11 +1,11 @@
-package ru.mos.polls.friend.vm;
+package ru.mos.polls.friend.vm.list;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendItemBinding;
-import ru.mos.polls.friend.ui.FriendGuiUtils;
-import ru.mos.polls.friend.ui.FriendsAdapter;
+import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
+import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 

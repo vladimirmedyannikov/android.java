@@ -13,8 +13,7 @@ import ru.mos.polls.newprofile.vm.UserTabFragmentVM;
 public class UserTabFragment extends BindingFragment<UserTabFragmentVM, FragmentUserTabProfileBinding> {
 
     public static UserTabFragment newInstance() {
-        UserTabFragment f = new UserTabFragment();
-        return f;
+        return new UserTabFragment();
     }
 
 

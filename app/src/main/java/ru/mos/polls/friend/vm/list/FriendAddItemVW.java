@@ -1,9 +1,9 @@
-package ru.mos.polls.friend.vm;
+package ru.mos.polls.friend.vm.list;
 
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendAddItemBinding;
-import ru.mos.polls.friend.ui.FriendsAdapter;
+import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

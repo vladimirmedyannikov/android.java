@@ -1,4 +1,4 @@
-package ru.mos.polls.friend.ui;
+package ru.mos.polls.friend.ui.utils;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;

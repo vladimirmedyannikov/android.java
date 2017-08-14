@@ -1,4 +1,4 @@
-package ru.mos.polls.friend.ui;
+package ru.mos.polls.friend.ui.fragment;
 
 import android.support.v4.app.Fragment;
 

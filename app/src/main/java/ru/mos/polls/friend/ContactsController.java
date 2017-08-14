@@ -9,7 +9,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.friend.ui.FriendGuiUtils;
+import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
@@ -123,6 +123,10 @@ public class ContactsController {
     public static class Manager {
         private static final String PREFS = "contacts_controller_prefs";
         private static final String UPDATE_TIME = "update_time";
+        /**
+         * todo
+         * поменять на интервал согласно требованиям
+         */
         private static final int INTERVAL = 24 * 60 * 1000;
 
         public static boolean isNeedUpdate(Context context) {

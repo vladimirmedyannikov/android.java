@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendsFragmentVM" />
+            type="ru.mos.polls.friend.vm.FriendProfileFragmentVM" />
     </data>
 
     <RelativeLayout

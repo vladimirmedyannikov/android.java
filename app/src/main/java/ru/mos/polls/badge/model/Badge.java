@@ -90,7 +90,8 @@ public class Badge {
     public enum Type {
         POLLS("poll"),
         NOVELTIES("novelty"),
-        NEWS("news");
+        NEWS("news"),
+        FRIENDS("friends");
 
         public static Type parse(String value) {
             Type result = null;
@@ -100,6 +101,8 @@ public class Badge {
                 result = NOVELTIES;
             } else if (NEWS.value.equalsIgnoreCase(value)) {
                 result = NEWS;
+            } else if (FRIENDS.value.equalsIgnoreCase(value)) {
+                result = FRIENDS;
             }
             return result;
         }

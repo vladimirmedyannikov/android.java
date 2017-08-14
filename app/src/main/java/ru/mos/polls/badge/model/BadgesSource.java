@@ -42,6 +42,12 @@ public class BadgesSource {
     public static final String TAG_NEWS = "news";
 
     /**
+     * Друзья
+     */
+    public static final String TAG_FRIENDS = "friends";
+
+
+    /**
      * Мои баллы
      */
     public static final String TAG_POINTS = "scores";
@@ -79,6 +85,9 @@ public class BadgesSource {
                     break;
                 case TAG_POLLS:
                     s = get(Badge.Type.POLLS);
+                    break;
+                case TAG_FRIENDS:
+                    s = get(Badge.Type.FRIENDS);
                     break;
                 default:
                     s = null;

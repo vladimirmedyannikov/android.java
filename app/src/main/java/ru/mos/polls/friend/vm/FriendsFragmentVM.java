@@ -85,7 +85,6 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
             if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
                 ContactsController contactsController = new ContactsController(getActivity());
                 contactsController.silentFindFriends();
-                ContactsController.Manager.increment(getActivity());
             } else {
                 EasyPermissions.requestPermissions(getFragment(),
                         getFragment().getResources().getString(R.string.permission_contacts),
@@ -93,7 +92,7 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
                         CONTACTS_PERMS);
             }
         }
-
+        ContactsController.Manager.increment(getActivity());
     }
 
     @Override

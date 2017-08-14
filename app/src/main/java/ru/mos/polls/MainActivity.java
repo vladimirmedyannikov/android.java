@@ -152,6 +152,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         initGeotargetManager();
 
         subscribeEventsBus();
+        findFriends();
     }
 
     private void findFriends() {

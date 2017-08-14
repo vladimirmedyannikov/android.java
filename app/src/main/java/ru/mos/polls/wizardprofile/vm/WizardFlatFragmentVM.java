@@ -101,7 +101,8 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                                 AgUser changed = action.getAgUser();
                                 agUser = changed;
                                 agUser.save(getActivity().getBaseContext());
-                                setView();
+//                                setView();
+                                setSocialStatusView();
                                 break;
                         }
                     }
@@ -128,15 +129,19 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 socialStatus.setVisibility(View.VISIBLE);
                 socialStatusWrapper.setVisibility(View.VISIBLE);
                 personal = new Personal();
-                if (agUser.getAgSocialStatus() != 0) {
-                    setSocialStatusView(agUser.getAgSocialStatus());
-                }
+                setSocialStatusView();
                 break;
         }
         newFlatFragment = NewFlatFragment.newInstanceForWizard(flat, flatType);
         FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
         ft.replace(R.id.container, newFlatFragment);
         ft.commit();
+    }
+
+    private void setSocialStatusView() {
+        if (agUser.getAgSocialStatus() != 0) {
+            setSocialStatusView(agUser.getAgSocialStatus());
+        }
     }
 
     public void setSocialStatusView(int idSocialStatus) {

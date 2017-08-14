@@ -49,7 +49,6 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
     protected void initialize(FragmentAchievementTabProfileBinding binding) {
         recyclerView = binding.agUserProfileList;
         UIhelper.setRecyclerList(recyclerView, getActivity());
-//        super.initialize(binding);
         list = new ArrayList<>();
         achivementPage = new Page();
         isPaginationEnable = true;
@@ -96,8 +95,6 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
                         adapter.add(result.getAchievements());
                         adapter.add(mockList(getActivity()));
                         adapter.notifyDataSetChanged();
-//                        list.addAll(mockList(getActivity()));
-//                        list.addAll(result.getAchievements());
                         progressable.end();
                         isPaginationEnable = true;
                     }

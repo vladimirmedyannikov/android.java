@@ -15,7 +15,6 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemAchievementBinding;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
 
 /**

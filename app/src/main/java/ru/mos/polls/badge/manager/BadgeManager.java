@@ -58,4 +58,11 @@ public abstract class BadgeManager {
         }
     }
 
+    public static void uploadAllFriendsAsReaded(BaseActivity elkActivity) {
+        Badge badge = BadgesSource.getInstance().getBadge(Badge.Type.FRIENDS);
+        if (badge != null && badge.hasIds()) {
+            BadgeApiController.updateFriends(elkActivity, badge.getIds());
+        }
+    }
+
 }

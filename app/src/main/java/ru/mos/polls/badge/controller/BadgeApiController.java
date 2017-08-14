@@ -11,6 +11,7 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.badge.model.Badge;
 import ru.mos.polls.badge.model.State;
 
 /**
@@ -26,7 +27,11 @@ public abstract class BadgeApiController {
      * @param listener    callback
      */
     public static void refresh(final BaseActivity elkActivity, final BadgesListener listener) {
-        String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL_BADGES, UrlManager.Methods.GET));
+        String url = API.getURL(
+                UrlManager.url(UrlManager.V240,
+                        UrlManager.Controller.POLL_BADGES,
+                        UrlManager.Methods.GET)
+        );
 
         JSONObject requestJson = new JSONObject();
         Session.addSession(requestJson);
@@ -45,19 +50,27 @@ public abstract class BadgeApiController {
         elkActivity.addRequest(jsonObjectRequest);
     }
 
+    public static void updateNews(final BaseActivity elkActivity, long[] ids) {
+        update(elkActivity, ids, Badge.Type.NEWS);
+    }
+
+    public static void updateFriends(final BaseActivity elkActivity, long[] ids) {
+        update(elkActivity, ids, Badge.Type.FRIENDS);
+    }
+
     /**
-     * Обновляение количества непрочитанных новостей
+     * Помечаем бейджи как непросмотренные
      *
      * @param elkActivity активити elk
-     * @param ids список идентификаторов новостей
+     * @param ids список идентификаторов нерпосмотренных бейджей
      */
-    public static void updateNews(final BaseActivity elkActivity, long[] ids) {
+    public static void update(final BaseActivity elkActivity, long[] ids, Badge.Type type) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL_BADGES, UrlManager.Methods.UPDATE));
         JSONObject requestJson = new JSONObject();
         try {
             JSONArray badgesJsonArray = new JSONArray();
             JSONObject badgeJsonObject = new JSONObject();
-            badgeJsonObject.put("type", "news");
+            badgeJsonObject.put("type", type.getValue());
             JSONArray newsIdsJsonArray = new JSONArray();
             for (long id : ids) {
                 newsIdsJsonArray.put(id);

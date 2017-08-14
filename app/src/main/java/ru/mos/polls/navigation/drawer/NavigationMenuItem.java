@@ -34,12 +34,7 @@ public class NavigationMenuItem {
     private static NavigationMenuItem ITEM_PROFILE = new NavigationMenuItem(PROFILE, R.string.mainmenu_profile);
 
     private static NavigationMenuItem ITEM_SETTINGS = new NavigationMenuItem(SETTINGS, R.string.mainmenu_settings);
-    private static NavigationMenuItem ITEM_FRIENDS = new NavigationMenuItem(FRIENDS, R.string.mainmenu_friends);
-    private static NavigationMenuItem ITEM_SUPPORT = new NavigationMenuItem(SUPPORT, R.string.mainmenu_support);
-
-    public static NavigationMenuItem[] ITEMS_TOP = new NavigationMenuItem[]{
-            ITEM_QUESTS
-    };
+    private static NavigationMenuItem ITEM_FRIENDS = new NavigationMenuItem(FRIENDS, R.string.mainmenu_friends, BadgesSource.TAG_FRIENDS);
 
     public static NavigationMenuItem[] ITEMS_MENU = new NavigationMenuItem[]{
             ITEM_QUESTS,

@@ -9,11 +9,21 @@ public class UrlManager {
     public static String V210 = "2.1.0";
     public static String V220 = "2.2.0";
     public static String V230 = "2.3.0";
+    public static String V240 = "2.4.0";
 
     public static String url(String controller, String method) {
         return String.format("v%s/%s/%s", V230/*BuildConfig.VERSION_NAME*/, controller, method);
     }
 
+    /**
+     * todo
+     * после того как все методы будут готовы, убрать использование данного метода
+     *
+     * @param version
+     * @param controller
+     * @param method
+     * @return
+     */
     public static String url(String version, String controller, String method) {
         return String.format("v%s/%s/%s", version, controller, method);
     }

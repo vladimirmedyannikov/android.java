@@ -75,6 +75,10 @@ public class Badge {
         return type.isNews();
     }
 
+    public boolean forFriends() {
+        return type.isFriends();
+    }
+
     public Type getType() {
         return type;
     }
@@ -127,6 +131,10 @@ public class Badge {
 
         public boolean isNews() {
             return this == NEWS;
+        }
+
+        public boolean isFriends() {
+            return this == FRIENDS;
         }
     }
 

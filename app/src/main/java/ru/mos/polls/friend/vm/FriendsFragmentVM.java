@@ -2,6 +2,7 @@ package ru.mos.polls.friend.vm;
 
 import android.Manifest;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -11,8 +12,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
@@ -77,6 +80,11 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
         loadMyFriends();
         initContactsController();
         chooseContact();
+
+        BadgeManager.uploadAllFriendsAsReaded((BaseActivity) getActivity());
+        LocalBroadcastManager
+                .getInstance(getActivity())
+                .sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
     }
 
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
@@ -85,6 +93,7 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
             if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
                 ContactsController contactsController = new ContactsController(getActivity());
                 contactsController.silentFindFriends();
+                ContactsController.Manager.increment(getActivity());
             } else {
                 EasyPermissions.requestPermissions(getFragment(),
                         getFragment().getResources().getString(R.string.permission_contacts),
@@ -92,7 +101,6 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
                         CONTACTS_PERMS);
             }
         }
-        ContactsController.Manager.increment(getActivity());
     }
 
     @Override

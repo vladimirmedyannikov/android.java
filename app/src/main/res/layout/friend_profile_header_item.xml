@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <import
-            type="ru.mos.polls.friend.ui.FriendGuiUtils"/>
+
+        <import type="ru.mos.polls.friend.ui.utils.FriendGuiUtils" />
+
         <variable
             name="viewModel"
-            type="ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile"/>
+            type="ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile" />
     </data>
+
     <LinearLayout
         style="@style/ripple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/actionbar_background"
-        >
+        android:orientation="vertical">
 
     </LinearLayout>
 </layout>

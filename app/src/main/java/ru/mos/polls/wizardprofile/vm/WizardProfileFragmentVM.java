@@ -276,13 +276,17 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 
     public void checkBirthdayKidsFr() {
         if (agUser.getChildCount() > 0) {
+            int nextPosition = pager.getCurrentItem() + 1;
             if (!tagFr.contains(TAG_BIRTHDAYKIDS)) {
-                int nextPosition = pager.getCurrentItem() + 1;
                 addFragment(nextPosition, EditPersonalInfoFragment.newInstanceForWizard(agUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS));
                 tagFr.add(nextPosition, TAG_BIRTHDAYKIDS);
                 wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
                 frViewedList.put(frViewedList.size() + 1, false);
                 reDrawDots();
+            } else {
+                EditPersonalInfoFragment epif = (EditPersonalInfoFragment) list.get(nextPosition);
+                epif.getViewModel().setAgUser(agUser);
+                epif.getViewModel().setView(EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
             }
         }
         if (tagFr.contains(TAG_BIRTHDAYKIDS) && agUser.getChildCount() == 0) {
@@ -344,7 +348,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             if (wizardFilledList.containsValue(false)) {
                 Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
             } else {
-                //            getActivity().finish();
+                getActivity().finish();
             }
         }
     }

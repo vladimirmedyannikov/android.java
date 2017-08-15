@@ -90,6 +90,10 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         setView(personalType);
     }
 
+    public void setAgUser(AgUser agUser) {
+        this.agUser = agUser;
+    }
+
     public void setView(int personalType) {
         switch (personalType) {
             case PERSONAL_EMAIL:

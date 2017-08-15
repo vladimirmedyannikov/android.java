@@ -202,7 +202,6 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
             UpdateSocialActivity.startActivity(getActivity());
         });
         bindingMostTitle.setOnClickListener(v -> {
-//            PguUIController.startPguBinding(getFragment());
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
         });
     }
@@ -271,7 +270,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     }
 
     public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
-        if (!registationFlat.isEmpty() && residenceFlat.isEmpty()) {
+        if (!registationFlat.isEmpty() && residenceFlat.compareByFullAddress(registationFlat)) {
             residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
             return;
         }

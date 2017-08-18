@@ -35,12 +35,8 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 
-import java.io.File;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +51,7 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.badge.model.Personal;
 import ru.mos.polls.badge.model.State;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -225,7 +222,7 @@ public class NavigationDrawerFragment extends Fragment {
                     LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_AVATAR_FROM_CACHE));
                 } else {
                     ImageLoader imageLoader = ((AGApplication) getActivity().getApplication()).getImageLoader();
-                    imageLoader.loadImage(url, new ImageLoadingListener() {
+                    imageLoader.loadImage(AgApiBuilder.resourceURL(url), new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String s, View view) {
                         }

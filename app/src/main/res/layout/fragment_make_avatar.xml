@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.wizardprofile.vm.MakeAvatarFragmentVM"/>
+            type="ru.mos.polls.wizardprofile.vm.WizardAvatarFragmentVM"/>
     </data>
 
     <LinearLayout

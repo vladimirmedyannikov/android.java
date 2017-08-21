@@ -58,7 +58,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
 
     protected void initialize(B binding) {
         if (recyclerView != null)
-            UIhelper.setRecyclerList(recyclerView,getActivity());
+            UIhelper.setRecyclerList(recyclerView, getActivity());
     }
 
     @Override
@@ -95,7 +95,7 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
         circleImageView.setImageURI(uri);
     }
 
-    void setAvatar() {
+    public void setAvatar() {
         if (BadgesSource.getInstance().getAvatar() != null)
             circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
     }

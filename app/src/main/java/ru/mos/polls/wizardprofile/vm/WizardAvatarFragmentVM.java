@@ -5,14 +5,14 @@ import android.content.Intent;
 
 import ru.mos.polls.databinding.FragmentMakeAvatarBinding;
 import ru.mos.polls.newprofile.vm.BaseTabFragmentVM;
-import ru.mos.polls.wizardprofile.ui.fragment.MakeAvatarFragment;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardAvatarFragment;
 
 /**
  * Created by Trunks on 27.07.2017.
  */
 
-public class MakeAvatarFragmentVM extends BaseTabFragmentVM<MakeAvatarFragment, FragmentMakeAvatarBinding> {
-    public MakeAvatarFragmentVM(MakeAvatarFragment fragment, FragmentMakeAvatarBinding binding) {
+public class WizardAvatarFragmentVM extends BaseTabFragmentVM<WizardAvatarFragment, FragmentMakeAvatarBinding> {
+    public WizardAvatarFragmentVM(WizardAvatarFragment fragment, FragmentMakeAvatarBinding binding) {
         super(fragment, binding);
     }
 
@@ -25,5 +25,13 @@ public class MakeAvatarFragmentVM extends BaseTabFragmentVM<MakeAvatarFragment, 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getCropedUri(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isAvatarLoaded) {
+            setAvatar();
+        }
     }
 }

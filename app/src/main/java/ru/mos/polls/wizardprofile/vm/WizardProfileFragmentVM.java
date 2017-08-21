@@ -34,7 +34,7 @@ import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
 import ru.mos.polls.wizardprofile.ui.adapter.WizardProfilePagerAdapter;
-import ru.mos.polls.wizardprofile.ui.fragment.MakeAvatarFragment;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardAvatarFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
@@ -182,7 +182,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 
     public void setFragmentListByIds(ArrayList<String> mockIds, List<Fragment> frList, List<String> tagList) {
         if (mockIds.contains(AVATAR)) {
-            frList.add(new MakeAvatarFragment());
+            frList.add(new WizardAvatarFragment());
             tagList.add(AVATAR);
         }
         if (mockIds.contains(EMAIL)) {

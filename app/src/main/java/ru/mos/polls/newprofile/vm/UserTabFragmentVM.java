@@ -25,6 +25,9 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
@@ -38,7 +41,7 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
  * Created by Trunks on 08.06.2017.
  */
 
-public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
+public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
 
 
     private SwitchCompat enableProfileVisibility;
@@ -68,9 +71,21 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        progressable = getProgressable();
         setView();
         setListener();
         setAchievementLayerView();
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+                    refreshProfile();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
     public void setView() {
@@ -120,10 +135,37 @@ public class UserTabFragmentVM extends BaseTabFragmentVM<UserTabFragment, Fragme
         recyclerView.setAdapter(userStatisticsAdapter);
     }
 
+//    public void refreshProfile() {
+//        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+//            @Override
+//            public void onLoaded(AgUser loadedAgUser) {
+//                try {
+//                    saved = loadedAgUser;
+//                    progressable.end();
+//                    updateView();
+//                } catch (Exception ignored) {
+//                }
+//            }
+//
+//            @Override
+//            public void onError(VolleyError error) {
+//                try {
+//                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                } catch (Exception ignored) {
+//                }
+//            }
+//        };
+//        ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+//    }
+
     @Override
     public void onResume() {
         super.onResume();
         saved = new AgUser(getActivity());
+        updateView();
+    }
+
+    public void updateView() {
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
         mockUserStatsList();

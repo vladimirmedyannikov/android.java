@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.android.volley2.VolleyError;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 
@@ -23,7 +24,9 @@ import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -31,7 +34,6 @@ import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.newprofile.base.rxjava.Events;
 import ru.mos.polls.newprofile.base.ui.rvdecoration.UIhelper;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.AvatarSet;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.model.EmptyResult;
@@ -45,13 +47,13 @@ import ru.mos.polls.util.ImagePickerController;
  * Created by Trunks on 19.06.2017.
  */
 
-public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends FragmentViewModel<F, B> {
+public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends UIComponentFragmentViewModel<F, B> {
     protected RecyclerView recyclerView;
     protected AgUser saved;
     protected CircleImageView circleImageView;
     public boolean isAvatarLoaded;
 
-    public BaseTabFragmentVM(F fragment, B binding) {
+    public BaseProfileTabFragmentVM(F fragment, B binding) {
         super(fragment, binding);
     }
 
@@ -163,5 +165,31 @@ public abstract class BaseTabFragmentVM<F extends JugglerFragment, B extends Vie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservable.subscribeWith(handler));
+    }
+
+    public void refreshProfile() {
+        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+            @Override
+            public void onLoaded(AgUser loadedAgUser) {
+                try {
+                    saved = loadedAgUser;
+                    progressable.end();
+                    updateView();
+                } catch (Exception ignored) {
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                try {
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (Exception ignored) {
+                }
+            }
+        };
+        ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+    }
+
+    public void updateView() {
     }
 }

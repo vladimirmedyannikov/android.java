@@ -18,6 +18,8 @@ import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
 import ru.mos.polls.newprofile.base.rxjava.Events;
@@ -30,7 +32,7 @@ import ru.mos.polls.social.model.Social;
  * Created by Trunks on 16.06.2017.
  */
 
-public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
+public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
     Observable<List<Social>> socialListObserable;
     AppCompatTextView percentFilledTitle;
@@ -91,6 +93,10 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
     public void onResume() {
         super.onResume();
         saved = new AgUser(getActivity());
+        updateView();
+    }
+
+    public void updateView() {
         socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
@@ -107,6 +113,18 @@ public class InfoTabFragmentVM extends BaseTabFragmentVM<InfoTabFragment, Fragme
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        progressable = getProgressable();
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+                    refreshProfile();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
     public void setSocialBindingLayerRx() {

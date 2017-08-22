@@ -1021,6 +1021,14 @@ public class AgUser implements Serializable {
             this.label = label;
         }
 
+        public String getLabelMale() {
+            return labelMale;
+        }
+
+        public String getLabelFemale() {
+            return labelFemale;
+        }
+
         public static MaritalStatus parse(String value) {
             MaritalStatus result = NULL;
             if (MARRIED.getValue().equalsIgnoreCase(value)) {

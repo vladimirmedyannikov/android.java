@@ -83,7 +83,7 @@ public class AboutAppFragment extends Fragment {
                                 getString(R.string.title_about_project),
                                 getString(R.string.url_about_app),
                                 null,
-                                true,
+                                false,
                                 false);
                         break;
                     case AboutItem.USER_GUIDE:
@@ -102,7 +102,7 @@ public class AboutAppFragment extends Fragment {
                                 getString(R.string.title_offer),
                                 getString(R.string.url_offer),
                                 null,
-                                true,
+                                false,
                                 false);
                         break;
                     case AboutItem.OUR_APPS:

@@ -80,6 +80,7 @@ public class WebViewActivity extends ToolbarAbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        System.out.println("WebViewActivity");
         setContentView(R.layout.activity_webview);
         webView = (WebView) findViewById(R.id.webView);
         loading = (ProgressBar) findViewById(R.id.loading);

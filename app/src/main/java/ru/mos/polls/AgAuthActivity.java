@@ -85,7 +85,7 @@ public class AgAuthActivity extends AuthActivity {
                         getString(R.string.title_offer),
                         getString(R.string.url_offer),
                         null,
-                        true,
+                        false,
                         false);
             }
         });

@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -195,7 +196,7 @@ public class AGApplication extends MultiDexApplication {
         imageLoader = ImageLoader.getInstance();
         cacheDir = StorageUtils.getCacheDirectory(this);
         imageLoader.init(getLoaderConfig());
-
+        L.writeDebugLogs(!BuildConfig.BUILD_TYPE.equals("release")); //отключение логгирования для imageLoader
 
         Session.init(getApplicationContext());
         /**

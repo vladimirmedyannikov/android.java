@@ -22,7 +22,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
-import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;

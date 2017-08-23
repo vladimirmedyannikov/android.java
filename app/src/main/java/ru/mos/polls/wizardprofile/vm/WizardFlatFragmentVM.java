@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,21 +18,16 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
 import ru.mos.polls.databinding.FragmentWizardFlatBinding;
-import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
-import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
-import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
-import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
-import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 
 /**
  * Created by Trunks on 31.07.2017.

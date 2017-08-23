@@ -31,9 +31,9 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
-import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.base.ui.dialog.DatePickerFragment;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.dialog.DatePickerFragment;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
@@ -42,10 +42,8 @@ import ru.mos.polls.newprofile.state.PguAuthState;
 import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
-import ru.mos.polls.profile.gui.fragment.ProfileBindItemsFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.Social;
-import ru.mos.polls.survey.hearing.controller.PguUIController;
 
 /**
  * Created by wlTrunks on 14.06.2017.

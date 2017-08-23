@@ -5,7 +5,7 @@ import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import ru.mos.polls.newprofile.base.ui.BindingHolder;
+import ru.mos.polls.base.ui.BindingHolder;
 
 /**
  * ViewModel для элементов списков<br/>

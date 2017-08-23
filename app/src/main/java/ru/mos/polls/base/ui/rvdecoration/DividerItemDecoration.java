@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui.rvdecoration;
+package ru.mos.polls.base.ui.rvdecoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

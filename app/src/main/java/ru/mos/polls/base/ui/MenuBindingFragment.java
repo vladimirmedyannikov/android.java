@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui;
+package ru.mos.polls.base.ui;
 
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -9,8 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ru.mos.polls.BR;
-import ru.mos.polls.R;
-import ru.mos.polls.newprofile.base.vm.MenuFragmentVM;
+import ru.mos.polls.base.vm.MenuFragmentVM;
 
 /**
  * Created by Trunks on 05.07.2017.

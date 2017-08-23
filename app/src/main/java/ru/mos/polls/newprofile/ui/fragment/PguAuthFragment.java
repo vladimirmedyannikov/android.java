@@ -5,7 +5,7 @@ import android.os.Bundle;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentPguAuthBinding;
-import ru.mos.polls.newprofile.base.ui.NavigateFragment;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.newprofile.vm.PguAuthFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 

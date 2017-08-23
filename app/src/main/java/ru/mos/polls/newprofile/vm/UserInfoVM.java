@@ -2,7 +2,7 @@ package ru.mos.polls.newprofile.vm;
 
 
 import ru.mos.polls.databinding.UserInfoItemBinding;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
+import ru.mos.polls.base.vm.BaseVM;
 import ru.mos.polls.newprofile.model.UserInfo;
 
 /**

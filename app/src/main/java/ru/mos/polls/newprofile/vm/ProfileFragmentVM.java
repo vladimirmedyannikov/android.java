@@ -8,7 +8,7 @@ import java.util.List;
 
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewProfileBinding;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;

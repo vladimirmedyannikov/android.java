@@ -47,8 +47,8 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.newprofile.base.rxjava.Events;
-import ru.mos.polls.newprofile.base.ui.BaseActivity;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
@@ -392,7 +392,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
 
                     /**
-                     * TODO убрать!!!! пока повесил сюда вызова визарда "Профиль Допонительные данные" в галвное ленте при клик в QuestFragment
+                     * TODO убрать!!!! пока повесил сюда вызова визарда в галвное ленте при клик в QuestFragment
                      */
                     @Override
                     public void onOther(String title, String linkUrl) {

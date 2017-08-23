@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui.dialog;
+package ru.mos.polls.base.ui.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;

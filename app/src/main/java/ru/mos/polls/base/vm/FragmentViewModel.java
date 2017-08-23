@@ -1,16 +1,11 @@
-package ru.mos.polls.newprofile.base.vm;
+package ru.mos.polls.base.vm;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;

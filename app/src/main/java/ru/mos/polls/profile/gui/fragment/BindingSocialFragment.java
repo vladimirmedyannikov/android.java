@@ -12,7 +12,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -28,7 +27,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialController;

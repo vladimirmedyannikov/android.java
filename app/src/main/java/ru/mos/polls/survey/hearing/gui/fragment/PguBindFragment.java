@@ -28,7 +28,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.model.QuestMessage;
-import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.util.GuiUtils;

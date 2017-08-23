@@ -5,7 +5,7 @@ import android.widget.Toast;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentMakeAvatarBinding;
-import ru.mos.polls.newprofile.base.ui.NavigateFragment;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.wizardprofile.vm.WizardAvatarFragmentVM;
 
 /**

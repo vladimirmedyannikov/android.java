@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.elk.profile.Achievements;
-import ru.mos.polls.R;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
-import ru.mos.polls.databinding.ItemAchievementBinding;
-import ru.mos.polls.newprofile.base.ui.BindingHolder;
-import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.newprofile.vm.AchievementVM;
 import ru.mos.polls.newprofile.vm.OnAchievementClickListener;
 

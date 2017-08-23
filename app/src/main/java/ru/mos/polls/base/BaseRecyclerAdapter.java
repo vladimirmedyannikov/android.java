@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.BR;
-import ru.mos.polls.newprofile.base.ui.BindingHolder;
+import ru.mos.polls.base.ui.BindingHolder;
 
 /**
  * Базовый адаптер для отображения списка {@link RecyclerBaseViewModel}

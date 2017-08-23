@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui;
+package ru.mos.polls.base.ui;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -20,7 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import butterknife.ButterKnife;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.vm.FragmentViewModel;
 
 public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment  {
 

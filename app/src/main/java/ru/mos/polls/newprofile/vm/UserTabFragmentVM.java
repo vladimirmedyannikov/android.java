@@ -29,7 +29,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
-import ru.mos.polls.newprofile.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.VisibilitySet;
 import ru.mos.polls.newprofile.service.model.EmptyResult;

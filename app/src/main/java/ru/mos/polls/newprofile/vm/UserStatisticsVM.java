@@ -3,8 +3,7 @@ package ru.mos.polls.newprofile.vm;
 
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.databinding.UserStatsItemBinding;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
-import ru.mos.polls.newprofile.model.UserStatistics;
+import ru.mos.polls.base.vm.BaseVM;
 
 /**
  * Created by wlTrunks on 15.06.2017.

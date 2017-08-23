@@ -3,10 +3,9 @@ package ru.mos.polls.newprofile.ui.fragment;
 import android.os.Bundle;
 
 import ru.mos.elk.profile.flat.Flat;
-import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
-import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
+import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 

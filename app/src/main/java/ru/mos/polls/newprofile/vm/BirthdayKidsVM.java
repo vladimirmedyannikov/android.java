@@ -8,8 +8,8 @@ import java.util.Calendar;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
-import ru.mos.polls.newprofile.base.ui.dialog.YearDialogFragment;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
+import ru.mos.polls.base.ui.dialog.YearDialogFragment;
+import ru.mos.polls.base.vm.BaseVM;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 
 /**

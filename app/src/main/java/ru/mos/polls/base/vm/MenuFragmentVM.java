@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.vm;
+package ru.mos.polls.base.vm;
 
 import android.databinding.ViewDataBinding;
 

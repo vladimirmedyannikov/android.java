@@ -3,7 +3,7 @@ package ru.mos.polls.wizardprofile.ui.fragment;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
-import ru.mos.polls.newprofile.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM;
 
 /**

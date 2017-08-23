@@ -4,7 +4,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 
 import ru.mos.polls.databinding.ItemBindSocialNewBinding;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
+import ru.mos.polls.base.vm.BaseVM;
 import ru.mos.polls.social.model.Social;
 import ru.mos.polls.social.model.SocialBindItem;
 

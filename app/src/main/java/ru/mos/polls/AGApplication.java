@@ -51,7 +51,7 @@ import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.newdb.AppDatabase;
-import ru.mos.polls.newprofile.base.rxjava.RxEventBus;
+import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;

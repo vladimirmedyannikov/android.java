@@ -3,7 +3,7 @@ package ru.mos.polls.newprofile.vm;
 
 import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.polls.databinding.ItemAgSocialStatusBinding;
-import ru.mos.polls.newprofile.base.vm.BaseVM;
+import ru.mos.polls.base.vm.BaseVM;
 
 /**
  * Created by Trunks on 07.07.2017.

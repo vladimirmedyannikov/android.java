@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui;
+package ru.mos.polls.base.ui;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

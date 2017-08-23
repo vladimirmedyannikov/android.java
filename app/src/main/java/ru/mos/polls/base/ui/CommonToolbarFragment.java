@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui;
+package ru.mos.polls.base.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

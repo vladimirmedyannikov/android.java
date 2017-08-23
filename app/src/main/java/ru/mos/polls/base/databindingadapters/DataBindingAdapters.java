@@ -1,7 +1,6 @@
-package ru.mos.polls.newprofile.base.databindingadapters;
+package ru.mos.polls.base.databindingadapters;
 
 import android.databinding.BindingAdapter;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;

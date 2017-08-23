@@ -7,7 +7,7 @@ import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.R;
-import ru.mos.polls.newprofile.base.ui.CommonToolbarFragment;
+import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 
 /**

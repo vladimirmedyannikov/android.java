@@ -6,7 +6,7 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.vm.FriendsFragmentVM;
-import ru.mos.polls.newprofile.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.BindingFragment;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

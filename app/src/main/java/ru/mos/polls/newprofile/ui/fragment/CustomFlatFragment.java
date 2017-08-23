@@ -5,7 +5,7 @@ import android.os.Bundle;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentCustomFlatBinding;
-import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
+import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.CustomFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 

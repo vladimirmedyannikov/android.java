@@ -8,11 +8,10 @@ import android.widget.TextView;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentPguAuthBinding;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.state.PguAuthState;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.popup.PopupController;
-import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**

@@ -5,8 +5,7 @@ import java.util.List;
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.UserStatsItemBinding;
-import ru.mos.polls.newprofile.base.ui.adapter.BaseAdapter;
-import ru.mos.polls.newprofile.model.UserStatistics;
+import ru.mos.polls.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.newprofile.vm.UserStatisticsVM;
 
 /**

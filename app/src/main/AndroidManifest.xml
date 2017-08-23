@@ -461,7 +461,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".newprofile.base.ui.BaseActivity"
+            android:name=".base.ui.BaseActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

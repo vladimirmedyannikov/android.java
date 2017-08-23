@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui.adapter;
+package ru.mos.polls.base.ui.adapter;
 
 import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ru.mos.polls.BR;
-import ru.mos.polls.newprofile.base.ui.BindingHolder;
+import ru.mos.polls.base.ui.BindingHolder;
 
 
 /**

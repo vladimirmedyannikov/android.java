@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.rxjava;
+package ru.mos.polls.base.rxjava;
 
 
 import ru.mos.elk.profile.AgUser;

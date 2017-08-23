@@ -3,7 +3,7 @@ package ru.mos.polls.base.component;
 import android.databinding.ViewDataBinding;
 
 import me.ilich.juggler.gui.JugglerFragment;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 public abstract class UIComponentFragmentViewModel<F extends JugglerFragment, B extends ViewDataBinding> extends FragmentViewModel<F, B> implements ComponentHolder {

@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import ru.mos.elk.profile.AgUser;
-import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
-import ru.mos.polls.newprofile.base.ui.MenuBindingFragment;
+import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;

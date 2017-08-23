@@ -1,7 +1,7 @@
 package ru.mos.polls.newprofile.ui.adapter;
 
 import ru.mos.polls.databinding.UserStatsItemBinding;
-import ru.mos.polls.newprofile.base.ui.BindingHolder;
+import ru.mos.polls.base.ui.BindingHolder;
 
 /**
  * Created by Trunks on 19.06.2017.

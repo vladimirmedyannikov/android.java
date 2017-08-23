@@ -1,4 +1,4 @@
-package ru.mos.polls.newprofile.base.ui;
+package ru.mos.polls.base.ui;
 
 
 import android.databinding.ViewDataBinding;
@@ -6,7 +6,7 @@ import android.databinding.ViewDataBinding;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
-import ru.mos.polls.newprofile.base.vm.FragmentViewModel;
+import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.newprofile.vm.WizardRequestInterfaceListener;
 
 /**

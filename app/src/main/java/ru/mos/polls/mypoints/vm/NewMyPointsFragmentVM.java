@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -122,8 +123,8 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                         result = true;
                         break;
                 }
-                setView();
-
+//                setView();
+                requestHistory();
                 return result;
             }
         });
@@ -135,6 +136,8 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                 new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(HistoryGet.Response.Result result) {
+//                        adapter.add(getFilteredList(result.getPoints()));
+//                        adapter.add(getFilteredList(mockList(getActivity())));
                         adapter.add(result.getPoints());
                         adapter.add(mockList(getActivity()));
                         adapter.notifyDataSetChanged();
@@ -150,6 +153,18 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservable.subscribeWith(handler));
+    }
+
+
+    public List<Points> getFilteredList(List<Points> list) {
+        List<Points> result = new ArrayList<>();
+        Observable.just(list)
+                .subscribeOn(Schedulers.io())
+                .flatMap(Observable::fromIterable)
+                .filter(points -> points.getAction().equalsIgnoreCase(currentAction.toString()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(points -> result.add(points));
+        return result;
     }
 
     private void setView() {

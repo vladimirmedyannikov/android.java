@@ -15,7 +15,6 @@ import ru.mos.polls.PromoController;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.ui.BindingFragment;
-import ru.mos.polls.databinding.FragmentMyPointsListBinding;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.mypoints.vm.NewMyPointsFragmentVM;
@@ -80,6 +79,6 @@ public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, 
 
     @Override
     public int getLayoutResources() {
-        return R.layout.fragment_my_points_list;
+        return R.layout.fragment_new_my_points;
     }
 }

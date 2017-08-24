@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/item.linear.horizontal"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:padding="@dimen/pd_xsmall">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.mypoints.vm.PointsVM" />
+    </data>
 
     <LinearLayout
-        style="@style/item.linear"
-        android:layout_weight="1"
-        android:paddingLeft="@dimen/pd_xxsmall"
-        android:paddingRight="@dimen/pd_xxsmall">
+        style="@style/item.linear.horizontal"
 
-        <TextView
-            android:id="@+id/tvWriteOffDate"
-            style="@style/text.gray"
-            android:text="@string/date"/>
+        android:padding="@dimen/pd_xsmall">
 
-        <TextView
-            android:id="@+id/tvTitle"
-            style="@style/text.large.black"
-            android:text="@string/description"/>
+        <LinearLayout
+            style="@style/item.linear"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingRight="@dimen/pd_xxsmall">
 
+            <TextView
+                android:id="@+id/tvWriteOffDate"
+                style="@style/text.gray"
+                android:text="@string/date" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/text.large.black"
+                android:text="@string/description" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPoints"
+            style="@style/wrap.centered"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvPoints"
+                style="@style/text.green"
+                android:drawablePadding="@dimen/pd_xxsmall"
+                android:textColor="@{viewModel.isRefilled() ? @color/greenText : @color/ag_red}" />
+
+            <TextView
+                android:id="@+id/tvPointsText"
+                style="@style/text.green"
+                android:drawablePadding="@dimen/pd_xxsmall"
+                android:text="@{@plurals/points_count(viewModel.points)}"
+                android:textColor="@{viewModel.isRefilled() ? @color/greenText : @color/ag_red}" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llPoints"
-        style="@style/wrap.centered"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvPoints"
-            style="@style/text.green"
-            android:drawablePadding="@dimen/pd_xxsmall"/>
-
-        <TextView
-            android:id="@+id/tvPointsText"
-            style="@style/text.green"
-            android:drawablePadding="@dimen/pd_xxsmall"/>
-    </LinearLayout>
-</LinearLayout>
+</layout>

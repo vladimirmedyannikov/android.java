@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.mypoints.vm.NewMyPointsFragmentVM" />
+    </data>
+
+    <LinearLayout style="@style/linear">
+
+        <TextView
+            android:id="@+id/tvStatus"
+            style="@style/text.xlarge.green"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/pd_xxsmall"
+            android:text="@string/state" />
+
+        <LinearLayout
+            style="@style/linear"
+            android:padding="@dimen/pd_xsmall">
+
+            <TextView
+                android:id="@+id/tvTitleBalance"
+                style="@style/text.large.black"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/current_balance" />
+
+            <TextView
+                android:id="@+id/tvPoints"
+                style="@style/header.green"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="-16dp"
+                android:layout_marginTop="-10dp"
+                android:text="0"
+                android:textSize="@dimen/ts_main_header"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCurrentPointsUnit"
+                style="@style/text.xxlarge.green"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/pd_xxsmall"
+                android:drawableRight="@drawable/open_menu"
+                android:text="@string/point_var_2" />
+
+            <LinearLayout
+                style="@style/item.linear"
+                android:paddingLeft="@dimen/pd_xxlarge"
+                android:paddingRight="@dimen/pd_xxlarge"
+                android:visibility="gone">
+
+                <ru.mos.polls.event.gui.view.DrawableAlignedButton
+                    android:id="@+id/shop"
+                    style="@style/basicIcon"
+                    android:background="@drawable/ag_back_button_round"
+                    android:drawableLeft="@drawable/shop_white"
+                    android:gravity="center"
+                    android:text="@string/goto_webshop"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/ts_xlarge"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/text.xlarge.green"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/pd_normal"
+                android:paddingLeft="@dimen/pd_xsmall"
+                android:text="@string/points_history"
+                android:textAllCaps="true" />
+
+            <include
+                layout="@layout/ag_separator"
+                android:background="@color/green_light" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1">
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/ptrLayout"
+                    style="@style/root">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list"
+                        style="@style/root" />
+
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+                <TextView
+                    android:id="@+id/empty"
+                    style="@style/emptylist" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

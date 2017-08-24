@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_promocode"
+        android:title="@string/enter_promocode"
+        android:orderInCategory="100"
+        android:icon="@drawable/gift"
+        app:showAsAction="always|withText" />
+</menu>

@@ -3,6 +3,7 @@ package ru.mos.polls.rxhttp.rxapi.config;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.service.AvatarSet;
@@ -42,6 +43,7 @@ public interface AgApi {
             String FRIEND = "friends";
             String AGPROFILE = "agprofile";
             String MEDIA = "media";
+            String POLL = "poll";
         }
 
         interface Methods {
@@ -58,6 +60,7 @@ public interface AgApi {
             String SET_PROFILE = "setProfile";
             String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
             String VISIBLE = "visible";
+            String GET_HISTORY = "getHistory";
         }
     }
 
@@ -99,4 +102,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.VISIBLE)
     Observable<EmptyResponse> setProfileVisibility(@Body VisibilitySet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.GET_HISTORY)
+    Observable<HistoryGet.Response> getHistory(@Body HistoryGet.Request body);
 }

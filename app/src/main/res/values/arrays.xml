@@ -56,4 +56,13 @@
         <item>updateSocial</item>
         <item>bindToPGU</item>
     </string-array>
+
+    <plurals name="points_count">
+        <item quantity="zero">баллов</item>
+        <item quantity="one">балл</item>
+        <item quantity="two">балла</item>
+        <item quantity="few">балла</item>
+        <item quantity="many">баллов</item>
+        <item quantity="other">баллов</item>
+    </plurals>
 </resources>

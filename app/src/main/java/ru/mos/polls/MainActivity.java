@@ -43,6 +43,7 @@ import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
+import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
@@ -438,6 +439,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 break;
             case NavigationMenuItem.MY_POINTS:
                 fr = MyPointsFragment.newInstance();
+//                fr = NewMyPointsFragment.newInstance();
                 tag = TAG_MY_POINTS;
                 break;
             case NavigationMenuItem.NEWS:

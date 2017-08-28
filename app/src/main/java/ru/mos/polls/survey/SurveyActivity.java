@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,10 @@ import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
+import ru.mos.social.callback.PostCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.PostValue;
+import ru.mos.social.model.social.Social;
 
 
 public class SurveyActivity extends BaseActivity {
@@ -62,6 +67,17 @@ public class SurveyActivity extends BaseActivity {
 
     private SocialController socialController;
     private Callback callback = Callback.STUB;
+    private PostCallback postCallback = new PostCallback() {
+        @Override
+        public void postSuccess(Social social, @Nullable PostValue postValue) {
+            SocialUIController.sendPostingResult(SurveyActivity.this, (AppPostValue) postValue, null);
+        }
+
+        @Override
+        public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
+            SocialUIController.sendPostingResult(SurveyActivity.this, (AppPostValue) postValue, e);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +94,13 @@ public class SurveyActivity extends BaseActivity {
         }
         SocialUIController.registerPostingReceiver(this);
         socialController = new SocialController(this);
+        socialController.getEventController().registerCallback(postCallback);
     }
 
     @Override
     protected void onDestroy() {
         SocialUIController.unregisterPostingReceiver(this);
+        socialController.getEventController().unregisterAllCallback();
         super.onDestroy();
     }
 
@@ -271,7 +289,7 @@ public class SurveyActivity extends BaseActivity {
 
             @Override
             public void onPosting(AppPostValue socialPostValue) {
-                socialController.post(socialPostValue);
+                socialController.post(socialPostValue, socialPostValue.getSocialId());
             }
         };
 
@@ -290,7 +308,7 @@ public class SurveyActivity extends BaseActivity {
             @Override
             public void onPageShowed(int pageId, int pagesCount) {
                 String pagesCountValue = String.valueOf(pagesCount);
-                String title = String.format(getString(R.string.survey_title), pageId + 1, pagesCountValue);
+                String title = String.format(getString(R.string.survey_title), String.valueOf(pageId + 1), pagesCountValue);
                 TitleHelper.setTitle(SurveyActivity.this, title);
             }
 
@@ -317,7 +335,7 @@ public class SurveyActivity extends BaseActivity {
 
             @Override
             public void onPosting(AppPostValue socialPostValue) {
-                socialController.post(socialPostValue);
+                socialController.post(socialPostValue, socialPostValue.getSocialId());
             }
         };
 

@@ -6,14 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.android.volley2.VolleyLog;
 import com.appsflyer.AppsFlyerLib;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
-import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -28,22 +24,19 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.vk.sdk.VKSdk;
 
 import org.json.JSONArray;
 
 import java.io.File;
 import java.util.List;
 
-import io.fabric.sdk.android.Fabric;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.api.Token;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.push.GCMBroadcastReceiver;
+import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.di.AppComponent;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
@@ -51,16 +44,17 @@ import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.newdb.AppDatabase;
-import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.session.Session;
-import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.social.storable.AppStorable;
 import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.SurveyActivity;
+import ru.mos.social.model.Configurator;
+import ru.mos.social.utils.SocialInitUtils;
 
 
 public class AGApplication extends MultiDexApplication {
@@ -135,12 +129,15 @@ public class AGApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         initGoogleAnalytics();
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        TwitterAuthConfig config = new TwitterAuthConfig(getString(R.string.tw_consumer_key), getString(R.string.tw_consumer_secret));
-
-        Fabric.with(this, crashlyticsKit, new TwitterCore(config));
+//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+//                .build();
+//        TwitterAuthConfig config = new TwitterAuthConfig(getString(R.string.tw_consumer_key), getString(R.string.tw_consumer_secret));
+//
+//        Fabric.with(this, crashlyticsKit, new TwitterCore(config));
+        SocialInitUtils.init(getApplicationContext());
+        AppStorable storable = new AppStorable(this);
+        Configurator.getInstance(this).setStorable(storable);
 
         BaseActivity.setFlurryKey(getString(R.string.ag_flurry_key));
         AppsFlyerLib.setAppsFlyerKey("TvVxifM6uMLnGmiZEwifAi");
@@ -173,17 +170,12 @@ public class AGApplication extends MultiDexApplication {
 
         getContentResolver().query(UserDataProvider.getContentWithLimitUri(UserData.Cars.URI_CONTENT, 1), null, null, null, null).close(); //work around falling when query db before created
 
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
-
-        VKSdk.initialize(this.getApplicationContext());
-
-
         BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Context cntx = getApplicationContext();
                 PointsManager.clearPointsAndHistory(cntx);
-                SocialManager.clearAll(cntx);
+                Configurator.getInstance(cntx).getStorable().clearAll();
                 SubscribeManager.clear(cntx);
                 CustomDialogController.clear(cntx);
                 ProfileFragment.clearSyncTime(cntx);
@@ -225,12 +217,6 @@ public class AGApplication extends MultiDexApplication {
 
     public static RxEventBus bus() {
         return bus;
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     public GCMBroadcastReceiver.PushAction getNewHearing() {

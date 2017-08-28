@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,10 @@ import ru.mos.polls.innovation.model.Status;
 import ru.mos.polls.innovation.view.ChartsView;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.social.callback.PostCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.PostValue;
+import ru.mos.social.model.social.Social;
 
 /**
  * Экран для отображения городской новинки
@@ -106,6 +111,18 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
 
     private SocialController socialController;
 
+    private PostCallback postCallback = new PostCallback() {
+        @Override
+        public void postSuccess(Social social, @Nullable PostValue postValue) {
+            SocialUIController.sendPostingResult(InnovationActivity.this, (AppPostValue) postValue, null);
+        }
+
+        @Override
+        public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
+            SocialUIController.sendPostingResult(InnovationActivity.this, (AppPostValue) postValue, e);
+        }
+    };
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,6 +138,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         TitleHelper.setTitle(this, R.string.title_innovation);
         setListenerToRatingbar();
         socialController = new SocialController(this);
+        socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
         if (getShortInnovation()) {
             loadInnovation();
@@ -142,6 +160,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
             SocialUIController.unregisterPostingReceiver(this);
         } catch (Exception ignored) {
         }
+        socialController.getEventController().unregisterAllCallback();
         super.onDestroy();
     }
 
@@ -258,7 +277,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                         public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                             socialPostValue.setId(innovation.getId());
                             if (socialController != null) {
-                                socialController.post(socialPostValue);
+                                socialController.post(socialPostValue, socialPostValue.getSocialId());
                             }
                         }
 
@@ -305,7 +324,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         String message;
         if (point > 0) {
             String pointTxt = PointsManager.getPointUnitString(this, point);
-            message = String.format(getString(R.string.novelty_result_send_share_with_points), point, pointTxt, allPoints, PointsManager.getPointUnitString(this, allPoints));
+            message = String.format(getString(R.string.novelty_result_send_share_with_points), String.valueOf(point), pointTxt, String.valueOf(allPoints), PointsManager.getPointUnitString(this, allPoints));
         } else {
             message = getString(R.string.novelty_result_send_share);
         }
@@ -355,7 +374,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                 innovationButtons.renderPassedButton();
                 if (innovation.getPoints() > 0) {
                     String pointsAdded = getResources().getQuantityString(R.plurals.points_added, innovation.getPoints());
-                    innPointTitleTxt = String.format(getString(R.string.passed_points_formatted), pointsAdded, innovation.getPoints(), pointTxt, innovation.getReadablePassedDate());
+                    innPointTitleTxt = String.format(getString(R.string.passed_points_formatted), pointsAdded, String.valueOf(innovation.getPoints()), pointTxt, innovation.getReadablePassedDate());
                     innerPointsVisibility = View.VISIBLE;
                 } else {
                     innPointTitleTxt = String.format(getString(R.string.vote_date_text), innovation.getReadablePassedDate());
@@ -378,7 +397,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         SocialUIController.SocialClickListener socialClickListener = new SocialUIController.SocialClickListener() {
             @Override
             public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
-                socialController.post(socialPostValue);
+                socialController.post(socialPostValue, socialPostValue.getSocialId());
                 scrollToChart();
             }
 

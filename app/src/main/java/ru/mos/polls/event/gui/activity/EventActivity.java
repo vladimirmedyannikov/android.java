@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -51,6 +52,10 @@ import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
+import ru.mos.social.callback.PostCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.PostValue;
+import ru.mos.social.model.social.Social;
 
 
 public class EventActivity extends ToolbarAbstractActivity {
@@ -112,6 +117,18 @@ public class EventActivity extends ToolbarAbstractActivity {
     private MenuItem subscribeMenuItem;
     private boolean isEventLoaded, isGPSEnableDialogShowed, isRuntimePermissionRejected;
 
+    private PostCallback postCallback = new PostCallback() {
+        @Override
+        public void postSuccess(Social social, @Nullable PostValue postValue) {
+            SocialUIController.sendPostingResult(EventActivity.this, (AppPostValue) postValue, null);
+        }
+
+        @Override
+        public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
+            SocialUIController.sendPostingResult(EventActivity.this, (AppPostValue) postValue, e);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +145,7 @@ public class EventActivity extends ToolbarAbstractActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiEventBuilder.findViews();
         socialController = new SocialController(this);
-
+        socialController.getEventController().registerCallback(postCallback);
         Statistics.enterEventTicket(eventId);
         GoogleStatistics.Events.enterEventTicket(eventId);
         SocialUIController.registerPostingReceiver(this);
@@ -160,6 +177,7 @@ public class EventActivity extends ToolbarAbstractActivity {
     @Override
     protected void onDestroy() {
         SocialUIController.unregisterPostingReceiver(this);
+        socialController.getEventController().unregisterAllCallback();
         if (locationController != null) {
             locationController.disconnect();
         }
@@ -288,7 +306,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                     @Override
                     public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
-                        socialController.post(socialPostValue);
+                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
 
                     @Override
@@ -379,7 +397,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                     @Override
                     public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         socialController = new SocialController(EventActivity.this);
-                        socialController.post(socialPostValue);
+                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
 
                     @Override
@@ -435,7 +453,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(EventActivity.this);
                     String message = String.format(
                             EventActivity.this.getString(R.string.distance_is_too_big),
-                            event.getMaxCheckInDistance());
+                            String.valueOf(event.getMaxCheckInDistance()));
                     builder.setMessage(message);
                     builder.setPositiveButton(R.string.survey_done_ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -658,7 +676,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                  * + 10 баллов
                  */
                 String points = String.format(getString(R.string.add_count),
-                        event.getPoints(),
+                        String.valueOf(event.getPoints()),
                         PointsManager.getPointUnitString(EventActivity.this, event.getPoints()));
                 titleCheckIn.setText(result);
                 subtitleCheckIn.setText(points);

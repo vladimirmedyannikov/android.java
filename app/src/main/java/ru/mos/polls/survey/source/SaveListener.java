@@ -31,6 +31,7 @@ import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
+import ru.mos.social.controller.SocialController;
 
 
 public abstract class SaveListener implements SurveyDataSource.SaveListener {
@@ -153,7 +154,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                                 public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                                     socialPostValue.setId(survey.getId());
                                     if (socialController != null) {
-                                        socialController.post(socialPostValue);
+                                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                                     }
                                 }
 

@@ -498,6 +498,7 @@
     <string name="innovation_formatted_date_end">голосование до %s</string>
     <string name="formatted_full_count">Оценок: %s</string>
     <string name="action_survey_subscribe">Подписаться</string>
+    <string name="confirm_social_auth_error_message">При авторизации возникла ошибка: %s</string>
     <string name="confirm_unbind_message">Вы действительно хотите отвязать свой аккаунт %s?</string>
     <string name="confirm_unbind_ok">Да, отвязать</string>
     <string name="unbind_progress_message">Отвязываем данные социальной сети от аккаунта активного гражданина..</string>

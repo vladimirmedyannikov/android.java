@@ -32,6 +32,11 @@ import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.model.AppBindItem;
 import ru.mos.polls.social.model.AppSocial;
+import ru.mos.polls.social.storable.AppStorable;
+import ru.mos.social.callback.AuthCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.Configurator;
+import ru.mos.social.model.social.Social;
 
 /**
  * Экран привязки аккаунтов соцсетей к аккаунту аг
@@ -64,6 +69,17 @@ public class BindingSocialFragment extends Fragment {
     @BindView(R.id.notifyContainer)
     View notifyContainer;
     private boolean isTask;
+    private AuthCallback authCallback = new AuthCallback() {
+        @Override
+        public void authSuccess(Social social) {
+            bindSocial((AppSocial) social);
+        }
+
+        @Override
+        public void authFailure(Social social, Exception e) {
+            showErrorAuthDialog((AppSocial) social, e);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,13 +104,12 @@ public class BindingSocialFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        socialController.getEventController().unregisterAllCallback();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (socialController.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+        socialController.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -104,8 +119,9 @@ public class BindingSocialFragment extends Fragment {
 
     private void init() {
         socialController = new SocialController((BaseActivity) getActivity());
-        savedSocials = AppSocial.getSavedSocials(getActivity());
-        changedSocials = AppSocial.getSavedSocials(getActivity());
+        socialController.getEventController().registerCallback(authCallback);
+        savedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
+        changedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
         socialBindAdapter = new SocialBindAdapter(getActivity(), changedSocials);
         if (getArguments() != null) {
             isTask = getArguments().getBoolean(IS_TASK);
@@ -120,7 +136,7 @@ public class BindingSocialFragment extends Fragment {
         socialBindAdapter.setListener(new SocialBindAdapter.Listener() {
             @Override
             public void onBindClick(AppSocial social) {
-                bindSocial(social);
+                socialController.auth(social.getSocialId());
             }
 
             @Override
@@ -148,6 +164,15 @@ public class BindingSocialFragment extends Fragment {
                 unBindSocial(social);
             }
         });
+        builder.show();
+    }
+
+    private void showErrorAuthDialog(final AppSocial social, Exception e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String message = String.format(getString(R.string.confirm_social_auth_error_message),
+                e.getMessage());
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.ag_ok, null);
         builder.show();
     }
 
@@ -188,7 +213,7 @@ public class BindingSocialFragment extends Fragment {
                 GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getSocialName(), isTask);
                 social.copy(loadedSocial);
                 social.setIsLogin(true);
-                social.save(getActivity());
+                Configurator.getInstance(getActivity()).getStorable().save(social);
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }
@@ -198,7 +223,7 @@ public class BindingSocialFragment extends Fragment {
                 hideProgress();
             }
         };
-        socialController.bindSocial(social, listener);
+        AgSocialApiController.bindSocialToAg((BaseActivity) getActivity(), social, listener);
     }
 
     private void unBindSocial(final AppSocial social) {
@@ -212,7 +237,7 @@ public class BindingSocialFragment extends Fragment {
                 } else {
                     Statistics.profileSocialLogin(loadedSocial.getSocialName());
                 }
-                social.reset(getActivity());
+                Configurator.getInstance(getActivity()).getStorable().clear(social.getSocialId());
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }
@@ -222,7 +247,7 @@ public class BindingSocialFragment extends Fragment {
                 hideProgress();
             }
         };
-        socialController.unBindSocial(social, listener);
+        AgSocialApiController.unbindSocialFromAg((BaseActivity) getActivity(), social, listener);
     }
 
     private void showProgress(String message) {

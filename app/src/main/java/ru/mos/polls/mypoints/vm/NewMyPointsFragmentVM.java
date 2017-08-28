@@ -144,7 +144,6 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                     protected void onResult(HistoryGet.Response.Result result) {
                         if (!currentAction.toString().equalsIgnoreCase(PointHistory.Action.ALL.toString())) {
                             getFilteredList(result.getPoints());
-                            getFilteredList(mockList(getActivity()));
                         } else {
                             adapter.add(result.getPoints());
                             adapter.notifyDataSetChanged();

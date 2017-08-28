@@ -48,9 +48,8 @@ import ru.mos.polls.event.model.Event;
 import ru.mos.polls.event.model.EventDetail;
 import ru.mos.polls.event.model.Filter;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 
 
@@ -174,7 +173,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 Statistics.enterCheckIn(eventId, true, false);
                 GoogleStatistics.Events.enterCheckIn(eventId, true, false);
                 if (message != null && !message.isEmpty()) {
-                    message.showCustomMessage(EventActivity.this, null, SocialPostValue.Type.CHECK_IN, eventId, new Runnable() {
+                    message.showCustomMessage(EventActivity.this, null, AppPostValue.Type.CHECK_IN, eventId, new Runnable() {
                         @Override
                         public void run() {
                             EventActivity.this.finish();
@@ -288,7 +287,7 @@ public class EventActivity extends ToolbarAbstractActivity {
             public void onClick(DialogInterface dialog, int which) {
                 SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                    public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         socialController.post(socialPostValue);
                     }
 
@@ -378,7 +377,7 @@ public class EventActivity extends ToolbarAbstractActivity {
             public void onClick(View v) {
                 SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                    public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         socialController = new SocialController(EventActivity.this);
                         socialController.post(socialPostValue);
                     }

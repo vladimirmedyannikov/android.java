@@ -15,7 +15,7 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 
 public class SocialQuest extends DetailsQuest {
 
@@ -78,8 +78,8 @@ public class SocialQuest extends DetailsQuest {
         if (ID_POST_IN_SOCIAL.equals(getId())) {
             SocialUIController.showSocialsDialog((BaseActivity) context, new SocialUIController.SocialClickListener() {
                 @Override
-                public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
-                    listener.onSocialPost(socialPostValue);
+                public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
+                    listener.onSocialPost(appPostValue);
                 }
 
                 @Override

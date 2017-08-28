@@ -3,28 +3,28 @@ package ru.mos.polls.newprofile.vm;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 
-import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.base.vm.BaseVM;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialBindItem;
+import ru.mos.polls.databinding.ItemBindSocialNewBinding;
+import ru.mos.polls.social.model.AppBindItem;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by Trunks on 23.06.2017.
  */
 
-public class SocialVM extends BaseVM<Social,ItemBindSocialNewBinding> {
+public class SocialVM extends BaseVM<AppSocial,ItemBindSocialNewBinding> {
     AppCompatImageView unbindIcon;
 
-    public SocialVM(Social social, ItemBindSocialNewBinding binding) {
+    public SocialVM(AppSocial social, ItemBindSocialNewBinding binding) {
         super(social,binding);
         unbindIcon = binding.socialUnbind;
         setUnbindIconVisibility();
     }
 
     public int getIcon() {
-        int drawableId = SocialBindItem.getBindResId(model.getSocialId());
+        int drawableId = AppBindItem.getBindResId(model.getSocialId());
         if (!model.isLogon()) {
-            drawableId = SocialBindItem.getUnBindResId(model.getSocialId());
+            drawableId = AppBindItem.getUnBindResId(model.getSocialId());
         }
         return drawableId;
     }

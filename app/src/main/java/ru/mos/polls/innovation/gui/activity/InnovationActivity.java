@@ -37,9 +37,8 @@ import ru.mos.polls.innovation.model.Rating;
 import ru.mos.polls.innovation.model.ShortInnovation;
 import ru.mos.polls.innovation.model.Status;
 import ru.mos.polls.innovation.view.ChartsView;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 
 /**
  * Экран для отображения городской новинки
@@ -256,7 +255,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                     dismiss(dialog);
                     SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                         @Override
-                        public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                        public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                             socialPostValue.setId(innovation.getId());
                             if (socialController != null) {
                                 socialController.post(socialPostValue);
@@ -378,7 +377,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     private void share() {
         SocialUIController.SocialClickListener socialClickListener = new SocialUIController.SocialClickListener() {
             @Override
-            public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+            public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                 socialController.post(socialPostValue);
                 scrollToChart();
             }

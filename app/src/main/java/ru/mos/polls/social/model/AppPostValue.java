@@ -1,28 +1,20 @@
 package ru.mos.polls.social.model;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.helpers.TextHelper;
-import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.social.model.PostValue;
 
 
-public class SocialPostValue implements Serializable {
+public class AppPostValue extends PostValue {
     private static final String URL_OK_WIDGET_MEDIATOPIC_POST = "http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=%s&st.attachment=%s&st.signature=%s&st.popup=on&st.utext=on&st.access_token=%s";
     /**
      * @see <a href="http://www.geek.com/news/twitter-now-limits-tweets-to-117-characters-if-you-include-a-link-1540340/">
@@ -46,28 +38,28 @@ public class SocialPostValue implements Serializable {
      */
     private Object id;
 
-    public SocialPostValue() {
+    public AppPostValue() {
     }
 
-    public SocialPostValue(SocialPostValue socialPostValue, String socialName) {
-        if (socialPostValue != null) {
+    public AppPostValue(AppPostValue appPostValue, String socialName) {
+        if (appPostValue != null) {
             setSocialName(socialName);
             setSocialId(socialName);
-            setText(socialPostValue.getText());
-            setLink(socialPostValue.getLink());
-            setImage(socialPostValue.getImage());
-            setNotify(socialPostValue.isMustServerNotified());
-            setType(socialPostValue.getType());
-            setEnable(socialPostValue.isEnable());
-            setId(socialPostValue.getId());
+            setText(appPostValue.getText());
+            setLink(appPostValue.getLink());
+            setImage(appPostValue.getImage());
+            setNotify(appPostValue.isMustServerNotified());
+            setType(appPostValue.getType());
+            setEnable(appPostValue.isEnable());
+            setId(appPostValue.getId());
         }
     }
 
-    public SocialPostValue(JSONObject socialJson, Type type) {
+    public AppPostValue(JSONObject socialJson, Type type) {
         this("", socialJson, type, -1);
     }
 
-    public SocialPostValue(String socialName, JSONObject socialJson, Type type, Object id) {
+    public AppPostValue(String socialName, JSONObject socialJson, Type type, Object id) {
         if (socialJson != null) {
             setSocialName(socialName);
             setSocialId(socialName);
@@ -172,7 +164,7 @@ public class SocialPostValue implements Serializable {
 //    /**
 //     * Формирование параметров для постинга в ok.ru для метода share.addLink
 //     * Устарел с изменением api ok.ru
-//     * Вместо него теперь исопльзуется метод {@link SocialPostValue#getOkAttachments()}
+//     * Вместо него теперь исопльзуется метод {@link AppPostValue#getOkAttachments()}
 //     *
 //     * @return
 //     */
@@ -184,22 +176,22 @@ public class SocialPostValue implements Serializable {
 //        return result;
 //    }
 
-    public Bundle prepareFbPost() {
-        Bundle result = new Bundle(2);
-        result.putString("message", text);
-        result.putString("link", link);
-        return result;
-    }
+//    public Bundle prepareFbPost() {
+//        Bundle result = new Bundle(2);
+//        result.putString("message", text);
+//        result.putString("link", link);
+//        return result;
+//    }
 
-    /**
-     * @return строка для постинга в {@see <a href="httP://twitter.com">twitter</a>}
-     */
-    public String prepareTwPost() {
-        String result = "";
-        if (!TextUtils.isEmpty(text)) result += text + " ";
-        if (!TextUtils.isEmpty(link)) result += link;
-        return result;
-    }
+//    /**
+//     * @return строка для постинга в {@see <a href="httP://twitter.com">twitter</a>}
+//     */
+//    public String prepareTwPost() {
+//        String result = "";
+//        if (!TextUtils.isEmpty(text)) result += text + " ";
+//        if (!TextUtils.isEmpty(link)) result += link;
+//        return result;
+//    }
 
     public int getSocialId() {
         return socialId;
@@ -210,15 +202,15 @@ public class SocialPostValue implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return super.getTitle();
     }
 
     public String getText() {
-        return text;
+        return super.getText();
     }
 
     public String getLink() {
-        return link;
+        return super.getLink();
     }
 
     public String getImage() {
@@ -241,57 +233,62 @@ public class SocialPostValue implements Serializable {
         return id;
     }
 
-    public SocialPostValue setSocialName(String socialName) {
+    public AppPostValue setSocialName(String socialName) {
         this.socialName = socialName;
         return this;
     }
 
-    public SocialPostValue setImage(String image) {
+    public AppPostValue setImage(String image) {
         this.image = image;
         return this;
     }
 
-    public SocialPostValue setEnable(boolean enable) {
+    public AppPostValue setEnable(boolean enable) {
         this.enable = enable;
         return this;
     }
 
-    public SocialPostValue setNotify(boolean isMustServerNotified) {
+    public AppPostValue setNotify(boolean isMustServerNotified) {
         this.isMustServerNotified = isMustServerNotified;
         return this;
     }
 
-    public SocialPostValue setText(String text) {
-        this.text = text;
+    public AppPostValue setText(String text) {
+        super.setText(text);
         return this;
     }
 
-    public SocialPostValue setLink(String link) {
-        this.link = link;
+    public AppPostValue setLink(String link) {
+        super.setLink(link);
         return this;
     }
 
-    public SocialPostValue setType(Type type) {
+    public AppPostValue setType(Type type) {
         this.type = type;
         return this;
     }
 //
-//    public SocialPostValue setSocialId(int socialId) {
+//    public AppPostValue setSocialId(int socialId) {
 //        this.socialId = socialId;
 //        return this;
 //    }
 
-    public SocialPostValue setSocialId(String socialName) {
-        this.socialId = SocialManager.getSocialId(socialName);
+    public AppPostValue setSocialId(int socialId) {
+        this.socialId = socialId;
         return this;
     }
 
-    public SocialPostValue setTitle(String title) {
-        this.title = title;
+    public AppPostValue setSocialId(String socialName) {
+        this.socialId = AppSocial.getSocialId(socialName);
         return this;
     }
 
-    public SocialPostValue setId(Object id) {
+    public AppPostValue setTitle(String title) {
+        super.setTitle(title);
+        return this;
+    }
+
+    public AppPostValue setId(Object id) {
         this.id = id;
         return this;
     }
@@ -315,8 +312,8 @@ public class SocialPostValue implements Serializable {
     @Override
     public boolean equals(Object o) {
         boolean isEquals;
-        if (o instanceof SocialPostValue) {
-            SocialPostValue other = (SocialPostValue) o;
+        if (o instanceof AppPostValue) {
+            AppPostValue other = (AppPostValue) o;
             isEquals = text.equalsIgnoreCase(other.getText())
                     && link.equalsIgnoreCase(other.getLink())
                     && image.equalsIgnoreCase(other.getImage());
@@ -359,24 +356,24 @@ public class SocialPostValue implements Serializable {
     }
 
     public boolean forTwitter() {
-        return socialId == SocialManager.SOCIAL_ID_TW;
+        return socialId == AppSocial.ID_TW;
     }
 
     public boolean forVk() {
-        return socialId == SocialManager.SOCIAL_ID_VK;
+        return socialId == AppSocial.ID_VK;
     }
 
     public boolean forOk() {
-        return socialId == SocialManager.SOCIAL_ID_OK;
+        return socialId == AppSocial.ID_OK;
     }
 
     public boolean isPostMuchLong() {
         boolean result = false;
         switch (socialId) {
-            case SocialManager.SOCIAL_ID_TW:
+            case AppSocial.ID_TW:
                 result = text.length() > MAX_TWEET_POST_LENGTH;
                 break;
-            case SocialManager.SOCIAL_ID_OK:
+            case AppSocial.ID_OK:
                 result = text.length() > MAX_OK_POST_LENGTH;
                 break;
         }
@@ -384,16 +381,16 @@ public class SocialPostValue implements Serializable {
     }
 
     public String getWarningTitle(Context context) {
-        return String.format(context.getString(R.string.warning_post_mutch_long), getMaxSymbolsInPost());
+        return String.format(context.getString(R.string.warning_post_mutch_long), String.valueOf(getMaxSymbolsInPost()));
     }
 
     public int getMaxSymbolsInPost() {
         int result = 0;
         switch (socialId) {
-            case SocialManager.SOCIAL_ID_OK:
+            case AppSocial.ID_OK:
                 result = MAX_OK_POST_LENGTH;
                 break;
-            case SocialManager.SOCIAL_ID_TW:
+            case AppSocial.ID_TW:
                 result = MAX_TWEET_POST_LENGTH;
                 break;
         }
@@ -401,7 +398,7 @@ public class SocialPostValue implements Serializable {
     }
 
     public boolean forFb() {
-        return socialId == SocialManager.SOCIAL_ID_FB;
+        return socialId == AppSocial.ID_FB;
     }
 
     public String preparePost() {
@@ -442,4 +439,45 @@ public class SocialPostValue implements Serializable {
             return this == TASK;
         }
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getTitle());
+        dest.writeString(getText());
+        dest.writeString(getLink());
+        dest.writeSerializable(type);
+        dest.writeInt(socialId);
+        dest.writeString(socialName);
+        dest.writeString(image);
+        boolean [] someBoolean = {isMustServerNotified,enable};
+        dest.writeBooleanArray(someBoolean);
+        dest.writeString(id.toString());
+    }
+
+    protected AppPostValue(Parcel in) {
+        setTitle(in.readString());
+        setText(in.readString());
+        setLink(in.readString());
+        setType((Type)in.readSerializable());
+        setSocialId(in.readInt());
+        setSocialName(in.readString());
+        setImage(in.readString());
+        boolean [] someBoolean = new boolean[2];
+        in.readBooleanArray(someBoolean);
+        isMustServerNotified = someBoolean[0];
+        enable = someBoolean [1];
+        id = in.readString();
+    }
+
+    public static final Parcelable.Creator<AppPostValue> CREATOR = new Parcelable.Creator<AppPostValue>() {
+        @Override
+        public AppPostValue createFromParcel(Parcel source) {
+            return new AppPostValue(source);
+        }
+
+        @Override
+        public AppPostValue[] newArray(int size) {
+            return new AppPostValue[size];
+        }
+    };
 }

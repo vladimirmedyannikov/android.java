@@ -1,6 +1,6 @@
 package ru.mos.polls.survey.source;
 
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 
 public interface SurveyDataSource {
@@ -19,7 +19,7 @@ public interface SurveyDataSource {
 
     interface SaveListener {
 
-        void onSaved(int price, int currentPoints, SocialPostValue socialPOstValue);
+        void onSaved(int price, int currentPoints, AppPostValue appPOstValue);
 
         void onPguAuthError(String message);
 

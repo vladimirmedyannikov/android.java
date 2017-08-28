@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
-import ru.mos.polls.social.model.TokenData;
 
 /**
  * Created by Trunks on 27.03.2017.

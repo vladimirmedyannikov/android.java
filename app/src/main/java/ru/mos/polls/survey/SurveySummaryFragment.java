@@ -28,7 +28,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.common.view.VotersView;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.experts.DetailsExpert;
 import ru.mos.polls.survey.experts.DetailsExpertsActivity;
@@ -373,7 +373,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
             }
 
             @Override
-            public void onPosting(SocialPostValue socialPostValue) {
+            public void onPosting(AppPostValue appPostValue) {
             }
         };
 
@@ -383,6 +383,6 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
 
         void onSurveyInterrupted(Survey survey);
 
-        void onPosting(SocialPostValue socialPostValue);
+        void onPosting(AppPostValue appPostValue);
     }
 }

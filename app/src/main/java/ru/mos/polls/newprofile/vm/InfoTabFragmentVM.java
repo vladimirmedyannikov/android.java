@@ -21,12 +21,12 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
-import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
-import ru.mos.polls.social.model.Social;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by Trunks on 16.06.2017.
@@ -34,7 +34,7 @@ import ru.mos.polls.social.model.Social;
 
 public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
-    Observable<List<Social>> socialListObserable;
+    Observable<List<AppSocial>> socialListObserable;
     AppCompatTextView percentFilledTitle;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
@@ -84,8 +84,8 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         linearLayout.addView(civ);
     }
 
-    public void addSocialToLayer(Social social) {
-        int socialIcon = Social.getSocialIcon(social.getSocialId());
+    public void addSocialToLayer(AppSocial social) {
+        int socialIcon = AppSocial.getSocialIcon(social.getSocialId());
         addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
     }
 
@@ -97,7 +97,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     }
 
     public void updateView() {
-        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+        socialListObserable = AppSocial.getObservableSavedSocials(getFragment().getContext());
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
         userInfoList();

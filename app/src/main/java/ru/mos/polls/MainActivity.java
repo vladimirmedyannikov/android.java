@@ -24,6 +24,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.polls.about.AboutAppFragment;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.event.controller.EventAPIController;
@@ -43,13 +45,10 @@ import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
-import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
@@ -61,9 +60,8 @@ import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.settings.SettingsFragment;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
@@ -271,8 +269,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 navFragment.selectItem(0);//todo replace with constant
                 SocialUIController.showSocialsDialog(this, new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
-                        socialController.post(socialPostValue);
+                    public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
+                        socialController.post(appPostValue);
                     }
 
                     @Override
@@ -376,10 +374,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     }
 
                     @Override
-                    public void onSocialPost(SocialPostValue socialPostValue) {
-                        Statistics.taskSocialSharing(socialPostValue.getSocialName());
-                        GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
-                        socialController.post(socialPostValue);
+                    public void onSocialPost(AppPostValue appPostValue) {
+                        Statistics.taskSocialSharing(appPostValue.getSocialName());
+                        GoogleStatistics.QuestsFragment.taskSocialSharing(appPostValue.getSocialName());
+                        socialController.post(appPostValue);
                     }
 
                     @Override
@@ -455,7 +453,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             case NavigationMenuItem.ABOUT:
                 AboutAppFragment.SocialListener socialListener = new AboutAppFragment.SocialListener() {
                     @Override
-                    public void onSocialPost(SocialPostValue socialPostValue) {
+                    public void onSocialPost(AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
                         GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
                         socialController.post(socialPostValue);
@@ -594,7 +592,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             public void onPostInSocial() {
                 SocialUIController.showSocialsDialog(MainActivity.this, new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                    public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
                         GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
                         socialController.post(socialPostValue);

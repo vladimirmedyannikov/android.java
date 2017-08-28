@@ -11,7 +11,7 @@ import java.util.List;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
 import ru.mos.polls.social.manager.SocialManager;
-import ru.mos.polls.social.model.Social;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by Trunks on 13.03.2017.
@@ -22,7 +22,7 @@ public class SocialUnitTest extends BaseUnitTest {
 
     @Test
     public void jsonObject() {
-        Social test = new Social("test", fromTestRawAsJson("social.json"));
+        AppSocial test = new AppSocial("test", fromTestRawAsJson("social.json"));
         Assert.assertNotNull(test.tokenDataAsJson());
         Assert.assertNotNull(test.asKillJson());
         Assert.assertNotNull(test.asNull());
@@ -31,11 +31,11 @@ public class SocialUnitTest extends BaseUnitTest {
 
     @Test
     public void othertest() {
-        Social test = new Social("test", fromTestRawAsJson("social.json"));
-        Social test2 = new Social();
+        AppSocial test = new AppSocial("test", fromTestRawAsJson("social.json"));
+        AppSocial test2 = new AppSocial();
         test2.copy(test);
         Assert.assertEquals(test2.getExpired(), test.getExpired());
-        Assert.assertEquals(test2.getIcon(), test.getIcon());
+        Assert.assertEquals(test2.getStringIcon(), test.getIcon());
         Assert.assertEquals(test2.getSocialId(), test.getSocialId());
         Assert.assertEquals(test2.getTokenData(), test.getTokenData());
         Assert.assertEquals(test2.isLogon(), test.isLogon());
@@ -44,60 +44,60 @@ public class SocialUnitTest extends BaseUnitTest {
         test.setIsLogin(false);
         Assert.assertEquals(false, test.isLogon());
         test.setIcon("test");
-        Assert.assertEquals("test", test.getIcon());
+        Assert.assertEquals("test", test.getStringIcon());
         Assert.assertEquals(-1, test.getSocialId());
     }
 
     @Test
     public void getList() {
-        List<Social> list = Social.getSavedSocials(appContext);
+        List<AppSocial> list = AppSocial.getSavedSocials(appContext);
         Assert.assertNotNull(list);
         Assert.assertEquals(4, list.size());
 
-        Social fbs = Social.findFbSocial(list);
+        AppSocial fbs = AppSocial.findFbSocial(list);
         Assert.assertEquals(fbs.getSocialId(), SocialManager.SOCIAL_ID_FB);
 
 
-        Social vk = Social.findVkSocial(list);
+        AppSocial vk = AppSocial.findVkSocial(list);
         Assert.assertEquals(vk.getSocialId(), SocialManager.SOCIAL_ID_VK);
 
-        Social ok = Social.findOkSocial(list);
+        AppSocial ok = AppSocial.findOkSocial(list);
         Assert.assertEquals(ok.getSocialId(), SocialManager.SOCIAL_ID_OK);
 
-        Social tw = Social.findTwSocial(list);
+        AppSocial tw = AppSocial.findTwSocial(list);
         Assert.assertEquals(tw.getSocialId(), SocialManager.SOCIAL_ID_TW);
 
-        Social tw2 = Social.findSocial(list, SocialManager.SOCIAL_ID_TW);
+        AppSocial tw2 = AppSocial.findSocial(list, SocialManager.SOCIAL_ID_TW);
         Assert.assertEquals(tw2.getSocialId(), SocialManager.SOCIAL_ID_TW);
 
-        Assert.assertEquals(true, Social.isEquals(list, list));
+        Assert.assertEquals(true, AppSocial.isEquals(list, list));
     }
 
     @Test
     public void fromPref() {
-        Social test = Social.fromPreference(appContext, SocialManager.SOCIAL_ID_FB);
+        AppSocial test = AppSocial.fromPreference(appContext, SocialManager.SOCIAL_ID_FB);
         Assert.assertNotNull(test);
 
     }
 
     @Test
     public void getSocialIconId() {
-        int vkIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_VK);
+        int vkIcon = AppSocial.getSocialIcon(SocialManager.SOCIAL_ID_VK);
         Assert.assertEquals(R.drawable.vk, vkIcon);
 
-        int fbIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_FB);
+        int fbIcon = AppSocial.getSocialIcon(SocialManager.SOCIAL_ID_FB);
         Assert.assertEquals(R.drawable.fb, fbIcon);
 
-        int twIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_TW);
+        int twIcon = AppSocial.getSocialIcon(SocialManager.SOCIAL_ID_TW);
         Assert.assertEquals(R.drawable.tw, twIcon);
 
-        int okIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_OK);
+        int okIcon = AppSocial.getSocialIcon(SocialManager.SOCIAL_ID_OK);
         Assert.assertEquals(R.drawable.odnklsnk, okIcon);
 
-        int gpIcon = Social.getSocialIcon(SocialManager.SOCIAL_ID_GP);
+        int gpIcon = AppSocial.getSocialIcon(SocialManager.SOCIAL_ID_GP);
         Assert.assertEquals(R.drawable.google, gpIcon);
 
-        int defaultRed = Social.getSocialIcon(0);
+        int defaultRed = AppSocial.getSocialIcon(0);
         Assert.assertEquals(-1, defaultRed);
     }
 }

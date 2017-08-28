@@ -19,9 +19,8 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
@@ -271,7 +270,7 @@ public class SurveyActivity extends BaseActivity {
             }
 
             @Override
-            public void onPosting(SocialPostValue socialPostValue) {
+            public void onPosting(AppPostValue socialPostValue) {
                 socialController.post(socialPostValue);
             }
         };
@@ -317,7 +316,7 @@ public class SurveyActivity extends BaseActivity {
             }
 
             @Override
-            public void onPosting(SocialPostValue socialPostValue) {
+            public void onPosting(AppPostValue socialPostValue) {
                 socialController.post(socialPostValue);
             }
         };

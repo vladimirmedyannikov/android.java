@@ -113,66 +113,66 @@
                     android:scheme="iSuperCitizen" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".social.auth.SocialAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="ru.ok.android.sdk.OkAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+        <!--<activity-->
+            <!--android:name=".social.auth.SocialAuthActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
+        <!--<activity-->
+            <!--android:name="ru.ok.android.sdk.OkAuthActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data
-                    android:host="ok1078245120"
-                    android:scheme="okauth" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="ru.mos.polls.social.auth.TwAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <!--<data-->
+                    <!--android:host="ok1078245120"-->
+                    <!--android:scheme="okauth" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name="ru.mos.polls.social.auth.TwAuthActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data
-                    android:host="callback"
-                    android:scheme="x-oauthflow-twitter" />
-            </intent-filter>
-        </activity>
+                <!--<data-->
+                    <!--android:host="callback"-->
+                    <!--android:scheme="x-oauthflow-twitter" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="ru.mos.polls.social.auth.FbAuthActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/auth"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.facebook.FacebookActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--<activity-->
+            <!--android:name="ru.mos.polls.social.auth.FbAuthActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+            <!--android:label="@string/auth"-->
+            <!--android:screenOrientation="portrait" />-->
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_app_id" />
+        <!--<meta-data-->
+            <!--android:name="com.facebook.sdk.ApplicationId"-->
+            <!--android:value="@string/fb_app_id" />-->
         <activity
             android:name=".profile.gui.activity.ChildrenBirthdaysActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_app_id" />
+        <!--<meta-data-->
+            <!--android:name="com.facebook.sdk.ApplicationId"-->
+            <!--android:value="@string/fb_app_id" />-->
 
         <activity
             android:name="ru.mos.polls.offer.OfferActivity"
@@ -290,17 +290,17 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
-        <activity
-            android:name=".social.auth.VkAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/auth"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".social.auth.VkAuthActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:label="@string/auth"-->
+            <!--android:screenOrientation="portrait" />-->
 
-        <activity
-            android:name=".social.auth.GpAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/auth"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".social.auth.GpAuthActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:label="@string/auth"-->
+            <!--android:screenOrientation="portrait" />-->
 
         <activity
             android:name=".subscribes.gui.SubscribeActivity"
@@ -450,7 +450,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="ru.ok.android.sdk.OkPostingActivity" />
+        <!--<activity android:name="ru.ok.android.sdk.OkPostingActivity" />-->
 
         <activity
             android:name="ru.mos.polls.tutorial.TutorialActivity"

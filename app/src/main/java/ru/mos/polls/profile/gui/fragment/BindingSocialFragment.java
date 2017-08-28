@@ -30,9 +30,8 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
-import ru.mos.polls.social.controller.SocialController;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialBindItem;
+import ru.mos.polls.social.model.AppBindItem;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Экран привязки аккаунтов соцсетей к аккаунту аг
@@ -58,7 +57,7 @@ public class BindingSocialFragment extends Fragment {
     private Unbinder unbinder;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
-    private List<Social> changedSocials, savedSocials;
+    private List<AppSocial> changedSocials, savedSocials;
     boolean isAnySocialBinded;
     @BindView(R.id.socialShareNotify)
     SwitchCompat socialShareNotify;
@@ -100,13 +99,13 @@ public class BindingSocialFragment extends Fragment {
     }
 
     public boolean isQuestExecuted() {
-        return isTask && !Social.isEquals(savedSocials, changedSocials);
+        return isTask && !AppSocial.isEquals(savedSocials, changedSocials);
     }
 
     private void init() {
         socialController = new SocialController((BaseActivity) getActivity());
-        savedSocials = Social.getSavedSocials(getActivity());
-        changedSocials = Social.getSavedSocials(getActivity());
+        savedSocials = AppSocial.getSavedSocials(getActivity());
+        changedSocials = AppSocial.getSavedSocials(getActivity());
         socialBindAdapter = new SocialBindAdapter(getActivity(), changedSocials);
         if (getArguments() != null) {
             isTask = getArguments().getBoolean(IS_TASK);
@@ -120,12 +119,12 @@ public class BindingSocialFragment extends Fragment {
         gridView.setAdapter(socialBindAdapter);
         socialBindAdapter.setListener(new SocialBindAdapter.Listener() {
             @Override
-            public void onBindClick(Social social) {
+            public void onBindClick(AppSocial social) {
                 bindSocial(social);
             }
 
             @Override
-            public void onCloseClick(Social social) {
+            public void onCloseClick(AppSocial social) {
                 showUnBindDialog(social);
             }
         });
@@ -137,10 +136,10 @@ public class BindingSocialFragment extends Fragment {
         CustomDialogController.setShareAbility(getActivity(), isChecked);
     }
 
-    private void showUnBindDialog(final Social social) {
+    private void showUnBindDialog(final AppSocial social) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String message = String.format(getString(R.string.confirm_unbind_message),
-                getString(SocialBindItem.getTitle(social.getSocialId())));
+                getString(AppBindItem.getTitle(social.getSocialId())));
         builder.setMessage(message);
         builder.setNegativeButton(R.string.ag_no, null);
         builder.setPositiveButton(R.string.confirm_unbind_ok, new DialogInterface.OnClickListener() {
@@ -156,7 +155,7 @@ public class BindingSocialFragment extends Fragment {
         showProgress(getString(R.string.update_social_message));
         AgSocialApiController.LoadSocialListener listener = new AgSocialApiController.LoadSocialListener() {
             @Override
-            public void onLoaded(List<Social> loadedSocials) {
+            public void onLoaded(List<AppSocial> loadedSocials) {
                 changedSocials.clear();
                 changedSocials.addAll(loadedSocials);
                 socialBindAdapter.notifyDataSetChanged();
@@ -171,11 +170,11 @@ public class BindingSocialFragment extends Fragment {
         AgSocialApiController.loadSocials((BaseActivity) getActivity(), listener);
     }
 
-    private void bindSocial(final Social social) {
+    private void bindSocial(final AppSocial social) {
         showProgress(getString(R.string.bind_progress_message));
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final Social loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
                     if (!isAnySocialBinded) {
@@ -195,18 +194,18 @@ public class BindingSocialFragment extends Fragment {
             }
 
             @Override
-            public void onError(Social social) {
+            public void onError(AppSocial social) {
                 hideProgress();
             }
         };
         socialController.bindSocial(social, listener);
     }
 
-    private void unBindSocial(final Social social) {
+    private void unBindSocial(final AppSocial social) {
         showProgress(getString(R.string.unbind_progress_message));
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final Social loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
                     Statistics.taskSocialLogin(loadedSocial.getSocialName());
@@ -219,7 +218,7 @@ public class BindingSocialFragment extends Fragment {
             }
 
             @Override
-            public void onError(Social social) {
+            public void onError(AppSocial social) {
                 hideProgress();
             }
         };

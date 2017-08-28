@@ -25,9 +25,8 @@ import ru.mos.polls.profile.controller.BadgeViewController;
 import ru.mos.polls.profile.controller.ProfileApiController;
 import ru.mos.polls.profile.model.Achievement;
 import ru.mos.polls.quests.controller.QuestsApiController;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 
 
 public class AchievementActivity extends ToolbarAbstractActivity {
@@ -91,7 +90,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     void share() {
         SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
             @Override
-            public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+            public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                 socialPostValue.setId(achievement.getId());
                 socialController.post(socialPostValue);
             }

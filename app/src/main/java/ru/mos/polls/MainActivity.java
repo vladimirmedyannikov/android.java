@@ -438,8 +438,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = null;
                 break;
             case NavigationMenuItem.MY_POINTS:
-                fr = MyPointsFragment.newInstance();
-//                fr = NewMyPointsFragment.newInstance();
+//                fr = MyPointsFragment.newInstance();
+                fr = NewMyPointsFragment.newInstance();
                 tag = TAG_MY_POINTS;
                 break;
             case NavigationMenuItem.NEWS:

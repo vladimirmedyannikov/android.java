@@ -8,14 +8,18 @@
             type="ru.mos.polls.mypoints.vm.NewMyPointsFragmentVM" />
     </data>
 
-    <LinearLayout style="@style/linear">
+    <LinearLayout
+        android:id="@+id/root"
+        style="@style/linear">
 
         <TextView
             android:id="@+id/tvStatus"
             style="@style/text.xlarge.green"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/pd_xxsmall"
-            android:text="@string/state" />
+            android:text="@string/state"
+            android:visibility="gone" />
+
 
         <LinearLayout
             style="@style/linear"
@@ -75,13 +79,19 @@
                 layout="@layout/ag_separator"
                 android:background="@color/green_light" />
 
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/item"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
 
                 <android.support.v4.widget.SwipeRefreshLayout
-                    android:id="@+id/ptrLayout"
+                    android:id="@+id/swipe"
                     style="@style/root">
 
                     <android.support.v7.widget.RecyclerView

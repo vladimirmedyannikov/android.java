@@ -21,6 +21,8 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.ui.RecyclerScrollableController;
@@ -51,6 +53,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     Status status;
     private Page historyPage;
     boolean isPaginationEnable;
+    List<Points> filteredList;
     /**
      * Хранит текущий тип списка баллов
      */
@@ -79,6 +82,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        progressable = getProgressable();
         currentAction = PointHistory.Action.ALL;
         setListeners();
     }
@@ -86,6 +90,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     @Override
     public void onResume() {
         super.onResume();
+        setView();
         requestHistory();
     }
 
@@ -123,7 +128,8 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                         result = true;
                         break;
                 }
-//                setView();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
                 requestHistory();
                 return result;
             }
@@ -136,11 +142,13 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                 new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(HistoryGet.Response.Result result) {
-//                        adapter.add(getFilteredList(result.getPoints()));
-//                        adapter.add(getFilteredList(mockList(getActivity())));
-                        adapter.add(result.getPoints());
-                        adapter.add(mockList(getActivity()));
-                        adapter.notifyDataSetChanged();
+                        if (!currentAction.toString().equalsIgnoreCase(PointHistory.Action.ALL.toString())) {
+                            getFilteredList(result.getPoints());
+                            getFilteredList(mockList(getActivity()));
+                        } else {
+                            adapter.add(result.getPoints());
+                            adapter.notifyDataSetChanged();
+                        }
                         empty.setVisibility(View.INVISIBLE);
                         progressable.end();
                         isPaginationEnable = true;
@@ -156,15 +164,20 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     }
 
 
-    public List<Points> getFilteredList(List<Points> list) {
-        List<Points> result = new ArrayList<>();
+    public void getFilteredList(List<Points> list) {
+        filteredList = new ArrayList<>();
         Observable.just(list)
                 .subscribeOn(Schedulers.io())
                 .flatMap(Observable::fromIterable)
                 .filter(points -> points.getAction().equalsIgnoreCase(currentAction.toString()))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(points -> result.add(points));
-        return result;
+                .subscribe(points -> filteredList.add(points), throwable -> {
+                }, this::addToAdapterList);
+    }
+
+    public void addToAdapterList() {
+        adapter.add(filteredList);
+        adapter.notifyDataSetChanged();
     }
 
     private void setView() {
@@ -178,7 +191,15 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
 
     @Override
     protected UIComponentHolder createComponentHolder() {
-        return null;
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    requestHistory();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
     /**
@@ -186,7 +207,6 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
      */
     protected void processPoints() {
         tvPoints.setText(String.valueOf(PointsManager.getPoints(getActivity(), currentAction)));
-
     }
 
     /**
@@ -206,11 +226,11 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
 
     protected void processStatus(String status) {
         if (tvStatus != null) {
-            tvStatus.setVisibility(View.VISIBLE);
 //            String status = PointsManager.getStatus(getActivity());
             if (!TextUtils.isEmpty(status) && !"null".equalsIgnoreCase(status)) {
                 status = String.format(getActivity().getString(R.string.state), status);
                 tvStatus.setText(status);
+                tvStatus.setVisibility(View.VISIBLE);
             } else {
                 tvStatus.setVisibility(View.GONE);
             }

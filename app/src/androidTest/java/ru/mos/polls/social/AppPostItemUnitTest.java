@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.util.List;
 
 import ru.mos.polls.BaseUnitTest;
-import ru.mos.polls.social.manager.SocialManager;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by Trunks on 21.03.2017.
@@ -64,7 +64,7 @@ public class AppPostItemUnitTest extends BaseUnitTest {
         AppPostValue ok = AppPostItem.getOkSocialPostValue(jsonObject, AppPostValue.Type.POLL, 122);
         Assert.assertNotNull(ok);
 
-        AppPostValue test = AppPostItem.getSocialPostValue(SocialManager.SOCIAL_NAME_VK, jsonObject, AppPostValue.Type.POLL, 122);
+        AppPostValue test = AppPostItem.getSocialPostValue(AppSocial.NAME_VK, jsonObject, AppPostValue.Type.POLL, 122);
         Assert.assertNotNull(test);
     }
 }

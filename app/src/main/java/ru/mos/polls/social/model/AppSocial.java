@@ -173,6 +173,7 @@ public class AppSocial extends Social{
         if (otherSocial != null) {
             setToken(otherSocial.token);
             socialId = otherSocial.socialId;
+            socialName = otherSocial.socialName;
             icon = otherSocial.icon;
             isLogon = otherSocial.isLogon;
             setSocialUser(otherSocial.getSocialUser());

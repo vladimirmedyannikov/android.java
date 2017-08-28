@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
-import ru.mos.polls.social.manager.SocialManager;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by Trunks on 21.03.2017.
@@ -27,10 +27,10 @@ public class AppPostValueUnitTest extends BaseUnitTest {
     public void createOk() {
         JSONObject jsonObject = fromTestRawAsJson("socialpostvalue.json");
         AppPostValue ok = AppPostItem.getOkSocialPostValue(jsonObject, AppPostValue.Type.POLL, 122);
-        ok.setSocialId(SocialManager.SOCIAL_NAME_OK);
-        ok.setSocialName(SocialManager.SOCIAL_NAME_OK);
-        Assert.assertEquals(ok.getSocialId(), SocialManager.SOCIAL_ID_OK);
-        Assert.assertEquals(ok.getSocialName(), SocialManager.SOCIAL_NAME_OK);
+        ok.setSocialId(AppSocial.NAME_OK);
+        ok.setSocialName(AppSocial.NAME_OK);
+        Assert.assertEquals(ok.getSocialId(), AppSocial.ID_OK);
+        Assert.assertEquals(ok.getSocialName(), AppSocial.NAME_OK);
         Assert.assertEquals(ok.getMaxSymbolsInPost(), AppPostValue.MAX_OK_POST_LENGTH);
         ok.setType(AppPostValue.Type.POLL);
         Assert.assertEquals(ok.getType(), AppPostValue.Type.POLL);
@@ -77,7 +77,7 @@ public class AppPostValueUnitTest extends BaseUnitTest {
         Assert.assertEquals(ok.isPostMuchLong(), false);
         Assert.assertEquals(ok.hasType(AppPostValue.Type.POLL), true);
 
-        String warning = String.format(appContext.getString(R.string.warning_post_mutch_long), ok.getMaxSymbolsInPost());
+        String warning = String.format(appContext.getString(R.string.warning_post_mutch_long), String.valueOf(ok.getMaxSymbolsInPost()));
         Assert.assertEquals(warning, ok.getWarningTitle(appContext));
 
         AppPostValue vk = AppPostItem.getVkSocialPostValue(jsonObject, AppPostValue.Type.ACHIEVEMENT, 222);

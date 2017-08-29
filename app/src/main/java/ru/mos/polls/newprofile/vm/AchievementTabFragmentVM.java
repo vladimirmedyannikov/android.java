@@ -1,6 +1,7 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -40,6 +41,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
     List<Achievements> list;
     boolean isPaginationEnable;
     RecyclerView recyclerView;
+    int friendId;
 
     public AchievementTabFragmentVM(AchievementTabFragment fragment, FragmentAchievementTabProfileBinding binding) {
         super(fragment, binding);
@@ -47,6 +49,10 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
 
     @Override
     protected void initialize(FragmentAchievementTabProfileBinding binding) {
+        Bundle extras = getFragment().getArguments();
+        if (extras != null) {
+            friendId = extras.getInt(AchievementTabFragment.ARG_FRIEND_ID);
+        }
         recyclerView = binding.agUserProfileList;
         UIhelper.setRecyclerList(recyclerView, getActivity());
         list = new ArrayList<>();
@@ -99,8 +105,13 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
                         isPaginationEnable = true;
                     }
                 };
+        AchievementsSelect.Request requestBody = new AchievementsSelect.Request(achivementPage);
+        System.out.println("friendId = " + friendId);
+        if (friendId != 0) {
+            requestBody = new AchievementsSelect.Request(achivementPage, friendId);
+        }
         Observable<AchievementsSelect.Response> responseObservable = AGApplication.api
-                .selectAchievements(new AchievementsSelect.Request(achivementPage))
+                .selectAchievements(requestBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservable.subscribeWith(handler));

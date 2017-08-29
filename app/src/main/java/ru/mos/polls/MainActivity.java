@@ -32,6 +32,7 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.MyPointsFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
+import ru.mos.polls.friend.state.FriendProfileState;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
@@ -179,6 +180,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                                 navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
                                 break;
                         }
+                    }
+                    if (o instanceof Events.FriendEvents) {
+                        Events.FriendEvents action = (Events.FriendEvents) o;
+                        navigateTo().state(Add.newActivity(new FriendProfileState(action.getFriend()), BaseActivity.class));
                     }
                 });
     }

@@ -3,6 +3,7 @@ package ru.mos.polls.base.rxjava;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -90,6 +91,28 @@ public class Events {
 
         public int getWizardType() {
             return wizardType;
+        }
+    }
+
+    public static class FriendEvents {
+        public static final int FRIEND_PROFILE = 1;
+        private int id;
+        private Friend friend;
+
+        public FriendEvents(Friend friend) {
+            this.friend = friend;
+        }
+
+        public Friend getFriend() {
+            return friend;
+        }
+
+        public FriendEvents(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
         }
     }
 }

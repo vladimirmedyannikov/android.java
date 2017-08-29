@@ -16,6 +16,13 @@ import ru.mos.polls.rxhttp.rxapi.model.base.PageAuthRequest;
 
 public class AchievementsSelect {
     public static class Request extends PageAuthRequest {
+        Integer id;
+
+        public Request(Page page, Integer id) {
+            super(page);
+            this.id = id;
+        }
+
         public Request(Page page) {
             super(page);
         }

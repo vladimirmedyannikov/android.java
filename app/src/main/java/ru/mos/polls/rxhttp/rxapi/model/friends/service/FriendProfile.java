@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.rxhttp.rxapi.model.friends.AchievementsData;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Personal;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Statistic;
 
@@ -15,6 +16,7 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.Statistic;
 public class FriendProfile {
     public static class Request extends AuthRequest {
         private int id;
+
         public Request(int id) {
             super();
             this.id = id;
@@ -27,6 +29,11 @@ public class FriendProfile {
             private boolean isProfileVisible;
             private Personal personal;
             private Statistic statistics;
+            private AchievementsData achievements;
+
+            public AchievementsData getAchievements() {
+                return achievements;
+            }
 
             public boolean isProfileVisible() {
                 return isProfileVisible;

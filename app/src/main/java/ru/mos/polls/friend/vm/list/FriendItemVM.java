@@ -1,8 +1,10 @@
 package ru.mos.polls.friend.vm.list;
 
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FriendItemBinding;
 import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
@@ -39,7 +41,7 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
         super.onBind(viewDataBinding);
         FriendGuiUtils.loadAvatar(viewDataBinding.avatar, AgApiBuilder.resourceURL(model.getAvatar()));
         viewDataBinding.getRoot().setOnClickListener(v -> {
-
+            AGApplication.bus().send(new Events.FriendEvents(model));
         });
     }
 

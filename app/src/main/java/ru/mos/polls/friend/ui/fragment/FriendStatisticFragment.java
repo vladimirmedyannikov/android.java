@@ -6,28 +6,29 @@ import android.support.v4.app.Fragment;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.LayoutFriendProfileBinding;
-import ru.mos.polls.friend.vm.FriendProfileFragmentVM;
+import ru.mos.polls.friend.vm.FriendStatisticFragmentVM;
 import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * @author Sergey Elizarov (elizarov1988@gmail.com)
  *         on 14.08.17 21:27.
  */
 
-public class FriendProfileFragment extends BindingFragment<FriendProfileFragmentVM, LayoutFriendProfileBinding> {
-    public static final String ARG_ID = "arg_id";
+public class FriendStatisticFragment extends BindingFragment<FriendStatisticFragmentVM, LayoutFriendProfileBinding> {
+    public static final String ARG_FRIEND = "arg_friend";
 
-    public static Fragment instance(int id) {
-        Fragment result = new FriendsFragment();
+    public static Fragment newInstance(Friend friend) {
+        Fragment result = new FriendStatisticFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_ID, id);
+        args.putSerializable(ARG_FRIEND, friend);
         result.setArguments(args);
         return result;
     }
 
     @Override
-    protected FriendProfileFragmentVM onCreateViewModel(LayoutFriendProfileBinding binding) {
-        return new FriendProfileFragmentVM(this, binding);
+    protected FriendStatisticFragmentVM onCreateViewModel(LayoutFriendProfileBinding binding) {
+        return new FriendStatisticFragmentVM(this, binding);
     }
 
     @Override

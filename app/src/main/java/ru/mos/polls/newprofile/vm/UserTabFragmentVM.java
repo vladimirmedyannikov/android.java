@@ -1,18 +1,11 @@
 package ru.mos.polls.newprofile.vm;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +17,10 @@ import ru.mos.elk.profile.Achievements;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
@@ -42,7 +35,6 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
  */
 
 public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
-
 
     private SwitchCompat enableProfileVisibility;
     AppCompatTextView fi;
@@ -135,29 +127,6 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         recyclerView.setAdapter(userStatisticsAdapter);
     }
 
-//    public void refreshProfile() {
-//        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
-//            @Override
-//            public void onLoaded(AgUser loadedAgUser) {
-//                try {
-//                    saved = loadedAgUser;
-//                    progressable.end();
-//                    updateView();
-//                } catch (Exception ignored) {
-//                }
-//            }
-//
-//            @Override
-//            public void onError(VolleyError error) {
-//                try {
-//                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                } catch (Exception ignored) {
-//                }
-//            }
-//        };
-//        ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
-//    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -183,39 +152,11 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         }
         if (list.size() > 0) {
             for (Achievements achievements : list) {
-                addAchievements(achievementLayer, achievements.getImageUrl(), getActivity().getBaseContext());
+                UIhelper.addAchievements(achievementLayer, achievements.getImageUrl(), getActivity().getBaseContext());
             }
         } else {
             achievementPanel.setVisibility(View.GONE);
         }
-    }
-
-    public void addAchievements(LinearLayout linearLayout, String url, Context context) {
-        ImageView image = new ImageView(context);
-        int sizeInPixel = context.getResources().getDimensionPixelSize(R.dimen.vs_xxsmall);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeInPixel, sizeInPixel);
-        layoutParams.setMargins(6, 6, 6, 6);
-        image.setLayoutParams(layoutParams);
-        linearLayout.addView(image);
-        ImageLoader imageLoader = AGApplication.getImageLoader();
-        imageLoader.loadImage(url, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String s, View view) {
-            }
-
-            @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
-            }
-
-            @Override
-            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                image.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onLoadingCancelled(String s, View view) {
-            }
-        });
     }
 
     @Override

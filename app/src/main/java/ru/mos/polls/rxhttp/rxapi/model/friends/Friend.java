@@ -1,11 +1,13 @@
 package ru.mos.polls.rxhttp.rxapi.model.friends;
 
+import java.io.Serializable;
+
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
  * on 06.07.17 11:25.
  */
 
-public class Friend {
+public class Friend implements Serializable {
     private int id;
     private String phone;
     private String surname;

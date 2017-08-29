@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendProfileFragmentVM" />
+            type="ru.mos.polls.friend.vm.FriendStatisticFragmentVM" />
     </data>
 
-    <RelativeLayout
-        style="@style/root">
+    <RelativeLayout style="@style/root">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -16,22 +18,49 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
-        <RelativeLayout
-            android:id="@+id/root"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
             style="@style/root">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
-                style="@style/root">
+            <android.support.v4.widget.NestedScrollView
+                style="@style/root"
+                android:fillViewport="true">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list"
-                    style="@style/root" />
+                <RelativeLayout
+                    android:id="@+id/root"
+                    style="@style/root">
 
-            </android.support.v4.widget.SwipeRefreshLayout>
+                    <LinearLayout
+                        android:id="@+id/friend_info_layout"
+                        style="@style/item"
+                        android:background="@color/actionbar_background"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/pd_normal">
 
-        </RelativeLayout>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/friend_image"
+                            android:layout_width="@dimen/vs_normal"
+                            android:layout_height="@dimen/vs_normal"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/unlogin2"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="2dp"
+                            app:layout_constraintTop_toTopOf="parent" />
 
+                        <include
+                            android:id="@+id/friend_status_info_panel"
+                            layout="@layout/layout_user_status_info" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list"
+                        style="@style/root"
+                        android:layout_below="@+id/friend_info_layout"
+                        android:paddingLeft="@dimen/pd_xsmall"
+                        android:paddingRight="@dimen/pd_xsmall" />
+                </RelativeLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
-
 </layout>

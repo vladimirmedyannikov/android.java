@@ -26,13 +26,16 @@ import ru.mos.social.utils.SocialTextUtils;
 public class AppSocial extends Social{
     private static final String IS_LOGON = "isLogon";
 
-    private int socialId;
-    private String socialName;
+    public static final String NAME_FB = "fb";
+    public static final String NAME_VK = "vk";
+    public static final String NAME_TW = "twitter";
+    public static final String NAME_OK = "ok";
+
     private String icon;
     private boolean isLogon;
     private String socialTitle;
 
-    public static int getSocialId(String socialName) {
+    public static int getId(String socialName) {
         int result = -1;
         if (AppSocial.NAME_FB.equalsIgnoreCase(socialName)) {
             result = AppSocial.ID_FB;
@@ -116,9 +119,9 @@ public class AppSocial extends Social{
     }
 
     public AppSocial(String socialName, JSONObject socialJson) {
-        super(null);
-        this.socialName = socialName;
-        socialId = getSocialId(socialName);
+        super(getId(socialName), socialName, 0, new Token());
+        this.name = socialName;
+        id = getId(socialName);
         if (socialJson != null) {
             icon = socialJson.optString("icon");
             isLogon = socialJson.optBoolean("logined");
@@ -137,7 +140,7 @@ public class AppSocial extends Social{
         try {
             tokenJson.put("token1", getToken().getAccess());
             tokenJson.put("token2", getToken().getRefresh());
-            result.put(socialName, tokenJson);
+            result.put(name, tokenJson);
         } catch (JSONException ignored) {
         }
         return result;
@@ -151,7 +154,7 @@ public class AppSocial extends Social{
     public JSONObject asNull() {
         JSONObject result = new JSONObject();
         try {
-            result.put(socialName, JSONObject.NULL);
+            result.put(name, JSONObject.NULL);
         } catch (JSONException ignored) {
         }
         return result;
@@ -162,7 +165,7 @@ public class AppSocial extends Social{
         try {
             JSONObject killJson = new JSONObject();
             killJson.put("kill", true);
-            result.put(socialName, killJson);
+            result.put(name, killJson);
         } catch (JSONException ignored) {
         }
         return result;
@@ -172,20 +175,12 @@ public class AppSocial extends Social{
     public void copy(AppSocial otherSocial) {
         if (otherSocial != null) {
             setToken(otherSocial.token);
-            socialId = otherSocial.socialId;
-            socialName = otherSocial.socialName;
+            id = otherSocial.id;
+            name = otherSocial.name;
             icon = otherSocial.icon;
             isLogon = otherSocial.isLogon;
             setSocialUser(otherSocial.getSocialUser());
         }
-    }
-
-    public int getSocialId() {
-        return socialId;
-    }
-
-    public String getSocialName() {
-        return socialName;
     }
 
     public String getStringIcon() {
@@ -193,7 +188,7 @@ public class AppSocial extends Social{
     }
 
     public int getIcon() {
-        return getSocialIcon(socialId);
+        return getSocialIcon(id);
     }
 
     public boolean isLogon() {
@@ -214,7 +209,7 @@ public class AppSocial extends Social{
         boolean result = false;
         if (o instanceof AppSocial) {
             AppSocial other = (AppSocial) o;
-            result = socialId == other.socialId
+            result = id == other.id
                     && isLogon == other.isLogon;
         }
         return result;
@@ -240,7 +235,7 @@ public class AppSocial extends Social{
         AppSocial result = null;
         if (socials != null) {
             for (AppSocial social : socials) {
-                if (socialId == social.getSocialId()) {
+                if (socialId == social.getId()) {
                     result = social;
                     break;
                 }
@@ -255,7 +250,7 @@ public class AppSocial extends Social{
             if (first.size() == second.size()) {
                 result = true;
                 for (int i = 0; i < first.size(); ++i) {
-                    AppSocial social = findSocial(second, first.get(i).getSocialId());
+                    AppSocial social = findSocial(second, first.get(i).getId());
                     if (social != null) {
                         if (!social.equals(first.get(i))) {
                             result = false;

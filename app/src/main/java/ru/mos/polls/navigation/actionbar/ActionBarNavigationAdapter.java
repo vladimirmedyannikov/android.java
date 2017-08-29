@@ -63,7 +63,7 @@ public class ActionBarNavigationAdapter extends ArrayAdapter<ActionBarNavigation
         if (convertView == null) {
             convertView = View.inflate(getContext(), R.layout.listitem_actionbar, null);
         }
-        TextView title = ButterKnife.findById(convertView, R.id.text1);
+        TextView title = ButterKnife.findById(convertView, android.R.id.text1);
         title.setText(getItem(position).getTitle());
         return convertView;
     }

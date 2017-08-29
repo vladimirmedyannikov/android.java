@@ -72,12 +72,12 @@ public class BindingSocialFragment extends Fragment {
     private AuthCallback authCallback = new AuthCallback() {
         @Override
         public void authSuccess(Social social) {
-            bindSocial((AppSocial) social);
+            bindSocial(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
         }
 
         @Override
         public void authFailure(Social social, Exception e) {
-            showErrorAuthDialog((AppSocial) social, e);
+            showErrorAuthDialog(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()), e);
         }
     };
 
@@ -136,7 +136,7 @@ public class BindingSocialFragment extends Fragment {
         socialBindAdapter.setListener(new SocialBindAdapter.Listener() {
             @Override
             public void onBindClick(AppSocial social) {
-                socialController.auth(social.getSocialId());
+                socialController.auth(social.getId());
             }
 
             @Override
@@ -155,7 +155,7 @@ public class BindingSocialFragment extends Fragment {
     private void showUnBindDialog(final AppSocial social) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String message = String.format(getString(R.string.confirm_unbind_message),
-                getString(AppBindItem.getTitle(social.getSocialId())));
+                getString(AppBindItem.getTitle(social.getId())));
         builder.setMessage(message);
         builder.setNegativeButton(R.string.ag_no, null);
         builder.setPositiveButton(R.string.confirm_unbind_ok, new DialogInterface.OnClickListener() {
@@ -206,14 +206,20 @@ public class BindingSocialFragment extends Fragment {
                         AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 0));
                         isAnySocialBinded = true;
                     }
-                    Statistics.taskSocialLogin(loadedSocial.getSocialName());
+                    Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
-                    Statistics.profileSocialLogin(loadedSocial.getSocialName());
+                    Statistics.profileSocialLogin(loadedSocial.getName());
                 }
-                GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getSocialName(), isTask);
+                GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getName(), isTask);
                 social.copy(loadedSocial);
                 social.setIsLogin(true);
                 Configurator.getInstance(getActivity()).getStorable().save(social);
+                for (int i = 0; i < changedSocials.size(); i++) {
+                    if (changedSocials.get(i).getId() == social.getId()) {
+                        changedSocials.get(i).setIsLogin(true);
+                        break;
+                    }
+                }
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }
@@ -233,11 +239,12 @@ public class BindingSocialFragment extends Fragment {
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
-                    Statistics.taskSocialLogin(loadedSocial.getSocialName());
+                    Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
-                    Statistics.profileSocialLogin(loadedSocial.getSocialName());
+                    Statistics.profileSocialLogin(loadedSocial.getName());
                 }
-                Configurator.getInstance(getActivity()).getStorable().clear(social.getSocialId());
+                Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
+                social.setIsLogin(false);
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }

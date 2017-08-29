@@ -22,15 +22,15 @@ public class SocialVM extends BaseVM<AppSocial,ItemBindSocialNewBinding> {
     }
 
     public int getIcon() {
-        int drawableId = AppBindItem.getBindResId(model.getSocialId());
+        int drawableId = AppBindItem.getBindResId(model.getId());
         if (!model.isLogon()) {
-            drawableId = AppBindItem.getUnBindResId(model.getSocialId());
+            drawableId = AppBindItem.getUnBindResId(model.getId());
         }
         return drawableId;
     }
 
     public String getSocialName() {
-        return model.getSocialName();
+        return model.getName();
     }
 
     public void unBindSocial(View view) {

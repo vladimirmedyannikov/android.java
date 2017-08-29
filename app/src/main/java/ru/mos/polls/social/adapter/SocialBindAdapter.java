@@ -46,16 +46,16 @@ public class SocialBindAdapter extends ArrayAdapter<AppSocial> {
     }
 
     private void displayTitle(SocialHolder v, AppSocial social) {
-        int resTitle = AppBindItem.getTitle(social.getSocialId());
+        int resTitle = AppBindItem.getTitle(social.getId());
         v.title.setText(resTitle);
     }
 
     private void displayIcon(SocialHolder v, final AppSocial social) {
-        int drawableId = AppBindItem.getBindResId(social.getSocialId());
+        int drawableId = AppBindItem.getBindResId(social.getId());
         int visibility = View.VISIBLE;
         boolean enable = false;
         if (!social.isLogon()) {
-            drawableId = AppBindItem.getUnBindResId(social.getSocialId());
+            drawableId = AppBindItem.getUnBindResId(social.getId());
             visibility = View.GONE;
             enable = true;
         }

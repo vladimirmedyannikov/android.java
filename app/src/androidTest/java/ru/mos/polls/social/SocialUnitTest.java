@@ -37,7 +37,7 @@ public class SocialUnitTest extends BaseUnitTest {
         test2.copy(test);
         Assert.assertEquals(test2.getToken().getExpireTime(), test.getToken().getExpireTime());
         Assert.assertEquals(test2.getStringIcon(), test.getIcon());
-        Assert.assertEquals(test2.getSocialId(), test.getSocialId());
+        Assert.assertEquals(test2.getId(), test.getId());
         Assert.assertEquals(test2.getToken(), test.getToken());
         Assert.assertEquals(test2.isLogon(), test.isLogon());
         Assert.assertEquals(true, test.equals(test2));
@@ -46,7 +46,7 @@ public class SocialUnitTest extends BaseUnitTest {
         Assert.assertEquals(false, test.isLogon());
         test.setIcon("test");
         Assert.assertEquals("test", test.getStringIcon());
-        Assert.assertEquals(-1, test.getSocialId());
+        Assert.assertEquals(-1, test.getId());
     }
 
     @Test
@@ -56,20 +56,20 @@ public class SocialUnitTest extends BaseUnitTest {
         Assert.assertEquals(4, list.size());
 
         AppSocial fbs = AppSocial.findFbSocial(list);
-        Assert.assertEquals(fbs.getSocialId(), AppSocial.ID_FB);
+        Assert.assertEquals(fbs.getId(), AppSocial.ID_FB);
 
 
         AppSocial vk = AppSocial.findVkSocial(list);
-        Assert.assertEquals(vk.getSocialId(), AppSocial.ID_VK);
+        Assert.assertEquals(vk.getId(), AppSocial.ID_VK);
 
         AppSocial ok = AppSocial.findOkSocial(list);
-        Assert.assertEquals(ok.getSocialId(), AppSocial.ID_OK);
+        Assert.assertEquals(ok.getId(), AppSocial.ID_OK);
 
         AppSocial tw = AppSocial.findTwSocial(list);
-        Assert.assertEquals(tw.getSocialId(), AppSocial.ID_TW);
+        Assert.assertEquals(tw.getId(), AppSocial.ID_TW);
 
         AppSocial tw2 = AppSocial.findSocial(list, AppSocial.ID_TW);
-        Assert.assertEquals(tw2.getSocialId(), AppSocial.ID_TW);
+        Assert.assertEquals(tw2.getId(), AppSocial.ID_TW);
 
         Assert.assertEquals(true, AppSocial.isEquals(list, list));
     }

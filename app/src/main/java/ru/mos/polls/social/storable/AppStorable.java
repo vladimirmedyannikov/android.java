@@ -1,14 +1,12 @@
 package ru.mos.polls.social.storable;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.social.controller.ValidatorController;
@@ -47,25 +45,27 @@ public class AppStorable extends BaseSharedPreferencesStorableManager {
     @Override
     public List<AppSocial> getAll() {
         List<AppSocial> result = new ArrayList<>();
-        Map<String, ?> allEntries = prefs.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            if (isDbg()) Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
-            try {
-                JSONObject socialJson = new JSONObject(entry.getValue().toString());
-                AppSocial social = new AppSocial(socialJson);
-
-                /**
-                 * т.к. в OpenCity нет (и пока не планируется) Google+
-                 * и при его вытаскивании из списка подтирается (т.к. реализованы только 4 места)
-                 * какая - нибудь другая соц сеть
-                 */
-                if (social.getId()!= AppSocial.ID_GP) {
-                    result.add(social);
-                }
-            } catch (JSONException e) {
-                if (isDbg()) e.printStackTrace();
-            }
-        }
+//        Map<String, ?> allEntries = prefs.getAll();
+//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+//            if (isDbg()) Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
+//            try {
+//                JSONObject socialJson = new JSONObject(entry.getValue().toString());
+//                AppSocial social = new AppSocial(socialJson);
+//
+//                /**
+//                 * т.к. нет (и пока не планируется) Google+
+//                 */
+//                if (social.getId()!= AppSocial.ID_GP) {
+//                    result.add(social);
+//                }
+//            } catch (JSONException e) {
+//                if (isDbg()) e.printStackTrace();
+//            }
+//        }
+        result.add(get(AppSocial.ID_FB));
+        result.add(get(AppSocial.ID_VK));
+        result.add(get(AppSocial.ID_TW));
+        result.add(get(AppSocial.ID_OK));
         return result;
     }
 }

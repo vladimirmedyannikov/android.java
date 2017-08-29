@@ -85,7 +85,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     }
 
     public void addSocialToLayer(AppSocial social) {
-        int socialIcon = AppSocial.getSocialIcon(social.getSocialId());
+        int socialIcon = AppSocial.getSocialIcon(social.getId());
         addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
     }
 

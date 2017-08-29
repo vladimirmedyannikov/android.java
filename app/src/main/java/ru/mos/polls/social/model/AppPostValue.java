@@ -5,8 +5,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.polls.AGApplication;
@@ -25,9 +23,6 @@ public class AppPostValue extends PostValue {
 
     private int socialId;
     private String socialName;
-    private String title;
-    private String text;
-    private String link;
     private String image;
     private boolean isMustServerNotified;
     private boolean enable;
@@ -136,30 +131,30 @@ public class AppPostValue extends PostValue {
 //        return result;
 //    }
 
-    public JSONObject getOkAttachmentsJson() {
-        JSONObject attachments = new JSONObject();
-        JSONArray media = new JSONArray();
-        JSONObject param = new JSONObject();
-        try {
-            /**
-             * add link
-             */
-            param.put("type", "link");
-            param.put("url", link);
-            media.put(param);
-            /**
-             * add text
-             */
-            param = new JSONObject();
-            param.put("type", "text");
-            param.put("text", text);
-            media.put(param);
-
-            attachments.put("media", media);
-        } catch (JSONException ignored) {
-        }
-        return attachments;
-    }
+//    public JSONObject getOkAttachmentsJson() {
+//        JSONObject attachments = new JSONObject();
+//        JSONArray media = new JSONArray();
+//        JSONObject param = new JSONObject();
+//        try {
+//            /**
+//             * add link
+//             */
+//            param.put("type", "link");
+//            param.put("url", link);
+//            media.put(param);
+//            /**
+//             * add text
+//             */
+//            param = new JSONObject();
+//            param.put("type", "text");
+//            param.put("text", text);
+//            media.put(param);
+//
+//            attachments.put("media", media);
+//        } catch (JSONException ignored) {
+//        }
+//        return attachments;
+//    }
 
 //    /**
 //     * Формирование параметров для постинга в ok.ru для метода share.addLink
@@ -279,7 +274,7 @@ public class AppPostValue extends PostValue {
     }
 
     public AppPostValue setSocialId(String socialName) {
-        this.socialId = AppSocial.getSocialId(socialName);
+        this.socialId = AppSocial.getId(socialName);
         return this;
     }
 
@@ -314,8 +309,8 @@ public class AppPostValue extends PostValue {
         boolean isEquals;
         if (o instanceof AppPostValue) {
             AppPostValue other = (AppPostValue) o;
-            isEquals = text.equalsIgnoreCase(other.getText())
-                    && link.equalsIgnoreCase(other.getLink())
+            isEquals = getText().equalsIgnoreCase(other.getText())
+                    && getLink().equalsIgnoreCase(other.getLink())
                     && image.equalsIgnoreCase(other.getImage());
         } else {
             isEquals = false;
@@ -352,7 +347,7 @@ public class AppPostValue extends PostValue {
     }
 
     public boolean isEmpty() {
-        return TextUtils.isEmpty(text) && TextUtils.isEmpty(link) && TextUtils.isEmpty(image);
+        return TextUtils.isEmpty(getText()) && TextUtils.isEmpty(getLink()) && TextUtils.isEmpty(image);
     }
 
     public boolean forTwitter() {
@@ -371,10 +366,10 @@ public class AppPostValue extends PostValue {
         boolean result = false;
         switch (socialId) {
             case AppSocial.ID_TW:
-                result = text.length() > MAX_TWEET_POST_LENGTH;
+                result = getText().length() > MAX_TWEET_POST_LENGTH;
                 break;
             case AppSocial.ID_OK:
-                result = text.length() > MAX_OK_POST_LENGTH;
+                result = getText().length() > MAX_OK_POST_LENGTH;
                 break;
         }
         return result;
@@ -402,7 +397,7 @@ public class AppPostValue extends PostValue {
     }
 
     public String preparePost() {
-        return text + " " + link;
+        return getText() + " " + getLink();
     }
 
     public static enum Type {

@@ -269,17 +269,6 @@ public abstract class AgSocialApiController {
                     add(newSocials, AppSocial.findVkSocial(savedSocial), getVkSocial(jsonResult));
                     add(newSocials, AppSocial.findTwSocial(savedSocial), getTwSocial(jsonResult));
                     add(newSocials, AppSocial.findOkSocial(savedSocial), getOkSocial(jsonResult));
-                    /**
-                     * TODO неясно для чего удаляем очищаем локальный кеш, если соцсеть не привязана в профию АГ
-                     * пока оставим 11.04.2016, работа по релизу 2.0.0
-                     * Если входе тетсирования не возникнет вопросов, то после релиза, удалить этот закомментированный фрагмент
-                     */
-//                    for (AppSocial social : newSocials) {
-//                        if (!social.isLogon()) {
-//                            social.clearAuth(activity);
-//                            social.reset(activity);
-//                        }
-//                    }
                     if (listener != null) {
                         listener.onLoaded(newSocials);
                     }
@@ -405,7 +394,7 @@ public abstract class AgSocialApiController {
             public void onErrorResponse(VolleyError error) {
                 onError(activity, error);
                 if (error.getErrorCode() == Error.Vk.ERROR_TOKKEN_EXPIRED) {
-                    Configurator.getInstance(activity).getStorable().clear(social.getSocialId());
+                    Configurator.getInstance(activity).getStorable().clear(social.getId());
                     unbindSocialFromAg(activity, social, null);
                 }
                 if (listener != null) {

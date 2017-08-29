@@ -111,6 +111,6 @@ public class SocialManagerUnitTest extends BaseUnitTest {
 //        Assert.assertEquals(SocialManager.getRefreshTokenKey(AppSocial.ID_VK), SocialManager.VK_REFRESH_TOKEN);
 //        Assert.assertEquals(SocialManager.getExpireDateKey(AppSocial.ID_VK), SocialManager.VK_EXPIRE_TIME);
 //        Assert.assertEquals(SocialManager.getSocialName(AppSocial.ID_VK), AppSocial.NAME_VK);
-//        Assert.assertEquals(SocialManager.getSocialId(AppSocial.NAME_VK), AppSocial.ID_VK);
+//        Assert.assertEquals(SocialManager.getId(AppSocial.NAME_VK), AppSocial.ID_VK);
 //    }
 }

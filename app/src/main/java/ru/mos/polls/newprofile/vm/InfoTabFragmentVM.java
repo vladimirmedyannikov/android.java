@@ -36,6 +36,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     LinearLayout socialBindingLayer;
     Observable<List<Social>> socialListObserable;
     AppCompatTextView percentFilledTitle;
+    AppCompatTextView socialBindingStatus;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
         super(fragment, binding);
@@ -47,6 +48,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         socialBindingLayer = binding.agUserSocialBindingLayer;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         percentFilledTitle = binding.agUserProfilePercentFillTitle;
+        socialBindingStatus = binding.agUserSocialValue;
         saved = new AgUser(getActivity());
         super.initialize(binding);
         binding.setClickListener(this);
@@ -134,7 +136,11 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addSocialToLayer));
+                .subscribe(this::addSocialToLayer, Throwable::printStackTrace, this::setSocialBindingStatusView));
+    }
+
+    private void setSocialBindingStatusView() {
+        socialBindingStatus.setText(socialBindingLayer.getChildCount() > 0 ? "подключено" : "не указано");
     }
 
     @Override

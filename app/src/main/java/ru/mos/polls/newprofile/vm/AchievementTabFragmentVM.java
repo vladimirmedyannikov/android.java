@@ -106,9 +106,8 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
                     }
                 };
         AchievementsSelect.Request requestBody = new AchievementsSelect.Request(achivementPage);
-        System.out.println("friendId = " + friendId);
         if (friendId != 0) {
-            requestBody = new AchievementsSelect.Request(achivementPage, friendId);
+            requestBody.setId(friendId);
         }
         Observable<AchievementsSelect.Response> responseObservable = AGApplication.api
                 .selectAchievements(requestBody)

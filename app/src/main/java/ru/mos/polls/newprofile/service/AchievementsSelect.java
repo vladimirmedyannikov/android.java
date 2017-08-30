@@ -26,6 +26,10 @@ public class AchievementsSelect {
         public Request(Page page) {
             super(page);
         }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
     }
 
     public static class Response extends GeneralResponse<Response.Result> {

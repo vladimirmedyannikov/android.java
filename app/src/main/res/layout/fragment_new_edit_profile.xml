@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -57,18 +56,6 @@
 
                     <include layout="@layout/layout_date_gender" android:id="@+id/layout_date_gender"/>
 
-                    <!--<android.support.v7.widget.AppCompatTextView-->
-                        <!--android:id="@+id/edit_birthday_date"-->
-                        <!--style="@style/edit_profile"-->
-                        <!--android:clickable="true"-->
-                        <!--android:hint="Дата рождения"/>-->
-
-                    <!--<include layout="@layout/ag_separator"/>-->
-
-                    <!--<android.support.v7.widget.AppCompatSpinner-->
-                        <!--android:id="@+id/edit_gender"-->
-                        <!--style="@style/edit_profile"/>-->
-
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -83,6 +70,7 @@
                     android:padding="@dimen/pd_xxsmall">
 
                     <android.support.v7.widget.AppCompatSpinner
+                        android:layout_marginRight="@dimen/pd_xnormal_m"
                         android:id="@+id/edit_martial_status"
                         style="@style/edit_profile"/>
 

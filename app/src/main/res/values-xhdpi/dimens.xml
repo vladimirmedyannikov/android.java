@@ -28,7 +28,9 @@
     <dimen name="pd_normal">16dp</dimen>
     <dimen name="pd_xlarge">20dp</dimen>
     <dimen name="pd_xxlarge">24dp</dimen>
-
+    <!-- padding size minus !-->
+    <dimen name="pd_xnormal_m">-14dp</dimen>
+    <dimen name="pd_normal_m">-16dp</dimen>
     <!-- text size !-->
     <dimen name="ts_small">14sp</dimen>
     <dimen name="ts_normal">16sp</dimen>

@@ -1,57 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:id="@+id/scrollView"
-    style="@style/root.padding"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fillViewport="true"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/root"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/topContainer"
-        style="@style/linear">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-        <include layout="@layout/layout_auth_logo"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        style="@style/root.padding"
+        android:fillViewport="true">
 
-        <TextView
-            style="@style/text.gray"
-            android:text="@string/hint_sms_sent"/>
+        <LinearLayout
+            android:id="@+id/topContainer"
+            style="@style/linear">
 
-        <TextView
-            android:id="@+id/tvPhone"
-            style="@style/text.medium"
-            tools:text="+7 (917) 814-69-80"/>
+            <include
+                layout="@layout/layout_auth_logo"
+                android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/etCode"
-            style="@style/input.phone"
-            android:hint="@string/ag_hint_code"
-            android:imeOptions="actionNext"/>
+            <TextView
+                style="@style/text.gray"
+                android:text="@string/hint_sms_sent" />
 
-        <TextView
-            android:id="@+id/tvError"
-            style="@style/text.center.red"
-            android:layout_margin="@dimen/pd_xxsmall"/>
+            <TextView
+                android:id="@+id/tvPhone"
+                style="@style/text.medium"
+                tools:text="+7 (917) 814-69-80" />
 
-        <Button
-            android:id="@+id/btnAction"
-            style="@style/button.centered.action"
-            android:layout_width="160dp"
-            android:text="@string/code_confirm_send"/>
+            <EditText
+                android:id="@+id/etCode"
+                style="@style/input.phone"
+                android:hint="@string/ag_hint_code"
+                android:imeOptions="actionNext" />
 
-        <include layout="@layout/layout_empty_view"/>
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/text.center.red"
+                android:layout_margin="@dimen/pd_xxsmall" />
 
-        <TextView
-            style="@style/text.link.green"
-            android:id="@+id/help"
-            android:text="@string/help_phone_not_correct"
-            android:layout_marginTop="@dimen/pd_xxlarge"
-            />
+            <Button
+                android:id="@+id/btnAction"
+                style="@style/button.centered.action"
+                android:layout_width="160dp"
+                android:text="@string/code_confirm_send"
+                android:visibility="gone" />
 
-        <TextView
-            style="@style/text.link.green"
-            android:id="@+id/feedback"
-            android:layout_marginBottom="@dimen/pd_xxsmall"
-            android:text="@string/help"
-            />
+            <include layout="@layout/layout_empty_view" />
 
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/help"
+                style="@style/text.link.green"
+                android:layout_marginTop="@dimen/pd_xxlarge"
+                android:text="@string/help_phone_not_correct" />
+
+            <TextView
+                android:id="@+id/feedback"
+                style="@style/text.link.green"
+                android:layout_marginBottom="@dimen/pd_xxsmall"
+                android:text="@string/help" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

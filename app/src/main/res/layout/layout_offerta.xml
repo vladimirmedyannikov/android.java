@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/item.linear"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:paddingTop="@dimen/pd_xsmall"
-                android:paddingBottom="@dimen/pd_xsmall">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item.linear"
+    android:paddingBottom="@dimen/pd_xsmall"
+    android:paddingTop="@dimen/pd_xsmall">
 
     <CheckBox
         android:id="@+id/cbAgreeOffer"
         style="@style/text"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
         android:checked="false"
-        android:paddingRight="@dimen/thick_separator"
-        android:layout_centerVertical="true"/>
+        android:paddingRight="@dimen/thick_separator" />
 
     <LinearLayout
-        style="@style/item.linear.horizontal"
+        style="@style/item.linear"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/cbAgreeOffer"
         android:layout_toRightOf="@+id/cbAgreeOffer"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/pd_xsmall"
-        android:paddingTop="@dimen/pd_xxsmall"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical">
+        android:paddingTop="@dimen/pd_xxsmall">
 
         <TextView
             style="@style/text"
-            android:text="@string/ag_agree"
-            android:layout_marginRight="4dp"/>
+            android:layout_marginRight="4dp"
+            android:text="@string/ag_agree_with_offer" />
 
         <TextView
             android:id="@+id/tvOffer"
             style="@style/text"
             android:text="@string/offerta_offer"
-            android:textColor="@color/accent_material_light"
-            />
+            android:textColor="@color/accent_material_light" />
 
     </LinearLayout>
 </RelativeLayout>

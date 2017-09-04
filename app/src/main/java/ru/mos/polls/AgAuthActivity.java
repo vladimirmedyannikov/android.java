@@ -102,14 +102,18 @@ public class AgAuthActivity extends AuthActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_confirm:
-                if (checkCodeText() && checkPhoneText()) {
-                    onClickLogin(etLogin);
-                } else {
-                    Toast.makeText(this, "Введите номер телефона", Toast.LENGTH_SHORT).show();
-                }
+                doRequestAction();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void doRequestAction() {
+        if (checkCodeText() && checkPhoneText()) {
+            onClickLogin(etLogin);
+        } else {
+            Toast.makeText(this, "Введите номер телефона", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

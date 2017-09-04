@@ -102,14 +102,18 @@ public class AgPhoneConfirmActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_confirm:
-                if (checkCodeText()) {
-                    onAction();
-                } else {
-                    Toast.makeText(this, "Введите проверочный код", Toast.LENGTH_SHORT).show();
-                }
+                doRequestAction();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void doRequestAction() {
+        if (checkCodeText()) {
+            onAction();
+        } else {
+            Toast.makeText(this, "Введите проверочный код", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String formatPhone() {

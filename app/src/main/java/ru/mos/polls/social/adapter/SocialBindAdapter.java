@@ -13,15 +13,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import ru.mos.polls.R;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialBindItem;
+import ru.mos.polls.social.model.AppBindItem;
+import ru.mos.polls.social.model.AppSocial;
 
-public class SocialBindAdapter extends ArrayAdapter<Social> {
+public class SocialBindAdapter extends ArrayAdapter<AppSocial> {
 
     private Listener listener;
-    Social social;
+    AppSocial social;
 
-    public SocialBindAdapter(Context context, List<Social> objects) {
+    public SocialBindAdapter(Context context, List<AppSocial> objects) {
         super(context, -1, objects);
     }
 
@@ -45,17 +45,17 @@ public class SocialBindAdapter extends ArrayAdapter<Social> {
         return v;
     }
 
-    private void displayTitle(SocialHolder v, Social social) {
-        int resTitle = SocialBindItem.getTitle(social.getSocialId());
+    private void displayTitle(SocialHolder v, AppSocial social) {
+        int resTitle = AppBindItem.getTitle(social.getId());
         v.title.setText(resTitle);
     }
 
-    private void displayIcon(SocialHolder v, final Social social) {
-        int drawableId = SocialBindItem.getBindResId(social.getSocialId());
+    private void displayIcon(SocialHolder v, final AppSocial social) {
+        int drawableId = AppBindItem.getBindResId(social.getId());
         int visibility = View.VISIBLE;
         boolean enable = false;
         if (!social.isLogon()) {
-            drawableId = SocialBindItem.getUnBindResId(social.getSocialId());
+            drawableId = AppBindItem.getUnBindResId(social.getId());
             visibility = View.GONE;
             enable = true;
         }
@@ -94,8 +94,8 @@ public class SocialBindAdapter extends ArrayAdapter<Social> {
     }
 
     public interface Listener {
-        void onBindClick(Social social);
+        void onBindClick(AppSocial social);
 
-        void onCloseClick(Social social);
+        void onCloseClick(AppSocial social);
     }
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +26,12 @@ import ru.mos.polls.profile.controller.BadgeViewController;
 import ru.mos.polls.profile.controller.ProfileApiController;
 import ru.mos.polls.profile.model.Achievement;
 import ru.mos.polls.quests.controller.QuestsApiController;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.social.callback.PostCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.PostValue;
+import ru.mos.social.model.social.Social;
 
 
 public class AchievementActivity extends ToolbarAbstractActivity {
@@ -61,6 +65,17 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     private Achievement achievement;
     private ImageLoader imageLoader;
     private SocialController socialController;
+    private PostCallback postCallback = new PostCallback() {
+        @Override
+        public void postSuccess(Social social, @Nullable PostValue postValue) {
+            SocialUIController.sendPostingResult(AchievementActivity.this, (AppPostValue) postValue, null);
+        }
+
+        @Override
+        public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
+            SocialUIController.sendPostingResult(AchievementActivity.this, (AppPostValue) postValue, e);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +84,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         ButterKnife.bind(this);
         imageLoader = createImageLoader();
         socialController = new SocialController(this);
+        socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
         if (getAchievement()) {
             loadAchievement();
@@ -78,6 +94,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     @Override
     protected void onDestroy() {
         SocialUIController.unregisterPostingReceiver(this);
+        socialController.getEventController().unregisterAllCallback();
         super.onDestroy();
     }
 
@@ -91,9 +108,9 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     void share() {
         SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
             @Override
-            public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+            public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                 socialPostValue.setId(achievement.getId());
-                socialController.post(socialPostValue);
+                socialController.post(socialPostValue, socialPostValue.getSocialId());
             }
 
             @Override

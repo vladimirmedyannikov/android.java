@@ -27,12 +27,13 @@ import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.http.HttpUtils;
 import ru.mos.polls.http.Request;
-import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.social.model.AppPostItem;
+import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.model.Error;
 import ru.mos.polls.social.model.Message;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialPostItem;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.storable.AppStorable;
+import ru.mos.social.model.Configurator;
 
 /**
  * Инкапсулирует работу с сервисами АГ для социальных сетей:
@@ -51,15 +52,15 @@ public abstract class AgSocialApiController {
      * @param listener callback для отображения списка соц сетей
      */
     public static void loadPostingData(BaseActivity activity, SocialPostValueListener listener) {
-        loadPostingData(activity, -1, SocialPostValue.Type.TASK, listener);
+        loadPostingData(activity, -1, AppPostValue.Type.TASK, listener);
     }
 
     public static void loadPostingDataForAchievement(BaseActivity activity, String achievementId, SocialPostValueListener listener) {
-        loadPostingData(activity, achievementId, SocialPostValue.Type.ACHIEVEMENT, listener);
+        loadPostingData(activity, achievementId, AppPostValue.Type.ACHIEVEMENT, listener);
     }
 
     public static void loadPostingDataForNovelty(BaseActivity activity, long noveltyId, SocialPostValueListener listener) {
-        loadPostingData(activity, noveltyId, SocialPostValue.Type.NOVELTY, listener);
+        loadPostingData(activity, noveltyId, AppPostValue.Type.NOVELTY, listener);
     }
 
     /**
@@ -70,7 +71,7 @@ public abstract class AgSocialApiController {
      * @param listener callback для отображения списка соц сетей
      */
     public static void loadPostingDataForPoll(BaseActivity activity, long pollId, boolean isHearing, SocialPostValueListener listener) {
-        loadPostingData(activity, pollId, isHearing ? SocialPostValue.Type.HEARING : SocialPostValue.Type.POLL, listener);
+        loadPostingData(activity, pollId, isHearing ? AppPostValue.Type.HEARING : AppPostValue.Type.POLL, listener);
     }
 
     /**
@@ -81,7 +82,7 @@ public abstract class AgSocialApiController {
      * @param listener callback для отображения списка соц сетей
      */
     public static void loadPostingDataForEvent(BaseActivity activity, long eventId, SocialPostValueListener listener) {
-        loadPostingData(activity, eventId, SocialPostValue.Type.CHECK_IN, listener);
+        loadPostingData(activity, eventId, AppPostValue.Type.CHECK_IN, listener);
     }
 
     /**
@@ -92,7 +93,7 @@ public abstract class AgSocialApiController {
      * @param type     тип постинга
      * @param listener callback для отображения списка соц сетей
      */
-    private static void loadPostingData(final BaseActivity activity, final Object id, final SocialPostValue.Type type, final SocialPostValueListener listener) {
+    private static void loadPostingData(final BaseActivity activity, final Object id, final AppPostValue.Type type, final SocialPostValueListener listener) {
         showProgress(activity);
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.GET_SOCIAL_INFO));
         if (AGApplication.IS_POSTING_LIMITATION) {
@@ -120,7 +121,7 @@ public abstract class AgSocialApiController {
             public void onResponse(JSONObject jsonObject) {
                 hideProgress();
                 if (jsonObject != null) {
-                    List<SocialPostItem> items = SocialPostItem.createItems(activity, jsonObject, type, id);
+                    List<AppPostItem> items = AppPostItem.createItems(activity, jsonObject, type, id);
 
                     if (listener != null) {
                         listener.onLoaded(items);
@@ -142,11 +143,11 @@ public abstract class AgSocialApiController {
      * Оповещение сс Аг о постинге в соцсеть
      *
      * @param context         не elk ActionBarActivity, а обычный контекст, поэтому делаем обычный запрос
-     * @param socialPostValue данные, которые запостили
+     * @param appPostValue данные, которые запостили
      * @param listener        callback
      */
     public static void notifyAboutPosting(final Context context,
-                                          final SocialPostValue socialPostValue, final PostingNotifyListener listener) {
+                                          final AppPostValue appPostValue, final PostingNotifyListener listener) {
         /**
          * оповещаем сервер о постинге
          */
@@ -157,10 +158,10 @@ public abstract class AgSocialApiController {
          */
         final JSONObject requestJson = new JSONObject();
         try {
-            requestJson.put("type", SocialManager.getSocialName(socialPostValue.getSocialId()));
-            if (!socialPostValue.isForTask()) {
-                requestJson.put(socialPostValue.getType().getName(), socialPostValue.getId());
-                requestJson.put("text", socialPostValue.getText());
+            requestJson.put("type", AppSocial.getSocialName(appPostValue.getSocialId()));
+            if (!appPostValue.isForTask()) {
+                requestJson.put(appPostValue.getType().getName(), appPostValue.getId());
+                requestJson.put("text", appPostValue.getText());
             }
             /**
              * передаем сессию
@@ -177,12 +178,12 @@ public abstract class AgSocialApiController {
             @Override
             public void onSuccess(HttpUtils.HttpResult httpResult) {
                 if (httpResult != null) {
-                    if (socialPostValue != null) {
-                        socialPostValue.setEnable(false);
+                    if (appPostValue != null) {
+                        appPostValue.setEnable(false);
                         SocialUIController.SocialAdapterHolder currentSocialAdapter
                                 = SocialUIController.getCurrentSocialAdapterHolder();
                         if (currentSocialAdapter != null) {
-                            currentSocialAdapter.refreshSocialListView(socialPostValue);
+                            currentSocialAdapter.refreshSocialListView(appPostValue);
                         }
                     }
                     try {
@@ -206,12 +207,12 @@ public abstract class AgSocialApiController {
                          * если кастомный диалог не отобразили, то показываем то, что в теге result
                          */
                         Map<String, String> stParams = new HashMap<String, String>();
-                        stParams.put("name", SocialManager.getStatisticsKey(socialPostValue.getSocialId()));
+                        stParams.put("name", AppSocial.getStatisticsKey(appPostValue.getSocialId()));
                         Statistics.customEvent("social post", stParams);
                         responseJson = responseJson.getJSONObject("status");
                         int points = responseJson.optInt("current_points");
                         String pointsTitle = PointsManager.getPointUnitString(context, points);
-                        String text = String.format(context.getString(R.string.post_added), points, pointsTitle);
+                        String text = String.format(context.getString(R.string.post_added), String.valueOf(points), pointsTitle);
                         if (listener != null) {
                             listener.onNotified(text);
                         }
@@ -262,58 +263,47 @@ public abstract class AgSocialApiController {
             @Override
             public void onResponse(JSONObject jsonResult) {
                 if (jsonResult != null) {
-                    List<Social> savedSocial = Social.getSavedSocials(activity);
-                    List<Social> newSocials = new ArrayList<Social>();
-                    add(newSocials, Social.findFbSocial(savedSocial), getFbSocial(jsonResult));
-                    add(newSocials, Social.findVkSocial(savedSocial), getVkSocial(jsonResult));
-                    add(newSocials, Social.findTwSocial(savedSocial), getTwSocial(jsonResult));
-                    add(newSocials, Social.findOkSocial(savedSocial), getOkSocial(jsonResult));
-                    /**
-                     * TODO неясно для чего удаляем очищаем локальный кеш, если соцсеть не привязана в профию АГ
-                     * пока оставим 11.04.2016, работа по релизу 2.0.0
-                     * Если входе тетсирования не возникнет вопросов, то после релиза, удалить этот закомментированный фрагмент
-                     */
-//                    for (Social social : newSocials) {
-//                        if (!social.isLogon()) {
-//                            social.clearAuth(activity);
-//                            social.reset(activity);
-//                        }
-//                    }
+                    List<AppSocial> savedSocial = ((AppStorable)Configurator.getInstance(activity).getStorable()).getAll();
+                    List<AppSocial> newSocials = new ArrayList<AppSocial>();
+                    add(newSocials, AppSocial.findFbSocial(savedSocial), getFbSocial(jsonResult));
+                    add(newSocials, AppSocial.findVkSocial(savedSocial), getVkSocial(jsonResult));
+                    add(newSocials, AppSocial.findTwSocial(savedSocial), getTwSocial(jsonResult));
+                    add(newSocials, AppSocial.findOkSocial(savedSocial), getOkSocial(jsonResult));
                     if (listener != null) {
                         listener.onLoaded(newSocials);
                     }
                 }
             }
 
-            private void add(List<Social> newSocials, Social savedSocial, Social newSocial) {
-                if (!newSocial.isEmpty()) {
-                    newSocial.save(activity);
+            private void add(List<AppSocial> newSocials, AppSocial savedSocial, AppSocial newSocial) {
+                if (!newSocial.getToken().isEmpty()) {
+                    Configurator.getInstance(activity).getStorable().save(newSocial);
                     newSocials.add(newSocial);
                 } else {
                     savedSocial.setIsLogin(false);
-                    savedSocial.save(activity);
+                    Configurator.getInstance(activity).getStorable().save(newSocial);
                     newSocials.add(savedSocial);
                 }
             }
 
-            private Social getOkSocial(JSONObject jsonResult) {
-                return getSocial(SocialManager.SOCIAL_NAME_OK, jsonResult);
+            private AppSocial getOkSocial(JSONObject jsonResult) {
+                return getSocial(AppSocial.NAME_OK, jsonResult);
             }
 
-            private Social getVkSocial(JSONObject jsonResult) {
-                return getSocial(SocialManager.SOCIAL_NAME_VK, jsonResult);
+            private AppSocial getVkSocial(JSONObject jsonResult) {
+                return getSocial(AppSocial.NAME_VK, jsonResult);
             }
 
-            private Social getTwSocial(JSONObject jsonResult) {
-                return getSocial(SocialManager.SOCIAL_NAME_TW, jsonResult);
+            private AppSocial getTwSocial(JSONObject jsonResult) {
+                return getSocial(AppSocial.NAME_TW, jsonResult);
             }
 
-            private Social getFbSocial(JSONObject jsonResult) {
-                return getSocial(SocialManager.SOCIAL_NAME_FB, jsonResult);
+            private AppSocial getFbSocial(JSONObject jsonResult) {
+                return getSocial(AppSocial.NAME_FB, jsonResult);
             }
 
-            private Social getSocial(String socialName, JSONObject jsonResult) {
-                return new Social(socialName, jsonResult.optJSONObject(socialName));
+            private AppSocial getSocial(String socialName, JSONObject jsonResult) {
+                return new AppSocial(socialName, jsonResult.optJSONObject(socialName));
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -336,7 +326,7 @@ public abstract class AgSocialApiController {
      * @param social
      * @param listener
      */
-    public static void unbindSocialFromAg(BaseActivity elkActivity, Social social, SaveSocialListener listener) {
+    public static void unbindSocialFromAg(BaseActivity elkActivity, AppSocial social, SaveSocialListener listener) {
         binding(elkActivity, social, false, listener);
     }
 
@@ -347,7 +337,7 @@ public abstract class AgSocialApiController {
      * @param social
      * @param listener
      */
-    public static void bindSocialToAg(BaseActivity elkActivity, Social social, SaveSocialListener listener) {
+    public static void bindSocialToAg(BaseActivity elkActivity, AppSocial social, SaveSocialListener listener) {
         binding(elkActivity, social, true, listener);
     }
 
@@ -360,7 +350,7 @@ public abstract class AgSocialApiController {
      * @param listener callback
      * @param forBind  признак привязки или отвязки соцсети
      */
-    public static void binding(final BaseActivity activity, final Social social, final boolean forBind, final SaveSocialListener listener) {
+    public static void binding(final BaseActivity activity, final AppSocial social, final boolean forBind, final SaveSocialListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
         if (AGApplication.IS_SOCIAL_API_V03_ENABLE) {
             url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.PROFILE_UPDATE_SOCIAL));
@@ -404,7 +394,7 @@ public abstract class AgSocialApiController {
             public void onErrorResponse(VolleyError error) {
                 onError(activity, error);
                 if (error.getErrorCode() == Error.Vk.ERROR_TOKKEN_EXPIRED) {
-                    SocialManager.clearAuth(activity, social.getSocialId());
+                    Configurator.getInstance(activity).getStorable().clear(social.getId());
                     unbindSocialFromAg(activity, social, null);
                 }
                 if (listener != null) {
@@ -452,7 +442,7 @@ public abstract class AgSocialApiController {
      * callback получения данных для постинга
      */
     public interface SocialPostValueListener {
-        void onLoaded(List<SocialPostItem> socialPostItems);
+        void onLoaded(List<AppPostItem> appPostItems);
     }
 
     /**
@@ -468,7 +458,7 @@ public abstract class AgSocialApiController {
      * callback получения списка привязанных соцсетей к аккакнту АГ
      */
     public interface LoadSocialListener {
-        void onLoaded(List<Social> socials);
+        void onLoaded(List<AppSocial> socials);
 
         void onError();
     }
@@ -477,8 +467,8 @@ public abstract class AgSocialApiController {
      * callback привязки данных соцсетей к аккаунту АГ
      */
     public interface SaveSocialListener {
-        void onSaved(Social social, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state);
+        void onSaved(AppSocial social, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state);
 
-        void onError(Social social);
+        void onError(AppSocial social);
     }
 }

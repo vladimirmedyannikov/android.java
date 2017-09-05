@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +25,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.polls.about.AboutAppFragment;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.event.controller.EventAPIController;
@@ -44,13 +47,10 @@ import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
-import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
@@ -62,13 +62,16 @@ import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.settings.SettingsFragment;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
+import ru.mos.social.callback.PostCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.PostValue;
+import ru.mos.social.model.social.Social;
 
 import static ru.mos.polls.friend.vm.FriendsFragmentVM.CONTACTS_PERMS;
 
@@ -112,6 +115,17 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private boolean isGPSEnableDialogShowed;
 
     private Callback callback;
+    private PostCallback postCallback = new PostCallback() {
+        @Override
+        public void postSuccess(Social social, @Nullable PostValue postValue) {
+            SocialUIController.sendPostingResult(MainActivity.this, (AppPostValue) postValue, null);
+        }
+
+        @Override
+        public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
+            SocialUIController.sendPostingResult(MainActivity.this, (AppPostValue) postValue, e);
+        }
+    };
 
     private static Activity instance;
 
@@ -134,6 +148,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         actionBarDrawerToggle.syncState();
 
         socialController = new SocialController(this);
+        socialController.getEventController().registerCallback(postCallback);
         smsInviteController = new SmsInviteController(this);
         questStateController = QuestStateController.getInstance();
 
@@ -258,6 +273,12 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socialController.getEventController().unregisterAllCallback();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         modeAct(intent);
@@ -276,8 +297,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 navFragment.selectItem(0);//todo replace with constant
                 SocialUIController.showSocialsDialog(this, new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
-                        socialController.post(socialPostValue);
+                    public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
+                        socialController.post(appPostValue, appPostValue.getSocialId());
                     }
 
                     @Override
@@ -381,10 +402,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     }
 
                     @Override
-                    public void onSocialPost(SocialPostValue socialPostValue) {
-                        Statistics.taskSocialSharing(socialPostValue.getSocialName());
-                        GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
-                        socialController.post(socialPostValue);
+                    public void onSocialPost(AppPostValue appPostValue) {
+                        Statistics.taskSocialSharing(appPostValue.getSocialName());
+                        GoogleStatistics.QuestsFragment.taskSocialSharing(appPostValue.getSocialName());
+                        socialController.post(appPostValue, appPostValue.getSocialId());
                     }
 
                     @Override
@@ -460,10 +481,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             case NavigationMenuItem.ABOUT:
                 AboutAppFragment.SocialListener socialListener = new AboutAppFragment.SocialListener() {
                     @Override
-                    public void onSocialPost(SocialPostValue socialPostValue) {
+                    public void onSocialPost(AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
                         GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
-                        socialController.post(socialPostValue);
+                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
                 };
                 fr = AboutAppFragment.newInstance(socialListener);
@@ -552,9 +573,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         if (smsInviteController.onActivityResult(requestCode, resultCode, data)) {
             return;
         }
-        if (socialController.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+        socialController.onActivityResult(requestCode, resultCode, data);
     }
 
     private void startFromUri() {
@@ -599,10 +618,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             public void onPostInSocial() {
                 SocialUIController.showSocialsDialog(MainActivity.this, new SocialUIController.SocialClickListener() {
                     @Override
-                    public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                    public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
                         GoogleStatistics.QuestsFragment.taskSocialSharing(socialPostValue.getSocialName());
-                        socialController.post(socialPostValue);
+                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
 
                     @Override

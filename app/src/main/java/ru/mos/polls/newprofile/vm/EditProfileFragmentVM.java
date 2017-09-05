@@ -30,10 +30,10 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
@@ -43,7 +43,7 @@ import ru.mos.polls.newprofile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.social.model.Social;
+import ru.mos.polls.social.model.AppSocial;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -74,7 +74,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
-    Observable<List<Social>> socialListObserable;
+    Observable<List<AppSocial>> socialListObserable;
     public static final String PREFS = "profile_prefs";
     public static final String TIME_SYNQ = "time_synq";
     public static final long INTERVAL_SYNQ = 15 * 60 * 1000;
@@ -167,7 +167,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
     public void onResume() {
         super.onResume();
         savedUser = new AgUser(getFragment().getContext());
-        socialListObserable = Social.getObservableSavedSocials(getFragment().getContext());
+        socialListObserable = AppSocial.getObservableSavedSocials(getFragment().getContext());
         refreshView(savedUser);
     }
 
@@ -416,8 +416,8 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
         linearLayout.addView(civ);
     }
 
-    public void addSocialToLayer(Social social) {
-        int socialIcon = Social.getSocialIcon(social.getSocialId());
+    public void addSocialToLayer(AppSocial social) {
+        int socialIcon = AppSocial.getSocialIcon(social.getId());
         addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
     }
 }

@@ -57,9 +57,8 @@ import ru.mos.polls.quests.quest.ResultsQuest;
 import ru.mos.polls.quests.quest.SocialQuest;
 import ru.mos.polls.quests.view.SpacesItemDecoration;
 import ru.mos.polls.quests.view.SwipeItemTouchHelper;
-import ru.mos.polls.quests.view.questviewholder.FavoriteSurveysHolder;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 import ru.mos.polls.util.StubUtils;
 
@@ -450,7 +449,7 @@ public class QuestsFragment extends PullableFragment {
 
         void onInviteFriends(boolean isTask);
 
-        void onSocialPost(SocialPostValue socialPostValue);
+        void onSocialPost(AppPostValue appPostValue);
 
         void onNews(String title, String linkUrl);
 

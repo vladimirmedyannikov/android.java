@@ -28,7 +28,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.quests.ProfileQuestActivity;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.questions.ListSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
@@ -635,7 +635,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
             }
 
             @Override
-            public void onPosting(SocialPostValue socialPostValue) {
+            public void onPosting(AppPostValue appPostValue) {
             }
         };
 
@@ -647,6 +647,6 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
 
         void onSurveyInterrupted(Survey survey);
 
-        void onPosting(SocialPostValue socialPostValue);
+        void onPosting(AppPostValue appPostValue);
     }
 }

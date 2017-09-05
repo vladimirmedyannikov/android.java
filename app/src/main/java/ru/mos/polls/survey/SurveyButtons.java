@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.summary.ProgressView;
 
@@ -270,7 +270,7 @@ public class SurveyButtons extends LinearLayout {
                     public void onClick(View v) {
                         SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                             @Override
-                            public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                            public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                                 socialPostValue.setId(survey.getId());
                                 callback.onPosting(socialPostValue);
                             }

@@ -29,7 +29,7 @@ import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.instruction.InstructionActivity;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.gui.AgSupportActivity;
 
 /**
@@ -117,8 +117,8 @@ public class AboutAppFragment extends Fragment {
                     case AboutItem.SHARE_SOCIAL:
                         SocialUIController.showSocialsDialog((BaseActivity) getActivity(), new SocialUIController.SocialClickListener() {
                             @Override
-                            public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
-                                socialListener.onSocialPost(socialPostValue);
+                            public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
+                                socialListener.onSocialPost(appPostValue);
                             }
 
                             @Override
@@ -143,7 +143,7 @@ public class AboutAppFragment extends Fragment {
     }
 
     public static interface SocialListener {
-        void onSocialPost(SocialPostValue socialPostValue);
+        void onSocialPost(AppPostValue appPostValue);
     }
 
     @Override

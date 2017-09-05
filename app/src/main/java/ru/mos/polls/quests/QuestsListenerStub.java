@@ -1,6 +1,6 @@
 package ru.mos.polls.quests;
 
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 
 
 public class QuestsListenerStub implements QuestsFragment.Listener {
@@ -50,7 +50,7 @@ public class QuestsListenerStub implements QuestsFragment.Listener {
     }
 
     @Override
-    public void onSocialPost(SocialPostValue socialPostValue) {
+    public void onSocialPost(AppPostValue appPostValue) {
     }
 
     @Override

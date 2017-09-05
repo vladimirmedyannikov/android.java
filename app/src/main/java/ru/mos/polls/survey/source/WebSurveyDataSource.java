@@ -20,7 +20,7 @@ import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.survey.parsers.SurveyFactory;
@@ -123,11 +123,11 @@ public class WebSurveyDataSource implements SurveyDataSource {
                 final int currentPoints = statusJsonObject.optInt("current_points");
                 final int price = json.optInt("added_points");
                 JSONObject socialJson = json.optJSONObject("social");
-                final SocialPostValue socialPostValue = new SocialPostValue(socialJson, SocialPostValue.Type.POLL);
-                socialPostValue
+                final AppPostValue appPostValue = new AppPostValue(socialJson, AppPostValue.Type.POLL);
+                appPostValue
                         .setEnable(true)
                         .setNotify(false);
-                listener.onSaved(price, currentPoints, socialPostValue);
+                listener.onSaved(price, currentPoints, appPostValue);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {

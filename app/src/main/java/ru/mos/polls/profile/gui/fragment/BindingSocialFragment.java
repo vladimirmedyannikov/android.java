@@ -30,9 +30,13 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
-import ru.mos.polls.social.controller.SocialController;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialBindItem;
+import ru.mos.polls.social.model.AppBindItem;
+import ru.mos.polls.social.model.AppSocial;
+import ru.mos.polls.social.storable.AppStorable;
+import ru.mos.social.callback.AuthCallback;
+import ru.mos.social.controller.SocialController;
+import ru.mos.social.model.Configurator;
+import ru.mos.social.model.social.Social;
 
 /**
  * Экран привязки аккаунтов соцсетей к аккаунту аг
@@ -58,13 +62,24 @@ public class BindingSocialFragment extends Fragment {
     private Unbinder unbinder;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
-    private List<Social> changedSocials, savedSocials;
+    private List<AppSocial> changedSocials, savedSocials;
     boolean isAnySocialBinded;
     @BindView(R.id.socialShareNotify)
     SwitchCompat socialShareNotify;
     @BindView(R.id.notifyContainer)
     View notifyContainer;
     private boolean isTask;
+    private AuthCallback authCallback = new AuthCallback() {
+        @Override
+        public void authSuccess(Social social) {
+            bindSocial(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
+        }
+
+        @Override
+        public void authFailure(Social social, Exception e) {
+            showErrorAuthDialog(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()), e);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,24 +104,24 @@ public class BindingSocialFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        socialController.getEventController().unregisterAllCallback();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (socialController.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+        socialController.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     public boolean isQuestExecuted() {
-        return isTask && !Social.isEquals(savedSocials, changedSocials);
+        return isTask && !AppSocial.isEquals(savedSocials, changedSocials);
     }
 
     private void init() {
         socialController = new SocialController((BaseActivity) getActivity());
-        savedSocials = Social.getSavedSocials(getActivity());
-        changedSocials = Social.getSavedSocials(getActivity());
+        socialController.getEventController().registerCallback(authCallback);
+        savedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
+        changedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
         socialBindAdapter = new SocialBindAdapter(getActivity(), changedSocials);
         if (getArguments() != null) {
             isTask = getArguments().getBoolean(IS_TASK);
@@ -120,12 +135,12 @@ public class BindingSocialFragment extends Fragment {
         gridView.setAdapter(socialBindAdapter);
         socialBindAdapter.setListener(new SocialBindAdapter.Listener() {
             @Override
-            public void onBindClick(Social social) {
-                bindSocial(social);
+            public void onBindClick(AppSocial social) {
+                socialController.auth(social.getId());
             }
 
             @Override
-            public void onCloseClick(Social social) {
+            public void onCloseClick(AppSocial social) {
                 showUnBindDialog(social);
             }
         });
@@ -137,10 +152,10 @@ public class BindingSocialFragment extends Fragment {
         CustomDialogController.setShareAbility(getActivity(), isChecked);
     }
 
-    private void showUnBindDialog(final Social social) {
+    private void showUnBindDialog(final AppSocial social) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String message = String.format(getString(R.string.confirm_unbind_message),
-                getString(SocialBindItem.getTitle(social.getSocialId())));
+                getString(AppBindItem.getTitle(social.getId())));
         builder.setMessage(message);
         builder.setNegativeButton(R.string.ag_no, null);
         builder.setPositiveButton(R.string.confirm_unbind_ok, new DialogInterface.OnClickListener() {
@@ -152,11 +167,20 @@ public class BindingSocialFragment extends Fragment {
         builder.show();
     }
 
+    private void showErrorAuthDialog(final AppSocial social, Exception e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String message = String.format(getString(R.string.confirm_social_auth_error_message),
+                e.getMessage());
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.ag_ok, null);
+        builder.show();
+    }
+
     private void refreshSocials() {
         showProgress(getString(R.string.update_social_message));
         AgSocialApiController.LoadSocialListener listener = new AgSocialApiController.LoadSocialListener() {
             @Override
-            public void onLoaded(List<Social> loadedSocials) {
+            public void onLoaded(List<AppSocial> loadedSocials) {
                 changedSocials.clear();
                 changedSocials.addAll(loadedSocials);
                 socialBindAdapter.notifyDataSetChanged();
@@ -171,59 +195,66 @@ public class BindingSocialFragment extends Fragment {
         AgSocialApiController.loadSocials((BaseActivity) getActivity(), listener);
     }
 
-    private void bindSocial(final Social social) {
+    private void bindSocial(final AppSocial social) {
         showProgress(getString(R.string.bind_progress_message));
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final Social loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
                     if (!isAnySocialBinded) {
                         AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 0));
                         isAnySocialBinded = true;
                     }
-                    Statistics.taskSocialLogin(loadedSocial.getSocialName());
+                    Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
-                    Statistics.profileSocialLogin(loadedSocial.getSocialName());
+                    Statistics.profileSocialLogin(loadedSocial.getName());
                 }
-                GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getSocialName(), isTask);
+                GoogleStatistics.BindSocialFragment.taskSocialLogin(loadedSocial.getName(), isTask);
                 social.copy(loadedSocial);
                 social.setIsLogin(true);
-                social.save(getActivity());
+                Configurator.getInstance(getActivity()).getStorable().save(social);
+                for (int i = 0; i < changedSocials.size(); i++) {
+                    if (changedSocials.get(i).getId() == social.getId()) {
+                        changedSocials.get(i).setIsLogin(true);
+                        break;
+                    }
+                }
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }
 
             @Override
-            public void onError(Social social) {
+            public void onError(AppSocial social) {
                 hideProgress();
             }
         };
-        socialController.bindSocial(social, listener);
+        AgSocialApiController.bindSocialToAg((BaseActivity) getActivity(), social, listener);
     }
 
-    private void unBindSocial(final Social social) {
+    private void unBindSocial(final AppSocial social) {
         showProgress(getString(R.string.unbind_progress_message));
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final Social loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
-                    Statistics.taskSocialLogin(loadedSocial.getSocialName());
+                    Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
-                    Statistics.profileSocialLogin(loadedSocial.getSocialName());
+                    Statistics.profileSocialLogin(loadedSocial.getName());
                 }
-                social.reset(getActivity());
+                Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
+                social.setIsLogin(false);
                 socialBindAdapter.notifyDataSetChanged();
                 hideProgress();
             }
 
             @Override
-            public void onError(Social social) {
+            public void onError(AppSocial social) {
                 hideProgress();
             }
         };
-        socialController.unBindSocial(social, listener);
+        AgSocialApiController.unbindSocialFromAg((BaseActivity) getActivity(), social, listener);
     }
 
     private void showProgress(String message) {

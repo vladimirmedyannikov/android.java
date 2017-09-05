@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 
 /**
  * Структура данных для хранения информации для кастомных сообщений после отправки опроса и выполенния чекина
@@ -66,8 +66,8 @@ public class Message {
      * @param id                   - идентификатор опроса или мероприятия,также исопльзуется для метода flurry
      */
     public void showCustomMessage(final Context context,
-                                  final SocialPostValue questResultPostValue,
-                                  final SocialPostValue.Type postType,
+                                  final AppPostValue questResultPostValue,
+                                  final AppPostValue.Type postType,
                                   final long id,
                                   final Runnable onClose) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -103,7 +103,7 @@ public class Message {
                     context.startActivity(intent);
                     onClose.run();
                 }
-                if (postType == SocialPostValue.Type.POLL) {
+                if (postType == AppPostValue.Type.POLL) {
                     onClose.run();
                 }
             }

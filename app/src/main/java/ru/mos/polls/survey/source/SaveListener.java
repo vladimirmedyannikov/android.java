@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
@@ -24,15 +23,15 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.common.model.Message;
-import ru.mos.polls.social.controller.SocialController;
 import ru.mos.polls.social.controller.SocialUIController;
-import ru.mos.polls.social.model.SocialPostValue;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesAPIController;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
+import ru.mos.social.controller.SocialController;
 
 
 public abstract class SaveListener implements SurveyDataSource.SaveListener {
@@ -79,7 +78,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         }
 
         @Override
-        public void onSaved(int price, int currentPoints, final SocialPostValue questResultPostValue) {
+        public void onSaved(int price, int currentPoints, final AppPostValue questResultPostValue) {
             if (survey.isInterrupted()) {
                 Statistics.pollsInterruptedToPassed();
                 GoogleStatistics.Survey.pollsInterruptedToPassed();
@@ -112,7 +111,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
             activity.finish();
         }
 
-        private void sendSubscribes(final int price, final int currentPoints, final SocialPostValue questResultPostValue) {
+        private void sendSubscribes(final int price, final int currentPoints, final AppPostValue questResultPostValue) {
             SubscribesAPIController subscribesAPIController = new SubscribesAPIController();
 
             subscribesAPIController.saveSubscribes(activity, survey.getId(), survey.getKind().isHearing(), new SubscribesAPIController.SaveListener() {
@@ -131,10 +130,10 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
             });
         }
 
-        private void showResults(int price, int currentPoints, final SocialPostValue questResultPostValue) {
+        private void showResults(int price, int currentPoints, final AppPostValue questResultPostValue) {
             Message message = survey.getMessage();
             if (message != null && !message.isEmpty()) {
-                message.showCustomMessage(activity, questResultPostValue, SocialPostValue.Type.POLL, survey.getId(), new Runnable() {
+                message.showCustomMessage(activity, questResultPostValue, AppPostValue.Type.POLL, survey.getId(), new Runnable() {
                     @Override
                     public void run() {
                         /**
@@ -152,10 +151,10 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                         public void onYes(Dialog dialog) {
                             SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                                 @Override
-                                public void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue) {
+                                public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                                     socialPostValue.setId(survey.getId());
                                     if (socialController != null) {
-                                        socialController.post(socialPostValue);
+                                        socialController.post(socialPostValue, socialPostValue.getSocialId());
                                     }
                                 }
 
@@ -231,7 +230,7 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         }
 
         @Override
-        public void onSaved(int price, int currentPoints, SocialPostValue socialPostValue) {
+        public void onSaved(int price, int currentPoints, AppPostValue appPostValue) {
             dismissProgressDialog();
             saveCurrentPage();
 

@@ -27,20 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.Tweet;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-
-import org.json.JSONObject;
-
+import java.io.Serializable;
 import java.util.List;
 
 import ru.mos.elk.BaseActivity;
@@ -49,16 +36,14 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.event.model.Event;
 import ru.mos.polls.innovation.model.Innovation;
-import ru.mos.polls.social.manager.SocialManager;
+import ru.mos.polls.social.model.AppPostItem;
+import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.model.Error;
 import ru.mos.polls.social.model.Message;
-import ru.mos.polls.social.model.Social;
-import ru.mos.polls.social.model.SocialPostItem;
-import ru.mos.polls.social.model.SocialPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.util.AgTextUtil;
-import ru.ok.android.sdk.Odnoklassniki;
-import ru.ok.android.sdk.OkListener;
+import ru.mos.social.model.Configurator;
 
 /**
  * Инкапсулирует работу с диалогами выбора соц сетей,
@@ -78,9 +63,9 @@ public abstract class SocialUIController {
         public void onReceive(Context context, Intent intent) {
             Exception postingException
                     = (Exception) intent.getSerializableExtra(EXTRA_POSTING_EXCEPTION);
-            SocialPostValue socialPostValue
-                    = (SocialPostValue) intent.getSerializableExtra(EXTRA_POSTED_VALUE);
-            showPostingResult(context, socialPostValue, postingException);
+            AppPostValue appPostValue
+                    = (AppPostValue) intent.getSerializableExtra(EXTRA_POSTED_VALUE);
+            showPostingResult(context, appPostValue, postingException);
         }
     };
 
@@ -111,7 +96,7 @@ public abstract class SocialUIController {
     public static void showSocialsDialog(final BaseActivity activity, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
-            public void onLoaded(List<SocialPostItem> socialPostItems) {
+            public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
                     createDialog(activity, socialPostItems, false, clickListener)
                             .show();
@@ -124,7 +109,7 @@ public abstract class SocialUIController {
     public static void showSocialsDialogForNovelty(final BaseActivity activity, Innovation innovation, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
-            public void onLoaded(List<SocialPostItem> socialPostItems) {
+            public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
                     createDialog(activity, socialPostItems, false, clickListener)
                             .show();
@@ -137,7 +122,7 @@ public abstract class SocialUIController {
     public static void showSocialsDialogForAchievement(final BaseActivity activity, String achievementId, final boolean isNeedCloseActivity, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
-            public void onLoaded(List<SocialPostItem> socialPostItems) {
+            public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
                     createDialog(activity, socialPostItems, isNeedCloseActivity, clickListener)
                             .show();
@@ -157,7 +142,7 @@ public abstract class SocialUIController {
     public static void showSocialsDialogForPoll(final BaseActivity activity, Survey survey, final boolean isNeedCloseActivity, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
-            public void onLoaded(List<SocialPostItem> socialPostItems) {
+            public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
                     createDialog(activity, socialPostItems, isNeedCloseActivity, clickListener)
                             .show();
@@ -176,7 +161,7 @@ public abstract class SocialUIController {
     public static void showSocialsDialogForEvent(final BaseActivity activity, Event event, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
-            public void onLoaded(List<SocialPostItem> socialPostItems) {
+            public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
                     createDialog(activity, socialPostItems, false, clickListener)
                             .show();
@@ -190,12 +175,12 @@ public abstract class SocialUIController {
      * Отображение списка социальных сетей для постинга результатов опроса или чекина
      *
      * @param activity
-     * @param socialPostValue
+     * @param appPostValue
      * @param clickListener
      */
-    public static void showSocialsDialog(BaseActivity activity, SocialPostValue socialPostValue, boolean isNeedCancelActivity, SocialClickListener clickListener) {
-        List<SocialPostItem> socialPostItems = SocialPostItem.createItems(activity, socialPostValue);
-        createDialog(activity, socialPostItems, isNeedCancelActivity, clickListener)
+    public static void showSocialsDialog(BaseActivity activity, AppPostValue appPostValue, boolean isNeedCancelActivity, SocialClickListener clickListener) {
+        List<AppPostItem> appPostItems = AppPostItem.createItems(activity, appPostValue);
+        createDialog(activity, appPostItems, isNeedCancelActivity, clickListener)
                 .show();
     }
 
@@ -203,10 +188,10 @@ public abstract class SocialUIController {
      * Отображения диалога для редактирвоания текста постинга
      *
      * @param context
-     * @param socialPostValue данные для постинга
+     * @param appPostValue данные для постинга
      * @param listener        callback для моента окончания редактирования текста
      */
-    public static void showEditSocialDialog(final Context context, final SocialPostValue socialPostValue, final EditSocialListener listener) {
+    public static void showEditSocialDialog(final Context context, final AppPostValue appPostValue, final EditSocialListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, R.style.StackedAlertDialogStyle);
@@ -215,33 +200,33 @@ public abstract class SocialUIController {
         View innerView = View.inflate(context, R.layout.layout_posting_dialog, null);
         final TextView message = (TextView) innerView.findViewById(R.id.message);
         final TextView warning = (TextView) innerView.findViewById(R.id.warning);
-        if (socialPostValue.forTwitter() && socialPostValue.isPostMuchLong()) {
-            socialPostValue.setText(AgTextUtil.stripLengthText(socialPostValue.getText(),
-                    SocialPostValue.MAX_TWEET_POST_LENGTH - 3));
+        if (appPostValue.forTwitter() && appPostValue.isPostMuchLong()) {
+            appPostValue.setText(AgTextUtil.stripLengthText(appPostValue.getText(),
+                    AppPostValue.MAX_TWEET_POST_LENGTH - 3));
         }
-        String post = String.format(context.getString(R.string.public_text), socialPostValue.getText());
-        if (!socialPostValue.isEnable()) {
-            post = String.format(context.getString(R.string.you_share_yet), socialPostValue.getText());
-            if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
-                post = String.format(context.getString(R.string.you_share_yet_without), socialPostValue.getText());
+        String post = String.format(context.getString(R.string.public_text), appPostValue.getText());
+        if (!appPostValue.isEnable()) {
+            post = String.format(context.getString(R.string.you_share_yet), appPostValue.getText());
+            if (appPostValue.getType() == AppPostValue.Type.ACHIEVEMENT) {
+                post = String.format(context.getString(R.string.you_share_yet_without), appPostValue.getText());
             }
         }
         message.setText(post);
-        if ((socialPostValue.forTwitter() || socialPostValue.forOk()) && socialPostValue.isPostMuchLong()) {
+        if ((appPostValue.forTwitter() || appPostValue.forOk()) && appPostValue.isPostMuchLong()) {
             warning.setVisibility(View.VISIBLE);
-            warning.setText(socialPostValue.getWarningTitle(context));
+            warning.setText(appPostValue.getWarningTitle(context));
         }
         dialog.setView(innerView);
         /**
          * Скрываем кнопку продолжить, если постим для твиттера и сообщение слишком длинное
          */
-        if (!((socialPostValue.forTwitter() || socialPostValue.forOk()) && socialPostValue.isPostMuchLong())) {
+        if (!((appPostValue.forTwitter() || appPostValue.forOk()) && appPostValue.isPostMuchLong())) {
             dialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.next), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (listener != null) {
-                        processBeforeStatistics(socialPostValue);
-                        listener.onComplete(socialPostValue);
+                        processBeforeStatistics(appPostValue);
+                        listener.onComplete(appPostValue);
                     }
                 }
             });
@@ -257,7 +242,7 @@ public abstract class SocialUIController {
                 final EditText inputEditText = (EditText) innerView.findViewById(R.id.postText);
                 final TextView symbols = (TextView) innerView.findViewById(R.id.symbols);
                 int visibility = View.GONE;
-                if (socialPostValue.forOk() || socialPostValue.forTwitter()) {
+                if (appPostValue.forOk() || appPostValue.forTwitter()) {
                     visibility = View.VISIBLE;
                 }
                 symbols.setVisibility(visibility);
@@ -272,31 +257,31 @@ public abstract class SocialUIController {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        String value = String.format(context.getString(R.string.count_symbols), s.toString().length(), socialPostValue.getMaxSymbolsInPost());
+                        String value = String.format(context.getString(R.string.count_symbols), String.valueOf(s.toString().length()), String.valueOf(appPostValue.getMaxSymbolsInPost()));
                         symbols.setText(value);
                         int color = R.color.greyHint;
-                        if (s.toString().length() > socialPostValue.getMaxSymbolsInPost()) {
+                        if (s.toString().length() > appPostValue.getMaxSymbolsInPost()) {
                             color = R.color.ag_red;
                         }
                         symbols.setTextColor(context.getResources().getColor(color));
                     }
                 });
-                inputEditText.setText(socialPostValue.getText());
+                inputEditText.setText(appPostValue.getText());
                 builder.setView(innerView);
                 builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String value = inputEditText.getText().toString().trim();
                         hideKeyboard(inputEditText);
-                        socialPostValue.setText(value);
-                        showEditSocialDialog(context, socialPostValue, listener);
+                        appPostValue.setText(value);
+                        showEditSocialDialog(context, appPostValue, listener);
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hideKeyboard(inputEditText);
-                        showEditSocialDialog(context, socialPostValue, listener);
+                        showEditSocialDialog(context, appPostValue, listener);
                     }
                 });
                 final AlertDialog d = builder.create();
@@ -312,7 +297,7 @@ public abstract class SocialUIController {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         hideKeyboard(inputEditText);
-                        showEditSocialDialog(context, socialPostValue, listener);
+                        showEditSocialDialog(context, appPostValue, listener);
                     }
                 });
                 d.setCanceledOnTouchOutside(true);
@@ -345,7 +330,7 @@ public abstract class SocialUIController {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void showWarningSocialDialogForFb(final Context context, final SocialPostValue socialPostValue, final EditSocialListener listener) {
+    public static void showWarningSocialDialogForFb(final Context context, final AppPostValue appPostValue, final EditSocialListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, R.style.StackedAlertDialogStyle);
@@ -355,11 +340,11 @@ public abstract class SocialUIController {
         final TextView message = (TextView) innerView.findViewById(R.id.message);
         final TextView warning = (TextView) innerView.findViewById(R.id.warning);
         warning.setVisibility(View.GONE);
-        String post = String.format(context.getString(R.string.public_text), socialPostValue.getText());
-        if (!socialPostValue.isEnable()) {
-            post = String.format(context.getString(R.string.you_share_yet), socialPostValue.getText());
-            if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
-                post = String.format(context.getString(R.string.you_share_yet_without), socialPostValue.getText());
+        String post = String.format(context.getString(R.string.public_text), appPostValue.getText());
+        if (!appPostValue.isEnable()) {
+            post = String.format(context.getString(R.string.you_share_yet), appPostValue.getText());
+            if (appPostValue.getType() == AppPostValue.Type.ACHIEVEMENT) {
+                post = String.format(context.getString(R.string.you_share_yet_without), appPostValue.getText());
             }
         }
         message.setText(post);
@@ -369,8 +354,8 @@ public abstract class SocialUIController {
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.next), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                processBeforeStatistics(socialPostValue);
-                showEditSocialDialogForFb(context, socialPostValue, listener);
+                processBeforeStatistics(appPostValue);
+                showEditSocialDialogForFb(context, appPostValue, listener);
             }
         });
 
@@ -392,7 +377,7 @@ public abstract class SocialUIController {
         }
     }
 
-    public static void showEditSocialDialogForFb(final Context context, final SocialPostValue socialPostValue, final EditSocialListener listener) {
+    public static void showEditSocialDialogForFb(final Context context, final AppPostValue appPostValue, final EditSocialListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, R.style.StackedAlertDialogStyle);
@@ -401,7 +386,7 @@ public abstract class SocialUIController {
         final EditText inputEditText = (EditText) innerView.findViewById(R.id.postText);
         final TextView hint = (TextView) innerView.findViewById(R.id.hint);
         innerView.findViewById(R.id.symbols).setVisibility(View.GONE);
-        hint.setText(socialPostValue.getText());
+        hint.setText(appPostValue.getText());
         hint.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -429,15 +414,15 @@ public abstract class SocialUIController {
                 String value = inputEditText.getText().toString().trim();
                 if (TextUtils.isEmpty(value)) {
                     hideKeyboard(context, inputEditText);
-                    showEditSocialDialogForFb(context, socialPostValue, listener);
+                    showEditSocialDialogForFb(context, appPostValue, listener);
                     Toast.makeText(context, context.getString(R.string.empty_post_text), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 hideKeyboard(context, inputEditText);
-                socialPostValue.setText(value);
+                appPostValue.setText(value);
                 if (listener != null) {
-                    processBeforeStatistics(socialPostValue);
-                    listener.onComplete(socialPostValue);
+                    processBeforeStatistics(appPostValue);
+                    listener.onComplete(appPostValue);
                 }
 
             }
@@ -470,9 +455,9 @@ public abstract class SocialUIController {
     }
 
 
-    public static void sendPostingResult(Context context, SocialPostValue socialPostValue, Exception postingException) {
+    public static void sendPostingResult(Context context, AppPostValue appPostValue, Exception postingException) {
         Intent intent = new Intent(ACTION_POSTING_COMPLETE);
-        intent.putExtra(EXTRA_POSTED_VALUE, socialPostValue);
+        intent.putExtra(EXTRA_POSTED_VALUE, (Serializable) appPostValue);
         intent.putExtra(EXTRA_POSTING_EXCEPTION, postingException);
         context.sendBroadcast(intent);
     }
@@ -481,124 +466,124 @@ public abstract class SocialUIController {
      * Обработка результатов постинга
      *
      * @param context
-     * @param socialPostValue  данные, которые запостили
+     * @param appPostValue  данные, которые запостили
      * @param postingException ошибка при постинге
      */
-    public static void showPostingResult(Context context, SocialPostValue socialPostValue, Exception postingException) {
+    public static void showPostingResult(Context context, AppPostValue appPostValue, Exception postingException) {
         boolean isPostingSuccess = postingException == null;
         if (isPostingSuccess) {
-            showPostingSuccessDialog(context, socialPostValue);
+            showPostingSuccessDialog(context, appPostValue);
         } else {
-            showPostingErrorDialog(context, socialPostValue, postingException);
+            showPostingErrorDialog(context, appPostValue, postingException);
         }
-        processAfterStatistics(socialPostValue, isPostingSuccess);
+        processAfterStatistics(appPostValue, isPostingSuccess);
     }
 
-    /**
-     * C версии 1.9.4 механизм постинга в Одноклассники изменился
-     * для публикации использовать {@see <a href="https://apiok.ru/wiki/pages/viewpage.action?pageId=83034148">Виджет для публикации на страницу пользователя из внешних приложений</a>}
-     *
-     * @param elkActivity     текущий контекст
-     * @param socialPostValue данные для постинга
-     */
-    public static void postInOKByWidget(final BaseActivity elkActivity, final SocialPostValue socialPostValue) {
-        final String id = elkActivity.getString(R.string.ok_app_id);
-        final String key = elkActivity.getString(R.string.ok_app_key);
-        final String secret = elkActivity.getString(R.string.ok_app_secret);
-        Odnoklassniki ok = Odnoklassniki.createInstance(elkActivity, id, key);
-        ok.performPosting(
-                socialPostValue.getOkAttachmentsJson().toString(),
-                true,
-                SocialManager.getOauthOkToken(elkActivity),
-                SocialManager.getOauthOkSessionSecretToken(elkActivity),
-                new OkListener() {
+//    /**
+//     * C версии 1.9.4 механизм постинга в Одноклассники изменился
+//     * для публикации использовать {@see <a href="https://apiok.ru/wiki/pages/viewpage.action?pageId=83034148">Виджет для публикации на страницу пользователя из внешних приложений</a>}
+//     *
+//     * @param elkActivity     текущий контекст
+//     * @param appPostValue данные для постинга
+//     */
+//    public static void postInOKByWidget(final BaseActivity elkActivity, final AppPostValue appPostValue) {
+//        final String id = elkActivity.getString(R.string.ok_app_id);
+//        final String key = elkActivity.getString(R.string.ok_app_key);
+//        final String secret = elkActivity.getString(R.string.ok_app_secret);
+//        Odnoklassniki ok = Odnoklassniki.createInstance(elkActivity, id, key);
+//        ok.performPosting(
+//                appPostValue.getOkAttachmentsJson().toString(),
+//                true,
+//                SocialManager.getOauthOkToken(elkActivity),
+//                SocialManager.getOauthOkSessionSecretToken(elkActivity),
+//                new OkListener() {
+//
+//
+//                    @Override
+//                    public void onSuccess(JSONObject json) {
+//                        Log.d(SocialManager.POSTING_RESULT, json.toString());
+//                        SocialUIController.showPostingResult(elkActivity, appPostValue, null);
+//                    }
+//
+//                    @Override
+//                    public void onError(String error) {
+//                        Log.e(Error.POSTING_ERROR, error);
+//                        if (!Error.Ok.OPERATION_WAS_CANCELED_BY_USER.equals(error)) {
+//                            SocialUIController.showPostingErrorDialog(elkActivity, appPostValue, error);
+//                        }
+//                    }
+//                });
+//    }
 
+//    public static void postInTweeter(final BaseActivity baseActivity, final AppPostValue appPostValue) {
+//        try {
+//            TwitterCore.getInstance().getApiClient().getStatusesService().update(appPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
+//                @Override
+//                public void success(Result<Tweet> result) {
+//                    Log.d("TW_SUCCESS", result.data.text);
+//                    SocialUIController.showPostingResult(baseActivity, appPostValue, null);
+//                }
+//
+//                @Override
+//                public void failure(TwitterException e) {
+//                    Log.e(Error.POSTING_ERROR, e.getMessage());
+//                    SocialUIController.showPostingResult(baseActivity, appPostValue, new Exception(AgTextUtil.stripNonDigits(e.getMessage())));
+//                }
+//            });
+//        } catch (Exception e) {
+//            Log.e(Error.POSTING_ERROR, e.getMessage());
+//            clearAndUnbindSocial(baseActivity, AppSocial.ID_TW);
+//            AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
+//            builder.setMessage(R.string.error_expired_access_token)
+//                    .setPositiveButton(R.string.ag_ok, null).show();
+//        }
+//    }
 
-                    @Override
-                    public void onSuccess(JSONObject json) {
-                        Log.d(SocialManager.POSTING_RESULT, json.toString());
-                        SocialUIController.showPostingResult(elkActivity, socialPostValue, null);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.e(Error.POSTING_ERROR, error);
-                        if (!Error.Ok.OPERATION_WAS_CANCELED_BY_USER.equals(error)) {
-                            SocialUIController.showPostingErrorDialog(elkActivity, socialPostValue, error);
-                        }
-                    }
-                });
-    }
-
-    public static void postInTweeter(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
-        try {
-            TwitterCore.getInstance().getApiClient().getStatusesService().update(socialPostValue.prepareTwPost(), null, null, null, null, null, null, null, new Callback<Tweet>() {
-                @Override
-                public void success(Result<Tweet> result) {
-                    Log.d("TW_SUCCESS", result.data.text);
-                    SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
-                }
-
-                @Override
-                public void failure(TwitterException e) {
-                    Log.e(Error.POSTING_ERROR, e.getMessage());
-                    SocialUIController.showPostingResult(baseActivity, socialPostValue, new Exception(AgTextUtil.stripNonDigits(e.getMessage())));
-                }
-            });
-        } catch (Exception e) {
-            Log.e(Error.POSTING_ERROR, e.getMessage());
-            clearAndUnbindSocial(baseActivity, SocialManager.SOCIAL_ID_TW);
-            AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
-            builder.setMessage(R.string.error_expired_access_token)
-                    .setPositiveButton(R.string.ag_ok, null).show();
-        }
-    }
-
-    public static void postInVk(final BaseActivity baseActivity, final SocialPostValue socialPostValue) {
-        VKParameters vkParameters = VKParameters.from(
-                VKApiConst.ACCESS_TOKEN, SocialManager.getAccessToken(baseActivity, SocialManager.SOCIAL_ID_VK),
-                VKApiConst.MESSAGE, socialPostValue.getText(),
-                VKApiConst.ATTACHMENTS, socialPostValue.getLink());
-        VKRequest request = VKApi.wall().post(vkParameters);
-        VKRequest.VKRequestListener vkRequestListener = new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                Log.d(SocialManager.POSTING_RESULT, response.toString());
-                SocialUIController.showPostingResult(baseActivity, socialPostValue, null);
-            }
-
-            @Override
-            public void onError(VKError error) {
-                super.onError(error);
-                int errorCode = error.apiError.errorCode;
-                Log.e(Error.POSTING_ERROR, error.apiError.toString());
-                SocialUIController.showPostingResult(baseActivity,
-                        socialPostValue,
-                        new Exception(String.valueOf(errorCode)));
-            }
-        };
-        request.executeWithListener(vkRequestListener);
-    }
+//    public static void postInVk(final BaseActivity baseActivity, final AppPostValue appPostValue) {
+//        VKParameters vkParameters = VKParameters.from(
+//                VKApiConst.ACCESS_TOKEN, SocialManager.getAccessToken(baseActivity, AppSocial.ID_VK),
+//                VKApiConst.MESSAGE, appPostValue.getText(),
+//                VKApiConst.ATTACHMENTS, appPostValue.getLink());
+//        VKRequest request = VKApi.wall().post(vkParameters);
+//        VKRequest.VKRequestListener vkRequestListener = new VKRequest.VKRequestListener() {
+//            @Override
+//            public void onComplete(VKResponse response) {
+//                Log.d(SocialManager.POSTING_RESULT, response.toString());
+//                SocialUIController.showPostingResult(baseActivity, appPostValue, null);
+//            }
+//
+//            @Override
+//            public void onError(VKError error) {
+//                super.onError(error);
+//                int errorCode = error.apiError.errorCode;
+//                Log.e(Error.POSTING_ERROR, error.apiError.toString());
+//                SocialUIController.showPostingResult(baseActivity,
+//                        appPostValue,
+//                        new Exception(String.valueOf(errorCode)));
+//            }
+//        };
+//        request.executeWithListener(vkRequestListener);
+//    }
 
     /**
      * Отправка статистики
      *
-     * @param socialPostValue
+     * @param appPostValue
      */
-    private static void processBeforeStatistics(SocialPostValue socialPostValue) {
+    private static void processBeforeStatistics(AppPostValue appPostValue) {
         try {
-            if (socialPostValue.getType() == SocialPostValue.Type.CHECK_IN) {
-                Statistics.beforeSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-                GoogleStatistics.SocialSharing.beforeSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-            } else if (socialPostValue.getType() == SocialPostValue.Type.POLL) {
-                Statistics.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-                GoogleStatistics.SocialSharing.beforeSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-            } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
-                Statistics.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-                GoogleStatistics.SocialSharing.beforeSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-            } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
-                Statistics.beforeSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
-                GoogleStatistics.SocialSharing.beforeSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString());
+            if (appPostValue.getType() == AppPostValue.Type.CHECK_IN) {
+                Statistics.beforeSocialEventSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialEventSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+            } else if (appPostValue.getType() == AppPostValue.Type.POLL) {
+                Statistics.beforeSocialSurveySharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialSurveySharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+            } else if (appPostValue.getType() == AppPostValue.Type.NOVELTY) {
+                Statistics.beforeSocialInnovationSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialInnovationSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+            } else if (appPostValue.getType() == AppPostValue.Type.ACHIEVEMENT) {
+                Statistics.beforeSocialAchivementSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
+                GoogleStatistics.SocialSharing.beforeSocialAchivementSharing(appPostValue.getSocialName(), appPostValue.getId().toString());
             }
         } catch (Exception ignored) {
         }
@@ -607,21 +592,21 @@ public abstract class SocialUIController {
     /**
      * Отправка статистики
      *
-     * @param socialPostValue
+     * @param appPostValue
      */
-    private static void processAfterStatistics(SocialPostValue socialPostValue, boolean isSuccess) {
-        if (socialPostValue.getType() == SocialPostValue.Type.CHECK_IN) {
-            Statistics.afterSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-            GoogleStatistics.SocialSharing.afterSocialEventSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-        } else if (socialPostValue.getType() == SocialPostValue.Type.POLL) {
-            Statistics.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-            GoogleStatistics.SocialSharing.afterSocialSurveySharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-        } else if (socialPostValue.getType() == SocialPostValue.Type.NOVELTY) {
-            Statistics.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-            GoogleStatistics.SocialSharing.afterSocialInnovationSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-        } else if (socialPostValue.getType() == SocialPostValue.Type.ACHIEVEMENT) {
-            Statistics.afterSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
-            GoogleStatistics.SocialSharing.afterSocialAchivementSharing(socialPostValue.getSocialName(), socialPostValue.getId().toString(), isSuccess);
+    private static void processAfterStatistics(AppPostValue appPostValue, boolean isSuccess) {
+        if (appPostValue.getType() == AppPostValue.Type.CHECK_IN) {
+            Statistics.afterSocialEventSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialEventSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+        } else if (appPostValue.getType() == AppPostValue.Type.POLL) {
+            Statistics.afterSocialSurveySharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialSurveySharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+        } else if (appPostValue.getType() == AppPostValue.Type.NOVELTY) {
+            Statistics.afterSocialInnovationSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialInnovationSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+        } else if (appPostValue.getType() == AppPostValue.Type.ACHIEVEMENT) {
+            Statistics.afterSocialAchivementSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
+            GoogleStatistics.SocialSharing.afterSocialAchivementSharing(appPostValue.getSocialName(), appPostValue.getId().toString(), isSuccess);
         }
     }
 
@@ -629,10 +614,10 @@ public abstract class SocialUIController {
      * Успешно выполнили пост
      *
      * @param context         не elk ActionBarActivity, из broadcast receiver
-     * @param socialPostValue данные, которые успешно заполстили
+     * @param appPostValue данные, которые успешно заполстили
      */
-    public static void showPostingSuccessDialog(final Context context, final SocialPostValue socialPostValue) {
-        if (socialPostValue.isEnable() && socialPostValue.isMustServerNotified()) {
+    public static void showPostingSuccessDialog(final Context context, final AppPostValue appPostValue) {
+        if (appPostValue.isEnable() && appPostValue.isMustServerNotified()) {
             AgSocialApiController.PostingNotifyListener listener = new AgSocialApiController.PostingNotifyListener() {
                 @Override
                 public void onNotified(Message customMessage) {
@@ -652,7 +637,7 @@ public abstract class SocialUIController {
                     showSimpleDialog(context, message);
                 }
             };
-            AgSocialApiController.notifyAboutPosting(context, socialPostValue, listener);
+            AgSocialApiController.notifyAboutPosting(context, appPostValue, listener);
         } else {
             /**
              * если оповещать сервер АГ не требуется,
@@ -663,11 +648,11 @@ public abstract class SocialUIController {
         }
     }
 
-    public static void showPostingErrorDialog(Context context, SocialPostValue socialPostValue, String error) {
+    public static void showPostingErrorDialog(Context context, AppPostValue appPostValue, String error) {
         String message = context.getString(R.string.error_in_posting);
         if (Error.Ok.SESSION_IS_EXPIRED.equalsIgnoreCase(error)) {
             message = context.getString(R.string.error_validating_access_token);
-            clearAndUnbindSocial(context, socialPostValue);
+            clearAndUnbindSocial(context, appPostValue);
         }
         showSimpleDialog(context, message);
     }
@@ -676,11 +661,11 @@ public abstract class SocialUIController {
      * Показывае диалог ошибки постинга
      *
      * @param context
-     * @param socialPostValue  данные, которые запостили
+     * @param appPostValue  данные, которые запостили
      * @param postingExсeption ошибка постинга
      */
-    private static void showPostingErrorDialog(Context context, SocialPostValue socialPostValue, Exception postingExсeption) {
-        String message = processErrorMessage(context, socialPostValue.getSocialId(), postingExсeption);
+    private static void showPostingErrorDialog(Context context, AppPostValue appPostValue, Exception postingExсeption) {
+        String message = processErrorMessage(context, appPostValue.getSocialId(), postingExсeption);
         showSimpleDialog(context, message);
     }
 
@@ -702,7 +687,7 @@ public abstract class SocialUIController {
                 Log.e(Error.POSTING_ERROR, ignored.getMessage());
             }
             switch (socialId) {
-                case SocialManager.SOCIAL_ID_FB:
+                case AppSocial.ID_FB:
                     switch (errorCode) {
                         case Error.Facebook.DUPLICATE_STATUS_MESSAGE:
                             result = context.getString(R.string.status_message_is_a_duplicate);
@@ -724,14 +709,14 @@ public abstract class SocialUIController {
                             break;
                     }
                     break;
-                case SocialManager.SOCIAL_ID_TW:
+                case AppSocial.ID_TW:
                     switch (errorCode) {
                         case Error.Twitter.STATUS_MESSAGE_IS_A_DUPLICATE:
                             result = context.getString(R.string.status_message_is_a_duplicate);
                             break;
                     }
                     break;
-                case SocialManager.SOCIAL_ID_VK:
+                case AppSocial.ID_VK:
                     switch (errorCode) {
                         case Error.Vk.ERROR_AUTH_FAILED:
                             result = context.getString(R.string.error_validating_access_token);
@@ -743,7 +728,7 @@ public abstract class SocialUIController {
                             break;
                     }
                     break;
-                case SocialManager.SOCIAL_ID_OK:
+                case AppSocial.ID_OK:
                     switch (errorCode) {
                         case Error.Ok.ERROR_SESSION_EXPIRED:
                             result = context.getString(R.string.error_validating_access_token);
@@ -759,14 +744,14 @@ public abstract class SocialUIController {
         return result;
     }
 
-    public static void clearAndUnbindSocial(Context context, SocialPostValue socialPostValue) {
-        clearAndUnbindSocial(context, socialPostValue.getSocialId());
+    public static void clearAndUnbindSocial(Context context, AppPostValue appPostValue) {
+        clearAndUnbindSocial(context, appPostValue.getSocialId());
     }
 
     private static void clearAndUnbindSocial(Context context, int socialId) {
-        SocialManager.clearAuth(context, socialId);
+        Configurator.getInstance(context).getStorable().clear(socialId);
         if (context instanceof BaseActivity) {
-            Social social = Social.fromPreference(context, socialId);
+            AppSocial social = AppSocial.fromPreference(context, socialId);
             AgSocialApiController.unbindSocialFromAg((BaseActivity) context, social, null);
         }
     }
@@ -792,11 +777,11 @@ public abstract class SocialUIController {
      * Создание и отображение даилога списка
      *
      * @param activity
-     * @param socialPostItems
+     * @param appPostItems
      * @param clickListener
      */
     private static Dialog createDialog(final BaseActivity activity,
-                                       List<SocialPostItem> socialPostItems,
+                                       List<AppPostItem> appPostItems,
                                        final boolean isNeedCancelActivity,
                                        final SocialClickListener clickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -810,7 +795,7 @@ public abstract class SocialUIController {
         });
         builder.setCancelable(false);
         AlertDialog result = builder.create();
-        View view = getView(activity, result, socialPostItems, clickListener);
+        View view = getView(activity, result, appPostItems, clickListener);
         result.setView(view);
         return result;
     }
@@ -820,24 +805,24 @@ public abstract class SocialUIController {
      *
      * @param activity
      * @param dialog          текущий диалог, к на котором отображаем список соц сетей
-     * @param socialPostItems данные для постинга
+     * @param appPostItems данные для постинга
      * @param clickListener   callback выбора соц сети
      * @return
      */
     private static View getView(BaseActivity activity,
                                 Dialog dialog,
-                                List<SocialPostItem> socialPostItems,
+                                List<AppPostItem> appPostItems,
                                 SocialClickListener clickListener) {
         View view = activity.getLayoutInflater().inflate(R.layout.layout_social_list, null);
         /**
          * Список социальных сетей
          */
         ListView socialList = (ListView) view.findViewById(R.id.socialList);
-        SocialItemAdapter adapter = new SocialItemAdapter(activity, dialog, socialPostItems);
+        SocialItemAdapter adapter = new SocialItemAdapter(activity, dialog, appPostItems);
         if (socialAdapterHolder != null) {
             socialAdapterHolder
                     .setSocialAdapter(adapter)
-                    .setSocialPostItems(socialPostItems);
+                    .setAppPostItems(appPostItems);
         }
         adapter.setListener(clickListener);
         socialList.setAdapter(adapter);
@@ -847,21 +832,21 @@ public abstract class SocialUIController {
         TextView socialHint = (TextView) view.findViewById(R.id.socialHint);
         int visibility = View.GONE;
         String hint = activity.getString(R.string.social_text_hint_task);
-        if (socialPostItems != null && socialPostItems.size() > 0) {
-            SocialPostItem socialPostItem = socialPostItems.get(0);
-            SocialPostValue socialPostValue = socialPostItem.getSocialPostValue();
-            if (socialPostValue.isForPoll()) {
+        if (appPostItems != null && appPostItems.size() > 0) {
+            AppPostItem appPostItem = appPostItems.get(0);
+            AppPostValue appPostValue = appPostItem.getAppPostValue();
+            if (appPostValue.isForPoll()) {
                 hint = String.format(activity.getString(R.string.social_text_hint),
                         activity.getString(R.string.social_hint_value_for_poll));
-            } else if (socialPostValue.isForHearing()) {
+            } else if (appPostValue.isForHearing()) {
                 hint = String.format(activity.getString(R.string.social_text_hint),
                         activity.getString(R.string.social_hint_value_for_hearing));
-            } else if (socialPostValue.isForCheckIn()) {
+            } else if (appPostValue.isForCheckIn()) {
                 hint = String.format(activity.getString(R.string.social_text_hint),
                         activity.getString(R.string.social_hint_value_event));
-            } else if (socialPostValue.isForAchievement()) {
+            } else if (appPostValue.isForAchievement()) {
                 hint = activity.getString(R.string.social_hint_for_achievement);
-            } else if (socialPostValue.isForNovelty()) {
+            } else if (appPostValue.isForNovelty()) {
                 hint = String.format(activity.getString(R.string.social_text_hint),
                         activity.getString(R.string.social_hint_value_for_poll));
             }
@@ -875,11 +860,11 @@ public abstract class SocialUIController {
     /**
      * Адаптер для списка социальных сетей
      */
-    private static class SocialItemAdapter extends ArrayAdapter<SocialPostItem> {
+    private static class SocialItemAdapter extends ArrayAdapter<AppPostItem> {
         private SocialClickListener listener;
         private Dialog dialog;
 
-        public SocialItemAdapter(Context context, Dialog dialog, List<SocialPostItem> objects) {
+        public SocialItemAdapter(Context context, Dialog dialog, List<AppPostItem> objects) {
             super(context, R.layout.item_social, objects);
             this.dialog = dialog;
         }
@@ -905,9 +890,9 @@ public abstract class SocialUIController {
          * @param view
          * @param item объект пункта
          */
-        private void displayIcon(View view, SocialPostItem item) {
+        private void displayIcon(View view, AppPostItem item) {
             ImageView icon = (ImageView) view.findViewById(R.id.icon);
-            SocialPostValue value = item.getSocialPostValue();
+            AppPostValue value = item.getAppPostValue();
             int resId = value.isEnable() ? item.getResourceId() : item.getResourceDisableId();
             icon.setImageResource(resId);
         }
@@ -918,7 +903,7 @@ public abstract class SocialUIController {
          * @param view
          * @param item объект пункта
          */
-        private void displayTitle(View view, SocialPostItem item) {
+        private void displayTitle(View view, AppPostItem item) {
             TextView title = (TextView) view.findViewById(R.id.social);
             title.setText(item.getTitle());
         }
@@ -929,14 +914,14 @@ public abstract class SocialUIController {
          * @param view
          * @param item
          */
-        private void setOnClickListener(View view, final SocialPostItem item) {
+        private void setOnClickListener(View view, final AppPostItem item) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        SocialPostValue socialPostValue = item.getSocialPostValue();
-                        socialPostValue.setTitle(item.getTitle());
-                        listener.onClick(getContext(), dialog, socialPostValue);
+                        AppPostValue appPostValue = item.getAppPostValue();
+                        appPostValue.setTitle(item.getTitle());
+                        listener.onClick(getContext(), dialog, appPostValue);
                     }
                 }
             });
@@ -949,11 +934,11 @@ public abstract class SocialUIController {
      * заблокировав пункты меню, в которые постинг уже совершили
      */
     public static class SocialAdapterHolder {
-        private List<SocialPostItem> socialPostItems;
+        private List<AppPostItem> appPostItems;
         private ArrayAdapter socialAdapter;
 
-        public SocialAdapterHolder setSocialPostItems(List<SocialPostItem> socialPostItems) {
-            this.socialPostItems = socialPostItems;
+        public SocialAdapterHolder setAppPostItems(List<AppPostItem> appPostItems) {
+            this.appPostItems = appPostItems;
             return this;
         }
 
@@ -965,13 +950,13 @@ public abstract class SocialUIController {
         /**
          * Обновление списка социальных сетей
          *
-         * @param changedSocialPostValue данные, которые были запощены
+         * @param changedAppPostValue данные, которые были запощены
          */
-        public void refreshSocialListView(SocialPostValue changedSocialPostValue) {
-            if (socialAdapter != null && socialPostItems != null && changedSocialPostValue != null) {
-                for (SocialPostItem socialPostItem : socialPostItems) {
-                    if (socialPostItem.getSocialPostValue().getSocialId() == changedSocialPostValue.getSocialId()) {
-                        socialPostItem.getSocialPostValue().setEnable(changedSocialPostValue.isEnable());
+        public void refreshSocialListView(AppPostValue changedAppPostValue) {
+            if (socialAdapter != null && appPostItems != null && changedAppPostValue != null) {
+                for (AppPostItem appPostItem : appPostItems) {
+                    if (appPostItem.getAppPostValue().getSocialId() == changedAppPostValue.getSocialId()) {
+                        appPostItem.getAppPostValue().setEnable(changedAppPostValue.isEnable());
                     }
                 }
                 socialAdapter.notifyDataSetChanged();
@@ -988,9 +973,9 @@ public abstract class SocialUIController {
          *
          * @param context         текущий контекст
          * @param dialog          текущий даилог (требуется, чтобы закрыть или что-то сделать с диалогом)
-         * @param socialPostValue данные для постинга
+         * @param appPostValue данные для постинга
          */
-        void onClick(Context context, Dialog dialog, SocialPostValue socialPostValue);
+        void onClick(Context context, Dialog dialog, AppPostValue appPostValue);
 
         void onCancel();
     }
@@ -999,6 +984,6 @@ public abstract class SocialUIController {
      * callback редактирования текста для постинга
      */
     public interface EditSocialListener {
-        void onComplete(SocialPostValue socialPostValue);
+        void onComplete(AppPostValue appPostValue);
     }
 }

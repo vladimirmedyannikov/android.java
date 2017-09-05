@@ -10,6 +10,7 @@
 
         <LinearLayout
             style="@style/item.linear"
+            android:paddingTop="@dimen/pd_xxlarge"
             android:gravity="center_horizontal">
 
             <LinearLayout

@@ -2,7 +2,7 @@
 <ru.mos.polls.controls.CheckableRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:layout_height="wrap_content"
     android:addStatesFromChildren="true"
     android:background="@drawable/selector_menu_item_background">
 
@@ -20,7 +20,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_margin="@dimen/pd_xsmall"
+        android:layout_margin="@dimen/pd_xxsmall"
         android:background="@drawable/selector_menu_bage_background"
         android:checkMark="@null"
         android:paddingLeft="@dimen/pd_xxsmall"

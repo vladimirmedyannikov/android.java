@@ -756,6 +756,7 @@
     <string name="tutorial_cancel">Завершить</string>
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
+    <string name="ag_agree_with_offer">Отправляя свой номер вы соглашаетесь с</string>
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>

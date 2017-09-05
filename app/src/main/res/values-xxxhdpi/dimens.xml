@@ -22,35 +22,33 @@
     <dimen name="thick_separator">2dp</dimen>
 
     <!-- padding size !-->
-    <dimen name="pd_xxxsmall">5dp</dimen>
-    <dimen name="pd_xxsmall">8dp</dimen>
-    <dimen name="pd_xsmall">12dp</dimen>
-    <dimen name="pd_small">13dp</dimen>
-    <dimen name="pd_xnormal">14dp</dimen>
-    <dimen name="pd_normal">16dp</dimen>
-    <dimen name="pd_xlarge">20dp</dimen>
-    <dimen name="pd_xxlarge">24dp</dimen>
-    <dimen name="pd_xxxlarge">32dp</dimen>
+    <dimen name="pd_xxxsmall">7dp</dimen>
+    <dimen name="pd_xxsmall">10dp</dimen>
+    <dimen name="pd_xsmall">14dp</dimen>
+    <dimen name="pd_small">15dp</dimen>
+    <dimen name="pd_xnormal">16dp</dimen>
+    <dimen name="pd_normal">18dp</dimen>
+    <dimen name="pd_xlarge">22dp</dimen>
+    <dimen name="pd_xxlarge">26dp</dimen>
+    <dimen name="pd_xxxlarge">34dp</dimen>
     <!-- padding size minus !-->
     <dimen name="pd_xnormal_m">-14dp</dimen>
     <dimen name="pd_normal_m">-16dp</dimen>
     <!-- text size !-->
-    <dimen name="ts_xsmall">12sp</dimen>
-    <dimen name="ts_small">14sp</dimen>
-    <dimen name="ts_normal">16sp</dimen>
-    <dimen name="ts_large">18sp</dimen>
-    <dimen name="ts_xlarge">20sp</dimen>
-    <dimen name="ts_xxlarge">22sp</dimen>
-    <dimen name="ts_xxxlarge">32sp</dimen>
-    <dimen name="ts_main_header">50sp</dimen>
+    <dimen name="ts_small">16sp</dimen>
+    <dimen name="ts_normal">18sp</dimen>
+    <dimen name="ts_large">20sp</dimen>
+    <dimen name="ts_xlarge">22sp</dimen>
+    <dimen name="ts_xxlarge">24sp</dimen>
+    <dimen name="ts_main_header">52sp</dimen>
 
     <!-- view size !-->
     <dimen name="vs_xxxsmall">30dp</dimen>
-    <dimen name="vs_xxsmall">50dp</dimen>
+    <dimen name="vs_xxsmall">40dp</dimen>
     <dimen name="vs_xsmall">60dp</dimen>
     <dimen name="vs_small">75dp</dimen>
     <dimen name="vs_normal">100dp</dimen>
-    <dimen name="vs_xnormal">130dp</dimen>
+    <dimen name="vs_xnormal">200dp</dimen>
     <dimen name="vs_large">150dp</dimen>
     <dimen name="vs_xxlarge">200dp</dimen>
     <dimen name="vs_xxxlarge">220dp</dimen>

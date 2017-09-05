@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser"/>
+            type="ru.mos.elk.profile.AgUser" />
     </data>
 
     <LinearLayout
@@ -19,11 +19,11 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/agUser_fi"
-            style="@style/text.xlarge.white"
+            style="@style/text.large.white"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:text="@{agUser.getSurnameAndFirstName()}"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/agUser_registration_date"
@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:hint="активный гражданин с 8 июня 2017"
-            android:text="@{agUser.getRegistrationDate()}"/>
+            android:text="@{agUser.getRegistrationDate()}" />
 
         <RelativeLayout
             android:id="@+id/agUser_achievement_panel"
@@ -48,7 +48,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/agUser_achievement_value"
@@ -60,41 +60,48 @@
                 android:layout_toRightOf="@+id/agUser_achievement_layer"
                 android:hint="+0"
                 android:text="@{agUser.getAchievementsCount()}"
-                android:visibility="@{agUser.count > 0 ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{agUser.count > 0 ? View.VISIBLE : View.GONE}" />
         </RelativeLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/agUser_rating_title"
-            style="@style/text.small.white"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/pd_normal"
-            android:gravity="center_horizontal"
-            android:text="общий рейтинг"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/agUser_rating_value"
-            style="@style/text.large.white"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:hint="50"
-            android:text="@{agUser.getRating()}"
-            android:textSize="@dimen/ts_xxxlarge"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/agUser_rating_title"
+                style="@style/text.small.white"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pd_normal"
+                android:gravity="center_horizontal"
+                android:text="общий рейтинг" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/agUser_status_title"
-            style="@style/text.small.white"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/pd_normal"
-            android:gravity="center_horizontal"
-            android:text="статус"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/agUser_rating_value"
+                style="@style/text.large.white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:hint="50"
+                android:text="@{agUser.getRating()}"
+                android:textSize="@dimen/ts_xxxlarge" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/agUser_status_value"
-            style="@style/text.large.white"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:hint="Новичок"
-            android:text="@{agUser.getStatus()}"
-            android:textSize="@dimen/ts_xxlarge"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/agUser_status_title"
+                style="@style/text.small.white"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pd_normal"
+                android:gravity="center_horizontal"
+                android:text="статус" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/agUser_status_value"
+                style="@style/text.large.white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:hint="Новичок"
+                android:text="@{agUser.getStatus()}"
+                android:textSize="@dimen/ts_xxlarge" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

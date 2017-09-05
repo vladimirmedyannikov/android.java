@@ -41,6 +41,8 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.fragments.PullableFragment;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -372,6 +374,10 @@ public class QuestsFragment extends PullableFragment {
                 if (quest.getId().equalsIgnoreCase("personalWizard")) {
                     listener.onOther("", "");
                     return;
+                }
+                if (quest.getType().equalsIgnoreCase(NewsQuest.TYPE)) {
+                    BadgeManager.markNewsAsReaded(Long.parseLong(quest.getId()));
+                    BadgeManager.uploadReadedNews((BaseActivity) getActivity());
                 }
                 quest.onClick(getActivity(), listener);
                 /**

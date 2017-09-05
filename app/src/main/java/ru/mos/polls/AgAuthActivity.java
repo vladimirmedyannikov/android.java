@@ -9,15 +9,21 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -42,6 +48,7 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
+import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.support.gui.AgSupportActivity;
@@ -51,7 +58,7 @@ import ru.mos.polls.util.GuiUtils;
 
 public class AgAuthActivity extends AuthActivity {
     private static final int SMS_PERMISSION_REQUEST = 9825;
-
+    protected Toolbar toolbar;
     private static final String[] SMS_PERMS = {
             Manifest.permission.RECEIVE_SMS
     };
@@ -59,6 +66,11 @@ public class AgAuthActivity extends AuthActivity {
     private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();
     @BindView(R.id.cbAgreeOffer)
     CheckBox cbAgreeOffer;
+
+    @BindView(R.id.et_code_country)
+    MaskedEditText codeCountry;
+    @BindView(R.id.etLogin)
+    MaskedEditText etLogin;
 
     @OnCheckedChanged(R.id.cbAgreeOffer)
     void offerCheckBox() {
@@ -71,11 +83,43 @@ public class AgAuthActivity extends AuthActivity {
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Ваш телефон");
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.confirm, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_confirm:
+                doRequestAction();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void doRequestAction() {
+        if (checkCodeText() && checkPhoneText()) {
+            onClickLogin(etLogin);
+        } else {
+            Toast.makeText(this, "Введите номер телефона", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     protected void configureEdits() {
-
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
-        offer.setPaintFlags(offer.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-
+        offer.setPaintFlags(offer.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +137,6 @@ public class AgAuthActivity extends AuthActivity {
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));
         }
-
         checkPermissions();
     }
 
@@ -110,11 +153,11 @@ public class AgAuthActivity extends AuthActivity {
             public void onResponse(String response) {
                 dialog.dismiss();
                 finish();
-                AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getText().toString());
+                AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getUnmaskedText());
             }
 
         };
-        Response.ErrorListener errListener = new Response.ErrorListener(){
+        Response.ErrorListener errListener = new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -133,7 +176,7 @@ public class AgAuthActivity extends AuthActivity {
     private JSONObject getQueryParams() {
         JSONObject params = new JSONObject();
         try {
-            params.put("msisdn", "7" + etLogin.getText().toString());
+            params.put("msisdn", codeCountry.getUnmaskedText() + etLogin.getUnmaskedText());
             JSONObject deviceInfo = new JSONObject();
             deviceInfo.put("os", "Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")");
             deviceInfo.put("device", Build.MODEL + " (" + Build.MANUFACTURER + ")");
@@ -141,7 +184,6 @@ public class AgAuthActivity extends AuthActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return params;
     }
 
@@ -167,13 +209,21 @@ public class AgAuthActivity extends AuthActivity {
 
     @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void textChangeListener() {
-        checkForEnable();
+//        checkForEnable();
     }
 
     @OnFocusChange(value = {R.id.etLogin, R.id.etPassword})
     void setFocusListener(boolean hasFocus) {
         if (hasFocus)
             tvError.setVisibility(View.GONE);
+    }
+
+    public boolean checkCodeText() {
+        return codeCountry.getUnmaskedText().length() > 0;
+    }
+
+    public boolean checkPhoneText() {
+        return etLogin.getUnmaskedText().length() == 10;
     }
 
     private void checkForEnable() {
@@ -237,15 +287,15 @@ public class AgAuthActivity extends AuthActivity {
         Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(this));
 
         startFromUri(getIntent());
-        Statistics.auth(etLogin.getText().toString().trim(), true);
-        statistics.auth(etLogin.getText().toString().trim(), true);
+        Statistics.auth(etLogin.getUnmaskedText(), true);
+        statistics.auth(etLogin.getUnmaskedText(), true);
         statistics.check(true);
     }
 
     @Override
     protected void onLoginFault(String errorMessage) {
         super.onLoginFault(errorMessage);
-        Statistics.auth(etLogin.getText().toString().trim(), false);
+        Statistics.auth(etLogin.getUnmaskedText(), false);
         statistics.check(false);
         statistics.errorOccurs(errorMessage);
     }
@@ -266,7 +316,7 @@ public class AgAuthActivity extends AuthActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(AgAuthActivity.this, AgRestoreActivity.class);
-                        intent.putExtra("phone", etLogin.getText());
+                        intent.putExtra("phone", etLogin.getUnmaskedText());
                         startActivityForResult(intent, REQUEST_RESTORE);
                     }
                 }).show();

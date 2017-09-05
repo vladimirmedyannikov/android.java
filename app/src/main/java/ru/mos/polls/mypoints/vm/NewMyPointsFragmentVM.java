@@ -205,7 +205,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
      * Вызывается на экране MyPointsFragment
      */
     protected void processPoints() {
-        tvPoints.setText(String.valueOf(PointsManager.getPoints(getActivity(), currentAction)));
+        tvPoints.setText(String.valueOf(getPointsValue()));
     }
 
     /**
@@ -225,7 +225,6 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
 
     protected void processStatus(String status) {
         if (tvStatus != null) {
-//            String status = PointsManager.getStatus(getActivity());
             if (!TextUtils.isEmpty(status) && !"null".equalsIgnoreCase(status)) {
                 status = String.format(getActivity().getString(R.string.state), status);
                 tvStatus.setText(status);
@@ -243,8 +242,12 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
         }
     }
 
-    private void processPointUnits() {
-        int points = 0;
+    public void processPointUnits() {
+        tvCurrentPointsUnit.setText(PointsManager.getPointUnitString(getActivity(),  getPointsValue()));
+    }
+
+    public int getPointsValue() {
+        int points = status.getCurrentPoints();
         if ("debit".equalsIgnoreCase((currentAction.toString()))) {
             points = status.getCurrentPoints();
         } else if ("credit".equalsIgnoreCase(currentAction.toString())) {
@@ -252,7 +255,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
         } else if ("blocked".equalsIgnoreCase(currentAction.toString())) {
             points = status.getFreezedPoints();
         }
-        tvCurrentPointsUnit.setText(PointsManager.getPointUnitString(getActivity(), points));
+        return points;
     }
 
     protected RecyclerView.OnScrollListener getScrollableListener() {

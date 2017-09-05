@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.InfoTabFragmentVM"/>
+            type="ru.mos.polls.newprofile.vm.InfoTabFragmentVM" />
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser"/>
+            type="ru.mos.elk.profile.AgUser" />
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.vm.AvatarPanelClickListener"/>
+            type="ru.mos.polls.newprofile.vm.AvatarPanelClickListener" />
 
     </data>
 
-    <RelativeLayout
-        style="@style/root">
+    <RelativeLayout style="@style/root">
 
         <ProgressBar
             android:id="@+id/progress"
             style="@style/item"
             android:layout_centerInParent="true"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe"
@@ -52,7 +51,7 @@
                             android:id="@+id/agUser_avatar_panel"
                             layout="@layout/layout_user_avatar_panel"
                             bind:agUser="@{agUser}"
-                            bind:clickListener="@{clickListener}"/>
+                            bind:clickListener="@{clickListener}" />
 
 
                         <android.support.v7.widget.AppCompatTextView
@@ -62,7 +61,7 @@
                             android:gravity="center"
                             android:paddingBottom="@dimen/pd_xxsmall"
                             android:paddingTop="@dimen/pd_normal"
-                            android:text="@string/profile_filled_title"/>
+                            android:text="@string/profile_filled_title" />
 
                         <ProgressBar
                             android:id="@+id/agUser_profile_progressbar"
@@ -72,7 +71,7 @@
                             android:paddingLeft="@dimen/pd_normal"
                             android:paddingRight="@dimen/pd_normal"
                             android:progress="@{agUser.getPercentFillProfile()}"
-                            android:progressDrawable="@drawable/progressbar_yellow"/>
+                            android:progressDrawable="@drawable/progressbar_yellow" />
 
                     </LinearLayout>
 
@@ -80,26 +79,36 @@
                         android:id="@+id/agUser_profile_list"
                         style="@style/item"
                         android:paddingLeft="@dimen/pd_xsmall"
-                        android:paddingRight="@dimen/pd_xsmall"/>
+                        android:paddingRight="@dimen/pd_xsmall" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         style="@style/linear"
                         android:padding="@dimen/pd_xsmall">
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/agUser_stat_title"
+                            android:id="@+id/agUser_social_title"
                             style="@style/text.small.gray"
                             android:paddingLeft="@dimen/pd_xsmall"
-                            android:text="социальные сети"/>
+                            android:text="социальные сети" />
+
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/agUser_social_value"
+                            style="@style/text.normal.black"
+                            android:layout_below="@+id/agUser_social_title"
+                            android:text="не указано"
+                            android:paddingLeft="@dimen/pd_xsmall" />
 
                         <LinearLayout
                             android:id="@+id/ag_user_social_binding_layer"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/pd_xxlarge"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/pd_xsmall">
-                        </LinearLayout>
-                    </LinearLayout>
+                            android:paddingLeft="@dimen/pd_xsmall"
+                            android:layout_alignBottom="@+id/agUser_social_value"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+                    </RelativeLayout>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>

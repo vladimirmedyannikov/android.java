@@ -139,7 +139,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                 friendRegDate.setText(result.getPersonal().getRegistrationDate());
                 friendRating.setText(String.valueOf(result.getStatistics().getRating()));
                 friendStatus.setText(result.getStatistics().getStatus());
-                achievementsValue.setText("+" + String.valueOf(result.getAchievements().getCount()));
+                setAchievementsCountView(result.getAchievements().getCount());
                 FriendGuiUtils.loadAvatar(friendImage, AgApiBuilder.resourceURL(result.getPersonal().getAvatar()));
                 adapter.notifyDataSetChanged();
             }
@@ -152,8 +152,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                 friendRegDate.setText("дата регистрации в сервисе, dd.mm.yyyy");
                 friendRating.setText("521");
                 friendStatus.setText("Новичок");
-                achievementsValue.setText("+10");
-                achievementsValue.setVisibility(View.VISIBLE);
+                setAchievementsCountView(2);
                 FriendGuiUtils.loadAvatar(friendImage, "http://cs623727.vk.me/v623727792/103e2/OebzxL0Mjf4.jpg");
                 mockUserStatsList();
             }
@@ -164,6 +163,16 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(handler);
+    }
+
+    public void setAchievementsCountView(int count) {
+        int value = count - 3;
+        if (value > 0) {
+            achievementsValue.setText("+" + String.valueOf(value));
+            achievementsValue.setVisibility(View.VISIBLE);
+        } else {
+            achievementsValue.setVisibility(View.GONE);
+        }
     }
 
     private void setFiView(String text) {

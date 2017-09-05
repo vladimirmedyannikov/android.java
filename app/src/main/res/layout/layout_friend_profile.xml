@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -35,12 +34,12 @@
                         style="@style/item"
                         android:background="@color/actionbar_background"
                         android:orientation="vertical"
-                        android:paddingTop="@dimen/pd_normal">
+                        android:paddingTop="@dimen/pd_xxlarge">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/friend_image"
-                            android:layout_width="@dimen/vs_normal"
-                            android:layout_height="@dimen/vs_normal"
+                            android:layout_width="@dimen/vs_xnormal"
+                            android:layout_height="@dimen/vs_xnormal"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:src="@drawable/unlogin2"
@@ -56,9 +55,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/list"
                         style="@style/root"
-                        android:layout_below="@+id/friend_info_layout"
-                        android:paddingLeft="@dimen/pd_xsmall"
-                        android:paddingRight="@dimen/pd_xsmall" />
+                        android:layout_below="@+id/friend_info_layout" />
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>

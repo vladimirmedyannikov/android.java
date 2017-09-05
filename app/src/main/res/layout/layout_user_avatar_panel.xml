@@ -15,6 +15,7 @@
 
     <LinearLayout
         style="@style/item"
+        android:paddingTop="@dimen/pd_xxlarge"
         android:background="@color/actionbar_background"
         android:gravity="center">
 
@@ -29,8 +30,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/agUser_image"
-            android:layout_width="@dimen/vs_normal"
-            android:layout_height="@dimen/vs_normal"
+            android:layout_width="@dimen/vs_xnormal"
+            android:layout_height="@dimen/vs_xnormal"
             android:layout_weight="1"
             android:src="@drawable/unlogin2"
             app:civ_border_color="@color/white"

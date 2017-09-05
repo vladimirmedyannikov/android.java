@@ -1,27 +1,26 @@
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:background="@color/mainGreenColor"
-                android:clickable="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/root"
+    android:background="@color/mainGreenColor"
+    android:clickable="true">
 
-    <LinearLayout
-        style="@style/linear">
+    <LinearLayout style="@style/linear">
 
         <LinearLayout
             android:id="@+id/userContainer"
             style="@style/item.linear.horizontal"
             android:layout_alignParentTop="true"
-            android:paddingBottom="@dimen/pd_xsmall"
-            android:paddingLeft="@dimen/menu_side_space"
+            android:paddingBottom="@dimen/pd_xxsmall"
+            android:paddingLeft="@dimen/pd_xxxsmall"
             android:paddingRight="@dimen/pd_xlarge"
-            android:paddingTop="@dimen/pd_xsmall">
+            android:paddingTop="@dimen/pd_xxsmall">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userAvatar"
                 android:layout_width="@dimen/vs_xxsmall"
                 android:layout_height="@dimen/vs_xxsmall"
-                android:layout_margin="@dimen/pd_xxsmall"
-                android:src="@drawable/unlogin2"/>
+                android:layout_margin="@dimen/pd_xxxsmall"
+                android:src="@drawable/unlogin2" />
 
             <LinearLayout
                 style="@style/wrap.centered"
@@ -32,18 +31,19 @@
 
                 <TextView
                     android:id="@+id/userName"
-                    style="@style/text.large.white"
+                    style="@style/menu_item"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Игорь Семеречениский"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/userPhone"
                     style="@style/text.small.white"
+                    android:layout_marginLeft="@dimen/pd_xxsmall"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="+7 915 186-32-03"/>
+                    android:text="+7 915 186-32-03" />
 
             </LinearLayout>
         </LinearLayout>
@@ -51,7 +51,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/thin_separator"
-            android:background="@color/menu_divider"/>
+            android:background="@color/menu_divider" />
 
         <ListView
             android:id="@+id/list"
@@ -59,6 +59,6 @@
             android:choiceMode="singleChoice"
             android:divider="@color/menu_divider"
             android:dividerHeight="@dimen/thin_separator"
-            tools:context="ru.mos.polls.navigation.drawer.NavigationDrawerFragment"/>
+            tools:context="ru.mos.polls.navigation.drawer.NavigationDrawerFragment" />
     </LinearLayout>
 </RelativeLayout>

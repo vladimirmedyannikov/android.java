@@ -9,10 +9,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
 
@@ -42,6 +47,7 @@ import ru.mos.polls.util.GuiUtils;
 public class AgPhoneConfirmActivity extends BaseActivity {
     public static final int CONFIRM_CODE_NOT_VALID = 401;
     public static final String EXTRA_PHONE = "extra_phone";
+    protected Toolbar toolbar;
 
     public static void start(Context context, String phone) {
         Intent activity = new Intent(context, AgPhoneConfirmActivity.class);
@@ -75,12 +81,39 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_confirm);
         ButterKnife.bind(this);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Подтверждение");
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(smsAuthReceiver, new IntentFilter(SmsBroadcastReceiver.ACTION_CODE_CONFIRMATION_RECEIVED));
 
         phone = getIntent().getStringExtra(EXTRA_PHONE);
         tvPhone.setText(formatPhone());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.confirm, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_confirm:
+                doRequestAction();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void doRequestAction() {
+        if (checkCodeText()) {
+            onAction();
+        } else {
+            Toast.makeText(this, "Введите проверочный код", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String formatPhone() {
@@ -92,6 +125,10 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 phone.substring(6, 8) +
                 "-" +
                 phone.substring(8);
+    }
+
+    public boolean checkCodeText() {
+        return etCode.getText().length() > 0;
     }
 
     @OnClick(R.id.feedback)

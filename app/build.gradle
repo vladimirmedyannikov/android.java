@@ -176,7 +176,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.12.1'
     compile 'ru.ok:odnoklassniki-android-sdk:2.0.8'
     compile 'com.google.android.gms:play-services-auth:11.0.4'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //
 
@@ -193,7 +193,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile "com.squareup.retrofit2:converter-moshi:2.3.0"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     compile 'com.google.code.gson:gson:2.8.1'
 

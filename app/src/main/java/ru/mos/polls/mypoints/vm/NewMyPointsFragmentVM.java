@@ -145,6 +145,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
                         if (!currentAction.toString().equalsIgnoreCase(PointHistory.Action.ALL.toString())) {
                             getFilteredList(result.getPoints());
                         } else {
+//                            adapter.add(mockList(getActivity()));
                             adapter.add(result.getPoints());
                             adapter.notifyDataSetChanged();
                         }
@@ -193,6 +194,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
         return new UIComponentHolder.Builder()
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
+                    historyPage.reset();
                     adapter.clear();
                     adapter.notifyDataSetChanged();
                     requestHistory();

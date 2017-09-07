@@ -80,6 +80,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
         return new UIComponentHolder.Builder()
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
+                    achivementPage.reset();
                     adapter.clear();
                     adapter.notifyDataSetChanged();
                     loadAchivements();
@@ -99,7 +100,7 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
                     @Override
                     protected void onResult(AchievementsSelect.Response.Result result) {
                         adapter.add(result.getAchievements());
-                        adapter.add(mockList(getActivity()));
+//                        adapter.add(mockList(getActivity()));
                         adapter.notifyDataSetChanged();
                         progressable.end();
                         isPaginationEnable = true;

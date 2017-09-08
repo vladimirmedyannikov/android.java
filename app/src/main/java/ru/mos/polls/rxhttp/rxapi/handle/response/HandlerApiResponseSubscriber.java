@@ -4,6 +4,8 @@ import android.content.Context;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
+import ru.mos.polls.AGApplication;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.rxhttp.rxapi.handle.error.DefaultResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.handle.error.ResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
@@ -15,9 +17,9 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
  * on 15.06.17 7:51.
  */
 
-public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver<GeneralResponse<R>>{
+public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver<GeneralResponse<R>> {
 
-    private ResponseErrorHandler errorHandler =  ResponseErrorHandler.STUB;
+    private ResponseErrorHandler errorHandler = ResponseErrorHandler.STUB;
     private Progressable progressable = Progressable.STUB;
 
     public HandlerApiResponseSubscriber() {
@@ -49,6 +51,9 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
 
     @Override
     public void onNext(@NonNull GeneralResponse<R> generalResponse) {
+        if (generalResponse.isUnauthorized()) {
+            AGApplication.bus().send(new Events.APPEvents(Events.APPEvents.UNAUTHORIZED));
+        }
         if (generalResponse.hasError()) {
             errorHandler.onServerError(generalResponse.getErrorCode(), generalResponse.getErrorMessage());
         } else {

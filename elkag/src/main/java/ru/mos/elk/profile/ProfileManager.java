@@ -168,7 +168,7 @@ public abstract class ProfileManager {
         alkActivity.addRequest(new StringRequest(API.getURL("json/v0.2/auth/user/logout"), params, listener, errorListener), dialog);
     }
 
-    private static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity){
+    public static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity){
         Intent intent = new Intent(elkActivity, authActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(AuthActivity.PASSED_ACTIVITY, afterLoginActivity);

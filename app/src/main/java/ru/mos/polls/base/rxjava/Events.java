@@ -115,4 +115,18 @@ public class Events {
             return id;
         }
     }
+
+    public static class APPEvents {
+        public static final int UNAUTHORIZED = 1;
+
+        private int eventType;
+
+        public APPEvents(int eventType) {
+            this.eventType = eventType;
+        }
+
+        public int getEventType() {
+            return eventType;
+        }
+    }
 }

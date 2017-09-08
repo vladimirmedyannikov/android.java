@@ -24,6 +24,7 @@ import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
+import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.about.AboutAppFragment;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
@@ -199,6 +200,14 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     if (o instanceof Events.FriendEvents) {
                         Events.FriendEvents action = (Events.FriendEvents) o;
                         navigateTo().state(Add.newActivity(new FriendProfileState(action.getFriend()), BaseActivity.class));
+                    }
+                    if (o instanceof Events.APPEvents) {
+                        Events.APPEvents action = (Events.APPEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.APPEvents.UNAUTHORIZED:
+                                ProfileManager.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
+                                break;
+                        }
                     }
                 });
     }
@@ -436,7 +445,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 /**
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
-                fr = PagerFragment.Profile.newInstance();
+//                fr = PagerFragment.Profile.newInstance();
                 fr = ProfileFragment.newInstance();
                 tag = TAG_PROFILE;
                 break;

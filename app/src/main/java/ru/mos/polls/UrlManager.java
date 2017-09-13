@@ -12,7 +12,7 @@ public class UrlManager {
     public static String V240 = "2.4.0";
 
     public static String url(String controller, String method) {
-        return String.format("v%s/%s/%s", V230/*BuildConfig.VERSION_NAME*/, controller, method);
+        return String.format("v%s/%s/%s", V240/*BuildConfig.VERSION_NAME*/, controller, method);
     }
 
     /**

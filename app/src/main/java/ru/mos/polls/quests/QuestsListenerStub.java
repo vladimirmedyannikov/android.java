@@ -1,5 +1,7 @@
 package ru.mos.polls.quests;
 
+import java.util.List;
+
 import ru.mos.polls.social.model.AppPostValue;
 
 
@@ -39,6 +41,10 @@ public class QuestsListenerStub implements QuestsFragment.Listener {
 
     @Override
     public void onBindToPgu() {
+    }
+
+    @Override
+    public void onWizardProfile(List<String> list, int percent) {
     }
 
     @Override

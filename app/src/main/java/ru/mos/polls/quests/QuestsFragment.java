@@ -299,7 +299,6 @@ public class QuestsFragment extends PullableFragment {
                 loadedListQuests = QuestStateController.getInstance().process(loadedListQuests);
                 quests.clear();
                 quests.addAll(loadedListQuests);
-                quests.add(0, getWizardQuest(getActivity())); //убрать
                 adapter.notifyDataSetChanged();
                 hideNewsMenu();
                 adapter.getItemCount();
@@ -370,11 +369,6 @@ public class QuestsFragment extends PullableFragment {
         @Override
         public void onClick(BackQuest quest) {
             if (quest != null) {
-                //на отладку
-                if (quest.getId().equalsIgnoreCase("personalWizard")) {
-                    listener.onOther("", "");
-                    return;
-                }
                 if (quest.getType().equalsIgnoreCase(NewsQuest.TYPE)) {
                     BadgeManager.markNewsAsReaded(Long.parseLong(quest.getId()));
                     BadgeManager.uploadReadedNews((BaseActivity) getActivity());
@@ -450,6 +444,8 @@ public class QuestsFragment extends PullableFragment {
         void onUpdateFamilyInfo();
 
         void onBindToPgu();
+
+        void onWizardProfile(List<String> list, int percent);
 
         void onRateThisApplication(String appId);
 

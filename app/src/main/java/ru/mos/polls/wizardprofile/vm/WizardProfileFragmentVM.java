@@ -3,16 +3,19 @@ package ru.mos.polls.wizardprofile.vm;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -56,6 +59,9 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     SparseBooleanArray frViewedList;
     WizardProfilePagerAdapter adapter;
     ArrayMap<String, Boolean> wizardFilledList;
+    AppCompatTextView percentegeTitle;
+    ProgressBar profileProgressbar;
+
     static final String AVATAR = "avatar";
     static final String EMAIL = "updateEmail";
     static final String PERSONAL = "updatePersonal";
@@ -72,6 +78,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 
     boolean isLastPage;
     int listSize;
+    public List<String> ids;
+    int percent;
 
     /*
     updatePersonal
@@ -91,23 +99,33 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     protected void initialize(FragmentWizardProfileBinding binding) {
         pager = binding.pager;
         tabLayout = binding.wizardTabLayout;
+        percentegeTitle = binding.wizardPercentageValue;
+        profileProgressbar = binding.wizardProfileProgressbar;
         agUser = new AgUser(getActivity());
         nextButton = binding.wizardAction;
         wizardFilledList = new ArrayMap<>();
+        Bundle extras = getFragment().getArguments();
+        if (extras != null) {
+            percent = extras.getInt(WizardProfileFragment.ARG_WIZARD_PERCENT);
+            ids = new ArrayList<>();
+            List<String> list = extras.getStringArrayList(WizardProfileFragment.ARG_WIZARD_IDS);
+            ids.addAll(list);
+        }
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
         setRxEventsBusListener();
+        setPercentegeTitleView(percent);
+        setProfileProgressbarView(percent);
         nextButton.setOnClickListener(v -> {
             doNext();
         });
-        ArrayList<String> mockIds = new ArrayList<>(Arrays.asList(getActivity().getResources().getStringArray(R.array.profile_sub_ids)));
         list = new ArrayList<>();
         tagFr = new ArrayList<>();
         frViewedList = new SparseBooleanArray();
-        setFragmentListByIds(mockIds, list, tagFr);
+        setFragmentListByIds(ids, list, tagFr);
 
 
         for (int i = 0; i < tagFr.size(); i++) {
@@ -180,7 +198,15 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         });
     }
 
-    public void setFragmentListByIds(ArrayList<String> mockIds, List<Fragment> frList, List<String> tagList) {
+    public void setPercentegeTitleView(int percent) {
+        percentegeTitle.setText(String.format("%d%%", percent));
+    }
+
+    public void setProfileProgressbarView(int percent) {
+        profileProgressbar.setProgress(percent);
+    }
+
+    public void setFragmentListByIds(List<String> mockIds, List<Fragment> frList, List<String> tagList) {
         if (mockIds.contains(AVATAR)) {
             frList.add(new WizardAvatarFragment());
             tagList.add(AVATAR);

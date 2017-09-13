@@ -35,7 +35,7 @@ public interface AgApi {
         interface Versions {
             String V_2_3_0 = "v2.3.0";
             String V_2_4_0 = "v2.4.0";
-            String CURRENT = V_2_3_0;
+            String CURRENT = V_2_4_0;
         }
 
         interface Controllers {
@@ -88,10 +88,10 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.SELECT_ACHIEVEMENTS)
     Observable<AchievementsSelect.Response> selectAchievements(@Body AchievementsSelect.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
     Observable<AchievementsGet.Response> getAchievement(@Body AchievementsGet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
     Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)

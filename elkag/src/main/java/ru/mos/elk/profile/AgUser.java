@@ -814,7 +814,7 @@ public class AgUser implements Serializable {
             status = ElkTextUtils.getString(statistics, "status", "Новичок");
             rating = statistics.optLong("rating");
             percentFillProfile = statistics.optInt("percent_fill_profile");
-            saveJsonArray(context, json, Statistics.STATISTICS_PARAMS);
+            saveJsonArray(context, statistics, Statistics.STATISTICS_PARAMS);
         }
     }
 

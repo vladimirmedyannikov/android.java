@@ -5,7 +5,7 @@ package ru.mos.elk.profile;
  */
 
 public class Statistics {
-    public static final String STATISTICS_PARAMS = "statistics_params";
+    public static final String STATISTICS_PARAMS = "params";
     String title;
     String value;
 

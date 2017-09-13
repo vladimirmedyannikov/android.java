@@ -75,7 +75,7 @@ public abstract class BackQuest extends Quest {
     public static String urlSchemeFromJson(JSONObject questJson) {
         String result = null;
         if (questJson != null) {
-            questJson = questJson.optJSONObject("url_schemes");
+            questJson = questJson.optJSONObject("urlSchemes");
             result = questJson.optString("android");
         }
         return result;

@@ -27,7 +27,7 @@
                 android:id="@+id/wizard_percentage_value"
                 style="@style/text.small.white"
                 android:paddingLeft="@dimen/pd_normal"
-                android:text="15%"/>
+                android:text="0%"/>
 
             <ProgressBar
                 android:id="@+id/wizard_profile_progressbar"
@@ -37,7 +37,7 @@
                 android:layout_below="@id/wizard_percentage_value"
                 android:paddingLeft="@dimen/pd_normal"
                 android:paddingRight="@dimen/pd_normal"
-                android:progress="15"
+                android:progress="0"
                 android:progressDrawable="@drawable/progressbar_yellow"/>
 
         </RelativeLayout>

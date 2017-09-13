@@ -142,7 +142,7 @@ public class PguBindFragment extends JugglerFragment {
             @Override
             public void onSuccess(QuestMessage questMessage) {
                 AbstractActivity.hideSoftInput(getActivity(), password);
-                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, 0));
+                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, 70));
                 questMessage.show(getActivity(), true);
                 stopProgress();
                 if (questMessage != null && !questMessage.isEmpty()) {

@@ -203,7 +203,7 @@ public class BindingSocialFragment extends Fragment {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
                     if (!isAnySocialBinded) {
-                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 0));
+                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 70));
                         isAnySocialBinded = true;
                     }
                     Statistics.taskSocialLogin(loadedSocial.getName());

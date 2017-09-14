@@ -41,9 +41,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String result = null;
         Page page = pages.get(position);
-        if (page != null && page.titleResId != -1) {
-            result = page.fragment.getContext().getString(page.titleResId);
-        }
+//        if (page != null && page.titleResId != -1) {
+//            result = page.fragment.getContext().getString(page.titleResId);
+//        }
         return TextUtils.isEmpty(result) ? super.getPageTitle(position) : result;
     }
 
@@ -59,6 +59,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         public Page(@DrawableRes int iconResId, Fragment fragment) {
             this(iconResId, -1, fragment);
+        }
+
+        public Page(Fragment fragment, @StringRes int titleResId) {
+            this(-1, titleResId, fragment);
         }
 
         public Page(@DrawableRes int iconResId, @StringRes int titleResId, Fragment fragment) {

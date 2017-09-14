@@ -109,20 +109,9 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    private void mockUserStatsList() {
+    private void setUserStatsListView() {
         List<Statistics> list = new ArrayList<>();
         list.addAll(saved.getStatisticList(getActivity()));
-        if (list.size() == 0) {
-            list.add(new Statistics("Заполненность профиля", "95%"));
-            list.add(new Statistics("Пройдено голосований", "257"));
-            list.add(new Statistics("Оценено новинок", "257"));
-            list.add(new Statistics("Оценено новинок", "17"));
-            list.add(new Statistics("Посещено мероприятий", "5"));
-            list.add(new Statistics("Приглашено друзей", "0"));
-            list.add(new Statistics("Активность в социальных сетях", "0"));
-            list.add(new Statistics("Получено баллов", "0"));
-            list.add(new Statistics("Потрачено баллов", "0"));
-        }
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
     }
@@ -137,7 +126,7 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     public void updateView() {
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
-        mockUserStatsList();
+        setUserStatsListView();
         setAvatar();
     }
 

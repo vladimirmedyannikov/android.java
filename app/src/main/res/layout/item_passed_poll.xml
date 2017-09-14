@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/item.linear"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@drawable/ag_list_selector"
-              android:padding="@dimen/pd_xsmall">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/baseInfoContainer"
-        style="@style/item.linear">
+        style="@style/item.linear"
+        android:background="@drawable/ag_list_selector"
+        android:padding="@dimen/pd_xsmall">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/text.large.black"/>
+        <LinearLayout
+            android:id="@+id/baseInfoContainer"
+            style="@style/item.linear">
 
-        <TextView
-            android:id="@+id/description"
-            style="@style/text.gray"/>
+            <TextView
+                android:id="@+id/title"
+                style="@style/text.large.black" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/text.gray" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

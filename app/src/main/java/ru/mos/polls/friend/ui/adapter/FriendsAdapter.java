@@ -58,7 +58,6 @@ public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         RecyclerBaseViewModel friendAddItemVW = list.get(0);
         list.clear();
         list.add(friendAddItemVW);
-
     }
 
     public void add(Friend friend) {

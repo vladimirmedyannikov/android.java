@@ -18,6 +18,8 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
 import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltyFill;
 import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltyGet;
 import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltySelect;
+import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
+import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -44,6 +46,7 @@ public interface AgApi {
             String AGPROFILE = "agprofile";
             String MEDIA = "media";
             String POLL = "poll";
+            String SUPPORT = "support";
         }
 
         interface Methods {
@@ -61,6 +64,8 @@ public interface AgApi {
             String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
             String VISIBLE = "visible";
             String GET_HISTORY = "getHistory";
+            String GET_FEEDBACK_SUBJECTS = "getFeedbackSubjects";
+            String SEND_FEEDBACK = "sendFeedback";
         }
     }
 
@@ -105,4 +110,10 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.GET_HISTORY)
     Observable<HistoryGet.Response> getHistory(@Body HistoryGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + AgApi.Api.Methods.GET_FEEDBACK_SUBJECTS)
+    Observable<SubjectsLoad.Response> getFeedbackSubjects(@Body SubjectsLoad.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + Api.Methods.SEND_FEEDBACK)
+    Observable<FeedbackSend.Response> sendFeedback(@Body FeedbackSend.Request body);
 }

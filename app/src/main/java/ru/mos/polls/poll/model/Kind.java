@@ -60,4 +60,9 @@ public enum Kind {
     public String getKind() {
         return kind;
     }
+
+    @Override
+    public String toString() {
+        return kind;
+    }
 }

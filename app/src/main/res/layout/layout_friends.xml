@@ -29,9 +29,6 @@
                     style="@style/root" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
-
         </RelativeLayout>
-
     </RelativeLayout>
-
 </layout>

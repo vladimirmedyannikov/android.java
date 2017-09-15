@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.mos.polls.mypoints.service.HistoryGet;
+import ru.mos.polls.newpoll.service.PollSelect;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.service.AvatarSet;
@@ -105,4 +106,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.GET_HISTORY)
     Observable<HistoryGet.Response> getHistory(@Body HistoryGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.SELECT)
+    Observable<PollSelect.Response> pollselect(@Body PollSelect.Request body);
 }

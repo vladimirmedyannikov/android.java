@@ -11,6 +11,7 @@ import ru.mos.polls.poll.model.Poll;
  */
 
 public class PollItemActiveVM extends RecyclerBaseViewModel<Poll, ItemActivePollBinding> {
+
     public PollItemActiveVM(Poll model, ItemActivePollBinding viewDataBinding) {
         super(model, viewDataBinding);
     }

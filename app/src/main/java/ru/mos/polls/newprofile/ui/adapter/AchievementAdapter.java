@@ -13,7 +13,7 @@ import ru.mos.polls.newprofile.vm.OnAchievementClickListener;
  * Created by Trunks on 23.06.2017.
  */
 
-public class AchievementAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
+public class AchievementAdapter extends BaseRecyclerAdapter<AchievementVM> {
     OnAchievementClickListener listener;
     public static final int TYPE = 1;
     public AchievementAdapter(List<Achievements> list, OnAchievementClickListener listener) {
@@ -22,7 +22,7 @@ public class AchievementAdapter extends BaseRecyclerAdapter<RecyclerBaseViewMode
 
 
     public void add(List<Achievements> achievements) {
-        List<RecyclerBaseViewModel> content = new ArrayList<>();
+        List<AchievementVM> content = new ArrayList<>();
         for (Achievements achievement : achievements) {
             AchievementVM achievementVM = new AchievementVM(achievement);
             achievementVM.setListener(listener);

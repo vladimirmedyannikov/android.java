@@ -11,6 +11,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentPollBinding;
 import ru.mos.polls.newpoll.ui.PollFragment;
+import ru.mos.polls.newpoll.ui.PollTabFragment;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
@@ -37,17 +38,17 @@ public class PollFragmentVM extends FragmentViewModel<PollFragment, FragmentPoll
 
         slidingTabs = binding.slidingTabs;
         slidingTabs.setupWithViewPager(pager);
-            for (int index = 0; index < pages.size(); ++index) {
-                slidingTabs
-                        .getTabAt(index)
-                        .setText(getActivity().getString(pages.get(index).getTitleResId()));
-            }
+        for (int index = 0; index < pages.size(); ++index) {
+            slidingTabs
+                    .getTabAt(index)
+                    .setText(getActivity().getString(pages.get(index).getTitleResId()));
+        }
     }
 
     protected List<PagerAdapter.Page> getPages() {
         List<PagerAdapter.Page> result = new ArrayList<>();
-        result.add(new PagerAdapter.Page(UserTabFragment.newInstance(), R.string.polls_active));
-        result.add(new PagerAdapter.Page(new AchievementTabFragment(), R.string.polls_old));
+        result.add(new PagerAdapter.Page(new PollTabFragment(), R.string.polls_active));
+        result.add(new PagerAdapter.Page(new PollTabFragment(), R.string.polls_old));
         return result;
     }
 }

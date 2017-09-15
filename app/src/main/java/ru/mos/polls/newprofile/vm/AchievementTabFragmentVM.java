@@ -2,7 +2,6 @@ package ru.mos.polls.newprofile.vm;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,97 +15,84 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.component.ProgressableUIComponent;
-import ru.mos.polls.base.component.PullableUIComponent;
-import ru.mos.polls.base.component.UIComponentFragmentViewModel;
-import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.vm.PullableFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
-import ru.mos.polls.base.ui.RecyclerScrollableController;
-import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.util.StubUtils;
 
 /**
  * Created by Trunks on 16.06.2017.
  */
 
-public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<AchievementTabFragment, FragmentAchievementTabProfileBinding> implements OnAchievementClickListener {
-    private Page achivementPage;
-    AchievementAdapter adapter;
+public class AchievementTabFragmentVM extends PullableFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding, AchievementAdapter> implements OnAchievementClickListener {
     List<Achievements> list;
-    boolean isPaginationEnable;
-    RecyclerView recyclerView;
     int friendId;
 
     public AchievementTabFragmentVM(AchievementTabFragment fragment, FragmentAchievementTabProfileBinding binding) {
         super(fragment, binding);
     }
 
-    @Override
     protected void initialize(FragmentAchievementTabProfileBinding binding) {
+        recyclerView = binding.list;
+        list = new ArrayList<>();
+        adapter = new AchievementAdapter(list, this);
+        super.initialize(binding);
         Bundle extras = getFragment().getArguments();
         if (extras != null) {
             friendId = extras.getInt(AchievementTabFragment.ARG_FRIEND_ID);
         }
-        recyclerView = binding.agUserProfileList;
-        UIhelper.setRecyclerList(recyclerView, getActivity());
-        list = new ArrayList<>();
-        achivementPage = new Page();
-        isPaginationEnable = true;
+//        UIhelper.setRecyclerList(recyclerView, getActivity());
+//        page = new Page();
+//        isPaginationEnable = true;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadAchivements();
-    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        doRequest();
+//    }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        progressable = getProgressable();
-        adapter = new AchievementAdapter(list, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(getScrollableListener());
+
+//        adapter = new AchievementAdapter(list, this);
+
     }
 
-    @Override
-    protected UIComponentHolder createComponentHolder() {
-        return new UIComponentHolder.Builder()
-                .with(new PullableUIComponent(() -> {
-                    progressable = getPullableProgressable();
-                    achivementPage.reset();
-                    adapter.clear();
-                    adapter.notifyDataSetChanged();
-                    loadAchivements();
-                }))
-                .with(new ProgressableUIComponent())
-                .build();
-    }
+//    @Override
+//    protected UIComponentHolder createComponentHolder() {
+//        return new UIComponentHolder.Builder()
+//                .with(new PullableUIComponent(() -> {
+//                    progressable = getPullableProgressable();
+//                    page.reset();
+//                    adapter.clear();
+//                    adapter.notifyDataSetChanged();
+//                    loadAchivements();
+//                }))
+//                .with(new ProgressableUIComponent())
+//                .build();
+//    }
 
     @Override
     public void onAchivementClick(String id) {
         AchievementActivity.startActivity(getActivity(), id);
     }
 
-    public void loadAchivements() {
+    public void doRequest() {
         HandlerApiResponseSubscriber<AchievementsSelect.Response.Result> handler =
                 new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(AchievementsSelect.Response.Result result) {
                         adapter.add(result.getAchievements());
-//                        adapter.add(mockList(getActivity()));
-                        adapter.notifyDataSetChanged();
-                        progressable.end();
-                        isPaginationEnable = true;
+                        progressPull();
                     }
                 };
-        AchievementsSelect.Request requestBody = new AchievementsSelect.Request(achivementPage);
+        AchievementsSelect.Request requestBody = new AchievementsSelect.Request(page);
         if (friendId != 0) {
             requestBody.setId(friendId);
         }
@@ -117,17 +103,17 @@ public class AchievementTabFragmentVM extends UIComponentFragmentViewModel<Achie
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    protected RecyclerView.OnScrollListener getScrollableListener() {
-        RecyclerScrollableController.OnLastItemVisibleListener onLastItemVisibleListener
-                = () -> {
-            if (isPaginationEnable) {
-                isPaginationEnable = false;
-                achivementPage.increment();
-                loadAchivements();
-            }
-        };
-        return new RecyclerScrollableController(onLastItemVisibleListener);
-    }
+//    protected RecyclerView.OnScrollListener getScrollableListener() {
+//        RecyclerScrollableController.OnLastItemVisibleListener onLastItemVisibleListener
+//                = () -> {
+//            if (isPaginationEnable) {
+//                isPaginationEnable = false;
+//                page.increment();
+//                doRequest();
+//            }
+//        };
+//        return new RecyclerScrollableController(onLastItemVisibleListener);
+//    }
 
     public static List<Achievements> mockList(Context context) {
         Gson gson = new Gson();

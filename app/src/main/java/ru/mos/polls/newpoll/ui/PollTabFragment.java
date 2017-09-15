@@ -1,6 +1,7 @@
 package ru.mos.polls.newpoll.ui;
 
 import ru.mos.polls.BR;
+import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.newpoll.vm.PollTabFragmentVM;
@@ -12,7 +13,7 @@ import ru.mos.polls.newpoll.vm.PollTabFragmentVM;
 public class PollTabFragment extends BindingFragment<PollTabFragmentVM, FragmentTabPollBinding> {
     @Override
     protected PollTabFragmentVM onCreateViewModel(FragmentTabPollBinding binding) {
-        return null;
+        return new PollTabFragmentVM(this, binding);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class PollTabFragment extends BindingFragment<PollTabFragmentVM, Fragment
 
     @Override
     public int getLayoutResources() {
-        return 0;
+        return R.layout.fragment_tab_poll;
     }
 }

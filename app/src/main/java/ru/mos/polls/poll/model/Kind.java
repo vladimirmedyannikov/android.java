@@ -41,14 +41,22 @@ public enum Kind {
         return HEARING.getKind().equalsIgnoreCase(kind);
     }
 
+    public static boolean isHearing(String kind) {
+        return kind.equalsIgnoreCase(HEARING.kind);
+    }
+
     public boolean isHearingPreview() {
         return HEARING_PREVIEW.getKind().equalsIgnoreCase(kind);
     }
-
+    public static boolean isHearingPreview(String kind) {
+        return HEARING_PREVIEW.getKind().equalsIgnoreCase(kind);
+    }
     public boolean isSpecial() {
         return SPECIAL.getKind().equalsIgnoreCase(kind);
     }
-
+    public static boolean isSpecial(String kind) {
+        return SPECIAL.getKind().equalsIgnoreCase(kind);
+    }
     public int getColor() {
         return color;
     }

@@ -60,11 +60,11 @@ public class ActivePollsFragment extends AbstractPollsFragment {
                 for (Poll poll : polls) {
                     if (poll.getId() == pollId) {
                         if (status == Poll.Status.INTERRUPTED) {
-                            poll.setStatus(Poll.Status.INTERRUPTED);
+                            poll.setStatus(Poll.Status.INTERRUPTED.status);
                         } else if (status == Poll.Status.PASSED) {
                             polls.remove(poll);
                             if (pollRemoveListener != null) {
-                                poll.setStatus(Poll.Status.PASSED);
+                                poll.setStatus(Poll.Status.PASSED.status);
                                 poll.setPassedDate(System.currentTimeMillis());
                                 pollRemoveListener.onRemove(poll);
                             }

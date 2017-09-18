@@ -13,12 +13,10 @@ import ru.mos.elk.profile.AgUser;
  */
 
 public class WizardProfilePagerAdapter extends FragmentStatePagerAdapter {
-    AgUser agUser;
     List<Fragment> list;
 
-    public WizardProfilePagerAdapter(FragmentManager fm, AgUser agUser, List<Fragment> list) {
+    public WizardProfilePagerAdapter(FragmentManager fm, List<Fragment> list) {
         super(fm);
-        this.agUser = agUser;
         this.list = list;
     }
 

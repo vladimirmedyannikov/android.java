@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.poll.gui.AbstractPollsFragment;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 
 /**
@@ -57,17 +58,17 @@ public class ActivePollAdapter extends ArrayAdapter<Poll> {
         if (poll.getPoints() > 0) {
             String result = PointsManager.getSuitableString(getContext(), R.array.survey_points_pluse, poll.getPoints());
             result = String.format(result, poll.getPoints());
-            if (poll.getKind().isHearing()) {
+            if (Kind.isHearing(poll.getKind())) {
                 result += ", " + getContext().getString(R.string.title_hearing_survey_summary).toLowerCase();
-            } else if (poll.getKind().isSpecial()) {
+            } else if (Kind.isSpecial(poll.getKind())) {
                 result += ", " + getContext().getString(R.string.special_hearing).toLowerCase();
             }
             params.setText(result);
         } else {
             String result = "";
-            if (poll.getKind().isHearing()) {
+            if (Kind.isHearing(poll.getKind())) {
                 result += getContext().getString(R.string.title_hearing_survey_summary);
-            } else if (poll.getKind().isSpecial()) {
+            } else if (Kind.isSpecial(poll.getKind())) {
                 result += getContext().getString(R.string.special_hearing);
             } else {
                 params.setVisibility(View.GONE);
@@ -79,7 +80,7 @@ public class ActivePollAdapter extends ArrayAdapter<Poll> {
     private void displayInterruptedMark(View v, Poll poll) {
         TextView params = ButterKnife.findById(v, R.id.interrupted);
         int visibility = View.GONE;
-        if (poll.getStatus() == Poll.Status.INTERRUPTED) {
+        if (poll.isInterrupted()) {
             visibility = View.VISIBLE;
         }
         params.setVisibility(visibility);

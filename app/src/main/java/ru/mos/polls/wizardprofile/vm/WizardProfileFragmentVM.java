@@ -127,13 +127,12 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         frViewedList = new SparseBooleanArray();
         setFragmentListByIds(ids, list, tagFr);
 
-
         for (int i = 0; i < tagFr.size(); i++) {
             wizardFilledList.put(tagFr.get(i), false);
             frViewedList.put(i, false);
         }
         listSize = list.size();
-        adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), agUser, list);
+        adapter = new WizardProfilePagerAdapter(getFragment().getChildFragmentManager(), list);
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager, true);
         setDotCustomView();

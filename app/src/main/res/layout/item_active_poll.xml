@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/baseInfoContainer"
-        style="@style/linear"
+        style="@style/item.linear"
         android:layout_centerVertical="true"
         android:padding="@dimen/pd_xxsmall">
 

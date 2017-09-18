@@ -1,7 +1,9 @@
 package ru.mos.polls.newpoll.vm;
 
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 public class PollFragmentVM extends FragmentViewModel<PollFragment, FragmentPollBinding> {
     private ViewPager pager;
     private TabLayout slidingTabs;
+    List<PagerAdapter.Page> list;
 
     public PollFragmentVM(PollFragment fragment, FragmentPollBinding binding) {
         super(fragment, binding);
@@ -46,9 +49,17 @@ public class PollFragmentVM extends FragmentViewModel<PollFragment, FragmentPoll
     }
 
     protected List<PagerAdapter.Page> getPages() {
-        List<PagerAdapter.Page> result = new ArrayList<>();
-        result.add(new PagerAdapter.Page(new PollTabFragment(), R.string.polls_active));
-        result.add(new PagerAdapter.Page(new PollTabFragment(), R.string.polls_old));
-        return result;
+        list = new ArrayList<>();
+        list.add(new PagerAdapter.Page(PollTabFragment.newInstance(PollTabFragmentVM.ARG_ACTIVE_POLL), R.string.polls_active));
+        list.add(new PagerAdapter.Page(PollTabFragment.newInstance(PollTabFragmentVM.ARG_OLD_POLL), R.string.polls_old));
+        return list;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PagerAdapter.Page page = list.get(pager.getCurrentItem());
+        Fragment currFr = page.getFragment();
+        currFr.onActivityResult(requestCode, resultCode, data);
     }
 }

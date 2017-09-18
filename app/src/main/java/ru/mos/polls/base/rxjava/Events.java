@@ -3,6 +3,7 @@ package ru.mos.polls.base.rxjava;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
@@ -123,6 +124,26 @@ public class Events {
 
         public APPEvents(int eventType) {
             this.eventType = eventType;
+        }
+
+        public int getEventType() {
+            return eventType;
+        }
+    }
+
+    public static class PollEvents {
+        public static final int OPEN_POLL = 1;
+
+        private Poll poll;
+        private int eventType;
+
+        public PollEvents(int eventType, Poll poll) {
+            this.eventType = eventType;
+            this.poll = poll;
+        }
+
+        public Poll getPoll() {
+            return poll;
         }
 
         public int getEventType() {

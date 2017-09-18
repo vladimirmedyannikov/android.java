@@ -106,7 +106,7 @@ public abstract class AbstractPollsFragment extends PullableFragment {
             public void onSelected(Poll poll) {
                 Fragment sender = FragmentHelper.getParentFragment(AbstractPollsFragment.this);
                 if (sender != null) {
-                    SurveyActivity.startActivityForResult(sender, poll.getId(), poll.getKind().isHearing());
+                    SurveyActivity.startActivityForResult(getActivity(), poll.getId(), Kind.isHearing(poll.getKind()));
                 }
             }
         };
@@ -134,12 +134,10 @@ public abstract class AbstractPollsFragment extends PullableFragment {
      */
     protected void findViews(View view) {
         empty = ButterKnife.findById(view, R.id.empty);
-//                view.findViewById(R.id.empty);
         if (empty instanceof TextView) {
             ((TextView) empty).setText(getEmptyText());
         }
         listView = ButterKnife.findById(view, android.R.id.list);
-//                (AbsListView) view.findViewById(android.R.id.list);
         listView.setEmptyView(empty);
         ((AdapterView<ListAdapter>) listView).setAdapter(adapter);
         listView.setOnScrollListener(scrollableController);
@@ -245,7 +243,7 @@ public abstract class AbstractPollsFragment extends PullableFragment {
     private List<Poll> preparePolls(List<Poll> polls) {
         List<Poll> result = new ArrayList<Poll>();
         for (Poll poll : polls) {
-            if (!poll.getKind().isHearing() && !poll.getKind().isHearingPreview()) {
+            if (!Kind.isHearing(poll.getKind()) && !Kind.isHearingPreview(poll.getKind())) {
                 result.add(poll);
             }
         }

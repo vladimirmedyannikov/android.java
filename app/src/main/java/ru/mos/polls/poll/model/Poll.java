@@ -2,6 +2,8 @@ package ru.mos.polls.poll.model;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -11,26 +13,31 @@ public class Poll {
     private int id;
     private String title;
     private int points;
-    private Status status;
+    //    private Status status;
+    private String status;
     private String author;
+    @SerializedName("questions_count")
     private int questCount;
     /**
      * с версии 1.8
      * тип голосование, сюда перенесли отметку о специальном опросе
      */
-    private Kind kind;
+//    private Kind kind;
+    private String kind;
     private String pushedMark;
 
     /**
      * @since 1.8
      * дата начала голосования
      */
+    @SerializedName("begin_date")
     private long beginDate;
     /**
      * @since 1.8
      * end_date - дата окончания голосования. В случае kind=hearing_preview
      * эти даты отсутствуют (=null), и клиенту надо выводить "скоро"
      */
+    @SerializedName("end_date")
     private long endDate;
 
     /**
@@ -40,6 +47,7 @@ public class Poll {
      * из hearing_preview в hearing, его значение сбрасывается в false. Для других kind параметр
      * может быть равен null или вовсе отсутствовать.
      */
+    @SerializedName("is_hearing_checked")
     private boolean isHearingChecked;
     /**
      * @since 1.9
@@ -53,11 +61,13 @@ public class Poll {
             id = pollJson.optInt("id");
             title = getString(pollJson, "title", "");
             points = pollJson.optInt("points");
-            status = Status.fromString(pollJson.optString("status"));
+//            status = Status.fromString(pollJson.optString("status"));
+            status = pollJson.optString("status");
             questCount = pollJson.optInt("question_count");
             author = getString(pollJson, "author", "");
 
-            kind = Kind.parse(pollJson.optString("kind"));
+//            kind = Kind.parse(pollJson.optString("kind"));
+            kind = pollJson.optString("kind");
             pushedMark = getString(pollJson, "pushed_mark", "");
             beginDate = pollJson.optLong("begin_date");
             beginDate *= 1000;
@@ -90,15 +100,15 @@ public class Poll {
         return questCount;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Kind getKind() {
+    public String getKind() {
         return kind;
     }
 
@@ -127,19 +137,19 @@ public class Poll {
     }
 
     public boolean isActive() {
-        return status == Status.ACTIVE;
+        return status.equalsIgnoreCase(Status.ACTIVE.status);
     }
 
     public boolean isPassed() {
-        return status == Status.PASSED;
+        return status.equalsIgnoreCase(Status.PASSED.status);
     }
 
     public boolean isOld() {
-        return status == Status.OLD;
+        return status.equalsIgnoreCase(Status.OLD.status);
     }
 
     public boolean isInterrupted() {
-        return status == Status.INTERRUPTED;
+        return status.equalsIgnoreCase(Status.INTERRUPTED.status);
     }
 
     public String convertFormatForDate(long mills, String newFormat) {
@@ -157,7 +167,7 @@ public class Poll {
 
     public boolean isHearingChecked() {
         boolean result = false;
-        if (kind.isHearing() || kind.isHearingPreview()) {
+        if (kind.equalsIgnoreCase(Kind.HEARING.kind) || kind.equalsIgnoreCase(Kind.HEARING_PREVIEW.kind)) {
             result = isHearingChecked;
         }
         return result;

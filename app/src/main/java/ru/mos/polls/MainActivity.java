@@ -55,6 +55,7 @@ import ru.mos.polls.navigation.tab.PagerFragment;
 import ru.mos.polls.newpoll.ui.PollFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
@@ -207,6 +208,15 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         switch (action.getEventType()) {
                             case Events.APPEvents.UNAUTHORIZED:
                                 ProfileManager.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
+                                break;
+                        }
+                    }
+                    if (o instanceof Events.PollEvents) {
+                        Events.PollEvents action = (Events.PollEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.PollEvents.OPEN_POLL:
+                                action.getPoll();
+                                SurveyActivity.startActivityForResult(this,  action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
                                 break;
                         }
                     }

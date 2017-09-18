@@ -107,10 +107,6 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    public void doRequest() {
-        viewModel.doRequest();
-    }
-
     public abstract int getVariable();
 
     public abstract int getLayoutResources();
@@ -132,5 +128,4 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         hideKeyboard(this);
         return super.onUpPressed();
     }
-
 }

@@ -78,10 +78,6 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
-    public void doRequest() {
-
-    }
-
     public Progressable progressable = new Progressable() {
         @Override
         public void begin() {

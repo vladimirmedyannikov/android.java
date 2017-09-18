@@ -42,6 +42,7 @@ public abstract class PullableFragmentVM<F extends JugglerFragment, B extends Vi
     public void onViewCreated() {
         super.onViewCreated();
         progressable = getProgressable();
+        doRequest();
     }
 
     public RecyclerView.OnScrollListener getScrollableListener() {
@@ -73,7 +74,6 @@ public abstract class PullableFragmentVM<F extends JugglerFragment, B extends Vi
     @Override
     public void onResume() {
         super.onResume();
-        doRequest();
     }
 
     public void progressPull() {

@@ -1,5 +1,6 @@
 package ru.mos.polls.survey;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,9 +43,9 @@ public class SurveyActivity extends BaseActivity {
 
     public static final int REQUEST_POLLS = 0;
 
-    public static void startActivityForResult(Fragment fragment, long pollId, boolean isHearing) {
-        Intent intent = getStartIntent(fragment.getActivity(), pollId, isHearing);
-        fragment.startActivityForResult(intent, REQUEST_POLLS);
+    public static void startActivityForResult(Activity activity, long pollId, boolean isHearing) {
+        Intent intent = getStartIntent(activity, pollId, isHearing);
+        activity.startActivityForResult(intent, REQUEST_POLLS);
     }
 
     public static Intent getStartIntent(Context context, long pollId, boolean isHearing) {

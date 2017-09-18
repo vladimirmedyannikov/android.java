@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.poll.gui.AbstractPollsFragment;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 
 /**
@@ -56,7 +57,7 @@ public class NotActivePollAdapter extends ArrayAdapter<Poll> {
                 sb.append(String.format(getContext().getString(R.string.title_passed_polls_with_zero_points), " "));
             }
             sb.append(sdf.format(poll.getPassedDate()));
-            if (poll.getKind().isHearing()) {
+            if (Kind.isHearing(poll.getKind())) {
                 sb.append(", " + getContext().getString(R.string.title_hearing_survey_summary).toLowerCase());
             }
             params.setTextColor(getContext().getResources().getColor(R.color.greenText));

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.model.Poll" />
+            type="ru.mos.polls.poll.model.Poll" />
     </data>
 
     <LinearLayout
@@ -16,6 +16,8 @@
 
         <TextView
             android:id="@+id/title"
+            android:text="@{viewModel.title}"
+            android:textColor="@{viewModel.active ? @color/greenText : @color/ag_red}"
             style="@style/text.large.black" />
 
         <TextView

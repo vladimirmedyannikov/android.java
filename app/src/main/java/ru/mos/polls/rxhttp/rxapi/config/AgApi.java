@@ -115,5 +115,5 @@ public interface AgApi {
     Observable<SubjectsLoad.Response> getFeedbackSubjects(@Body SubjectsLoad.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + Api.Methods.SEND_FEEDBACK)
-    Observable<FeedbackSend.Response> sendFeedback(@Body FeedbackSend.Request body);
+    Observable<EmptyResponse> sendFeedback(@Body FeedbackSend.Request body);
 }

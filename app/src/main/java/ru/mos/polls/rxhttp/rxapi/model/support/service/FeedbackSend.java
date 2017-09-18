@@ -1,10 +1,18 @@
 package ru.mos.polls.rxhttp.rxapi.model.support.service;
 
 
+import android.os.Build;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ru.mos.elk.push.GCMHelper;
+import ru.mos.polls.BuildConfig;
+import ru.mos.polls.UrlManager;
+import ru.mos.polls.newprofile.service.model.EmptyResult;
+import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 /**
@@ -25,20 +33,22 @@ public class FeedbackSend{
         @SerializedName("user_info")
         private FeedbackUserInfo userInfo;
 
-        public Request(int subjectId, List<String> apiVersion, String email, String message, String orderNumber, FeedbackUserInfo userInfo) {
+        public Request(int subjectId, String email, String message, String orderNumber, String sessionId) {
             this.subjectId = subjectId;
-            this.apiVersion = apiVersion;
+            apiVersion = new ArrayList<>();
+            apiVersion.add(GCMHelper.REGISTER_PATH);
+            apiVersion.add(UrlManager.url(AgApi.Api.Controllers.SUPPORT, AgApi.Api.Methods.SEND_FEEDBACK));
             this.email = email;
             this.message = message;
             this.orderNumber = orderNumber;
-            this.userInfo = userInfo;
+            this.userInfo = new FeedbackUserInfo(sessionId);
         }
     }
 
-    public static class Response extends GeneralResponse<String> {
+    public static class Response extends GeneralResponse<EmptyResult[]> {
     }
 
-    public class FeedbackUserInfo {
+    public static class FeedbackUserInfo {
         private String app;
         @SerializedName("app_version")
         private String appVersion;
@@ -52,6 +62,14 @@ public class FeedbackSend{
             this.appVersion = appVersion;
             this.device = device;
             this.os = os;
+            this.sessionId = sessionId;
+        }
+
+        public FeedbackUserInfo(String sessionId){
+            app = "iSuperCitizen";
+            appVersion = BuildConfig.VERSION_NAME;
+            device = Build.MODEL + " (" + Build.MANUFACTURER + ")";
+            os = "Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")";
             this.sessionId = sessionId;
         }
     }

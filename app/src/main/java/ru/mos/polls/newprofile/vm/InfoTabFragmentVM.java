@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatTextView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     Observable<List<AppSocial>> socialListObserable;
     AppCompatTextView percentFilledTitle;
     AppCompatTextView socialBindingStatus;
+    ProgressBar percentFilledPb;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
         super(fragment, binding);
@@ -49,6 +51,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         circleImageView = binding.agUserAvatarPanel.agUserImage;
         percentFilledTitle = binding.agUserProfilePercentFillTitle;
         socialBindingStatus = binding.agUserSocialValue;
+        percentFilledPb = binding.agUserProfileProgressbar;
         saved = new AgUser(getActivity());
         super.initialize(binding);
         binding.setClickListener(this);
@@ -65,8 +68,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("пол", saved.getGender().toString()));
         list.add(new UserInfo("семейное положение", saved.getMaritalStatus().toString()));
         list.add(new UserInfo("адрес регистрации", saved.getRegistration().getAddressTitle(getActivity().getBaseContext())));
-        String residenceFlat = saved.getRegistration().compareByFullAddress(saved.getResidence()) || saved.getResidence().isEmpty()
-                ? "Совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getActivity().getBaseContext());
+        String residenceFlat = getRegistrationAddressTitle();
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", AgSocialStatus.fromPreferences(getActivity().getBaseContext()).get(saved.getAgSocialStatus()).getTitle()));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
@@ -74,6 +76,13 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("связь с mos.ru", pguConnected));
         UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
+    }
+
+    public String getRegistrationAddressTitle() {
+        if (saved.getResidence().isEmpty() && saved.getRegistration().isEmpty())
+            return getActivity().getString(R.string.address_not_specified);
+        return saved.getRegistration().compareByFullAddress(saved.getResidence()) || saved.getResidence().isEmpty()
+                ? "Совпадает с адресом регистрации" : saved.getResidence().getAddressTitle(getActivity().getBaseContext());
     }
 
     public void addSocialBindingIcon(LinearLayout linearLayout, @DrawableRes int res, Context context) {
@@ -110,6 +119,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
 
     public void setProfileFillPercentView() {
         percentFilledTitle.setText(String.format(getActivity().getString(R.string.profile_filled_title), saved.getPercentFillProfile()));
+        percentFilledPb.setProgress(saved.getPercentFillProfile());
     }
 
     @Override
@@ -140,7 +150,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     }
 
     private void setSocialBindingStatusView() {
-        socialBindingStatus.setText(socialBindingLayer.getChildCount() > 0 ? "подключено" : "не указано");
+        socialBindingStatus.setText(socialBindingLayer.getChildCount() > 0 ? "Подключено" : "Не указано");
     }
 
     @Override

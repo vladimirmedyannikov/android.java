@@ -36,6 +36,7 @@ public class DefaultResponseErrorHandler implements ResponseErrorHandler {
     public void onSystemError(Throwable throwable) {
         String errorMessage = "Произошла непредвиденная ошибка. Попробуйте повторить операцию позже.";
         if (BuildConfig.DEBUG) {
+            throwable.printStackTrace();
             errorMessage = String.format("Попробуйте повторить операцию позже. Произошла непредвиденная ошибка: %s",
                     throwable.getMessage());
         }

@@ -3,19 +3,34 @@ package ru.mos.polls.friend.vm;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
+import ru.mos.elk.profile.ProfileManager;
+import ru.mos.polls.AGApplication;
+import ru.mos.polls.AgAuthActivity;
+import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
+import ru.mos.polls.friend.state.FriendProfileState;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
+import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
+import ru.mos.polls.survey.SurveyActivity;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -25,6 +40,8 @@ public class FriendProfileTabFragmentVM extends FragmentViewModel<FriendProfileT
     private ViewPager pager;
     private TabLayout slidingTabs;
     private Friend friend;
+    private PagerAdapter adapter;
+    private View friendInvisibleLayout;
 
     public FriendProfileTabFragmentVM(FriendProfileTabFragment fragment, FragmentFriendTabBinding binding) {
         super(fragment, binding);
@@ -38,9 +55,9 @@ public class FriendProfileTabFragmentVM extends FragmentViewModel<FriendProfileT
         }
         List<PagerAdapter.Page> pages = getPages();
         pager = binding.pager;
-        PagerAdapter adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
+        adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
         pager.setAdapter(adapter);
-
+        friendInvisibleLayout = binding.friendInvisibleLayout;
         slidingTabs = binding.slidingTabs;
         slidingTabs.setupWithViewPager(pager);
         for (int index = 0; index < pages.size(); ++index) {
@@ -69,6 +86,26 @@ public class FriendProfileTabFragmentVM extends FragmentViewModel<FriendProfileT
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+        subscribeEventsBus();
+    }
+
+    private void subscribeEventsBus() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.FriendEvents) {
+                        Events.FriendEvents action = (Events.FriendEvents) o;
+                        switch (action.getId()) {
+                            case Events.FriendEvents.FRIEND_INVISIBLE:
+                                slidingTabs.setVisibility(View.GONE);
+                                pager.setVisibility(View.GONE);
+                                friendInvisibleLayout.setVisibility(View.VISIBLE);
+                                break;
+                        }
+                    }
+
+                });
     }
 
     protected void selectTab(int tabNumber) {

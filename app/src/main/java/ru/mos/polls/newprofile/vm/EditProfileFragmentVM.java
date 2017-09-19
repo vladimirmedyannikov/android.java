@@ -125,8 +125,7 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
                                 this.savedUser = changed;
-                                refreshView(changed);
-                                savedUser.save(getActivity().getBaseContext());
+                                refreshView(savedUser);
                                 break;
                         }
                     }

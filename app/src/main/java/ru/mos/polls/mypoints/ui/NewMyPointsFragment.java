@@ -16,6 +16,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
+import ru.mos.polls.helpers.ActionBarHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.mypoints.vm.NewMyPointsFragmentVM;
 
@@ -80,5 +81,11 @@ public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, 
     @Override
     public int getLayoutResources() {
         return R.layout.fragment_new_my_points;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ActionBarHelper.hideCustomActionBar((AppCompatActivity) getActivity());
     }
 }

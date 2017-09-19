@@ -240,7 +240,7 @@
     <string name="social_update_success">Спасибо! Данные скоро обновятся</string>
     <string name="coincidesAddresses">Адрес регистрации совпадает с адресом проживания</string>
     <string name="coincidesAddressRegistration">совпадает с адресом регистрации</string>
-    <string name="address_not_specified">не указан</string>
+    <string name="address_not_specified">Не указан</string>
     <string name="add_new_address">Добавить новый адрес</string>
     <string name="title_select_address">Добавление адреса</string>
     <string name="last_post_time_not_allow_do_new_post">Вы уже сделали пост на стене в %s, попробуйте повторить операцию позже</string>
@@ -788,4 +788,5 @@
     <string name="connection_mos_pgu_connected">установлена</string>
     <string name="title_item_add_friend">Добавить друга</string>
     <string name="profile_title">Профиль</string>
+    <string name="friend_profile_invisible">Пользователь скрыл свои данные</string>
 </resources>

@@ -363,8 +363,9 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
+                System.out.printf("sendFlat");
                 Flat newFlat = null;
-                if (result != null) {
+                if (result != null && result.getFlats() != null) {
                     if (result.getFlats().getRegistration() != null) {
                         newFlat = result.getFlats().getRegistration();
                         newFlat.setType(Flat.Type.REGISTRATION);

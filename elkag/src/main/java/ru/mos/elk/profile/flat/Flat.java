@@ -36,6 +36,8 @@ public class Flat implements Serializable {
     private String building;
     private String street;
     private String city;
+    @SerializedName("flat_type")
+    private String flatType;
     private Type type;
     @SerializedName("editing_blocked")
     private boolean enable;

@@ -522,7 +522,15 @@ public class AgUser implements Serializable {
     }
 
     public String getRegistrationDate() {
-        return registrationDate;
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy");
+        String regDate = "на проекте с ";
+        try {
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
+            regDate = regDate + sdf2.format(sdf1.parse(registrationDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return regDate;
     }
 
     public AgUser setBirthday(String birthday) {
@@ -694,6 +702,10 @@ public class AgUser implements Serializable {
 
     public int getPercentFillProfile() {
         return percentFillProfile;
+    }
+
+    public void setPercentFillProfile(int percentFillProfile) {
+        this.percentFillProfile = percentFillProfile;
     }
 
     public int getCount() {

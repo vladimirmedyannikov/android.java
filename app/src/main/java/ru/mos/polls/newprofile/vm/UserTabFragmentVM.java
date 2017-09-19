@@ -133,12 +133,6 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     public void setAchievementLayerView() {
         List<Achievements> list = saved.getAchievementsList(getActivity());
         achievementLayer.removeAllViews();
-        if (list.size() == 0) {
-            for (Achievements achievements : AchievementTabFragmentVM.mockList(getActivity())) {
-                if (list.size() > 2) break;
-                list.add(achievements);
-            }
-        }
         if (list.size() > 0) {
             for (Achievements achievements : list) {
                 UIhelper.addAchievements(achievementLayer, achievements.getImageUrl(), getActivity().getBaseContext());

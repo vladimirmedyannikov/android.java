@@ -238,33 +238,35 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
-                if (!forWizard) {
-                    AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
-                    EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                    getActivity().finish();
-                } else {
-                    int wizardType = 0;
-                    int percent = 0;
-                    if (result != null) percent = result.getPercentFillProfile();
-                    switch (personalType) {
-                        case PERSONAL_EMAIL:
-                            wizardType = Events.WizardEvents.WIZARD_EMAIL;
-                            break;
-                        case PERSONAL_FIO:
-                            agUser.setGender(AgUser.Gender.parse(personal.getSex()));
-                            AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_UPDATE_GENDER, percent));
-                            wizardType = Events.WizardEvents.WIZARD_PERSONAL;
-                            break;
-                        case COUNT_KIDS:
-                            agUser.setMaritalStatus(AgUser.MaritalStatus.parse(personal.getMarital_status()));
-                            wizardType = Events.WizardEvents.WIZARD_FAMALY;
-                            break;
-                        case BIRTHDAY_KIDS:
-                            wizardType = Events.WizardEvents.WIZARD_KIDS;
-                            break;
-                    }
+                if (result != null) {
+                    int percent = result.getPercentFillProfile();
+                    agUser.setPercentFillProfile(percent);
                     agUser.save(getActivity());
-                    AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                    if (!forWizard) {
+                        AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
+                        EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                        getActivity().finish();
+                    } else {
+                        int wizardType = 0;
+                        switch (personalType) {
+                            case PERSONAL_EMAIL:
+                                wizardType = Events.WizardEvents.WIZARD_EMAIL;
+                                break;
+                            case PERSONAL_FIO:
+                                agUser.setGender(AgUser.Gender.parse(personal.getSex()));
+                                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_UPDATE_GENDER, percent));
+                                wizardType = Events.WizardEvents.WIZARD_PERSONAL;
+                                break;
+                            case COUNT_KIDS:
+                                agUser.setMaritalStatus(AgUser.MaritalStatus.parse(personal.getMarital_status()));
+                                wizardType = Events.WizardEvents.WIZARD_FAMALY;
+                                break;
+                            case BIRTHDAY_KIDS:
+                                wizardType = Events.WizardEvents.WIZARD_KIDS;
+                                break;
+                        }
+                        AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                    }
                 }
             }
         };

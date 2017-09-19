@@ -97,6 +97,8 @@ public class Events {
 
     public static class FriendEvents {
         public static final int FRIEND_PROFILE = 1;
+        public static final int FRIEND_INVISIBLE = 2;
+
         private int id;
         private Friend friend;
 

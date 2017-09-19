@@ -14,16 +14,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/wizard_avatar"
-            android:layout_width="@dimen/vs_xnormal"
-            android:layout_height="@dimen/vs_xnormal"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/pd_normal"
-            android:src="@drawable/unlogin"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp"/>
+        <include layout="@layout/layout_user_avatar"
+            android:id="@+id/wizard_avatar"/>
 
         <Button
             android:id="@+id/wizard_take_avatar"

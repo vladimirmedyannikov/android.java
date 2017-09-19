@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -11,6 +11,7 @@
 
     <LinearLayout
         style="@style/root"
+        android:background="@color/actionbar_background"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -19,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            app:tabIndicatorColor="@color/yellow"
             app:tabBackground="@color/actionbar_background"
+            app:tabIndicatorColor="@color/yellow"
             app:tabMode="fixed"/>
 
         <android.support.v4.view.ViewPager
@@ -30,5 +31,20 @@
             android:layout_weight="1">
 
         </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/friend_invisible_layout"
+            android:visibility="gone"
+            style="@style/linear">
+
+            <include
+                layout="@layout/layout_user_avatar"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/text.small.white"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/friend_profile_invisible"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -24,7 +24,7 @@ public class WizardAvatarFragmentVM extends BaseProfileTabFragmentVM<WizardAvata
 
     @Override
     protected void initialize(FragmentMakeAvatarBinding binding) {
-        circleImageView = binding.wizardAvatar;
+        circleImageView = binding.wizardAvatar.avatar;
     }
 
     @Override

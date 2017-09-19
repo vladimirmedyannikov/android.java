@@ -32,6 +32,12 @@ public class PagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+
+    public void deletePage(int page) {
+        pages.remove(page);
+        notifyDataSetChanged();
+    }
+
     @Override
     public Fragment getItem(int position) {
         return pages.get(position).fragment;

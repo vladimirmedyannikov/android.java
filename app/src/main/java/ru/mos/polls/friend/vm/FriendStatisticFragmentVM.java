@@ -21,6 +21,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.LayoutFriendProfileBinding;
 import ru.mos.polls.friend.ui.adapter.FriendProfileAdapter;
@@ -51,6 +52,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
     AppCompatTextView achievementsValue;
     View achievementPanel;
     RecyclerView recyclerView;
+    View friendStatusInfo;
     Friend friend;
 
     public FriendStatisticFragmentVM(FriendStatisticFragment fragment, LayoutFriendProfileBinding binding) {
@@ -65,7 +67,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         }
         recyclerView = binding.list;
         UIhelper.setRecyclerList(recyclerView, getActivity());
-        friendImage = binding.friendImage;
+        friendImage = binding.friendAvatar.avatar;
         friendFI = binding.friendStatusInfoPanel.agUserFi;
         friendRegDate = binding.friendStatusInfoPanel.agUserRegistrationDate;
         friendRating = binding.friendStatusInfoPanel.agUserRatingValue;
@@ -73,6 +75,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         achievementLayer = binding.friendStatusInfoPanel.agUserAchievementLayer;
         achievementsValue = binding.friendStatusInfoPanel.agUserAchievementValue;
         achievementPanel = binding.friendStatusInfoPanel.agUserAchievementPanel;
+        friendStatusInfo = binding.friendStatusInfoPanel.agUserStatusLayout;
         adapter = new FriendProfileAdapter();
         recyclerView.setAdapter(adapter);
         loadFriendProfile();
@@ -134,27 +137,24 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                 = new HandlerApiResponseSubscriber<FriendProfile.Response.Result>(getFragment().getContext(), progressable) {
             @Override
             protected void onResult(FriendProfile.Response.Result result) {
-                setAchievementLayerView(result.getAchievements().getLast());
-                setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
-                friendRegDate.setText(result.getPersonal().getRegistrationDate());
-                friendRating.setText(String.valueOf(result.getStatistics().getRating()));
-                friendStatus.setText(result.getStatistics().getStatus());
-                setAchievementsCountView(result.getAchievements().getCount());
-                FriendGuiUtils.loadAvatar(friendImage, AgApiBuilder.resourceURL(result.getPersonal().getAvatar()));
-                adapter.notifyDataSetChanged();
+                if (result.isProfileVisible()) {
+                    setAchievementLayerView(result.getAchievements().getLast());
+                    setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
+                    friendRegDate.setText(result.getPersonal().getRegistrationDate());
+                    friendRating.setText(String.valueOf(result.getStatistics().getRating()));
+                    friendStatus.setText(result.getStatistics().getStatus());
+                    setAchievementsCountView(result.getAchievements().getCount());
+                    FriendGuiUtils.loadAvatar(friendImage, AgApiBuilder.resourceURL(result.getPersonal().getAvatar()));
+                    adapter.notifyDataSetChanged();
+                } else {
+                    setFriendInvisibleView();
+                }
             }
 
             @Override
             public void onError(Throwable throwable) {
                 super.onError(throwable);
-                setAchievementLayerView(new ArrayList<>()); //убрать
-                setFiView(FriendGuiUtils.getTitle(friend));
-                friendRegDate.setText("дата регистрации в сервисе, dd.mm.yyyy");
-                friendRating.setText("521");
-                friendStatus.setText("Новичок");
-                setAchievementsCountView(2);
-                FriendGuiUtils.loadAvatar(friendImage, "http://cs623727.vk.me/v623727792/103e2/OebzxL0Mjf4.jpg");
-                mockUserStatsList();
+                setFriendInvisibleView();
             }
         };
         AGApplication
@@ -163,6 +163,13 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(handler);
+    }
+
+    public void setFriendInvisibleView() {
+        AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_INVISIBLE));
+        friendImage.setImageResource(R.drawable.ic_avatar_default);
+        recyclerView.setVisibility(View.GONE);
+        friendStatusInfo.setVisibility(View.INVISIBLE);
     }
 
     public void setAchievementsCountView(int count) {

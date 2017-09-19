@@ -2,6 +2,7 @@ package ru.mos.polls.rxhttp.rxapi.model.support.service;
 
 
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +12,6 @@ import java.util.List;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.UrlManager;
-import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
@@ -40,12 +40,14 @@ public class FeedbackSend{
             apiVersion.add(UrlManager.url(AgApi.Api.Controllers.SUPPORT, AgApi.Api.Methods.SEND_FEEDBACK));
             this.email = email;
             this.message = message;
-            this.orderNumber = orderNumber;
+            if (!TextUtils.isEmpty(orderNumber)) {
+                this.orderNumber = orderNumber;
+            }
             this.userInfo = new FeedbackUserInfo(sessionId);
         }
     }
 
-    public static class Response extends GeneralResponse<EmptyResult[]> {
+    public static class Response extends GeneralResponse<String> {
     }
 
     public static class FeedbackUserInfo {

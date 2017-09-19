@@ -28,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.netframework.request.Session;
@@ -35,7 +37,7 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
-import ru.mos.polls.support.gui.AgSupportActivity;
+import ru.mos.polls.newsupport.state.SupportState;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
 import ru.mos.polls.util.GuiUtils;
@@ -133,7 +135,8 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.feedback)
     public void onFeedback() {
-        AgSupportActivity.startActivity(this);
+//        AgSupportActivity.startActivity(this);
+        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
     @Override

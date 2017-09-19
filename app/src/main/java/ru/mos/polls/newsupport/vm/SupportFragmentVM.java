@@ -23,13 +23,13 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutSupportBinding;
-import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.newsupport.ui.adapter.SubjectAdapter;
 import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.support.Subject;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
+import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by matek3022 on 13.09.17.
@@ -39,7 +39,6 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
     private List<Subject> subjects;
     private ArrayAdapter subjectAdapter;
-    private Subject currentSubject;
     private Unbinder unbinder;
     private GoogleStatistics.Feedback statistics;
 
@@ -50,7 +49,13 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
     @Override
     protected UIComponentHolder createComponentHolder() {
         return new UIComponentHolder.Builder()
-                .with(new ProgressableUIComponent())
+                .with(new ProgressableUIComponent(){
+                    @Override
+                    public void begin() {
+                        super.begin();
+                        rootView.setVisibility(View.GONE);
+                    }
+                })
                 .build();
     }
 
@@ -105,7 +110,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
     private void loadSubjects() {
         HandlerApiResponseSubscriber<SubjectsLoad.Response.Result> handler
-                = new HandlerApiResponseSubscriber<SubjectsLoad.Response.Result>(getFragment().getContext(), progressable) {
+                = new HandlerApiResponseSubscriber<SubjectsLoad.Response.Result>(getFragment().getContext(), getProgressable()) {
 
             @Override
             protected void onResult(SubjectsLoad.Response.Result result) {
@@ -124,12 +129,12 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
     public void sendMessage() {
         getBinding().btnSendMessage.setEnabled(false);
-        HandlerApiResponseSubscriber<EmptyResult[]> handler
-                = new HandlerApiResponseSubscriber<EmptyResult[]>(getFragment().getContext(), progressable) {
+        HandlerApiResponseSubscriber<String> handler
+                = new HandlerApiResponseSubscriber<String>(getFragment().getContext(), getProgressable()) {
 
             @Override
-            protected void onResult(EmptyResult[] result) {
-                statistics.feedbackSanded(currentSubject.getTitle());
+            protected void onResult(String response) {
+                statistics.feedbackSanded(getCurrentSubject().getTitle());
                 /**
                  * Очищаем поля при успещной отправке сообщения
                  */
@@ -137,12 +142,13 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                 getBinding().orderNumber.setText("");
                 getBinding().subject.setSelection(0);
                 processSendingEnabled();
+                GuiUtils.displayOkMessage(getActivity(), "Обращение успешно отправлено", null);
             }
 
             @Override
             public void onError(Throwable throwable) {
                 super.onError(throwable);
-                statistics.errorOccurs(currentSubject.getTitle(), throwable.getMessage());
+                statistics.errorOccurs(getCurrentSubject().getTitle(), throwable.getMessage());
                 processSendingEnabled();
             }
         };

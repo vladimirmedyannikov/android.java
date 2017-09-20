@@ -151,16 +151,16 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void setAvatarRequest(String id) {
-        HandlerApiResponseSubscriber<EmptyResult[]> handler
-                = new HandlerApiResponseSubscriber<EmptyResult[]>(getActivity(), progressable) {
+        HandlerApiResponseSubscriber<AvatarSet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<AvatarSet.Response.Result>(getActivity(), progressable) {
             @Override
-            protected void onResult(EmptyResult[] result) {
+            protected void onResult(AvatarSet.Response.Result result) {
                 Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
                 isAvatarLoaded = true;
-                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, 3));
+                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, result.getPercentFillProfile()));
             }
         };
-        Observable<EmptyResponse> responseObservable = AGApplication.api
+        Observable<AvatarSet.Response> responseObservable = AGApplication.api
                 .setAvatar(new AvatarSet.Request(id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

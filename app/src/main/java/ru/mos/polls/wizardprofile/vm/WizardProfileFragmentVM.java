@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -261,7 +260,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                             case Events.WizardEvents.WIZARD_PERSONAL:
                                 wizardFilledList.put(PERSONAL, true);
                                 break;
-                            case Events.WizardEvents.WIZARD_FAMALY:
+                            case Events.WizardEvents.WIZARD_FAMILY:
                                 wizardFilledList.put(FAMILY, true);
                                 checkBirthdayKidsFr();
                                 break;
@@ -284,21 +283,19 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 wizardFilledList.put(PGU, true);
                                 break;
                         }
-                        setPercentegeTitleView(percent);
-                        setProfileProgressbarView(percent);
+                        if (events.getWizardType() != Events.WizardEvents.WIZARD_UPDATE_GENDER) {
+                            setPercentegeTitleView(percent);
+                            setProfileProgressbarView(percent);
+                            slideNextPage();
+                        }
                     }
                 });
     }
 
-    public void checkPageNumber() {
+    public void slideNextPage() {
         int nextPage = pager.getCurrentItem() + 1;
         if (nextPage <= listSize) {
             pager.setCurrentItem(nextPage);
-            if (nextPage == listSize) {
-                nextButton.setText("Завершить");
-            } else {
-                nextButton.setText("Продолжить");
-            }
         }
     }
 

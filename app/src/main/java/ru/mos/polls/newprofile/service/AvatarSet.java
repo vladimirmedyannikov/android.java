@@ -19,4 +19,16 @@ public class AvatarSet {
             this.mediaId = mediaId;
         }
     }
+
+    public static class Response extends GeneralResponse<Response.Result> {
+        public static class Result {
+            @SerializedName("percent_fill_profile")
+            private int percentFillProfile;
+
+            public int getPercentFillProfile() {
+                return percentFillProfile;
+            }
+
+        }
+    }
 }

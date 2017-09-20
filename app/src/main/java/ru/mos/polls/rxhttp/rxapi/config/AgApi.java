@@ -104,7 +104,7 @@ public interface AgApi {
     Observable<StreetGet.Response> getAddressStreetList(@Body StreetGet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.AVATAR)
-    Observable<EmptyResponse> setAvatar(@Body AvatarSet.Request body);
+    Observable<AvatarSet.Response> setAvatar(@Body AvatarSet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.VISIBLE)
     Observable<EmptyResponse> setProfileVisibility(@Body VisibilitySet.Request body);

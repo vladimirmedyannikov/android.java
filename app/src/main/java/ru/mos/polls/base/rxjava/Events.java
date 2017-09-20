@@ -66,7 +66,7 @@ public class Events {
         public static final int WIZARD_AVATAR = 1;
         public static final int WIZARD_EMAIL = 2;
         public static final int WIZARD_PERSONAL = 3;
-        public static final int WIZARD_FAMALY = 4;
+        public static final int WIZARD_FAMILY = 4;
         public static final int WIZARD_KIDS = 5;
         public static final int WIZARD_REGISTRATION = 6;
         public static final int WIZARD_RESIDENCE = 7;

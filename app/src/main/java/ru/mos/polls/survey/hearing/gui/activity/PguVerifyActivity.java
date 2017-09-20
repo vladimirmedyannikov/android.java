@@ -103,7 +103,7 @@ public class PguVerifyActivity extends ToolbarAbstractActivity {
         startProgress();
         HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
             @Override
-            public void onSuccess(QuestMessage questMessage) {
+            public void onSuccess(QuestMessage questMessag, int percent) {
                 stopProgress();
                 setResult(true);
                 finish();

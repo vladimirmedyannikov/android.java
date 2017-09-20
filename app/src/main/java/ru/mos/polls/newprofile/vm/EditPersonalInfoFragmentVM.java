@@ -254,12 +254,12 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                                 break;
                             case PERSONAL_FIO:
                                 agUser.setGender(AgUser.Gender.parse(personal.getSex()));
-                                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_UPDATE_GENDER, percent));
                                 wizardType = Events.WizardEvents.WIZARD_PERSONAL;
+                                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_UPDATE_GENDER));
                                 break;
                             case COUNT_KIDS:
                                 agUser.setMaritalStatus(AgUser.MaritalStatus.parse(personal.getMarital_status()));
-                                wizardType = Events.WizardEvents.WIZARD_FAMALY;
+                                wizardType = Events.WizardEvents.WIZARD_FAMILY;
                                 break;
                             case BIRTHDAY_KIDS:
                                 wizardType = Events.WizardEvents.WIZARD_KIDS;

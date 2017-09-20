@@ -140,9 +140,9 @@ public class PguBindFragment extends JugglerFragment {
         startProgress();
         HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
             @Override
-            public void onSuccess(QuestMessage questMessage) {
+            public void onSuccess(QuestMessage questMessage, int percent) {
                 AbstractActivity.hideSoftInput(getActivity(), password);
-                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, 70));
+                AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, percent));
                 questMessage.show(getActivity(), true);
                 stopProgress();
                 if (questMessage != null && !questMessage.isEmpty()) {

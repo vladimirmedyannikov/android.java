@@ -17,7 +17,9 @@ import java.util.List;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
@@ -70,6 +72,7 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
     @Override
     public void onResume() {
         super.onResume();
+        agUser = new AgUser(getActivity());
         displayBirthday();
         setGenderView(agUser.getGender());
     }

@@ -82,7 +82,6 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
                 .subscribe(o -> {
                     if (o instanceof Events.WizardEvents) {
                         Events.WizardEvents events = (Events.WizardEvents) o;
-                        agUser = new AgUser(getActivity());
                         switch (events.getWizardType()) {
                             case Events.WizardEvents.WIZARD_UPDATE_GENDER:
                                 agUser = new AgUser(getActivity());

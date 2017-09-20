@@ -82,7 +82,8 @@ public abstract class HearingApiController {
                 AgUser.setPguConnected(elkActivity);
                 if (listener != null) {
                     QuestMessage questMessage = new QuestMessage(jsonObject);
-                    listener.onSuccess(questMessage);
+                    int percent = jsonObject.optInt("percent_fill_profile");
+                    listener.onSuccess(questMessage, percent);
                 }
             }
         };
@@ -168,7 +169,7 @@ public abstract class HearingApiController {
     }
 
     public interface PguAuthListener {
-        void onSuccess(QuestMessage questMessage);
+        void onSuccess(QuestMessage questMessage, int percent);
 
         void onError(String error);
     }

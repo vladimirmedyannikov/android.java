@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.gui.JugglerFragment;
+import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
@@ -28,16 +30,16 @@ import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.instruction.InstructionActivity;
+import ru.mos.polls.newsupport.state.SupportState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
-import ru.mos.polls.support.gui.AgSupportActivity;
 
 /**
  * Экран "О приложении", содержит список пукнтов {@link AboutItem}, описывающих общие положения о приложении
  *
  * @since 1.0
  */
-public class AboutAppFragment extends Fragment {
+public class AboutAppFragment extends JugglerFragment {
     private SocialListener socialListener;
     @BindView(R.id.app_version)
     TextView versionTextView;
@@ -131,7 +133,8 @@ public class AboutAppFragment extends Fragment {
                         FunctionalHelper.startGooglePlay(getActivity());
                         break;
                     case AboutItem.FEEDBACK:
-                        AgSupportActivity.startActivity(getActivity());
+//                        AgSupportActivity.startActivity(getActivity());
+                        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                         break;
                 }
             }

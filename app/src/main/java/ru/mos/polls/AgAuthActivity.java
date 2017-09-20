@@ -39,6 +39,8 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -49,9 +51,9 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
+import ru.mos.polls.newsupport.state.SupportState;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.session.Session;
-import ru.mos.polls.support.gui.AgSupportActivity;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 
@@ -204,7 +206,8 @@ public class AgAuthActivity extends AuthActivity {
 //        PopupController.authOrRegistry(AgAuthActivity.this, phone);
         statistics.helpClick();
         new GoogleStatistics.Auth().feedbackClick();
-        AgSupportActivity.startActivity(this);
+//        AgSupportActivity.startActivity(this);
+        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
     @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

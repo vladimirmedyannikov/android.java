@@ -1,6 +1,5 @@
 package ru.mos.polls.popup;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,12 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.AgRestoreActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
-import ru.mos.polls.support.gui.AgSupportActivity;
+import ru.mos.polls.newsupport.state.SupportState;
 
 /**
  * Класс для создания всплывающео меню внизу экрана
@@ -44,7 +46,8 @@ public abstract class PopupController {
                         break;
                     case PopupItem.Auth.FEEDBACK:
                         popupWindow.dismiss();
-                        AgSupportActivity.startActivity(context);
+//                        AgSupportActivity.startActivity(context);
+                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                         break;
                 }
             }
@@ -70,7 +73,8 @@ public abstract class PopupController {
                         break;
                     case PopupItem.Auth.FEEDBACK:
                         new GoogleStatistics.Auth().feedbackClick();
-                        AgSupportActivity.startActivity(context);
+//                        AgSupportActivity.startActivity(context);
+                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                         popupWindow.dismiss();
                         break;
                 }
@@ -105,7 +109,8 @@ public abstract class PopupController {
                         break;
                     case PopupItem.Auth.FEEDBACK:
                         new GoogleStatistics.Auth().feedbackClick();
-                        AgSupportActivity.startActivity(context);
+//                        AgSupportActivity.startActivity(context);
+                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                         popupWindow.dismiss();
                         break;
                 }

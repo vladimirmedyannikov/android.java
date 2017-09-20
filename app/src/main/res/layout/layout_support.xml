@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newsupport.vm.SupportFragmentVM" />
+    </data>
+
+    <RelativeLayout
+        style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/root.padding">
+
+                <LinearLayout style="@style/linear">
+
+                    <TextView
+                        style="@style/text.up.green.medium"
+                        android:text="@string/contact_info" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        style="@style/input.email"
+                        android:hint="@string/email"
+                        app:onTextChange="@{viewModel::processSendingEnabled}"/>
+
+                    <LinearLayout
+                        android:id="@+id/subjectContainer"
+                        style="@style/linear"
+                        android:paddingTop="@dimen/pd_normal">
+
+                        <TextView
+                            style="@style/text.up.green.medium"
+                            android:text="@string/subject_support" />
+
+                        <Spinner
+                            android:id="@+id/subject"
+                            style="@style/item"
+                            android:layout_marginTop="@dimen/pd_xxsmall"
+                            android:editable="false"
+                            android:focusable="false" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/orderNumberLayout"
+                        style="@style/item.linear"
+                        android:paddingTop="@dimen/pd_normal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/orderNumberTitle"
+                            style="@style/text.up.green.medium"
+                            android:text="@string/order_number_title_text" />
+
+                        <EditText
+                            android:id="@+id/orderNumber"
+                            style="@style/input.numberDecimal"
+                            android:hint="@string/order_number_hint" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/text.up.green.medium"
+                        android:paddingTop="@dimen/pd_normal"
+                        android:text="@string/message_text" />
+
+                    <EditText
+                        android:id="@+id/etMessage"
+                        style="@style/input.multiLines"
+                        android:hint="@string/your_message"
+                        app:onTextChange="@{viewModel::processSendingEnabled}"/>
+
+                    <Button
+                        android:id="@+id/btnSendMessage"
+                        style="@style/button.centered.match"
+                        android:layout_marginTop="@dimen/pd_xlarge"
+                        android:enabled="false"
+                        android:text="@string/sendMessage"
+                        app:onClick="@{viewModel::sendMessage}"/>
+                </LinearLayout>
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

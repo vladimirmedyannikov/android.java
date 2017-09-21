@@ -73,7 +73,11 @@ public class AppSocial extends Social{
     }
 
     public static Observable<List<AppSocial>> getObservableSavedSocials(Context context) {
-        return Observable.just(Configurator.getInstance(context).getStorable().getAll());
+        List<AppSocial> list = Configurator.getInstance(context).getStorable().getAll();
+        for (AppSocial appSocial : list) {
+            appSocial.setIsLogin(!appSocial.getToken().isEmpty());
+        }
+        return Observable.just(list);
     }
 
     public AppSocial(JSONObject socialJson) {

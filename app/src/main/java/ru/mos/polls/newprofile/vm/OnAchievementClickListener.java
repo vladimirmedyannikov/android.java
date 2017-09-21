@@ -5,5 +5,5 @@ package ru.mos.polls.newprofile.vm;
  */
 
 public interface OnAchievementClickListener {
-     void onAchivementClick(String id);
+     void onAchievementClick(String id);
 }

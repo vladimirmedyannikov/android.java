@@ -45,41 +45,15 @@ public class AchievementTabFragmentVM extends PullableFragmentVM<AchievementTabF
         if (extras != null) {
             friendId = extras.getInt(AchievementTabFragment.ARG_FRIEND_ID);
         }
-//        UIhelper.setRecyclerList(recyclerView, getActivity());
-//        page = new Page();
-//        isPaginationEnable = true;
     }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        doRequest();
-//    }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-
-//        adapter = new AchievementAdapter(list, this);
-
     }
 
-//    @Override
-//    protected UIComponentHolder createComponentHolder() {
-//        return new UIComponentHolder.Builder()
-//                .with(new PullableUIComponent(() -> {
-//                    progressable = getPullableProgressable();
-//                    page.reset();
-//                    adapter.clear();
-//                    adapter.notifyDataSetChanged();
-//                    loadAchivements();
-//                }))
-//                .with(new ProgressableUIComponent())
-//                .build();
-//    }
-
     @Override
-    public void onAchivementClick(String id) {
+    public void onAchievementClick(String id) {
         AchievementActivity.startActivity(getActivity(), id);
     }
 
@@ -103,17 +77,6 @@ public class AchievementTabFragmentVM extends PullableFragmentVM<AchievementTabF
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-//    protected RecyclerView.OnScrollListener getScrollableListener() {
-//        RecyclerScrollableController.OnLastItemVisibleListener onLastItemVisibleListener
-//                = () -> {
-//            if (isPaginationEnable) {
-//                isPaginationEnable = false;
-//                page.increment();
-//                doRequest();
-//            }
-//        };
-//        return new RecyclerScrollableController(onLastItemVisibleListener);
-//    }
 
     public static List<Achievements> mockList(Context context) {
         Gson gson = new Gson();

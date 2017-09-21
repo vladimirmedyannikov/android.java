@@ -2,7 +2,6 @@ package ru.mos.polls.mypoints.vm;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,12 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
-import ru.mos.polls.base.component.ProgressableUIComponent;
-import ru.mos.polls.base.component.PullableUIComponent;
-import ru.mos.polls.base.component.UIComponentFragmentViewModel;
-import ru.mos.polls.base.component.UIComponentHolder;
-import ru.mos.polls.base.ui.RecyclerScrollableController;
-import ru.mos.polls.base.ui.rvdecoration.UIhelper;
+import ru.mos.polls.base.vm.PullableFragmentVM;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
 import ru.mos.polls.model.PointHistory;
 import ru.mos.polls.mypoints.model.Points;
@@ -35,25 +29,20 @@ import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.mypoints.ui.NewMyPointsAdapter;
 import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.util.StubUtils;
 
 /**
  * Created by Trunks on 23.08.2017.
  */
 
-public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPointsFragment, FragmentNewMyPointsBinding> {
+public class NewMyPointsFragmentVM extends PullableFragmentVM<NewMyPointsFragment, FragmentNewMyPointsBinding, NewMyPointsAdapter> {
     TextView tvCurrentPointsUnit;
-    RecyclerView list;
-    NewMyPointsAdapter adapter;
     TextView empty;
     TextView tvPoints;
     TextView tvStatus;
     TextView tvTitleBalance;
     Status status;
-    private Page historyPage;
-    boolean isPaginationEnable;
-    List<Points> filteredList;
+    List<String> action;
     /**
      * Хранит текущий тип списка баллов
      */
@@ -67,31 +56,43 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     protected void initialize(FragmentNewMyPointsBinding binding) {
         tvCurrentPointsUnit = binding.tvCurrentPointsUnit;
         empty = binding.empty;
-        list = binding.list;
+        recyclerView = binding.list;
         tvPoints = binding.tvPoints;
         tvStatus = binding.tvStatus;
         tvTitleBalance = binding.tvTitleBalance;
-        UIhelper.setRecyclerList(list, getActivity());
         adapter = new NewMyPointsAdapter();
-        list.setAdapter(adapter);
-        list.addOnScrollListener(getScrollableListener());
-        historyPage = new Page();
-        isPaginationEnable = true;
-    }
-
-    @Override
-    public void onViewCreated() {
-        super.onViewCreated();
-        progressable = getProgressable();
+        action = new ArrayList<>();
         currentAction = PointHistory.Action.ALL;
         setListeners();
+        super.initialize(binding);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setView();
-        requestHistory();
+    }
+
+    @Override
+    public void doRequest() {
+        HandlerApiResponseSubscriber<HistoryGet.Response.Result> handler =
+                new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
+                    @Override
+                    protected void onResult(HistoryGet.Response.Result result) {
+                        adapter.add(result.getPoints());
+                        empty.setVisibility(View.INVISIBLE);
+                        progressPull();
+                        status = result.getStatus();
+                        setView();
+                    }
+                };
+        HistoryGet.Request request = new HistoryGet.Request(page);
+        request.setAction(action);
+        Observable<HistoryGet.Response> responseObservable = AGApplication.api
+                .getHistory(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservable.subscribeWith(handler));
     }
 
     public void setListeners() {
@@ -114,69 +115,30 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 boolean result = false;
+                action = new ArrayList<>();
                 switch (menuItem.getItemId()) {
                     case R.id.action_debit:
                         currentAction = PointHistory.Action.DEBIT;
+                        action.add(PointHistory.Action.DEBIT.toString());
                         result = true;
                         break;
                     case R.id.action_credit:
                         currentAction = PointHistory.Action.CREDIT;
+                        action.add(PointHistory.Action.CREDIT.toString());
                         result = true;
                         break;
                     case R.id.action_all:
                         currentAction = PointHistory.Action.ALL;
+                        action = null;
                         result = true;
                         break;
                 }
-                adapter.clear();
-                adapter.notifyDataSetChanged();
-                requestHistory();
+                clearList();
+                doRequest();
                 return result;
             }
         });
         popup.show();
-    }
-
-    public void requestHistory() {
-        HandlerApiResponseSubscriber<HistoryGet.Response.Result> handler =
-                new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
-                    @Override
-                    protected void onResult(HistoryGet.Response.Result result) {
-                        if (!currentAction.toString().equalsIgnoreCase(PointHistory.Action.ALL.toString())) {
-                            getFilteredList(result.getPoints());
-                        } else {
-                            adapter.add(result.getPoints());
-                            adapter.notifyDataSetChanged();
-                        }
-                        empty.setVisibility(View.INVISIBLE);
-                        progressable.end();
-                        isPaginationEnable = true;
-                        status = result.getStatus();
-                        setView();
-                    }
-                };
-        Observable<HistoryGet.Response> responseObservable = AGApplication.api
-                .getHistory(new HistoryGet.Request(historyPage))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(responseObservable.subscribeWith(handler));
-    }
-
-
-    public void getFilteredList(List<Points> list) {
-        filteredList = new ArrayList<>();
-        Observable.just(list)
-                .subscribeOn(Schedulers.io())
-                .flatMap(Observable::fromIterable)
-                .filter(points -> points.getAction().equalsIgnoreCase(currentAction.toString()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(points -> filteredList.add(points), throwable -> {
-                }, this::addToAdapterList);
-    }
-
-    public void addToAdapterList() {
-        adapter.add(filteredList);
-        adapter.notifyDataSetChanged();
     }
 
     private void setView() {
@@ -186,20 +148,6 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
             processPoints();
             processPointUnits();
         }
-    }
-
-    @Override
-    protected UIComponentHolder createComponentHolder() {
-        return new UIComponentHolder.Builder()
-                .with(new PullableUIComponent(() -> {
-                    progressable = getPullableProgressable();
-                    historyPage.reset();
-                    adapter.clear();
-                    adapter.notifyDataSetChanged();
-                    requestHistory();
-                }))
-                .with(new ProgressableUIComponent())
-                .build();
     }
 
     /**
@@ -244,7 +192,7 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
     }
 
     public void processPointUnits() {
-        tvCurrentPointsUnit.setText(PointsManager.getPointUnitString(getActivity(),  getPointsValue()));
+        tvCurrentPointsUnit.setText(PointsManager.getPointUnitString(getActivity(), getPointsValue()));
     }
 
     public int getPointsValue() {
@@ -257,18 +205,6 @@ public class NewMyPointsFragmentVM extends UIComponentFragmentViewModel<NewMyPoi
             points = status.getFreezedPoints();
         }
         return points;
-    }
-
-    protected RecyclerView.OnScrollListener getScrollableListener() {
-        RecyclerScrollableController.OnLastItemVisibleListener onLastItemVisibleListener
-                = () -> {
-            if (isPaginationEnable) {
-                isPaginationEnable = false;
-                historyPage.increment();
-                requestHistory();
-            }
-        };
-        return new RecyclerScrollableController(onLastItemVisibleListener);
     }
 
     public static List<Points> mockList(Context context) {

@@ -95,9 +95,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
          * отметка отложенного голососвания, если голосование былопрервано
          * удаляем голосование, если его прошли
          */
-        System.out.println("SurveyActivity onResult");
         if (SurveyActivity.onResult(requestCode, resultCode, data)) {
-            System.out.println("SurveyActivity onResult");
             long pollId = data.getLongExtra(SurveyActivity.EXTRA_SURVEY_ID, -1);
             Poll.Status status = (Poll.Status) data.getSerializableExtra(SurveyActivity.EXTRA_RESULT_SURVEY_STATE);
             if (pollId != -1 && status != null) {

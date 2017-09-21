@@ -63,12 +63,16 @@ public abstract class PullableFragmentVM<F extends JugglerFragment, B extends Vi
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
                     page.reset();
-                    adapter.clear();
-                    adapter.notifyDataSetChanged();
+                    clearList();
                     doRequest();
                 }))
                 .with(new ProgressableUIComponent())
                 .build();
+    }
+
+    public void clearList() {
+        adapter.clear();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

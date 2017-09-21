@@ -33,6 +33,7 @@ import ru.mos.polls.newprofile.vm.AchievementTabFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Param;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
 
 /**
@@ -87,21 +88,14 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         setFiView(FriendGuiUtils.getTitle(friend));
     }
 
-    private void mockUserStatsList() {
+    private void friendsStatsList(List<Param> params) { //todo привести в порядок убрать param
         List<Statistics> list = new ArrayList<>();
-        if (list.size() == 0) {
-            list.add(new Statistics("Заполненность профиля", "95%"));
-            list.add(new Statistics("Пройдено голосований", "257"));
-            list.add(new Statistics("Оценено новинок", "257"));
-            list.add(new Statistics("Оценено новинок", "17"));
-            list.add(new Statistics("Посещено мероприятий", "5"));
-            list.add(new Statistics("Приглашено друзей", "0"));
-            list.add(new Statistics("Активность в социальных сетях", "0"));
-            list.add(new Statistics("Получено баллов", "0"));
-            list.add(new Statistics("Потрачено баллов", "0"));
+        for (Param param : params) {
+            list.add(new Statistics(param.getTitle(), param.getValue()));
         }
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -117,12 +111,6 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
 
     public void setAchievementLayerView(List<Achievements> list) {
         achievementLayer.removeAllViews();
-        if (list.size() == 0) {
-            for (Achievements achievements : AchievementTabFragmentVM.mockList(getActivity())) {
-                if (list.size() > 2) break;
-                list.add(achievements);
-            }
-        }
         if (list.size() > 0) {
             for (Achievements achievements : list) {
                 UIhelper.addAchievements(achievementLayer, achievements.getImageUrl(), getActivity().getBaseContext());
@@ -139,13 +127,13 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
             protected void onResult(FriendProfile.Response.Result result) {
                 if (result.isProfileVisible()) {
                     setAchievementLayerView(result.getAchievements().getLast());
+                    setAchievementsCountView(result.getAchievements().getCount());
                     setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
                     friendRegDate.setText(result.getPersonal().getRegistrationDate());
                     friendRating.setText(String.valueOf(result.getStatistics().getRating()));
                     friendStatus.setText(result.getStatistics().getStatus());
-                    setAchievementsCountView(result.getAchievements().getCount());
                     FriendGuiUtils.loadAvatar(friendImage, AgApiBuilder.resourceURL(result.getPersonal().getAvatar()));
-                    adapter.notifyDataSetChanged();
+                    friendsStatsList(result.getStatistics().getParams());
                 } else {
                     setFriendInvisibleView();
                 }

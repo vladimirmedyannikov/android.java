@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/pd_xxsmall"
             android:layout_toRightOf="@id/badgeContainer"
-            android:onClick="@{()-> listener.onAchivementClick(viewModel.getId)}">
+            android:onClick="@{()-> listener.onAchievementClick(viewModel.getId)}">
 
             <TextView
                 android:id="@+id/title"

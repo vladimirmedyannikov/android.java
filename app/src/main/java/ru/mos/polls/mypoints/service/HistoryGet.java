@@ -16,8 +16,14 @@ import ru.mos.polls.rxhttp.rxapi.model.base.PageAuthRequest;
 
 public class HistoryGet {
     public static class Request extends PageAuthRequest {
+        List<String> action;
+
         public Request(Page page) {
             super(page);
+        }
+
+        public void setAction(List<String> action) {
+            this.action = action;
         }
     }
 

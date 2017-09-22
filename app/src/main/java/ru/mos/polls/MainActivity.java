@@ -51,7 +51,7 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.newabout.state.AboutAppState;
+import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
@@ -509,7 +509,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     }
                 };
 //                fr = AboutAppFragment.newInstance(socialListener);
-                navigateTo().state(Add.newActivity(new AboutAppState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                fr = AboutAppFragment.instance(socialListener);
                 tag = TAG_ABOUT;
                 break;
             case NavigationMenuItem.NOVELTY:

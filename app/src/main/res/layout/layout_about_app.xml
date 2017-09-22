@@ -43,6 +43,9 @@
                 <TextView
                     android:id="@android:id/empty"
                     style="@style/root"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
                     android:text="@string/empty_list" />
             </FrameLayout>
 

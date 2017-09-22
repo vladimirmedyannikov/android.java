@@ -1,5 +1,6 @@
 package ru.mos.polls.newabout.ui.fragment;
 
+import me.ilich.juggler.Navigable;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
@@ -37,5 +38,10 @@ public class AboutAppFragment extends BindingFragment<AboutAppFragmentVM, Layout
     @Override
     public int getLayoutResources() {
         return R.layout.layout_about_app;
+    }
+
+    @Override
+    public Navigable navigateTo() {
+        return super.navigateTo();
     }
 }

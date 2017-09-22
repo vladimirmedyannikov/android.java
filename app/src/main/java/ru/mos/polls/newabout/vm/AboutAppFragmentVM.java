@@ -45,6 +45,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
     protected void initialize(LayoutAboutAppBinding binding) {
         Statistics.appsDescription();
         GoogleStatistics.AGNavigation.appsDescription();
+        getActivity().setTitle(R.string.title_help);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                             break;
                         case AboutItem.FEEDBACK:
 //                        AgSupportActivity.startActivity(getActivity());
-                            ((ru.mos.polls.base.ui.BaseActivity)getActivity()).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                            getFragment().navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                             break;
                     }
                 })))

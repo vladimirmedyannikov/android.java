@@ -213,15 +213,15 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
     }
 
     public boolean checkFIOValid() {
-        if (AgTextUtil.validateRus(lastname.getText().toString())
-                && AgTextUtil.validateRus(firstname.getText().toString())
-                && AgTextUtil.validateRus(middlename.getText().toString())) {
+        if (lastname.getText().toString().length() > 0
+                && firstname.getText().toString().length() > 0
+                && middlename.getText().toString().length() > 0) {
             agUser.setSurname(lastname.getText().toString());
             agUser.setFirstName(firstname.getText().toString());
             agUser.setMiddleName(middlename.getText().toString());
             return true;
         } else {
-            Toast.makeText(getActivity(), "ФИО заполнены не на кириллице", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "ФИО не заполнены", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

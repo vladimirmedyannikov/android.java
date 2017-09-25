@@ -14,7 +14,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/lastname"
                 style="@style/edit_profile"
-                android:hint="@string/lastname" />
+                android:hint="@string/lastname"
+                android:inputType="textCapSentences" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -25,7 +26,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/firstname"
                 style="@style/edit_profile"
-                android:hint="@string/firstname" />
+                android:hint="@string/firstname"
+                android:inputType="textCapSentences" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -36,7 +38,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/middlename"
                 style="@style/edit_profile"
-                android:hint="@string/middlename" />
+                android:hint="@string/middlename"
+                android:inputType="textCapSentences" />
 
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>

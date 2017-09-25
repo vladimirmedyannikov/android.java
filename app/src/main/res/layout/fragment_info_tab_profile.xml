@@ -77,13 +77,12 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/agUser_profile_list"
-                        style="@style/item"
-                        android:paddingLeft="@dimen/pd_xsmall"
-                        android:paddingRight="@dimen/pd_xsmall" />
+                        style="@style/item" />
 
                     <RelativeLayout
                         style="@style/linear"
-                        android:padding="@dimen/pd_xsmall">
+                        android:paddingBottom="@dimen/pd_xsmall"
+                        android:paddingTop="@dimen/pd_xsmall">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/agUser_social_title"
@@ -96,18 +95,19 @@
                             android:id="@+id/agUser_social_value"
                             style="@style/text.normal.black"
                             android:layout_below="@+id/agUser_social_title"
-                            android:text="не указано"
-                            android:paddingLeft="@dimen/pd_xsmall" />
+                            android:paddingLeft="@dimen/pd_xsmall"
+                            android:text="не указано" />
 
                         <LinearLayout
                             android:id="@+id/ag_user_social_binding_layer"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/pd_xxlarge"
-                            android:orientation="horizontal"
-                            android:paddingLeft="@dimen/pd_xsmall"
                             android:layout_alignBottom="@+id/agUser_social_value"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:orientation="horizontal"
+                            android:paddingRight="@dimen/pd_xsmall"
+                            android:paddingLeft="@dimen/pd_xsmall" />
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>

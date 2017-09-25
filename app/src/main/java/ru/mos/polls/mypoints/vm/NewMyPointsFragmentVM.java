@@ -79,11 +79,15 @@ public class NewMyPointsFragmentVM extends PullableFragmentVM<NewMyPointsFragmen
                 new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(HistoryGet.Response.Result result) {
-                        adapter.add(result.getPoints());
-                        empty.setVisibility(View.INVISIBLE);
-                        progressPull();
-                        status = result.getStatus();
-                        setView();
+                        if (result.getPoints().size() > 0) {
+                            adapter.add(result.getPoints());
+                            empty.setVisibility(View.INVISIBLE);
+                            progressPull();
+                            status = result.getStatus();
+                            setView();
+                        } else {
+                            empty.setVisibility(View.VISIBLE);
+                        }
                     }
                 };
         HistoryGet.Request request = new HistoryGet.Request(page);

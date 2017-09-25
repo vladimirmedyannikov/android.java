@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_quests"
+        android:checkable="true"
+        android:title="@string/mainmenu_quests" />
+
+    <item
+        android:id="@+id/menu_survey"
+        android:checkable="true"
+        android:title="@string/mainmenu_polls" />
+
+    <item
+        android:id="@+id/menu_novelty"
+        android:checkable="true"
+        android:title="@string/mainmenu_novelty" />
+
+    <item
+        android:id="@+id/menu_news"
+        android:checkable="true"
+        android:title="@string/mainmenu_news" />
+
+    <item
+        android:id="@+id/menu_shop"
+        android:checkable="true"
+        android:title="@string/mainmenu_shop" />
+
+    <item
+        android:id="@+id/menu_points"
+        android:checkable="true"
+        android:title="@string/mainmenu_my_points" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:checkable="true"
+        android:title="@string/mainmenu_profile" />
+
+    <item
+        android:id="@+id/menu_friend"
+        android:checkable="true"
+        android:title="@string/mainmenu_friends" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:checkable="true"
+        android:title="@string/mainmenu_settings" />
+
+    <item
+        android:id="@+id/menu_support"
+        android:checkable="true"
+        android:title="@string/mainmenu_support" />
+
+</menu>

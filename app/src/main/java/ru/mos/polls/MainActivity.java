@@ -25,7 +25,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.elk.profile.ProfileManager;
-import ru.mos.polls.about.AboutAppFragment;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
@@ -52,7 +51,7 @@ import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
-import ru.mos.polls.newpoll.ui.PollFragment;
+import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
@@ -501,7 +500,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_NEWS;
                 break;
             case NavigationMenuItem.ABOUT:
-                AboutAppFragment.SocialListener socialListener = new AboutAppFragment.SocialListener() {
+                ru.mos.polls.newabout.vm.AboutAppFragmentVM.SocialListener socialListener = new ru.mos.polls.newabout.vm.AboutAppFragmentVM.SocialListener() {
                     @Override
                     public void onSocialPost(AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
@@ -509,7 +508,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
                 };
-                fr = AboutAppFragment.newInstance(socialListener);
+//                fr = AboutAppFragment.newInstance(socialListener);
+                fr = AboutAppFragment.instance(socialListener);
                 tag = TAG_ABOUT;
                 break;
             case NavigationMenuItem.NOVELTY:

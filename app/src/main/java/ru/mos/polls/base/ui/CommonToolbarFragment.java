@@ -23,6 +23,20 @@ public class CommonToolbarFragment extends JugglerToolbarFragment {
         return f;
     }
 
+    public static JugglerFragment createNavigation() {
+        CommonToolbarFragment f = new CommonToolbarFragment();
+        Bundle b = addDisplayOptionsToBundle(null, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP);
+        f.setArguments(b);
+        return f;
+    }
+
+    public static JugglerFragment create() {
+        CommonToolbarFragment f = new CommonToolbarFragment();
+        Bundle b = addDisplayOptionsToBundle(null, ActionBar.DISPLAY_SHOW_TITLE);
+        f.setArguments(b);
+        return f;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newabout.vm.AboutAppFragmentVM" />
+    </data>
+
+    <RelativeLayout style="@style/root">
+
+        <LinearLayout
+            android:id="@+id/root"
+            style="@style/linear"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/pd_xxsmall">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="75dp"
+                android:minWidth="75dp"
+                android:src="@drawable/ic_launcher_v230" />
+
+            <TextView
+                style="@style/header.up"
+                android:layout_marginTop="@dimen/pd_xxsmall"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/app_version"
+                style="@style/text"
+                android:paddingBottom="@dimen/pd_xsmall"
+                android:text="@string/user_version" />
+
+            <FrameLayout style="@style/root">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/list"
+                    style="@style/root" />
+
+                <TextView
+                    android:id="@android:id/empty"
+                    style="@style/root"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/empty_list" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

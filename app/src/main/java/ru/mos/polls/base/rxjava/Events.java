@@ -135,9 +135,22 @@ public class Events {
 
     public static class PollEvents {
         public static final int OPEN_POLL = 1;
+        public static final int FINISHED_POLL = 2;
+        public static final int INTERRUPTED_POLL = 3;
 
         private Poll poll;
         private int eventType;
+        private long pollId;
+
+        public PollEvents(int eventType, long pollId) {
+            this.eventType = eventType;
+            this.pollId = pollId;
+        }
+
+        public long getPollId() {
+
+            return pollId;
+        }
 
         public PollEvents(int eventType, Poll poll) {
             this.eventType = eventType;

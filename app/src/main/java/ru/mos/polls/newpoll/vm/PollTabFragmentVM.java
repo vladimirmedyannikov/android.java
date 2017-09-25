@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.PullableFragmentVM;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.newpoll.service.PollSelect;
@@ -47,6 +48,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
             case ARG_ACTIVE_POLL:
                 Statistics.enterPollsActive();
                 GoogleStatistics.Survey.enterPollsActive();
+                subscribeEventsBus();
                 break;
             case ARG_OLD_POLL:
                 GoogleStatistics.Survey.enterPollsUnactive();
@@ -56,6 +58,23 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
         list = new ArrayList<>();
         adapter = new PollAdapter();
         super.initialize(binding);
+    }
+
+    public void subscribeEventsBus() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.PollEvents) {
+                        Events.PollEvents action = (Events.PollEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.PollEvents.FINISHED_POLL:
+                            case Events.PollEvents.INTERRUPTED_POLL:
+                                proccessPoll(action.getPollId(), action.getEventType());
+                                break;
+                        }
+                    }
+                });
     }
 
     @Override
@@ -91,31 +110,34 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /**
-         * отметка отложенного голососвания, если голосование былопрервано
-         * удаляем голосование, если его прошли
-         */
-        if (SurveyActivity.onResult(requestCode, resultCode, data)) {
-            long pollId = data.getLongExtra(SurveyActivity.EXTRA_SURVEY_ID, -1);
-            Poll.Status status = (Poll.Status) data.getSerializableExtra(SurveyActivity.EXTRA_RESULT_SURVEY_STATE);
-            if (pollId != -1 && status != null) {
-                for (Poll poll : list) {
-                    if (poll.getId() == pollId) {
-                        if (status == Poll.Status.INTERRUPTED) {
+
+//        if (SurveyActivity.onResult(requestCode, resultCode, data)) {
+//            proccessPoll(data);
+//        }
+    }
+
+    /**
+     * отметка отложенного голососвания, если голосование былопрервано
+     * удаляем голосование, если его прошли
+     */
+    public void proccessPoll(long pollId, int typeEvent) {
+        if (pollId != -1) {
+            for (Poll poll : list) {
+                if (poll.getId() == pollId) {
+                    switch (typeEvent) {
+                        case Events.PollEvents.INTERRUPTED_POLL:
                             poll.setStatus(Poll.Status.INTERRUPTED.status);
-                        } else if (status == Poll.Status.PASSED) {
+                            break;
+                        case Events.PollEvents.FINISHED_POLL:
                             list.remove(poll);
-//                            if (pollRemoveListener != null) {
-                                poll.setStatus(Poll.Status.PASSED.status);
-                                poll.setPassedDate(System.currentTimeMillis());
-//                                pollRemoveListener.onRemove(poll);
-//                            }
-                        }
-                        break;
+                            poll.setStatus(Poll.Status.PASSED.status);
+                            poll.setPassedDate(System.currentTimeMillis());
+                            break;
                     }
+                    break;
                 }
-                adapter.notifyDataSetChanged();
             }
+            adapter.notifyDataSetChanged();
         }
     }
 }

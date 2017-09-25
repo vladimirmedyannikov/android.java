@@ -18,8 +18,10 @@ import ru.mos.elk.Statistics;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
@@ -118,7 +120,7 @@ public class WebSurveyDataSource implements SurveyDataSource {
                 stParams.put("id", String.valueOf(survey.getId()));
                 stParams.put("success", isInterrupted ? "Cancel" : "Final");
                 Statistics.customEvent("poll passaging", stParams);
-
+                AGApplication.bus().send(new Events.PollEvents(isInterrupted ? Events.PollEvents.INTERRUPTED_POLL : Events.PollEvents.FINISHED_POLL, survey.getId()));
                 JSONObject statusJsonObject = json.optJSONObject("status");
                 final int currentPoints = statusJsonObject.optInt("current_points");
                 final int price = json.optInt("added_points");

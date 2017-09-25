@@ -61,7 +61,6 @@ import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
-import ru.mos.polls.settings.SettingsFragment;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialUIController;
@@ -350,7 +349,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             case NavigationMenuItem.SETTINGS:
                 Statistics.propertiesFragment();
                 GoogleStatistics.AGNavigation.propertiesFragment();
-                fr = SettingsFragment.newInstance();
+                fr = ru.mos.polls.newsettings.ui.fragment.SettingsFragment.instance();
                 tag = TAG_SETTINGS;
                 break;
             case NavigationMenuItem.SUPPORT:

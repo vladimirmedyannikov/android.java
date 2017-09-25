@@ -126,8 +126,10 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
             @Override
             protected void onResult(FriendProfile.Response.Result result) {
                 if (result.isProfileVisible()) {
-                    setAchievementLayerView(result.getAchievements().getLast());
-                    setAchievementsCountView(result.getAchievements().getCount());
+                    if (result.getAchievements() != null) {
+                        setAchievementLayerView(result.getAchievements().getLast());
+                        setAchievementsCountView(result.getAchievements().getCount());
+                    }
                     setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
                     friendRegDate.setText(result.getPersonal().getRegistrationDate());
                     friendRating.setText(String.valueOf(result.getStatistics().getRating()));

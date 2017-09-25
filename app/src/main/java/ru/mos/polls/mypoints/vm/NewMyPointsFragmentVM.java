@@ -134,6 +134,7 @@ public class NewMyPointsFragmentVM extends PullableFragmentVM<NewMyPointsFragmen
                         break;
                 }
                 clearList();
+                page.reset();
                 doRequest();
                 return result;
             }

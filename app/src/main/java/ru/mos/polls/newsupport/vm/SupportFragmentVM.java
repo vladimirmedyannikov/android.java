@@ -14,11 +14,14 @@ import java.util.List;
 
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Remove;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
+import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
@@ -26,6 +29,7 @@ import ru.mos.polls.databinding.LayoutSupportBinding;
 import ru.mos.polls.newsupport.ui.adapter.SubjectAdapter;
 import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.model.support.Subject;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
@@ -129,6 +133,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
     public void sendMessage() {
         getBinding().btnSendMessage.setEnabled(false);
+        GuiUtils.hideKeyboard(getFragment().getView());
         HandlerApiResponseSubscriber<String> handler
                 = new HandlerApiResponseSubscriber<String>(getFragment().getContext(), getProgressable()) {
 
@@ -142,7 +147,9 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                 getBinding().orderNumber.setText("");
                 getBinding().subject.setSelection(0);
                 processSendingEnabled();
-                GuiUtils.displayOkMessage(getActivity(), "Обращение успешно отправлено", null);
+                GuiUtils.displayOkMessage(getActivity(), R.string.succeeded_support, (dialog, which) -> {
+                    getFragment().navigateTo().state(Remove.closeCurrentActivity());
+                });
             }
 
             @Override
@@ -150,6 +157,17 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                 super.onError(throwable);
                 statistics.errorOccurs(getCurrentSubject().getTitle(), throwable.getMessage());
                 processSendingEnabled();
+                GuiUtils.showKeyboard(getBinding().etEmail);
+            }
+
+            @Override
+            public void onNext(@NonNull GeneralResponse<String> generalResponse) {
+                super.onNext(generalResponse);
+                if (generalResponse.getErrorCode() != 0) {
+                    statistics.errorOccurs(getCurrentSubject().getTitle(), generalResponse.getErrorMessage());
+                    processSendingEnabled();
+                    GuiUtils.showKeyboard(getBinding().etEmail);
+                }
             }
         };
 

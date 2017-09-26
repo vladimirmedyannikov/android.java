@@ -13,6 +13,7 @@ import android.widget.EditText;
 import java.util.List;
 
 import butterknife.Unbinder;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
@@ -123,12 +124,12 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
             }
         };
 
-        AGApplication
+        Observable<SubjectsLoad.Response> responseObservabl = AGApplication
                 .api
                 .getFeedbackSubjects(new SubjectsLoad.Request())
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservabl.subscribeWith(handler));
     }
 
     public void sendMessage() {
@@ -171,7 +172,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
             }
         };
 
-        AGApplication
+        Observable<FeedbackSend.Response> responseObservabl = AGApplication
                 .api
                 .sendFeedback(new FeedbackSend.Request(getCurrentSubject().getId(),
                         getBinding().etEmail.getText().toString(),
@@ -179,8 +180,8 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                         getBinding().orderNumber.getText().toString(),
                         Session.getSession(getActivity())))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .observeOn(AndroidSchedulers.mainThread());
+        disposables.add(responseObservabl.subscribeWith(handler));
     }
 
     @BindingAdapter("app:onClick")

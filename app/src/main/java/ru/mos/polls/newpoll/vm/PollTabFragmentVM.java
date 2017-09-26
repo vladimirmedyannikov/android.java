@@ -1,7 +1,6 @@
 package ru.mos.polls.newpoll.vm;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.vm.PullableFragmentVM;
+import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.newpoll.service.PollSelect;
 import ru.mos.polls.newpoll.ui.PollTabFragment;
@@ -22,17 +21,17 @@ import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.controller.PollApiController;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.survey.SurveyActivity;
 
 /**
  * Created by Trunks on 14.09.2017.
  */
 
-public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, FragmentTabPollBinding, PollAdapter> {
-    public static final int ARG_ACTIVE_POLL = 0;
-    public static final int ARG_OLD_POLL = 1;
-    List<Poll> list;
-    int pollType;
+public class PollTabFragmentVM extends PullablePaginationFragmentVM<PollTabFragment, FragmentTabPollBinding, PollAdapter> {
+    static final int ARG_ACTIVE_POLL = 0;
+    static final int ARG_OLD_POLL = 1;
+
+    private List<Poll> list;
+    private int pollType;
 
     public PollTabFragmentVM(PollTabFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
@@ -60,7 +59,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
         super.initialize(binding);
     }
 
-    public void subscribeEventsBus() {
+    private void subscribeEventsBus() {
         AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,7 +69,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
                         switch (action.getEventType()) {
                             case Events.PollEvents.FINISHED_POLL:
                             case Events.PollEvents.INTERRUPTED_POLL:
-                                proccessPoll(action.getPollId(), action.getEventType());
+                                processPoll(action.getPollId(), action.getEventType());
                                 break;
                         }
                     }
@@ -84,7 +83,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
                     @Override
                     protected void onResult(PollSelect.Response.Result result) {
                         adapter.add(result.getPolls(), pollType);
-                        progressPull();
+                        isPaginationEnable = result.getPolls().size() >= page.getSize();
                     }
                 };
         List<String> filters = new ArrayList<>();
@@ -97,7 +96,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    public void addFilters(List<String> filters, int type) {
+    private void addFilters(List<String> filters, int type) {
         if (type == ARG_ACTIVE_POLL) {
             filters.add(PollApiController.Filter.AVAILABLE.toString());
         }
@@ -107,20 +106,7 @@ public class PollTabFragmentVM extends PullableFragmentVM<PollTabFragment, Fragm
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-//        if (SurveyActivity.onResult(requestCode, resultCode, data)) {
-//            proccessPoll(data);
-//        }
-    }
-
-    /**
-     * отметка отложенного голососвания, если голосование былопрервано
-     * удаляем голосование, если его прошли
-     */
-    public void proccessPoll(long pollId, int typeEvent) {
+    private void processPoll(long pollId, int typeEvent) {
         if (pollId != -1) {
             for (Poll poll : list) {
                 if (poll.getId() == pollId) {

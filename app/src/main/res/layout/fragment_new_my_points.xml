@@ -85,12 +85,6 @@
                 android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
 
-                <ProgressBar
-                    android:id="@+id/progress"
-                    style="@style/item"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone"/>
-
                 <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/swipe"
                     style="@style/root">
@@ -106,5 +100,13 @@
                     style="@style/emptylist"/>
             </FrameLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
     </LinearLayout>
+
 </layout>

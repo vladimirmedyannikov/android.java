@@ -30,7 +30,7 @@ public class ProgressableUIComponent extends UIComponent implements Progressable
                     .setColorFilter(getProgressColor(), PorterDuff.Mode.SRC_IN);
         }
         progressView.setVisibility(View.VISIBLE);
-//        rootView.setVisibility(View.GONE);
+        rootView.setVisibility(View.GONE);
     }
 
     @Override

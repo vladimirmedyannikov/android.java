@@ -3,7 +3,6 @@ package ru.mos.polls.base.vm;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 
-
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -19,13 +18,16 @@ import ru.mos.polls.rxhttp.rxapi.model.Page;
  * Created by Trunks on 15.09.2017.
  * Базовый класс для запросов с пагинацией
  */
-public abstract class PullableFragmentVM<F extends JugglerFragment, B extends ViewDataBinding, A extends BaseRecyclerAdapter> extends UIComponentFragmentViewModel<F, B> {
-    public Page page;
-    public RecyclerView recyclerView;
-    public boolean isPaginationEnable;
-    public A adapter;
+public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
+        B extends ViewDataBinding,
+        A extends BaseRecyclerAdapter> extends UIComponentFragmentViewModel<F, B> {
 
-    public PullableFragmentVM(F fragment, B binding) {
+    protected Page page;
+    protected RecyclerView recyclerView;
+    protected boolean isPaginationEnable;
+    protected A adapter;
+
+    public PullablePaginationFragmentVM(F fragment, B binding) {
         super(fragment, binding);
     }
 
@@ -63,27 +65,11 @@ public abstract class PullableFragmentVM<F extends JugglerFragment, B extends Vi
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
                     page.reset();
-                    clearList();
+                    adapter.clear();
                     doRequest();
                 }))
                 .with(new ProgressableUIComponent())
                 .build();
-    }
-
-    public void clearList() {
-        adapter.clear();
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void progressPull() {
-        adapter.notifyDataSetChanged();
-        progressable.end();
-        isPaginationEnable = true;
     }
 
     public abstract void doRequest();

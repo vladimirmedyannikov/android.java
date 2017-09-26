@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.vm.PullableFragmentVM;
+import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
@@ -28,7 +28,7 @@ import ru.mos.polls.util.StubUtils;
  * Created by Trunks on 16.06.2017.
  */
 
-public class AchievementTabFragmentVM extends PullableFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding, AchievementAdapter> implements OnAchievementClickListener {
+public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding, AchievementAdapter> implements OnAchievementClickListener {
     List<Achievements> list;
     int friendId;
 
@@ -63,7 +63,7 @@ public class AchievementTabFragmentVM extends PullableFragmentVM<AchievementTabF
                     @Override
                     protected void onResult(AchievementsSelect.Response.Result result) {
                         adapter.add(result.getAchievements());
-                        progressPull();
+                        isPaginationEnable = result.getAchievements().size() >= page.getSize();
                     }
                 };
         AchievementsSelect.Request requestBody = new AchievementsSelect.Request(page);

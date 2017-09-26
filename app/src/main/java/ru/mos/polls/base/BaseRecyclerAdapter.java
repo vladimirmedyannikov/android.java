@@ -57,10 +57,12 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
 
     public void addData(List<RVM> list) {
         this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
     public void add(RVM item) {
         list.add(item);
+        notifyDataSetChanged();
     }
 
     public boolean remove(RVM item) {
@@ -69,6 +71,7 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
 
     public void clear() {
         list.clear();
+        notifyDataSetChanged();
     }
 
     protected BindingHolder getBindingHolder(ViewGroup viewGroup, int viewType) {

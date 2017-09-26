@@ -45,7 +45,7 @@
                     style="@style/input"
                     android:inputType="phone"
                     mask:char_representation="#"
-                    mask:mask="### ### ## ##"
+                    mask:mask="### ### ####"
                     mask:mask_fill="-" />
             </LinearLayout>
 

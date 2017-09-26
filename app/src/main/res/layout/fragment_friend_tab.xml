@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM"/>
+            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM" />
     </data>
 
-    <LinearLayout
-        style="@style/root"
-        android:background="@color/actionbar_background"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/slidingTabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            app:tabBackground="@color/actionbar_background"
-            app:tabIndicatorColor="@color/yellow"
-            app:tabMode="fixed"/>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0"
-            android:background="@color/white"
-            android:layout_weight="1">
-
-        </android.support.v4.view.ViewPager>
+    <RelativeLayout
+        style="@style/root">
 
         <LinearLayout
-            android:id="@+id/friend_invisible_layout"
-            android:visibility="gone"
-            style="@style/linear">
+            style="@style/root"
+            android:background="@color/actionbar_background"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
-            <include
-                layout="@layout/layout_user_avatar"/>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/slidingTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                app:tabBackground="@color/actionbar_background"
+                app:tabIndicatorColor="@color/yellow"
+                app:tabMode="fixed" />
 
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/text.small.white"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/friend_profile_invisible"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"
+                android:background="@color/white">
+
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:id="@+id/friend_invisible_layout"
+                style="@style/linear"
+                android:visibility="gone">
+
+                <include layout="@layout/layout_user_avatar" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/text.small.white"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/friend_profile_invisible" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </layout>

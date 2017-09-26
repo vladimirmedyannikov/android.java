@@ -48,11 +48,6 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
     }
 
     @Override
-    public void onViewCreated() {
-        super.onViewCreated();
-    }
-
-    @Override
     public void onAchievementClick(String id) {
         AchievementActivity.startActivity(getActivity(), id);
     }

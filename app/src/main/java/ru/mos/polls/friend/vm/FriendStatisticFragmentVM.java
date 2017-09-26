@@ -2,7 +2,6 @@ package ru.mos.polls.friend.vm;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,7 +28,6 @@ import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
-import ru.mos.polls.newprofile.vm.AchievementTabFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
@@ -79,13 +77,19 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         friendStatusInfo = binding.friendStatusInfoPanel.agUserStatusLayout;
         adapter = new FriendProfileAdapter();
         recyclerView.setAdapter(adapter);
-        loadFriendProfile();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setFiView(FriendGuiUtils.getTitle(friend));
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        progressable = getProgressable();
+        loadFriendProfile();
     }
 
     private void friendsStatsList(List<Param> params) { //todo привести в порядок убрать param

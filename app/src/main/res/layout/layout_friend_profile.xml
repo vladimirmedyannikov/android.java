@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -9,7 +8,9 @@
             type="ru.mos.polls.friend.vm.FriendStatisticFragmentVM"/>
     </data>
 
-    <RelativeLayout style="@style/root">
+    <RelativeLayout
+        android:id="@+id/root"
+        style="@style/root">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -26,7 +27,6 @@
                 android:fillViewport="true">
 
                 <RelativeLayout
-                    android:id="@+id/root"
                     style="@style/root"
                     android:background="@color/actionbar_background">
 

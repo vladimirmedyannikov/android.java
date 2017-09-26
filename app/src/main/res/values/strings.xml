@@ -227,7 +227,7 @@
     <string name="congratulations">Поздравляем</string>
     <string name="invited_success">Вы успешно завершили задание!</string>
     <string name="add_location_success">Добавление адреса прошло успешно</string>
-    <string name="sms_invite_text">\"Я - Активный гражданин - А ТЫ? Давай вместе сделаем город лучше!</string>
+    <string name="sms_invite_text">Я - Активный гражданин - А ТЫ? Давай вместе сделаем город лучше!</string>
     <string name="sms_invate_url">http://ag.mos.ru</string>
     <string name="quest_task_done">Данные сохранены, Вам будут начислены баллы</string>
     <string name="success_personal_updated">Данные сохранены</string>

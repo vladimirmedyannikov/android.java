@@ -11,8 +11,9 @@ import android.support.v4.app.Fragment;
 import android.telephony.SmsManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import ru.mos.polls.R;
 
 /**
  * Работа с контактами устройства {@link ContactsContract}
@@ -58,8 +59,9 @@ public class ContactsManager {
     public void sms(String phoneNumber, String[] text) {
         SmsManager sms = SmsManager.getDefault();
         ArrayList<String> smsBody = new ArrayList<>();
-        Collections.addAll(smsBody, text);
-        sms.sendMultipartTextMessage(phoneNumber,
+        smsBody.add(context.getString(R.string.sms_invite_text));
+        smsBody.add(" " + context.getString(R.string.sms_invate_url));
+        sms.sendMultipartTextMessage("+7" + phoneNumber,
                 null,
                 smsBody,
                 new ArrayList<PendingIntent>(),

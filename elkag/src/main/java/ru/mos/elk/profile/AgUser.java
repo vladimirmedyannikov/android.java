@@ -834,9 +834,13 @@ public class AgUser implements Serializable {
     public static void saveJsonArray(Context context, JSONObject json, String params) {
         if (json != null) {
             JSONArray array = json.optJSONArray(params);
-            SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Context.MODE_PRIVATE);
-            prefs.edit().putString(params, array.toString()).apply();
+            saveToSharedPreferences(context, params, array.toString());
         }
+    }
+
+    public static void saveToSharedPreferences(Context context, String content, String params) {
+        SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Context.MODE_PRIVATE);
+        prefs.edit().putString(params, content).apply();
     }
 
     public List<Statistics> getStatisticList(Context context) {

@@ -88,11 +88,9 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         setFiView(FriendGuiUtils.getTitle(friend));
     }
 
-    private void friendsStatsList(List<Param> params) { //todo привести в порядок убрать param
+    private void friendsStatsList(List<Statistics> params) { //todo привести в порядок убрать param
         List<Statistics> list = new ArrayList<>();
-        for (Param param : params) {
-            list.add(new Statistics(param.getTitle(), param.getValue()));
-        }
+        list.addAll(params);
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
         adapter.notifyDataSetChanged();

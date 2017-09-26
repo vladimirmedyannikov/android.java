@@ -9,10 +9,12 @@ import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.service.AvatarSet;
 import ru.mos.polls.newprofile.service.EmptyResponse;
+import ru.mos.polls.newprofile.service.GetStatistics;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.StreetGet;
 import ru.mos.polls.newprofile.service.UploadMedia;
 import ru.mos.polls.newprofile.service.VisibilitySet;
+import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
@@ -67,6 +69,7 @@ public interface AgApi {
             String GET_HISTORY = "getHistory";
             String GET_FEEDBACK_SUBJECTS = "getFeedbackSubjects";
             String SEND_FEEDBACK = "sendFeedback";
+            String STATISTICS = "statistics";
         }
     }
 
@@ -100,7 +103,7 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
     Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
     Observable<StreetGet.Response> getAddressStreetList(@Body StreetGet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.AVATAR)
@@ -115,9 +118,12 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.SELECT)
     Observable<PollSelect.Response> pollselect(@Body PollSelect.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + AgApi.Api.Methods.GET_FEEDBACK_SUBJECTS)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + AgApi.Api.Methods.GET_FEEDBACK_SUBJECTS)
     Observable<SubjectsLoad.Response> getFeedbackSubjects(@Body SubjectsLoad.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_3_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + Api.Methods.SEND_FEEDBACK)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + Api.Methods.SEND_FEEDBACK)
     Observable<FeedbackSend.Response> sendFeedback(@Body FeedbackSend.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.STATISTICS)
+    Observable<GetStatistics.Response> getStatistics(@Body AuthRequest body);
 }

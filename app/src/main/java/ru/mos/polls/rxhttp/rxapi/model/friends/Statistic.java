@@ -2,6 +2,9 @@ package ru.mos.polls.rxhttp.rxapi.model.friends;
 
 import java.util.List;
 
+import ru.mos.elk.profile.Statistics;
+
+
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
  * on 06.07.17 11:59.
@@ -10,7 +13,7 @@ import java.util.List;
 public class Statistic {
     private String status;
     private int rating;
-    private List<Param> params;
+    private List<Statistics> params;
 
     public String getStatus() {
         return status;
@@ -20,7 +23,7 @@ public class Statistic {
         return rating;
     }
 
-    public List<Param> getParams() {
+    public List<Statistics> getParams() {
         return params;
     }
 }

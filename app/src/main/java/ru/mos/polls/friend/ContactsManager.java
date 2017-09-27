@@ -1,18 +1,17 @@
 package ru.mos.polls.friend;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.telephony.SmsManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import ru.mos.polls.util.SMSUtils;
 
 /**
  * Работа с контактами устройства {@link ContactsContract}
@@ -56,14 +55,7 @@ public class ContactsManager {
      * @param text        массив строк сообщения
      */
     public void sms(String phoneNumber, String[] text) {
-        SmsManager sms = SmsManager.getDefault();
-        ArrayList<String> smsBody = new ArrayList<>();
-        Collections.addAll(smsBody, text);
-        sms.sendMultipartTextMessage(phoneNumber,
-                null,
-                smsBody,
-                new ArrayList<PendingIntent>(),
-                new ArrayList<PendingIntent>());
+        SMSUtils.sendSMS(context, phoneNumber, text);
     }
 
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {

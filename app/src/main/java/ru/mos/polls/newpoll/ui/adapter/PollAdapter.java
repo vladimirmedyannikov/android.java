@@ -40,4 +40,13 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         addData(content);
     }
 
+    public void removeItem(Poll poll) {
+        for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
+            if (poll.getId() == ((Poll)recyclerBaseViewModel.getModel()).getId()) {
+                System.out.println("POOOOLLL removeItem " + poll.getId());
+                list.remove(recyclerBaseViewModel);
+            }
+        }
+        notifyDataSetChanged();
+    }
 }

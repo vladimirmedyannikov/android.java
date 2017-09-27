@@ -69,6 +69,10 @@ public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends Recy
         return list.remove(item);
     }
 
+    public List<RVM> getList() {
+        return list;
+    }
+
     public void clear() {
         list.clear();
         notifyDataSetChanged();

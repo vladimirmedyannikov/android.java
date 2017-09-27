@@ -1,6 +1,5 @@
 package ru.mos.polls.survey.hearing.gui.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -27,8 +26,9 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
-import ru.mos.polls.common.model.QuestMessage;
+import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
 import ru.mos.polls.util.GuiUtils;
@@ -51,7 +51,9 @@ public class PguBindFragment extends JugglerFragment {
 
     private Unbinder unbinder;
     private PguBindingListener pguBindingListener;
-    ProgressDialog progressDialog;
+    //ProgressDialog progressDialog;
+
+    private ProgressableUIComponent progressableUIComponent;
 
     public void setPguBindListener(PguBindingListener pguBindingListener) {
         if (pguBindingListener == null) {
@@ -70,23 +72,25 @@ public class PguBindFragment extends JugglerFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        progressableUIComponent = new ProgressableUIComponent();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_pgu_bind, null);
         unbinder = ButterKnife.bind(this, root);
+        progressableUIComponent.onViewCreated(getContext(), root);
         return root;
     }
 
-    public void startProgress() {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.show();
-    }
-
-    public void stopProgress() {
-        if (progressDialog != null) progressDialog.dismiss();
-    }
+//    public void startProgress() {
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.show();
+//    }
+//
+//    public void stopProgress() {
+//        if (progressDialog != null) progressDialog.dismiss();
+//    }
 
 
     @Override
@@ -137,14 +141,15 @@ public class PguBindFragment extends JugglerFragment {
     private void bind() {
         setPguBindListener(pguBindingListener);
         pguBindingListener.onPrepare();
-        startProgress();
+//        startProgress();
+        progressableUIComponent.begin();
         HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
             @Override
             public void onSuccess(QuestMessage questMessage, int percent) {
                 AbstractActivity.hideSoftInput(getActivity(), password);
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, percent));
                 questMessage.show(getActivity(), true);
-                stopProgress();
+                progressableUIComponent.end();
                 if (questMessage != null && !questMessage.isEmpty()) {
                     questMessage.show(getActivity(), true);
                 } else {
@@ -156,7 +161,7 @@ public class PguBindFragment extends JugglerFragment {
 
             @Override
             public void onError(String errorMessage) {
-                stopProgress();
+                progressableUIComponent.end();
                 etPassword.setError(errorMessage);
 //                error.setText(errorMessage);
 //                error.setVisibility(View.VISIBLE);

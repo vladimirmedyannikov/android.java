@@ -54,13 +54,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
     @Override
     protected UIComponentHolder createComponentHolder() {
         return new UIComponentHolder.Builder()
-                .with(new ProgressableUIComponent(){
-                    @Override
-                    public void begin() {
-                        super.begin();
-                        rootView.setVisibility(View.GONE);
-                    }
-                })
+                .with(new ProgressableUIComponent())
                 .build();
     }
 

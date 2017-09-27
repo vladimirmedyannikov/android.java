@@ -1,7 +1,6 @@
 package ru.mos.polls.profile.gui.fragment;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +26,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
 import ru.mos.polls.social.controller.AgSocialApiController;
@@ -58,11 +58,12 @@ public class BindingSocialFragment extends Fragment {
         return new BindingSocialFragment();
     }
 
-    private ProgressDialog progressDialog;
+//    private ProgressDialog progressDialog;
     private Unbinder unbinder;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
     private List<AppSocial> changedSocials, savedSocials;
+    private ProgressableUIComponent progressableUIComponent;
     boolean isAnySocialBinded;
     @BindView(R.id.socialShareNotify)
     SwitchCompat socialShareNotify;
@@ -96,6 +97,7 @@ public class BindingSocialFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        progressableUIComponent.onViewCreated(getContext(), view);
         findViews(view);
         refreshSocials();
     }
@@ -118,6 +120,7 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void init() {
+        progressableUIComponent = new ProgressableUIComponent();
         socialController = new SocialController((BaseActivity) getActivity());
         socialController.getEventController().registerCallback(authCallback);
         savedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
@@ -177,26 +180,30 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void refreshSocials() {
-        showProgress(getString(R.string.update_social_message));
+//        showProgress(getString(R.string.update_social_message));
+        progressableUIComponent.begin();
         AgSocialApiController.LoadSocialListener listener = new AgSocialApiController.LoadSocialListener() {
             @Override
             public void onLoaded(List<AppSocial> loadedSocials) {
                 changedSocials.clear();
                 changedSocials.addAll(loadedSocials);
                 socialBindAdapter.notifyDataSetChanged();
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
 
             @Override
             public void onError() {
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
         };
         AgSocialApiController.loadSocials((BaseActivity) getActivity(), listener);
     }
 
     private void bindSocial(final AppSocial social) {
-        showProgress(getString(R.string.bind_progress_message));
+//        showProgress(getString(R.string.bind_progress_message));
+        progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
@@ -221,19 +228,22 @@ public class BindingSocialFragment extends Fragment {
                     }
                 }
                 socialBindAdapter.notifyDataSetChanged();
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
         };
         AgSocialApiController.bindSocialToAg((BaseActivity) getActivity(), social, listener);
     }
 
     private void unBindSocial(final AppSocial social) {
-        showProgress(getString(R.string.unbind_progress_message));
+//        showProgress(getString(R.string.unbind_progress_message));
+        progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
@@ -246,29 +256,31 @@ public class BindingSocialFragment extends Fragment {
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 social.setIsLogin(false);
                 socialBindAdapter.notifyDataSetChanged();
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
-                hideProgress();
+//                hideProgress();
+                progressableUIComponent.end();
             }
         };
         AgSocialApiController.unbindSocialFromAg((BaseActivity) getActivity(), social, listener);
     }
 
-    private void showProgress(String message) {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage(message);
-        progressDialog.show();
-    }
-
-    private void hideProgress() {
-        try {
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-        } catch (Exception ignored) {
-        }
-    }
+//    private void showProgress(String message) {
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.setMessage(message);
+//        progressDialog.show();
+//    }
+//
+//    private void hideProgress() {
+//        try {
+//            if (progressDialog != null) {
+//                progressDialog.dismiss();
+//            }
+//        } catch (Exception ignored) {
+//        }
+//    }
 }

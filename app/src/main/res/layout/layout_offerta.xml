@@ -24,6 +24,7 @@
 
         <TextView
             style="@style/text"
+            android:textColor="@color/offer_text"
             android:layout_marginRight="4dp"
             android:text="@string/ag_agree_with_offer" />
 

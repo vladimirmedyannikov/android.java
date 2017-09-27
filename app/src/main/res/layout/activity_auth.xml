@@ -14,6 +14,7 @@
         android:fillViewport="true">
 
         <LinearLayout
+            android:paddingTop="@dimen/pd_normal"
             android:id="@+id/topContainer"
             style="@style/linear">
 
@@ -34,11 +35,13 @@
                 <ru.mos.polls.maskedettext.MaskedEditText
                     android:id="@+id/et_code_country"
                     style="@style/input"
-                    android:layout_width="@dimen/vs_xsmall"
-                    android:layout_marginRight="@dimen/pd_normal"
+                    android:background="#00000000"
+                    android:textColor="@color/disable_code_country"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="@dimen/pd_xxsmall"
                     android:inputType="phone"
                     mask:char_representation="#"
-                    mask:mask="+###" />
+                    mask:mask="+#" />
 
                 <ru.mos.polls.maskedettext.MaskedEditText
                     android:id="@+id/etLogin"

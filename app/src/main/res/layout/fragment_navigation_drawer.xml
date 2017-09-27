@@ -25,13 +25,18 @@
             <LinearLayout
                 style="@style/wrap.centered"
                 android:layout_gravity="start|center_vertical"
+                android:layout_height="@dimen/vs_xxsmall"
+
                 android:layout_marginLeft="@dimen/pd_xxsmall"
                 android:layout_marginStart="@dimen/pd_xxsmall"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/text.large"
+                    android:textColor="@color/menu_text"
                     android:id="@+id/userName"
-                    style="@style/menu_item"
+                    android:gravity="center_vertical|left"
+                    android:layout_marginLeft="@dimen/pd_xxsmall"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Игорь Семеречениский"

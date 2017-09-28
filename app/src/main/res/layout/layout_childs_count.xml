@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/childs_count_container"
         style="@style/item"
         android:visibility="gone">
@@ -9,11 +9,11 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/childs_count_wrapper"
-            style="@style/item">
+            style="@style/text_input_layout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/childs_count"
-                style="@style/edit_profile"
+                style="@style/edit_profile.input"
                 android:hint="@string/childrenCount"
                 android:inputType="number" />
 

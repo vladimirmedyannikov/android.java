@@ -18,16 +18,17 @@
                 style="@style/linear"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:layout_marginTop="-8dp"
                 android:paddingLeft="@dimen/pd_xxsmall"
                 android:paddingRight="@dimen/pd_xxsmall">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/birthday_date_wrapper"
-                    style="@style/item">
+                    style="@style/text_input_layout">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/birthday_date"
-                        style="@style/edit_profile"
+                        style="@style/edit_profile.input"
                         android:focusable="false"
                         android:hint="@string/birthdate" />
 
@@ -36,6 +37,7 @@
                 <LinearLayout
                     style="@style/item"
                     android:orientation="vertical"
+                    android:layout_marginTop="@dimen/pd_xxxsmall"
                     android:paddingLeft="@dimen/pd_xxxsmall"
                     android:paddingRight="@dimen/pd_xxxsmall">
 
@@ -47,11 +49,12 @@
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/edit_gender"
-                        style="@style/edit_profile" />
+                        android:layout_marginTop="@dimen/pd_pd_xxxsmall_m"
+                        style="@style/edit_profile.input" />
 
-                    <!--<include layout="@layout/ag_separator"/>-->
                     <View
                         android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/pd_pd_xxxsmall_m"
                         android:layout_height="3px"
                         android:background="@color/black_lightest" />
                 </LinearLayout>

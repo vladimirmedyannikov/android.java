@@ -53,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="@dimen/pd_xxxlarge"
-            android:paddingRight="@dimen/pd_xxxlarge"
+            app:paddingStart="@dimen/pd_xxxlarge"
+            app:paddingEnd="@dimen/pd_xxxlarge"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"/>
 

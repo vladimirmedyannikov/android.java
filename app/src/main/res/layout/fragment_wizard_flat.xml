@@ -16,11 +16,11 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/social_status_wrapper"
                 android:visibility="gone"
-                style="@style/item">
+                style="@style/text_input_layout">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/social_status"
-                    style="@style/edit_profile"
+                    style="@style/edit_profile.input"
                     android:layout_marginBottom="@dimen/pd_xsmall"
                     android:focusable="false"
                     android:hint="@string/title_social_status"

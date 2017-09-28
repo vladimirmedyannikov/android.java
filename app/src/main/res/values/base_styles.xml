@@ -284,6 +284,13 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="edit_profile.input" parent="edit_profile">
+        <item name="android:paddingTop">3dp</item>
+    </style>
+
+    <style name="text_input_layout" parent="item">
+        <item name="android:paddingTop">@dimen/pd_xxsmall</item>
+    </style>
     <!--Для отображения заголовков-->
     <style name="header" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/fio_container"
         style="@style/item"
         android:orientation="vertical"
@@ -9,11 +9,11 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/lastname_wrapper"
-            style="@style/item">
+            style="@style/text_input_layout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/lastname"
-                style="@style/edit_profile"
+                style="@style/edit_profile.input"
                 android:hint="@string/lastname"
                 android:inputType="textCapSentences" />
 
@@ -21,11 +21,11 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/firstname_wrapper"
-            style="@style/item">
+            style="@style/text_input_layout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/firstname"
-                style="@style/edit_profile"
+                style="@style/edit_profile.input"
                 android:hint="@string/firstname"
                 android:inputType="textCapSentences" />
 
@@ -33,11 +33,11 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/middlename_wrapper"
-            style="@style/item">
+            style="@style/text_input_layout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/middlename"
-                style="@style/edit_profile"
+                style="@style/edit_profile.input"
                 android:hint="@string/middlename"
                 android:inputType="textCapSentences" />
 

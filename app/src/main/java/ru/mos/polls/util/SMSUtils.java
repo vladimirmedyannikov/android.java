@@ -33,7 +33,7 @@ public class SMSUtils {
                 default:
                     GuiUtils.displayOkMessage(context, String.format(context.getString(R.string.error_send_sms), msg), null);
             }
-            context.unregisterReceiver(deliverReceiver);
+            unregisterReceiver(context);
         }
     };
 
@@ -63,8 +63,17 @@ public class SMSUtils {
                     new ArrayList<PendingIntent>(),
                     list);
         }catch (Exception e) {
-            context.unregisterReceiver(deliverReceiver);
+            unregisterReceiver(context);
             GuiUtils.displayOkMessage(context, String.format(context.getString(R.string.error_send_sms), stringText), null);
+        }
+    }
+
+    public static void unregisterReceiver(Context context) {
+        try {
+            if (deliverReceiver != null) {
+                context.unregisterReceiver(deliverReceiver);
+            }
+        } catch (Exception ignored) {
         }
     }
 }

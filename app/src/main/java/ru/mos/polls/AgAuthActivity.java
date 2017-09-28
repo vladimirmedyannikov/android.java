@@ -90,8 +90,19 @@ public class AgAuthActivity extends AuthActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Ваш телефон");
+
+        /**
+         * код по умолчанию +7, при этом без возможности редактирования
+         */
+        codeCountry.setText("7");
+        codeCountry.setEnabled(false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GuiUtils.showKeyboard(etLogin);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

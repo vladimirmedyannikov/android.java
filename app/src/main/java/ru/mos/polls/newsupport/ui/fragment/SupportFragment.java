@@ -1,5 +1,6 @@
 package ru.mos.polls.newsupport.ui.fragment;
 
+import me.ilich.juggler.Navigable;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
@@ -30,5 +31,10 @@ public class SupportFragment extends BindingFragment<SupportFragmentVM, LayoutSu
     @Override
     public int getLayoutResources() {
         return R.layout.layout_support;
+    }
+
+    @Override
+    public Navigable navigateTo() {
+        return super.navigateTo();
     }
 }

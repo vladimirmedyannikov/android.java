@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +26,13 @@ import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
+import ru.mos.polls.newprofile.service.GetStatistics;
 import ru.mos.polls.newprofile.service.VisibilitySet;
 import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -109,11 +113,34 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    private void setUserStatsListView() {
+    public void setUserStatsListView() {
         List<Statistics> list = new ArrayList<>();
         list.addAll(saved.getStatisticList(getActivity()));
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
         recyclerView.setAdapter(userStatisticsAdapter);
+    }
+
+    public void getStatistics() {
+        HandlerApiResponseSubscriber<GetStatistics.Response.Result> handler
+                = new HandlerApiResponseSubscriber<GetStatistics.Response.Result>(getActivity(), progressable) {
+            @Override
+            protected void onResult(GetStatistics.Response.Result result) {
+                if (result != null && result.getStatistics().getParams() != null) {
+                    AgUser.saveToSharedPreferences(getActivity(), new Gson().toJson(result.getStatistics().getParams()), Statistics.STATISTICS_PARAMS);
+                    setUserStatsListView();
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                super.onError(throwable);
+                setUserStatsListView();
+            }
+        };
+        disposables.add(AGApplication.api
+                .getStatistics(new AuthRequest())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(handler));
     }
 
     @Override
@@ -126,7 +153,7 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     public void updateView() {
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
-        setUserStatsListView();
+        getStatistics();
         setAvatar();
     }
 

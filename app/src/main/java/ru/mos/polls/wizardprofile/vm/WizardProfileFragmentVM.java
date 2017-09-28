@@ -103,6 +103,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         agUser = new AgUser(getActivity());
         nextButton = binding.wizardAction;
         wizardFilledList = new ArrayMap<>();
+        pager.setOffscreenPageLimit(2);
         Bundle extras = getFragment().getArguments();
         if (extras != null) {
             percent = extras.getInt(WizardProfileFragment.ARG_WIZARD_PERCENT);

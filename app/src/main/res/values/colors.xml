@@ -92,6 +92,9 @@
     <color name="details_more">@color/gray_lightest</color>
     <color name="rating_orange">@color/orange</color>
 
+    <color name="disable_code_country">#999999</color>
+    <color name="offer_text">#333333</color>
+
     <color name="password_quality_red">@color/red</color>
     <color name="password_quality_orange">@color/orange</color>
     <color name="password_quality_green">#00CC33</color>

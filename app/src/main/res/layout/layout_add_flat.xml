@@ -10,36 +10,54 @@
         <LinearLayout
             android:id="@+id/areaAndDistrictLayout"
             style="@style/item.linear"
+            android:layout_marginTop="@dimen/pd_xxsmall"
             android:animateLayoutChanges="true"
             android:visibility="gone">
 
             <TextView
+                style="@style/text.xsmall.green"
+                android:layout_marginLeft="4dp"
+                android:text="@string/flat_district" />
+
+            <TextView
                 android:id="@+id/districtFlat"
                 style="@style/flat.inactive"
-                android:hint="@string/flat_district"/>
+                android:layout_marginTop="@dimen/pd_small_m"
+                android:hint="@string/flat_district" />
+
+            <TextView
+                android:id="@+id/areaLabel"
+                style="@style/text.xsmall.green"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="@dimen/pd_xxsmall"
+                android:text="@string/flat_area" />
 
             <TextView
                 android:id="@+id/areaFlat"
                 style="@style/flat.inactive"
-                android:layout_marginTop="@dimen/pd_xsmall"
-                android:hint="@string/flat_area"/>
+                android:layout_marginTop="@dimen/pd_small_m"
+                android:hint="@string/flat_area" />
         </LinearLayout>
 
-        <RelativeLayout
-            style="@style/item">
+        <RelativeLayout style="@style/item">
 
             <ProgressBar
                 android:id="@+id/pbStreet"
-                style="@style/progressbar"/>
+                style="@style/progressbar" />
 
-            <android.widget.AutoCompleteTextView
-                android:id="@+id/etStreet"
-                style="@style/flat.auto"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:completionThreshold="3"
-                android:hint="@string/elk_street"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etStreet_wrapper"
+                style="@style/text_input_layout">
+
+                <android.widget.AutoCompleteTextView
+                    android:id="@+id/etStreet"
+                    style="@style/flat.auto"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:completionThreshold="3"
+                    android:hint="@string/elk_street" />
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -49,36 +67,39 @@
             <ImageView
                 style="@style/wrap"
                 android:paddingRight="@dimen/pd_xsmall"
-                android:src="@drawable/ag_icon_add_address"/>
+                android:src="@drawable/ag_icon_add_address" />
 
-            <LinearLayout
-                style="@style/item.linear">
+            <LinearLayout style="@style/item.linear">
 
                 <TextView
                     style="@style/text.gray"
-                    android:text="@string/custom_address_not_found_street"/>
+                    android:text="@string/custom_address_not_found_street" />
 
                 <TextView
                     style="@style/text.small.green"
-                    android:text="@string/custom_address_not_found_hint"/>
+                    android:text="@string/custom_address_not_found_hint" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <RelativeLayout
-            style="@style/item">
+        <RelativeLayout style="@style/item">
 
             <ProgressBar
                 android:id="@+id/pbBuilding"
-                style="@style/progressbar"/>
+                style="@style/progressbar" />
 
-            <android.widget.AutoCompleteTextView
-                android:id="@+id/etBuilding"
-                style="@style/flat.auto"
-                android:enabled="false"
-                android:hint="@string/elk_building"
-                android:nextFocusDown="@+id/etFlat"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etBuilding_wrapper"
+                style="@style/text_input_layout">
+
+                <android.widget.AutoCompleteTextView
+                    android:id="@+id/etBuilding"
+                    style="@style/flat.auto"
+                    android:enabled="false"
+                    android:hint="@string/elk_building"
+                    android:nextFocusDown="@+id/etFlat" />
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -88,18 +109,17 @@
             <ImageView
                 style="@style/wrap"
                 android:paddingRight="@dimen/pd_xsmall"
-                android:src="@drawable/ag_icon_add_address"/>
+                android:src="@drawable/ag_icon_add_address" />
 
-            <LinearLayout
-                style="@style/item.linear">
+            <LinearLayout style="@style/item.linear">
 
                 <TextView
                     style="@style/text.gray"
-                    android:text="@string/custom_address_not_found_building"/>
+                    android:text="@string/custom_address_not_found_building" />
 
                 <TextView
                     style="@style/text.small.green"
-                    android:text="@string/custom_address_not_found_hint"/>
+                    android:text="@string/custom_address_not_found_hint" />
 
             </LinearLayout>
 
@@ -110,6 +130,6 @@
             style="@style/text.gray"
             android:paddingTop="@dimen/pd_xsmall"
             android:text="@string/ag_add_flat"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

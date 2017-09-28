@@ -33,6 +33,9 @@
     <dimen name="pd_xxxlarge">32dp</dimen>
     <!-- padding size minus !-->
     <dimen name="pd_pd_xxxsmall_m">-4dp</dimen>
+    <dimen name="pd_pd_xxsmall_m">-6dp</dimen>
+    <dimen name="pd_pd_xsmall_m">-8dp</dimen>
+    <dimen name="pd_small_m">-12dp</dimen>
     <dimen name="pd_xnormal_m">-14dp</dimen>
     <dimen name="pd_normal_m">-16dp</dimen>
     <!-- text size !-->

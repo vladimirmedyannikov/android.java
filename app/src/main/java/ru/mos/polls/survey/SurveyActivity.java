@@ -93,16 +93,21 @@ public class SurveyActivity extends BaseActivity {
         if (setSurveyId() && !isNeedLoading(savedInstanceState)) {
             loadSurvey();
         }
-        SocialUIController.registerPostingReceiver(this);
         socialController = new SocialController(this);
-        socialController.getEventController().registerCallback(postCallback);
     }
 
     @Override
-    protected void onDestroy() {
-        SocialUIController.unregisterPostingReceiver(this);
+    protected void onResume() {
+        super.onResume();
+        socialController.getEventController().registerCallback(postCallback);
+        SocialUIController.registerPostingReceiver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         socialController.getEventController().unregisterAllCallback();
-        super.onDestroy();
+        SocialUIController.unregisterPostingReceiver(this);
     }
 
     public void setCallback(Callback callback) {

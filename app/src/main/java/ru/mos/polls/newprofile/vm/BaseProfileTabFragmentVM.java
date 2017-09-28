@@ -14,6 +14,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 
 import java.io.File;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
@@ -22,7 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.AgUser;
@@ -35,8 +35,6 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.service.AvatarSet;
-import ru.mos.polls.newprofile.service.EmptyResponse;
-import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.newprofile.service.model.Media;
 import ru.mos.polls.newprofile.service.UploadMedia;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -47,7 +45,7 @@ import ru.mos.polls.util.ImagePickerController;
  * Created by Trunks on 19.06.2017.
  */
 
-public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends UIComponentFragmentViewModel<F, B> {
+public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends UIComponentFragmentViewModel<F, B> implements EasyPermissions.PermissionCallbacks {
     protected RecyclerView recyclerView;
     protected AgUser saved;
     protected CircleImageView circleImageView;
@@ -74,7 +72,6 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
         ImagePickerController.beginCrop(getFragment(), requestCode, resultCode, data);
     }
 
-    @AfterPermissionGranted(ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE)
     public void showChooseMediaDialog() {
         if (EasyPermissions.hasPermissions(getFragment().getContext(), ImagePickerController.MEDIA_PERMS)) {
             ImagePickerController.showDialog(getFragment());
@@ -191,5 +188,20 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void updateView() {
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        ImagePickerController.showDialog(getFragment());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @android.support.annotation.NonNull String[] permissions, @android.support.annotation.NonNull int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

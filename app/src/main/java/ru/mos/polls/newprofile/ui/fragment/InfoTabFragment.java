@@ -1,6 +1,8 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
 
+import android.support.annotation.NonNull;
+
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
@@ -29,5 +31,9 @@ public class InfoTabFragment extends BindingFragment<InfoTabFragmentVM, Fragment
         return R.layout.fragment_info_tab_profile;
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        getViewModel().onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

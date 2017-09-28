@@ -1,5 +1,6 @@
 package ru.mos.polls.wizardprofile.ui.fragment;
 
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import ru.mos.polls.BR;
@@ -35,5 +36,11 @@ public class WizardAvatarFragment extends NavigateFragment<WizardAvatarFragmentV
         } else {
             Toast.makeText(getActivity(), "Вы не загрузили аватарку", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        getViewModel().onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

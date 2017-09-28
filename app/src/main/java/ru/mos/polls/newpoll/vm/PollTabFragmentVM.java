@@ -107,20 +107,20 @@ public class PollTabFragmentVM extends PullablePaginationFragmentVM<PollTabFragm
     }
 
     private void processPoll(long pollId, int typeEvent) {
-        if (pollId != -1) {
-            for (Poll poll : list) {
-                if (poll.getId() == pollId) {
-                    switch (typeEvent) {
-                        case Events.PollEvents.INTERRUPTED_POLL:
-                            poll.setStatus(Poll.Status.INTERRUPTED.status);
-                            break;
-                        case Events.PollEvents.FINISHED_POLL:
-                            list.remove(poll);
-                            poll.setStatus(Poll.Status.PASSED.status);
-                            poll.setPassedDate(System.currentTimeMillis());
-                            break;
-                    }
-                    break;
+        Poll poll = adapter.getPoll(pollId);
+        if (poll != null) {
+            if (poll.getId() == pollId) {
+                switch (typeEvent) {
+                    case Events.PollEvents.INTERRUPTED_POLL:
+                        poll.setStatus(Poll.Status.INTERRUPTED.status);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case Events.PollEvents.FINISHED_POLL:
+                        poll.setStatus(Poll.Status.PASSED.status);
+                        poll.setPassedDate(System.currentTimeMillis());
+                        adapter.removeItem(poll);
+                        list.remove(poll);
+                        break;
                 }
             }
             adapter.notifyDataSetChanged();

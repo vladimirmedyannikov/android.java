@@ -94,8 +94,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         loadFriendProfile();
     }
 
-    private void friendsStatsList(List<Param> params) { //todo привести в порядок убрать param
-    private void friendsStatsList(List<Statistics> params) { //todo привести в порядок убрать param
+    private void friendsStatsList(List<Statistics> params) {
         List<Statistics> list = new ArrayList<>();
         list.addAll(params);
         UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);

@@ -210,6 +210,14 @@ public class AgAuthActivity extends AuthActivity {
         return false;
     }
 
+    @OnEditorAction(R.id.etLogin)
+    boolean actionLoginListener(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            doRequestAction();
+        }
+        return true;
+    }
+
     @OnClick(R.id.help)
     void help() {
         AbstractActivity.hideSoftInput(AgAuthActivity.this, etLogin);

@@ -74,7 +74,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
         String pguConnected = saved.isPguConnected() ? "Подключено" : "Не указано";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
-        UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(list);
+        UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(getFragment().getContext(), list);
         recyclerView.setAdapter(userStatisticsAdapter);
     }
 

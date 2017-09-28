@@ -201,6 +201,18 @@ public class GuiUtils {
         builder.create().show();
     }
 
+    public static void displayYesOrNotDialog(Context context, int messageId, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener notListener) {
+        displayYesOrNotDialog(context, context.getString(messageId), okListener, notListener);
+    }
+
+    public static void displayYesOrNotDialog(Context context, String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener notListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setPositiveButton("Да", okListener);
+        builder.setNegativeButton("Нет", notListener);
+        builder.create().show();
+    }
+
     public static void browseAppInGooglePlayMarket(Context context) {
         final String appPackageName = context.getPackageName();
         try {

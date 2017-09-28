@@ -48,7 +48,7 @@ public class UserInfoAdapter extends BaseAdapter<UserInfoVM, BindingHolder<UserI
                 GuiUtils.displayYesOrNotDialog(context,
                         "Вы хотите перейти в режим редактирования данных?",
                         (dialog, which) -> {
-                            // TODO: 28.09.17 вызывать окно редактирования 
+                            // TODO: 28.09.17 вызывать окно редактирования плюс ещё надо отельно слушать нажатие на соц сеть, см в InfoTabFragmentVM
                         }, null);
             });
         }

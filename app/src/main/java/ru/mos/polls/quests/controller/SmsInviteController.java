@@ -1,14 +1,12 @@
 package ru.mos.polls.quests.controller;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.telephony.SmsManager;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
@@ -27,6 +25,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.util.SMSUtils;
 
 public class SmsInviteController {
 
@@ -110,15 +109,10 @@ public class SmsInviteController {
     }
 
     private void sendSms(String phoneNumber) {
-        SmsManager sms = SmsManager.getDefault();
         ArrayList<String> smsBody = new ArrayList<String>(2);
         smsBody.add(activity.getString(R.string.sms_invite_text));
         smsBody.add(" " + activity.getString(R.string.sms_invate_url));
-        sms.sendMultipartTextMessage(phoneNumber,
-                null,
-                smsBody,
-                new ArrayList<PendingIntent>(),
-                new ArrayList<PendingIntent>());
+        SMSUtils.sendSMS(activity, phoneNumber, smsBody);
     }
 
     private void notifyBackEnd(String number) {

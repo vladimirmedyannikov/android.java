@@ -65,7 +65,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     static final String EMAIL = "updateEmail";
     static final String PERSONAL = "updatePersonal";
     static final String FAMILY = "updateFamilyInfo";
-    static final String LOCATION = "updateLocation";
+    static final String LOCATION_REGISTRATION = "updateLocationRegistration";
+    static final String LOCATION_RESIDENCE = "updateLocationResidence";
     static final String EXTRAINFO = "updateExtraInfo";
     static final String SOCIAL = "updateSocial";
     static final String PGU = "bindToPGU";
@@ -222,10 +223,12 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             list.add(new WizardFamilyFragment());
             tagList.add(FAMILY);
         }
-        if (mockIds.contains(LOCATION)) {
+        if (mockIds.contains(LOCATION_REGISTRATION)) {
             list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_REGISTRATION));
-            list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
             tagList.add(TAG_REGISTRATION);
+        }
+        if (mockIds.contains(LOCATION_RESIDENCE)) {
+            list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
             tagList.add(TAG_RESIDENCE);
         }
         if (mockIds.contains(EXTRAINFO)) {
@@ -371,11 +374,11 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             wpdf.doRequestAction();
         }
         if (isLastPage) {
-            if (wizardFilledList.containsValue(false)) {
-                Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
-            } else {
-                getActivity().finish();
-            }
+//            if (wizardFilledList.containsValue(false)) {
+//                Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
+//            } else {
+            getActivity().finish();
+//            }
         }
     }
 

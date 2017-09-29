@@ -1,6 +1,7 @@
 package ru.mos.polls.util;
 
 import java.nio.CharBuffer;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,5 +54,14 @@ public abstract class AgTextUtil {
     public static boolean validateRus(String text) {
         Matcher matcher = russianPattern.matcher(text);
         return matcher.matches();
+    }
+
+    public static <T> String listToString(List<T> list) {
+        String res = "";
+        for (int i = 0; i < list.size(); i++) {
+            res += list.get(i).toString();
+            if (i != list.size() - 1) res += "\n";
+        }
+        return res;
     }
 }

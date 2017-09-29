@@ -43,8 +43,8 @@ public class ContactsManager {
      * в сочетании с {@link #onActivityResult(int, int, Intent)}
      */
     public void chooseContact(Fragment fragment) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
         fragment.startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -100,7 +100,7 @@ public class ContactsManager {
     public List<String> loadContacts() {
         List<String> result = new ArrayList<>();
         Cursor cursor = context.getContentResolver()
-                .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+                .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 String phone = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));

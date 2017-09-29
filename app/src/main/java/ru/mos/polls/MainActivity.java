@@ -52,7 +52,6 @@ import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
 import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
-import ru.mos.polls.newpoll.ui.PollFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
@@ -151,7 +150,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         actionBarDrawerToggle.syncState();
 
         socialController = new SocialController(this);
-        socialController.getEventController().registerCallback(postCallback);
         smsInviteController = new SmsInviteController(this);
         questStateController = QuestStateController.getInstance();
 
@@ -248,6 +246,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onResume() {
         super.onResume();
+        socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
         if (PreviewAppActivity.isNeedPreview(this)) {
             PreviewAppActivity.start(this);
@@ -284,17 +283,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
         SocialUIController.unregisterPostingReceiver(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         socialController.getEventController().unregisterAllCallback();
     }
 

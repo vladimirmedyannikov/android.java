@@ -84,19 +84,25 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         ButterKnife.bind(this);
         imageLoader = createImageLoader();
         socialController = new SocialController(this);
-        socialController.getEventController().registerCallback(postCallback);
-        SocialUIController.registerPostingReceiver(this);
         if (getAchievement()) {
             loadAchievement();
         }
     }
 
     @Override
-    protected void onDestroy() {
-        SocialUIController.unregisterPostingReceiver(this);
-        socialController.getEventController().unregisterAllCallback();
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        socialController.getEventController().registerCallback(postCallback);
+        SocialUIController.registerPostingReceiver(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        socialController.getEventController().unregisterAllCallback();
+        SocialUIController.unregisterPostingReceiver(this);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

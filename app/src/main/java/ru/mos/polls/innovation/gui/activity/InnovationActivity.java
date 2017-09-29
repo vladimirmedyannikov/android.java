@@ -138,11 +138,23 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         TitleHelper.setTitle(this, R.string.title_innovation);
         setListenerToRatingbar();
         socialController = new SocialController(this);
-        socialController.getEventController().registerCallback(postCallback);
-        SocialUIController.registerPostingReceiver(this);
         if (getShortInnovation()) {
             loadInnovation();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        socialController.getEventController().registerCallback(postCallback);
+        SocialUIController.registerPostingReceiver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        socialController.getEventController().unregisterAllCallback();
+        SocialUIController.unregisterPostingReceiver(this);
     }
 
     private void setListenerToRatingbar() {
@@ -152,16 +164,6 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                 innovationButtons.setSendButtonEnable(rating > 0);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        try {
-            SocialUIController.unregisterPostingReceiver(this);
-        } catch (Exception ignored) {
-        }
-        socialController.getEventController().unregisterAllCallback();
-        super.onDestroy();
     }
 
     @Override

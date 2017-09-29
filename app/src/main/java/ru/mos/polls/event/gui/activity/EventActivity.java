@@ -145,15 +145,15 @@ public class EventActivity extends ToolbarAbstractActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         uiEventBuilder.findViews();
         socialController = new SocialController(this);
-        socialController.getEventController().registerCallback(postCallback);
         Statistics.enterEventTicket(eventId);
         GoogleStatistics.Events.enterEventTicket(eventId);
-        SocialUIController.registerPostingReceiver(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        socialController.getEventController().registerCallback(postCallback);
+        SocialUIController.registerPostingReceiver(this);
         if (LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this)) {
             if (!isRuntimePermissionRejected) {
                 getLocationController();
@@ -175,9 +175,14 @@ public class EventActivity extends ToolbarAbstractActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        SocialUIController.unregisterPostingReceiver(this);
+    protected void onPause() {
+        super.onPause();
         socialController.getEventController().unregisterAllCallback();
+        SocialUIController.unregisterPostingReceiver(this);
+    }
+
+    @Override
+    protected void onDestroy() {
         if (locationController != null) {
             locationController.disconnect();
         }

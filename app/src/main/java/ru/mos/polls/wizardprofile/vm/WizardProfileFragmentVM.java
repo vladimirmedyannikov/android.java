@@ -85,7 +85,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     updatePersonal
    updateFamilyInfo
    updateEmail
-   updateLocation
+   updateLocationRegistration
+   updateLocationResidence
    updateExtraInfo
    updateSocial
    bindToPGU
@@ -182,11 +183,13 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                 frViewedList.put(tab.getPosition(), true);
                 try {
                     boolean preWizardFr = wizardFilledList.get(tagFr.get(tab.getPosition()));
-                    if (preWizardFr) {
-                        setDotColor(tab, R.drawable.wizard_profile_default_dot);
-                    } else {
+                    if (tagFr.get(tab.getPosition()).equalsIgnoreCase(EMAIL) && !preWizardFr) {
                         setDotColor(tab, R.drawable.wizard_profile_warning_dot);
+                        return;
                     }
+//                    if (preWizardFr) {
+                    setDotColor(tab, R.drawable.wizard_profile_default_dot);
+//                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -243,6 +246,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             list.add(PguAuthFragment.newInstanceForWizard());
             tagList.add(PGU);
         }
+
     }
 
     public void setRxEventsBusListener() {

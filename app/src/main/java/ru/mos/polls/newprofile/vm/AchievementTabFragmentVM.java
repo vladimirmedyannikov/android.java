@@ -2,6 +2,7 @@ package ru.mos.polls.newprofile.vm;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
@@ -29,8 +31,8 @@ import ru.mos.polls.util.StubUtils;
  */
 
 public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding, AchievementAdapter> implements OnAchievementClickListener {
-    List<Achievements> list;
-    int friendId;
+    public List<Achievements> list;
+    public int friendId;
 
     public AchievementTabFragmentVM(AchievementTabFragment fragment, FragmentAchievementTabProfileBinding binding) {
         super(fragment, binding);
@@ -59,6 +61,7 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                     protected void onResult(AchievementsSelect.Response.Result result) {
                         adapter.add(result.getAchievements());
                         isPaginationEnable = result.getAchievements().size() >= page.getSize();
+                        recyclerUIComponent.refreshUI();
                     }
                 };
         AchievementsSelect.Request requestBody = new AchievementsSelect.Request(page);

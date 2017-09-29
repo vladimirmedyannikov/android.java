@@ -39,7 +39,6 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
         NewMyPointsAdapter> {
 
     private TextView tvCurrentPointsUnit;
-    private TextView empty;
     private TextView tvPoints;
     private TextView tvStatus;
     private TextView tvTitleBalance;
@@ -58,7 +57,6 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
     @Override
     protected void initialize(FragmentNewMyPointsBinding binding) {
         tvCurrentPointsUnit = binding.tvCurrentPointsUnit;
-        empty = binding.empty;
         recyclerView = binding.list;
         tvPoints = binding.tvPoints;
         tvStatus = binding.tvStatus;
@@ -85,7 +83,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
                         adapter.add(result.getPoints());
                         status = result.getStatus();
                         setView();
-                        empty.setVisibility(adapter.hasData() ? View.GONE : View.VISIBLE);
+                        recyclerUIComponent.refreshUI();
                     }
                 };
         HistoryGet.Request request = new HistoryGet.Request(page);

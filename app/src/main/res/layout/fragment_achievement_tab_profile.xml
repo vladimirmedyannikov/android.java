@@ -27,5 +27,8 @@
                 android:id="@+id/list"
                 style="@style/root" />
         </android.support.v4.widget.SwipeRefreshLayout>
+        <TextView
+            android:id="@android:id/empty"
+            style="@style/emptylist"/>
     </RelativeLayout>
 </layout>

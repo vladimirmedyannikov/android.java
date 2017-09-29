@@ -84,6 +84,7 @@ public class PollTabFragmentVM extends PullablePaginationFragmentVM<PollTabFragm
                     protected void onResult(PollSelect.Response.Result result) {
                         adapter.add(result.getPolls(), pollType);
                         isPaginationEnable = result.getPolls().size() >= page.getSize();
+                        recyclerUIComponent.refreshUI();
                     }
                 };
         List<String> filters = new ArrayList<>();

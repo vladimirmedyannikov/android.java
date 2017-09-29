@@ -7,6 +7,7 @@ import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
+import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.ui.RecyclerScrollableController;
@@ -26,6 +27,7 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
     protected RecyclerView recyclerView;
     protected boolean isPaginationEnable;
     protected A adapter;
+    protected RecyclerUIComponent recyclerUIComponent;
 
     public PullablePaginationFragmentVM(F fragment, B binding) {
         super(fragment, binding);
@@ -38,6 +40,7 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
         recyclerView.setAdapter(adapter);
         page = new Page();
         isPaginationEnable = true;
+        recyclerUIComponent = new RecyclerUIComponent(adapter);
     }
 
     @Override
@@ -69,6 +72,7 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
                     doRequest();
                 }))
                 .with(new ProgressableUIComponent())
+                .with(recyclerUIComponent)
                 .build();
     }
 

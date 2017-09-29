@@ -1,6 +1,6 @@
 package ru.mos.polls.newprofile.ui.adapter;
 
-import android.content.Context;
+import android.view.View;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import ru.mos.polls.base.ui.adapter.BaseAdapter;
 import ru.mos.polls.databinding.UserInfoItemBinding;
 import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.vm.UserInfoVM;
-import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Trunks on 19.06.2017.
@@ -18,10 +17,10 @@ import ru.mos.polls.util.GuiUtils;
 
 public class UserInfoAdapter extends BaseAdapter<UserInfoVM, BindingHolder<UserInfoItemBinding>, UserInfoItemBinding, UserInfo> {
 
-    private Context context;
+    private View.OnClickListener onItemClickListener;
 
-    public UserInfoAdapter(Context context, List<UserInfo> list) {
-        this.context = context;
+    public UserInfoAdapter(View.OnClickListener onItemClickListener, List<UserInfo> list) {
+        this.onItemClickListener = onItemClickListener;
         this.list = list;
     }
 
@@ -44,13 +43,7 @@ public class UserInfoAdapter extends BaseAdapter<UserInfoVM, BindingHolder<UserI
     public void onBindViewHolder(BindingHolder<UserInfoItemBinding> holder, int position) {
         super.onBindViewHolder(holder, position);
         if (position != 0) {
-            holder.itemView.setOnClickListener(v -> {
-                GuiUtils.displayYesOrNotDialog(context,
-                        "Вы хотите перейти в режим редактирования данных?",
-                        (dialog, which) -> {
-                            // TODO: 28.09.17 вызывать окно редактирования плюс ещё надо отельно слушать нажатие на соц сеть, см в InfoTabFragmentVM
-                        }, null);
-            });
+            holder.itemView.setOnClickListener(onItemClickListener);
         }
     }
 }

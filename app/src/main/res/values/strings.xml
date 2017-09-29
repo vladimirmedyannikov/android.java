@@ -789,4 +789,5 @@
     <string name="title_item_add_friend">Добавить друга</string>
     <string name="profile_title">Профиль</string>
     <string name="friend_profile_invisible">Пользователь скрыл свои данные</string>
+    <string name="title_dialog_edit_profile">Вы хотите перейти в режим редактирования данных?</string>
 </resources>

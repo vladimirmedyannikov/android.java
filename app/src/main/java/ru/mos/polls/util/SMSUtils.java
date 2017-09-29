@@ -44,11 +44,7 @@ public class SMSUtils {
     }
 
     public static void sendSMS(Context context, String phoneNumber, ArrayList<String> text) {
-        String stringText = "";
-        for (int i = 0; i < text.size(); i++) {
-            stringText += text.get(i);
-            if (i != text.size() - 1) stringText += "\n";
-        }
+        String stringText = AgTextUtil.listToString(text);
         Intent messageIntent = new Intent(DELIVER_RECEIVER_FILTER);
         messageIntent.putExtra(SENDING_MESSAGE_KEY, stringText);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, messageIntent, 0);

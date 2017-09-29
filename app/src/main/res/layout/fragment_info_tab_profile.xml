@@ -81,6 +81,7 @@
 
                     <RelativeLayout
                         style="@style/linear"
+                        android:onClick="@{()->viewModel.showDialogEditProfile()}"
                         android:paddingBottom="@dimen/pd_xsmall"
                         android:paddingTop="@dimen/pd_xsmall">
 

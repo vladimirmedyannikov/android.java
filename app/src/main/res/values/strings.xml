@@ -791,4 +791,5 @@
     <string name="friend_profile_invisible">Пользователь скрыл свои данные</string>
     <string name="success_send_sms">СМС \"%s\" успешно доставлено</string>
     <string name="error_send_sms">К сожалению, не удалось доставить СМС \"%s\"</string>
+    <string name="title_dialog_edit_profile">Вы хотите перейти в режим редактирования данных?</string>
 </resources>

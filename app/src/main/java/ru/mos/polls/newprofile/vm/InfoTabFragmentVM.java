@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -28,6 +29,7 @@ import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.social.model.AppSocial;
+import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Trunks on 16.06.2017.
@@ -42,6 +44,14 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
         super(fragment, binding);
+    }
+
+    private View.OnClickListener onItemClickListener = v -> showDialogEditProfile();
+
+    public void showDialogEditProfile() {
+        GuiUtils.displayYesOrNotDialog(getFragment().getContext(),
+                R.string.title_dialog_edit_profile,
+                (dialog, which) -> editUserInfo(), null);
     }
 
     @Override
@@ -74,7 +84,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
         String pguConnected = saved.isPguConnected() ? "Подключено" : "Не указано";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
-        UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(list);
+        UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(onItemClickListener, list);
         recyclerView.setAdapter(userStatisticsAdapter);
     }
 

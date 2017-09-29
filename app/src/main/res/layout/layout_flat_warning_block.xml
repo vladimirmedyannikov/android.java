@@ -21,7 +21,7 @@
             android:layout_toRightOf="@id/warningEditingBlocked"
             android:paddingLeft="@dimen/pd_xxsmall"
             android:text="@string/error_short_editing_blocked"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvWarningEditingBlocked"

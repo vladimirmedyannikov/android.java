@@ -55,7 +55,7 @@ public class ContactsManager {
      * @param text        массив строк сообщения
      */
     public void sms(String phoneNumber, String[] text) {
-        SMSUtils.sendSMS(context, "+7" + phoneNumber, text);
+        SMSUtils.sendSMS(context, "+" + phoneNumber, text);
     }
 
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {

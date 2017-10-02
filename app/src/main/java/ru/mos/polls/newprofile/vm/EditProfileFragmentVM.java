@@ -30,9 +30,11 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
-import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
@@ -49,7 +51,7 @@ import ru.mos.polls.social.model.AppSocial;
  * Created by wlTrunks on 14.06.2017.
  */
 
-public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
+public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
     AppCompatSpinner gender;
     AppCompatSpinner martialStatus;
     ArrayAdapter genderAdapter;
@@ -132,12 +134,19 @@ public class EditProfileFragmentVM extends FragmentViewModel<EditProfileFragment
                 });
     }
 
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new ProgressableUIComponent())
+                .build();
+    }
+
     public void sendProfile(ProfileSet.Request request) {
         /**
          * обсервер для сохранения профиля
          */
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
-                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 savedUser.save(getActivity());

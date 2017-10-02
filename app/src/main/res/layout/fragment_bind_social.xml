@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/root"
                 xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        style="@style/root">
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/notifyContainer"
-        style="@style/item.linear"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/background_text_field"
-        android:padding="@dimen/pd_normal">
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+            <LinearLayout
+                android:id="@+id/notifyContainer"
+                style="@style/item.linear"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/background_text_field"
+                android:padding="@dimen/pd_normal">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/socialShareNotify"
-            style="@style/wrap"
-            android:layout_alignParentRight="true"
-            android:paddingBottom="@dimen/pd_xxsmall"
-            android:text="@string/social_share_notify"
-            android:textColor="@color/greyHint"
-            android:textOff="@string/empty"
-            android:textOn="@string/empty"/>
-    </LinearLayout>
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/socialShareNotify"
+                    style="@style/wrap"
+                    android:layout_alignParentRight="true"
+                    android:paddingBottom="@dimen/pd_xxsmall"
+                    android:text="@string/social_share_notify"
+                    android:textColor="@color/greyHint"
+                    android:textOff="@string/empty"
+                    android:textOn="@string/empty"/>
+            </LinearLayout>
 
-    <ListView
-        android:id="@id/list"
-        style="@style/linear"
-        android:layout_above="@id/notifyContainer"
-        android:listSelector="@android:color/transparent"/>
+            <ListView
+                android:id="@id/list"
+                style="@style/linear"
+                android:layout_above="@id/notifyContainer"
+                android:listSelector="@android:color/transparent"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

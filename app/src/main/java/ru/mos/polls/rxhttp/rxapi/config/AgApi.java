@@ -18,9 +18,9 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltyFill;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltyGet;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltySelect;
+import ru.mos.polls.newinnovation.service.NoveltyFill;
+import ru.mos.polls.newinnovation.service.NoveltyGet;
+import ru.mos.polls.newinnovation.service.NoveltySelect;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
 
@@ -126,4 +126,5 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.STATISTICS)
     Observable<GetStatistics.Response> getStatistics(@Body AuthRequest body);
+
 }

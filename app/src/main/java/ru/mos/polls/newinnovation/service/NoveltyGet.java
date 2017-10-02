@@ -1,10 +1,10 @@
-package ru.mos.polls.rxhttp.rxapi.model.novelty.service;
+package ru.mos.polls.newinnovation.service;
 
 import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.InnovationDetails;
+import ru.mos.polls.newinnovation.model.InnovationDetails;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

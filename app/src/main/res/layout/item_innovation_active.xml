@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/item.linear"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:padding="@dimen/pd_xsmall">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/text.large.crimson"/>
+    <LinearLayout
+        style="@style/item.linear"
+        android:padding="@dimen/pd_xsmall">
 
-    <include layout="@layout/item_innovation_ratingbar"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/title"
+            style="@style/text.large.crimson" />
+
+        <include layout="@layout/item_innovation_ratingbar" />
+    </LinearLayout>
+</layout>

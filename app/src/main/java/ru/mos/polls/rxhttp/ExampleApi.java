@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.service.NoveltySelect;
+import ru.mos.polls.newinnovation.service.NoveltySelect;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 /**

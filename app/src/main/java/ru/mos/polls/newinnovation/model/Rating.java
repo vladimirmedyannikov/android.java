@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.rxapi.model.novelty;
+package ru.mos.polls.newinnovation.model;
 
 import android.content.Context;
 

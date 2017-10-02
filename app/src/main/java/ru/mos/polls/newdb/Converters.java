@@ -2,7 +2,7 @@ package ru.mos.polls.newdb;
 
 import android.arch.persistence.room.TypeConverter;
 
-import ru.mos.polls.rxhttp.rxapi.model.novelty.Status;
+import ru.mos.polls.newinnovation.model.Status;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

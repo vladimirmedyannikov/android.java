@@ -52,6 +52,7 @@ import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
 import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
+import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
@@ -214,7 +215,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         switch (action.getEventType()) {
                             case Events.PollEvents.OPEN_POLL:
                                 action.getPoll();
-                                SurveyActivity.startActivityForResult(this,  action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
+                                SurveyActivity.startActivityForResult(this, action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
                                 break;
                         }
                     }
@@ -505,6 +506,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             case NavigationMenuItem.NOVELTY:
 //                ActionBarNavigationController.setNoveltyNavigation(this);
                 fr = new ActiveInnovationsFragment();
+//                fr = InnovationFragment.newInstance();
                 tag = TAG_NOVELTY;
                 Statistics.innovationsListFragment();
                 GoogleStatistics.Innovation.innovationsListFragment();

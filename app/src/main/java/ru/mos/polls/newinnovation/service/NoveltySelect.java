@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.rxapi.model.novelty.service;
+package ru.mos.polls.newinnovation.service;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.model.base.PageAuthRequest;
-import ru.mos.polls.rxhttp.rxapi.model.novelty.Innovation;
+import ru.mos.polls.newinnovation.model.Innovation;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

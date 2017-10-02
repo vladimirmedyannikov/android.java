@@ -36,7 +36,7 @@ public class BirthdayKidsVM extends BaseVM<BirthdayKids, ItemBirthdayKidsBinding
     @Bindable
     public String getYear() {
         String yearString = getYearString(model.getBirthdayYear());
-        return model.getBirthdayYear() < 0 ? "" : yearString;
+        return model.getBirthdayYear() <= 0 ? "" : yearString;
     }
 
     public void setYear(long year) {

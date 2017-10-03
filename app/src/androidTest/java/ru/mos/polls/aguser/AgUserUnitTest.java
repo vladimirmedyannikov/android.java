@@ -95,7 +95,7 @@ public class AgUserUnitTest extends BaseUnitTest {
         assertNotNullOrEmpty(agUser1.getFullUserName());
         assertNotNullOrEmpty(agUser1.getSurnameAndFirstName());
 
-        Assert.assertEquals(agUser1.birthdayToLongFromView("2000"), 2000);
+//        Assert.assertEquals(agUser1.birthdayToLongFromView("2000"), 2000);
 
         Assert.assertEquals(agUser1.isCarExist(), false);
         agUser1.setCarExist(true);

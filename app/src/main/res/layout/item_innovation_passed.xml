@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/item.linear"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:padding="@dimen/pd_xsmall">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/text.large.black"/>
+    <LinearLayout
+        style="@style/item.linear"
+        android:padding="@dimen/pd_xsmall">
 
-    <TextView
-        android:id="@+id/creditedPoints"
-        style="@style/text.crimson"
-        android:text="@string/credited"/>
+        <TextView
+            android:id="@+id/title"
+            style="@style/text.large.black" />
 
-    <TextView
-        android:id="@+id/voteDateTxt"
-        style="@style/text.crimson"
-        android:hint="@string/vote_date_text"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/creditedPoints"
+            style="@style/text.crimson"
+            android:text="@string/credited" />
 
-    <include layout="@layout/item_innovation_ratingbar"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/voteDateTxt"
+            style="@style/text.crimson"
+            android:hint="@string/vote_date_text"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/ratingbar_layout"
+            layout="@layout/item_innovation_ratingbar" />
+    </LinearLayout>
+</layout>

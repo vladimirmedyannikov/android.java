@@ -55,9 +55,9 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     private static final String EXTRA_SHORT_INNOVATION = "extra_short_innovation";
     private static final String EXTRA_INNOVATION = "extra_innovation";
 
-    public static void startActivity(Fragment fragment, ShortInnovation shortInnovation) {
+    public static void startActivity(Fragment fragment, long shortInnovationId) {
         Intent start = new Intent(fragment.getActivity(), InnovationActivity.class);
-        start.putExtra(EXTRA_SHORT_INNOVATION, shortInnovation.getId());
+        start.putExtra(EXTRA_SHORT_INNOVATION, shortInnovationId);
         fragment.startActivityForResult(start, REQUEST);
     }
 

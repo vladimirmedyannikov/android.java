@@ -8,6 +8,8 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.newinnovation.model.Innovation;
 import ru.mos.polls.newinnovation.model.Status;
 import ru.mos.polls.newinnovation.vm.item.InnovationsItemActiveVM;
+import ru.mos.polls.newinnovation.vm.item.InnovationsItemOldVM;
+import ru.mos.polls.newinnovation.vm.item.InnovationsItemPassedVM;
 
 /**
  * Created by Trunks on 02.10.2017.
@@ -28,10 +30,10 @@ public class InnovationAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
                 inn = new InnovationsItemActiveVM(innovation);
             }
             if (innovation.getStatus() == Status.OLD) {
-                inn = new InnovationsItemActiveVM(innovation);
+                inn = new InnovationsItemOldVM(innovation);
             }
             if (innovation.getStatus() == Status.PASSED) {
-                inn = new InnovationsItemActiveVM(innovation);
+                inn = new InnovationsItemPassedVM(innovation);
             }
             content.add(inn);
         }

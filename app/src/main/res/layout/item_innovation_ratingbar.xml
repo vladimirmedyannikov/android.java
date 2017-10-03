@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/item.linear.horizontal"
-    android:gravity="center_vertical"
-    android:paddingTop="@dimen/pd_xxsmall">
+<layout>
 
-    <TextView
-        style="@style/text.gray"
-        android:id="@+id/ratingTitle"
-        android:text="@string/innovation_rate_avg"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/item.linear.horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/pd_xxsmall">
 
-    <include layout="@layout/layout_small_rating_bar"/>
+        <TextView
+            android:id="@+id/ratingTitle"
+            style="@style/text.gray"
+            android:text="@string/innovation_rate_avg" />
 
-</LinearLayout>
+        <RatingBar xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/pd_normal"
+            android:layout_marginLeft="@dimen/pd_xxsmall"
+            android:layout_marginStart="@dimen/pd_xxsmall"
+            android:clickable="false"
+            android:max="5"
+            android:progressDrawable="@drawable/novelty_listitem_rating"
+            android:rating="3.25"
+            android:stepSize="0.5" />
+
+    </LinearLayout>
+</layout>

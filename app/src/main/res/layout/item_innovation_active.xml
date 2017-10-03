@@ -9,6 +9,8 @@
             android:id="@+id/title"
             style="@style/text.large.crimson" />
 
-        <include layout="@layout/item_innovation_ratingbar" />
+        <include
+            android:id="@+id/innovation_ratingbar_layout"
+            layout="@layout/item_innovation_ratingbar" />
     </LinearLayout>
 </layout>

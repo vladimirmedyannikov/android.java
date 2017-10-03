@@ -1,6 +1,7 @@
 package ru.mos.polls.newinnovation.vm;
 
 
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -38,6 +39,7 @@ public class InnovationFragmentVM extends PullablePaginationFragmentVM<Innovatio
                     @Override
                     protected void onResult(NoveltySelect.Response.Result result) {
                         adapter.add(result.getInnovations());
+                        isPaginationEnable = result.getInnovations().size() > 0;
                         recyclerUIComponent.refreshUI();
                     }
                 };
@@ -48,4 +50,5 @@ public class InnovationFragmentVM extends PullablePaginationFragmentVM<Innovatio
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservable.subscribeWith(handler));
     }
+
 }

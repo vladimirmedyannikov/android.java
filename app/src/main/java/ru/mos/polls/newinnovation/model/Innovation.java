@@ -53,6 +53,16 @@ public class Innovation implements Serializable {
         return description;
     }
 
+    public void setPassedDate(long passedDate) {
+        this.passedDate = passedDate;
+    }
+
+    private long passedDate;
+
+    public long getPassedDate() {
+        return passedDate * 1000;
+    }
+
     public Status getStatus() {
         return status;
     }

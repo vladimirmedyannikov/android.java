@@ -121,7 +121,7 @@ public abstract class AbstractInnovationsFragment extends PullableFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Statistics.innovationsDetail();
                 GoogleStatistics.Innovation.innovationsDetail();
-                InnovationActivity.startActivity(AbstractInnovationsFragment.this, shortInnovations.get(position));
+                InnovationActivity.startActivity(AbstractInnovationsFragment.this, shortInnovations.get(position).getId());
             }
         });
     }

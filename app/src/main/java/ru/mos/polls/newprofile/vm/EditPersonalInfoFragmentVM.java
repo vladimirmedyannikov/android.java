@@ -18,10 +18,10 @@ import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.base.vm.MenuFragmentVM;
+import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
@@ -195,7 +195,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
                 personal.setMiddlename(agUser.getMiddleName());
                 break;
             case COUNT_KIDS:
-                agUser.setChildCount(Integer.valueOf(childsCount.getText().toString()));
+                agUser.setChildCount(Integer.valueOf(TextUtils.isEmpty(childsCount.getText().toString()) ? "0" : childsCount.getText().toString()));
                 personal.setChildrens_count(agUser.getChildCount());
                 validationOk = true;
                 break;

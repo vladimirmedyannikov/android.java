@@ -192,7 +192,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 .subscribe(o -> {
                     if (o instanceof Events.ProfileEvents) {
                         Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getAction()) {
+                        switch (action.getEventType()) {
                             case Events.ProfileEvents.EDIT_USER_INFO:
                                 navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
                                 break;
@@ -216,6 +216,14 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                             case Events.PollEvents.OPEN_POLL:
                                 action.getPoll();
                                 SurveyActivity.startActivityForResult(this, action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
+                                break;
+                        }
+                    }
+                    if (o instanceof Events.InnovationsEvents) {
+                        Events.InnovationsEvents action = (Events.InnovationsEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.InnovationsEvents.OPEN_INNOVATIONS:
+                                InnovationActivity.startActivity(this, action.getInnovationId());
                                 break;
                         }
                     }

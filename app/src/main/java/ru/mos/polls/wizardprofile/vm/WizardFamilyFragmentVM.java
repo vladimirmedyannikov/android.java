@@ -82,7 +82,7 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
                 .subscribe(o -> {
                     if (o instanceof Events.WizardEvents) {
                         Events.WizardEvents events = (Events.WizardEvents) o;
-                        switch (events.getWizardType()) {
+                        switch (events.getEventType()) {
                             case Events.WizardEvents.WIZARD_UPDATE_GENDER:
                                 agUser = new AgUser(getActivity());
                                 setMartialStatusView(agUser.getGender());

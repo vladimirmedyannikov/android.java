@@ -113,7 +113,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                 .subscribe(o -> {
                     if (o instanceof Events.ProfileEvents) {
                         Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getAction()) {
+                        switch (action.getEventType()) {
                             case Events.ProfileEvents.UPDATE_FLAT:
                                 Flat upDateFlat = action.getFlat();
                                 if (upDateFlat != null) {

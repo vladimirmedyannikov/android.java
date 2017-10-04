@@ -86,7 +86,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 .subscribe(o -> {
                     if (o instanceof Events.ProfileEvents) {
                         Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getAction()) {
+                        switch (action.getEventType()) {
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
                                 agUser = changed;

@@ -3,9 +3,11 @@ package ru.mos.polls.newinnovation.vm.item;
 import android.databinding.ViewDataBinding;
 import android.view.View;
 
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.RecyclerBaseViewModel;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
 import ru.mos.polls.newinnovation.model.Innovation;
 
@@ -27,6 +29,6 @@ public abstract class InnovationsItemBaseVM<M extends Innovation, VDB extends Vi
     public void openInnovations(View v) {
         Statistics.innovationsDetail();
         GoogleStatistics.Innovation.innovationsDetail();
-        InnovationActivity.startActivity(v.getContext(), getModel().getId());
+        AGApplication.bus().send(new Events.InnovationsEvents(getModel().getId(), Events.InnovationsEvents.OPEN_INNOVATIONS));
     }
 }

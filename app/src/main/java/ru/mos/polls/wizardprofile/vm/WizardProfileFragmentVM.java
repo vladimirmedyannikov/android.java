@@ -258,7 +258,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                         Events.WizardEvents events = (Events.WizardEvents) o;
                         agUser = new AgUser(getActivity());
                         percent = events.getPercentFillProfile();
-                        switch (events.getWizardType()) {
+                        switch (events.getEventType()) {
                             case Events.WizardEvents.WIZARD_AVATAR:
                                 wizardFilledList.put(AVATAR, true);
                                 break;
@@ -291,7 +291,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 wizardFilledList.put(PGU, true);
                                 break;
                         }
-                        if (events.getWizardType() != Events.WizardEvents.WIZARD_UPDATE_GENDER) {
+                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER) {
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
                             slideNextPage();

@@ -1,7 +1,9 @@
 package ru.mos.polls.survey;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
@@ -28,6 +32,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.common.view.VotersView;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.experts.DetailsExpert;
@@ -68,6 +73,8 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     ScrollView baseContainer;
     @BindView(R.id.votesInfo)
     VotersView votersView;
+    @BindView(R.id.shareButton)
+    Button shareButton;
 
     private Survey survey = null;
     private Callback callback = Callback.STUB;
@@ -90,6 +97,18 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
         unbinder = ButterKnife.bind(this, view);
         restoreSavedState(savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        renderShareButton();
+    }
+
+    private void renderShareButton() {
+        if (survey != null) {
+            shareButton.setVisibility(survey.isPassed() ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
@@ -218,7 +237,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     protected void refreshUI() {
         SharedPreferencesSurveyManager manager = new SharedPreferencesSurveyManager(getActivity());
         manager.fill(survey);
-
+        renderShareButton();
         surveyHeader.display(survey);
         if (survey.getKind().isHearing()) {
             surveyHeader.displayHearingInfo(this, survey);
@@ -356,6 +375,23 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
         };
         SurveyDataSource surveyDataSource = new WebSurveyDataSource((BaseActivity) getActivity());
         surveyDataSource.load(surveyId, isHearing, listener);
+    }
+
+    @OnClick(R.id.shareButton)
+    void onClickShareButton() {
+        SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
+            @Override
+            public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
+                socialPostValue.setId(survey.getId());
+                callback.onPosting(socialPostValue);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        };
+        SocialUIController.showSocialsDialogForPoll((BaseActivity) getActivity(), survey, false, listener);
     }
 
     public interface Callback {

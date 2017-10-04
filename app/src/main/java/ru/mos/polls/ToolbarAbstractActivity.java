@@ -38,9 +38,8 @@ public abstract class ToolbarAbstractActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                System.out.println("onOptionsItemSelected ToolbarAbstractActivity");
                 onBackPressed();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

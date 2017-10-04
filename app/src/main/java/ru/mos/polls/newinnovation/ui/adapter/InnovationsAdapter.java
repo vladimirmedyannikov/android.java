@@ -15,7 +15,7 @@ import ru.mos.polls.newinnovation.vm.item.InnovationsItemPassedVM;
  * Created by Trunks on 02.10.2017.
  */
 
-public class InnovationAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
+public class InnovationsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     public interface Type {
         int ITEM_ACTIVE = 0;
         int ITEM_OLD = 1;
@@ -38,5 +38,23 @@ public class InnovationAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
             content.add(inn);
         }
         addData(content);
+    }
+
+    public void updateInnovations(long id, double rating, long passedDate) {
+        int position = 0;
+        for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
+            if (id == ((Innovation) recyclerBaseViewModel.getModel()).getId()) {
+                Innovation innovation = (Innovation) recyclerBaseViewModel.getModel();
+                innovation.setStatus(Status.PASSED);
+                innovation.setFullRating(rating);
+                innovation.setPassedDate(passedDate);
+                position = list.indexOf(recyclerBaseViewModel);
+                RecyclerBaseViewModel inn = new InnovationsItemPassedVM(innovation);
+                list.remove(recyclerBaseViewModel);
+                list.add(position, inn);
+                break;
+            }
+        }
+        notifyItemChanged(position);
     }
 }

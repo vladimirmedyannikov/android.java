@@ -151,16 +151,34 @@ public class Events {
 
     public static class InnovationsEvents extends BaseEvents {
         public static final int OPEN_INNOVATIONS = 1;
+        public static final int PASSED_INNOVATIONS = 2;
 
         private long innovationId;
+        private double rating;
+        private long passedDate;
 
         public InnovationsEvents(long innovationId, int eventType) {
             this.innovationId = innovationId;
             this.eventType = eventType;
         }
 
+        public InnovationsEvents(long innovationId, double rating, long passedDate, int eventType) {
+            this.innovationId = innovationId;
+            this.rating = rating;
+            this.passedDate = passedDate;
+            this.eventType = eventType;
+        }
+
         public long getInnovationId() {
             return innovationId;
+        }
+
+        public double getRating() {
+            return rating;
+        }
+
+        public long getPassedDate() {
+            return passedDate;
         }
     }
 

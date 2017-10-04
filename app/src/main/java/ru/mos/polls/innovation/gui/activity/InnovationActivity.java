@@ -21,12 +21,14 @@ import com.android.volley2.VolleyError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.common.view.HtmlTitleView;
@@ -246,6 +248,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                 stopProgress();
                 showResults(message, allPoints);
                 scrollToChart();
+                AGApplication.bus().send(new Events.InnovationsEvents(innovation.getId(), rating.getFullRating(), innovation.getPassedDate(), Events.InnovationsEvents.PASSED_INNOVATIONS));
             }
 
             @Override

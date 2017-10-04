@@ -6,7 +6,7 @@ import android.view.View;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.ItemInnovationPassedBinding;
 import ru.mos.polls.newinnovation.model.Innovation;
-import ru.mos.polls.newinnovation.ui.adapter.InnovationAdapter;
+import ru.mos.polls.newinnovation.ui.adapter.InnovationsAdapter;
 
 /**
  * Created by Trunks on 03.10.2017.
@@ -24,7 +24,7 @@ public class InnovationsItemPassedVM extends InnovationsItemBaseVM<Innovation, I
 
     @Override
     public int getViewType() {
-        return InnovationAdapter.Type.ITEM_PASSED;
+        return InnovationsAdapter.Type.ITEM_PASSED;
     }
 
 

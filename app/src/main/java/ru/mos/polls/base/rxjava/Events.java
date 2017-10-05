@@ -124,6 +124,8 @@ public class Events {
         public static final int OPEN_POLL = 1;
         public static final int FINISHED_POLL = 2;
         public static final int INTERRUPTED_POLL = 3;
+        public static final int ADD_OLD_POLL = 4;
+
 
         private Poll poll;
         private long pollId;

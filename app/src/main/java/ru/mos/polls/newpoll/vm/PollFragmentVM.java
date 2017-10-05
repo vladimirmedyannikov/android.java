@@ -13,10 +13,8 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentPollBinding;
 import ru.mos.polls.newpoll.ui.PollFragment;
-import ru.mos.polls.newpoll.ui.PollTabFragment;
+import ru.mos.polls.newpoll.ui.PollBaseFragment;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
-import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
-import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 
 /**
  * Created by Trunks on 14.09.2017.
@@ -50,8 +48,8 @@ public class PollFragmentVM extends FragmentViewModel<PollFragment, FragmentPoll
 
     protected List<PagerAdapter.Page> getPages() {
         list = new ArrayList<>();
-        list.add(new PagerAdapter.Page(PollTabFragment.newInstance(PollTabFragmentVM.ARG_ACTIVE_POLL), R.string.polls_active));
-        list.add(new PagerAdapter.Page(PollTabFragment.newInstance(PollTabFragmentVM.ARG_OLD_POLL), R.string.polls_old));
+        list.add(new PagerAdapter.Page(PollBaseFragment.newInstance(PollBaseFragmentVM.ARG_ACTIVE_POLL), R.string.polls_active));
+        list.add(new PagerAdapter.Page(PollBaseFragment.newInstance(PollBaseFragmentVM.ARG_OLD_POLL), R.string.polls_old));
         return list;
     }
 

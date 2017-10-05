@@ -40,14 +40,21 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
         addData(content);
     }
 
+    public void addOldPoll(Poll poll) {
+        list.add(0, new PollItemOldVM(poll));
+        notifyDataSetChanged();
+    }
+
     public void removeItem(Poll poll) {
+        int position = 0;
         for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
             if (poll.getId() == ((Poll) recyclerBaseViewModel.getModel()).getId()) {
+                position = list.indexOf(recyclerBaseViewModel);
                 list.remove(recyclerBaseViewModel);
-                notifyItemChanged(list.indexOf(recyclerBaseViewModel));
                 break;
             }
         }
+        notifyItemChanged(position);
     }
 
     public Poll getPoll(long pollId) {

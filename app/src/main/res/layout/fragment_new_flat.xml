@@ -8,31 +8,44 @@
             type="ru.mos.polls.newprofile.vm.NewFlatFragmentVM"/>
     </data>
 
-    <LinearLayout
-        android:id="@+id/layout_main"
-        style="@style/linear"
-        android:animateLayoutChanges="true">
-
-        <ScrollView
-            style="@style/root"
-            android:background="@color/white">
-
+    <RelativeLayout
+        style="@style/root">
+        <FrameLayout
+            android:id="@+id/root"
+            style="@style/root">
             <LinearLayout
+                android:id="@+id/layout_main"
                 style="@style/linear"
-                android:padding="@dimen/pd_xsmall">
+                android:animateLayoutChanges="true">
 
-                <include
-                    android:id="@+id/layout_flat_residence_toggle"
-                    layout="@layout/layout_flat_residence_toggle"/>
+                <ScrollView
+                    style="@style/root"
+                    android:background="@color/white">
 
-                <include
-                    android:id="@+id/layout_add_flat"
-                    layout="@layout/layout_add_flat"/>
+                    <LinearLayout
+                        style="@style/linear"
+                        android:padding="@dimen/pd_xsmall">
 
-                <include
-                    android:id="@+id/layout_flat_warning_block"
-                    layout="@layout/layout_flat_warning_block"/>
+                        <include
+                            android:id="@+id/layout_flat_residence_toggle"
+                            layout="@layout/layout_flat_residence_toggle"/>
+
+                        <include
+                            android:id="@+id/layout_add_flat"
+                            layout="@layout/layout_add_flat"/>
+
+                        <include
+                            android:id="@+id/layout_flat_warning_block"
+                            layout="@layout/layout_flat_warning_block"/>
+                    </LinearLayout>
+                </ScrollView>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
 </layout>

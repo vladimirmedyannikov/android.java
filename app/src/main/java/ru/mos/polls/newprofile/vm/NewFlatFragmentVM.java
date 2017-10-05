@@ -27,9 +27,11 @@ import ru.mos.elk.profile.flat.Flat;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentNewFlatBinding;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.vm.MenuFragmentVM;
+import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.state.CustomFlatState;
@@ -47,7 +49,7 @@ import ru.mos.polls.wizardprofile.vm.WizardCustomFlatListener;
  * Created by Trunks on 23.07.2017.
  */
 
-public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentNewFlatBinding> {
+public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragment, FragmentNewFlatBinding> {
     public static final int FLAT_TYPE_REGISTRATION = 12234;
     public static final int FLAT_TYPE_RESIDENCE = 11223;
     public static final int FLAT_TYPE_WORK = 11132;
@@ -123,6 +125,13 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
                         }
                     }
                 });
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
     public void setListener() {
@@ -360,7 +369,7 @@ public class NewFlatFragmentVM extends MenuFragmentVM<NewFlatFragment, FragmentN
      */
     public void sendFlat(ProfileSet.Request request) {
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
-                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;

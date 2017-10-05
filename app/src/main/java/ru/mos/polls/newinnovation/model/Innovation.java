@@ -60,7 +60,7 @@ public class Innovation implements Serializable {
     private long passedDate;
 
     public long getPassedDate() {
-        return passedDate * 1000;
+        return passedDate;
     }
 
     public Status getStatus() {

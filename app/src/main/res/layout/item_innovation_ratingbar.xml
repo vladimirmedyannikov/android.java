@@ -14,7 +14,7 @@
         <RatingBar xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/pd_normal"
+            android:layout_height="@dimen/pd_small"
             android:layout_marginLeft="@dimen/pd_xxsmall"
             android:layout_marginStart="@dimen/pd_xxsmall"
             android:clickable="false"

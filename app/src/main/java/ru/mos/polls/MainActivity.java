@@ -512,8 +512,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 break;
             case NavigationMenuItem.NOVELTY:
 //                ActionBarNavigationController.setNoveltyNavigation(this);
-                fr = new ActiveInnovationsFragment();
-//                fr = InnovationFragment.newInstance();
+//                fr = new ActiveInnovationsFragment();
+                fr = InnovationFragment.newInstance();
                 tag = TAG_NOVELTY;
                 Statistics.innovationsListFragment();
                 GoogleStatistics.Innovation.innovationsListFragment();

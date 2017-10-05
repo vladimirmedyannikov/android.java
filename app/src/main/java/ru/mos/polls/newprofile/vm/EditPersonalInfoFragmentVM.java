@@ -18,9 +18,11 @@ import ru.mos.elk.profile.AgSocialStatus;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
-import ru.mos.polls.base.vm.MenuFragmentVM;
 import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.newprofile.model.BirthdayKids;
 import ru.mos.polls.newprofile.service.ProfileSet;
@@ -38,7 +40,7 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
  * Created by Trunks on 04.07.2017.
  */
 
-public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoFragment, FragmentNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
+public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<EditPersonalInfoFragment, FragmentNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
     public static final int PERSONAL_EMAIL = 33344;
     public static final int PERSONAL_FIO = 44333;
     public static final int COUNT_KIDS = 43678;
@@ -56,6 +58,13 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
 
     public EditPersonalInfoFragmentVM(EditPersonalInfoFragment fragment, FragmentNewEditPersonalInfoBinding binding) {
         super(fragment, binding);
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new ProgressableUIComponent())
+                .build();
     }
 
 
@@ -77,7 +86,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
         firstname = binding.fioContainer.firstname;
         middlename = binding.fioContainer.middlename;
         childsCount = binding.childsCountContainer.childsCount;
-        recyclerView = binding.root;
+        recyclerView = binding.rootRecyclerView;
     }
 
     public int getPersonalType() {
@@ -235,7 +244,7 @@ public class EditPersonalInfoFragmentVM extends MenuFragmentVM<EditPersonalInfoF
          * отправляем личные данные профиля
          */
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
-                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 if (result != null) {

@@ -7,26 +7,35 @@
             name="viewModel"
             type="ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM"/>
     </data>
-
-    <LinearLayout
-        style="@style/linear"
-        android:background="@color/white"
-        android:padding="@dimen/pd_xxsmall">
-
-        <include
-            android:id="@+id/email_container"
-            layout="@layout/layout_email_contact"/>
-
-        <include
-            android:id="@+id/fio_container"
-            layout="@layout/layout_fio"/>
-
-        <include
-            android:id="@+id/childs_count_container"
-            layout="@layout/layout_childs_count"/>
-
-        <android.support.v7.widget.RecyclerView
+    <RelativeLayout
+        style="@style/root">
+        <LinearLayout
             android:id="@+id/root"
-            style="@style/item"/>
-    </LinearLayout>
+            style="@style/linear"
+            android:background="@color/white"
+            android:padding="@dimen/pd_xxsmall">
+
+            <include
+                android:id="@+id/email_container"
+                layout="@layout/layout_email_contact"/>
+
+            <include
+                android:id="@+id/fio_container"
+                layout="@layout/layout_fio"/>
+
+            <include
+                android:id="@+id/childs_count_container"
+                layout="@layout/layout_childs_count"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rootRecyclerView"
+                style="@style/item"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
 </layout>

@@ -10,33 +10,24 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
-import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.AgAuthActivity;
-import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.ui.BaseActivity;
-import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
-import ru.mos.polls.friend.state.FriendProfileState;
-import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
+import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
-import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
-import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
-import ru.mos.polls.survey.SurveyActivity;
 
 /**
  * Created by wlTrunks on 07.06.2017.
  */
 
-public class FriendProfileTabFragmentVM extends FragmentViewModel<FriendProfileTabFragment, FragmentFriendTabBinding> {
+public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<FriendProfileTabFragment, FragmentFriendTabBinding> {
     private ViewPager pager;
     private TabLayout slidingTabs;
     private Friend friend;
@@ -45,6 +36,11 @@ public class FriendProfileTabFragmentVM extends FragmentViewModel<FriendProfileT
 
     public FriendProfileTabFragmentVM(FriendProfileTabFragment fragment, FragmentFriendTabBinding binding) {
         super(fragment, binding);
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder().build();
     }
 
     @Override

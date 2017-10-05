@@ -25,9 +25,11 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentCustomFlatBinding;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.vm.MenuFragmentVM;
+import ru.mos.polls.databinding.FragmentCustomFlatBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
@@ -41,7 +43,7 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
  * Created by Trunks on 03.08.2017.
  */
 
-public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, FragmentCustomFlatBinding> {
+public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFlatFragment, FragmentCustomFlatBinding> {
     boolean forWizard;
     Flat flat;
     TextInputEditText street;
@@ -174,7 +176,7 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
      */
     public void sendFlat(ProfileSet.Request request) {
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
-                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;
@@ -238,6 +240,11 @@ public class CustomFlatFragmentVM extends MenuFragmentVM<CustomFlatFragment, Fra
     public void onViewCreated() {
         super.onViewCreated();
         setListeners();
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder().with(new ProgressableUIComponent()).build();
     }
 
     public void setListeners() {

@@ -7,8 +7,8 @@ import java.util.List;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM;
 
 /**
@@ -16,6 +16,8 @@ import ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM;
  */
 
 public class WizardProfileFragment extends BindingFragment<WizardProfileFragmentVM, FragmentWizardProfileBinding> {
+
+    public static final int RESULT_CODE_START_PROFILE_FOR_INFO_PAGE = 19546;
 
     public static final String ARG_FOR_WIZARD = "for_wizard";
     public static final String ARG_WIZARD_IDS = "profile_personal_quest";

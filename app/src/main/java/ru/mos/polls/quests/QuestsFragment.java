@@ -328,6 +328,12 @@ public class QuestsFragment extends PullableFragment {
                         }
                     }
                     /**
+                     * Убираем квест визарда из ленты если список задания пустой
+                     */
+                    if (((BackQuest) quest).getId().equalsIgnoreCase(ProfileQuest.ID_PERSONAL_WIZARD)) {
+                        if (((ProfileQuest) quest).idsList.size() == 0) continue;
+                    }
+                    /**
                      * Удаляем рекламные блоки из ленты
                      */
                     if (quest instanceof AdvertisementQuest) {

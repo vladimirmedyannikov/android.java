@@ -10,25 +10,24 @@
             android:id="@+id/front"
             style="@style/root"
             android:background="@drawable/quest_background_pink"
-            android:gravity="left|center"
+            android:gravity="center"
             android:tag="front">
 
             <include
                 android:id="@+id/rrPrice"
-                android:visibility="gone"
                 layout="@layout/quest_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
 
-            <!--android:layout_toLeftOf="@id/rrPrice"-->
             <TextView
                 android:id="@+id/title"
                 style="@style/quest_title"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@id/rrPrice"
                 android:drawableLeft="@drawable/image_icon_category_pin"
                 android:drawablePadding="@dimen/pd_xxsmall" />
         </RelativeLayout>

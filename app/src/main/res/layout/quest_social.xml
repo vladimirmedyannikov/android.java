@@ -23,6 +23,7 @@
 
             <include
                 android:id="@+id/contprice"
+                android:visibility="gone"
                 style="@style/wrap"
                 layout="@layout/quest_price"
                 android:layout_width="wrap_content"
@@ -30,10 +31,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
 
+            <!--android:layout_toLeftOf="@id/contprice"-->
             <LinearLayout
                 style="@style/wrap.linear"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_toLeftOf="@id/contprice"
                 android:layout_toRightOf="@id/icon"
                 android:layout_weight="0.4">
 

@@ -384,6 +384,9 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             getActivity().finish();
 //            }
         }
+        if (bd instanceof BindingSocialFragment) {
+            slideNextPage();
+        }
     }
 
     public View getTabView() {

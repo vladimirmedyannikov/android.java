@@ -1,5 +1,9 @@
 package ru.mos.polls.util;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+
 import java.nio.CharBuffer;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,5 +67,15 @@ public abstract class AgTextUtil {
             if (i != list.size() - 1) res += "\n";
         }
         return res;
+    }
+
+    public static String getPhoneFormat(String phone) {
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phone, "RU");
+            phone = phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        } catch (NumberParseException e) {
+        }
+        return phone;
     }
 }

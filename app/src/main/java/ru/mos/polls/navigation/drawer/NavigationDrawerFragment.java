@@ -52,6 +52,7 @@ import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.badge.model.Personal;
 import ru.mos.polls.badge.model.State;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -281,13 +282,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void doRefreshUserInfo(String phone, String firstName, String surname) {
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-        try {
-            Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phone, "RU");
-            phone = phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-        } catch (NumberParseException e) {
-            Log.w(NavigationDrawerFragment.class.getName(), e.getMessage(), e);
-        }
+        phone = AgTextUtil.getPhoneFormat(phone);
         final String name;
         if (ElkTextUtils.isEmpty(firstName) && !ElkTextUtils.isEmpty(surname)) {
             name = surname;

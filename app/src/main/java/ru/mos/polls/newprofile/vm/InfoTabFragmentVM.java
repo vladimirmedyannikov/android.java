@@ -29,6 +29,7 @@ import ru.mos.polls.newprofile.model.UserInfo;
 import ru.mos.polls.newprofile.ui.adapter.UserInfoAdapter;
 import ru.mos.polls.newprofile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.social.model.AppSocial;
+import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -69,7 +70,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
 
     private void userInfoList() {
         List<UserInfo> list = new ArrayList<>();
-        list.add(new UserInfo("телефон", saved.getPhone()));
+        list.add(new UserInfo("телефон", AgTextUtil.getPhoneFormat(saved.getPhone())));
         list.add(new UserInfo("e-mail", saved.getEmail()));
         list.add(new UserInfo("фамилия", saved.getSurname()));
         list.add(new UserInfo("имя", saved.getFirstName()));

@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +25,10 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
@@ -381,6 +380,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
 //            if (wizardFilledList.containsValue(false)) {
 //                Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
 //            } else {
+            getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
             getActivity().finish();
 //            }
         }

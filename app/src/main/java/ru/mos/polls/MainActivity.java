@@ -45,7 +45,6 @@ import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovation.gui.activity.InnovationActivity;
-import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
 import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
@@ -53,7 +52,6 @@ import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.navigation.tab.PagerFragment;
 import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
 import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
-import ru.mos.polls.newpoll.ui.PollFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
@@ -71,6 +69,7 @@ import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
@@ -408,7 +407,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onWizardProfile(List<String> list, int percent) {
-                        navigateTo().state(Add.newActivity(new WizardProfileState(list, percent), BaseActivity.class));
+                        navigateTo().state(Add.newActivityForResult(new WizardProfileState(list, percent), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
                     }
 
                     @Override
@@ -457,7 +456,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
 //                fr = PagerFragment.Profile.newInstance();
-                fr = ProfileFragment.newInstance();
+                fr = ProfileFragment.newInstance(ProfileFragment.PAGE_START_PROFILE);
                 tag = TAG_PROFILE;
                 break;
             case NavigationMenuItem.FRIENDS:
@@ -596,6 +595,13 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             return;
         }
         socialController.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
+            navFragment.selectItem(-1);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, ProfileFragment.newInstance(ProfileFragment.PAGE_INFO_PROFILE), TAG_PROFILE)
+                    .commit();
+        }
     }
 
     private void startFromUri() {

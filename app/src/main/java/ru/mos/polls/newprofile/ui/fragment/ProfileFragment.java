@@ -16,11 +16,24 @@ import ru.mos.polls.newprofile.vm.ProfileFragmentVM;
 
 public class ProfileFragment extends BindingFragment<ProfileFragmentVM, FragmentNewProfileBinding> {
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
+    public static final int PAGE_START_PROFILE = 0;
+    public static final int PAGE_ACHIEVEMENTS_PROFILE = 1;
+    public static final int PAGE_INFO_PROFILE = 2;
+    private static final String ARG_PAGE = "ru.mos.polls.newprofile.ui.fragment.arg_page";
+
+    public static ProfileFragment newInstance(int page) {
+        ProfileFragment f = new ProfileFragment();
+        Bundle arg = new Bundle(1);
+        arg.putInt (ARG_PAGE, page);
+        f.setArguments(arg);
+        return f;
     }
 
     public ProfileFragment() {
+    }
+
+    public int getStartPage() {
+        return getArguments().getInt(ARG_PAGE);
     }
 
     @Override

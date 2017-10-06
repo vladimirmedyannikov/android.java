@@ -23,6 +23,10 @@ public class NavigationMenuAdapter extends BaseAdapter {
         this.items = items;
     }
 
+    public NavigationMenuItem[] getItems() {
+        return items;
+    }
+
     @Override
     public int getCount() {
         return items.length;

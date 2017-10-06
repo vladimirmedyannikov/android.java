@@ -17,7 +17,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,13 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -264,7 +259,15 @@ public class NavigationDrawerFragment extends Fragment {
         mUserAvatarImageView = (ImageView) v.findViewById(R.id.userAvatar);
         mUserNameTextView = (TextView) v.findViewById(R.id.userName);
         mUserPhoneTextView = (TextView) v.findViewById(R.id.userPhone);
-
+        mUserContainer = (LinearLayout) v.findViewById(R.id.userContainer);
+        mUserContainer.setOnClickListener(v1 -> {
+            for (int i = 0; i < adapter.getItems().length; i++) {
+                if (adapter.getItems()[i].getId() == NavigationMenuItem.PROFILE) {
+                    selectItem(i);
+                    break;
+                }
+            }
+        });
         return v;
     }
 

@@ -10,14 +10,15 @@
             android:id="@+id/front"
             style="@style/root"
             android:background="@drawable/quest_background_pink"
-            android:gravity="center"
+            android:gravity="left|center"
             android:tag="front">
 
+            <!--android:layout_toLeftOf="@+id/rrPrice"-->
             <ImageView
                 android:id="@+id/markerSpecial"
                 style="@style/wrap"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/rrPrice"
+                android:layout_alignParentLeft="true"
                 android:paddingLeft="@dimen/pd_xxsmall"
                 android:paddingRight="@dimen/pd_xxsmall"
                 android:src="@drawable/icon02"
@@ -25,6 +26,7 @@
 
             <include
                 layout="@layout/quest_price"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

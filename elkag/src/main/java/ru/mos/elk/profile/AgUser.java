@@ -3,6 +3,7 @@ package ru.mos.elk.profile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -618,7 +619,9 @@ public class AgUser implements Serializable {
         if (childBirthdays == null) {
             childBirthdays = new ArrayList<Long>();
         }
-        childBirthdays.add(birthdayToLongFromView(birthday));
+        if (!TextUtils.isEmpty(birthday)) {
+            childBirthdays.add(birthdayToLongFromView(birthday));
+        }
         return this;
     }
 
@@ -774,8 +777,10 @@ public class AgUser implements Serializable {
         List<Long> result = new ArrayList<Long>();
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.length(); ++i) {
-                Long birthday = birthdayToLong(jsonArray.optString(i));
-                result.add(birthday);
+                if (!TextUtils.isEmpty(jsonArray.optString(i))) {
+                    Long birthday = birthdayToLong(jsonArray.optString(i));
+                    result.add(birthday);
+                }
             }
         }
         return result;
@@ -789,7 +794,9 @@ public class AgUser implements Serializable {
     private JSONArray childBirthdaysAsJsonArray() {
         JSONArray result = new JSONArray();
         for (int i = 0; i < childBirthdays.size(); ++i) {
-            result.put(birthdayToString(childBirthdays.get(i)));
+            if (childBirthdays.get(i) != 0) {
+                result.put(birthdayToString(childBirthdays.get(i)));
+            }
         }
         return result;
     }
@@ -797,7 +804,9 @@ public class AgUser implements Serializable {
     public List<String> childBirthdaysAsList() {
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < childBirthdays.size(); ++i) {
-            list.add(birthdayToString(childBirthdays.get(i)));
+            if (childBirthdays.get(i) != 0) {
+                list.add(birthdayToString(childBirthdays.get(i)));
+            }
         }
         return list;
     }

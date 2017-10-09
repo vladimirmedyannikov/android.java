@@ -52,7 +52,7 @@ public class PointsVM extends RecyclerBaseViewModel<Points, ItemPointHistoryBind
     }
 
     public void setView() {
-        tvWriteOffDate.setText(df.format(new Date(model.getDate())));
+        tvWriteOffDate.setText(df.format(new Date(model.getDate() * 1000)));
         tvTitle.setText(model.getTitle());
         if (isRefilled()) {
             tvPoints.setText("+" + model.getPoints());

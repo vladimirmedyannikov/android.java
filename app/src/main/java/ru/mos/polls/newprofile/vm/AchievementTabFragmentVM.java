@@ -2,7 +2,6 @@ package ru.mos.polls.newprofile.vm;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,7 +15,6 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
@@ -52,6 +50,12 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
     @Override
     public void onAchievementClick(String id) {
         AchievementActivity.startActivity(getActivity(), id);
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        recyclerUIComponent.setEmptyText(R.string.empty_achievement_list);
     }
 
     public void doRequest() {

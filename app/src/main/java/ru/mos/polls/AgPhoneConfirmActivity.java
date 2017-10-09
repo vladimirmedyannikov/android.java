@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.states.VoidParams;
@@ -229,6 +231,14 @@ public class AgPhoneConfirmActivity extends BaseActivity {
     @OnTextChanged(R.id.etCode)
     public void onCodeTextChanged() {
         action.setEnabled(etCode.getText().length() > 0);
+    }
+
+    @OnEditorAction(R.id.etCode)
+    boolean actionLoginListener(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+            doRequestAction();
+        }
+        return true;
     }
 
 }

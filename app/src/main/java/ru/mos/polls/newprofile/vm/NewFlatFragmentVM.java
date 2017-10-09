@@ -393,6 +393,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 }
                 if (flatType == FLAT_TYPE_RESIDENCE && residenceToggle.isChecked()) {
                     flat.delete(getActivity());
+                    cloneResidenceFromRegistration();
                 }
                 setupViewIfNotEmpty();
                 EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
@@ -459,6 +460,12 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         areaFlat.setText(flat.getArea());
 
         setEditingBlocked();
+    }
+
+    public void cloneResidenceFromRegistration() {
+            flat = Flat.getRegistration(getActivity());
+            flat.setType(Flat.Type.RESIDENCE);
+            flat.save(getActivity());
     }
 
     private String clearText(String text) {

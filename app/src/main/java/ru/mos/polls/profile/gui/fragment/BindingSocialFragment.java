@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
@@ -206,11 +207,14 @@ public class BindingSocialFragment extends Fragment {
         progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+                AgUser agUser = new AgUser(getActivity());
+                agUser.setPercentFillProfile(percentFill);
+                agUser.save(getActivity());
                 if (isTask) {
                     if (!isAnySocialBinded) {
-                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, 70));
+                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, percentFill));
                         isAnySocialBinded = true;
                     }
                     Statistics.taskSocialLogin(loadedSocial.getName());
@@ -246,7 +250,7 @@ public class BindingSocialFragment extends Fragment {
         progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
-            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state) {
+            public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 if (isTask) {
                     Statistics.taskSocialLogin(loadedSocial.getName());

@@ -142,9 +142,9 @@ public abstract class AgSocialApiController {
     /**
      * Оповещение сс Аг о постинге в соцсеть
      *
-     * @param context         не elk ActionBarActivity, а обычный контекст, поэтому делаем обычный запрос
+     * @param context      не elk ActionBarActivity, а обычный контекст, поэтому делаем обычный запрос
      * @param appPostValue данные, которые запостили
-     * @param listener        callback
+     * @param listener     callback
      */
     public static void notifyAboutPosting(final Context context,
                                           final AppPostValue appPostValue, final PostingNotifyListener listener) {
@@ -263,7 +263,7 @@ public abstract class AgSocialApiController {
             @Override
             public void onResponse(JSONObject jsonResult) {
                 if (jsonResult != null) {
-                    List<AppSocial> savedSocial = ((AppStorable)Configurator.getInstance(activity).getStorable()).getAll();
+                    List<AppSocial> savedSocial = ((AppStorable) Configurator.getInstance(activity).getStorable()).getAll();
                     List<AppSocial> newSocials = new ArrayList<AppSocial>();
                     add(newSocials, AppSocial.findFbSocial(savedSocial), getFbSocial(jsonResult));
                     add(newSocials, AppSocial.findVkSocial(savedSocial), getVkSocial(jsonResult));
@@ -368,8 +368,9 @@ public abstract class AgSocialApiController {
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                int percentFill = response.optInt("percent_fill_profile");
                 if (!forBind) {
-                    if (listener != null) listener.onSaved(social, 0, 0, 0, 0, "");
+                    if (listener != null) listener.onSaved(social, 0, 0, 0, 0, "", percentFill);
                 } else {
                     if (response != null) {
                         int freezedPoints = 0, spentPoints = 0, allPoints = 0, currentPoints = 0;
@@ -383,7 +384,7 @@ public abstract class AgSocialApiController {
                             state = response.optString("response");
                         }
                         if (listener != null) {
-                            listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state);
+                            listener.onSaved(social, freezedPoints, spentPoints, allPoints, currentPoints, state, percentFill);
                         }
                     }
                 }
@@ -467,7 +468,7 @@ public abstract class AgSocialApiController {
      * callback привязки данных соцсетей к аккаунту АГ
      */
     public interface SaveSocialListener {
-        void onSaved(AppSocial social, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state);
+        void onSaved(AppSocial social, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill);
 
         void onError(AppSocial social);
     }

@@ -426,6 +426,6 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
     public void addSocialToLayer(AppSocial social) {
         int socialIcon = AppSocial.getSocialIcon(social.getId());
-        addSocialBindingIcon(socialBindingLayer, socialIcon, getFragment().getContext());
+        addSocialBindingIcon(socialBindingLayer, socialIcon, getActivity().getBaseContext());
     }
 }

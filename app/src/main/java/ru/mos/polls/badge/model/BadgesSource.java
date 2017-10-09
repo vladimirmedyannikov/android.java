@@ -209,7 +209,7 @@ public class BadgesSource {
                 if (ElkTextUtils.isEmpty(url)) {
                     urlProcessor.process(null);
                 } else {
-                    if (lastAvatartUrl == null || !url.equals(lastAvatartUrl) ) {
+                    if (lastAvatartUrl == null || !url.equals(lastAvatartUrl)) {
                         urlProcessor.process(url);
                     } else {
                         urlProcessor.process(lastAvatartUrl);
@@ -247,10 +247,19 @@ public class BadgesSource {
     private Bitmap copyBitmap(Bitmap bitmap) {
         Bitmap result = null;
         if (bitmap != null) {
-            result = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(result);
-            Paint paint = new Paint();
-            canvas.drawBitmap(bitmap, 0, 0, paint);
+            final int maxSize = 1024;
+            int outWidth;
+            int outHeight;
+            int inWidth = bitmap.getWidth();
+            int inHeight = bitmap.getHeight();
+            if (inWidth > inHeight) {
+                outWidth = maxSize;
+                outHeight = (inHeight * maxSize) / inWidth;
+            } else {
+                outHeight = maxSize;
+                outWidth = (inWidth * maxSize) / inHeight;
+            }
+            result = Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, true);
         }
         return result;
     }

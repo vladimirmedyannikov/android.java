@@ -195,7 +195,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         fio.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.PERSONAL_FIO), EditPersonalInfoFragmentVM.PERSONAL_FIO);
         });
-        kidsCountTitle.setOnClickListener(v -> {
+        kidsLayer.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.COUNT_KIDS), EditPersonalInfoFragmentVM.COUNT_KIDS);
         });
         socialStatus.setOnClickListener(v -> {

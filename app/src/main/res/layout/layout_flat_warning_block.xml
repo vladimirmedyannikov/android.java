@@ -19,7 +19,7 @@
             android:id="@+id/tvErrorEditingBlocked"
             style="@style/text.red"
             android:layout_toRightOf="@id/warningEditingBlocked"
-            android:paddingLeft="@dimen/pd_xxsmall"
+            android:paddingLeft="@dimen/pd_xsmall"
             android:text="@string/error_short_editing_blocked"
             android:visibility="gone"/>
 

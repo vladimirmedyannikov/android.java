@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.AgRestoreActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -45,9 +44,9 @@ public abstract class PopupController {
                         FunctionalHelper.startBrowser(context, R.string.pgu_link_value);
                         break;
                     case PopupItem.Auth.FEEDBACK:
+                        ((BaseActivity)context).navigateTo().state(Add.deeper(new SupportState(false)));
                         popupWindow.dismiss();
 //                        AgSupportActivity.startActivity(context);
-                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
                         break;
                 }
             }
@@ -74,7 +73,7 @@ public abstract class PopupController {
                     case PopupItem.Auth.FEEDBACK:
                         new GoogleStatistics.Auth().feedbackClick();
 //                        AgSupportActivity.startActivity(context);
-                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(true)));
                         popupWindow.dismiss();
                         break;
                 }
@@ -110,7 +109,7 @@ public abstract class PopupController {
                     case PopupItem.Auth.FEEDBACK:
                         new GoogleStatistics.Auth().feedbackClick();
 //                        AgSupportActivity.startActivity(context);
-                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                        ((BaseActivity)context).navigateTo().state(Add.newActivity(new SupportState(true), BaseActivity.class));
                         popupWindow.dismiss();
                         break;
                 }

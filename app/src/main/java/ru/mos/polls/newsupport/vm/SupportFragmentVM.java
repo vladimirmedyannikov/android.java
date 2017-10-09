@@ -143,7 +143,11 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                 getBinding().subject.setSelection(0);
                 processSendingEnabled();
                 GuiUtils.displayOkMessage(getActivity(), R.string.succeeded_support, (dialog, which) -> {
-                    getFragment().navigateTo().state(Remove.closeCurrentActivity());
+                    if (getFragment().isStartWithNewActivity()) {
+                        getFragment().navigateTo().state(Remove.closeCurrentActivity());
+                    } else {
+                        getFragment().navigateTo().state(Remove.last());
+                    }
                 });
             }
 

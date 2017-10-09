@@ -40,7 +40,6 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -226,7 +225,7 @@ public class AgAuthActivity extends AuthActivity {
         statistics.helpClick();
         new GoogleStatistics.Auth().feedbackClick();
 //        AgSupportActivity.startActivity(this);
-        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
     @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

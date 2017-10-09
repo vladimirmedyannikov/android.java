@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerFragment;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
@@ -134,7 +133,7 @@ public class AboutAppFragment extends JugglerFragment {
                         break;
                     case AboutItem.FEEDBACK:
 //                        AgSupportActivity.startActivity(getActivity());
-                        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
                         break;
                 }
             }

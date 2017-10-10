@@ -1,11 +1,14 @@
 package ru.mos.polls.newpoll.vm;
 
+import android.view.View;
+
 import java.util.List;
 
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.newpoll.ui.PollBaseFragment;
+import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.controller.PollApiController;
 
 /**
@@ -19,7 +22,9 @@ public class PollOldFragmentVM extends PollBaseFragmentVM {
 
     @Override
     protected void initialize(FragmentTabPollBinding binding) {
+        pollType = PollAdapter.Type.ITEM_OLD;
         super.initialize(binding);
+        subscriptionsContainer.setVisibility(View.GONE);
         GoogleStatistics.Survey.enterPollsUnactive();
     }
 
@@ -28,7 +33,7 @@ public class PollOldFragmentVM extends PollBaseFragmentVM {
         if (o instanceof Events.PollEvents) {
             Events.PollEvents action = (Events.PollEvents) o;
             switch (action.getEventType()) {
-                case Events.PollEvents.FINISHED_POLL:
+                case Events.PollEvents.ADD_OLD_POLL:
                     list.add(0, action.getPoll());
                     adapter.addOldPoll(action.getPoll());
                     break;

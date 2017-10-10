@@ -54,6 +54,7 @@ public class Poll {
      * Дата прохождения голосования,
      * возвращается только для голосований со статусом passed {@link ru.mos.polls.poll.model.Poll.Status}
      */
+    @SerializedName("passed_date")
     private long passedDate;
 
     public Poll(JSONObject pollJson) {

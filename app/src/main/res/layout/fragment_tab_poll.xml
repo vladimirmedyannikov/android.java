@@ -25,7 +25,47 @@
 
             <TextView
                 android:id="@android:id/empty"
-                style="@style/emptylist" />
+                style="@style/emptylist"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/pd_xxxlarge"
+                android:text="@string/empty_activepolls_hint" />
+
+            <LinearLayout
+                android:id="@+id/subscriptionsContainer"
+                style="@style/item.linear"
+                android:layout_below="@android:id/empty">
+
+                <TextView
+                    style="@style/text.large.black"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/notify_about_active_polls" />
+
+                <LinearLayout
+                    style="@style/item.linear"
+                    android:background="@drawable/background_text_field">
+
+                    <!--E-mail-->
+                    <RelativeLayout
+                        style="@style/item.linear.horizontal"
+                        android:padding="@dimen/pd_xlarge">
+
+                        <TextView
+                            style="@style/wrap"
+                            android:layout_centerVertical="true"
+                            android:text="@string/email" />
+
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/emailNew"
+                            style="@style/wrap"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:textOff="@string/empty"
+                            android:textOn="@string/empty"
+                            android:thumbTextPadding="@dimen/pd_xlarge" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </layout>

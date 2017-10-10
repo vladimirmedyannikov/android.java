@@ -1,6 +1,8 @@
 package ru.mos.polls.newpoll.vm;
 
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +27,15 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     public static final int ARG_OLD_POLL = 1;
 
     protected List<Poll> list;
-    private int pollType;
-
+    protected int pollType;
+    protected View subscriptionsContainer;
     public PollBaseFragmentVM(PollBaseFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
     }
 
     @Override
     protected void initialize(FragmentTabPollBinding binding) {
+        subscriptionsContainer = binding.subscriptionsContainer;
         subscribeEventsBus();
         recyclerView = binding.list;
         list = new ArrayList<>();
@@ -51,6 +54,9 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
 
     protected abstract void eventsBusPollAction(Object o);
 
+    public void updateView() {
+    }
+
     @Override
     public void doRequest() {
         HandlerApiResponseSubscriber<PollSelect.Response.Result> handler =
@@ -60,6 +66,7 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
                         adapter.add(result.getPolls(), pollType);
                         isPaginationEnable = result.getPolls().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();
+                        updateView();
                     }
                 };
         List<String> filters = new ArrayList<>();

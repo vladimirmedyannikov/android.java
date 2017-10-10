@@ -57,14 +57,14 @@ public class PollItemOldVM extends RecyclerBaseViewModel<Poll, ItemPassedPollBin
             } else {
                 sb.append(String.format(v.getContext().getString(R.string.title_passed_polls_with_zero_points), " "));
             }
-            sb.append(sdf.format(poll.getPassedDate()));
+            sb.append(sdf.format(poll.getPassedDate() * 1000));
             if (Kind.isHearing(poll.getKind())) {
                 sb.append(", " + v.getContext().getString(R.string.title_hearing_survey_summary).toLowerCase());
             }
             v.setTextColor(v.getContext().getResources().getColor(R.color.greenText));
             v.setText(sb);
         } else if (poll.isOld()) {
-            v.setText(String.format(v.getContext().getString(R.string.title_old_polls), sdf.format(poll.getEndDate())));
+            v.setText(String.format(v.getContext().getString(R.string.title_old_polls), sdf.format(poll.getEndDate() * 1000)));
         }
     }
 

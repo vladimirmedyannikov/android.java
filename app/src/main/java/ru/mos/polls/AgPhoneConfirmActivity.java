@@ -31,7 +31,6 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.netframework.request.Session;
@@ -138,7 +137,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
     @OnClick(R.id.feedback)
     public void onFeedback() {
 //        AgSupportActivity.startActivity(this);
-        navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
     @Override

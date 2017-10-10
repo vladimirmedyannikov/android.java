@@ -1,5 +1,7 @@
 package ru.mos.polls.newsupport.ui.fragment;
 
+import android.os.Bundle;
+
 import me.ilich.juggler.Navigable;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.BR;
@@ -14,13 +16,23 @@ import ru.mos.polls.newsupport.vm.SupportFragmentVM;
 
 public class SupportFragment extends BindingFragment<SupportFragmentVM, LayoutSupportBinding> {
 
-    public static JugglerFragment instance() {
-        return new SupportFragment();
+    private static final String ARG_START_WITH_NEW_ACTIVITY = "ru.mos.polls.newsupport.ui.fragment.start_with_new_activity";
+
+    public static JugglerFragment instance(boolean startWithNewActivity) {
+        SupportFragment f = new SupportFragment();
+        Bundle b = new Bundle(1);
+        b.putBoolean(ARG_START_WITH_NEW_ACTIVITY, startWithNewActivity);
+        f.setArguments(b);
+        return f;
     }
 
     @Override
     protected SupportFragmentVM onCreateViewModel(LayoutSupportBinding binding) {
         return new SupportFragmentVM(this, binding);
+    }
+
+    public boolean isStartWithNewActivity() {
+        return getArguments().getBoolean(ARG_START_WITH_NEW_ACTIVITY);
     }
 
     @Override

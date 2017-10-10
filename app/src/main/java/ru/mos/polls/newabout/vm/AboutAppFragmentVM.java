@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
@@ -108,7 +107,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                             break;
                         case AboutItem.FEEDBACK:
 //                        AgSupportActivity.startActivity(getActivity());
-                            getFragment().navigateTo().state(Add.newActivity(new SupportState(VoidParams.instance()), ru.mos.polls.base.ui.BaseActivity.class));
+                            getFragment().navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
                             break;
                     }
                 })))

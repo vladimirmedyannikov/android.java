@@ -154,7 +154,10 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
             protected void onResult(AvatarSet.Response.Result result) {
                 Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
                 isAvatarLoaded = true;
+                saved.setPercentFillProfile(result.getPercentFillProfile());
+                saved.save(getActivity());
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, result.getPercentFillProfile()));
+                updateView();
             }
         };
         Observable<AvatarSet.Response> responseObservable = AGApplication.api

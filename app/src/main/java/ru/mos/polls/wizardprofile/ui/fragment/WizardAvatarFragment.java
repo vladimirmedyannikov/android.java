@@ -31,9 +31,7 @@ public class WizardAvatarFragment extends NavigateFragment<WizardAvatarFragmentV
 
     @Override
     public void doRequestAction() {
-        if (getViewModel().isAvatarLoaded) {
-
-        } else {
+        if (!getViewModel().isAvatarLoaded) {
             Toast.makeText(getActivity(), "Вы не загрузили аватарку", Toast.LENGTH_SHORT).show();
         }
     }

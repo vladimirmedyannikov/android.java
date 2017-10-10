@@ -38,7 +38,7 @@ import ru.mos.polls.util.GuiUtils;
 
 public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;
-    Observable<List<AppSocial>> socialListObserable;
+    Observable<List<AppSocial>> socialListObservable;
     AppCompatTextView percentFilledTitle;
     AppCompatTextView socialBindingStatus;
     ProgressBar percentFilledPb;
@@ -120,7 +120,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     }
 
     public void updateView() {
-        socialListObserable = AppSocial.getObservableSavedSocials(getFragment().getContext());
+        socialListObservable = AppSocial.getObservableSavedSocials(getFragment().getContext());
         getBinding().setAgUser(saved);
         getBinding().executePendingBindings();
         userInfoList();
@@ -153,7 +153,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
 
     public void setSocialBindingLayerRx() {
         socialBindingLayer.removeAllViews();
-        disposables.add(socialListObserable
+        disposables.add(socialListObservable
                 .subscribeOn(Schedulers.io())
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())

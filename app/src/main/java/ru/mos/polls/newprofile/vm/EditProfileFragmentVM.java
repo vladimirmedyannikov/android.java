@@ -149,6 +149,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
+                savedUser.setPercentFillProfile(result.getPercentFillProfile());
                 savedUser.save(getActivity());
                 sendBroadcastReLoadBadges(getActivity());
             }

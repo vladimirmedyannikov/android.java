@@ -40,24 +40,25 @@ public class FriendGuiUtils {
 
     public static void loadAvatar(ImageView v, String url) {
         ImageLoader imageLoader = AGApplication.getImageLoader();
-        imageLoader.loadImage(url, new ImageLoadingListener() {
+        imageLoader.displayImage(url, v, new ImageLoadingListener() {
             @Override
-            public void onLoadingStarted(String s, View view) {
+            public void onLoadingStarted(String imageUri, View view) {
+
             }
 
             @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                Log.wtf("LoadingImage", "failed \n" + imageUri + "\n" + failReason.toString());
             }
 
             @Override
-            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                if (bitmap != null) {
-                    v.setImageBitmap(bitmap);
-                }
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                Log.wtf("LoadingImage", "complete \n" + imageUri);
             }
 
             @Override
-            public void onLoadingCancelled(String s, View view) {
+            public void onLoadingCancelled(String imageUri, View view) {
+//                Log.wtf("LoadingImage", "cancelled \n" + imageUri);
             }
         });
     }

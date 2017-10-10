@@ -263,10 +263,8 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-//                    areaSpinner.setVisibility(View.VISIBLE);
                     areaSpinner.setClickable(true);
                     arealayout.setVisibility(View.VISIBLE);
-//                    areaLabel.setVisibility(View.VISIBLE);
                     if (districtReference != null) {
                         for (Reference reference : districtReference) {
                             if (districtList.get(position).equals(reference.getLabel())) {
@@ -279,8 +277,6 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                     areaReference = new ArrayList<Reference>();
                     refreshAreas();
                     arealayout.setVisibility(View.GONE);
-//                    areaLabel.setVisibility(View.GONE);
-//                    areaSpinner.setVisibility(View.GONE);
                 }
             }
 

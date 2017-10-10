@@ -138,21 +138,13 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         streetNotFoundContainer.setOnClickListener(v -> customFlat());
         buildingNotFoundContainer.setOnClickListener(v -> customFlat());
         residenceToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                visibilityFlatInput(View.GONE);
-            } else {
-                visibilityFlatInput(View.VISIBLE);
-            }
+            visibilityFlatInput(isChecked ? View.GONE : View.VISIBLE);
         });
         etStreet.addTextChangedListener(new StreetWatcher((BaseActivity) getActivity(), etStreet, getFragment().getView().findViewById(R.id.pbStreet), new StreetWatcher.Listener() {
             @Override
             public void onDataLoaded(int count) {
                 buildingNotFoundView.setVisibility(View.GONE);
-                if (count == 0) {
-                    streetNotFoundView.setVisibility(View.VISIBLE);
-                } else {
-                    streetNotFoundView.setVisibility(View.GONE);
-                }
+                streetNotFoundView.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
             }
         }));
         etStreet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -444,7 +436,9 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
          */
         switch (flatType) {
             case FLAT_TYPE_RESIDENCE:
-                if (flat.isEmpty()) {
+                residenceToggle.setEnabled(flat.isEnable());
+                residenceToggle.setClickable(flat.isEnable());
+                if (flat.isEmpty() || flat.compareByFullAddress(Flat.getRegistration(getActivity()))) {
                     visibilityFlatInput(View.GONE);
                     residenceToggle.setChecked(true);
                 } else {
@@ -453,19 +447,18 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 }
                 break;
         }
-
+        districtFlat.requestFocus();
         etStreet.setText(flat.getStreet());
         etBuilding.setText(flat.getBuilding());
         districtFlat.setText(flat.getDistrict());
         areaFlat.setText(flat.getArea());
-
         setEditingBlocked();
     }
 
     public void cloneResidenceFromRegistration() {
-            flat = Flat.getRegistration(getActivity());
-            flat.setType(Flat.Type.RESIDENCE);
-            flat.save(getActivity());
+        flat = Flat.getRegistration(getActivity());
+        flat.setType(Flat.Type.RESIDENCE);
+        flat.save(getActivity());
     }
 
     private String clearText(String text) {
@@ -517,6 +510,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         etStreet.setTextColor(getFragment().getResources().getColor(R.color.gray_light));
         etBuilding.setTextColor(getFragment().getResources().getColor(R.color.gray_light));
         areaAndDistrictLayout.setVisibility(View.VISIBLE);
+        areaAndDistrictLayout.setAlpha(1.0f);
     }
 
     private void setEditingBlocked() {

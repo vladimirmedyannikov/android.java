@@ -203,6 +203,11 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     }
 
     @Override
+    public void onUpPressed() {
+        onBackPressed();
+    }
+
+    @Override
     public void onLocationUpdated() {
     }
 

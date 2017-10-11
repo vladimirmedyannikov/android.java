@@ -144,7 +144,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             @Override
             public void onDataLoaded(int count) {
                 buildingNotFoundView.setVisibility(View.GONE);
-                streetNotFoundView.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
+                streetNotFoundView.setVisibility(count == 0 && etStreet.isEnabled() ? View.VISIBLE : View.GONE);
             }
         }));
         etStreet.setOnFocusChangeListener(new View.OnFocusChangeListener() {

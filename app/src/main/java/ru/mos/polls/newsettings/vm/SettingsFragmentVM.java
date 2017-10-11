@@ -47,7 +47,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        ((ItemsAdapter)getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
+        ((ItemsAdapter) getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
             switch (item.getId()) {
                 case Item.SUBSCRIBE:
                     SubscribeActivity.startActivity(getActivity());
@@ -64,6 +64,8 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
                     break;
                 case Item.LOGOUT:
                     showLogoutDialog();
+                    break;
+                case Item.SOURCES_POLL:
                     break;
             }
         });

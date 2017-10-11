@@ -126,7 +126,7 @@ public class AgUser implements Serializable {
         email = prefs.getString(EMAIL, "");
         phone = prefs.getString(PHONE, "");
         maritalStatus = MaritalStatus.parse(prefs.getString(MARITAL_STATUS, "null"));
-        childCount = prefs.getInt(CHILDRENS_COUNT, -1);
+        childCount = prefs.getInt(CHILDRENS_COUNT, 0);
         childBirthdays = childBirthdaysFromPrefs(prefs);
         isCarExist = prefs.getBoolean(HAS_CAR, false);
         isEmailConfirmed = prefs.getBoolean(IS_EMAIL_CONFIRMED, false);
@@ -135,7 +135,7 @@ public class AgUser implements Serializable {
         registrationFlat = Flat.getRegistration(context);
         residenceFlat = Flat.getResidence(context);
         workFlat = Flat.getWork(context);
-        agSocialStatus = prefs.getInt(SOCIAL_STATUS, -1);
+        agSocialStatus = prefs.getInt(SOCIAL_STATUS, 0);
         status = prefs.getString(STATUS, "");
         rating = prefs.getLong(RATING, 0);
         percentFillProfile = prefs.getInt(PERCENT_FILL_PROFILE, 0);

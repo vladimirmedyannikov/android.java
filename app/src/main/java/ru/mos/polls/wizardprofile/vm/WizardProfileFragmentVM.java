@@ -138,7 +138,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         tabLayout.setupWithViewPager(pager, true);
         setDotCustomView();
         setTabListener();
-        setNextButtonView(listSize);
+        setNextButtonView(tabLayout.getSelectedTabPosition());
     }
 
     public void setTabListener() {
@@ -224,10 +224,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_RESIDENCE));
             tagList.add(TAG_RESIDENCE);
         }
-        if (mockIds.contains(EXTRAINFO)) {
+//        if (mockIds.contains(EXTRAINFO)) {
             list.add(WizardFlatFragment.newInstance(agUser, NewFlatFragmentVM.FLAT_TYPE_WORK));
             tagList.add(EXTRAINFO);
-        }
+//        }
         if (mockIds.contains(SOCIAL)) {
             list.add(BindingSocialFragment.newInstance(true));
             tagList.add(SOCIAL);

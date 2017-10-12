@@ -291,7 +291,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
             agUser.setEmail(email.getText().toString());
             return true;
         } else {
-            Toast.makeText(getActivity(), "E-mail не соотвествует формату", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "E-mail не соответствует формату", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

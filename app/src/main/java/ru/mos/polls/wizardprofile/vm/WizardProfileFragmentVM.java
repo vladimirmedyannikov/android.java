@@ -137,39 +137,15 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager, true);
         setDotCustomView();
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        setTabListener();
+        setNextButtonView(listSize);
+    }
 
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrolled(int position,
-                                       float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+    public void setTabListener() {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int tabPos = tab.getPosition() + 1;
-                if (tabPos == listSize) {
-                    isLastPage = true;
-                }
-                if (tabPos < listSize) {
-                    if (isLastPage) {
-                        nextButton.setText("Продолжить");
-                    }
-                    isLastPage = false;
-                }
-                if (isLastPage) {
-                    nextButton.setText("Завершить");
-                }
+                setNextButtonView(tab.getPosition() + 1);
                 try {
                     setDotColor(tab, R.drawable.wizard_profile_selected_dot);
                 } catch (NullPointerException e) {
@@ -198,6 +174,21 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    public void setNextButtonView(int position) {
+        if (position == listSize) {
+            isLastPage = true;
+        }
+        if (position < listSize) {
+            if (isLastPage) {
+                nextButton.setText("Продолжить");
+            }
+            isLastPage = false;
+        }
+        if (isLastPage) {
+            nextButton.setText("Завершить");
+        }
     }
 
     public void setPercentegeTitleView(int percent) {
@@ -377,12 +368,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             wpdf.doRequestAction();
         }
         if (isLastPage) {
-//            if (wizardFilledList.containsValue(false)) {
-//                Toast.makeText(getActivity(), "Вы не до конца заполнили профиль", Toast.LENGTH_SHORT).show();
-//            } else {
             getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
             getActivity().finish();
-//            }
         }
         if (bd instanceof BindingSocialFragment) {
             slideNextPage();

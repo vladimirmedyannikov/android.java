@@ -312,8 +312,11 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
                 .flatMap(Observable::fromIterable)
                 .filter(social -> social.isLogon())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addSocialToLayer));
-        if (socialBindingLayer.getChildCount()>0)  socialBindTitle.setText(getActivity().getString(R.string.socials));
+                .subscribe(this::addSocialToLayer, throwable -> throwable.printStackTrace(), this::setSocialBindingTitleView));
+    }
+
+    public void setSocialBindingTitleView() {
+        socialBindTitle.setText(socialBindingLayer.getChildCount() > 0 ? getActivity().getString(R.string.socials) : "");
     }
 
     int selectedGender;

@@ -436,8 +436,8 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
          */
         switch (flatType) {
             case FLAT_TYPE_RESIDENCE:
-                residenceToggle.setEnabled(flat.isEnable());
-                residenceToggle.setClickable(flat.isEnable());
+                residenceToggle.setEnabled(flat.isEnable() || flat.isEmpty());
+                residenceToggle.setClickable(flat.isEnable() || flat.isEmpty());
                 if (flat.isEmpty() || flat.compareByFullAddress(Flat.getRegistration(getActivity()))) {
                     visibilityFlatInput(View.GONE);
                     residenceToggle.setChecked(true);

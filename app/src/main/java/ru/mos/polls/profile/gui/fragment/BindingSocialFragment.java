@@ -209,9 +209,7 @@ public class BindingSocialFragment extends Fragment {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
-                AgUser agUser = new AgUser(getActivity());
-                agUser.setPercentFillProfile(percentFill);
-                agUser.save(getActivity());
+                saveProfilePercentFill(percentFill);
                 if (isTask) {
                     if (!isAnySocialBinded) {
                         AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, percentFill));
@@ -245,6 +243,12 @@ public class BindingSocialFragment extends Fragment {
         AgSocialApiController.bindSocialToAg((BaseActivity) getActivity(), social, listener);
     }
 
+    public void saveProfilePercentFill(int percentFill) {
+        AgUser agUser = new AgUser(getActivity());
+        agUser.setPercentFillProfile(percentFill);
+        agUser.save(getActivity());
+    }
+
     private void unBindSocial(final AppSocial social) {
 //        showProgress(getString(R.string.unbind_progress_message));
         progressableUIComponent.begin();
@@ -252,6 +256,7 @@ public class BindingSocialFragment extends Fragment {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+                saveProfilePercentFill(percentFill);
                 if (isTask) {
                     Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {

@@ -147,6 +147,7 @@ public class PguBindFragment extends JugglerFragment {
             @Override
             public void onSuccess(QuestMessage questMessage, int percent) {
                 AbstractActivity.hideSoftInput(getActivity(), password);
+                AgUser.setPercentFillProfile(getActivity(), percent);
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, percent));
                 questMessage.show(getActivity(), true);
                 progressableUIComponent.end();

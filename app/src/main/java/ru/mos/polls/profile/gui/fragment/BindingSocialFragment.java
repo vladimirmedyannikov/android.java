@@ -244,9 +244,7 @@ public class BindingSocialFragment extends Fragment {
     }
 
     public void saveProfilePercentFill(int percentFill) {
-        AgUser agUser = new AgUser(getActivity());
-        agUser.setPercentFillProfile(percentFill);
-        agUser.save(getActivity());
+        AgUser.setPercentFillProfile(getActivity(), percentFill);
     }
 
     private void unBindSocial(final AppSocial social) {

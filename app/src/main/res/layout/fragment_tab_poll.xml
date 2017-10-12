@@ -33,6 +33,7 @@
             <LinearLayout
                 android:id="@+id/subscriptionsContainer"
                 style="@style/item.linear"
+                android:visibility="gone"
                 android:layout_below="@android:id/empty">
 
                 <TextView

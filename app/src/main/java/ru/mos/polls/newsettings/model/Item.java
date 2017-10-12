@@ -14,7 +14,7 @@ public class Item {
     public static final int SOURCES_POLL = 50;
 
     public static final Item[] SETTINGS = new Item[]{
-            new Item(SOURCES_POLL, 0, R.string.sources_poll),
+            new Item(SOURCES_POLL, R.drawable.ic_tower, R.string.sources_poll),
             new Item(SUBSCRIBE, R.drawable.rss, R.string.subscribes),
             new Item(USER_LOCK, R.drawable.elk_block, R.string.user_lock),
             /*new SettingItem(CHANGE_PASSWORD, R.drawable.elk_change_password, R.string.change_password),*/

@@ -20,6 +20,7 @@ import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.newsettings.model.Item;
 import ru.mos.polls.newsettings.ui.adapter.ItemsAdapter;
 import ru.mos.polls.newsettings.ui.fragment.SettingsFragment;
+import ru.mos.polls.sourcesvoting.state.SourcesVotingState;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
 /**
@@ -66,6 +67,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
                     showLogoutDialog();
                     break;
                 case Item.SOURCES_POLL:
+                    getFragment().navigateTo(new SourcesVotingState(), ru.mos.polls.base.ui.BaseActivity.class);
                     break;
             }
         });

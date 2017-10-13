@@ -50,6 +50,7 @@ public abstract class RecyclerBaseViewModel<M, VDB extends ViewDataBinding> exte
      * @param viewDataBinding объект {@link ViewDataBinding}
      */
     public void onBind(VDB viewDataBinding) {
+        setViewDataBinding(viewDataBinding);
     }
 
     /**

@@ -1,5 +1,6 @@
 package ru.mos.polls.base;
 
+import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 
 /**
@@ -7,7 +8,7 @@ import android.databinding.ViewDataBinding;
  * on 13.07.17 10:12.
  */
 
-public abstract class BaseViewModel<M, VDB extends ViewDataBinding> {
+public abstract class BaseViewModel<M, VDB extends ViewDataBinding> extends BaseObservable {
     protected M model;
     protected VDB viewDataBinding;
 
@@ -30,4 +31,7 @@ public abstract class BaseViewModel<M, VDB extends ViewDataBinding> {
 
     protected abstract int getLayoutId();
 
+    public void setViewDataBinding(VDB viewDataBinding) {
+        this.viewDataBinding = viewDataBinding;
+    }
 }

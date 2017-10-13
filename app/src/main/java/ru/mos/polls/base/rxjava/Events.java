@@ -184,6 +184,23 @@ public class Events {
         }
     }
 
+    public static class SourcesVotingEvents extends BaseEvents {
+        private int sourcesVotingId;
+        private boolean enable;
+
+        public SourcesVotingEvents(int sourcesVotingId, boolean enable) {
+            this.sourcesVotingId = sourcesVotingId;
+            this.enable = enable;
+        }
+
+        public int getSourcesVotingId() {
+            return sourcesVotingId;
+        }
+
+        public boolean isEnable() {
+            return enable;
+        }
+    }
 
     abstract static class BaseEvents {
         protected int eventType;

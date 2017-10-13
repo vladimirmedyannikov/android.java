@@ -1,0 +1,123 @@
+package ru.mos.polls.sourcesvoting.vm;
+
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
+import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
+import ru.mos.polls.sourcesvoting.model.SourcesVoting;
+import ru.mos.polls.sourcesvoting.service.SourcesGet;
+import ru.mos.polls.sourcesvoting.ui.SourcesVotingFragment;
+import ru.mos.polls.sourcesvoting.ui.adapter.SourcesVotingAdapter;
+import ru.mos.polls.util.StubUtils;
+
+/**
+ * Created by Trunks on 13.10.2017.
+ */
+
+public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<SourcesVotingFragment, FragmentSourcesVotingBinding> {
+    SourcesVotingAdapter adapter;
+    protected RecyclerView recyclerView;
+
+    public SourcesVotingFragmentVM(SourcesVotingFragment fragment, FragmentSourcesVotingBinding binding) {
+        super(fragment, binding);
+    }
+
+    @Override
+    protected void initialize(FragmentSourcesVotingBinding binding) {
+        adapter = new SourcesVotingAdapter();
+        recyclerView = binding.list;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        setRxEventsBusListener();
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        progressable = getProgressable();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doRequest();
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder()
+                .with(new PullableUIComponent(() -> {
+                    progressable = getPullableProgressable();
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                    doRequest();
+                }))
+                .with(new ProgressableUIComponent())
+                .build();
+    }
+
+    public void doRequest() {
+        HandlerApiResponseSubscriber<SourcesGet.Response.Result> handler
+                = new HandlerApiResponseSubscriber<SourcesGet.Response.Result>(getFragment().getContext(), progressable) {
+            @Override
+            protected void onResult(SourcesGet.Response.Result result) {
+                adapter.add(result.getSourcesVotings());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                super.onError(throwable);
+                adapter.add(mockList(getActivity())); //delete later
+            }
+        };
+        AGApplication
+                .api
+                .getSources(new AuthRequest())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(handler);
+    }
+
+    public static List<SourcesVoting> mockList(Context context) {
+        Gson gson = new Gson();
+        List<SourcesVoting> content = gson.fromJson(
+                StubUtils.fromRawAsJsonArray(context, R.raw.sources_voting).toString(),
+                new TypeToken<List<SourcesVoting>>() {
+                }.getType()
+        );
+        return content;
+    }
+
+    public void setRxEventsBusListener() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.SourcesVotingEvents) {
+                        Events.SourcesVotingEvents events = (Events.SourcesVotingEvents) o;
+
+                    }
+                });
+    }
+
+    public void subscribeSourcesVoting(int sourcesId, boolean enable) {
+
+    }
+}

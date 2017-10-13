@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.sourcesvoting.vm.item.SourcesVotingVM" />
+    </data>
+
+    <RelativeLayout
+        style="@style/item"
+        android:padding="@dimen/pd_xsmall">
+
+        <TextView
+            android:id="@+id/sources_voting_title"
+            style="@style/text.large.black"
+            android:text="@{viewModel.title}" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/sources_voting_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/pd_normal"
+            android:visibility="@{viewModel.editable ? View.GONE : View.VISIBLE}"
+            app:srcCompat="@drawable/ic_lock_4" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sources_voting_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sources_voting_title"
+            android:layout_alignBottom="@+id/sources_voting_title"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:checked="@{viewModel.isEnable()}"
+            android:onCheckedChanged="@{(switch, checked) -> viewModel.onCheckedChanged(checked)}"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}" />
+
+    </RelativeLayout>
+</layout>

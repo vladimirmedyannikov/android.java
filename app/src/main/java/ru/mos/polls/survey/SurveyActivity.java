@@ -122,7 +122,15 @@ public class SurveyActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                if (currentFragment != null) {
+                    if (currentFragment instanceof SurveyFragment) {
+                        onUpPressed();
+                    } else {
+                        onBackPressed();
+                    }
+                } else {
+                    onBackPressed();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -130,6 +138,10 @@ public class SurveyActivity extends BaseActivity {
 
     public void setCurrentFragment(Fragment currentFragment) {
         this.currentFragment = currentFragment;
+    }
+
+    private void onUpPressed() {
+        callback.onUpPressed();
     }
 
     @Override
@@ -409,11 +421,18 @@ public class SurveyActivity extends BaseActivity {
             }
 
             @Override
+            public void onUpPressed() {
+
+            }
+
+            @Override
             public void onLocationUpdated() {
             }
         };
 
         void onBackPressed();
+
+        void onUpPressed();
 
         void onLocationUpdated();
     }

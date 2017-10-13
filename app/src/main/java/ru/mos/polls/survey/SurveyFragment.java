@@ -592,6 +592,24 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
         }
     }
 
+    public void interruptUp() {
+        if (survey != null) {
+            if (survey.getKind().isHearing()) {
+                callback.onSurveyInterrupted(survey);
+                ((SurveyActivity)getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+            } else {
+                try {
+                    survey.verify();
+                    survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
+                } catch (VerificationException ignored) {
+                }
+                survey.endTiming();
+                manager.saveCurrentPage(survey);
+                ((SurveyActivity)getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+            }
+        }
+    }
+
     private boolean isHasAnswer() {
         boolean result = false;
         List<SurveyQuestion> questionList = survey.getFilteredQuestionList();
@@ -613,6 +631,11 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
     @Override
     public void onBackPressed() {
         interrupt();
+    }
+
+    @Override
+    public void onUpPressed() {
+        interruptUp();
     }
 
     public interface Callback {

@@ -6,8 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,6 +94,18 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         loadFriendProfile();
     }
 
+    private String getRegistrationDate(String registrationDate) {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy");
+        String regDate = "на проекте с ";
+        try {
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
+            regDate = regDate + sdf2.format(sdf1.parse(registrationDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return regDate;
+    }
+
     private void friendsStatsList(List<Statistics> params) {
         List<Statistics> list = new ArrayList<>();
         list.addAll(params);
@@ -132,7 +147,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                         setAchievementsCountView(result.getAchievements().getCount());
                     }
                     setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
-                    friendRegDate.setText(result.getPersonal().getRegistrationDate());
+                    friendRegDate.setText(getRegistrationDate(result.getPersonal().getRegistrationDate()));
                     friendRating.setText(String.valueOf(result.getStatistics().getRating()));
                     friendStatus.setText(result.getStatistics().getStatus());
                     FriendGuiUtils.loadAvatar(friendImage, AgApiBuilder.resourceURL(result.getPersonal().getAvatar()));

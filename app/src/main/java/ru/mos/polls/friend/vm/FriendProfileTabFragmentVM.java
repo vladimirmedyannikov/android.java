@@ -2,6 +2,7 @@ package ru.mos.polls.friend.vm;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.transition.TransitionManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
@@ -40,7 +42,13 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
 
     @Override
     protected UIComponentHolder createComponentHolder() {
-        return new UIComponentHolder.Builder().build();
+        return new UIComponentHolder.Builder().with(new ProgressableUIComponent()).build();
+    }
+
+    private void setProgressable(boolean on) {
+        TransitionManager.beginDelayedTransition(getBinding().root);
+        getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
+//        getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -55,6 +63,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         pager.setAdapter(adapter);
         friendInvisibleLayout = binding.friendInvisibleLayout;
         slidingTabs = binding.slidingTabs;
+        setProgressable(true);
         slidingTabs.setupWithViewPager(pager);
         for (int index = 0; index < pages.size(); ++index) {
             slidingTabs
@@ -97,6 +106,9 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                                 slidingTabs.setVisibility(View.GONE);
                                 pager.setVisibility(View.GONE);
                                 friendInvisibleLayout.setVisibility(View.VISIBLE);
+                                break;
+                            case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD:
+                                setProgressable(false);
                                 break;
                         }
                     }

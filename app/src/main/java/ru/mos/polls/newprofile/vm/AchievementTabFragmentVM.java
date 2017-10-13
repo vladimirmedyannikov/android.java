@@ -12,11 +12,17 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.change.Remove;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
+import ru.mos.polls.friend.state.FriendStatisticFragmentState;
+import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
@@ -66,6 +72,13 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                         adapter.add(result.getAchievements());
                         isPaginationEnable = result.getAchievements().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();
+                        if (getFragment().getParentFragment() instanceof FriendProfileTabFragment) {
+                            AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD));
+                            if (result.getAchievements().size() == 0) {
+                                ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity());
+                                ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
+                            }
+                        }
                     }
                 };
         AchievementsSelect.Request requestBody = new AchievementsSelect.Request(page);

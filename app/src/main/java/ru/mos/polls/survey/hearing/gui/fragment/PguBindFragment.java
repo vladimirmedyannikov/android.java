@@ -94,6 +94,12 @@ public class PguBindFragment extends JugglerFragment {
 
 
     @Override
+    public void onPause() {
+        super.onPause();
+        GuiUtils.hideKeyboard(getView());
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.confirm, menu);

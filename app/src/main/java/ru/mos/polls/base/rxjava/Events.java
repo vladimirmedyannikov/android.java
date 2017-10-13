@@ -185,6 +185,8 @@ public class Events {
     }
 
     public static class SourcesVotingEvents extends BaseEvents {
+        public static final int SUBSCRIBE_SOURCES = 1;
+
         private int sourcesVotingId;
         private boolean enable;
 

@@ -74,6 +74,7 @@ public interface AgApi {
             String SEND_FEEDBACK = "sendFeedback";
             String STATISTICS = "statistics";
             String GET_SOURCES = "getSources";
+            String SET_SOURCES = "setSources";
         }
     }
 
@@ -134,6 +135,6 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.GET_SOURCES)
     Observable<SourcesGet.Response> getSources(@Body AuthRequest body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.GET_SOURCES)
-    Observable<EmptyResponse> setSources(@Body SourcesSet body);
+    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.SET_SOURCES)
+    Observable<EmptyResponse> setSources(@Body SourcesSet.Request body);
 }

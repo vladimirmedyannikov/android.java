@@ -18,6 +18,10 @@ public class SourcesVoting extends SourcesVotingSet {
 
     private boolean editable;
 
+    public SourcesVoting(int id, boolean enable) {
+        super(id, enable);
+    }
+
     public int getId() {
         return id;
     }

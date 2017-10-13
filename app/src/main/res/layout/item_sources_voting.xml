@@ -39,6 +39,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:checked="@{viewModel.isEnable()}"
+            android:enabled="@{viewModel.editable}"
             android:onCheckedChanged="@{(switch, checked) -> viewModel.onCheckedChanged(checked)}"
             android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}" />
 

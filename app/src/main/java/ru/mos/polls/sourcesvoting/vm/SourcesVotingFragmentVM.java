@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,10 +20,14 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
+import ru.mos.polls.newprofile.service.EmptyResponse;
+import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.sourcesvoting.model.SourcesVoting;
+import ru.mos.polls.sourcesvoting.model.SourcesVotingSet;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
+import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.sourcesvoting.ui.SourcesVotingFragment;
 import ru.mos.polls.sourcesvoting.ui.adapter.SourcesVotingAdapter;
 import ru.mos.polls.util.StubUtils;
@@ -112,12 +117,25 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
                 .subscribe(o -> {
                     if (o instanceof Events.SourcesVotingEvents) {
                         Events.SourcesVotingEvents events = (Events.SourcesVotingEvents) o;
-
+                        subscribeSourcesVoting(events.getSourcesVotingId(), events.isEnable());
                     }
                 });
     }
 
     public void subscribeSourcesVoting(int sourcesId, boolean enable) {
-
+        List<SourcesVotingSet> list = new ArrayList<>();
+        list.add(new SourcesVotingSet(sourcesId, enable));
+        HandlerApiResponseSubscriber<EmptyResult[]> handler
+                = new HandlerApiResponseSubscriber<EmptyResult[]>(getFragment().getContext(), progressable) {
+            @Override
+            protected void onResult(EmptyResult[] result) {
+            }
+        };
+        AGApplication
+                .api
+                .setSources(new SourcesSet.Request(list))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(handler);
     }
 }

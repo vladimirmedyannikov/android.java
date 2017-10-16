@@ -129,7 +129,14 @@ public class AppSocial extends Social{
         if (socialJson != null) {
             icon = socialJson.optString("icon");
             isLogon = socialJson.optBoolean("logined");
-            token = new Token(socialJson.optString("token1"), socialJson.optString("token2"), socialJson.optLong("expired_time") * 1000);
+            token = new Token(socialJson.optString("token1"),
+                    socialJson.optString("token2"),
+                    id == AppSocial.ID_FB ?
+                            /**
+                             * Т.к. сс возвращает оставшееся время, а не абсолютное
+                             */
+                            System.currentTimeMillis() + socialJson.optLong("expired_time") * 1000 :
+                            socialJson.optLong("expired_time") * 1000);
         }
     }
 

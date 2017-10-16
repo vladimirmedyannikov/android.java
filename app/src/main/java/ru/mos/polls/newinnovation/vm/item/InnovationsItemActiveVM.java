@@ -29,9 +29,9 @@ public class InnovationsItemActiveVM extends InnovationsItemBaseVM<Innovation, I
         super.onBind(viewDataBinding);
         UIInnovationViewHelper.setPassedTitleAndRating(getModel(), viewDataBinding.title, viewDataBinding.innovationRatingbarLayout.rating);
         if (getModel().getPoints() > 0) {
-            viewDataBinding.title.setText(UIInnovationViewHelper.getRatingTitleTxt(getModel().getPoints(), viewDataBinding.title.getContext()));
+            viewDataBinding.innovationRatingbarLayout.ratingTitle.setText(UIInnovationViewHelper.getRatingTitleTxt(getModel().getPoints(), viewDataBinding.title.getContext()));
         } else {
-            viewDataBinding.title.setText(viewDataBinding.title.getContext().getString(R.string.innovation_rate_your));
+            viewDataBinding.innovationRatingbarLayout.ratingTitle.setText(viewDataBinding.title.getContext().getString(R.string.innovation_rate_your));
         }
     }
 }

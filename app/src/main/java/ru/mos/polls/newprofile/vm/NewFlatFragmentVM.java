@@ -23,6 +23,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.BaseActivity;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.AGApplication;
@@ -73,6 +74,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     LinearLayout buildingNotFoundContainer;
     private boolean isAddressSelected;
     boolean forWizard;
+    boolean deleteFlat;
     WizardCustomFlatListener wizardCustomFlatListener;
 
 
@@ -319,6 +321,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
             if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
                 registrationEntity.setFlat_id(flat.getFlatId());
+            setKill(registrationEntity);
             entity = new FlatsEntity(registrationEntity);
         }
         if (flat.isResidence()) {
@@ -333,15 +336,25 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
                 if (!TextUtils.isEmpty(flat.getFlatId()))
                     residenceEntity.setFlat_id(flat.getFlatId());
+                setKill(residenceEntity);
             }
             entity = new FlatsEntity(residenceEntity);
         }
         if (flat.isWork()) {
             FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
             if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
+            setKill(workEntity);
             entity = new FlatsEntity(workEntity);
         }
         sendFlat(new ProfileSet.Request(entity));
+    }
+
+
+    public void setKill(FlatsEntity.BaseFlat bf) {
+        if (TextUtils.isEmpty(etStreet.getText().toString()) && TextUtils.isEmpty(etBuilding.getText().toString())) {
+            bf.setKill(true);
+            deleteFlat = true;
+        }
     }
 
     void changeFlat() {
@@ -352,6 +365,9 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         etStreet.getText().clear();
         etStreet.setEnabled(true);
         etStreet.setTextColor(getFragment().getResources().getColor(R.color.editTextColor));
+        flat.setBuildingId("");
+        flat.setBuilding("");
+        flat.setStreet("");
         hideAreaDistrict();
     }
 
@@ -365,49 +381,55 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;
-                if (result != null && result.getFlats() != null) {
-                    if (result.getFlats().getRegistration() != null) {
-                        newFlat = result.getFlats().getRegistration();
-                        newFlat.setType(Flat.Type.REGISTRATION);
+                int percent;
+                if (result != null) {
+                    percent = result.getPercentFillProfile();
+                    if (result.getFlats() != null) {
+                        if (result.getFlats().getRegistration() != null) {
+                            newFlat = result.getFlats().getRegistration();
+                            newFlat.setType(Flat.Type.REGISTRATION);
+                        }
+                        if (result.getFlats().getResidence() != null) {
+                            newFlat = result.getFlats().getResidence();
+                            newFlat.setType(Flat.Type.RESIDENCE);
+                        }
+                        if (result.getFlats().getWork() != null) {
+                            newFlat = result.getFlats().getWork();
+                            newFlat.setType(Flat.Type.WORK);
+                        }
+                        if (newFlat != null) {
+                            newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
+                            newFlat.save(getActivity());
+                        }
                     }
-                    if (result.getFlats().getResidence() != null) {
-                        newFlat = result.getFlats().getResidence();
-                        newFlat.setType(Flat.Type.RESIDENCE);
+                    if (flatType == FLAT_TYPE_RESIDENCE && residenceToggle.isChecked()) {
+                        flat.delete(getActivity());
+                        cloneResidenceFromRegistration();
                     }
-                    if (result.getFlats().getWork() != null) {
-                        newFlat = result.getFlats().getWork();
-                        newFlat.setType(Flat.Type.WORK);
+                    if (deleteFlat) {
+                        flat.delete(getActivity());
                     }
-                    if (newFlat != null) {
-                        newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
-                        newFlat.save(getActivity());
+                    AgUser.setPercentFillProfile(getActivity(), percent);
+                    setupViewIfNotEmpty();
+                    EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
+                    if (!forWizard) {
+                        showDeleteMenuIcon();
+                        getActivity().finish();
+                    } else {
+                        int wizardType = 0;
+                        switch (flatType) {
+                            case FLAT_TYPE_REGISTRATION:
+                                wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
+                                break;
+                            case FLAT_TYPE_RESIDENCE:
+                                wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
+                                break;
+                            case FLAT_TYPE_WORK:
+                                wizardType = Events.WizardEvents.WIZARD_WORK;
+                                break;
+                        }
+                        AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
                     }
-                }
-                if (flatType == FLAT_TYPE_RESIDENCE && residenceToggle.isChecked()) {
-                    flat.delete(getActivity());
-                    cloneResidenceFromRegistration();
-                }
-                setupViewIfNotEmpty();
-                EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
-                if (!forWizard) {
-                    showDeleteMenuIcon();
-                    getActivity().finish();
-                } else {
-                    int wizardType = 0;
-                    switch (flatType) {
-                        case FLAT_TYPE_REGISTRATION:
-                            wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
-                            break;
-                        case FLAT_TYPE_RESIDENCE:
-                            wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
-                            break;
-                        case FLAT_TYPE_WORK:
-                            wizardType = Events.WizardEvents.WIZARD_WORK;
-                            break;
-                    }
-                    int percent = 0;
-                    if (result != null) percent = result.getPercentFillProfile();
-                    AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
                 }
             }
         };

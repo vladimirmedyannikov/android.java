@@ -8,6 +8,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,10 +75,21 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                         isPaginationEnable = result.getAchievements().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();
                         if (getFragment().getParentFragment() instanceof FriendProfileTabFragment) {
-                            AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD));
                             if (result.getAchievements().size() == 0) {
-                                ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity());
-                                ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
+                                AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO));
+                                /**
+                                 * для красивой анимации
+                                 */
+                                Timer timer = new Timer();
+                                TimerTask timerTask = new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity());
+                                        ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
+                                    }
+                                };
+                                timer.schedule(timerTask, 500);
+
                             }
                         }
                     }

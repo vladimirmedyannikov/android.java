@@ -89,7 +89,7 @@ public class Events {
     public static class FriendEvents extends BaseEvents {
         public static final int FRIEND_PROFILE = 1;
         public static final int FRIEND_INVISIBLE = 2;
-        public static final int FRIEND_ACHIEVEMENT_DOWNLOAD = 3;
+        public static final int FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO = 3;
 
         private int id;
         private Friend friend;

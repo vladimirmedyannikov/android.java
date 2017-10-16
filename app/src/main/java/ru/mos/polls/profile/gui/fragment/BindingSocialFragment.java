@@ -79,7 +79,12 @@ public class BindingSocialFragment extends Fragment {
 
         @Override
         public void authFailure(Social social, Exception e) {
-            showErrorAuthDialog(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()), e);
+            /**
+             * если ошибка не связана с тем, что пользователь сам отклонил авторизацию
+             */
+            if (!e.getMessage().equals(SocialController.EXIT_AUTH_EXCEPTION)) {
+                showErrorAuthDialog(((AppStorable) Configurator.getInstance(getContext()).getStorable()).get(social.getId()), e);
+            }
         }
     };
 

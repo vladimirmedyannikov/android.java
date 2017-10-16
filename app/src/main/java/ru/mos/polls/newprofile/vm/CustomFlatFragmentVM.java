@@ -22,6 +22,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.BaseActivity;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
@@ -180,6 +181,8 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;
+                int percent = 0;
+                if (result != null) percent = result.getPercentFillProfile();
                 if (result.getFlats().getRegistration() != null) {
                     newFlat = result.getFlats().getRegistration();
                     newFlat.setType(Flat.Type.REGISTRATION);
@@ -196,6 +199,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                     newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
                     newFlat.save(getActivity());
                 }
+                AgUser.setPercentFillProfile(getActivity(), percent);
                 if (!forWizard) {
                     showDeleteMenuIcon();
                     EditProfileFragmentVM.sendBroadcastReLoadBadges(getActivity());
@@ -215,8 +219,6 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                             wizardType = Events.WizardEvents.WIZARD_WORK;
                             break;
                     }
-                    int percent = 0;
-                    if (result != null) percent = result.getPercentFillProfile();
                     AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
                     disableView();
                 }

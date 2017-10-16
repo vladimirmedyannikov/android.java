@@ -56,7 +56,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     AppCompatSpinner martialStatus;
     ArrayAdapter genderAdapter;
     MaritalStatusAdapter martialStatusAdapter;
-    AgUser savedUser, changedUser;
+    AgUser savedUser;
     View kidsLayer;
     TextView birthdayDate;
     BirthDateParser dbp;
@@ -88,7 +88,6 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     @Override
     protected void initialize(FragmentNewEditProfileBinding binding) {
         savedUser = new AgUser(getFragment().getContext());
-        changedUser = new AgUser(getFragment().getContext());
         dbp = new BirthDateParser(getActivity());
         gender = binding.layoutDateGender.editGender;
         martialStatus = binding.editMartialStatus;
@@ -290,6 +289,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
 
     public void setFlatView(Flat flat, TextView view) {
+        view.setText("");
         if (!flat.isEmpty())
             view.setText(flat.getAddressTitle(getActivity().getBaseContext()));
     }

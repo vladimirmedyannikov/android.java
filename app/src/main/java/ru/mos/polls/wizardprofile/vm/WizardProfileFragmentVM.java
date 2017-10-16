@@ -281,7 +281,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 wizardFilledList.put(PGU, true);
                                 break;
                         }
-                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER) {
+                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER &&
+                                events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL) {
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
                             slideNextPage();

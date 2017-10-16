@@ -794,5 +794,5 @@
     <string name="success_send_sms">СМС \"%s\" успешно доставлено</string>
     <string name="error_send_sms">К сожалению, не удалось доставить СМС \"%s\"</string>
     <string name="title_dialog_edit_profile">Вы хотите перейти в режим редактирования данных?</string>
-    <string name="empty_achievement_list">Инфромации по достижениям нет</string>
+    <string name="empty_achievement_list">Информации по достижениям нет</string>
 </resources>

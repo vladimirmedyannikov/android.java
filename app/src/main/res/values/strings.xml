@@ -244,6 +244,7 @@
     <string name="add_new_address">Добавить новый адрес</string>
     <string name="title_select_address">Добавление адреса</string>
     <string name="last_post_time_not_allow_do_new_post">Вы уже сделали пост на стене в %s, попробуйте повторить операцию позже</string>
+    <string name="repeated_posting_message">Вы уже размещали данное голосование в %s, хотите продолжить?</string>
     <string name="my_addresses">Мои адреса</string>
     <string name="goToPolls">Перейти к вопросам</string>
     <string name="description">Описание</string>

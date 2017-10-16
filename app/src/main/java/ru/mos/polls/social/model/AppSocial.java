@@ -306,6 +306,22 @@ public class AppSocial extends Social{
         return result;
     }
 
+    public static String getNormalSocialName(int socialId) {
+        String result = "Unknown";
+        if (AppSocial.ID_FB == socialId) {
+            result = Social.NAME_FB;
+        } else if (AppSocial.ID_VK == socialId) {
+            result = Social.NAME_VK;
+        } else if (AppSocial.ID_OK == socialId) {
+            result = Social.NAME_OK;
+        } else if (AppSocial.ID_TW == socialId) {
+            result = Social.NAME_TW;
+        } else if (AppSocial.ID_GP == socialId) {
+            result = Social.NAME_GP;
+        }
+        return result;
+    }
+
     public static String getStatisticsKey(int socialId) {
         switch (socialId) {
             case ID_FB:

@@ -106,6 +106,7 @@ public class GuiUtils {
     }
 
     public static void displayUnknownError(Context context) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Произошла непредвиденная ошибка, попробуйте повторить операцию позже");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -120,6 +121,7 @@ public class GuiUtils {
     }
 
     public static void displayUnknownError(Context context, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Произошла непредвиденная ошибка, попробуйте повторить операцию позже");
         builder.setPositiveButton("OK", okListener);
@@ -131,14 +133,17 @@ public class GuiUtils {
 
 
     public static void displayOkMessage(Context context, int message, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         displayOkMessage(context, context.getString(message), okListener);
     }
 
     public static void displayOkMessage(Context context, int message, int title, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         displayOkMessage(context, context.getString(message), context.getString(title), okListener);
     }
 
     public static void displayOkMessage(Context context, String message, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setPositiveButton("OK", okListener);
@@ -150,6 +155,7 @@ public class GuiUtils {
     }
     
     public static void displayOkMessage(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setTitle(title);
@@ -193,6 +199,7 @@ public class GuiUtils {
     }
 
     public static void displayAreYouSureDialogTitle(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setTitle(title);
@@ -202,10 +209,12 @@ public class GuiUtils {
     }
 
     public static void displayYesOrNotDialog(Context context, int messageId, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener notListener) {
+        if (context == null) return;
         displayYesOrNotDialog(context, context.getString(messageId), okListener, notListener);
     }
 
     public static void displayYesOrNotDialog(Context context, String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener notListener) {
+        if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setPositiveButton("Да", okListener);

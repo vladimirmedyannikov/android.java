@@ -15,8 +15,15 @@ import ru.mos.polls.sourcesvoting.model.SourcesVoting;
  */
 
 public class SourcesVotingVM extends RecyclerBaseViewModel<SourcesVoting, ItemSourcesVotingBinding> {
+    /**
+     * т.к. слушатель ChechedChanged срабатывает при первой инициализации
+     * тогда когда поле enable == true, то для этого заведен флаг (вина DataBinding)
+     */
+    private boolean dontNeedSendChangeResultWithCreated;
+
     public SourcesVotingVM(SourcesVoting model) {
         super(model);
+        dontNeedSendChangeResultWithCreated = model.isEnable();
     }
 
     @Override
@@ -56,6 +63,10 @@ public class SourcesVotingVM extends RecyclerBaseViewModel<SourcesVoting, ItemSo
 
     public void onCheckedChanged(boolean checked) {
         setEnable(checked);
-        AGApplication.bus().send(new Events.SourcesVotingEvents(model.getId(), checked));
+        if (dontNeedSendChangeResultWithCreated) {
+            dontNeedSendChangeResultWithCreated = false;
+        } else {
+            AGApplication.bus().send(new Events.SourcesVotingEvents(model.getId(), checked));
+        }
     }
 }

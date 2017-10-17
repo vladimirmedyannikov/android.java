@@ -3,8 +3,10 @@ package ru.mos.polls.survey.source;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
+import com.android.volley2.RequestQueue;
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
+import com.android.volley2.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +19,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Statistics;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
+import ru.mos.elk.netframework.request.OkHttpStack;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
@@ -149,7 +152,12 @@ public class WebSurveyDataSource implements SurveyDataSource {
             listener.onNoDataToSave();
         } else {
             JsonObjectRequest jsonRequest = new JsonObjectRequest(url, requestJsonObject, responseListener, errorListener);
-            actionBarActivity.addRequest(jsonRequest);
+//            actionBarActivity.addRequest(jsonRequest);
+            /**
+             * т.к. запрос не успевал срабатывать, а умерал раньше, сделано вот так ->
+             */
+            RequestQueue requestQueue = Volley.newRequestQueue(actionBarActivity, new OkHttpStack());
+            requestQueue.add(jsonRequest);
         }
     }
 }

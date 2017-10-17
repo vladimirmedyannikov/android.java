@@ -6,7 +6,9 @@ import org.junit.Test;
 
 import java.util.List;
 
+import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.BaseUnitTest;
+import ru.mos.polls.newprofile.vm.AchievementVM;
 import ru.mos.polls.profile.model.Achievement;
 
 
@@ -45,5 +47,12 @@ public class AchievementUnitTest extends BaseUnitTest {
 
     private Achievement getTestObject() {
         return  new Achievement(fromTestRawAsJson("achievement.json"));
+    }
+
+    @Test
+    public void testAchievementVM() {
+        Achievements achievements = mockObj("achievement.json");
+        Assert.assertNotNull(achievements);
+        AchievementVM achievementVM = new AchievementVM(achievements);
     }
 }

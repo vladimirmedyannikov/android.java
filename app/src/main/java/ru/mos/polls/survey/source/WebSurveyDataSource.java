@@ -156,6 +156,9 @@ public class WebSurveyDataSource implements SurveyDataSource {
             /**
              * т.к. запрос не успевал срабатывать, а умерал раньше, сделано вот так ->
              */
+            //TODO разобраться в каком моменте убивается активити. по логам запрос отменятся при приёме "volley canceled-at-delivery" где то раньше срабатывает finish
+
+
             RequestQueue requestQueue = Volley.newRequestQueue(actionBarActivity, new OkHttpStack());
             requestQueue.add(jsonRequest);
         }

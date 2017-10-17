@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -43,6 +44,8 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     AppCompatTextView wizardFlatTitle;
     TextInputLayout socialStatusWrapper;
     Personal personal;
+    boolean isCustomFlat;
+    int flatType;
 
     public WizardFlatFragmentVM(WizardFlatFragment fragment, FragmentWizardFlatBinding binding) {
         super(fragment, binding);
@@ -67,8 +70,8 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     public void onViewCreated() {
         super.onViewCreated();
         setView();
+        setRxEventBusListener();
         if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK) {
-            setRxEventBusListener();
             setListener();
         }
     }
@@ -96,11 +99,24 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                                 break;
                         }
                     }
+                    if (o instanceof Events.WizardEvents) {
+                        Events.WizardEvents action = (Events.WizardEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.WizardEvents.WIZARD_CHANGE_FLAT_FR:
+                                rotateFragment();
+                                break;
+                        }
+                    }
                 });
     }
 
+    private void rotateFragment() {
+        if (isCustomFlat) {
+            changeToNewFlatFragment();
+        }
+    }
+
     public void setView() {
-        int flatType = 0;
         switch (wizardFlatType) {
             case NewFlatFragmentVM.FLAT_TYPE_REGISTRATION:
                 flat = agUser.getRegistration();
@@ -123,8 +139,17 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 break;
         }
         newFlatFragment = NewFlatFragment.newInstanceForWizard(flat, flatType);
+        changeToNewFlatFragment();
+    }
+
+    public void changeToNewFlatFragment() {
+        changeFragment(newFlatFragment);
+        isCustomFlat = false;
+    }
+
+    public void changeFragment(Fragment fragment) {
         FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.container, newFlatFragment);
+        ft.replace(R.id.container, fragment);
         ft.commit();
     }
 
@@ -165,9 +190,12 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     @Override
     public void onCustomFlatListener(String street, String building) {
         customFlatFragment = CustomFlatFragment.newInstanceForWizard(flat, true, street, building, wizardFlatType);
-        FragmentTransaction ft = getFragment().getChildFragmentManager().beginTransaction();
-        ft.replace(R.id.container, customFlatFragment);
-        ft.commit();
+        changeToCustomFlatFragment();
+    }
+
+    public void changeToCustomFlatFragment() {
+        changeFragment(customFlatFragment);
+        isCustomFlat = true;
     }
 
     @Override

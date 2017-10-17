@@ -29,6 +29,7 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
+import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
@@ -282,7 +283,8 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 break;
                         }
                         if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER &&
-                                events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL) {
+                                events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
+                                && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR) {
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
                             slideNextPage();
@@ -392,4 +394,15 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         Fragment currFr = list.get(pager.getCurrentItem());
         currFr.onActivityResult(requestCode, resultCode, data);
     }
+
+    public boolean isFlatFlatFragment() {
+        return list.get(pager.getCurrentItem()) instanceof WizardFlatFragment;
+    }
+
+
+    public boolean isCustomFlatFragment() {
+        WizardFlatFragment fr = (WizardFlatFragment) list.get(pager.getCurrentItem());
+        return fr.getViewModel().isCustomFlat;
+    }
+
 }

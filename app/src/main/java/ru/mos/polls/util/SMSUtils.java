@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsManager;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import ru.mos.polls.R;
  */
 
 public class SMSUtils {
+    public static final String SUCCESS_SEND_INVITE_MESSAGE_FILTER = "ru.mos.polls.util.success_send_invite_message_filter";
+    public static final String SENDING_PHONE_NUMBER = "ru.mos.polls.util.sending_phone_number";
+    public static final String SENDING_MESSAGE_KEY = "ru.mos.polls.util.sending_message_key";
 
     private static final String DELIVER_RECEIVER_FILTER = "ru.mos.polls.util.deliver_receiver_filter";
-    private static final String SENDING_MESSAGE_KEY = "ru.mos.polls.util.sending_message_key";
 
     private static final BroadcastReceiver deliverReceiver = new BroadcastReceiver() {
         @Override
@@ -28,7 +31,9 @@ public class SMSUtils {
             String msg = intent.getStringExtra(SENDING_MESSAGE_KEY);
             switch (getResultCode()) {
                 case Activity.RESULT_OK:
+                    intent.setAction(SUCCESS_SEND_INVITE_MESSAGE_FILTER);
                     GuiUtils.displayOkMessage(context, String.format(context.getString(R.string.success_send_sms), msg), null);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     break;
                 default:
                     GuiUtils.displayOkMessage(context, String.format(context.getString(R.string.error_send_sms), msg), null);
@@ -47,6 +52,7 @@ public class SMSUtils {
         String stringText = AgTextUtil.listToString(text);
         Intent messageIntent = new Intent(DELIVER_RECEIVER_FILTER);
         messageIntent.putExtra(SENDING_MESSAGE_KEY, stringText);
+        messageIntent.putExtra(SENDING_PHONE_NUMBER, phoneNumber);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, messageIntent, 0);
         ArrayList<PendingIntent> list = new ArrayList<>();
         list.add(deliveredPI);

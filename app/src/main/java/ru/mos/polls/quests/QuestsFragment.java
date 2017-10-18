@@ -42,7 +42,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.fragments.PullableFragment;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -184,11 +183,12 @@ public class QuestsFragment extends PullableFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_invite_friends:
+            /*case R.id.action_invite_friends:
                 if (listener != null) {
                     listener.onInviteFriends(true);
                 }
-                break;
+                break;*/
+            //мб потом понадобится, если что раскомментировать код в menu/main.xml
             case R.id.hideNews:
                 hideAllNews();
                 break;

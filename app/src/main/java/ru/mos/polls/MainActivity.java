@@ -2,12 +2,15 @@ package ru.mos.polls;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
@@ -49,7 +52,6 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.navigation.tab.PagerFragment;
 import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
 import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
 import ru.mos.polls.newpoll.ui.PollFragment;
@@ -69,6 +71,7 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
+import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.social.callback.PostCallback;
@@ -127,6 +130,16 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         @Override
         public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
             SocialUIController.sendPostingResult(MainActivity.this, (AppPostValue) postValue, e);
+        }
+    };
+
+    /**
+     * после успешной отправки смс, сообщаем серверу (работает и для обращения с ленты и из списка друзей)
+     */
+    private BroadcastReceiver smsSuccessReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            smsInviteController.notifyBackEnd(intent.getStringExtra(SMSUtils.SENDING_PHONE_NUMBER));
         }
     };
 
@@ -255,6 +268,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onResume() {
         super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(smsSuccessReceiver, new IntentFilter(SMSUtils.SUCCESS_SEND_INVITE_MESSAGE_FILTER));
         socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
         if (PreviewAppActivity.isNeedPreview(this)) {
@@ -292,6 +306,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onPause() {
         super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(smsSuccessReceiver);
         SocialUIController.unregisterPostingReceiver(this);
         socialController.getEventController().unregisterAllCallback();
     }

@@ -1,13 +1,13 @@
 package ru.mos.polls.friend.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
+import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.LayoutFriendProfileBinding;
 import ru.mos.polls.friend.vm.FriendStatisticFragmentVM;
-import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
@@ -18,8 +18,8 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 public class FriendStatisticFragment extends BindingFragment<FriendStatisticFragmentVM, LayoutFriendProfileBinding> {
     public static final String ARG_FRIEND = "arg_friend";
 
-    public static Fragment newInstance(Friend friend) {
-        Fragment result = new FriendStatisticFragment();
+    public static JugglerFragment newInstance(Friend friend) {
+        JugglerFragment result = new FriendStatisticFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_FRIEND, friend);
         result.setArguments(args);

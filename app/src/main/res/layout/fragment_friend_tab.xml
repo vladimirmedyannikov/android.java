@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM" />
+            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM"/>
     </data>
 
     <RelativeLayout
         style="@style/root">
 
         <LinearLayout
+            android:id="@+id/root"
             style="@style/root"
             android:background="@color/actionbar_background"
             android:fitsSystemWindows="true"
@@ -25,7 +26,7 @@
                 android:layout_gravity="top"
                 app:tabBackground="@color/actionbar_background"
                 app:tabIndicatorColor="@color/yellow"
-                app:tabMode="fixed" />
+                app:tabMode="fixed"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
@@ -35,27 +36,13 @@
                 android:background="@color/white">
 
             </android.support.v4.view.ViewPager>
-
-            <LinearLayout
-                android:id="@+id/friend_invisible_layout"
-                style="@style/linear"
-                android:visibility="gone">
-
-                <include layout="@layout/layout_user_avatar" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/text.small.white"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/friend_profile_invisible" />
-            </LinearLayout>
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress"
             style="@style/item"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </layout>

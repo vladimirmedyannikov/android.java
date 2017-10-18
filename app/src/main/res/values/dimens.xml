@@ -22,6 +22,7 @@
     <dimen name="thick_separator">2dp</dimen>
 
     <!-- padding size !-->
+    <dimen name="pd_xxxxsmall">2dp</dimen>
     <dimen name="pd_xxxsmall">5dp</dimen>
     <dimen name="pd_xxsmall">8dp</dimen>
     <dimen name="pd_xsmall">12dp</dimen>

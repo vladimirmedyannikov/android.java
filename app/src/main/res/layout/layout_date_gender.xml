@@ -16,9 +16,15 @@
 
         <include layout="@layout/ag_separator"/>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:paddingTop="@dimen/pd_xxsmall"
+            style="@style/text.xsmall.gray"
+            android:text="@string/gender_status_title"/>
+
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/edit_gender"
             android:layout_marginRight="@dimen/pd_xnormal_m"
-            style="@style/edit_profile"/>
+            style="@style/edit_profile"
+            android:paddingTop="@dimen/pd_xxxxsmall" />
     </LinearLayout>
 </layout>

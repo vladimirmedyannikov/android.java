@@ -3,6 +3,7 @@ package ru.mos.polls.friend.ui.fragment;
 
 import android.os.Bundle;
 
+import me.ilich.juggler.Navigable;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
@@ -41,5 +42,13 @@ public class FriendProfileTabFragment extends BindingFragment<FriendProfileTabFr
     @Override
     public int getLayoutResources() {
         return R.layout.fragment_friend_tab;
+    }
+
+    public Navigable navigate() {
+        return navigateTo();
+    }
+
+    public Friend getFriend() {
+        return (Friend) getArguments().getSerializable(ARG_FRIEND);
     }
 }

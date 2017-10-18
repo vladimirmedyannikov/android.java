@@ -13,6 +13,7 @@
         style="@style/root">
 
         <LinearLayout
+            android:id="@+id/root"
             style="@style/root"
             android:background="@color/actionbar_background"
             android:fitsSystemWindows="true"

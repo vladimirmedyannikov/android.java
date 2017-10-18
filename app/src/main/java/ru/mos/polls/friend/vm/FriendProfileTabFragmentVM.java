@@ -38,7 +38,6 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
     private TabLayout slidingTabs;
     private Friend friend;
     private PagerAdapter adapter;
-    private View friendInvisibleLayout;
 
     public FriendProfileTabFragmentVM(FriendProfileTabFragment fragment, FragmentFriendTabBinding binding) {
         super(fragment, binding);
@@ -82,7 +81,6 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         pager = binding.pager;
         adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
         pager.setAdapter(adapter);
-        friendInvisibleLayout = binding.friendInvisibleLayout;
         slidingTabs = binding.slidingTabs;
 //        visibleSlidingTabs(true);
         slidingTabs.setupWithViewPager(pager);
@@ -126,7 +124,6 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                             case Events.FriendEvents.FRIEND_INVISIBLE:
                                 slidingTabs.setVisibility(View.GONE);
                                 pager.setVisibility(View.GONE);
-                                friendInvisibleLayout.setVisibility(View.VISIBLE);
                                 break;
                             case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
                                 visibleSlidingTabs(true);

@@ -49,6 +49,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
     AppCompatTextView friendRegDate;
     AppCompatTextView friendRating;
     AppCompatTextView friendStatus;
+    AppCompatTextView friendInvisibleTitle;
     LinearLayout achievementLayer;
     AppCompatTextView achievementsValue;
     View achievementPanel;
@@ -77,6 +78,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         achievementsValue = binding.friendStatusInfoPanel.agUserAchievementValue;
         achievementPanel = binding.friendStatusInfoPanel.agUserAchievementPanel;
         friendStatusInfo = binding.friendStatusInfoPanel.agUserStatusLayout;
+        friendInvisibleTitle = binding.friendInvisibleTitle;
         adapter = new FriendProfileAdapter();
         recyclerView.setAdapter(adapter);
     }
@@ -176,6 +178,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         friendImage.setImageResource(R.drawable.ic_avatar_default);
         recyclerView.setVisibility(View.GONE);
         friendStatusInfo.setVisibility(View.INVISIBLE);
+        friendInvisibleTitle.setVisibility(View.VISIBLE);
     }
 
     public void setAchievementsCountView(int count) {

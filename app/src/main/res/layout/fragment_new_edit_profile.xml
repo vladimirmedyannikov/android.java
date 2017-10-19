@@ -79,15 +79,11 @@
                             style="@style/linear"
                             android:padding="@dimen/pd_xxsmall">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                style="@style/text.xsmall.gray"
-                                android:text="@string/marital_status_title"/>
-
-                            <android.support.v7.widget.AppCompatSpinner
+                            <ru.mos.polls.base.view.DictionaryView
                                 android:layout_marginRight="@dimen/pd_xnormal_m"
                                 android:id="@+id/edit_martial_status"
                                 style="@style/edit_profile"
-                                android:paddingTop="@dimen/pd_xxxxsmall" />
+                                android:paddingTop="@dimen/pd_xxsmall" />
 
                             <include layout="@layout/ag_separator"/>
 
@@ -176,13 +172,9 @@
                             android:padding="@dimen/pd_xxsmall">
 
                             <android.support.v7.widget.AppCompatTextView
-                                style="@style/text.xsmall.gray"
-                                android:text="@string/social_status_title"/>
-
-                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_social_status"
                                 style="@style/edit_profile"
-                                android:paddingTop="@dimen/pd_xxxxsmall"
+                                android:paddingTop="@dimen/pd_xxsmall"
                                 android:hint="Род деятельности"/>
 
                             <include layout="@layout/ag_separator"/>

@@ -20,6 +20,8 @@ import java.util.List;
  * @since 1.9
  */
 public class AgSocialStatus implements Serializable {
+    public static final String NOTHING_SELECT_TEXT = "Не установлено";
+
     private static final String PREFS = "ag_social_status_prefs";
     private static final String SOCIAL_STATUSES = "social_statuses";
 
@@ -49,7 +51,7 @@ public class AgSocialStatus implements Serializable {
         try {
             JSONArray array = new JSONArray(prefs.getString(SOCIAL_STATUSES, ""));
             result = getAgSocialStatuses(array);
-            result.add(0, new AgSocialStatus(0, "Не установлено"));
+            result.add(0, new AgSocialStatus(0, NOTHING_SELECT_TEXT));
         } catch (JSONException ignored) {
         }
         return result;

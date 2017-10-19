@@ -6,16 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,6 +32,8 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
+import ru.mos.polls.base.view.DictionaryView;
+import ru.mos.polls.base.view.model.DictionaryItem;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
@@ -52,8 +51,8 @@ import ru.mos.polls.social.model.AppSocial;
  */
 
 public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
-    AppCompatSpinner gender;
-    AppCompatSpinner martialStatus;
+    DictionaryView gender;
+    DictionaryView maritalStatus;
     ArrayAdapter genderAdapter;
     MaritalStatusAdapter martialStatusAdapter;
     AgUser savedUser;
@@ -90,7 +89,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         savedUser = new AgUser(getActivity());
         dbp = new BirthDateParser(getActivity());
         gender = binding.layoutDateGender.editGender;
-        martialStatus = binding.editMartialStatus;
+        maritalStatus = binding.editMartialStatus;
         kidsLayer = binding.editKidsLayer;
         kidsDateLayer = binding.editKidsDateLayer;
         birthdayDate = binding.layoutDateGender.editBirthdayDate;
@@ -213,8 +212,10 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     }
 
     public void refreshView(AgUser agUser) {
-        setGenderView(agUser.getGender());
-        setMartialStatusView(agUser.getGender());
+//        setGenderView(agUser.getGender());
+        initGender(agUser);
+//        setMartialStatusView(agUser.getGender());
+        initMarital(agUser);
         displayBirthday();
         setRegistationFlatView(agUser.getRegistration());
         setResidenceFlatView(agUser.getRegistration(), agUser.getResidence());
@@ -252,7 +253,12 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
     public void setSocialStatusView(int idSocialStatus) {
         List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getActivity().getBaseContext());
-        socialStatus.setText(list.get(idSocialStatus).getTitle());
+        socialStatus.setText(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
+                getFragment().getString(R.string.social_status_non_select_item_title) :
+                list.get(idSocialStatus).getTitle());
+        socialStatus.setTextColor(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
+                getFragment().getContext().getResources().getColor(R.color.text_hint) :
+                getFragment().getContext().getResources().getColor(R.color.black_light));
     }
 
     public void setKidsCountView(int kidsCountValue) {
@@ -321,69 +327,71 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
     int selectedGender;
 
-    public void setGenderView(AgUser.Gender userGender) {
-        genderAdapter = getGenderAdapter();
-        gender.setAdapter(genderAdapter);
-        selectedGender = genderAdapter.getPosition(userGender);
-        gender.setSelection(selectedGender, false);
-        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void initGender(AgUser user) {
+        gender.setAddFirstNothingElement(true);
+        gender.setFirstSelectedElementIsSetHintFirstNothingElement(true);
+        gender.setTitleFirstNothingElement(getFragment().getString(R.string.gender_non_select_item_title));
+        gender.setNonSelectFirstNothingElement(true);
+        gender.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != selectedGender) {
-                    AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
-                    martialStatusAdapter.setGender(gender);
-                    savedUser.setGender(gender);
-                    martialStatusAdapter.notifyDataSetChanged();
-                    selectedGender = position;
+            public void selected(DictionaryItem dictionaryItem) {
+                if (dictionaryItem.getId() != selectedGender) {
+                    AgUser.Gender gender = AgUser.Gender.parseLabel(dictionaryItem.getTitle());
+                    user.setGender(gender);
+                    refreshMarital(user);
+                    selectedGender = dictionaryItem.getId();
                     sendProfile(new Personal().setSex(savedUser.getGender() == AgUser.Gender.NULL ? "" : savedUser.getGender().getValue()));
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void nothingSelected() {
 
             }
         });
+        refreshGender(user);
+    }
+    private void refreshGender(AgUser user) {
+        ArrayList<DictionaryItem> genderItems = new ArrayList<>();
+        genderItems.add(new DictionaryItem(1, AgUser.Gender.NULL.toString()));
+        genderItems.add(new DictionaryItem(2, AgUser.Gender.MALE.toString()));
+        genderItems.add(new DictionaryItem(3, AgUser.Gender.FEMALE.toString()));
+        gender.setData(genderItems);
+        gender.setSelected(user.getGender() == AgUser.Gender.NULL ? 1 : user.getGender() == AgUser.Gender.MALE ? 2 : 3);
     }
 
     int selectedMartial;
 
-    public void setMartialStatusView(AgUser.Gender gender) {
-        martialStatusAdapter = (MaritalStatusAdapter) getMartialStatusAdapter(gender);
-        martialStatus.setAdapter(martialStatusAdapter);
-        selectedMartial = martialStatusAdapter.getPosition(savedUser.getMaritalStatus());
-        martialStatus.setSelection(selectedMartial, false);
-        martialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void initMarital(AgUser user) {
+        maritalStatus.setAddFirstNothingElement(true);
+        maritalStatus.setFirstSelectedElementIsSetHintFirstNothingElement(true);
+        maritalStatus.setTitleFirstNothingElement(getFragment().getString(R.string.marital_non_select_item_title));
+        maritalStatus.setNonSelectFirstNothingElement(true);
+        maritalStatus.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != selectedMartial) {
-                    AgUser.MaritalStatus maritalStatus = martialStatusAdapter.getItem(position);
-                    savedUser.setMaritalStatus(maritalStatus);
-                    selectedMartial = position;
-                    sendProfile(new Personal().setMarital_status(savedUser.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : savedUser.getMaritalStatus().getValue()));
+            public void selected(DictionaryItem dictionaryItem) {
+                if (dictionaryItem.getId() != selectedMartial) {
+                    AgUser.MaritalStatus maritalStatus = AgUser.MaritalStatus.parseLabel(dictionaryItem.getTitle());
+                    user.setMaritalStatus(maritalStatus);
+                    selectedMartial = dictionaryItem.getId();
+                    sendProfile(new Personal().setMarital_status(user.getMaritalStatus() == AgUser.MaritalStatus.NULL ? "" : user.getMaritalStatus().getValue()));
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void nothingSelected() {
 
             }
         });
+        refreshMarital(user);
     }
-
-
-    public ArrayAdapter getGenderAdapter() {
-        List<AgUser.Gender> list = new ArrayList<>(Arrays.asList(AgUser.Gender.getGenderItems()));
-        ArrayAdapter<AgUser.Gender> ad = new ArrayAdapter<>(getActivity(), R.layout.layout_spinner_view, list);
-        ad.setDropDownViewResource(R.layout.layout_spinner_item);
-        return ad;
-    }
-
-    public ArrayAdapter getMartialStatusAdapter(AgUser.Gender gender) {
-        List<AgUser.MaritalStatus> list = new ArrayList<>(Arrays.asList(AgUser.MaritalStatus.getMaritalStatusItems()));
-        MaritalStatusAdapter newAd = new MaritalStatusAdapter(getActivity(), R.layout.layout_spinner_item, list, gender);
-        newAd.setDropDownViewResource(R.layout.layout_spinner_item);
-        return newAd;
+    private void refreshMarital(AgUser user) {
+        ArrayList<DictionaryItem> maritalItems = new ArrayList<>();
+        maritalItems.add(new DictionaryItem(1, AgUser.MaritalStatus.NULL.toString(user.getGender())));
+        maritalItems.add(new DictionaryItem(2, AgUser.MaritalStatus.SINGLE.toString(user.getGender())));
+        maritalItems.add(new DictionaryItem(3, AgUser.MaritalStatus.MARRIED.toString(user.getGender())));
+        maritalStatus.setData(maritalItems);
+        maritalStatus.setSelected(user.getMaritalStatus() == AgUser.MaritalStatus.NULL ? 1 : user.getMaritalStatus() == AgUser.MaritalStatus.SINGLE ? 2 : 3);
     }
 
     public void setBirthDayDate() {

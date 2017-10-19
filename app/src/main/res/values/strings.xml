@@ -124,6 +124,11 @@
     <string name="elk_authorization">Вход</string>
     <string name="elk_restoreTitle">Восстановление пароля</string>
 
+    <string name="marital_non_select_item_title">Семейное положение</string>
+    <string name="gender_non_select_item_title">Пол</string>
+    <string name="social_status_non_select_item_title">Род деятельности</string>
+
+
     <string name="ag_agree_offer_link">Я согласен с
         &lt;a href="http://ag.mos.ru/oferta.html" style="text-decoration: none;">условиями оферты&lt;/a></string>
 

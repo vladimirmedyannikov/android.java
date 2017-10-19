@@ -55,7 +55,6 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         subscribesController.loadAllSubscribes((BaseActivity) getActivity(), new SubscribesAPIController.StateListener() {
             @Override
             public void onSubscriptionsState(List<Subscription> typeChanells) {
-                subscriptionsContainer.setVisibility(View.VISIBLE);
                 for (Subscription subscription : typeChanells) {
                     if (subscription.getType().equals(Subscription.TYPE_AG_NEW)) {
                         for (Channel channel : subscription.getChannels()) {

@@ -146,8 +146,7 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     @Override
     public void onResume() {
         super.onResume();
-        saved = new AgUser(getActivity());
-        updateView();
+        refreshProfile();
     }
 
     public void updateView() {

@@ -104,6 +104,7 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
                     AgUser.MaritalStatus maritalStatus = (AgUser.MaritalStatus) martialStatusAdapter.getItem(position);
                     selectedMartial = position;
                     personal.setMarital_status(maritalStatus == AgUser.MaritalStatus.NULL ? "" : maritalStatus.getValue());
+                    agUser.setMaritalStatus(maritalStatus);
                 }
             }
 
@@ -132,6 +133,7 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
     public void wizardAction() {
         if (checkField()) {
             personalInfoFragment.getViewModel().setPersonal(personal);
+            personalInfoFragment.getViewModel().setAgUser(agUser);
             personalInfoFragment.getViewModel().confirmAction();
         }
     }

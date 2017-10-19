@@ -131,6 +131,7 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
                     AgUser.Gender gender = (AgUser.Gender) genderAdapter.getItem(position);
                     selectedGender = position;
                     personal.setSex(gender == AgUser.Gender.NULL ? "" : gender.getValue());
+                    agUser.setGender(gender);
                 }
             }
 
@@ -164,6 +165,7 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
     public void wizardAction() {
         if (checkField()) {
             personalInfoFragment.getViewModel().setPersonal(personal);
+            personalInfoFragment.getViewModel().setAgUser(agUser);
             personalInfoFragment.getViewModel().confirmAction();
         }
     }

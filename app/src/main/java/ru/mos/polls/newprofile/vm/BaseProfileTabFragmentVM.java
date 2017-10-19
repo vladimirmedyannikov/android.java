@@ -181,6 +181,9 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
 
             @Override
             public void onError(VolleyError error) {
+                saved = new AgUser(getActivity());
+                progressable.end();
+                updateView();
                 try {
                     Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception ignored) {

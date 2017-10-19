@@ -83,7 +83,6 @@ public abstract class ProfileManager {
             requestBody = new JSONObject();
             Session.addSession(requestBody);
         }
-
         elkActivity.addRequest(new JsonObjectRequest(url, requestBody, responseListener, errorListener));
     }
 

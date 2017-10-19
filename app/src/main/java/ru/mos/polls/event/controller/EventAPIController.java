@@ -204,9 +204,10 @@ public abstract class EventAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 try {
                     if (progressDialog != null) {
                         progressDialog.dismiss();
@@ -276,9 +277,10 @@ public abstract class EventAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
@@ -356,9 +358,10 @@ public abstract class EventAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (listener != null) {
                     listener.onError(volleyError);
                 }
@@ -407,9 +410,10 @@ public abstract class EventAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (listener != null) {
                     listener.onError(volleyError);
                 }

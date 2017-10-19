@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.helpers.SearchViewCustomizer;
@@ -147,9 +148,10 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
                 adapter.notifyDataSetChanged();
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(this, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 setSupportProgressBarIndeterminateVisibility(false);
                 Toast.makeText(SelectActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
             }

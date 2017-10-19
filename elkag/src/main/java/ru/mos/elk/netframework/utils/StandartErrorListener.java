@@ -14,6 +14,7 @@ import com.android.volley2.VolleyError;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
+import ru.mos.elk.netframework.request.ResponseErrorCode;
 
 public class StandartErrorListener implements ErrorListener {
 
@@ -34,7 +35,7 @@ public class StandartErrorListener implements ErrorListener {
     @Override
     @SuppressLint("NewApi")
     public void onErrorResponse(VolleyError error) {
-        if (error.getErrorCode() == 401 || error.getErrorCode() == 403) {
+        if (error.getErrorCode() == ResponseErrorCode.UNAUTHORIZED || error.getErrorCode() == ResponseErrorCode.SESSION_DOWN) {
             context.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
             return;
         }

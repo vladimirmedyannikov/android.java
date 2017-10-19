@@ -21,6 +21,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.helpers.TextHelper;
 
@@ -104,9 +105,10 @@ public abstract class PromoController {
                 parseResult(activity, promoCode, jsonObject);
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 dismissProgress();
                 String error = String.format(activity.getString(R.string.error_occurs), volleyError.getMessage());
                 Toast.makeText(activity, error, Toast.LENGTH_LONG).show();

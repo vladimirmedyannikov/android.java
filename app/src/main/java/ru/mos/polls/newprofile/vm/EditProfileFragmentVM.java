@@ -87,7 +87,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
     @Override
     protected void initialize(FragmentNewEditProfileBinding binding) {
-        savedUser = new AgUser(getFragment().getContext());
+        savedUser = new AgUser(getActivity());
         dbp = new BirthDateParser(getActivity());
         gender = binding.layoutDateGender.editGender;
         martialStatus = binding.editMartialStatus;
@@ -174,8 +174,8 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     @Override
     public void onResume() {
         super.onResume();
-        savedUser = new AgUser(getFragment().getContext());
-        socialListObserable = AppSocial.getObservableSavedSocials(getFragment().getContext());
+        savedUser = new AgUser(getActivity());
+        socialListObserable = AppSocial.getObservableSavedSocials(getActivity());
         refreshView(savedUser);
     }
 
@@ -277,7 +277,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
 
     public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
         if (!registationFlat.isEmpty() && residenceFlat.compareByFullAddress(registationFlat)) {
-            residence.setText(getFragment().getString(R.string.coincidesAddressRegistration));
+            residence.setText(getActivity().getString(R.string.coincidesAddressRegistration));
             return;
         }
         setFlatView(residenceFlat, residence);

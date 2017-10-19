@@ -116,23 +116,6 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
         }
     }
 
-    //    {
-//        "personal":{
-//    },
-//        "flats":{
-//        "residence":{
-//            "building_id":"userid",
-//                    "flat":"",
-//                    "building":"Коаоаоаь",
-//                    "street":"вовоуооу",
-//                    "city":"",
-//                    "area_id":"1004"
-//        }
-//    },
-//        "auth":{
-//        "session_id":"9af8dfc0cb1dd63d3b6a1c68fce593f7"
-//    }
-//    }
     public void prepareRequest() {
         FlatsEntity entity = null;
         Reference areaReference = (Reference) areaSpinner.getSelectedItem();

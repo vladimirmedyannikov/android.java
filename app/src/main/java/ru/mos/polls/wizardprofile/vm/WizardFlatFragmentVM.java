@@ -182,8 +182,10 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     public void wizardAction() {
-        if (checkField()) {
+        if (checkField() && !isCustomFlat) {
             newFlatFragment.getViewModel().confirmAction();
+        } else {
+            customFlatFragment.getViewModel().confirmAction();
         }
     }
 

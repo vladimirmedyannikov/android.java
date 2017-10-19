@@ -968,6 +968,16 @@ public class AgUser implements Serializable {
             return result;
         }
 
+        public static Gender parseLabel(String value) {
+            Gender result = NULL;
+            if (MALE.toString().equalsIgnoreCase(value)) {
+                result = MALE;
+            } else if (FEMALE.toString().equalsIgnoreCase(value)) {
+                result = FEMALE;
+            }
+            return result;
+        }
+
         public String getValue() {
             return value;
         }
@@ -1069,6 +1079,16 @@ public class AgUser implements Serializable {
             return result;
         }
 
+        public static MaritalStatus parseLabel(String value) {
+            MaritalStatus result = NULL;
+            if (SINGLE.labelMale.equalsIgnoreCase(value) || SINGLE.labelFemale.equalsIgnoreCase(value) || SINGLE.labelMale.equalsIgnoreCase(value)) {
+                result = SINGLE;
+            } else if (MARRIED.labelMale.equalsIgnoreCase(value) || MARRIED.labelFemale.equalsIgnoreCase(value) || MARRIED.labelMale.equalsIgnoreCase(value)) {
+                result = MARRIED;
+            }
+            return result;
+        }
+
         public String getValue() {
             return value;
         }
@@ -1089,6 +1109,16 @@ public class AgUser implements Serializable {
          */
         @Override
         public String toString() {
+            String result = label;
+            if (Gender.MALE == gender) {
+                result = labelMale;
+            } else if (Gender.FEMALE == gender) {
+                result = labelFemale;
+            }
+            return result;
+        }
+
+        public String toString(Gender gender) {
             String result = label;
             if (Gender.MALE == gender) {
                 result = labelMale;

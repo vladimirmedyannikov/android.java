@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/text1"
+    android:singleLine="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="@dimen/pd_xnormal"
+    android:paddingRight="@dimen/pd_xnormal"
+    android:textSize="16dp"
+    style="@style/text.normal.black"
+    android:ellipsize="marquee"
+    android:textAlignment="inherit"
+    tools:text="test text" />

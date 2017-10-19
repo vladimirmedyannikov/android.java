@@ -86,7 +86,6 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
     @Override
     public void onResume() {
         super.onResume();
-        setFiView(FriendGuiUtils.getTitle(friend));
     }
 
     @Override
@@ -148,7 +147,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                         setAchievementLayerView(result.getAchievements().getLast());
                         setAchievementsCountView(result.getAchievements().getCount());
                     }
-                    setFiView(result.getPersonal().getSurname() + result.getPersonal().getFirstName());
+                    setFiView(result.getPersonal().getSurname() + " " + result.getPersonal().getFirstName());
                     friendRegDate.setText(getRegistrationDate(result.getPersonal().getRegistrationDate()));
                     friendRating.setText(String.valueOf(result.getStatistics().getRating()));
                     friendStatus.setText(result.getStatistics().getStatus());

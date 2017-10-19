@@ -830,7 +830,7 @@ public class AgUser implements Serializable {
         JSONObject achievements = json.optJSONObject("achievements");
         if (achievements != null) {
             count = achievements.optInt("count");
-            saveJsonArray(context, json, Achievements.LAST_ACHIEVEMENTS);
+            saveJsonArray(context, achievements, Achievements.LAST_ACHIEVEMENTS);
         }
     }
 

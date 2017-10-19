@@ -79,10 +79,15 @@
                             style="@style/linear"
                             android:padding="@dimen/pd_xxsmall">
 
+                            <android.support.v7.widget.AppCompatTextView
+                                style="@style/text.xsmall.gray"
+                                android:text="@string/marital_status_title"/>
+
                             <android.support.v7.widget.AppCompatSpinner
                                 android:layout_marginRight="@dimen/pd_xnormal_m"
                                 android:id="@+id/edit_martial_status"
-                                style="@style/edit_profile"/>
+                                style="@style/edit_profile"
+                                android:paddingTop="@dimen/pd_xxxxsmall" />
 
                             <include layout="@layout/ag_separator"/>
 
@@ -171,8 +176,13 @@
                             android:padding="@dimen/pd_xxsmall">
 
                             <android.support.v7.widget.AppCompatTextView
+                                style="@style/text.xsmall.gray"
+                                android:text="@string/social_status_title"/>
+
+                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_social_status"
                                 style="@style/edit_profile"
+                                android:paddingTop="@dimen/pd_xxxxsmall"
                                 android:hint="Род деятельности"/>
 
                             <include layout="@layout/ag_separator"/>

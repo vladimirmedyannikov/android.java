@@ -80,19 +80,11 @@ public class SmsInviteController {
                                 String number = c.getString(0);
                                 try {
                                     sendSms(number);
-                                    if (isTask) {
-                                        notifyBackEnd(number);
-                                    } else {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                                        builder.setMessage(R.string.invited_from_top_bar);
-                                        builder.setPositiveButton(android.R.string.ok, null);
-                                        builder.show();
-                                    }
+                                    /**
+                                     * обработка ошибок и успеха реализована в SMSUtils
+                                     */
                                 } catch (Exception ignored) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                                    builder.setMessage(R.string.number_format_exception);
-                                    builder.setPositiveButton(android.R.string.ok, null);
-                                    builder.show();
+
                                 }
                             }
                         } finally {
@@ -115,7 +107,7 @@ public class SmsInviteController {
         SMSUtils.sendSMS(activity, phoneNumber, smsBody);
     }
 
-    private void notifyBackEnd(String number) {
+    public void notifyBackEnd(String number) {
         number = number.replace("+", "").replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.SMS_INVITATION_NOTICE));
         JSONObject jsonRequest = new JSONObject();
@@ -128,10 +120,9 @@ public class SmsInviteController {
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage(R.string.invited_from_top_bar);
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.show();
+                /**
+                * обработка успеха реализована в SMSUtils
+                */
                 Statistics.afterSendInviteFriends(true);
                 GoogleStatistics.QuestsFragment.afterSendInviteFriends(true);
             }

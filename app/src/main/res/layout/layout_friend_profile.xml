@@ -41,6 +41,14 @@
                             android:id="@+id/friend_avatar"
                             layout="@layout/layout_user_avatar"/>
 
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/friend_invisible_title"
+                            android:visibility="gone"
+                            style="@style/text.small.white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/friend_profile_invisible"/>
+
                         <include
                             android:id="@+id/friend_status_info_panel"
                             layout="@layout/layout_user_status_info"/>

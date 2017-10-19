@@ -57,6 +57,7 @@ public abstract class SocialUIController {
     public static final String EXTRA_POSTED_VALUE = "extra_posted_value";
     public static final String EXTRA_POSTING_EXCEPTION = "extra_posting_exception";
 
+    private static final String TWITTER_AUTH_EXCEPTION = "HTTP request failed, Status: 401";
     private static SocialAdapterHolder socialAdapterHolder = new SocialAdapterHolder();
 
     private static BroadcastReceiver postingReceiver = new BroadcastReceiver() {
@@ -457,6 +458,13 @@ public abstract class SocialUIController {
 
 
     public static void sendPostingResult(Context context, AppPostValue appPostValue, Exception postingException) {
+        if (appPostValue.getSocialId() == AppSocial.ID_TW) {
+            if (postingException != null) {
+                if (postingException.getMessage().equals(TWITTER_AUTH_EXCEPTION)) {
+                    Configurator.getInstance(context).getStorable().clear(AppSocial.ID_TW);
+                }
+            }
+        }
         Intent intent = new Intent(ACTION_POSTING_COMPLETE);
         intent.putExtra(EXTRA_POSTED_VALUE, (Serializable) appPostValue);
         intent.putExtra(EXTRA_POSTING_EXCEPTION, postingException);

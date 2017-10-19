@@ -217,6 +217,10 @@
         <item name="android:textColor">@color/gray_light</item>
     </style>
 
+    <style name="text.xsmall.gray">
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
     <style name="text.small.gray">
         <item name="android:textColor">@color/gray_light</item>
     </style>

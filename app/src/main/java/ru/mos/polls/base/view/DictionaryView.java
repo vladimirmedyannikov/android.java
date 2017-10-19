@@ -107,9 +107,11 @@ public class DictionaryView extends LinearLayout {
      */
     public void refreshUi() {
         if (selected < listDictionary.size() && selected >= 0) {
+            firstItem.setTextColor(getResources().getColor(R.color.black_light));
             firstItem.setText(listDictionary.get(selected).getTitle());
             if (firstSelectedElementIsSetHintFirstNothingElement && !TextUtils.isEmpty(titleFirstNothingElement)) {
                 if (listDictionary.get(selected).getId() == 1) {
+                    firstItem.setTextColor(getResources().getColor(R.color.text_hint));
                     firstItem.setText(titleFirstNothingElement);
                 }
             }

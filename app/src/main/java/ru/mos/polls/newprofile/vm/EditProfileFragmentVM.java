@@ -256,6 +256,9 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         socialStatus.setText(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
                 getFragment().getString(R.string.social_status_non_select_item_title) :
                 list.get(idSocialStatus).getTitle());
+        socialStatus.setTextColor(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
+                getFragment().getContext().getResources().getColor(R.color.text_hint) :
+                getFragment().getContext().getResources().getColor(R.color.black_light));
     }
 
     public void setKidsCountView(int kidsCountValue) {

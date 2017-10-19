@@ -21,6 +21,7 @@ import ru.mos.elk.Statistics;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
@@ -130,9 +131,10 @@ public abstract class AgSocialApiController {
 
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 onError(activity, volleyError);
             }
         };
@@ -306,9 +308,10 @@ public abstract class AgSocialApiController {
                 return new AppSocial(socialName, jsonResult.optJSONObject(socialName));
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 onError(activity, volleyError);
                 if (listener != null) {
                     listener.onError();
@@ -390,9 +393,10 @@ public abstract class AgSocialApiController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener =new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
                 onError(activity, error);
                 if (error.getErrorCode() == Error.Vk.ERROR_TOKKEN_EXPIRED) {
                     Configurator.getInstance(activity).getStorable().clear(social.getId());

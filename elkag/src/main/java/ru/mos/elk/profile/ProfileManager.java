@@ -24,16 +24,19 @@ import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.request.StringRequest;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.elk.push.GCMBroadcastReceiver;
 
 /**
  * Менеджер для работы сервисами профиля пользователя аг
+ *
  * @since 1.9
  * on 24.02.15.
  */
 public abstract class ProfileManager {
     /**
      * Получение данных пользователя
+     *
      * @param elkActivity
      * @param agUserListener
      */
@@ -43,11 +46,12 @@ public abstract class ProfileManager {
 
     /**
      * Получение данных пользователя
+     *
      * @param elkActivity
-     * @param requestBody тело запроса, используется после авторизации
+     * @param requestBody    тело запроса, используется после авторизации
      * @param agUserListener
      */
-    public static void getProfile(final BaseActivity elkActivity, JSONObject requestBody, final AgUserListener agUserListener){
+    public static void getProfile(final BaseActivity elkActivity, JSONObject requestBody, final AgUserListener agUserListener) {
         String url = API.getURL(API.url(API.Controller.AGPROFILE, API.Methods.GET_PROFILE));
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
 
@@ -58,16 +62,17 @@ public abstract class ProfileManager {
                     result = new AgUser(elkActivity, jsonUserData);
                     result.save(elkActivity);
                 }
-                if(agUserListener != null) {
+                if (agUserListener != null) {
                     agUserListener.onLoaded(result);
                 }
             }
 
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, 0) {
             @Override
             public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
                 if (agUserListener != null) {
                     agUserListener.onError(error);
                 }
@@ -84,8 +89,9 @@ public abstract class ProfileManager {
 
     /**
      * Сохранение данных пользователя аг на сервере
+     *
      * @param elkActivity
-     * @param requestBody данные для обновления
+     * @param requestBody        данные для обновления
      * @param saveAgUserListener
      */
     public static void setProfile(final BaseActivity elkActivity, JSONObject requestBody, final SaveAgUserListener saveAgUserListener) {
@@ -94,16 +100,17 @@ public abstract class ProfileManager {
 
             @Override
             public void onResponse(JSONObject result) {
-                if(saveAgUserListener != null) {
+                if (saveAgUserListener != null) {
                     saveAgUserListener.onSaved(result);
                 }
             }
 
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, 0) {
             @Override
             public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
                 if (saveAgUserListener != null) {
                     saveAgUserListener.onError(error);
                 }
@@ -121,16 +128,17 @@ public abstract class ProfileManager {
 
     /**
      * Удаление всех данных пользователя из локального кеша
+     *
      * @param context
      */
-    public static void clearStoredData(Context context){
+    public static void clearStoredData(Context context) {
         ContentResolver cr = context.getContentResolver();
-        cr.delete(UserDataProvider.getContentUri(UserData.Cars.URI_CONTENT),null,null);
-        cr.delete(UserDataProvider.getContentUri(UserData.Flats.URI_CONTENT),null,null);
-        cr.delete(UserDataProvider.getContentUri(UserData.Subscriptions.URI_CONTENT),null,null);
-        cr.delete(UserDataProvider.getContentUri(UserData.Roads.URI_CONTENT),null,null);
-        cr.delete(UserDataProvider.getContentUri(UserData.Times.URI_CONTENT),null,null);
-        cr.delete(UserDataProvider.getContentUri(UserData.RoadGroups.URI_CONTENT),null,null);
+        cr.delete(UserDataProvider.getContentUri(UserData.Cars.URI_CONTENT), null, null);
+        cr.delete(UserDataProvider.getContentUri(UserData.Flats.URI_CONTENT), null, null);
+        cr.delete(UserDataProvider.getContentUri(UserData.Subscriptions.URI_CONTENT), null, null);
+        cr.delete(UserDataProvider.getContentUri(UserData.Roads.URI_CONTENT), null, null);
+        cr.delete(UserDataProvider.getContentUri(UserData.Times.URI_CONTENT), null, null);
+        cr.delete(UserDataProvider.getContentUri(UserData.RoadGroups.URI_CONTENT), null, null);
 
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         String phone = prefs.getString(AgUser.PHONE, null);
@@ -138,7 +146,6 @@ public abstract class ProfileManager {
     }
 
     /**
-     *
      * @param alkActivity
      * @param authActivity
      * @param afterLoginActivity
@@ -146,29 +153,31 @@ public abstract class ProfileManager {
     public static void logOut(final BaseActivity alkActivity, final Class<?> authActivity, final Class<?> afterLoginActivity) {
         final ProgressDialog dialog = Dialogs.showProgressDialog(alkActivity, R.string.elk_wait_logout);
         JSONObject params = new JSONObject();
-        try{
+        try {
             params.put("auth", new JSONObject().put("logout", true));
-        } catch (JSONException e) {e.printStackTrace();}
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Response.Listener<String> listener = new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 dialog.dismiss();
-                afterLoggedOut(alkActivity,authActivity, afterLoginActivity);
+                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dialog.dismiss();
-                afterLoggedOut(alkActivity,authActivity, afterLoginActivity);
+                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
             }
         };
         alkActivity.addRequest(new StringRequest(API.getURL("json/v0.2/auth/user/logout"), params, listener, errorListener), dialog);
     }
 
-    public static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity){
+    public static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity) {
         Intent intent = new Intent(elkActivity, authActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(AuthActivity.PASSED_ACTIVITY, afterLoginActivity);
@@ -191,11 +200,13 @@ public abstract class ProfileManager {
 
     public interface AgUserListener {
         void onLoaded(AgUser agUser);
+
         void onError(VolleyError error);
     }
 
     public interface SaveAgUserListener {
         void onSaved(JSONObject resultJson);
+
         void onError(VolleyError error);
     }
 }

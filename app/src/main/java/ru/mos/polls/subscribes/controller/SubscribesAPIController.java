@@ -17,6 +17,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -59,10 +60,11 @@ public class SubscribesAPIController {
             }
 
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, R.string.error_occurs) {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (saveListener != null) {
                     saveListener.onError(volleyError);
                 }
@@ -141,10 +143,11 @@ public class SubscribesAPIController {
             }
 
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (stateListener != null) {
                     stateListener.onError();
                 }
@@ -242,9 +245,10 @@ public class SubscribesAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
@@ -271,9 +275,10 @@ public class SubscribesAPIController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 Toast.makeText(activity,
                         String.format(activity.getString(R.string.error_occurs), volleyError.getMessage()),
                         Toast.LENGTH_LONG).show();

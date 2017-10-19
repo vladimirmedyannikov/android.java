@@ -26,6 +26,7 @@ import ru.mos.elk.actionmode.ActionDescription;
 import ru.mos.elk.actionmode.SearchDescription;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.utils.BitmapLruCache;
+import ru.mos.elk.profile.ProfileManager;
 
 public class BaseActivity extends JugglerActivity {
 	public static final String INTENT_LOGOUT = "ru.mos.elk.pages.LOGOUT";
@@ -74,7 +75,7 @@ public class BaseActivity extends JugglerActivity {
             logoutReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    finish();
+//                    finish();
                 }
             };
         	registerReceiver(logoutReceiver, new IntentFilter(INTENT_LOGOUT));

@@ -35,6 +35,7 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.api.Token;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
+import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMBroadcastReceiver;
 import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.di.AppComponent;
@@ -180,6 +181,7 @@ public class AGApplication extends MultiDexApplication {
                 CustomDialogController.clear(cntx);
                 ProfileFragment.clearSyncTime(cntx);
                 new SharedPreferencesSurveyManager(cntx).removeAll();
+                startActivity(new Intent(getApplicationContext(), AgAuthActivity.class));
             }
         };
         registerReceiver(logoutReceiver, new IntentFilter(BaseActivity.INTENT_LOGOUT));

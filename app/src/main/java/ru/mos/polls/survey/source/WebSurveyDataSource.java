@@ -21,6 +21,7 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.OkHttpStack;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
@@ -51,9 +52,10 @@ public class WebSurveyDataSource implements SurveyDataSource {
             e.printStackTrace();
         }
         Session.addSession(requestJsonObject);
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(actionBarActivity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 if (volleyError != null) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(actionBarActivity);
                     builder.setMessage(volleyError.getMessage());
@@ -135,9 +137,10 @@ public class WebSurveyDataSource implements SurveyDataSource {
                 listener.onSaved(price, currentPoints, appPostValue);
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(actionBarActivity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 switch (volleyError.getErrorCode()) {
                     case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
                         listener.onPguAuthError(volleyError.getMessage());

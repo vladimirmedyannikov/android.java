@@ -17,6 +17,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.R;
@@ -39,9 +40,10 @@ public abstract class AgSupportApiController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, R.string.error_occurs){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 Toast.makeText(elkActivity, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                 if (listener != null) {
                     listener.onError();
@@ -72,9 +74,10 @@ public abstract class AgSupportApiController {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 Toast.makeText(elkActivity, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                 try {
                     if (progressDialog != null) {

@@ -37,6 +37,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -348,9 +349,10 @@ public class QuestsFragment extends PullableFragment {
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener = new StandartErrorListener(getActivity(), R.string.error_occurs) {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 String errorMessage = volleyError.getMessage();
                 if (errorMessage == null
                         || TextUtils.isEmpty(errorMessage)

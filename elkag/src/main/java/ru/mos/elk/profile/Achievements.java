@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 public class Achievements implements Serializable {
-    public static final String LAST_ACHIEVEMENTS = "last_achievements";
+    public static final String LAST_ACHIEVEMENTS = "last";
     private String id;
     @SerializedName("img_url")
     private String imageUrl;

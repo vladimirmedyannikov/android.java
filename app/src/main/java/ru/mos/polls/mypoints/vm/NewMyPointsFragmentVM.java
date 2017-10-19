@@ -81,6 +81,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
                     @Override
                     protected void onResult(HistoryGet.Response.Result result) {
                         adapter.add(result.getPoints());
+                        isPaginationEnable = result.getPoints().size() > 0;
                         status = result.getStatus();
                         setView();
                         recyclerUIComponent.refreshUI();

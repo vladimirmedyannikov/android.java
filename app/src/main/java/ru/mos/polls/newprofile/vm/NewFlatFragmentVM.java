@@ -304,11 +304,17 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CustomFlatFragment.REQUEST_FLAT && resultCode == Activity.RESULT_OK) {
-            if (!forWizard) {
-                getActivity().finish();
+        if (requestCode == CustomFlatFragment.REQUEST_FLAT) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (!forWizard) {
+                    getActivity().finish();
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                changeFlat();
             }
         }
+
     }
 
     public void setWizardCustomFlatListener(WizardCustomFlatListener wizardCustomFlatListener) {
@@ -357,7 +363,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         }
     }
 
-    void changeFlat() {
+    public void changeFlat() {
         showConfirmMenuIcon();
         etBuilding.getText().clear();
         etBuilding.setEnabled(true);

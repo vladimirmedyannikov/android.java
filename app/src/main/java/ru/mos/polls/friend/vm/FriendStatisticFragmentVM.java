@@ -3,6 +3,7 @@ package ru.mos.polls.friend.vm;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -34,7 +35,9 @@ import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
+import ru.mos.polls.rxhttp.rxapi.model.friends.Personal;
 import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * @author Sergey Elizarov (elizarov1988@gmail.com)
@@ -147,7 +150,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
                         setAchievementLayerView(result.getAchievements().getLast());
                         setAchievementsCountView(result.getAchievements().getCount());
                     }
-                    setFiView(result.getPersonal().getSurname() + " " + result.getPersonal().getFirstName());
+                    setFiView(getFIfriend(result.getPersonal()));
                     friendRegDate.setText(getRegistrationDate(result.getPersonal().getRegistrationDate()));
                     friendRating.setText(String.valueOf(result.getStatistics().getRating()));
                     friendStatus.setText(result.getStatistics().getStatus());
@@ -190,7 +193,15 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         }
     }
 
-    private void setFiView(String text) {
+    public void setFiView(String text) {
         friendFI.setText(text);
+    }
+
+    public String getFIfriend(Personal personal) {
+        if (!AgTextUtil.isStringNoEmpty(personal.getSurname()) && !AgTextUtil.isStringNoEmpty(personal.getFirstName()))
+            return AgTextUtil.getPhoneFormat(personal.getPhone());
+        String surname = AgTextUtil.isStringNoEmpty(personal.getSurname()) ? personal.getSurname() : "";
+        String firstname = AgTextUtil.isStringNoEmpty(personal.getFirstName()) ? personal.getSurname() : "";
+        return String.format("%s %s", surname, firstname);
     }
 }

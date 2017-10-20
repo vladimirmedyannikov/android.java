@@ -78,4 +78,8 @@ public abstract class AgTextUtil {
         }
         return phone;
     }
+
+    public static boolean isStringNoEmpty(String text) {
+        return text != null && !"null".equalsIgnoreCase(text);
+    }
 }

@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import ru.mos.elk.profile.flat.Flat;
@@ -49,5 +50,16 @@ public class CustomFlatFragment extends MenuBindingFragment<CustomFlatFragmentVM
     @Override
     public int getMenuResource() {
         return R.menu.new_flat;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        getActivity().setResult(Activity.RESULT_CANCELED);
+        return super.onBackPressed();
+    }
+
+    @Override
+    public boolean onUpPressed() {
+        return onBackPressed();
     }
 }

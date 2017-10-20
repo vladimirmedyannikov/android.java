@@ -113,12 +113,6 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     private void rotateFragment() {
         if (isCustomFlat) {
             changeToNewFlatFragment();
-            while (!newFlatFragment.isAdded()) {
-                if (newFlatFragment.isAdded()) {
-                    newFlatFragment.getViewModel().changeFlat();
-                    break;
-                }
-            }
         }
     }
 
@@ -198,6 +192,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     @Override
     public void onCustomFlatListener(String street, String building) {
         customFlatFragment = CustomFlatFragment.newInstanceForWizard(flat, true, street, building, wizardFlatType);
+        newFlatFragment.getViewModel().changeFlat();
         changeToCustomFlatFragment();
     }
 

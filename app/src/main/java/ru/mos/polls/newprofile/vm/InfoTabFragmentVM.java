@@ -125,18 +125,19 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         userInfoList();
         setSocialBindingLayerRx();
         setAvatar();
-        setProfileFillPercentView();
+        setProfileFillPercentView(saved.getPercentFillProfile());
     }
 
-    public void setProfileFillPercentView() {
-        percentFilledTitle.setText(String.format(getActivity().getString(R.string.profile_filled_title), saved.getPercentFillProfile()));
-        percentFilledPb.setProgress(saved.getPercentFillProfile());
+    public void setProfileFillPercentView(int percent) {
+        percentFilledTitle.setText(String.format(getActivity().getString(R.string.profile_filled_title), percent));
+        percentFilledPb.setProgress(percent);
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
         progressable = getProgressable();
+        setProfileFillPercentView(0);
     }
 
     @Override

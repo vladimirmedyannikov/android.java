@@ -89,7 +89,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
         requestDistrictList();
         street.setText(savedStreet);
         building.setText(savedBuilding);
-        showDeleteMenuIcon();
+        if (forWizard) hideAllMenuIcon();
     }
 
     @Override
@@ -104,8 +104,8 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
     @Override
     public void onCreateOptionsMenu() {
         super.onCreateOptionsMenu();
-        showConfirmMenuIcon();
         if (forWizard) hideAllMenuIcon();
+        else showConfirmMenuIcon();
     }
 
     public void confirmAction() {

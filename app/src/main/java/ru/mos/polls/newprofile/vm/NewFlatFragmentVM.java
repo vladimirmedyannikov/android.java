@@ -75,6 +75,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     private boolean isAddressSelected;
     boolean forWizard;
     boolean deleteFlat;
+    boolean flatFilled;
     WizardCustomFlatListener wizardCustomFlatListener;
 
 
@@ -387,6 +388,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 Flat newFlat = null;
+                flatFilled = true;
                 int percent;
                 if (result != null) {
                     percent = result.getPercentFillProfile();
@@ -452,7 +454,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
          * Если адрес проживания совпадает с адресом регистрации
          * то не отображаем адрес проживания, очищаем поля
          */
-        if (!flat.isEmpty()) {
+        if (!flat.isEmpty() && flatFilled) {
             setupViewIfNotEmpty();
         }
         /**
@@ -480,7 +482,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         etBuilding.setText(flat.getBuilding());
         districtFlat.setText(flat.getDistrict());
         areaFlat.setText(flat.getArea());
-        setEditingBlocked();
+        if (flatFilled) setEditingBlocked();
     }
 
     public void cloneResidenceFromRegistration() {
@@ -548,7 +550,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         } else {
             if (!flat.isEmpty() && !flat.isEnable()) {
                 tvWarningEditingBlocked.setText(getFragment().getString(ru.mos.polls.R.string.error_full_editing_blocked));
-                tvErrorEditingBlocked.setVisibility(View.VISIBLE);
+                if (!forWizard) tvErrorEditingBlocked.setVisibility(View.VISIBLE);
                 etStreet.setEnabled(false);
                 etBuilding.setEnabled(false);
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

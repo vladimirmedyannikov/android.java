@@ -43,6 +43,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     TextInputEditText socialStatus;
     AppCompatTextView wizardFlatTitle;
     TextInputLayout socialStatusWrapper;
+    View container;
     Personal personal;
     boolean isCustomFlat;
     int flatType;
@@ -61,6 +62,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
             agUser = new AgUser(getActivity());
         }
         personal = new Personal();
+        container = binding.container;
         socialStatus = binding.socialStatus;
         socialStatusWrapper = binding.socialStatusWrapper;
         wizardFlatTitle = binding.wizardFlatTitle;
@@ -94,7 +96,6 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                                 AgUser changed = action.getAgUser();
                                 agUser = changed;
                                 agUser.save(getActivity().getBaseContext());
-//                                setView();
                                 setSocialStatusView();
                                 break;
                         }
@@ -132,10 +133,12 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 flat = agUser.getWork();
                 flatType = NewFlatFragmentVM.FLAT_TYPE_WORK;
                 wizardFlatTitle.setText(getActivity().getString(R.string.flat_title_work));
-                socialStatus.setVisibility(View.VISIBLE);
-                socialStatusWrapper.setVisibility(View.VISIBLE);
-                personal = new Personal();
+                container.setVisibility(flat.isEmpty() ? View.VISIBLE : View.GONE);
+                wizardFlatTitle.setVisibility(flat.isEmpty() ? View.VISIBLE : View.GONE);
                 setSocialStatusView();
+                socialStatus.setVisibility(agUser.getAgSocialStatus() == 0 ? View.VISIBLE : View.GONE);
+                socialStatusWrapper.setVisibility(agUser.getAgSocialStatus() == 0 ? View.VISIBLE : View.GONE);
+                personal = new Personal();
                 break;
         }
         newFlatFragment = NewFlatFragment.newInstanceForWizard(flat, flatType);
@@ -154,14 +157,12 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     private void setSocialStatusView() {
-        if (agUser.getAgSocialStatus() != 0) {
-            setSocialStatusView(agUser.getAgSocialStatus());
-        }
+        setSocialStatusView(agUser.getAgSocialStatus());
     }
 
     public void setSocialStatusView(int idSocialStatus) {
         List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getActivity().getBaseContext());
-        socialStatus.setText(list.get(idSocialStatus).getTitle());
+        socialStatus.setText(idSocialStatus != 0 ? list.get(idSocialStatus).getTitle() : "");
     }
 
     @Override
@@ -185,7 +186,8 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
         if (checkField() && !isCustomFlat) {
             newFlatFragment.getViewModel().confirmAction();
         } else {
-            customFlatFragment.getViewModel().confirmAction();
+            if (checkField())
+                customFlatFragment.getViewModel().confirmAction();
         }
     }
 

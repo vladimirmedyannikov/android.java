@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.ui.fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -72,6 +73,7 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
                         getViewModel().confirmAction();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
+                        getActivity().setResult(Activity.RESULT_CANCELED);
                         getActivity().finish();
                         break;
                 }

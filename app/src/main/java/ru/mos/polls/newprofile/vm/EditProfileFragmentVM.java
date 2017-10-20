@@ -254,11 +254,11 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     public void setSocialStatusView(int idSocialStatus) {
         List<AgSocialStatus> list = AgSocialStatus.fromPreferences(getActivity().getBaseContext());
         socialStatus.setText(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
-                getFragment().getString(R.string.social_status_non_select_item_title) :
+                getActivity().getString(R.string.social_status_non_select_item_title) :
                 list.get(idSocialStatus).getTitle());
         socialStatus.setTextColor(list.get(idSocialStatus).getTitle().equals(AgSocialStatus.NOTHING_SELECT_TEXT) ?
-                getFragment().getContext().getResources().getColor(R.color.text_hint) :
-                getFragment().getContext().getResources().getColor(R.color.black_light));
+                getActivity().getResources().getColor(R.color.text_hint) :
+                getActivity().getResources().getColor(R.color.black_light));
     }
 
     public void setKidsCountView(int kidsCountValue) {
@@ -330,7 +330,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     private void initGender(AgUser user) {
         gender.setAddFirstNothingElement(true);
         gender.setFirstSelectedElementIsSetHintFirstNothingElement(true);
-        gender.setTitleFirstNothingElement(getFragment().getString(R.string.gender_non_select_item_title));
+        gender.setTitleFirstNothingElement(getActivity().getString(R.string.gender_non_select_item_title));
         gender.setNonSelectFirstNothingElement(true);
         gender.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override
@@ -365,7 +365,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     private void initMarital(AgUser user) {
         maritalStatus.setAddFirstNothingElement(true);
         maritalStatus.setFirstSelectedElementIsSetHintFirstNothingElement(true);
-        maritalStatus.setTitleFirstNothingElement(getFragment().getString(R.string.marital_non_select_item_title));
+        maritalStatus.setTitleFirstNothingElement(getActivity().getString(R.string.marital_non_select_item_title));
         maritalStatus.setNonSelectFirstNothingElement(true);
         maritalStatus.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override

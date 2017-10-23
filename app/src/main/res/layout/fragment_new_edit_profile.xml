@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.EditProfileFragmentVM"/>
+            type="ru.mos.polls.newprofile.vm.EditProfileFragmentVM" />
     </data>
 
-    <RelativeLayout
-        style="@style/root">
+    <RelativeLayout style="@style/root">
+
         <ProgressBar
             android:id="@+id/progress"
             style="@style/item"
             android:layout_centerInParent="true"
             android:visibility="gone" />
+
         <FrameLayout
             android:id="@+id/root"
             style="@style/root">
-            <android.support.v4.widget.NestedScrollView
-                style="@style/linear">
 
-                <RelativeLayout
-                    style="@style/linear">
+            <android.support.v4.widget.NestedScrollView style="@style/linear">
+
+                <RelativeLayout style="@style/linear">
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/edit_contact_card"
@@ -32,18 +33,27 @@
                             style="@style/linear"
                             android:padding="@dimen/pd_xxsmall">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/edit_phone"
-                                style="@style/edit_profile"
-                                android:drawableRight="@drawable/ic_lock_4"
-                                android:hint="+7(000)000-00-00"/>
+                            <LinearLayout style="@style/linear.horizontal">
 
-                            <include layout="@layout/ag_separator"/>
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/edit_phone"
+                                    style="@style/edit_profile"
+                                    android:layout_weight="1"
+                                    android:hint="+7(000)000-00-00" />
+
+                                <android.support.v7.widget.AppCompatImageView
+                                    style="@style/wrap"
+                                    android:layout_gravity="center"
+                                    app:srcCompat="@drawable/ic_lock_4" />
+                            </LinearLayout>
+
+
+                            <include layout="@layout/ag_separator" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_email"
                                 style="@style/edit_profile"
-                                android:hint="@string/email"/>
+                                android:hint="@string/email" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
 
@@ -60,11 +70,13 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_fio"
                                 style="@style/edit_profile"
-                                android:hint="Фамилия Имя Отчество"/>
+                                android:hint="Фамилия Имя Отчество" />
 
-                            <include layout="@layout/ag_separator"/>
+                            <include layout="@layout/ag_separator" />
 
-                            <include layout="@layout/layout_date_gender" android:id="@+id/layout_date_gender"/>
+                            <include
+                                android:id="@+id/layout_date_gender"
+                                layout="@layout/layout_date_gender" />
 
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
@@ -80,12 +92,12 @@
                             android:padding="@dimen/pd_xxsmall">
 
                             <ru.mos.polls.base.view.DictionaryView
-                                android:layout_marginRight="@dimen/pd_xnormal_m"
                                 android:id="@+id/edit_martial_status"
                                 style="@style/edit_profile"
+                                android:layout_marginRight="@dimen/pd_xnormal_m"
                                 android:paddingTop="@dimen/pd_xxsmall" />
 
-                            <include layout="@layout/ag_separator"/>
+                            <include layout="@layout/ag_separator" />
 
                             <LinearLayout
                                 android:id="@+id/edit_kids_layer"
@@ -101,14 +113,14 @@
                                         android:id="@+id/edit_kids_title"
                                         style="@style/edit_profile"
                                         android:layout_width="wrap_content"
-                                        android:text="Количество детей"/>
+                                        android:text="Количество детей" />
 
                                     <android.support.v7.widget.AppCompatTextView
                                         android:id="@+id/edit_kids_value"
                                         style="@style/edit_profile"
                                         android:layout_width="wrap_content"
                                         android:layout_alignParentEnd="true"
-                                        android:layout_alignParentRight="true"/>
+                                        android:layout_alignParentRight="true" />
                                 </RelativeLayout>
                             </LinearLayout>
 
@@ -118,13 +130,13 @@
                                 android:layout_height="wrap_content"
                                 android:visibility="gone">
 
-                                <include layout="@layout/ag_separator"/>
+                                <include layout="@layout/ag_separator" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/edit_kids_date"
                                     style="@style/edit_profile"
                                     android:hint="@string/kids_birthdays"
-                                    android:text="@string/kids_birthdays"/>
+                                    android:text="@string/kids_birthdays" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/edit_kids_date_value"
@@ -132,7 +144,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentRight="true"
-                                    android:text="не указан"/>
+                                    android:text="не указан" />
                             </RelativeLayout>
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
@@ -150,14 +162,14 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_flat_registration"
                                 style="@style/edit_profile"
-                                android:hint="Адрес регистрации"/>
+                                android:hint="Адрес регистрации" />
 
-                            <include layout="@layout/ag_separator"/>
+                            <include layout="@layout/ag_separator" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_flat_residence"
                                 style="@style/edit_profile"
-                                android:hint="Адрес проживания"/>
+                                android:hint="Адрес проживания" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
 
@@ -174,15 +186,15 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_social_status"
                                 style="@style/edit_profile"
-                                android:paddingTop="@dimen/pd_xxsmall"
-                                android:hint="Род деятельности"/>
+                                android:hint="Род деятельности"
+                                android:paddingTop="@dimen/pd_xxsmall" />
 
-                            <include layout="@layout/ag_separator"/>
+                            <include layout="@layout/ag_separator" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/edit_flat_work"
                                 style="@style/edit_profile"
-                                android:hint="Адрес работы/учебы"/>
+                                android:hint="Адрес работы/учебы" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
 
@@ -204,7 +216,7 @@
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/edit_binding_mos_title"
                                     style="@style/edit_profile"
-                                    android:hint="@string/connection_mos_pgu_title"/>
+                                    android:hint="@string/connection_mos_pgu_title" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/edit_binding_mos_status"
@@ -212,10 +224,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentRight="true"
-                                    android:text="не установлена"/>
+                                    android:text="не установлена" />
                             </RelativeLayout>
 
-                            <include layout="@layout/ag_separator"/>
+                            <include layout="@layout/ag_separator" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -224,7 +236,7 @@
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/edit_social_bind_title"
                                     style="@style/edit_profile"
-                                    android:hint="Социальные сети"/>
+                                    android:hint="Социальные сети" />
 
                                 <LinearLayout
                                     android:id="@+id/edit_social_bind_layer"
@@ -234,7 +246,7 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_centerVertical="true"
-                                    android:orientation="horizontal"/>
+                                    android:orientation="horizontal" />
                             </RelativeLayout>
                         </LinearLayout>
                     </android.support.v7.widget.CardView>

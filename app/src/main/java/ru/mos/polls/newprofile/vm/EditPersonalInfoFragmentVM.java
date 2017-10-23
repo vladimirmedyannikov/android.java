@@ -46,6 +46,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
     public static final int COUNT_KIDS = 43678;
     public static final int BIRTHDAY_KIDS = 13453;
     public static final int SOCIAL_STATUS = 12333;
+    public static final int WIZARD_SOCIAL_STATUS = 19993;
     public int personalType;
     AgUser agUser;
     TextInputEditText email, lastname, firstname, middlename, childsCount;
@@ -75,6 +76,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
             personalType = extras.getInt(EditPersonalInfoFragment.ARG_PERSONAL_INFO);
             agUser = (AgUser) extras.get(EditPersonalInfoFragment.ARG_AGUSER);
             forWizard = extras.getBoolean(WizardProfileFragment.ARG_FOR_WIZARD);
+            if (personalType == WIZARD_SOCIAL_STATUS) forWizard = true;
         } else {
             agUser = new AgUser(getActivity());
         }
@@ -121,6 +123,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
                 childsCount.setFilters(new InputFilter[]{new InputFilterMinMax(0, 15)});
                 break;
             case SOCIAL_STATUS:
+            case WIZARD_SOCIAL_STATUS:
                 SocialStatusAdapter adapter = new SocialStatusAdapter(AgSocialStatus.fromPreferences(getFragment().getContext()), this);
                 setRecyclerViewAdapter(adapter);
                 break;
@@ -178,7 +181,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
     @Override
     public void onCreateOptionsMenu() {
         super.onCreateOptionsMenu();
-        if (forWizard || personalType == SOCIAL_STATUS) {
+        if (forWizard || personalType == SOCIAL_STATUS || personalType == WIZARD_SOCIAL_STATUS) {
             hideAllMenuIcon();
         }
     }
@@ -214,6 +217,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
                 validationOk = true;
                 break;
             case SOCIAL_STATUS:
+            case WIZARD_SOCIAL_STATUS:
                 personal.setSocial_status(String.valueOf(agUser.getAgSocialStatus()));
                 validationOk = true;
                 break;
@@ -249,6 +253,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
             protected void onResult(ProfileSet.Response.Result result) {
                 if (result != null) {
                     int percent = result.getPercentFillProfile();
+                    AgUser.setPercentFillProfile(getActivity(), percent);
                     agUser.setPercentFillProfile(percent);
                     agUser.save(getActivity());
                     if (!forWizard) {
@@ -273,8 +278,12 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
                             case BIRTHDAY_KIDS:
                                 wizardType = Events.WizardEvents.WIZARD_KIDS;
                                 break;
+                            case WIZARD_SOCIAL_STATUS:
+                                wizardType = Events.WizardEvents.WIZARD_SOCIAL_STATUS;
+                                break;
                         }
                         AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                        getActivity().finish();
                     }
                 }
             }

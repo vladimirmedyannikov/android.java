@@ -101,6 +101,11 @@ public class AgUser implements Serializable {
         prefs.edit().putInt(AgUser.PERCENT_FILL_PROFILE, percentFillProfile).apply();
     }
 
+    public static int getPercentFillProfile(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
+        return prefs.getInt(AgUser.PERCENT_FILL_PROFILE, 0);
+    }
+
     public static void setProfileVisible(Context context, boolean isConnected) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
         prefs.edit().putBoolean(AgUser.IS_PROFILE_VISIBLE, isConnected).apply();

@@ -68,7 +68,7 @@
         <item>+%1$s баллов</item>
     </array>
     <array name="poll_passed_points">
-        <item>начислено +%1$s балл</item>
+        <item>начислен +%1$s балл</item>
         <item>начислено +%1$s балла</item>
         <item>начислено +%1$s баллов</item>
     </array>

@@ -188,9 +188,9 @@ public class SubscribesAPIController {
      * @param pollIds
      */
     public void saveSubscribes(final BaseActivity activity, List<Subscription> subscriptions, long[] pollIds, long[] eventIds, final SaveListener saveListener) {
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        final ProgressDialog progressDialogSub = new ProgressDialog(activity);
+        progressDialogSub.setCancelable(false);
+        progressDialogSub.show();
         String url = API.getURL(UrlManager.url(UrlManager.Controller.AGPROFILE, UrlManager.Methods.SET_SUBSCRIPTIONS));
         JSONObject requestJsonObject = new JSONObject();
         JSONArray subscriptionsJsonArray = new JSONArray();
@@ -237,8 +237,8 @@ public class SubscribesAPIController {
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
+                if (progressDialogSub != null) {
+                    progressDialogSub.dismiss();
                 }
                 if (saveListener != null) {
                     saveListener.onSaved(jsonObject);
@@ -251,6 +251,9 @@ public class SubscribesAPIController {
                 super.onErrorResponse(volleyError);
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                }
+                if (progressDialogSub != null) {
+                    progressDialogSub.dismiss();
                 }
                 Toast.makeText(activity,
                         String.format(activity.getString(R.string.error_occurs), volleyError.getMessage()),

@@ -70,6 +70,7 @@ public class Events {
         public static final int WIZARD_PGU = 10;
         public static final int WIZARD_UPDATE_GENDER = 11;
         public static final int WIZARD_CHANGE_FLAT_FR = 12;
+        public static final int WIZARD_SOCIAL_STATUS = 13;
         private int percentFillProfile;
 
         public WizardEvents(int eventType, int percentFillProfile) {

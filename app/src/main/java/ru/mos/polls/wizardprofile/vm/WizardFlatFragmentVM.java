@@ -46,6 +46,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     View container;
     Personal personal;
     boolean isCustomFlat;
+    boolean isWorkFlatEmpty;
     int flatType;
 
     public WizardFlatFragmentVM(WizardFlatFragment fragment, FragmentWizardFlatBinding binding) {
@@ -80,7 +81,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
 
     public void setListener() {
         socialStatus.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new EditPersonalInfoState(agUser, EditPersonalInfoFragmentVM.SOCIAL_STATUS), EditPersonalInfoFragmentVM.SOCIAL_STATUS);
+            getFragment().navigateToActivityForResult(new EditPersonalInfoState(agUser, EditPersonalInfoFragmentVM.WIZARD_SOCIAL_STATUS), EditPersonalInfoFragmentVM.WIZARD_SOCIAL_STATUS);
         });
     }
 
@@ -133,6 +134,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                 flat = agUser.getWork();
                 flatType = NewFlatFragmentVM.FLAT_TYPE_WORK;
                 wizardFlatTitle.setText(getActivity().getString(R.string.flat_title_work));
+                isWorkFlatEmpty = flat.isEmpty();
                 container.setVisibility(flat.isEmpty() ? View.VISIBLE : View.GONE);
                 wizardFlatTitle.setVisibility(flat.isEmpty() ? View.VISIBLE : View.GONE);
                 setSocialStatusView();
@@ -183,6 +185,10 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     public void wizardAction() {
+        if (flatType == NewFlatFragmentVM.FLAT_TYPE_WORK && !isWorkFlatEmpty) {
+            AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL_STATUS, AgUser.getPercentFillProfile(getActivity())));
+            return;
+        }
         if (checkField() && !isCustomFlat) {
             newFlatFragment.getViewModel().confirmAction();
         } else {

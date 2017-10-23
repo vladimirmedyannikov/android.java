@@ -273,6 +273,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 wizardFilledList.put(TAG_RESIDENCE, true);
                                 break;
                             case Events.WizardEvents.WIZARD_WORK:
+                            case Events.WizardEvents.WIZARD_SOCIAL_STATUS:
                                 wizardFilledList.put(EXTRAINFO, true);
                                 break;
                             case Events.WizardEvents.WIZARD_SOCIAL:
@@ -356,7 +357,11 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
     public void addFragment(int index, Fragment fragment) {
         list.add(index, fragment);
         listSize = list.size();
-        adapter.notifyDataSetChanged();
+        try {
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setDotCustomView();
     }
 

@@ -235,6 +235,8 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     void customFlat() {
         String street = etStreet.getText().toString();
         String building = etBuilding.getText().toString();
+        streetNotFoundContainer.setVisibility(View.GONE);
+        buildingNotFoundContainer.setVisibility(View.GONE);
         if (!forWizard) {
             boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
             getFragment().navigateToActivityForResult(new CustomFlatState(street, building, flat, isHideWarnings, false, flatType), CustomFlatFragment.REQUEST_FLAT);

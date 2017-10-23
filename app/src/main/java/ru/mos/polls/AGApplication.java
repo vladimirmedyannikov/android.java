@@ -181,7 +181,9 @@ public class AGApplication extends MultiDexApplication {
                 CustomDialogController.clear(cntx);
                 ProfileFragment.clearSyncTime(cntx);
                 new SharedPreferencesSurveyManager(cntx).removeAll();
-                startActivity(new Intent(getApplicationContext(), AgAuthActivity.class));
+                Intent i = new Intent(getApplicationContext(), AgAuthActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
             }
         };
         registerReceiver(logoutReceiver, new IntentFilter(BaseActivity.INTENT_LOGOUT));

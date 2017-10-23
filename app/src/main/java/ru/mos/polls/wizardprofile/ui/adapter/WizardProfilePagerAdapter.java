@@ -3,6 +3,7 @@ package ru.mos.polls.wizardprofile.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -35,4 +36,12 @@ public class WizardProfilePagerAdapter extends FragmentStatePagerAdapter {
         return list.size();
     }
 
+    @Override
+    public void finishUpdate(ViewGroup container) {
+        try{
+            super.finishUpdate(container);
+        } catch (NullPointerException e){
+           e.printStackTrace();
+        }
+    }
 }

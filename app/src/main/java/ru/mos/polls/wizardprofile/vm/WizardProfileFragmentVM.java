@@ -331,9 +331,11 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             boolean isViewed = frViewedList.get(i);
             String tag = tagFr.get(i);
             boolean isFilled = wizardFilledList.get(tag);
-            if (isViewed && !isFilled) {
+            if (tag.equalsIgnoreCase(EMAIL) && !isFilled) {
                 setDotColor(tab, R.drawable.wizard_profile_warning_dot);
             }
+//            if (isViewed && !isFilled) {
+//            }
         }
     }
 

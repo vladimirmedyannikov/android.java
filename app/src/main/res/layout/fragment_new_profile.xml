@@ -19,6 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
             app:tabIndicatorColor="@color/yellow"
             app:tabBackground="@color/actionbar_background"
             app:tabMode="fixed"/>

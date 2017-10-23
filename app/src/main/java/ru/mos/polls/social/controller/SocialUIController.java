@@ -934,7 +934,7 @@ public abstract class SocialUIController {
                             processPosting(appPostValue);
                         } else {
                             GuiUtils.displayYesOrNotDialog(getContext(),
-                                    String.format(getContext().getString(R.string.repeated_posting_message), AppSocial.getNormalSocialName(appPostValue.getSocialId())),
+                                    String.format(getContext().getString(R.string.repeated_posting_message), appPostValue.getTypeNameForPostingRepeat(), AppSocial.getNormalSocialName(appPostValue.getSocialId())),
                                     (dialog1, which) -> processPosting(appPostValue), null);
                         }
                     }

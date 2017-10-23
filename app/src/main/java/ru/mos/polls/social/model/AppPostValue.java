@@ -11,6 +11,13 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.social.model.PostValue;
 
+import static ru.mos.polls.social.model.AppPostValue.Type.ACHIEVEMENT;
+import static ru.mos.polls.social.model.AppPostValue.Type.CHECK_IN;
+import static ru.mos.polls.social.model.AppPostValue.Type.HEARING;
+import static ru.mos.polls.social.model.AppPostValue.Type.NOVELTY;
+import static ru.mos.polls.social.model.AppPostValue.Type.POLL;
+import static ru.mos.polls.social.model.AppPostValue.Type.TASK;
+
 
 public class AppPostValue extends PostValue {
     private static final String URL_OK_WIDGET_MEDIATOPIC_POST = "http://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=%s&st.attachment=%s&st.signature=%s&st.popup=on&st.utext=on&st.access_token=%s";
@@ -73,6 +80,30 @@ public class AppPostValue extends PostValue {
             setEnable(enable);
             setId(id);
         }
+    }
+
+    public String getTypeNameForPostingRepeat() {
+        String result = "запись";
+        if (type != null) {
+            switch (type) {
+                case POLL:
+                    result = "голосование";
+                    break;
+                case CHECK_IN:
+                    result = "мероприятие";
+                    break;
+                case ACHIEVEMENT:
+                    result = "достижение";
+                    break;
+                case NOVELTY:
+                    result = "новинку";
+                    break;
+                case HEARING:
+                    result = "публичное слушание";
+                    break;
+            }
+        }
+        return result;
     }
 
 //    public Bundle getFbParams() {
@@ -319,27 +350,27 @@ public class AppPostValue extends PostValue {
     }
 
     public boolean isForNovelty() {
-        return hasType(Type.NOVELTY);
+        return hasType(NOVELTY);
     }
 
     public boolean isForAchievement() {
-        return hasType(Type.ACHIEVEMENT);
+        return hasType(ACHIEVEMENT);
     }
 
     public boolean isForPoll() {
-        return hasType(Type.POLL);
+        return hasType(POLL);
     }
 
     public boolean isForCheckIn() {
-        return hasType(Type.CHECK_IN);
+        return hasType(CHECK_IN);
     }
 
     public boolean isForTask() {
-        return hasType(Type.TASK);
+        return hasType(TASK);
     }
 
     public boolean isForHearing() {
-        return hasType(Type.HEARING);
+        return hasType(HEARING);
     }
 
     public boolean hasType(Type type) {

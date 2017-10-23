@@ -46,7 +46,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     View container;
     Personal personal;
     boolean isCustomFlat;
-    boolean isWorkFlatEmpty;
+    public boolean isWorkFlatEmpty;
     int flatType;
 
     public WizardFlatFragmentVM(WizardFlatFragment fragment, FragmentWizardFlatBinding binding) {
@@ -96,7 +96,6 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
                             case Events.ProfileEvents.UPDATE_USER_INFO:
                                 AgUser changed = action.getAgUser();
                                 agUser = changed;
-                                agUser.save(getActivity().getBaseContext());
                                 setSocialStatusView();
                                 break;
                         }
@@ -173,9 +172,16 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
         newFlatFragment.getViewModel().setWizardCustomFlatListener(this);
     }
 
+    public boolean isSocialStatusSeted() {
+        return socialStatus.getText().length() < 0;
+    }
+
+    public boolean checkWorkFlatWizard() {
+        return wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && !isWorkFlatEmpty && !isSocialStatusSeted();
+    }
 
     public boolean checkField() {
-        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && socialStatus.getText().length() < 0) {
+        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && isSocialStatusSeted()) {
             Toast.makeText(getActivity(), "Укажите род деятельности", Toast.LENGTH_SHORT).show();
             return false;
         } else {

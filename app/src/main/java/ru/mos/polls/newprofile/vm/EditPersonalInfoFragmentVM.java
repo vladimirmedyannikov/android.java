@@ -283,7 +283,9 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
                                 break;
                         }
                         AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
-                        getActivity().finish();
+                        AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.UPDATE_USER_INFO, agUser));
+                        if (wizardType == Events.WizardEvents.WIZARD_SOCIAL_STATUS)
+                            getActivity().finish();
                     }
                 }
             }

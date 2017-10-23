@@ -283,9 +283,10 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                                 wizardFilledList.put(PGU, true);
                                 break;
                         }
-                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER &&
-                                events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
-                                && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR) {
+                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER
+                                && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
+                                && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR
+                                && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL_STATUS) {
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
                             slideNextPage();
@@ -383,6 +384,11 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         }
         if (bd instanceof BindingSocialFragment) {
             slideNextPage();
+        }
+        if (bd instanceof WizardFlatFragment) {
+            WizardFlatFragment wff = (WizardFlatFragment) bd;
+            if (wff.getViewModel().checkWorkFlatWizard())
+                slideNextPage();
         }
     }
 

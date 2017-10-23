@@ -57,6 +57,7 @@ public class Innovation implements Serializable {
         this.passedDate = passedDate;
     }
 
+    @SerializedName("passed_date")
     private long passedDate;
 
     public long getPassedDate() {

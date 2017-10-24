@@ -167,7 +167,9 @@ dependencies {
     /**
      * Библиотека mos_social для работы с соцсетями
      */
-    compile(name: 'mos_social_0.1.85', ext: 'aar')
+    compile(name: 'mos_social_0.1.86', ext: 'aar') {
+        exclude module: 'support-v4'
+    }
     compile 'com.twitter.sdk.android:twitter:3.0.0'
     compile 'com.twitter.sdk.android:tweet-ui:3.0.0'
     compile 'com.twitter.sdk.android:twitter-core:3.0.0'

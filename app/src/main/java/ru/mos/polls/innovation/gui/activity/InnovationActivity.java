@@ -243,7 +243,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
             public void onSuccess(Rating rating, QuestMessage message, int allPoints) {
                 innovation.setStatus(Status.PASSED);
                 innovation.setRating(rating);
-                innovation.setPassedDate(System.currentTimeMillis());
+                innovation.setPassedDate(System.currentTimeMillis() / 1000L);
                 refreshUI();
                 stopProgress();
                 showResults(message, allPoints);
@@ -328,8 +328,9 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     private String getDialogMessage(int point, int allPoints) {
         String message;
         if (point > 0) {
-            String pointTxt = PointsManager.getPointUnitString(this, point);
-            message = String.format(getString(R.string.novelty_result_send_share_with_points), String.valueOf(point), pointTxt, String.valueOf(allPoints), PointsManager.getPointUnitString(this, allPoints));
+//            String pointTxt = PointsManager.getPointUnitString(this, point);
+//            message = String.format(getString(R.string.novelty_result_send_share_with_points), String.valueOf(point), pointTxt, String.valueOf(allPoints), PointsManager.getPointUnitString(this, allPoints));
+            message = PointsManager.getMessage(this, point, allPoints);
         } else {
             message = getString(R.string.novelty_result_send_share);
         }

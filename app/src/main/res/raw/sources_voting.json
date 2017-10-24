@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Городские голосования",
+    "enable": true,
+    "editable": false
+  },
+  {
+    "id": 2,
+    "title": "Голосования собственников",
+    "enable": false,
+    "editable": true
+  }
+]

@@ -74,7 +74,7 @@ public abstract class ActionBarHelper {
 
     private static String getTitle(Activity activity) {
         String result;
-        ActionBar actionBar = ((android.support.v7.app.ActionBarActivity) activity).getSupportActionBar();
+        ActionBar actionBar = ((android.support.v7.app.AppCompatActivity) activity).getSupportActionBar();
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1 && actionBar != null) {
             result = actionBar.getTitle().toString();
         } else {

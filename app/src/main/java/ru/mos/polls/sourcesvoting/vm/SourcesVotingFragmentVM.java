@@ -85,7 +85,6 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
             @Override
             public void onError(Throwable throwable) {
                 super.onError(throwable);
-                adapter.add(mockList(getActivity())); //delete later
             }
         };
         AGApplication

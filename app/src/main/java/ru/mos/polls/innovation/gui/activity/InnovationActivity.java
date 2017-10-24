@@ -243,7 +243,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
             public void onSuccess(Rating rating, QuestMessage message, int allPoints) {
                 innovation.setStatus(Status.PASSED);
                 innovation.setRating(rating);
-                innovation.setPassedDate(System.currentTimeMillis());
+                innovation.setPassedDate(System.currentTimeMillis() / 1000L);
                 refreshUI();
                 stopProgress();
                 showResults(message, allPoints);

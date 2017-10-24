@@ -72,6 +72,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     TextView kidsDate;
     TextView bindingMostTitle;
     TextView bindingMostStatus;
+    TextView privateProperty;
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
@@ -109,6 +110,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         socialBindingLayer = binding.editSocialBindLayer;
         bindingMostTitle = binding.editBindingMosTitle;
         bindingMostStatus = binding.editBindingMosStatus;
+        privateProperty = binding.editPrivateProperty;
     }
 
     @Override

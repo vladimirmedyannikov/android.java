@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AddressesPropertyFragmentVM" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/root"
+        style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            style="@style/root">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                style="@style/root" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@android:id/empty"
+            style="@style/wrap"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/address_info"
+            style="@style/text.normal.black"
+            android:layout_margin="@dimen/pd_small"
+            android:text="@string/addresses_info" />
+
+        <Button
+            android:id="@+id/address_add"
+            style="@style/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_info"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:minWidth="@dimen/vs_xxlarge"
+            android:text="@string/add_address" />
+    </RelativeLayout>
+</layout>

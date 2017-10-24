@@ -8,7 +8,7 @@ import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
-import ru.mos.polls.newprofile.ui.fragment.EditProfileFragment;
+import ru.mos.polls.newprofile.ui.fragment.AddressesPropertyFragment;
 
 
 public class AddPrivatePropertyState extends ContentBelowToolbarState<VoidParams> {
@@ -18,7 +18,7 @@ public class AddPrivatePropertyState extends ContentBelowToolbarState<VoidParams
 
     @Override
     protected JugglerFragment onConvertContent(VoidParams params, @Nullable JugglerFragment fragment) {
-        return EditProfileFragment.newInstance();
+        return AddressesPropertyFragment.newInstance();
     }
 
     @Override

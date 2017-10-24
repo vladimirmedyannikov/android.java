@@ -37,6 +37,7 @@ import ru.mos.polls.base.view.model.DictionaryItem;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.newprofile.service.ProfileSet;
 import ru.mos.polls.newprofile.service.model.Personal;
+import ru.mos.polls.newprofile.state.AddPrivatePropertyState;
 import ru.mos.polls.newprofile.state.EditPersonalInfoState;
 import ru.mos.polls.newprofile.state.NewFlatState;
 import ru.mos.polls.newprofile.state.PguAuthState;
@@ -211,6 +212,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
         });
+        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));
     }
 
     public void refreshView(AgUser agUser) {
@@ -353,6 +355,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         });
         refreshGender(user);
     }
+
     private void refreshGender(AgUser user) {
         ArrayList<DictionaryItem> genderItems = new ArrayList<>();
         genderItems.add(new DictionaryItem(1, AgUser.Gender.NULL.toString()));
@@ -387,6 +390,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         });
         refreshMarital(user);
     }
+
     private void refreshMarital(AgUser user) {
         ArrayList<DictionaryItem> maritalItems = new ArrayList<>();
         maritalItems.add(new DictionaryItem(1, AgUser.MaritalStatus.NULL.toString(user.getGender())));

@@ -65,8 +65,6 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
         return new UIComponentHolder.Builder()
                 .with(new PullableUIComponent(() -> {
                     progressable = getPullableProgressable();
-                    adapter.clear();
-                    getComponent(RecyclerUIComponent.class).refreshUI();
                     doRequest();
                 }))
                 .with(new ProgressableUIComponent())
@@ -79,7 +77,9 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
                 = new HandlerApiResponseSubscriber<SourcesGet.Response.Result>(getFragment().getContext(), progressable) {
             @Override
             protected void onResult(SourcesGet.Response.Result result) {
+                adapter.clear();
                 adapter.add(result.getSourcesVotings());
+                getComponent(RecyclerUIComponent.class).refreshUI();
             }
 
             @Override

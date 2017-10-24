@@ -20,6 +20,7 @@ import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.newsettings.model.Item;
 import ru.mos.polls.newsettings.ui.adapter.ItemsAdapter;
 import ru.mos.polls.newsettings.ui.fragment.SettingsFragment;
+import ru.mos.polls.sourcesvoting.state.SourcesVotingState;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
 /**
@@ -47,7 +48,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        ((ItemsAdapter)getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
+        ((ItemsAdapter) getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
             switch (item.getId()) {
                 case Item.SUBSCRIBE:
                     SubscribeActivity.startActivity(getActivity());
@@ -64,6 +65,9 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
                     break;
                 case Item.LOGOUT:
                     showLogoutDialog();
+                    break;
+                case Item.SOURCES_POLL:
+                    getFragment().navigateTo(new SourcesVotingState(), ru.mos.polls.base.ui.BaseActivity.class);
                     break;
             }
         });

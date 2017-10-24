@@ -23,6 +23,8 @@ import ru.mos.polls.newinnovation.service.NoveltyGet;
 import ru.mos.polls.newinnovation.service.NoveltySelect;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
 import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
+import ru.mos.polls.sourcesvoting.service.SourcesGet;
+import ru.mos.polls.sourcesvoting.service.SourcesSet;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -40,6 +42,7 @@ public interface AgApi {
         interface Versions {
             String V_2_3_0 = "v2.3.0";
             String V_2_4_0 = "v2.4.0";
+            String V_2_4_1 = "v2.4.1";
             String CURRENT = V_2_4_0;
         }
 
@@ -70,6 +73,8 @@ public interface AgApi {
             String GET_FEEDBACK_SUBJECTS = "getFeedbackSubjects";
             String SEND_FEEDBACK = "sendFeedback";
             String STATISTICS = "statistics";
+            String GET_SOURCES = "getSources";
+            String SET_SOURCES = "setSources";
         }
     }
 
@@ -127,4 +132,9 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.STATISTICS)
     Observable<GetStatistics.Response> getStatistics(@Body AuthRequest body);
 
+    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.GET_SOURCES)
+    Observable<SourcesGet.Response> getSources(@Body AuthRequest body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.SET_SOURCES)
+    Observable<EmptyResponse> setSources(@Body SourcesSet.Request body);
 }

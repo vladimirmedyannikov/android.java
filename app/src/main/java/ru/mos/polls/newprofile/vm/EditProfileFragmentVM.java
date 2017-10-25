@@ -74,6 +74,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     TextView bindingMostTitle;
     TextView bindingMostStatus;
     TextView privateProperty;
+    TextView privatePropertyStatus;
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
@@ -112,6 +113,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostTitle = binding.editBindingMosTitle;
         bindingMostStatus = binding.editBindingMosStatus;
         privateProperty = binding.editPrivateProperty;
+        privatePropertyStatus = binding.editPrivatePropertyStatus;
     }
 
     @Override
@@ -232,6 +234,12 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         setKidsDateLayerView(agUser);
         setSocialBindingLayerRx();
         setPguStatusView(agUser);
+        setOwnPropertyView(agUser);
+    }
+
+    public void setOwnPropertyView(AgUser agUser) {
+        privateProperty.setText(agUser.getOwnPropertyCount() > 0 ? getActivity().getString(R.string.property_addresses) : "");
+        privatePropertyStatus.setVisibility(agUser.getOwnPropertyCount() > 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void setPguStatusView(AgUser agUser) {

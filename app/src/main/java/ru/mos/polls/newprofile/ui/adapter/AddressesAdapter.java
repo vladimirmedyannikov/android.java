@@ -5,6 +5,7 @@ import java.util.List;
 
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.base.BaseRecyclerAdapter;
+import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.newprofile.vm.AddressesPropertyVM;
 import ru.mos.polls.newprofile.vm.onAddressesDeleteIconClickListener;
 
@@ -34,5 +35,15 @@ public class AddressesAdapter extends BaseRecyclerAdapter<AddressesPropertyVM> {
         AddressesPropertyVM addressesPropertyVM = new AddressesPropertyVM(flat);
         addressesPropertyVM.setClickListener(clickListener);
         add(addressesPropertyVM);
+    }
+
+    public void removeItem(String flatId) {
+        for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
+            if (flatId.equalsIgnoreCase(((Flat) recyclerBaseViewModel.getModel()).getFlatId())) {
+                list.remove(recyclerBaseViewModel);
+                break;
+            }
+        }
+        notifyDataSetChanged();
     }
 }

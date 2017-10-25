@@ -1,0 +1,92 @@
+[
+  {
+    "flat_id": "345",
+    "building_id": 5,
+    "flat": "string",
+    "building": "2",
+    "street": "краснодонская",
+    "district": "ювао",
+    "area": "люблино"
+  },
+  {
+    "flat_id": "678",
+    "building_id": 6,
+    "flat": "string",
+    "building": "7",
+    "street": "гурьянова",
+    "district": "ювао",
+    "area": "печатники"
+  },
+  {
+    "flat_id": "345",
+    "building_id": 5,
+    "flat": "string",
+    "building": "2",
+    "street": "краснодонская",
+    "district": "ювао",
+    "area": "люблино"
+  },
+  {
+    "flat_id": "678",
+    "building_id": 6,
+    "flat": "string",
+    "building": "7",
+    "street": "гурьянова",
+    "district": "ювао",
+    "area": "печатники"
+  },
+  {
+    "flat_id": "345",
+    "building_id": 5,
+    "flat": "string",
+    "building": "2",
+    "street": "краснодонская",
+    "district": "ювао",
+    "area": "люблино"
+  },
+  {
+    "flat_id": "678",
+    "building_id": 6,
+    "flat": "string",
+    "building": "7",
+    "street": "гурьянова",
+    "district": "ювао",
+    "area": "печатники"
+  },
+  {
+    "flat_id": "345",
+    "building_id": 5,
+    "flat": "string",
+    "building": "2",
+    "street": "краснодонская",
+    "district": "ювао",
+    "area": "люблино"
+  },
+  {
+    "flat_id": "678",
+    "building_id": 6,
+    "flat": "string",
+    "building": "7",
+    "street": "гурьянова",
+    "district": "ювао",
+    "area": "печатники"
+  },
+  {
+    "flat_id": "345",
+    "building_id": 5,
+    "flat": "string",
+    "building": "2",
+    "street": "краснодонская",
+    "district": "ювао",
+    "area": "люблино"
+  },
+  {
+    "flat_id": "678",
+    "building_id": 6,
+    "flat": "string",
+    "building": "7",
+    "street": "гурьянова",
+    "district": "ювао",
+    "area": "печатники"
+  }
+]

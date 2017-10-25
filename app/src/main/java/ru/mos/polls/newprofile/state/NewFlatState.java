@@ -42,6 +42,8 @@ public class NewFlatState extends ContentBelowToolbarState<NewFlatState.FlatPara
                 return context.getString(R.string.flat_title_residence);
             case NewFlatFragmentVM.FLAT_TYPE_WORK:
                 return context.getString(R.string.flat_title_work);
+            case NewFlatFragmentVM.FLAT_TYPE_OWN:
+                return context.getString(R.string.address_property);
         }
         return super.getTitle(context, params);
     }

@@ -25,6 +25,7 @@ import ru.mos.elk.db.UserDataProvider;
  * @since 1.9
  */
 public class Flat implements Serializable {
+    public static String FLAT_TYPE_OWN = "own";
     private static final Uri URI = UserDataProvider.getContentUri(UserData.Flats.URI_CONTENT);
     private static final String[] ARGS = new String[]{"1"};
     private static final String WHERE = "%s = ?";
@@ -453,6 +454,10 @@ public class Flat implements Serializable {
         return Type.WORK == type;
     }
 
+    public boolean isOwn() {
+        return Type.OWN == type;
+    }
+
     public void setType(Type type) {
         this.type = type;
     }
@@ -529,7 +534,8 @@ public class Flat implements Serializable {
     public enum Type {
         REGISTRATION("registration", UserData.Flats.IS_REGISTRATION),
         RESIDENCE("residence", UserData.Flats.IS_RESIDENCE),
-        WORK("work", UserData.Flats.IS_WORK);
+        WORK("work", UserData.Flats.IS_WORK),
+        OWN("own", "is_own");
 
         private String type;
         private String field;

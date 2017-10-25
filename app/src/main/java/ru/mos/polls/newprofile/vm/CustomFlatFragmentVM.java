@@ -152,6 +152,14 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                 workEntity.setFlat_id(flat.getFlatId());
             entity = new FlatsEntity(workEntity);
         }
+        if (flat.isOwn()) {
+            List<FlatsEntity.BaseFlat> listEntity = new ArrayList<>();
+            listEntity.add(new FlatsEntity.BaseFlat(USER_ID
+                    , building.getText().toString().trim()
+                    , street.getText().toString().trim()
+                    , areaReference.getValue()));
+            entity = new FlatsEntity(listEntity);
+        }
         sendFlat(new ProfileSet.Request(entity));
     }
 

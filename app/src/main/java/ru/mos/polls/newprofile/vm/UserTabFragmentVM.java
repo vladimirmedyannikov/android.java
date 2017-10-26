@@ -22,9 +22,9 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
-import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.GetStatistics;
 import ru.mos.polls.newprofile.service.VisibilitySet;
@@ -41,6 +41,8 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
 
     private SwitchCompat enableProfileVisibility;
+    private List<Statistics> statisticsList;
+    private UserStatisticsAdapter userStatisticsAdapter;
     AppCompatTextView fi;
     LinearLayout achievementLayer;
     AppCompatTextView achievementsValue;
@@ -71,6 +73,7 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         setView();
         setListener();
         setAchievementLayerView();
+        setStatistics();
     }
 
     @Override
@@ -94,6 +97,12 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         });
     }
 
+    public void setStatistics() {
+        statisticsList = new ArrayList<>();
+        userStatisticsAdapter = new UserStatisticsAdapter(statisticsList);
+        recyclerView.setAdapter(userStatisticsAdapter);
+    }
+
     public void sendVisibilityProfileRequest(boolean visibility) {
         HandlerApiResponseSubscriber<EmptyResult[]> handler
                 = new HandlerApiResponseSubscriber<EmptyResult[]>(getActivity(), progressable) {
@@ -114,10 +123,9 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     }
 
     public void setUserStatsListView() {
-        List<Statistics> list = new ArrayList<>();
-        list.addAll(saved.getStatisticList(getActivity()));
-        UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
-        recyclerView.setAdapter(userStatisticsAdapter);
+        statisticsList.clear();
+        statisticsList.addAll(saved.getStatisticList(getActivity()));
+        userStatisticsAdapter.notifyDataSetChanged();
     }
 
     public void getStatistics() {

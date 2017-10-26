@@ -147,7 +147,7 @@ public class ShortInnovation implements Serializable {
     }
 
     public String getReadablePassedDate() {
-        return sdfFullDate.format(new Date(passedDate));
+        return sdfFullDate.format(new Date(passedDate * 1000L));
     }
 
     public int getTitleColorForAdapterItem(Context context) {

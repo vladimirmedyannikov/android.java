@@ -32,14 +32,14 @@ public class UIInnovationViewHelper {
     public static String getCreditedAndPassedDateTxt(Innovation shortInnovation, int pointsValue, Context context) {
         String pointTxt = PointsManager.getPointUnitString(context, pointsValue);
         String pointsAdded = context.getResources().getQuantityString(R.plurals.points_added, shortInnovation.getPoints());
-        return String.format(context.getString(R.string.passed_points_formatted), pointsAdded, pointsValue, pointTxt, getReadablePassedDate(shortInnovation.getPassedDate() * 1000L));
+        return String.format(context.getString(R.string.passed_points_formatted), pointsAdded, pointsValue, pointTxt, getReadablePassedDate(shortInnovation.getPassedDate()));
     }
 
     public static String getReadablePassedDate(long date) {
-        return sdfFullDate.format(new Date(date));
+        return sdfFullDate.format(new Date(date * 1000L));
     }
 
     public static String getInnEndedDateTxt(Innovation shortInnovation, Context context) {
-        return context.getString(R.string.innovation_ended) + " " + getReadablePassedDate(shortInnovation.getEndDate() * 1000);
+        return context.getString(R.string.innovation_ended) + " " + getReadablePassedDate(shortInnovation.getEndDate());
     }
 }

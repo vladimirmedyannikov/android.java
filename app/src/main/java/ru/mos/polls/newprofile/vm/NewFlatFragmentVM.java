@@ -467,7 +467,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
          * Если адрес проживания совпадает с адресом регистрации
          * то не отображаем адрес проживания, очищаем поля
          */
-        if (!flat.isEmpty() && flatFilled) {
+        if (!flat.isEmpty() || flatFilled) {
             setupViewIfNotEmpty();
         }
         /**

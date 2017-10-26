@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.android.volley2.VolleyError;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-
 import java.io.File;
 import java.util.List;
 
@@ -35,8 +34,8 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.newprofile.service.AvatarSet;
-import ru.mos.polls.newprofile.service.model.Media;
 import ru.mos.polls.newprofile.service.UploadMedia;
+import ru.mos.polls.newprofile.service.model.Media;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
@@ -175,6 +174,7 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                     saved = loadedAgUser;
                     progressable.end();
                     updateView();
+                    AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
                 } catch (Exception ignored) {
                 }
             }
@@ -184,6 +184,7 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 saved = new AgUser(getActivity());
                 progressable.end();
                 updateView();
+                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
                 try {
                     Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception ignored) {

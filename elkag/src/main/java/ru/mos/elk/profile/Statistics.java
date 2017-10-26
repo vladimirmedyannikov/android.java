@@ -21,4 +21,13 @@ public class Statistics {
     public String getValue() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Statistics) {
+            return ((Statistics) o).getTitle().equals(getTitle()) && ((Statistics) o).getValue().equals(getValue());
+        } else {
+            return super.equals(o);
+        }
+    }
 }

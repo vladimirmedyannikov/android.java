@@ -1,9 +1,12 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.content.Intent;
+import android.support.transition.ChangeBounds;
+import android.support.transition.TransitionManager;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -123,14 +127,43 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     }
 
     public void setUserStatsListView() {
-        statisticsList.clear();
-        statisticsList.addAll(saved.getStatisticList(getActivity()));
-        userStatisticsAdapter.notifyDataSetChanged();
+        boolean update = false;
+        /**
+         * проверка на одинаковость списков
+         */
+        if (saved.getStatisticList(getActivity()).size() > statisticsList.size()) {
+            update = true;
+        } else {
+            for (int i = 0; i < statisticsList.size(); i++) {
+                if (saved.getStatisticList(getActivity()).size() <= i || !statisticsList.get(i).equals(saved.getStatisticList(getActivity()).get(i))) {
+                    update = true;
+                    break;
+                }
+            }
+        }
+        if (update) {
+            statisticsList.clear();
+            statisticsList.addAll(saved.getStatisticList(getActivity()));
+            ChangeBounds changeBounds = new ChangeBounds();
+            changeBounds.setDuration(200);
+            TransitionManager.beginDelayedTransition((ViewGroup) getBinding().agUserProfileList.getRootView(), changeBounds);
+            userStatisticsAdapter.notifyDataSetChanged();
+        }
     }
 
     public void getStatistics() {
         HandlerApiResponseSubscriber<GetStatistics.Response.Result> handler
-                = new HandlerApiResponseSubscriber<GetStatistics.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<GetStatistics.Response.Result>(getActivity(), new Progressable() {
+            @Override
+            public void begin() {
+
+            }
+
+            @Override
+            public void end() {
+
+            }
+        }) {
             @Override
             protected void onResult(GetStatistics.Response.Result result) {
                 if (result != null && result.getStatistics().getParams() != null) {

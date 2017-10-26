@@ -201,7 +201,7 @@ public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<Frie
         if (!AgTextUtil.isStringNoEmpty(personal.getSurname()) && !AgTextUtil.isStringNoEmpty(personal.getFirstName()))
             return AgTextUtil.getPhoneFormat(personal.getPhone());
         String surname = AgTextUtil.isStringNoEmpty(personal.getSurname()) ? personal.getSurname() : "";
-        String firstname = AgTextUtil.isStringNoEmpty(personal.getFirstName()) ? personal.getSurname() : "";
+        String firstname = AgTextUtil.isStringNoEmpty(personal.getFirstName()) ? personal.getFirstName() : "";
         return String.format("%s %s", surname, firstname);
     }
 }

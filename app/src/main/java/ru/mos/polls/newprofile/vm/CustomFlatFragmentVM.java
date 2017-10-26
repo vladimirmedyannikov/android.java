@@ -84,11 +84,17 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated() {
+        super.onViewCreated();
+        setListeners();
         requestDistrictList();
         street.setText(savedStreet);
         building.setText(savedBuilding);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (forWizard) hideAllMenuIcon();
     }
 
@@ -229,11 +235,6 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
         building.setEnabled(false);
     }
 
-    @Override
-    public void onViewCreated() {
-        super.onViewCreated();
-        setListeners();
-    }
 
     @Override
     protected UIComponentHolder createComponentHolder() {

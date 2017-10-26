@@ -49,7 +49,7 @@
                     android:inputType="phone"
                     mask:char_representation="#"
                     mask:mask="### ### ####"
-                    mask:mask_fill="-" />
+                    mask:mask_fill="" />
             </LinearLayout>
 
             <!--<EditText-->

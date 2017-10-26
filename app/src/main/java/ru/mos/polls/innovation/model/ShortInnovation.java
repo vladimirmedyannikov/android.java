@@ -147,7 +147,14 @@ public class ShortInnovation implements Serializable {
     }
 
     public String getReadablePassedDate() {
-        return sdfFullDate.format(new Date(passedDate));
+        /**
+         * преобразовывание из милли секунд в секунды когда требуется
+         */
+        if (passedDate > 150000000000L) {
+            return sdfFullDate.format(new Date(passedDate));
+        } else {
+            return sdfFullDate.format(new Date(passedDate * 1000L));
+        }
     }
 
     public int getTitleColorForAdapterItem(Context context) {

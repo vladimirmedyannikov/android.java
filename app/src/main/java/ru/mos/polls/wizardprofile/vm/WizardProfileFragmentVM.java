@@ -29,7 +29,6 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
-import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
@@ -112,6 +111,7 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
             ids = new ArrayList<>();
             List<String> list = extras.getStringArrayList(WizardProfileFragment.ARG_WIZARD_IDS);
             ids.addAll(list);
+            pager.setOffscreenPageLimit(list.size());
         }
     }
 

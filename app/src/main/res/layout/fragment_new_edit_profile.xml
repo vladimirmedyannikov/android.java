@@ -199,9 +199,35 @@
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/edit_social_binding_card"
+                        android:id="@+id/edit_user_private_property"
                         style="@style/linear"
                         android:layout_below="@+id/edit_user_work_card"
+                        android:layout_marginTop="@dimen/pd_normal">
+
+                        <RelativeLayout
+                            style="@style/linear"
+                            android:padding="@dimen/pd_xxsmall">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/edit_private_property"
+                                style="@style/edit_profile"
+                                android:hint="Адреса собственности" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/edit_private_property_status"
+                                style="@style/edit_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:text="указаны"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/edit_social_binding_card"
+                        style="@style/linear"
+                        android:layout_below="@+id/edit_user_private_property"
                         android:layout_marginBottom="@dimen/pd_normal"
                         android:layout_marginTop="@dimen/pd_normal">
 

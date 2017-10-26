@@ -209,7 +209,7 @@
     <string name="elk_birthdate_pattern" formatted="false">%s %s %s г.р.</string>
     <string name="choose_building">Выберите строение из списка</string>
     <string name="add_address">Добавить адрес</string>
-    <string name="address_not_specified">Не указан</string>
+    <string name="address_not_specified">не указан</string>
     <string name="title_formatted_address" formatted="false" tools:ignore="StringFormatInvalid">%s, %s</string>
     <string name="warning_editing_blocked">Просим вас внимательно отнестись к заполнению адреса. Изменить сохраненный адрес можно только один раз в течение трех месяцев.</string>
     <string-array name="elk_birthdate_months">

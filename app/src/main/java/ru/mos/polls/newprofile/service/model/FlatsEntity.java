@@ -1,6 +1,9 @@
 package ru.mos.polls.newprofile.service.model;
 
 
+import java.util.List;
+
+
 /**
  * Created by Trunks on 20.07.2017.
  */
@@ -11,6 +14,15 @@ public class FlatsEntity {
     private RegistrationEntity registration;
     private WorkEntity work;
     private ResidenceEntity residence;
+    private List<BaseFlat> own;
+
+    public void setOwn(List<BaseFlat> own) {
+        this.own = own;
+    }
+
+    public FlatsEntity(List<BaseFlat> own) {
+        this.own = own;
+    }
 
     public FlatsEntity(RegistrationEntity registration) {
         this.registration = registration;
@@ -101,6 +113,11 @@ public class FlatsEntity {
         public BaseFlat(String flat_id, String building_id) {
             this.flat_id = flat_id;
             this.building_id = building_id;
+        }
+
+        public BaseFlat(String flat_id, Boolean kill) {
+            this.flat_id = flat_id;
+            this.kill = kill;
         }
 
         public BaseFlat(String building_id, String building, String street, String area_id) {

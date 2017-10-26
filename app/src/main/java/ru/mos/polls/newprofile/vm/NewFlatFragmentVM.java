@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.android.volley2.VolleyError;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -54,6 +57,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     public static final int FLAT_TYPE_REGISTRATION = 12234;
     public static final int FLAT_TYPE_RESIDENCE = 11223;
     public static final int FLAT_TYPE_WORK = 11132;
+    public static final int FLAT_TYPE_OWN = 11222;
     private static final int ANIMATION_DURATION_MILLS = 300;
     int flatType;
     Flat flat;
@@ -310,6 +314,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         if (requestCode == CustomFlatFragment.REQUEST_FLAT) {
             if (resultCode == Activity.RESULT_OK) {
                 if (!forWizard) {
+                    getActivity().setResult(Activity.RESULT_OK);
                     getActivity().finish();
                 }
             }
@@ -355,6 +360,11 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             setKill(workEntity);
             entity = new FlatsEntity(workEntity);
         }
+        if (flat.isOwn()) {
+            List<FlatsEntity.BaseFlat> listEntity = new ArrayList<>();
+            listEntity.add(new FlatsEntity.BaseFlat(flat.getBuildingId()));
+            entity = new FlatsEntity(listEntity);
+        }
         sendFlat(new ProfileSet.Request(entity));
     }
 
@@ -393,6 +403,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 flatFilled = true;
                 int percent;
                 if (result != null) {
+                    getActivity().setResult(Activity.RESULT_OK);
                     percent = result.getPercentFillProfile();
                     if (result.getFlats() != null) {
                         if (result.getFlats().getRegistration() != null) {
@@ -478,6 +489,9 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                     residenceToggle.setChecked(false);
                 }
                 break;
+            case FLAT_TYPE_OWN:
+                setEditingBlocked();
+                break;
         }
         districtFlat.requestFocus();
         etStreet.setText(flat.getStreet());
@@ -547,7 +561,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
 
     private void setEditingBlocked() {
         boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
-        if (isHideWarnings) {
+        if (isHideWarnings || flatType == FLAT_TYPE_OWN) {
             warningContainer.setVisibility(View.GONE);
         } else {
             if (!flat.isEmpty() && !flat.isEnable()) {

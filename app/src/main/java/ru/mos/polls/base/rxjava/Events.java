@@ -31,6 +31,7 @@ public class Events {
         public static final int UPDATE_AVATAR = 2;
         public static final int UPDATE_USER_INFO = 3;
         public static final int UPDATE_FLAT = 4;
+        public static final int PROFILE_LOADED = 5;
         private AgUser agUser;
         private Flat flat;
 
@@ -92,6 +93,7 @@ public class Events {
         public static final int FRIEND_PROFILE = 1;
         public static final int FRIEND_INVISIBLE = 2;
         public static final int FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO = 3;
+        public static final int FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO = 4;
 
         private int id;
         private Friend friend;

@@ -2,6 +2,7 @@ package ru.mos.polls.friend.ui.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import me.ilich.juggler.Navigable;
 import ru.mos.polls.BR;
@@ -44,8 +45,11 @@ public class FriendProfileTabFragment extends BindingFragment<FriendProfileTabFr
         return R.layout.fragment_friend_tab;
     }
 
+    @Nullable
     public Navigable navigate() {
-        return navigateTo();
+        if (getContext() != null) {
+            return navigateTo();
+        } else return null;
     }
 
     public Friend getFriend() {

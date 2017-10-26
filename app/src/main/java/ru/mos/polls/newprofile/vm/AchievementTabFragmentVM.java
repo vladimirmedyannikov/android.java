@@ -68,9 +68,10 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
 
     public void doRequest() {
         HandlerApiResponseSubscriber<AchievementsSelect.Response.Result> handler =
-                new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), getPullableProgressable()) {
+                new HandlerApiResponseSubscriber<AchievementsSelect.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(AchievementsSelect.Response.Result result) {
+                        progressable = getPullableProgressable();
                         adapter.add(result.getAchievements());
                         isPaginationEnable = result.getAchievements().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();

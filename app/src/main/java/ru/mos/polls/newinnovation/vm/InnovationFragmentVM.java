@@ -36,9 +36,10 @@ public class InnovationFragmentVM extends PullablePaginationFragmentVM<Innovatio
     @Override
     public void doRequest() {
         HandlerApiResponseSubscriber<NoveltySelect.Response.Result> handler =
-                new HandlerApiResponseSubscriber<NoveltySelect.Response.Result>(getActivity(), getPullableProgressable()) {
+                new HandlerApiResponseSubscriber<NoveltySelect.Response.Result>(getActivity(), progressable) {
                     @Override
                     protected void onResult(NoveltySelect.Response.Result result) {
+                        progressable = getPullableProgressable();
                         adapter.add(result.getInnovations());
                         isPaginationEnable = result.getInnovations().size() > 0;
                         recyclerUIComponent.refreshUI();

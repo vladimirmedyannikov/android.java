@@ -11,8 +11,8 @@ import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentInnovationsListBinding;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.newinnovation.service.NoveltySelect;
-import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
 import ru.mos.polls.newinnovation.ui.adapter.InnovationsAdapter;
+import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
 /**
@@ -36,7 +36,7 @@ public class InnovationFragmentVM extends PullablePaginationFragmentVM<Innovatio
     @Override
     public void doRequest() {
         HandlerApiResponseSubscriber<NoveltySelect.Response.Result> handler =
-                new HandlerApiResponseSubscriber<NoveltySelect.Response.Result>(getActivity(), progressable) {
+                new HandlerApiResponseSubscriber<NoveltySelect.Response.Result>(getActivity(), getPullableProgressable()) {
                     @Override
                     protected void onResult(NoveltySelect.Response.Result result) {
                         adapter.add(result.getInnovations());

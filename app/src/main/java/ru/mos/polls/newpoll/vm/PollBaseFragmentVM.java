@@ -60,7 +60,7 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     @Override
     public void doRequest() {
         HandlerApiResponseSubscriber<PollSelect.Response.Result> handler =
-                new HandlerApiResponseSubscriber<PollSelect.Response.Result>(getActivity(), progressable) {
+                new HandlerApiResponseSubscriber<PollSelect.Response.Result>(getActivity(), getPullableProgressable()) {
                     @Override
                     protected void onResult(PollSelect.Response.Result result) {
                         adapter.add(result.getPolls(), pollType);

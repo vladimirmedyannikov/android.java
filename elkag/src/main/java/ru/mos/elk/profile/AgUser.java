@@ -888,7 +888,6 @@ public class AgUser implements Serializable {
             JSONArray array = new JSONArray(prefs.getString(params, ""));
             result.addAll(getDataList(array.toString(), clazz));
         } catch (JSONException ignored) {
-            ignored.printStackTrace();
         }
         return result;
     }

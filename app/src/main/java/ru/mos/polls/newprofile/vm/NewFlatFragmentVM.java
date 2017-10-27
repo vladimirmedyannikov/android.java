@@ -498,7 +498,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         etBuilding.setText(flat.getBuilding());
         districtFlat.setText(flat.getDistrict());
         areaFlat.setText(flat.getArea());
-        if (flatFilled) setEditingBlocked();
+        if (flatFilled || !flat.isEnable()) setEditingBlocked();
     }
 
     public void cloneResidenceFromRegistration() {
@@ -564,6 +564,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         if (isHideWarnings || flatType == FLAT_TYPE_OWN) {
             warningContainer.setVisibility(View.GONE);
         } else {
+            System.out.println("setEditingBlocked");
             if (!flat.isEmpty() && !flat.isEnable()) {
                 tvWarningEditingBlocked.setText(getFragment().getString(ru.mos.polls.R.string.error_full_editing_blocked));
                 if (!forWizard) tvErrorEditingBlocked.setVisibility(View.VISIBLE);

@@ -8,7 +8,6 @@ import android.support.transition.TransitionManager;
 import android.support.transition.TransitionSet;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,14 +59,14 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         transitionSet.addTransition(changeBounds);
         transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), transitionSet);
+        TransitionManager.beginDelayedTransition(getBinding().root, transitionSet);
         getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
 
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), fade);
+        TransitionManager.beginDelayedTransition(getBinding().root, fade);
         getBinding().root.setVisibility(on ? View.GONE : View.VISIBLE);
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), fade);
+        TransitionManager.beginDelayedTransition(getBinding().root, fade);
         getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
     }
 

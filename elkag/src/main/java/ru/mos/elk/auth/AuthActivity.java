@@ -100,7 +100,7 @@ public class AuthActivity extends BaseActivity {
                 }
             }
         };
-        ProfileManager.getProfile(this, getQueryParams(), agUserListener);
+        ProfileManager.getProfile(this, getQueryParams(), agUserListener, false);
     }
 
     private JSONObject getQueryParams() {

@@ -1,12 +1,21 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.support.design.widget.TabLayout;
+import android.support.transition.ChangeBounds;
+import android.support.transition.Fade;
+import android.support.transition.TransitionManager;
+import android.support.transition.TransitionSet;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentNewProfileBinding;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
@@ -27,6 +36,23 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
         super(fragment, binding);
     }
 
+    private void goneSlidingTabs(boolean on) {
+        Fade fade = new Fade();
+        fade.setDuration(500);
+
+        ChangeBounds changeBounds = new ChangeBounds();
+        changeBounds.setDuration(500);
+
+        TransitionSet transitionSet = new TransitionSet();
+        transitionSet.addTransition(fade);
+        transitionSet.addTransition(changeBounds);
+        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
+
+        TransitionManager.beginDelayedTransition(getBinding().rootTab, transitionSet);
+        getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
+
+    }
+
     @Override
     protected void initialize(FragmentNewProfileBinding binding) {
         List<PagerAdapter.Page> pages = getPages();
@@ -41,6 +67,23 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
                     .getTabAt(index)
                     .setIcon(pages.get(index).getIconResId());
         }
+        subscribeEventsBus();
+    }
+
+    private void subscribeEventsBus() {
+        AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    if (o instanceof Events.ProfileEvents) {
+                        Events.ProfileEvents action = (Events.ProfileEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.ProfileEvents.PROFILE_LOADED:
+                                goneSlidingTabs(false);
+                                break;
+                        }
+                    }
+                });
     }
 
     @Override

@@ -803,5 +803,8 @@
     <string name="social_status_title">Род деятельности</string>
     <string name="marital_status_title">Семейное положение</string>
     <string name="gender_status_title">Пол</string>
+    <string name="property_addresses">Адреса собственности</string>
     <string name="sources_poll">Источники голосований</string>
+    <string name="addresses_info">Для того, чтобы участвовать в голосовании собственников многоквартирных домов, вам необходимо добавить адреса, по которым вы владеете собственностью.</string>
+    <string name="address_property">Адрес собственности</string>
 </resources>

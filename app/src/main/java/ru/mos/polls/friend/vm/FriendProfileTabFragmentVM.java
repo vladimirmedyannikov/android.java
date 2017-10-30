@@ -8,7 +8,6 @@ import android.support.transition.TransitionManager;
 import android.support.transition.TransitionSet;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         return new UIComponentHolder.Builder().with(new ProgressableUIComponent()).build();
     }
 
-    private void visibleSlidingTabs(boolean on) {
+    private void goneSlidingTabs(boolean on) {
         Fade fade = new Fade();
         fade.setDuration(500);
 
@@ -60,14 +59,14 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         transitionSet.addTransition(changeBounds);
         transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), transitionSet);
+        TransitionManager.beginDelayedTransition(getBinding().root, transitionSet);
         getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
 
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), fade);
+        TransitionManager.beginDelayedTransition(getBinding().root, fade);
         getBinding().root.setVisibility(on ? View.GONE : View.VISIBLE);
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().root.getRootView(), fade);
+        TransitionManager.beginDelayedTransition(getBinding().root, fade);
         getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
     }
 
@@ -82,7 +81,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
         pager.setAdapter(adapter);
         slidingTabs = binding.slidingTabs;
-//        visibleSlidingTabs(true);
+//        goneSlidingTabs(true);
         slidingTabs.setupWithViewPager(pager);
         for (int index = 0; index < pages.size(); ++index) {
             slidingTabs
@@ -126,7 +125,10 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                                 pager.setVisibility(View.GONE);
                                 break;
                             case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
-                                visibleSlidingTabs(true);
+                                goneSlidingTabs(true);
+                                break;
+                            case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO:
+                                goneSlidingTabs(false);
                                 break;
                         }
                     }
@@ -141,8 +143,10 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
 
     protected List<PagerAdapter.Page> getPages() {
         List<PagerAdapter.Page> result = new ArrayList<>();
-        result.add(new PagerAdapter.Page(R.drawable.ic_user, FriendStatisticFragment.newInstance(friend)));
-        result.add(new PagerAdapter.Page(R.drawable.ic_trophy, AchievementTabFragment.newInstance(friend.getId())));
+        if (friend != null) {
+            result.add(new PagerAdapter.Page(R.drawable.ic_user, FriendStatisticFragment.newInstance(friend)));
+            result.add(new PagerAdapter.Page(R.drawable.ic_trophy, AchievementTabFragment.newInstance(friend.getId())));
+        }
         return result;
     }
 }

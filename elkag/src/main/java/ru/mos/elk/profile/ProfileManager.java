@@ -41,7 +41,7 @@ public abstract class ProfileManager {
      * @param agUserListener
      */
     public static void getProfile(final BaseActivity elkActivity, final AgUserListener agUserListener) {
-        getProfile(elkActivity, null, agUserListener);
+        getProfile(elkActivity, null, agUserListener, false);
     }
 
     /**
@@ -51,7 +51,7 @@ public abstract class ProfileManager {
      * @param requestBody    тело запроса, используется после авторизации
      * @param agUserListener
      */
-    public static void getProfile(final BaseActivity elkActivity, JSONObject requestBody, final AgUserListener agUserListener) {
+    public static void getProfile(final BaseActivity elkActivity, JSONObject requestBody, final AgUserListener agUserListener, final boolean isConfirm) {
         String url = API.getURL(API.url(API.Controller.AGPROFILE, API.Methods.GET_PROFILE));
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
 
@@ -72,7 +72,7 @@ public abstract class ProfileManager {
         Response.ErrorListener errorListener = new StandartErrorListener(elkActivity, 0) {
             @Override
             public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
+                if (!isConfirm) super.onErrorResponse(error);
                 if (agUserListener != null) {
                     agUserListener.onError(error);
                 }

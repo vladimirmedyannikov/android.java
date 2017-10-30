@@ -14,9 +14,8 @@
             android:gravity="center_horizontal">
 
             <LinearLayout
-                android:layout_width="@dimen/vs_normal"
-                android:layout_height="@dimen/vs_normal"
-                android:layout_centerVertical="true"
+                android:layout_width="@dimen/vs_large"
+                android:layout_height="@dimen/vs_large"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -26,8 +25,8 @@
 
                 <ImageView
                     android:id="@+id/badge"
-                    android:layout_width="@dimen/vs_normal"
-                    android:layout_height="@dimen/vs_normal"
+                    android:layout_width="@dimen/vs_large"
+                    android:layout_height="@dimen/vs_large"
                     android:visibility="gone"/>
             </LinearLayout>
 

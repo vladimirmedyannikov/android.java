@@ -184,7 +184,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 tvError.requestFocus();
             }
         };
-        ProfileManager.getProfile(this, getQueryParams(), agUserListener);
+        ProfileManager.getProfile(this, getQueryParams(), agUserListener, true);
     }
 
     private void onAuthCompleted() {

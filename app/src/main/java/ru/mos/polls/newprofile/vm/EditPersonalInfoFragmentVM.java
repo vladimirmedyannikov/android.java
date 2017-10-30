@@ -1,5 +1,6 @@
 package ru.mos.polls.newprofile.vm;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
@@ -252,6 +253,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
             @Override
             protected void onResult(ProfileSet.Response.Result result) {
                 if (result != null) {
+                    getActivity().setResult(Activity.RESULT_OK);
                     int percent = result.getPercentFillProfile();
                     AgUser.setPercentFillProfile(getActivity(), percent);
                     agUser.setPercentFillProfile(percent);

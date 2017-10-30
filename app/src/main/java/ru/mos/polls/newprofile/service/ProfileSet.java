@@ -3,6 +3,8 @@ package ru.mos.polls.newprofile.service;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.newprofile.service.model.FlatsEntity;
 import ru.mos.polls.newprofile.service.model.Personal;
@@ -69,6 +71,11 @@ public class ProfileSet extends AuthRequest {
                 private RegistrationEntity registration;
                 private WorkEntity work;
                 private ResidenceEntity residence;
+                private List<Flat> own;
+
+                public List<Flat> getOwn() {
+                    return own;
+                }
 
                 public void setWork(WorkEntity work) {
                     this.work = work;

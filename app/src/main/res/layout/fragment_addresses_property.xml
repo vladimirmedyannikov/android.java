@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AddressesPropertyFragmentVM" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/root"
+        style="@style/root"
+        android:background="@color/white">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            style="@style/root">
+
+            <android.support.v4.widget.NestedScrollView
+                style="@style/root"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    style="@style/linear"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list"
+                        style="@style/item" />
+
+                    <TextView
+                        android:id="@+id/address_info"
+                        style="@style/text.normal.black"
+                        android:layout_margin="@dimen/pd_small"
+                        android:text="@string/addresses_info" />
+
+                    <Button
+                        android:id="@+id/address_add"
+                        style="@style/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/pd_normal"
+                        android:gravity="center"
+                        android:minWidth="@dimen/vs_xxlarge"
+                        android:onClick="@{()-> viewModel.addProperty()}"
+                        android:text="@string/add_address"
+                        android:textSize="@dimen/ts_small" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@android:id/empty"
+            style="@style/wrap"
+            android:visibility="gone" />
+    </RelativeLayout>
+</layout>

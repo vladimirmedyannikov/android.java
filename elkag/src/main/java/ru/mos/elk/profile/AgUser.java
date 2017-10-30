@@ -77,6 +77,7 @@ public class AgUser implements Serializable {
     private int count;
     private String registrationDate;
     private String avatar;
+    private int ownPropertyCount;
 
     public static boolean isPguConnected(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
@@ -151,6 +152,12 @@ public class AgUser implements Serializable {
         percentFillProfile = prefs.getInt(PERCENT_FILL_PROFILE, 0);
         count = prefs.getInt(ACHIEVEMENTS_COUNT, 0);
         registrationDate = prefs.getString(REGISTRATION_DATE, "0");
+        ownPropertyCount = getOwnPropertyList(context).size();
+    }
+
+
+    public int getOwnPropertyCount() {
+        return ownPropertyCount;
     }
 
     /**
@@ -849,11 +856,11 @@ public class AgUser implements Serializable {
         }
     }
 
-
     public static void saveJsonArray(Context context, JSONObject json, String params) {
         if (json != null) {
             JSONArray array = json.optJSONArray(params);
-            saveToSharedPreferences(context, params, array.toString());
+            if (array != null)
+                saveToSharedPreferences(context, array.toString(), params);
         }
     }
 
@@ -870,6 +877,9 @@ public class AgUser implements Serializable {
         return getListFromPreferences(context, Achievements.LAST_ACHIEVEMENTS, Achievements[].class);
     }
 
+    public static List<Flat> getOwnPropertyList(Context context) {
+        return getListFromPreferences(context, Flat.FLAT_TYPE_OWN, Flat[].class);
+    }
 
     public static <T> List<T> getListFromPreferences(Context context, String params, Class<T[]> clazz) {
         List<T> result = new ArrayList<>();
@@ -935,6 +945,8 @@ public class AgUser implements Serializable {
             registrationFlat = Flat.getRegistration(flatsJson);
             residenceFlat = Flat.getResidence(flatsJson);
             workFlat = Flat.getWork(flatsJson);
+            saveToSharedPreferences(context, "", Flat.FLAT_TYPE_OWN);
+            saveJsonArray(context, flatsJson, Flat.FLAT_TYPE_OWN);
         }
     }
 

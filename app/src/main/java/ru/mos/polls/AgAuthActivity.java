@@ -103,11 +103,18 @@ public class AgAuthActivity extends AuthActivity {
         GuiUtils.showKeyboard(etLogin);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.confirm, menu);
         return true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GuiUtils.hideKeyboard(etLogin);
     }
 
     @Override

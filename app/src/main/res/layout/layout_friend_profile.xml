@@ -28,6 +28,7 @@
 
                 <RelativeLayout
                     style="@style/root"
+                    android:descendantFocusability="blocksDescendants"
                     android:background="@color/actionbar_background">
 
                     <LinearLayout

@@ -150,6 +150,14 @@ public class QuestsItemAdapter extends RecyclerView.Adapter<QuestsViewHolder> {
                     listener.onClick(quest);
                 }
             });
+            if (holder.swipableView != null) {
+                holder.swipableView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onClick(quest);
+                    }
+                });
+            }
         }
     }
 

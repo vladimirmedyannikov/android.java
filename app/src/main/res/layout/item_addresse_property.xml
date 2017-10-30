@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.newprofile.vm.AddressesPropertyVM" />
+
+        <variable
+            name="listener"
+            type="ru.mos.polls.newprofile.vm.onAddressesDeleteIconClickListener" />
+    </data>
+
+    <RelativeLayout
+        style="@style/item.linear"
+        android:padding="@dimen/pd_xsmall">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/address_icon_delete"
+            style="@style/wrap"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="@{()-> listener.onIconDeleteClick(viewModel.flatId)}"
+            android:padding="@dimen/pd_xxsmall"
+            app:srcCompat="@drawable/ic_inr_cross_circle" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/address_title"
+            style="@style/text.normal.black"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/pd_xxxsmall"
+            android:layout_toLeftOf="@+id/address_icon_delete"
+            android:layout_toStartOf="@+id/address_icon_delete"
+            android:padding="@dimen/pd_xxsmall"
+            android:text="@{viewModel.propertyAddress}" />
+    </RelativeLayout>
+</layout>

@@ -22,9 +22,9 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
-import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.newprofile.service.EmptyResponse;
 import ru.mos.polls.newprofile.service.GetStatistics;
 import ru.mos.polls.newprofile.service.VisibilitySet;
@@ -33,6 +33,7 @@ import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -41,6 +42,8 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
 
     private SwitchCompat enableProfileVisibility;
+    private List<Statistics> statisticsList;
+    private UserStatisticsAdapter userStatisticsAdapter;
     AppCompatTextView fi;
     LinearLayout achievementLayer;
     AppCompatTextView achievementsValue;
@@ -71,6 +74,7 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         setView();
         setListener();
         setAchievementLayerView();
+        setStatistics();
     }
 
     @Override
@@ -94,6 +98,12 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         });
     }
 
+    public void setStatistics() {
+        statisticsList = new ArrayList<>();
+        userStatisticsAdapter = new UserStatisticsAdapter(statisticsList);
+        recyclerView.setAdapter(userStatisticsAdapter);
+    }
+
     public void sendVisibilityProfileRequest(boolean visibility) {
         HandlerApiResponseSubscriber<EmptyResult[]> handler
                 = new HandlerApiResponseSubscriber<EmptyResult[]>(getActivity(), progressable) {
@@ -114,15 +124,40 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     }
 
     public void setUserStatsListView() {
-        List<Statistics> list = new ArrayList<>();
-        list.addAll(saved.getStatisticList(getActivity()));
-        UserStatisticsAdapter userStatisticsAdapter = new UserStatisticsAdapter(list);
-        recyclerView.setAdapter(userStatisticsAdapter);
+        boolean update = false;
+        /**
+         * проверка на одинаковость списков
+         */
+        if (saved.getStatisticList(getActivity()).size() > statisticsList.size()) {
+            update = true;
+        } else {
+            for (int i = 0; i < statisticsList.size(); i++) {
+                if (saved.getStatisticList(getActivity()).size() <= i || !statisticsList.get(i).equals(saved.getStatisticList(getActivity()).get(i))) {
+                    update = true;
+                    break;
+                }
+            }
+        }
+        if (update) {
+            statisticsList.clear();
+            statisticsList.addAll(saved.getStatisticList(getActivity()));
+            userStatisticsAdapter.notifyDataSetChanged();
+        }
     }
 
     public void getStatistics() {
         HandlerApiResponseSubscriber<GetStatistics.Response.Result> handler
-                = new HandlerApiResponseSubscriber<GetStatistics.Response.Result>(getActivity(), progressable) {
+                = new HandlerApiResponseSubscriber<GetStatistics.Response.Result>(getActivity(), new Progressable() {
+            @Override
+            public void begin() {
+
+            }
+
+            @Override
+            public void end() {
+
+            }
+        }) {
             @Override
             protected void onResult(GetStatistics.Response.Result result) {
                 if (result != null && result.getStatistics().getParams() != null) {

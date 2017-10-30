@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM"/>
+            type="ru.mos.polls.friend.vm.FriendProfileTabFragmentVM" />
     </data>
 
-    <RelativeLayout
-        style="@style/root">
+    <RelativeLayout style="@style/root">
 
         <LinearLayout
             android:id="@+id/root"
@@ -24,9 +23,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:visibility="gone"
                 app:tabBackground="@color/actionbar_background"
+                app:tabGravity="fill"
                 app:tabIndicatorColor="@color/yellow"
-                app:tabMode="fixed"/>
+                app:tabMaxWidth="0dp"
+                app:tabMode="fixed" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
@@ -42,7 +44,7 @@
             android:id="@+id/progress"
             style="@style/item"
             android:layout_centerInParent="true"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

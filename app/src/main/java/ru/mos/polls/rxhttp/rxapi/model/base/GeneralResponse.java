@@ -14,7 +14,7 @@ package ru.mos.polls.rxhttp.rxapi.model.base;
 public class GeneralResponse<Result> {
     public static final int CODE_NO_ERROR = 0;
     public static final int UNAUTHORIZED = 401;
-    public static final int SESSION_DOWN = 403;
+    public static final int FORBIDDEN = 403;
     private int errorCode;
     private String errorMessage;
     private Result result;
@@ -40,7 +40,7 @@ public class GeneralResponse<Result> {
     }
 
     public boolean isUnauthorized() {
-        return errorCode == UNAUTHORIZED || errorCode == SESSION_DOWN;
+        return errorCode == UNAUTHORIZED || errorCode == FORBIDDEN;
     }
 
 }

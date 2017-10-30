@@ -53,6 +53,7 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
     public void onNext(@NonNull GeneralResponse<R> generalResponse) {
         if (generalResponse.isUnauthorized()) {
             AGApplication.bus().send(new Events.APPEvents(Events.APPEvents.UNAUTHORIZED));
+            return;
         }
         if (generalResponse.hasError()) {
             errorHandler.onServerError(generalResponse.getErrorCode(), generalResponse.getErrorMessage());

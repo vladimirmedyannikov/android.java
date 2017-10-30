@@ -7,7 +7,6 @@ import android.support.transition.TransitionManager;
 import android.support.transition.TransitionSet;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,7 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
         transitionSet.addTransition(changeBounds);
         transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
 
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().slidingTabs.getRootView(), transitionSet);
-        getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
-        TransitionManager.beginDelayedTransition((ViewGroup) getBinding().pager.getRootView(), transitionSet);
+        TransitionManager.beginDelayedTransition(getBinding().rootTab, transitionSet);
         getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
 
     }

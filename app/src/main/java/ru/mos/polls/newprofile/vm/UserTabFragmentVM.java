@@ -1,12 +1,9 @@
 package ru.mos.polls.newprofile.vm;
 
 import android.content.Intent;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -144,9 +141,6 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         if (update) {
             statisticsList.clear();
             statisticsList.addAll(saved.getStatisticList(getActivity()));
-            ChangeBounds changeBounds = new ChangeBounds();
-            changeBounds.setDuration(200);
-            TransitionManager.beginDelayedTransition((ViewGroup) getBinding().agUserProfileList.getRootView(), changeBounds);
             userStatisticsAdapter.notifyDataSetChanged();
         }
     }

@@ -11,6 +11,7 @@
 
     <LinearLayout
         style="@style/root"
+        android:id="@+id/root_tab"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 

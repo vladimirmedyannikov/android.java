@@ -27,6 +27,7 @@ import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
@@ -191,6 +192,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         if (ContactsController.Manager.isNeedUpdate(this)) {
             if (EasyPermissions.hasPermissions(this, CONTACTS_PERMS)) {
                 ContactsController contactsController = new ContactsController(this);
+                contactsController.setPhone(AgUser.getPhone(this));
                 contactsController.silentFindFriends();
                 ContactsController.Manager.increment(this);
             }

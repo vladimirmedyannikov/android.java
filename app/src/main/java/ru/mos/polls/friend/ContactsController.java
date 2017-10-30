@@ -24,9 +24,14 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 
 public class ContactsController {
     private ContactsManager contactsManager;
+    public static String phone;
 
     public ContactsController(Context context) {
         contactsManager = new ContactsManager(context);
+    }
+
+    public static void setPhone(String phone) {
+        ContactsController.phone = phone;
     }
 
     /**
@@ -70,6 +75,10 @@ public class ContactsController {
                 }
                 List<List<String>> subLists = toSubLists(result, FriendFind.Request.MAX_PHONES_FOR_FINDING);
                 for (List<String> subList : subLists) {
+                    if (subList.contains(phone)) {
+                        subList.remove(phone);
+                        break;
+                    }
                     AGApplication
                             .api
                             .friendFind(new FriendFind.Request(subList))
@@ -96,6 +105,7 @@ public class ContactsController {
 
     /**
      * Разбиение списка объектов на список списков объектов
+     *
      * @param source исходный список объектов
      * @param offset количество элементов в подсписке
      * @return список списков

@@ -49,9 +49,9 @@ public class FriendGuiUtils {
                     .replace("-", "")
                     .replace("*", "");
             switch (number.length()) {
-                case 10:
-                    number = "7" + number;
-                    break;
+//                case 10:
+//                    number = "7" + number;
+//                    break;
                 case 11:
                     if (number.charAt(0) != '7') {
                         number = "7" + number.substring(1);

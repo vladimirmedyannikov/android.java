@@ -28,5 +28,6 @@
                 style="@style/emptylist"
                 android:text="@string/innovation_emptylist" />
         </RelativeLayout>
+
     </RelativeLayout>
 </layout>

@@ -75,12 +75,11 @@ public class BaseUnitTest {
         return content;
     }
 
-    protected <T> T mockObj(String fileName) {
+    protected <T> T mockObj(String fileName, Class<T> clazz) {
         Gson gson = new Gson();
         T content = gson.fromJson(
                 fromTestRawAsJson(fileName).toString(),
-                new TypeToken<T>() {
-                }.getType()
+                clazz
         );
         return content;
     }

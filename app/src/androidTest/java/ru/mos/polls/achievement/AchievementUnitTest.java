@@ -46,13 +46,24 @@ public class AchievementUnitTest extends BaseUnitTest {
     }
 
     private Achievement getTestObject() {
-        return  new Achievement(fromTestRawAsJson("achievement.json"));
+        return new Achievement(fromTestRawAsJson("achievement.json"));
     }
 
     @Test
     public void testAchievementVM() {
-        Achievements achievements = mockObj("achievement.json");
+        Achievements achievements = (Achievements) mockObj("achievement.json", Achievements.class);
         Assert.assertNotNull(achievements);
         AchievementVM achievementVM = new AchievementVM(achievements);
+        Assert.assertNotNull(achievementVM.getModel());
+        Assert.assertEquals(achievements, achievementVM.getModel());
+        Assert.assertNotNull(achievementVM.getBody());
+        Assert.assertNotNull(achievementVM.getDescription());
+        Assert.assertNotNull(achievementVM.getId());
+        Assert.assertNotNull(achievementVM.getImageUrl());
+        Assert.assertNotNull(achievementVM.getTitle());
+        Assert.assertNotNull(achievementVM.getVariableId());
+        Assert.assertNotNull(achievementVM.getViewType());
+        Assert.assertEquals(true, achievementVM.isNext());
+        Assert.assertEquals(false, achievementVM.isNeedHideTask());
     }
 }

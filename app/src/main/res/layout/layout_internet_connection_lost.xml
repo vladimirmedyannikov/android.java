@@ -6,7 +6,7 @@
         android:id="@+id/rootConnectionError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/internetLostMessage"
@@ -27,26 +27,26 @@
             android:id="@+id/InternetLostImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/internetLostReload"
+            android:layout_above="@+id/internet_lost_reload"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="61dp"
             android:paddingBottom="16dp"
             android:src="@drawable/ic_connection_lost" />
 
         <TextView
-            android:id="@+id/internetLostReload"
+            android:id="@+id/internet_lost_reload"
             style="@style/ripple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="222dp"
+            android:layout_below="@+id/internetLostMessage"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:padding="16dp"
             android:text="@string/refresh"
             android:textAllCaps="true"
+            android:textColor="@color/green_light"
             android:textStyle="bold"
             tools:ignore="UnusedAttribute" />
 

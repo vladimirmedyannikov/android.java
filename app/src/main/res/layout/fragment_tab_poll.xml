@@ -68,5 +68,6 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+        <include layout="@layout/layout_internet_connection_lost" />
     </RelativeLayout>
 </layout>

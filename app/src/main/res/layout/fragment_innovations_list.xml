@@ -29,5 +29,6 @@
                 android:text="@string/innovation_emptylist" />
         </RelativeLayout>
 
+        <include layout="@layout/layout_internet_connection_lost" />
     </RelativeLayout>
 </layout>

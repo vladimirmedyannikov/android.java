@@ -29,6 +29,7 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     protected List<Poll> list;
     protected int pollType;
     protected View subscriptionsContainer;
+
     public PollBaseFragmentVM(PollBaseFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
     }
@@ -81,4 +82,10 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     }
 
     protected abstract void addFilters(List<String> filters);
+
+    @Override
+    public void setErrorConnetionView() {
+        super.setErrorConnetionView();
+        subscriptionsContainer.setVisibility(View.GONE);
+    }
 }

@@ -27,8 +27,11 @@
                 android:id="@+id/list"
                 style="@style/root" />
         </android.support.v4.widget.SwipeRefreshLayout>
+
         <TextView
             android:id="@android:id/empty"
-            style="@style/emptylist"/>
+            style="@style/emptylist" />
+
+        <include layout="@layout/layout_internet_connection_lost" />
     </RelativeLayout>
 </layout>

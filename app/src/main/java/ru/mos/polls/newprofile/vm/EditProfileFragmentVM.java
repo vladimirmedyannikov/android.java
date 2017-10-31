@@ -340,9 +340,9 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     int selectedGender;
 
     private void initGender(AgUser user) {
+        gender.setTitleFirstNothingElement(getActivity().getString(R.string.gender_non_select_item_title));
         gender.setAddFirstNothingElement(true);
         gender.setFirstSelectedElementIsSetHintFirstNothingElement(true);
-        gender.setTitleFirstNothingElement(getActivity().getString(R.string.gender_non_select_item_title));
         gender.setNonSelectFirstNothingElement(true);
         gender.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override
@@ -352,7 +352,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
                     user.setGender(gender);
                     refreshMarital(user);
                     selectedGender = dictionaryItem.getId();
-                    sendProfile(new Personal().setSex(savedUser.getGender() == AgUser.Gender.NULL ? "" : savedUser.getGender().getValue()));
+                    sendProfile(new Personal().setSex(user.getGender() == AgUser.Gender.NULL ? "" : user.getGender().getValue()));
                 }
             }
 
@@ -376,9 +376,9 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     int selectedMartial;
 
     private void initMarital(AgUser user) {
+        maritalStatus.setTitleFirstNothingElement(getActivity().getString(R.string.marital_non_select_item_title));
         maritalStatus.setAddFirstNothingElement(true);
         maritalStatus.setFirstSelectedElementIsSetHintFirstNothingElement(true);
-        maritalStatus.setTitleFirstNothingElement(getActivity().getString(R.string.marital_non_select_item_title));
         maritalStatus.setNonSelectFirstNothingElement(true);
         maritalStatus.setOnDictionarySelectedListener(new DictionaryView.OnDictionarySelectedListener() {
             @Override

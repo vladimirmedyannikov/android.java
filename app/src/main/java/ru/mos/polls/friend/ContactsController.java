@@ -133,11 +133,7 @@ public class ContactsController {
     public static class Manager {
         private static final String PREFS = "contacts_controller_prefs";
         private static final String UPDATE_TIME = "update_time";
-        /**
-         * todo
-         * поменять на интервал согласно требованиям
-         */
-        private static final int INTERVAL = 24 * 60 * 1000;
+        private static final int INTERVAL = 30 * 24 * 60 * 1000;
 
         public static boolean isNeedUpdate(Context context) {
             SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);

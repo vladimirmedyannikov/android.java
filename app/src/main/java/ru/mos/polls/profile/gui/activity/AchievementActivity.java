@@ -36,14 +36,16 @@ import ru.mos.social.model.social.Social;
 
 public class AchievementActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_ACHIEVEMENT_ID = "extra_achievement";
+    private static final String EXTRA_IS_OWN = "extra_is_own";
 
     public static void startActivity(Context context, Achievement achievement) {
-        startActivity(context, achievement.getId());
+        startActivity(context, achievement.getId(), true);
     }
 
-    public static void startActivity(Context context, String id) {
+    public static void startActivity(Context context, String id, boolean isOwn) {
         Intent intent = new Intent(context, AchievementActivity.class);
         intent.putExtra(EXTRA_ACHIEVEMENT_ID, id);
+        intent.putExtra(EXTRA_IS_OWN, isOwn);
         context.startActivity(intent);
     }
 
@@ -61,6 +63,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     TextView body;
     @BindView(R.id.share)
     Button share;
+    boolean isOwnAchievement;
     private String achievementId;
     private Achievement achievement;
     private ImageLoader imageLoader;
@@ -80,6 +83,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isOwnAchievement = getIntent().getBooleanExtra(EXTRA_IS_OWN, true);
         setContentView(R.layout.activity_achievement);
         ButterKnife.bind(this);
         imageLoader = createImageLoader();
@@ -102,7 +106,6 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         socialController.getEventController().unregisterAllCallback();
         SocialUIController.unregisterPostingReceiver(this);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -164,6 +167,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         BadgeViewController.displayBadge(badge, loadingProgressBadge, achievement, imageLoader);
         body.setText(achievement.getBody());
         share.setVisibility(achievement.isNext() ? View.GONE : View.VISIBLE);
+        if (!isOwnAchievement) share.setVisibility(View.GONE);
     }
 
     private void startFromUri() {
@@ -174,5 +178,4 @@ public class AchievementActivity extends ToolbarAbstractActivity {
             }
         });
     }
-
 }

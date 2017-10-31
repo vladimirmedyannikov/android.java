@@ -57,7 +57,7 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
 
     @Override
     public void onAchievementClick(String id) {
-        AchievementActivity.startActivity(getActivity(), id);
+        AchievementActivity.startActivity(getActivity(), id, friendId == 0);
     }
 
     @Override

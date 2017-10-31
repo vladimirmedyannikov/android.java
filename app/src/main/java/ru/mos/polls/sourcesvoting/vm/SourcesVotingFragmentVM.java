@@ -1,9 +1,5 @@
 package ru.mos.polls.sourcesvoting.vm;
 
-import android.content.Context;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +7,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.RecyclerUIComponent;
@@ -22,13 +17,11 @@ import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
 import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
-import ru.mos.polls.sourcesvoting.model.SourcesVoting;
 import ru.mos.polls.sourcesvoting.model.SourcesVotingSet;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.sourcesvoting.ui.SourcesVotingFragment;
 import ru.mos.polls.sourcesvoting.ui.adapter.SourcesVotingAdapter;
-import ru.mos.polls.util.StubUtils;
 
 /**
  * Created by Trunks on 13.10.2017.
@@ -36,7 +29,6 @@ import ru.mos.polls.util.StubUtils;
 
 public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<SourcesVotingFragment, FragmentSourcesVotingBinding> {
     SourcesVotingAdapter adapter;
-//    protected RecyclerView recyclerView;
 
     public SourcesVotingFragmentVM(SourcesVotingFragment fragment, FragmentSourcesVotingBinding binding) {
         super(fragment, binding);
@@ -93,16 +85,6 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(handler);
-    }
-
-    public static List<SourcesVoting> mockList(Context context) {
-        Gson gson = new Gson();
-        List<SourcesVoting> content = gson.fromJson(
-                StubUtils.fromRawAsJsonArray(context, R.raw.sources_voting).toString(),
-                new TypeToken<List<SourcesVoting>>() {
-                }.getType()
-        );
-        return content;
     }
 
     public void setRxEventsBusListener() {

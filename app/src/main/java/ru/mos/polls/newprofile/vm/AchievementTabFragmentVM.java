@@ -75,7 +75,7 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                         adapter.add(result.getAchievements());
                         isPaginationEnable = result.getAchievements().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();
-                        if (getFragment().getParentFragment() instanceof FriendProfileTabFragment) {
+                        if (friendId != 0) {
                             if (result.getAchievements().size() == 0) {
                                 AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO));
                                 /**
@@ -86,13 +86,11 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                                     @Override
                                     public void run() {
                                         if ((getFragment().getParentFragment()) != null && ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate() != null) {
-                                            ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity());
-                                            ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
+                                            ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity(), Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
                                         }
                                     }
                                 };
                                 timer.schedule(timerTask, 500);
-
                             } else {
                                 AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO));
                             }

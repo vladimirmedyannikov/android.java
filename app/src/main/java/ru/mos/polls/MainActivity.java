@@ -215,7 +215,9 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     }
                     if (o instanceof Events.FriendEvents) {
                         Events.FriendEvents action = (Events.FriendEvents) o;
-                        navigateTo().state(Add.newActivity(new FriendProfileState(action.getFriend()), BaseActivity.class));
+                        if (action.getId() == Events.FriendEvents.FRIEND_START_PROFILE) {
+                            navigateTo().state(Add.newActivity(new FriendProfileState(action.getFriend()), BaseActivity.class));
+                        }
                     }
                     if (o instanceof Events.APPEvents) {
                         Events.APPEvents action = (Events.APPEvents) o;

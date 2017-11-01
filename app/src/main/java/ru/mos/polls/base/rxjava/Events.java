@@ -94,12 +94,14 @@ public class Events {
         public static final int FRIEND_INVISIBLE = 2;
         public static final int FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO = 3;
         public static final int FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO = 4;
+        public static final int FRIEND_START_PROFILE = 5;
 
         private int id;
         private Friend friend;
 
         public FriendEvents(Friend friend) {
             this.friend = friend;
+            this.id = FRIEND_START_PROFILE;
         }
 
         public Friend getFriend() {

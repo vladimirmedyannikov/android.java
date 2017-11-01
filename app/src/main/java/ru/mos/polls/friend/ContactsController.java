@@ -9,11 +9,11 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.friend.model.Friend;
+import ru.mos.polls.friend.service.FriendFind;
+import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 
 /**
  * Логика поиска друзей {@link #silentFindFriends()}

@@ -8,8 +8,8 @@ import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by wlTrunks on 29.08.2017.

@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.rxapi.model.friends;
+package ru.mos.polls.friend.model;
 
 import java.io.Serializable;
 

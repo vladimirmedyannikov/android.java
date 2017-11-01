@@ -3,8 +3,8 @@ package ru.mos.polls.base.rxjava;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.poll.model.Poll;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by wlTrunks on 14.06.2017.

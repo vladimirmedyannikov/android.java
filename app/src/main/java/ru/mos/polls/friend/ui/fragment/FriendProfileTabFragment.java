@@ -9,8 +9,8 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.vm.FriendProfileTabFragmentVM;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by Trunks on 06.06.2017.

@@ -3,7 +3,6 @@ package ru.mos.polls.friend.vm;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -27,6 +26,9 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.LayoutFriendProfileBinding;
+import ru.mos.polls.friend.model.Friend;
+import ru.mos.polls.friend.model.Personal;
+import ru.mos.polls.friend.service.FriendProfile;
 import ru.mos.polls.friend.ui.adapter.FriendProfileAdapter;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
@@ -34,9 +36,6 @@ import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Personal;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
 import ru.mos.polls.util.AgTextUtil;
 
 /**

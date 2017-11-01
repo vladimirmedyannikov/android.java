@@ -7,7 +7,7 @@
             type="ru.mos.polls.friend.ui.utils.FriendGuiUtils"/>
         <variable
             name="viewModel"
-            type="ru.mos.polls.rxhttp.rxapi.model.friends.Friend"/>
+            type="ru.mos.polls.friend.model.Friend"/>
     </data>
     <LinearLayout
         style="@style/ripple"

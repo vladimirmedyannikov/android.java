@@ -21,11 +21,11 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by wlTrunks on 07.06.2017.

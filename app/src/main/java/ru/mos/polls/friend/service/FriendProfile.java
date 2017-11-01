@@ -1,12 +1,12 @@
-package ru.mos.polls.rxhttp.rxapi.model.friends.service;
+package ru.mos.polls.friend.service;
 
 import com.google.gson.annotations.SerializedName;
 
+import ru.mos.polls.friend.model.AchievementsData;
+import ru.mos.polls.friend.model.Personal;
+import ru.mos.polls.friend.model.Statistic;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.rxhttp.rxapi.model.friends.AchievementsData;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Personal;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Statistic;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

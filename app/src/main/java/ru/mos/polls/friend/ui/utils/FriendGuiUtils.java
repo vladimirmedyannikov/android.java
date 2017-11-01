@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
+import ru.mos.polls.friend.model.Friend;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

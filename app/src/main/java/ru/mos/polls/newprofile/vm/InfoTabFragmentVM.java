@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -71,11 +72,11 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     private void userInfoList() {
         List<UserInfo> list = new ArrayList<>();
         list.add(new UserInfo("телефон", AgTextUtil.getPhoneFormat(saved.getPhone())));
-        list.add(new UserInfo("e-mail", saved.getEmail()));
-        list.add(new UserInfo("фамилия", saved.getSurname()));
-        list.add(new UserInfo("имя", saved.getFirstName()));
-        list.add(new UserInfo("отчество", saved.getMiddleName()));
-        list.add(new UserInfo("дата рождения", saved.getBirthday()));
+        list.add(new UserInfo("e-mail", TextUtils.isEmpty(saved.getEmail()) ? getFragment().getString(R.string.non_selected_male) : saved.getEmail()));
+        list.add(new UserInfo("фамилия", TextUtils.isEmpty(saved.getSurname()) ? getFragment().getString(R.string.non_selected_female) : saved.getSurname()));
+        list.add(new UserInfo("имя", TextUtils.isEmpty(saved.getFirstName()) ? getFragment().getString(R.string.non_selected) : saved.getFirstName()));
+        list.add(new UserInfo("отчество", TextUtils.isEmpty(saved.getMiddleName()) ? getFragment().getString(R.string.non_selected) : saved.getMiddleName()));
+        list.add(new UserInfo("дата рождения", TextUtils.isEmpty(saved.getBirthday()) ? getFragment().getString(R.string.non_selected_female) : saved.getBirthday()));
         list.add(new UserInfo("пол", saved.getGender().toString()));
         list.add(new UserInfo("семейное положение", saved.getMaritalStatus().toString(saved.getGender())));
         list.add(new UserInfo("количество детей", String.valueOf(saved.getChildCount())));
@@ -84,8 +85,8 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", AgSocialStatus.fromPreferences(getActivity().getBaseContext()).get(saved.getAgSocialStatus()).getTitle()));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
-        list.add(new UserInfo("адреса собственности", saved.getOwnPropertyList(getActivity()).size() > 0 ? "указаны" : "не указаны"));
-        String pguConnected = saved.isPguConnected() ? "подключено" : "не указано";
+        list.add(new UserInfo("адреса собственности", saved.getOwnPropertyList(getActivity()).size() > 0 ? "Указаны" : "Не указаны"));
+        String pguConnected = saved.isPguConnected() ? "Подключено" : "Не указана";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
         UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(onItemClickListener, list);
         recyclerView.setAdapter(userStatisticsAdapter);

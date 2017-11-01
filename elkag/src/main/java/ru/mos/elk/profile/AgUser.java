@@ -963,7 +963,7 @@ public class AgUser implements Serializable {
      * Пол
      */
     public enum Gender {
-        NULL("null", "Не установлено"),
+        NULL("null", "Не указан"),
         MALE("male", "Мужской"),
         FEMALE("female", "Женский"),
         HINT("null", "Пол");
@@ -1064,7 +1064,7 @@ public class AgUser implements Serializable {
      * то на контроле выведется соотвествующая полу метка
      */
     public enum MaritalStatus {
-        NULL("null", "Не установлено", "Не установлено", "Не установлено"),
+        NULL("null", "Не указано", "Не указано", "Не указано"),
         MARRIED("married", "Женат", "Замужем", "Женат/замужем"),
         SINGLE("single", "Не женат", "Не замужем", "Не женат/не замужем");
 
@@ -1098,9 +1098,9 @@ public class AgUser implements Serializable {
 
         public static MaritalStatus parseLabel(String value) {
             MaritalStatus result = NULL;
-            if (SINGLE.labelMale.equalsIgnoreCase(value) || SINGLE.labelFemale.equalsIgnoreCase(value) || SINGLE.labelMale.equalsIgnoreCase(value)) {
+            if (SINGLE.labelMale.equalsIgnoreCase(value) || SINGLE.labelFemale.equalsIgnoreCase(value) || SINGLE.label.equalsIgnoreCase(value)) {
                 result = SINGLE;
-            } else if (MARRIED.labelMale.equalsIgnoreCase(value) || MARRIED.labelFemale.equalsIgnoreCase(value) || MARRIED.labelMale.equalsIgnoreCase(value)) {
+            } else if (MARRIED.labelMale.equalsIgnoreCase(value) || MARRIED.labelFemale.equalsIgnoreCase(value) || MARRIED.label.equalsIgnoreCase(value)) {
                 result = MARRIED;
             }
             return result;

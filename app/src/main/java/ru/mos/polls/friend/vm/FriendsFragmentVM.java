@@ -23,13 +23,13 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ContactsManager;
+import ru.mos.polls.friend.service.FriendFind;
+import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.friend.vm.list.FriendAddItemVW;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.GuiUtils;
 

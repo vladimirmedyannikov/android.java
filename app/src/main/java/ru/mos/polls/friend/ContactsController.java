@@ -9,11 +9,11 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.friend.model.Friend;
+import ru.mos.polls.friend.service.FriendFind;
+import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendFind;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 
 /**
  * Логика поиска друзей {@link #silentFindFriends()}
@@ -24,9 +24,14 @@ import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendMy;
 
 public class ContactsController {
     private ContactsManager contactsManager;
+    public static String phone;
 
     public ContactsController(Context context) {
         contactsManager = new ContactsManager(context);
+    }
+
+    public static void setPhone(String phone) {
+        ContactsController.phone = phone;
     }
 
     /**
@@ -70,6 +75,10 @@ public class ContactsController {
                 }
                 List<List<String>> subLists = toSubLists(result, FriendFind.Request.MAX_PHONES_FOR_FINDING);
                 for (List<String> subList : subLists) {
+                    if (subList.contains(phone)) {
+                        subList.remove(phone);
+                        break;
+                    }
                     AGApplication
                             .api
                             .friendFind(new FriendFind.Request(subList))
@@ -96,6 +105,7 @@ public class ContactsController {
 
     /**
      * Разбиение списка объектов на список списков объектов
+     *
      * @param source исходный список объектов
      * @param offset количество элементов в подсписке
      * @return список списков
@@ -123,11 +133,7 @@ public class ContactsController {
     public static class Manager {
         private static final String PREFS = "contacts_controller_prefs";
         private static final String UPDATE_TIME = "update_time";
-        /**
-         * todo
-         * поменять на интервал согласно требованиям
-         */
-        private static final int INTERVAL = 24 * 60 * 1000;
+        private static final int INTERVAL = 30 * 24 * 60 * 1000;
 
         public static boolean isNeedUpdate(Context context) {
             SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);

@@ -1,11 +1,11 @@
-package ru.mos.polls.rxhttp.rxapi.model.friends.service;
+package ru.mos.polls.friend.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)

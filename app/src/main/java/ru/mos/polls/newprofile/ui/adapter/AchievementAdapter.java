@@ -26,7 +26,6 @@ public class AchievementAdapter extends BaseRecyclerAdapter<AchievementVM> {
         for (Achievements achievement : achievements) {
             AchievementVM achievementVM = new AchievementVM(achievement);
             achievementVM.setListener(listener);
-//            achievementVM.getViewDataBinding().setListener(listener);
             content.add(achievementVM);
         }
         addData(content);

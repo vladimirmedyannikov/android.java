@@ -7,8 +7,8 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.LayoutFriendProfileBinding;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.vm.FriendStatisticFragmentVM;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * @author Sergey Elizarov (elizarov1988@gmail.com)

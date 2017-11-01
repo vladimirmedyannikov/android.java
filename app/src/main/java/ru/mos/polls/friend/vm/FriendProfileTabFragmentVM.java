@@ -21,12 +21,11 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
-import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 
 /**
  * Created by wlTrunks on 07.06.2017.
@@ -37,6 +36,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
     private TabLayout slidingTabs;
     private Friend friend;
     private PagerAdapter adapter;
+    private boolean isInvisible = false;
 
     public FriendProfileTabFragmentVM(FriendProfileTabFragment fragment, FragmentFriendTabBinding binding) {
         super(fragment, binding);
@@ -48,26 +48,28 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
     }
 
     private void goneSlidingTabs(boolean on) {
-        Fade fade = new Fade();
-        fade.setDuration(500);
+        if (!isInvisible) {
+            Fade fade = new Fade();
+            fade.setDuration(500);
 
-        ChangeBounds changeBounds = new ChangeBounds();
-        changeBounds.setDuration(500);
+            ChangeBounds changeBounds = new ChangeBounds();
+            changeBounds.setDuration(500);
 
-        TransitionSet transitionSet = new TransitionSet();
-        transitionSet.addTransition(fade);
-        transitionSet.addTransition(changeBounds);
-        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
+            TransitionSet transitionSet = new TransitionSet();
+            transitionSet.addTransition(fade);
+            transitionSet.addTransition(changeBounds);
+            transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
 
-        TransitionManager.beginDelayedTransition(getBinding().root, transitionSet);
-        getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
+            TransitionManager.beginDelayedTransition(getBinding().root, transitionSet);
+            getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
 
 
-        TransitionManager.beginDelayedTransition(getBinding().root, fade);
-        getBinding().root.setVisibility(on ? View.GONE : View.VISIBLE);
+            TransitionManager.beginDelayedTransition(getBinding().root, fade);
+            getBinding().root.setVisibility(on ? View.GONE : View.VISIBLE);
 
-        TransitionManager.beginDelayedTransition(getBinding().root, fade);
-        getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
+            TransitionManager.beginDelayedTransition(getBinding().root, fade);
+            getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
@@ -91,14 +93,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         slidingTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        getFragment().getActivity().setTitle(R.string.profile_title);
-                        break;
-                    case 1:
-                        getFragment().getActivity().setTitle(FriendGuiUtils.getTitle(friend));
-                        break;
-                }
+                getFragment().getActivity().setTitle(R.string.profile_title);
             }
 
             @Override
@@ -121,6 +116,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                         Events.FriendEvents action = (Events.FriendEvents) o;
                         switch (action.getId()) {
                             case Events.FriendEvents.FRIEND_INVISIBLE:
+                                isInvisible = true;
                                 slidingTabs.setVisibility(View.GONE);
                                 pager.setVisibility(View.GONE);
                                 break;

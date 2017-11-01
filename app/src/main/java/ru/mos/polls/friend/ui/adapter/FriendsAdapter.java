@@ -11,9 +11,9 @@ import java.util.List;
 import ru.mos.polls.R;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
+import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.vm.list.FriendAddItemVW;
 import ru.mos.polls.friend.vm.list.FriendItemVM;
-import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
 import ru.mos.polls.util.StubUtils;
 
 /**

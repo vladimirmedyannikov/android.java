@@ -33,7 +33,7 @@ public class UIhelper {
 
     public static void addAchievements(LinearLayout linearLayout, String url, Context context) {
         ImageView image = new ImageView(context);
-        int sizeInPixel = context.getResources().getDimensionPixelSize(R.dimen.vs_xxsmall);
+        int sizeInPixel = context.getResources().getDimensionPixelSize(R.dimen.vs_small);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(sizeInPixel, sizeInPixel);
         layoutParams.setMargins(6, 6, 6, 6);
         image.setLayoutParams(layoutParams);

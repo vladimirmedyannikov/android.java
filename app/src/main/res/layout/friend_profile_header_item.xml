@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile" />
+            type="ru.mos.polls.friend.service.FriendProfile" />
     </data>
 
     <LinearLayout

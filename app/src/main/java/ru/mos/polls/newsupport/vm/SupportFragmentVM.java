@@ -27,13 +27,13 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutSupportBinding;
+import ru.mos.polls.newsupport.model.Subject;
+import ru.mos.polls.newsupport.service.FeedbackSend;
+import ru.mos.polls.newsupport.service.SubjectsLoad;
 import ru.mos.polls.newsupport.ui.adapter.SubjectAdapter;
 import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.rxhttp.rxapi.model.support.Subject;
-import ru.mos.polls.rxhttp.rxapi.model.support.service.FeedbackSend;
-import ru.mos.polls.rxhttp.rxapi.model.support.service.SubjectsLoad;
 import ru.mos.polls.util.GuiUtils;
 
 /**

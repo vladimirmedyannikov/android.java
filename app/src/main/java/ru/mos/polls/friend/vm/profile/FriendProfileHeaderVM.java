@@ -4,8 +4,8 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendProfileHeaderItemBinding;
+import ru.mos.polls.friend.service.FriendProfile;
 import ru.mos.polls.friend.ui.adapter.FriendProfileAdapter;
-import ru.mos.polls.rxhttp.rxapi.model.friends.service.FriendProfile;
 
 /**
  * @author Sergey Elizarov (elizarov1988@gmail.com)

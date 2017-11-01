@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.mos.polls.rxhttp.rxapi.model.support.Subject;
+import ru.mos.polls.newsupport.model.Subject;
 
 
 /**

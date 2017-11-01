@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.9
  */
 public class AgSocialStatus implements Serializable {
-    public static final String NOTHING_SELECT_TEXT = "Не установлено";
+    public static final String NOTHING_SELECT_TEXT = "Не указан";
 
     private static final String PREFS = "ag_social_status_prefs";
     private static final String SOCIAL_STATUSES = "social_statuses";

@@ -86,6 +86,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         isOwnAchievement = getIntent().getBooleanExtra(EXTRA_IS_OWN, true);
         setContentView(R.layout.activity_achievement);
         ButterKnife.bind(this);
+        setTitle(R.string.achievement_tab_title);
         imageLoader = createImageLoader();
         socialController = new SocialController(this);
         if (getAchievement()) {

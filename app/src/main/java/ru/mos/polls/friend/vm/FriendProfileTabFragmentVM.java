@@ -23,7 +23,6 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
-import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.rxhttp.rxapi.model.friends.Friend;
@@ -91,14 +90,7 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         slidingTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        getFragment().getActivity().setTitle(R.string.profile_title);
-                        break;
-                    case 1:
-                        getFragment().getActivity().setTitle(FriendGuiUtils.getTitle(friend));
-                        break;
-                }
+                getFragment().getActivity().setTitle(R.string.profile_title);
             }
 
             @Override

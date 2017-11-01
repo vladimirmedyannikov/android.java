@@ -811,5 +811,6 @@
     <string name="non_selected_male">Не указан</string>
     <string name="non_selected_female">Не указана</string>
     <string name="non_selected_many">Не указаны</string>
+    <string name="achievement_tab_title">Достижение</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package ru.mos.polls.innovation.model;
 
-import android.arch.persistence.room.Entity;
 
 import org.json.JSONObject;
 
@@ -10,7 +9,6 @@ import org.json.JSONObject;
  *
  * @since 1.9
  */
-@Entity
 public class Innovation extends ShortInnovation {
     private String textShortHtml;
     private String textFullHtml;

@@ -1,4 +1,4 @@
-package ru.mos.polls.rxhttp.rxapi.model.support;
+package ru.mos.polls.newsupport.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

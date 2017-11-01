@@ -1,10 +1,10 @@
-package ru.mos.polls.rxhttp.rxapi.model.support.service;
+package ru.mos.polls.newsupport.service;
 
 import java.util.List;
 
 import ru.mos.elk.api.Token;
+import ru.mos.polls.newsupport.model.Subject;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.rxhttp.rxapi.model.support.Subject;
 
 /**
  * Created by matek3022 on 15.09.17.

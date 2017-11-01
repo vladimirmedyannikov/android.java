@@ -1,9 +1,5 @@
 package ru.mos.polls.newinnovation.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -14,9 +10,7 @@ import java.io.Serializable;
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
  * on 28.04.17 11:49.
  */
-@Entity
 public class Innovation implements Serializable {
-    @PrimaryKey
     private int id;
 
     private String title;
@@ -27,17 +21,14 @@ public class Innovation implements Serializable {
     @SerializedName("status")
     private Status status;
 
-    @ColumnInfo(name = "begin_date")
     @SerializedName("begin_date")
     private long beginDate;
 
-    @ColumnInfo(name = "end_date")
     @SerializedName("end_date")
     private long endDate;
 
     private int points;
 
-    @ColumnInfo(name = "full_rating")
     @SerializedName("full_rating")
     private double fullRating;
 

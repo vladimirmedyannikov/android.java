@@ -22,7 +22,7 @@ public class PollUnitTest extends BaseUnitTest {
 //        Assert.assertEquals(poll.getStatus(), Poll.Status.ACTIVE);
         Assert.assertEquals(poll.getBeginDate(), 1491000000);
         Assert.assertEquals(poll.getEndDate(), 1493000000);
-        Assert.assertEquals(poll.getKind(), Kind.STANDART);
+        Assert.assertEquals(poll.getKind(), Kind.STANDART.toString());
         Assert.assertEquals(poll.getId(), 1268);
         Assert.assertEquals(poll.isActive(), true);
         Assert.assertEquals(poll.isOld(), false);

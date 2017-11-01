@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley2.Response;
 
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Constants;
 import ru.mos.elk.Dialogs;
@@ -43,6 +45,7 @@ import ru.mos.elk.netframework.model.results.ResultText;
 import ru.mos.elk.netframework.model.results.ResultType;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.ListViewHelper;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -72,9 +75,15 @@ public class DynamicFragment extends PullableFragment {
             return null;
         }
     };
-    @BindView(android.R.id.list) AbsListView list;
+    @BindView(android.R.id.list)
+    AbsListView list;
     private Bundle savedInstanceState;
-
+    @BindView(android.R.id.empty)
+    public TextView empty;
+    @BindView(R.id.root)
+    public View root;
+    @BindView(R.id.rootConnectionError)
+    public View rootConnectionError;
     private boolean delayStart = false;
 
     public static DynamicFragment newInstance(String defTitle, String params, String baseUrl) {
@@ -109,6 +118,41 @@ public class DynamicFragment extends PullableFragment {
         View root = inflater.inflate(R.layout.fragment_dynamic, container, false);
         unbinder = ButterKnife.bind(this, root);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        checkInternetConnection();
+        empty.setText(getEmptyViewText());
+    }
+
+    public String getEmptyViewText() {
+        return "";
+    }
+
+    public boolean checkInternetConnection() {
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            hideErrorConnectionViews();
+            return true;
+        } else {
+            setErrorConneсtionView();
+            return false;
+        }
+    }
+
+    public void hideErrorConnectionViews() {
+        if (rootConnectionError.getVisibility() == View.VISIBLE) {
+            rootConnectionError.setVisibility(View.GONE);
+        }
+        if (root.getVisibility() == View.GONE) {
+            root.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setErrorConneсtionView() {
+        rootConnectionError.setVisibility(View.VISIBLE);
+        root.setVisibility(View.GONE);
     }
 
     @Override
@@ -355,10 +399,21 @@ public class DynamicFragment extends PullableFragment {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                manager.invalidateAll();
-                manager.start();
+                refresh();
             }
         };
+    }
+
+    public void refresh() {
+        manager.invalidateAll();
+        manager.start();
+    }
+
+    @OnClick(R.id.internet_lost_reload)
+    public void onReloadClick() {
+        if (checkInternetConnection()) {
+            refresh();
+        }
     }
 }
 

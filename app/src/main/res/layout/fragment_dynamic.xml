@@ -5,21 +5,26 @@
              android:paddingLeft="@dimen/pd_normal"
              android:paddingRight="@dimen/pd_normal">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/ptrLayout"
+    <RelativeLayout
+        android:id="@+id/root"
         style="@style/root">
 
-        <ListView
-            android:id="@android:id/list"
-            style="@style/root"
-            android:divider="@drawable/ag_list_divider"
-            android:listSelector="@drawable/ag_list_selector"/>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/ptrLayout"
+            style="@style/root">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <ListView
+                android:id="@android:id/list"
+                style="@style/root"
+                android:divider="@drawable/ag_list_divider"
+                android:listSelector="@drawable/ag_list_selector"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@android:id/empty"
-        style="@style/emptylist"
-        android:text="@string/no_news"/>
+        <TextView
+            android:id="@android:id/empty"
+            style="@style/emptylist"/>
+    </RelativeLayout>
+
+    <include layout="@layout/layout_internet_connection_lost"/>
 </FrameLayout>
 

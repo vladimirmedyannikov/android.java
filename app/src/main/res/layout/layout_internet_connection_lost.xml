@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/rootConnectionError"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+    <RelativeLayout android:id="@+id/rootConnectionError"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
         <TextView
             android:id="@+id/internetLostMessage"
@@ -21,7 +21,7 @@
             android:text="@string/default_no_internet_err"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"/>
 
         <ImageView
             android:id="@+id/InternetLostImage"
@@ -31,7 +31,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="61dp"
             android:paddingBottom="16dp"
-            android:src="@drawable/ic_connection_lost" />
+            android:src="@drawable/ic_connection_lost"/>
 
         <TextView
             android:id="@+id/internet_lost_reload"
@@ -48,7 +48,7 @@
             android:textAllCaps="true"
             android:textColor="@color/green_light"
             android:textStyle="bold"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"/>
 
     </RelativeLayout>
 </layout>

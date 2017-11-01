@@ -71,8 +71,8 @@ public class QuestsFragment extends PullableFragment {
     @BindView(R.id.empty)
     LinearLayout empty;
     private Listener listener = new QuestsListenerStub();
-    @BindView(R.id.stubOffline)
-    View stubOffline;
+    @BindView(R.id.rootConnectionError)
+    View rootConnectionError;
     public List<Quest> quests;
     private Unbinder unbinder;
     private Menu menu;
@@ -126,7 +126,7 @@ public class QuestsFragment extends PullableFragment {
         setHasOptionsMenu(true);
     }
 
-    @OnClick(R.id.refresh)
+    @OnClick(R.id.internet_lost_reload)
     public void refresh() {
         update(null, null);
     }
@@ -267,20 +267,9 @@ public class QuestsFragment extends PullableFragment {
         };
     }
 
-    //загрузка заглушки убрать
-    public Quest getWizardQuest(Context context) {
-        Gson gson = new Gson();
-        ProfileQuest content = gson.fromJson(
-                StubUtils.fromRawAsJsonObject(context, R.raw.wizard_quest).toString(),
-                new TypeToken<ProfileQuest>() {
-                }.getType()
-        );
-        return content;
-    }
-
     private void update(final Response.Listener<Object> addRespListener, final Response.ErrorListener addErrListener) {
         final BaseActivity activity = ((BaseActivity) getActivity());
-        stubOffline.setVisibility(View.GONE);
+        rootConnectionError.setVisibility(View.GONE);
         if (adapter == null || adapter.getItemCount() == 0) {
             empty.setVisibility(View.GONE);
         }
@@ -364,7 +353,7 @@ public class QuestsFragment extends PullableFragment {
                     listView.setVisibility(View.GONE);
                 }
                 if (empty != null) empty.setVisibility(View.GONE);
-                if (stubOffline != null) stubOffline.setVisibility(View.VISIBLE);
+                if (rootConnectionError != null) rootConnectionError.setVisibility(View.VISIBLE);
                 getPullToRefreshLayout().setRefreshing(false);
             }
         };

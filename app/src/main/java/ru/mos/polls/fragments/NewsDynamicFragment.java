@@ -22,6 +22,7 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.adapters.DynamicsAdapter;
 import ru.mos.elk.netframework.model.results.ResultTableLink;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
+import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.common.controller.ExtendScrollableController;
@@ -61,12 +62,22 @@ public class NewsDynamicFragment extends AgDynamicFragment {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                extendScrollableController.setAllowed(true);
-                pagination.setPageNumber(2);
-                getManager().invalidateAll();
-                getManager().start();
+                refresh();
             }
         };
+    }
+
+    @Override
+    public String getEmptyViewText() {
+        return getString(R.string.no_news);
+    }
+
+    @Override
+    public void refresh() {
+        extendScrollableController.setAllowed(true);
+        pagination.setPageNumber(2);
+        getManager().invalidateAll();
+        getManager().start();
     }
 
     @Override

@@ -12,16 +12,10 @@
         style="@style/wrap"
         android:layout_centerInParent="true"/>
 
-    <Button
-        android:id="@+id/reloadInnDetails"
-        style="@style/button.centered"
-        android:layout_centerInParent="true"
-        android:onClick="reloadContent"
-        android:text="@string/refresh"
-        android:visibility="gone"/>
+    <include layout="@layout/layout_internet_connection_lost"/>
 
     <RelativeLayout
-        android:id="@+id/content"
+        android:id="@+id/root"
         style="@style/item"
         android:layout_below="@id/toolbar">
 

@@ -21,6 +21,7 @@ import com.android.volley2.VolleyError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
@@ -42,6 +43,7 @@ import ru.mos.polls.innovation.model.Status;
 import ru.mos.polls.innovation.view.ChartsView;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.util.NetworkUtils;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
@@ -87,8 +89,6 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         return result;
     }
 
-    @BindView(R.id.content)
-    View content;
     @BindView(R.id.loadingProgress)
     ProgressBar loadingProgress;
     @BindView(R.id.container)
@@ -101,12 +101,12 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     RatingBar ratingBar;
     @BindView(R.id.innPointTitle)
     TextView innPointTitle;
-    @BindView(R.id.reloadInnDetails)
-    Button reloadInnDetails;
     @BindView(R.id.buttonContainer)
     InnovationButtons innovationButtons;
-
-
+    @BindView(R.id.rootConnectionError)
+    View rootConnectionError;
+    @BindView(R.id.root)
+    View root;
     private long innovationId;
 
     private Innovation innovation;
@@ -150,6 +150,35 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         super.onResume();
         socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
+    }
+
+    @OnClick(R.id.internet_lost_reload)
+    public void refresh() {
+        if (checkInternetConnection()) loadInnovation();
+    }
+
+    public boolean checkInternetConnection() {
+        if (NetworkUtils.hasInternetConnection(this)) {
+            hideErrorConnectionViews();
+            return true;
+        } else {
+            setErrorConneсtionView();
+            return false;
+        }
+    }
+
+    public void hideErrorConnectionViews() {
+        if (rootConnectionError.getVisibility() == View.VISIBLE) {
+            rootConnectionError.setVisibility(View.GONE);
+        }
+        if (root.getVisibility() == View.GONE) {
+            root.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setErrorConneсtionView() {
+        rootConnectionError.setVisibility(View.VISIBLE);
+        root.setVisibility(View.GONE);
     }
 
     @Override
@@ -229,8 +258,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                     Toast.makeText(InnovationActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 loadingProgress.setVisibility(View.GONE);
-                content.setVisibility(View.GONE);
-                reloadInnDetails.setVisibility(View.VISIBLE);
+                checkInternetConnection();
             }
         };
         InnovationApiController.get(this, innovationId, innovationListener);
@@ -425,13 +453,8 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     }
 
     private void showLoading(boolean show) {
-        content.setVisibility(show ? View.GONE : View.VISIBLE);
+        root.setVisibility(show ? View.GONE : View.VISIBLE);
         loadingProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    public void reloadContent(View view) {
-        reloadInnDetails.setVisibility(View.GONE);
-        loadInnovation();
     }
 
     @Override

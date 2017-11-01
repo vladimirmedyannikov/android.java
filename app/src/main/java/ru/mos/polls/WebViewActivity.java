@@ -24,12 +24,16 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.quests.controller.QuestsApiController;
+import ru.mos.polls.util.NetworkUtils;
 
 
 public class WebViewActivity extends ToolbarAbstractActivity {
@@ -75,23 +79,20 @@ public class WebViewActivity extends ToolbarAbstractActivity {
     private boolean isShareEnable;
     private MenuItem shareMenuItem;
     private String shareUrl;
+    @BindView(R.id.rootConnectionError)
+    View rootConnectionError;
+    @BindView(R.id.root)
+    View root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        System.out.println("WebViewActivity");
         setContentView(R.layout.activity_webview);
+        ButterKnife.bind(this);
         webView = (WebView) findViewById(R.id.webView);
         loading = (ProgressBar) findViewById(R.id.loading);
-        LinearLayout stubOfflineView = (LinearLayout) findViewById(R.id.stubOfflineView);
-        stubOfflineView.setVisibility(View.GONE);
-        if (!isOnline(this)) {
-            stubOfflineView.setVisibility(View.VISIBLE);
-            webView.setVisibility(View.GONE);
-            Toast.makeText(WebViewActivity.this, getString(R.string.internet_failed_to_connect), Toast.LENGTH_SHORT).show();
-            return;
-        }
+        checkInternetConnection();
         title = getIntent().getStringExtra(INFORMATION_TITLE);
         firstUrl = getIntent().getStringExtra(INFORMATION_URL);
         isOnlyLoadFirstUrl = getIntent().getBooleanExtra(ONLY_LOAD_FIRST_URL, false);
@@ -137,6 +138,35 @@ public class WebViewActivity extends ToolbarAbstractActivity {
                 getString(R.string.default_web_view_title) : title);
         webView.loadUrl(firstUrl);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @OnClick(R.id.internet_lost_reload)
+    public void refresh() {
+        if (checkInternetConnection()) webView.loadUrl(firstUrl);
+    }
+
+    public boolean checkInternetConnection() {
+        if (NetworkUtils.hasInternetConnection(this)) {
+            hideErrorConnectionViews();
+            return true;
+        } else {
+            setErrorConneсtionView();
+            return false;
+        }
+    }
+
+    public void hideErrorConnectionViews() {
+        if (rootConnectionError.getVisibility() == View.VISIBLE) {
+            rootConnectionError.setVisibility(View.GONE);
+        }
+        if (root.getVisibility() == View.GONE) {
+            root.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setErrorConneсtionView() {
+        rootConnectionError.setVisibility(View.VISIBLE);
+        root.setVisibility(View.GONE);
     }
 
     private void tryHide() {

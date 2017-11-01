@@ -34,12 +34,25 @@ public class RecyclerUIComponent<Adapter extends RecyclerView.Adapter> extends U
     public void refreshUI() {
         adapter.notifyDataSetChanged();
         if (adapter.getItemCount() == 0) {
-            recyclerView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
+            showEmptyView();
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            hideEmptyView();
         }
+    }
+
+    public void showEmptyView() {
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideEmptyView() {
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    public void hideViews() {
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
     }
 
     public Adapter getAdapter() {

@@ -58,7 +58,6 @@ public class SourcesVotingVM extends RecyclerBaseViewModel<SourcesVoting, ItemSo
 
     public void onCheckedChanged(CompoundButton v, boolean checked) {
         if (v.isPressed()) {
-            setEnable(checked);
             AGApplication.bus().send(new Events.SourcesVotingEvents(model.getId(), checked));
         }
     }

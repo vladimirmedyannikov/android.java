@@ -5,18 +5,10 @@
 
     <include layout="@layout/toolbar"/>
 
-    <include layout="@layout/layout_stub_offline"/>
-
-    <Button
-        android:id="@+id/reloadNewsDetails"
-        style="@style/button.centered"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:onClick="reloadContent"
-        android:text="@string/refresh"
-        android:visibility="gone"/>
+    <include layout="@layout/layout_internet_connection_lost"/>
 
     <RelativeLayout
+        android:id="@+id/root"
         style="@style/linear">
 
         <ProgressBar

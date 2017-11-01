@@ -7,12 +7,9 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.base.component.ProgressableUIComponent;
-import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.RecyclerUIComponent;
-import ru.mos.polls.base.component.UIComponentFragmentViewModel;
-import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
 import ru.mos.polls.newprofile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -27,8 +24,7 @@ import ru.mos.polls.sourcesvoting.ui.adapter.SourcesVotingAdapter;
  * Created by Trunks on 13.10.2017.
  */
 
-public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<SourcesVotingFragment, FragmentSourcesVotingBinding> {
-    SourcesVotingAdapter adapter;
+public class SourcesVotingFragmentVM extends PullablePaginationFragmentVM<SourcesVotingFragment, FragmentSourcesVotingBinding, SourcesVotingAdapter> {
 
     public SourcesVotingFragmentVM(SourcesVotingFragment fragment, FragmentSourcesVotingBinding binding) {
         super(fragment, binding);
@@ -37,31 +33,15 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
     @Override
     protected void initialize(FragmentSourcesVotingBinding binding) {
         adapter = new SourcesVotingAdapter();
+        recyclerView = binding.list;
+        super.initialize(binding);
+        isPaginationEnable = false;
         setRxEventsBusListener();
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        progressable = getProgressable();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        doRequest();
-    }
-
-    @Override
-    protected UIComponentHolder createComponentHolder() {
-        return new UIComponentHolder.Builder()
-                .with(new PullableUIComponent(() -> {
-                    progressable = getPullableProgressable();
-                    doRequest();
-                }))
-                .with(new ProgressableUIComponent())
-                .with(new RecyclerUIComponent<>(adapter))
-                .build();
     }
 
     public void doRequest() {
@@ -103,7 +83,7 @@ public class SourcesVotingFragmentVM extends UIComponentFragmentViewModel<Source
         List<SourcesVotingSet> list = new ArrayList<>();
         list.add(new SourcesVotingSet(sourcesId, enable));
         HandlerApiResponseSubscriber<EmptyResult[]> handler
-                = new HandlerApiResponseSubscriber<EmptyResult[]>(getFragment().getContext(), getComponent(ProgressableUIComponent.class)) {
+                = new HandlerApiResponseSubscriber<EmptyResult[]>(getFragment().getContext(), getProgressable()) {
             @Override
             protected void onResult(EmptyResult[] result) {
             }

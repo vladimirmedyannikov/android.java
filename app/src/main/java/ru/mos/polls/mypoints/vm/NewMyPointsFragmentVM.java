@@ -75,6 +75,18 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
     }
 
     @Override
+    public void setErrorConneсtionView() {
+        super.setErrorConneсtionView();
+        getBinding().root.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideErrorConnectionViews() {
+        super.hideErrorConnectionViews();
+        getBinding().root.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void doRequest() {
         HandlerApiResponseSubscriber<HistoryGet.Response.Result> handler =
                 new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/root">
+<RelativeLayout style="@style/root"
+                xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
-        style="@style/root">
+        style="@style/root"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -20,7 +21,7 @@
                 android:id="@+id/list"
                 style="@style/root"
                 android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
@@ -33,7 +34,7 @@
         <TextView
             style="@style/text.large.gray"
             android:padding="@dimen/pd_xsmall"
-            android:text="@string/empty_quest_list" />
+            android:text="@string/empty_quest_list"/>
         <!--Социальные сети-->
         <LinearLayout
             style="@style/item.linear"
@@ -44,26 +45,9 @@
                 android:id="@+id/subscribe"
                 style="@style/basicIcon"
                 android:drawableLeft="@drawable/rss"
-                android:text="@string/do_subscribe" />
+                android:text="@string/do_subscribe"/>
         </LinearLayout>
     </LinearLayout>
-    <!--Заглушка при отсутсвии интернета -->
-    <ScrollView
-        android:id="@+id/stubOffline"
-        style="@style/root"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:visibility="gone">
 
-        <LinearLayout
-            style="@style/item.linear"
-            android:layout_gravity="center">
-
-            <Button
-                android:id="@+id/refresh"
-                style="@style/button.centered"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/refresh" />
-        </LinearLayout>
-    </ScrollView>
+    <include layout="@layout/layout_internet_connection_lost"/>
 </RelativeLayout>

@@ -30,6 +30,7 @@ import com.appsflyer.AppsFlyerLib;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.request.Session;
@@ -40,6 +41,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * Магазин поощрений
@@ -66,8 +68,16 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
     WebView webView;
     @BindView(R.id.loading)
     ProgressBar loading;
-    @BindView(R.id.stubOfflineView)
-    View stubOfflineView;
+    @BindView(R.id.rootConnectionError)
+    View rootConnectionError;
+    @BindView(R.id.root)
+    View root;
+
+
+    @OnClick(R.id.internet_lost_reload)
+    public void refresh() {
+        if (checkInternetConnection()) webView.loadUrl(url);
+    }
 
     @Nullable
     @Override
@@ -79,23 +89,41 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
         return view;
     }
 
+    public boolean checkInternetConnection() {
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            hideErrorConnectionViews();
+            return true;
+        } else {
+            setErrorConneсtionView();
+            return false;
+        }
+    }
+
+    public void hideErrorConnectionViews() {
+        if (rootConnectionError.getVisibility() == View.VISIBLE) {
+            rootConnectionError.setVisibility(View.GONE);
+        }
+        if (root.getVisibility() == View.GONE) {
+            root.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setErrorConneсtionView() {
+        rootConnectionError.setVisibility(View.VISIBLE);
+        root.setVisibility(View.GONE);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         activity = (BaseActivity) getActivity();
         TitleHelper.setTitle(activity, R.string.goto_webshop);
-        stubOfflineView.setVisibility(View.GONE);
-        if (!isOnline(activity)) {
-            stubOfflineView.setVisibility(View.VISIBLE);
-            webView.setVisibility(View.GONE);
-            return;
-        }
         webView.setVisibility(View.VISIBLE);
         new WebViewTask().execute();
         AppsFlyerLib.sendTrackingWithEvent(activity, AppsFlyerConstants.SHOP_OPENED, "");
         hideActionBarLand();
         Statistics.shopBuy();
         GoogleStatistics.AGNavigation.shopBuy();
+        checkInternetConnection();
     }
 
     @Override

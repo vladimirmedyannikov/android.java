@@ -8,11 +8,13 @@ import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.RecyclerUIComponent;
+import ru.mos.polls.base.component.RequestableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.ui.RecyclerScrollableController;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
+import ru.mos.polls.util.NetworkUtils;
 
 
 /**
@@ -21,13 +23,15 @@ import ru.mos.polls.rxhttp.rxapi.model.Page;
  */
 public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
         B extends ViewDataBinding,
-        A extends BaseRecyclerAdapter> extends UIComponentFragmentViewModel<F, B> {
+        A extends BaseRecyclerAdapter> extends UIComponentFragmentViewModel<F, B> implements RequestInterface {
 
     protected Page page;
     protected RecyclerView recyclerView;
     protected boolean isPaginationEnable;
     protected A adapter;
     protected RecyclerUIComponent recyclerUIComponent;
+    protected RequestableUIComponent requestableUIComponent;
+    protected PullableUIComponent pullableUIComponent;
 
     public PullablePaginationFragmentVM(F fragment, B binding) {
         super(fragment, binding);
@@ -47,7 +51,31 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
     public void onViewCreated() {
         super.onViewCreated();
         progressable = getProgressable();
-        doRequest();
+        if (checkInternetConnection()) {
+            doRequest();
+        }
+    }
+
+    public boolean checkInternetConnection() {
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            hideErrorConnectionViews();
+            return true;
+        } else {
+            setErrorConneсtionView();
+            return false;
+        }
+    }
+
+    public void hideErrorConnectionViews() {
+        if (requestableUIComponent.isRootConnectionVisible()) {
+            requestableUIComponent.hideErrorConnectionView();
+        }
+    }
+
+    public void setErrorConneсtionView() {
+        recyclerUIComponent.hideViews();
+        requestableUIComponent.showErrorConnetionView();
+        pullableUIComponent.end();
     }
 
     public RecyclerView.OnScrollListener getScrollableListener() {
@@ -65,15 +93,27 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
     @Override
     protected UIComponentHolder createComponentHolder() {
         return new UIComponentHolder.Builder()
-                .with(new PullableUIComponent(() -> {
-                    progressable = getPullableProgressable();
-                    page.reset();
-                    adapter.clear();
-                    doRequest();
+                .with(pullableUIComponent = new PullableUIComponent(() -> {
+                    resetData();
                 }))
+                .with(requestableUIComponent = new RequestableUIComponent(this))
                 .with(new ProgressableUIComponent())
                 .with(recyclerUIComponent)
                 .build();
+    }
+
+    @Override
+    public void reload() {
+        resetData();
+    }
+
+    public void resetData() {
+        if (checkInternetConnection()) {
+            progressable = getPullableProgressable();
+            page.reset();
+            adapter.clear();
+            doRequest();
+        }
     }
 
     public abstract void doRequest();

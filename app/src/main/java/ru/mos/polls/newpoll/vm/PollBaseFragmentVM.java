@@ -84,8 +84,8 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     protected abstract void addFilters(List<String> filters);
 
     @Override
-    public void setErrorConnetionView() {
-        super.setErrorConnetionView();
+    public void setErrorConneсtionView() {
+        super.setErrorConneсtionView();
         subscriptionsContainer.setVisibility(View.GONE);
     }
 }

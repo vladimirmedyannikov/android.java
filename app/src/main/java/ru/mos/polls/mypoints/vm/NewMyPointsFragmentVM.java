@@ -75,8 +75,15 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
     }
 
     @Override
-    public void setErrorConnetionView() {
-        super.setErrorConnetionView();
+    public void setErrorConneсtionView() {
+        super.setErrorConneсtionView();
+        getBinding().root.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideErrorConnectionViews() {
+        super.hideErrorConnectionViews();
+        getBinding().root.setVisibility(View.VISIBLE);
     }
 
     @Override

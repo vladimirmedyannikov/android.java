@@ -58,17 +58,21 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
 
     public boolean checkInternetConnection() {
         if (NetworkUtils.hasInternetConnection(getActivity())) {
-            if (requestableUIComponent.isRootConnectionVisible()) {
-                requestableUIComponent.hideErrorConnectionView();
-            }
+            hideErrorConnectionViews();
             return true;
         } else {
-            setErrorConnetionView();
+            setErrorConneсtionView();
             return false;
         }
     }
 
-    public void setErrorConnetionView() {
+    public void hideErrorConnectionViews() {
+        if (requestableUIComponent.isRootConnectionVisible()) {
+            requestableUIComponent.hideErrorConnectionView();
+        }
+    }
+
+    public void setErrorConneсtionView() {
         recyclerUIComponent.hideViews();
         requestableUIComponent.showErrorConnetionView();
         pullableUIComponent.end();

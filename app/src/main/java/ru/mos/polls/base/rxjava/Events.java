@@ -127,6 +127,17 @@ public class Events {
 
     }
 
+    public static class ProgressableEvents extends BaseEvents {
+        public static final int BEGIN = 1;
+        public static final int END = 2;
+
+
+        public ProgressableEvents(int eventType) {
+            this.eventType = eventType;
+        }
+
+    }
+
     public static class PollEvents extends BaseEvents {
         public static final int OPEN_POLL = 1;
         public static final int FINISHED_POLL = 2;

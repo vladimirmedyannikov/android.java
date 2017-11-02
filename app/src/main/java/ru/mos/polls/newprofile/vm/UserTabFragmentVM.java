@@ -34,6 +34,7 @@ import ru.mos.polls.newprofile.ui.fragment.UserTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * Created by Trunks on 08.06.2017.
@@ -172,10 +173,14 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
                 setUserStatsListView();
             }
         };
-        disposables.add(AGApplication.api
-                .getStatistics(new AuthRequest())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(handler));
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            disposables.add(AGApplication.api
+                    .getStatistics(new AuthRequest())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(handler));
+        } else {
+            setUserStatsListView();
+        }
     }
 
     @Override

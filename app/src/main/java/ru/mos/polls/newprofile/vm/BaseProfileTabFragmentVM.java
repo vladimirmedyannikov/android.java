@@ -39,6 +39,7 @@ import ru.mos.polls.newprofile.service.model.Media;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * Created by Trunks on 19.06.2017.
@@ -191,7 +192,14 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 }
             }
         };
-        ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+        } else {
+            progressable.end();
+            Toast.makeText(getActivity(), getActivity().getString(R.string.internet_failed_to_connect), Toast.LENGTH_SHORT).show();
+            AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
+            updateView();
+        }
     }
 
     public void updateView() {

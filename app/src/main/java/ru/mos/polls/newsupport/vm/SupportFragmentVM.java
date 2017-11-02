@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Remove;
+import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
@@ -34,7 +36,9 @@ import ru.mos.polls.newsupport.ui.adapter.SubjectAdapter;
 import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.support.controller.AgSupportApiController;
 import ru.mos.polls.util.GuiUtils;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * Created by matek3022 on 13.09.17.
@@ -44,7 +48,6 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
     private List<Subject> subjects;
     private ArrayAdapter subjectAdapter;
-    private Unbinder unbinder;
     private GoogleStatistics.Feedback statistics;
 
     public SupportFragmentVM(SupportFragment fragment, LayoutSupportBinding binding) {
@@ -69,6 +72,12 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        setSubjectsAdapter();
+        setEmailView();
+        loadSubjects();
+    }
+
+    public void setSubjectsAdapter() {
         getBinding().subject.setAdapter(subjectAdapter);
         getBinding().subject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -95,12 +104,14 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
 
             }
         });
+    }
+
+    public void setEmailView() {
         String email = getActivity().getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE).getString(AgUser.EMAIL, "");
         if (email.length() > 0) {
             getBinding().etEmail.setText(email);
             getBinding().etMessage.requestFocus();
         }
-        loadSubjects();
     }
 
     private Subject getCurrentSubject() {
@@ -117,13 +128,17 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                 subjectAdapter.notifyDataSetChanged();
             }
         };
-
-        Observable<SubjectsLoad.Response> responseObservabl = AGApplication
-                .api
-                .getFeedbackSubjects(new SubjectsLoad.Request())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(responseObservabl.subscribeWith(handler));
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            Observable<SubjectsLoad.Response> responseObservabl = AGApplication
+                    .api
+                    .getFeedbackSubjects(new SubjectsLoad.Request())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread());
+            disposables.add(responseObservabl.subscribeWith(handler));
+        } else {
+            Toast.makeText(getActivity(), getActivity().getString(R.string.internet_failed_to_connect), Toast.LENGTH_SHORT).show();
+            getProgressable().end();
+        }
     }
 
     public void sendMessage() {

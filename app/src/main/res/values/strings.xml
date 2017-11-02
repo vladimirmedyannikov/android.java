@@ -813,5 +813,6 @@
     <string name="non_selected_female">Не указана</string>
     <string name="non_selected_many">Не указаны</string>
     <string name="achievement_tab_title">Достижение</string>
+    <string formatted="false" name="remove_addresses_dialog_message">Удалить адрес собственности \"%s\"?</string>
 
 </resources>

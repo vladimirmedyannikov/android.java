@@ -2,14 +2,11 @@ package ru.mos.polls.newprofile.vm;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +33,7 @@ import ru.mos.polls.newprofile.state.NewFlatState;
 import ru.mos.polls.newprofile.ui.adapter.AddressesAdapter;
 import ru.mos.polls.newprofile.ui.fragment.AddressesPropertyFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.util.GuiUtils;
 
 /**
  * Created by Trunks on 25.10.2017.
@@ -107,8 +105,18 @@ public class AddressesPropertyFragmentVM extends UIComponentFragmentViewModel<Ad
 
     @Override
     public void onIconDeleteClick(String id) {
-        flatsList.add(new FlatsEntity.BaseFlat(id, true));
-        doDeleteRequest(id);
+        for (AddressesPropertyVM iterator : adapter.getList()) {
+            if (iterator.getFlatId().equals(id)) {
+                GuiUtils.displayYesOrNotDialog(getActivity(),
+                        String.format(getFragment().getString(R.string.remove_addresses_dialog_message), iterator.getPropertyAddress()),
+                        (dialog, which) -> {
+                            flatsList.add(new FlatsEntity.BaseFlat(id, true));
+                            doDeleteRequest(id);
+                        },
+                        null);
+                break;
+            }
+        }
     }
 
     public void refreshProfile() {

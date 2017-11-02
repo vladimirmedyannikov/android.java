@@ -23,7 +23,7 @@ public class FriendProfileHeaderVM extends RecyclerBaseViewModel<FriendProfile, 
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.friend_profile_header_item;
     }
 

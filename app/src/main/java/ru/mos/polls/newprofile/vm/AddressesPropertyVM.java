@@ -23,7 +23,7 @@ public class AddressesPropertyVM extends RecyclerBaseViewModel<Flat, ItemAddress
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_addresse_property;
     }
 

@@ -15,11 +15,11 @@ public class PollUnitTest extends BaseUnitTest {
 
     @Test
     public void parse() {
-        Poll poll = new Poll(fromTestRawAsJson("poll.json"));
+        Poll poll = new Poll(fromTestRawAsJson("poll_active.json"));
         Assert.assertEquals(poll.getAuthor(),"");
         Assert.assertEquals(poll.getTitle(),"тест картинки");
         Assert.assertEquals(poll.getPoints(),12);
-//        Assert.assertEquals(poll.getStatus(), Poll.Status.ACTIVE);
+        Assert.assertEquals(poll.getStatus(), Poll.Status.ACTIVE.toString());
         Assert.assertEquals(poll.getBeginDate(), 1491000000);
         Assert.assertEquals(poll.getEndDate(), 1493000000);
         Assert.assertEquals(poll.getKind(), Kind.STANDART.toString());
@@ -28,5 +28,10 @@ public class PollUnitTest extends BaseUnitTest {
         Assert.assertEquals(poll.isOld(), false);
         Assert.assertEquals(poll.isPassed(), false);
         Assert.assertEquals(poll.isInterrupted(), false);
+        Assert.assertEquals(poll.getQuestCount(), 0);
+        Assert.assertEquals(poll.isExistBeginDate(), true);
+        Assert.assertEquals(poll.isExistEndDate(), true);
+        Assert.assertEquals(poll.isHearingChecked(), false);
+        Assert.assertEquals(poll.isExistKind(), true);
     }
 }

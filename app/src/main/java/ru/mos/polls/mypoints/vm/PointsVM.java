@@ -31,7 +31,7 @@ public class PointsVM extends RecyclerBaseViewModel<Points, ItemPointHistoryBind
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_point_history;
     }
 

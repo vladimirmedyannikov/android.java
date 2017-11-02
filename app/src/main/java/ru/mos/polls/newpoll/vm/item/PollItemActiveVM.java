@@ -28,7 +28,7 @@ public class PollItemActiveVM extends RecyclerBaseViewModel<Poll, ItemActivePoll
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_active_poll;
     }
 

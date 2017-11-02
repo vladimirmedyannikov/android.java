@@ -22,7 +22,7 @@ public class SourcesVotingVM extends RecyclerBaseViewModel<SourcesVoting, ItemSo
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_sources_voting;
     }
 

@@ -51,7 +51,7 @@ public class AchievementVM extends RecyclerBaseViewModel<Achievements, ItemAchie
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_achievement;
     }
 

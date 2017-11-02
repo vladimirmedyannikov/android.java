@@ -1,5 +1,6 @@
 package ru.mos.polls;
 
+import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 
 public class BaseUnitTest {
+    protected Context appContext = InstrumentationRegistry.getTargetContext();
 
     protected JSONObject fromTestRawAsJson(String fileName) {
         JSONObject result = null;

@@ -18,7 +18,7 @@ public class InnovationsItemPassedVM extends InnovationsItemBaseVM<Innovation, I
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.item_innovation_passed;
     }
 

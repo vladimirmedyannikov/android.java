@@ -29,7 +29,7 @@ public abstract class BaseViewModel<M, VDB extends ViewDataBinding> extends Base
         return model;
     }
 
-    protected abstract int getLayoutId();
+    public abstract int getLayoutId();
 
     public void setViewDataBinding(VDB viewDataBinding) {
         this.viewDataBinding = viewDataBinding;

@@ -27,7 +27,7 @@ public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBindin
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.friend_item;
     }
 

@@ -25,7 +25,7 @@ public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItem
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.friend_add_item;
     }
 

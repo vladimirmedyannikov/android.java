@@ -93,7 +93,14 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         slidingTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                getFragment().getActivity().setTitle(R.string.profile_title);
+                switch (tab.getPosition()) {
+                    case 0:
+                        getFragment().getActivity().setTitle(R.string.profile_title);
+                        break;
+                    case 1:
+                        getFragment().getActivity().setTitle(R.string.achievements);
+                        break;
+                }
             }
 
             @Override

@@ -106,12 +106,12 @@ public class IntervalSurveyVariant extends SurveyVariant {
     private void showSelectDialog(final Context context) {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.select_dialog_item);
         if (startVariantValue.isEmpty()) {
-            arrayAdapter.add(leftText);
+            arrayAdapter.add(TextUtils.isEmpty(leftText) ? "нажмите для выбора" : leftText);
         } else {
             arrayAdapter.add(leftText + " " + startVariantValue.asString());
         }
         if (endVariantValue.isEmpty()) {
-            arrayAdapter.add(rightText);
+            arrayAdapter.add(TextUtils.isEmpty(rightText) ? "нажмите для выбора" : rightText);
         } else {
             arrayAdapter.add(rightText + " " + endVariantValue.asString());
         }

@@ -12,6 +12,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
@@ -36,6 +37,8 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
     private TabLayout slidingTabs;
     private Friend friend;
     private PagerAdapter adapter;
+    private View invisibleProfileContainer;
+    private CircleImageView avatar;
     private boolean isInvisible = false;
 
     public FriendProfileTabFragmentVM(FriendProfileTabFragment fragment, FragmentFriendTabBinding binding) {
@@ -83,6 +86,8 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
         adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
         pager.setAdapter(adapter);
         slidingTabs = binding.slidingTabs;
+        invisibleProfileContainer = binding.friendInfoLayout;
+        avatar = binding.friendAvatar.avatar;
 //        goneSlidingTabs(true);
         slidingTabs.setupWithViewPager(pager);
         for (int index = 0; index < pages.size(); ++index) {
@@ -126,6 +131,8 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                                 isInvisible = true;
                                 slidingTabs.setVisibility(View.GONE);
                                 pager.setVisibility(View.GONE);
+                                avatar.setImageResource(R.drawable.ic_avatar_default);
+                                invisibleProfileContainer.setVisibility(View.VISIBLE);
                                 break;
                             case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
                                 goneSlidingTabs(true);

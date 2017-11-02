@@ -24,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.states.VoidParams;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
@@ -105,6 +106,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private static final String TAG_SHOP = "shop";
 
     private static final int GPS_PERMISSION_REQUEST = 9824;
+    public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;
     private static final String[] GPS_PERMS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION
     };
@@ -187,7 +189,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         subscribeEventsBus();
         findFriends();
     }
-
+    @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void findFriends() {
         if (ContactsController.Manager.isNeedUpdate(this)) {
             if (EasyPermissions.hasPermissions(this, CONTACTS_PERMS)) {
@@ -195,6 +197,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 contactsController.setPhone(AgUser.getPhone(this));
                 contactsController.silentFindFriends();
                 ContactsController.Manager.increment(this);
+            } else {
+                EasyPermissions.requestPermissions(this,
+                        getString(R.string.permission_contacts),
+                        CONTACTS_PERMISSION_REQUEST_CODE,
+                        CONTACTS_PERMS);
             }
         }
     }

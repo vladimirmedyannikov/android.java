@@ -133,7 +133,7 @@ public class ContactsController {
     public static class Manager {
         private static final String PREFS = "contacts_controller_prefs";
         private static final String UPDATE_TIME = "update_time";
-        private static final int INTERVAL = 30 * 24 * 60 * 1000;
+        private static final Long INTERVAL = 2592000000L;// 30 days
 
         public static boolean isNeedUpdate(Context context) {
             SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -142,8 +142,9 @@ public class ContactsController {
 
         public static void increment(Context context) {
             SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+            long updateTime = System.currentTimeMillis() + INTERVAL;
             prefs.edit()
-                    .putLong(UPDATE_TIME, System.currentTimeMillis() + INTERVAL)
+                    .putLong(UPDATE_TIME, updateTime)
                     .apply();
         }
     }

@@ -90,6 +90,9 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
         requestDistrictList();
         street.setText(savedStreet);
         building.setText(savedBuilding);
+        if (flatType == NewFlatFragmentVM.FLAT_TYPE_OWN && getFragment().getView() != null) {
+            getFragment().getView().findViewById(R.id.warningContainer).setVisibility(View.GONE);
+        }
     }
 
     @Override

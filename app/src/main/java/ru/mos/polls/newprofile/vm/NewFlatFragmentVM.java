@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
 
@@ -330,42 +331,46 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     }
 
     public void confirmAction() {
-        FlatsEntity entity = null;
-        if (flat.isRegistration()) {
-            FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
-            if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
-                registrationEntity.setFlat_id(flat.getFlatId());
-            setKill(registrationEntity);
-            entity = new FlatsEntity(registrationEntity);
-        }
-        if (flat.isResidence()) {
-            FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity();
-            if (residenceToggle.isChecked()) {
-                if (!TextUtils.isEmpty(flat.getFlatId())) {
-                    residenceEntity.setKill(true);
-                } else {
-                    residenceEntity.setBuilding_id(Flat.getRegistration(getActivity()).getBuildingId());
-                }
-            } else {
-                residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
-                if (!TextUtils.isEmpty(flat.getFlatId()))
-                    residenceEntity.setFlat_id(flat.getFlatId());
-                setKill(residenceEntity);
+        if (TextUtils.isEmpty(flat.getFlatId()) && (TextUtils.isEmpty(flat.getStreet()) || TextUtils.isEmpty(flat.getBuilding()))) {
+            Toast.makeText(getActivity(), R.string.empty_flat_error, Toast.LENGTH_SHORT).show();
+        } else {
+            FlatsEntity entity = null;
+            if (flat.isRegistration()) {
+                FlatsEntity.RegistrationEntity registrationEntity = new FlatsEntity.RegistrationEntity(flat.getBuildingId());
+                if (!TextUtils.isEmpty(flat.getFlatId()))// тоже почему то при первом надо только building_id, а при обновлении flat_id
+                    registrationEntity.setFlat_id(flat.getFlatId());
+                setKill(registrationEntity);
+                entity = new FlatsEntity(registrationEntity);
             }
-            entity = new FlatsEntity(residenceEntity);
+            if (flat.isResidence()) {
+                FlatsEntity.ResidenceEntity residenceEntity = new FlatsEntity.ResidenceEntity();
+                if (residenceToggle.isChecked()) {
+                    if (!TextUtils.isEmpty(flat.getFlatId())) {
+                        residenceEntity.setKill(true);
+                    } else {
+                        residenceEntity.setBuilding_id(Flat.getRegistration(getActivity()).getBuildingId());
+                    }
+                } else {
+                    residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());
+                    if (!TextUtils.isEmpty(flat.getFlatId()))
+                        residenceEntity.setFlat_id(flat.getFlatId());
+                    setKill(residenceEntity);
+                }
+                entity = new FlatsEntity(residenceEntity);
+            }
+            if (flat.isWork()) {
+                FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
+                if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
+                setKill(workEntity);
+                entity = new FlatsEntity(workEntity);
+            }
+            if (flat.isOwn()) {
+                List<FlatsEntity.BaseFlat> listEntity = new ArrayList<>();
+                listEntity.add(new FlatsEntity.BaseFlat(flat.getBuildingId()));
+                entity = new FlatsEntity(listEntity);
+            }
+            sendFlat(new ProfileSet.Request(entity));
         }
-        if (flat.isWork()) {
-            FlatsEntity.WorkEntity workEntity = new FlatsEntity.WorkEntity(flat.getBuildingId());
-            if (!TextUtils.isEmpty(flat.getFlatId())) workEntity.setFlat_id(flat.getFlatId());
-            setKill(workEntity);
-            entity = new FlatsEntity(workEntity);
-        }
-        if (flat.isOwn()) {
-            List<FlatsEntity.BaseFlat> listEntity = new ArrayList<>();
-            listEntity.add(new FlatsEntity.BaseFlat(flat.getBuildingId()));
-            entity = new FlatsEntity(listEntity);
-        }
-        sendFlat(new ProfileSet.Request(entity));
     }
 
 

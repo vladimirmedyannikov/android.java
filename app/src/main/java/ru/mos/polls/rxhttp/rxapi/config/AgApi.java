@@ -10,7 +10,7 @@ import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.newinnovation.service.NoveltyFill;
 import ru.mos.polls.newinnovation.service.NoveltyGet;
 import ru.mos.polls.newinnovation.service.NoveltySelect;
-import ru.mos.polls.newpoll.service.PollSelect;
+import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.newprofile.service.AchievementsGet;
 import ru.mos.polls.newprofile.service.AchievementsSelect;
 import ru.mos.polls.newprofile.service.AvatarSet;

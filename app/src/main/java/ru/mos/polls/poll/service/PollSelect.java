@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.service;
+package ru.mos.polls.poll.service;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,10 @@
-package ru.mos.polls.newpoll.ui;
+package ru.mos.polls.poll.ui;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentPollBinding;
-import ru.mos.polls.newpoll.vm.PollFragmentVM;
+import ru.mos.polls.poll.vm.PollFragmentVM;
 
 /**
  * Created by Trunks on 14.09.2017.

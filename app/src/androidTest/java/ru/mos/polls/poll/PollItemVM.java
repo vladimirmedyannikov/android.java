@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
-import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
-import ru.mos.polls.newpoll.vm.item.PollItemActiveVM;
-import ru.mos.polls.newpoll.vm.item.PollItemOldVM;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
+import ru.mos.polls.poll.vm.item.PollItemActiveVM;
+import ru.mos.polls.poll.vm.item.PollItemOldVM;
 import ru.mos.polls.poll.model.Poll;
 
 /**

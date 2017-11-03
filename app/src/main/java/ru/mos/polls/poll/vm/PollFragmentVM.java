@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.vm;
+package ru.mos.polls.poll.vm;
 
 
 import android.content.Intent;
@@ -12,8 +12,8 @@ import java.util.List;
 import ru.mos.polls.R;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentPollBinding;
-import ru.mos.polls.newpoll.ui.PollFragment;
-import ru.mos.polls.newpoll.ui.PollBaseFragment;
+import ru.mos.polls.poll.ui.PollFragment;
+import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
 
 /**

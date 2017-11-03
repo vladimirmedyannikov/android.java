@@ -10,8 +10,6 @@ import ru.mos.polls.event.gui.fragment.VisitedEventsFragment;
 import ru.mos.polls.innovation.gui.fragment.ActiveInnovationsFragment;
 import ru.mos.polls.innovation.gui.fragment.OldInnovationsFragment;
 import ru.mos.polls.innovation.gui.fragment.PassedInnovationsFragment;
-import ru.mos.polls.poll.gui.ActivePollsFragment;
-import ru.mos.polls.poll.gui.OldPollsFragment;
 import ru.mos.polls.profile.gui.fragment.AchievementsFragment;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
@@ -57,8 +55,6 @@ public class ActionBarNavigationItem {
 
         public static ActionBarNavigationItem[] create(Context context) {
             return new ActionBarNavigationItem[]{
-                    new ActionBarNavigationItem(ACTIVE, context.getString(R.string.polls_active), ActivePollsFragment.newInstance()),
-                    new ActionBarNavigationItem(OLD, context.getString(R.string.polls_old), OldPollsFragment.newInstance())
             };
         }
 

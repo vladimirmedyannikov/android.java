@@ -20,8 +20,6 @@ import butterknife.Unbinder;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.FragmentHelper;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.poll.gui.ActivePollsFragment;
-import ru.mos.polls.poll.gui.OldPollsFragment;
 import ru.mos.polls.profile.gui.fragment.AchievementsFragment;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
@@ -180,7 +178,6 @@ public abstract class PagerFragment extends Fragment {
         }
 
         private class Adapter extends StateAdapter {
-            private ActivePollsFragment activePollsFragment;
 
             public Adapter(FragmentManager fm) {
                 super(fm);
@@ -191,12 +188,8 @@ public abstract class PagerFragment extends Fragment {
                 Fragment result = new Fragment();
                 switch (position) {
                     case 0:
-                        result = ActivePollsFragment.newInstance();
-                        activePollsFragment = (ActivePollsFragment) result;
                         break;
                     case 1:
-                        result = OldPollsFragment.newInstance();
-                        activePollsFragment.setPollRemoveListener((ActivePollsFragment.PollRemoveListener) result);
                         break;
                 }
                 return result;

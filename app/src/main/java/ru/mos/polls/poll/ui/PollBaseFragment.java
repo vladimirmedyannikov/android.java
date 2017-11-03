@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.ui;
+package ru.mos.polls.poll.ui;
 
 import android.os.Bundle;
 
@@ -6,9 +6,9 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
-import ru.mos.polls.newpoll.vm.PollActiveFragmentVM;
-import ru.mos.polls.newpoll.vm.PollBaseFragmentVM;
-import ru.mos.polls.newpoll.vm.PollOldFragmentVM;
+import ru.mos.polls.poll.vm.PollActiveFragmentVM;
+import ru.mos.polls.poll.vm.PollBaseFragmentVM;
+import ru.mos.polls.poll.vm.PollOldFragmentVM;
 
 /**
  * Created by Trunks on 14.09.2017.

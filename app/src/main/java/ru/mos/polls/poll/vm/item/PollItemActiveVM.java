@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.vm.item;
+package ru.mos.polls.poll.vm.item;
 
 import android.view.View;
 import android.widget.TextView;
@@ -9,7 +9,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.ItemActivePollBinding;
-import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 

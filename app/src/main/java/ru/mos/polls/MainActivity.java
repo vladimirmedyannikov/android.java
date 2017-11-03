@@ -56,7 +56,7 @@ import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
 import ru.mos.polls.newinnovation.ui.fragment.InnovationFragment;
-import ru.mos.polls.newpoll.ui.PollFragment;
+import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
 import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;

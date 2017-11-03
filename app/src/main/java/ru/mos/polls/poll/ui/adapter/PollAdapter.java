@@ -1,12 +1,12 @@
-package ru.mos.polls.newpoll.ui.adapter;
+package ru.mos.polls.poll.ui.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
-import ru.mos.polls.newpoll.vm.item.PollItemActiveVM;
-import ru.mos.polls.newpoll.vm.item.PollItemOldVM;
+import ru.mos.polls.poll.vm.item.PollItemActiveVM;
+import ru.mos.polls.poll.vm.item.PollItemOldVM;
 import ru.mos.polls.poll.model.Poll;
 
 /**

@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.vm;
+package ru.mos.polls.poll.vm;
 
 
 import android.view.View;
@@ -12,9 +12,9 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
-import ru.mos.polls.newpoll.service.PollSelect;
-import ru.mos.polls.newpoll.ui.PollBaseFragment;
-import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
+import ru.mos.polls.poll.service.PollSelect;
+import ru.mos.polls.poll.ui.PollBaseFragment;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 

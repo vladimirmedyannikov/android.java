@@ -1,4 +1,4 @@
-package ru.mos.polls.newpoll.vm;
+package ru.mos.polls.poll.vm;
 
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -12,9 +12,9 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
-import ru.mos.polls.newpoll.ui.PollBaseFragment;
-import ru.mos.polls.newpoll.ui.adapter.PollAdapter;
-import ru.mos.polls.poll.controller.PollApiController;
+import ru.mos.polls.poll.model.Filter;
+import ru.mos.polls.poll.ui.PollBaseFragment;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.subscribes.controller.SubscribesAPIController;
 import ru.mos.polls.subscribes.model.Channel;
@@ -102,7 +102,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
 
     @Override
     protected void addFilters(List<String> filters) {
-        filters.add(PollApiController.Filter.AVAILABLE.toString());
+        filters.add(Filter.AVAILABLE.toString());
     }
 
     protected void processPoll(long pollId, int typeEvent) {

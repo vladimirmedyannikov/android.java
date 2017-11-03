@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
-import ru.mos.polls.innovation.model.Rating;
+import ru.mos.polls.innovations.oldmodel.Rating;
 
 /**
  */

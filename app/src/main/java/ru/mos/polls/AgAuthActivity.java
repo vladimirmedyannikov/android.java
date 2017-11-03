@@ -48,7 +48,7 @@ import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
-import ru.mos.polls.innovation.gui.activity.InnovationActivity;
+import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;

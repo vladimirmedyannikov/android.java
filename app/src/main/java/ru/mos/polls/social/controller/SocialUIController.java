@@ -35,7 +35,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.event.model.Event;
-import ru.mos.polls.innovation.model.Innovation;
+import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.social.model.AppSocial;
@@ -108,7 +108,7 @@ public abstract class SocialUIController {
         AgSocialApiController.loadPostingData(activity, listener);
     }
 
-    public static void showSocialsDialogForNovelty(final BaseActivity activity, Innovation innovation, final SocialClickListener clickListener) {
+    public static void showSocialsDialogForNovelty(final BaseActivity activity, InnovationActiviti innovationActiviti, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
@@ -118,7 +118,7 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForNovelty(activity, innovation.getId(), listener);
+        AgSocialApiController.loadPostingDataForNovelty(activity, innovationActiviti.getId(), listener);
     }
 
     public static void showSocialsDialogForAchievement(final BaseActivity activity, String achievementId, final boolean isNeedCloseActivity, final SocialClickListener clickListener) {

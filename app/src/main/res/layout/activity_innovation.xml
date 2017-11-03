@@ -19,7 +19,7 @@
         style="@style/item"
         android:layout_below="@id/toolbar">
 
-        <ru.mos.polls.innovation.model.InnovationButtons
+        <ru.mos.polls.innovations.ui.InnovationButtons
             android:id="@+id/buttonContainer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/vs_xxsmall"

@@ -40,7 +40,7 @@ import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
-import ru.mos.polls.innovation.gui.activity.InnovationActivity;
+import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.profile.gui.activity.AchievementActivity;
 import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;

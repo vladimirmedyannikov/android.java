@@ -3,7 +3,7 @@ package ru.mos.polls.innovation;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.mos.polls.innovation.model.Status;
+import ru.mos.polls.innovations.oldmodel.Status;
 
 /**
  */

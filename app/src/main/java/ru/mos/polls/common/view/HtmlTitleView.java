@@ -19,14 +19,14 @@ import butterknife.ButterKnife;
 import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AnimationHelper;
-import ru.mos.polls.innovation.model.Innovation;
+import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
 
 /**
  * Компонент для отображения информации о вопросе: краткое, полное описание
  * Исопльзуется на экранах:
  * списка вопросов голосования {@link ru.mos.polls.survey.SurveySummaryFragment}
  * деталей голосования {@link ru.mos.polls.survey.SurveyFragment}
- * деталей городской новинки {@link ru.mos.polls.innovation.gui.activity.InnovationActivity}
+ * деталей городской новинки {@link ru.mos.polls.innovations.ui.activity.InnovationActivity}
  *
  * @since 1.8
  */
@@ -88,12 +88,12 @@ public class HtmlTitleView extends LinearLayout {
         this.stateListener = stateListener;
     }
 
-    public void display(Innovation innovation) {
-        if (innovation != null) {
+    public void display(InnovationActiviti innovationActiviti) {
+        if (innovationActiviti != null) {
             prepare();
-            display(innovation.getTitle(),
-                    innovation.getTextShortHtml(),
-                    innovation.getTextFullHtml());
+            display(innovationActiviti.getTitle(),
+                    innovationActiviti.getTextShortHtml(),
+                    innovationActiviti.getTextFullHtml());
         }
     }
 

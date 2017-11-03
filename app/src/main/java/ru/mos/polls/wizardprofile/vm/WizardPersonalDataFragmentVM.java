@@ -17,16 +17,14 @@ import java.util.List;
 
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.BirthDateParser;
-import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.base.vm.FragmentViewModel;
-import ru.mos.polls.newprofile.service.model.Personal;
-import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
-import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
-import ru.mos.polls.newprofile.vm.OnDateSetCallback;
+import ru.mos.polls.profile.service.model.Personal;
+import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
+import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
+import ru.mos.polls.base.ui.dialog.OnDateSetCallback;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 
 /**

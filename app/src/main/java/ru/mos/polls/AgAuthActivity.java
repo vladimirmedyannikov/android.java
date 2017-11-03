@@ -51,7 +51,7 @@ import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.support.state.SupportState;
-import ru.mos.polls.profile.gui.activity.AchievementActivity;
+import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;

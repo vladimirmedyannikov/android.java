@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,12 +19,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.model.QuestMessage;
-import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.profile.gui.fragment.AbstractProfileFragment;
-import ru.mos.polls.profile.gui.fragment.FamilyFragment;
-import ru.mos.polls.profile.gui.fragment.UserPersonalFragment;
-import ru.mos.polls.profile.gui.fragment.WorkFragment;
-import ru.mos.polls.profile.gui.fragment.location.FlatsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.quest.ProfileQuest;
 
@@ -36,7 +28,7 @@ import ru.mos.polls.quests.quest.ProfileQuest;
  *
  * @since 1.9
  */
-public class ProfileQuestActivity extends ToolbarAbstractActivity implements AbstractProfileFragment.ChangeListener {
+public class ProfileQuestActivity extends ToolbarAbstractActivity  {
     private static final int REQUEST_ADD_FLAT = 1;
     private static final String EXTRA_REQUEST_CODE = "extra_request_code";
     private static final String EXTRA_TASK_ID = "extra_task_id";
@@ -76,7 +68,6 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
         return resultCode == RESULT_OK && requestCode == REQUEST_ADD_FLAT;
     }
 
-    private AbstractProfileFragment fragment;
     private Button save;
 
     private AgUser changed, saved;
@@ -94,9 +85,6 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(CHANGED_AG_USER, changed);
-        if (fragment != null) {
-            outState.putString(FRAGMENT_TAG, fragment.getClass().getName());
-        }
     }
 
     @Override
@@ -121,44 +109,11 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
     }
 
     private void setFragment(Bundle savedInstanceState) {
-        int title = -1;
-        FragmentManager fm = getSupportFragmentManager();
-        if (savedInstanceState != null) {
-            fragment = (AbstractProfileFragment) fm.findFragmentByTag(savedInstanceState.getString(FRAGMENT_TAG));
-        }
-        if (fragment == null) {
-            if (ProfileQuest.ID_UPDATE_PERSONAL.equalsIgnoreCase(taskId)) {
-                fragment = UserPersonalFragment.newInstance();
-                title = R.string.quest_title_personal;
-            } else if (ProfileQuest.ID_UPDATE_LOCATION.equalsIgnoreCase(taskId)) {
-                int requestCode = getIntent().getIntExtra(EXTRA_REQUEST_CODE, -1);
-                if (requestCode == REQUEST_ADD_FLAT) {
-                    fragment = FlatsFragment.newInstanceWithoutWarning();
-                } else {
-                    fragment = FlatsFragment.newInstance();
-                }
-                title = R.string.quest_title_location;
-            } else if (ProfileQuest.ID_UPDATE_EXTRA_INFO.equalsIgnoreCase(taskId)) {
-                fragment = WorkFragment.newInstance();
-                title = R.string.quest_title_extra_info;
-            } else if (ProfileQuest.ID_UPDATE_FAMILY_INFO.equalsIgnoreCase(taskId)) {
-                fragment = FamilyFragment.newInstance();
-                title = R.string.quest_title_family_info;
-            }
-            if (title != -1) {
-                TitleHelper.setTitle(this, title);
-            }
-            fm.beginTransaction().add(R.id.container, fragment, fragment.getClass().getName()).commit();
-        }
-        fragment.setChangeListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (fragment != null && fragment.isAdded() && fragment.isVisible()) {
-            fragment.refreshUI(changed);
-        }
     }
 
     private void doQuest() {
@@ -185,8 +140,6 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
                 stopProgress();
             }
         };
-        boolean isNedChildCount = fragment instanceof FamilyFragment;
-        ProfileManager.setProfile(this, saved.getRequestBody(changed, isNedChildCount, false), saveAgUserListener);
     }
 
     private void processResults(JSONObject resultJson) {
@@ -199,9 +152,13 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity implements Abs
         }
     }
 
-    @Override
-    public void onChange(int fragmentId) {
-        fragment.updateAgUser(changed);
-        save.setEnabled(fragment.isFilledAndChanged(saved, changed));
+    public interface ChangeListener {
+        ChangeListener STUB = new ChangeListener() {
+            @Override
+            public void onChange(int fragmentId) {
+            }
+        };
+
+        void onChange(int fragmentId);
     }
 }

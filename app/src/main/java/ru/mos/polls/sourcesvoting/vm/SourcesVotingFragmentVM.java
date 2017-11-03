@@ -11,7 +11,7 @@ import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
-import ru.mos.polls.newprofile.service.model.EmptyResult;
+import ru.mos.polls.profile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.sourcesvoting.model.SourcesVotingSet;

@@ -33,7 +33,7 @@ import ru.mos.polls.friend.ui.adapter.FriendProfileAdapter;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
-import ru.mos.polls.newprofile.ui.adapter.UserStatisticsAdapter;
+import ru.mos.polls.profile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.AgTextUtil;

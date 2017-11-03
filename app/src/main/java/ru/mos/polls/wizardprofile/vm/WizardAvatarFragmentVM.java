@@ -6,7 +6,7 @@ import android.content.Intent;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentMakeAvatarBinding;
-import ru.mos.polls.newprofile.vm.BaseProfileTabFragmentVM;
+import ru.mos.polls.profile.vm.BaseProfileTabFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardAvatarFragment;
 
 /**

@@ -7,7 +7,7 @@ import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.base.vm.FragmentViewModel;
-import ru.mos.polls.newprofile.vm.WizardRequestInterfaceListener;
+import ru.mos.polls.profile.vm.WizardRequestInterfaceListener;
 
 /**
  * Created by Trunks on 06.06.2017.

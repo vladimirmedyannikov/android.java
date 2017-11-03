@@ -8,6 +8,6 @@
                     style="@style/root"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
-                    tools:context="ru.mos.polls.profile.gui.activity.UpdateSocialActivity">
+                    tools:context=".profile.ui.activity.UpdateSocialActivity">
     </RelativeLayout>
 </LinearLayout>

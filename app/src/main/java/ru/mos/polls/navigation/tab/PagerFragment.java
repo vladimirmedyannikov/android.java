@@ -20,8 +20,6 @@ import butterknife.Unbinder;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.FragmentHelper;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.profile.gui.fragment.AchievementsFragment;
-import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
 /**
  * Общий класс фрагмента, внутри которого
@@ -134,10 +132,8 @@ public abstract class PagerFragment extends Fragment {
                 Fragment result = new Fragment();
                 switch (position) {
                     case 0:
-                        result = ProfileFragment.newInstance();
                         break;
                     case 1:
-                        result = AchievementsFragment.newInstance();
                         break;
                 }
                 return result;

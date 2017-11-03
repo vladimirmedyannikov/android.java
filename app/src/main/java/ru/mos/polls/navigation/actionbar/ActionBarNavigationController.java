@@ -1,13 +1,11 @@
 package ru.mos.polls.navigation.actionbar;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.ActionBarHelper;
-import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
 /**
  * Контроллер, упрощающий интеграцию на экране навигации через выпадающее меню в action bar
@@ -51,17 +49,6 @@ public abstract class ActionBarNavigationController {
         setNavigation(activity, ActionBarNavigationItem.Event.create(activity), ActionBarNavigationItem.Event.PAST);
     }
 
-    /**
-     * Переключение фрагментов для экрана профиля
-     *
-     * @param activity
-     */
-    public static void setProfileNavigation(BaseActivity activity) {
-        Fragment fr = activity.getSupportFragmentManager().findFragmentByTag(ProfileFragment.class.getName());
-        if (fr == null || !fr.isVisible()) {
-            setNavigation(activity, ActionBarNavigationItem.Profile.create(activity), -1);
-        }
-    }
 
     public static void setNavigation(BaseActivity activity, ActionBarNavigationItem[] items, int defaultItemId) {
         setNavigation(activity, items, R.id.container, defaultItemId, null);

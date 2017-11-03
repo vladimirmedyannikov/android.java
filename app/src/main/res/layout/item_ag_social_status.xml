@@ -5,11 +5,11 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.SocialStatusVM"/>
+            type="ru.mos.polls.profile.vm.SocialStatusVM"/>
 
         <variable
             name="clicklistener"
-            type="ru.mos.polls.newprofile.vm.OnSocialStatusItemClick"/>
+            type="ru.mos.polls.profile.vm.OnSocialStatusItemClick"/>
     </data>
 
     <android.support.v7.widget.AppCompatTextView

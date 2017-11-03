@@ -57,11 +57,11 @@ import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
 import ru.mos.polls.poll.ui.PollFragment;
-import ru.mos.polls.newprofile.state.EditProfileState;
-import ru.mos.polls.newprofile.ui.fragment.ProfileFragment;
+import ru.mos.polls.profile.state.EditProfileState;
+import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.poll.model.Kind;
-import ru.mos.polls.profile.gui.activity.AchievementActivity;
-import ru.mos.polls.profile.gui.activity.UpdateSocialActivity;
+import ru.mos.polls.profile.ui.activity.AchievementActivity;
+import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -396,12 +396,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onUpdatePersonal() {
-                        ProfileQuestActivity.startUpdatePersonal(MainActivity.this);
                     }
 
                     @Override
                     public void onUpdateLocation() {
-                        ProfileQuestActivity.startUpdateLocation(MainActivity.this);
                     }
 
                     @Override
@@ -411,17 +409,14 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onUpdateEmail() {
-                        EmailQuestActivity.startActivity(MainActivity.this);
                     }
 
                     @Override
                     public void onUpdateExtraInfo() {
-                        ProfileQuestActivity.startUpdateExtraInfo(MainActivity.this);
                     }
 
                     @Override
                     public void onUpdateFamilyInfo() {
-                        ProfileQuestActivity.startUpdateFamilyInfo(MainActivity.this);
                     }
 
                     @Override
@@ -479,7 +474,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 /**
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
-//                fr = PagerFragment.Profile.newInstance();
                 fr = ProfileFragment.newInstance(ProfileFragment.PAGE_START_PROFILE);
                 tag = TAG_PROFILE;
                 break;
@@ -507,7 +501,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = null;
                 break;
             case NavigationMenuItem.MY_POINTS:
-//                fr = MyPointsFragment.newInstance();
                 fr = NewMyPointsFragment.newInstance();
                 tag = TAG_MY_POINTS;
                 break;

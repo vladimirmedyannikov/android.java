@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="ru.mos.polls.newprofile.vm.OnAchievementClickListener"/>
+            type="ru.mos.polls.profile.vm.OnAchievementClickListener"/>
     </data>
 
     <RelativeLayout

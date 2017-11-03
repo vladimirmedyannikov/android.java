@@ -14,7 +14,7 @@ import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentPollBinding;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.poll.ui.PollBaseFragment;
-import ru.mos.polls.newprofile.ui.adapter.PagerAdapter;
+import ru.mos.polls.profile.ui.adapter.PagerAdapter;
 
 /**
  * Created by Trunks on 14.09.2017.

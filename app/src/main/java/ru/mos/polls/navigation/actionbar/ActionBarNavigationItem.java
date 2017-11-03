@@ -7,8 +7,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.event.gui.fragment.CurrentEventsFragment;
 import ru.mos.polls.event.gui.fragment.PastEventsFragment;
 import ru.mos.polls.event.gui.fragment.VisitedEventsFragment;
-import ru.mos.polls.profile.gui.fragment.AchievementsFragment;
-import ru.mos.polls.profile.gui.fragment.ProfileFragment;
 
 /**
  * Структура данных, описывающая пункт выпадающего меню, исопльзуемого для навигации в action bar
@@ -61,8 +59,6 @@ public class ActionBarNavigationItem {
 
         public static ActionBarNavigationItem[] create(Context context) {
             return new ActionBarNavigationItem[]{
-                    new ActionBarNavigationItem(PROFILE, context.getString(R.string.profile), ProfileFragment.newInstance()),
-                    new ActionBarNavigationItem(ACHIEVEMENTS, context.getString(R.string.achievements), AchievementsFragment.newInstance())
             };
         }
 

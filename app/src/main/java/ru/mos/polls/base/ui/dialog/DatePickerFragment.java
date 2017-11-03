@@ -13,7 +13,6 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import ru.mos.elk.profile.BirthDateParser;
-import ru.mos.polls.newprofile.vm.OnDateSetCallback;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     public static final String MINDATE = "minDate";

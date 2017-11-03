@@ -116,11 +116,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".profile.gui.activity.ChildrenBirthdaysActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
@@ -224,7 +219,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".profile.gui.activity.UpdateSocialActivity"
+            android:name=".profile.ui.activity.UpdateSocialActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/socials"
             android:screenOrientation="portrait"
@@ -245,12 +240,6 @@
             android:name=".subscribes.gui.SubscribeActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/subscribes"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".support.gui.AgSupportActivity"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -311,7 +300,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".profile.gui.activity.AchievementActivity"
+            android:name=".profile.ui.activity.AchievementActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -352,16 +341,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".profile.gui.fragment.location.NewAddressActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".profile.gui.fragment.location.CustomFlatActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".quests.ProfileQuestActivity"
             android:configChanges="orientation|screenSize"

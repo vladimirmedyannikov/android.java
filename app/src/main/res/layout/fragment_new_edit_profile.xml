@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.EditProfileFragmentVM" />
+            type="ru.mos.polls.profile.vm.EditProfileFragmentVM" />
     </data>
 
     <RelativeLayout style="@style/root">

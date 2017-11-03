@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="ru.mos.polls.newprofile.vm.AvatarPanelClickListener"/>
+            type="ru.mos.polls.profile.vm.AvatarPanelClickListener"/>
     </data>
 
     <LinearLayout

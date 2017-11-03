@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newprofile.vm.AddressesPropertyVM" />
+            type="ru.mos.polls.profile.vm.AddressesPropertyVM" />
 
         <variable
             name="listener"
-            type="ru.mos.polls.newprofile.vm.onAddressesDeleteIconClickListener" />
+            type="ru.mos.polls.profile.vm.onAddressesDeleteIconClickListener" />
     </data>
 
     <RelativeLayout

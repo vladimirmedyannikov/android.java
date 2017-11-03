@@ -22,12 +22,12 @@ import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardFlatBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.FragmentViewModel;
-import ru.mos.polls.newprofile.service.model.Personal;
-import ru.mos.polls.newprofile.state.EditPersonalInfoState;
-import ru.mos.polls.newprofile.ui.fragment.CustomFlatFragment;
-import ru.mos.polls.newprofile.ui.fragment.NewFlatFragment;
-import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
-import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
+import ru.mos.polls.profile.service.model.Personal;
+import ru.mos.polls.profile.state.EditPersonalInfoState;
+import ru.mos.polls.profile.ui.fragment.CustomFlatFragment;
+import ru.mos.polls.profile.ui.fragment.NewFlatFragment;
+import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
+import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
 
 /**

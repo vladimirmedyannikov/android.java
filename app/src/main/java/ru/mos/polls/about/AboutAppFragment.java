@@ -29,7 +29,7 @@ import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.instruction.InstructionActivity;
-import ru.mos.polls.newsupport.state.SupportState;
+import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 

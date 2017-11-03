@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.model;
+package ru.mos.polls.support.model;
 
 import com.google.gson.annotations.SerializedName;
 

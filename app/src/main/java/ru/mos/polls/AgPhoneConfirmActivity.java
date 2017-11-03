@@ -38,7 +38,7 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.elk.push.GCMHelper;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
-import ru.mos.polls.newsupport.state.SupportState;
+import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
 import ru.mos.polls.util.GuiUtils;

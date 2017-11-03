@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.state;
+package ru.mos.polls.support.state;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,7 +9,7 @@ import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
-import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
+import ru.mos.polls.support.ui.fragment.SupportFragment;
 
 /**
  * Created by matek3022 on 13.09.17.

@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.vm;
+package ru.mos.polls.support.vm;
 
 import android.app.Activity;
 import android.databinding.BindingAdapter;
@@ -13,13 +13,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Remove;
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
@@ -29,14 +27,13 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutSupportBinding;
-import ru.mos.polls.newsupport.model.Subject;
-import ru.mos.polls.newsupport.service.FeedbackSend;
-import ru.mos.polls.newsupport.service.SubjectsLoad;
-import ru.mos.polls.newsupport.ui.adapter.SubjectAdapter;
-import ru.mos.polls.newsupport.ui.fragment.SupportFragment;
+import ru.mos.polls.support.model.Subject;
+import ru.mos.polls.support.service.FeedbackSend;
+import ru.mos.polls.support.service.SubjectsLoad;
+import ru.mos.polls.support.ui.adapter.SubjectAdapter;
+import ru.mos.polls.support.ui.fragment.SupportFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.support.controller.AgSupportApiController;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.NetworkUtils;
 

@@ -17,7 +17,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
-import ru.mos.polls.newsupport.state.SupportState;
+import ru.mos.polls.support.state.SupportState;
 
 /**
  * Класс для создания всплывающео меню внизу экрана

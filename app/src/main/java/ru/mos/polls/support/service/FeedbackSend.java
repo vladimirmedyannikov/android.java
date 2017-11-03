@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.service;
+package ru.mos.polls.support.service;
 
 
 import android.os.Build;

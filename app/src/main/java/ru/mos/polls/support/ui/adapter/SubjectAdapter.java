@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.ui.adapter;
+package ru.mos.polls.support.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.mos.polls.newsupport.model.Subject;
+import ru.mos.polls.support.model.Subject;
 
 
 /**

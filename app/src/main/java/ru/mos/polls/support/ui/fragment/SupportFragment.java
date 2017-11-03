@@ -1,4 +1,4 @@
-package ru.mos.polls.newsupport.ui.fragment;
+package ru.mos.polls.support.ui.fragment;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.LayoutSupportBinding;
-import ru.mos.polls.newsupport.vm.SupportFragmentVM;
+import ru.mos.polls.support.vm.SupportFragmentVM;
 
 /**
  * Created by matek3022 on 13.09.17.

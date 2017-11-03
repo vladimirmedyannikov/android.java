@@ -70,7 +70,6 @@ import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
-import ru.mos.polls.support.gui.SupportFragment;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.util.SMSUtils;
@@ -379,7 +378,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_SETTINGS;
                 break;
             case NavigationMenuItem.SUPPORT:
-                fr = SupportFragment.newInstance();
                 tag = TAG_SUPPORT;
                 break;
             case NavigationMenuItem.QUESTS:

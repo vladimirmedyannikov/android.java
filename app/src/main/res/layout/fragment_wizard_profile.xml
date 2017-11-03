@@ -42,31 +42,47 @@
 
         </RelativeLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/root"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0"
+                    android:layout_weight="1"/>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/wizard_tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:tabPaddingStart="@dimen/thick_separator"
-            app:tabPaddingEnd="@dimen/thick_separator"
-            app:paddingStart="@dimen/pd_xxxlarge"
-            app:paddingEnd="@dimen/pd_xxxlarge"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"/>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/wizard_tab_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:tabPaddingStart="@dimen/thick_separator"
+                    app:tabPaddingEnd="@dimen/thick_separator"
+                    app:paddingStart="@dimen/pd_xxxlarge"
+                    app:paddingEnd="@dimen/pd_xxxlarge"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"/>
 
-        <Button
-            android:id="@+id/wizard_action"
-            style="@style/text.link.green"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/pd_normal"
-            android:text="@string/ag_continue"
-            android:textAllCaps="true"/>
+                <Button
+                    android:id="@+id/wizard_action"
+                    style="@style/text.link.green"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/pd_normal"
+                    android:text="@string/ag_continue"
+                    android:textAllCaps="true"/>
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/item"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
     </LinearLayout>
 </layout>

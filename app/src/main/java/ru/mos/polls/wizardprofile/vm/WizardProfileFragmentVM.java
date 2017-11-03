@@ -25,9 +25,11 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.NavigateFragment;
-import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.newprofile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
@@ -45,7 +47,7 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
  * Created by Trunks on 27.07.2017.
  */
 
-public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFragment, FragmentWizardProfileBinding> {
+public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<WizardProfileFragment, FragmentWizardProfileBinding> {
 
 
     ViewPager pager;
@@ -140,6 +142,13 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
         setDotCustomView();
         setTabListener();
         setNextButtonView(tabLayout.getSelectedTabPosition());
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        ProgressableUIComponent progressableUIComponent = new ProgressableUIComponent();
+        progressableUIComponent.setSendEvents(false);
+        return new UIComponentHolder.Builder().with(progressableUIComponent).build();
     }
 
     public void setTabListener() {
@@ -290,6 +299,17 @@ public class WizardProfileFragmentVM extends FragmentViewModel<WizardProfileFrag
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
                             slideNextPage();
+                        }
+                    }
+                    if (o instanceof Events.ProgressableEvents) {
+                        Events.ProgressableEvents events = (Events.ProgressableEvents) o;
+                        switch (events.getEventType()) {
+                            case Events.ProgressableEvents.BEGIN:
+                                getComponent(ProgressableUIComponent.class).begin();
+                                break;
+                            case Events.ProgressableEvents.END:
+                                getComponent(ProgressableUIComponent.class).end();
+                                break;
                         }
                     }
                 });

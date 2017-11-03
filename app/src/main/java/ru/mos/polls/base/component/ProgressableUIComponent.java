@@ -8,7 +8,9 @@ import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 public class ProgressableUIComponent extends UIComponent implements Progressable {
@@ -16,6 +18,7 @@ public class ProgressableUIComponent extends UIComponent implements Progressable
     protected View progressView;
     @BindView(R.id.root)
     protected View rootView;
+    private boolean sendEvents = true;
 
     @Override
     public void onViewCreated(View layout) {
@@ -25,6 +28,7 @@ public class ProgressableUIComponent extends UIComponent implements Progressable
 
     @Override
     public void begin() {
+        if (sendEvents) AGApplication.bus().send(new Events.ProgressableEvents(Events.ProgressableEvents.BEGIN));
         if (progressView instanceof ProgressBar) {
             ((ProgressBar) progressView).getIndeterminateDrawable()
                     .setColorFilter(getProgressColor(), PorterDuff.Mode.SRC_IN);
@@ -35,10 +39,15 @@ public class ProgressableUIComponent extends UIComponent implements Progressable
 
     @Override
     public void end() {
+        if (sendEvents) AGApplication.bus().send(new Events.ProgressableEvents(Events.ProgressableEvents.END));
         progressView.setVisibility(View.GONE);
         rootView.setVisibility(View.VISIBLE);
         Animation animation = getAnimationForContent();
         rootView.startAnimation(animation);
+    }
+
+    public void setSendEvents(boolean b) {
+        sendEvents = b;
     }
 
     protected Animation getAnimationForContent() {

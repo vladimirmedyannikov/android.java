@@ -1,11 +1,11 @@
-package ru.mos.polls.newabout.ui.fragment;
+package ru.mos.polls.about.ui.fragment;
 
 import me.ilich.juggler.Navigable;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.LayoutAboutAppBinding;
-import ru.mos.polls.newabout.vm.AboutAppFragmentVM;
+import ru.mos.polls.about.vm.AboutAppFragmentVM;
 
 /**
  * Created by matek3022 on 21.09.17.

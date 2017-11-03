@@ -54,7 +54,7 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
+import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.newprofile.state.EditProfileState;
@@ -522,7 +522,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_NEWS;
                 break;
             case NavigationMenuItem.ABOUT:
-                ru.mos.polls.newabout.vm.AboutAppFragmentVM.SocialListener socialListener = new ru.mos.polls.newabout.vm.AboutAppFragmentVM.SocialListener() {
+                ru.mos.polls.about.vm.AboutAppFragmentVM.SocialListener socialListener = new ru.mos.polls.about.vm.AboutAppFragmentVM.SocialListener() {
                     @Override
                     public void onSocialPost(AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());

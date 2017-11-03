@@ -1,4 +1,4 @@
-package ru.mos.polls.newabout.vm;
+package ru.mos.polls.about.vm;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,8 +22,8 @@ import ru.mos.polls.databinding.LayoutAboutAppBinding;
 import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
-import ru.mos.polls.newabout.model.AboutItem;
-import ru.mos.polls.newabout.ui.fragment.AboutAppFragment;
+import ru.mos.polls.about.model.AboutItem;
+import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;

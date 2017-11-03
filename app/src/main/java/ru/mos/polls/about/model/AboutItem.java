@@ -1,4 +1,4 @@
-package ru.mos.polls.newabout.model;
+package ru.mos.polls.about.model;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import ru.mos.polls.R;
 
 /**
- * Структура данных, описывающая пункт меню экрана "О приложении" {@link ru.mos.polls.newabout.vm.AboutAppFragmentVM}
+ * Структура данных, описывающая пункт меню экрана "О приложении" {@link ru.mos.polls.about.vm.AboutAppFragmentVM}
  *
  * @since 1.9
  */

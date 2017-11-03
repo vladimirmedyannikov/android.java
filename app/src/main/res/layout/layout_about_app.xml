@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newabout.vm.AboutAppFragmentVM" />
+            type="ru.mos.polls.about.vm.AboutAppFragmentVM" />
     </data>
 
     <RelativeLayout style="@style/root">

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mos.polls.newsettings.vm.SettingsFragmentVM" />
+            type="ru.mos.polls.settings.vm.SettingsFragmentVM" />
     </data>
 
 

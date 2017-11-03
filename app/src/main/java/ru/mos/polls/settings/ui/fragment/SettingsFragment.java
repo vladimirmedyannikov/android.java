@@ -1,10 +1,10 @@
-package ru.mos.polls.newsettings.ui.fragment;
+package ru.mos.polls.settings.ui.fragment;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.LayoutSettingsBinding;
-import ru.mos.polls.newsettings.vm.SettingsFragmentVM;
+import ru.mos.polls.settings.vm.SettingsFragmentVM;
 
 /**
  * Created by matek3022 on 25.09.17.

@@ -1,4 +1,4 @@
-package ru.mos.polls.newsettings.ui.adapter;
+package ru.mos.polls.settings.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
-import ru.mos.polls.newsettings.model.Item;
+import ru.mos.polls.settings.model.Item;
 
 /**
  * Created by matek3022 on 25.09.17.

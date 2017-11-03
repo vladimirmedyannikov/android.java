@@ -368,13 +368,12 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 /**
                  * с версии 1.9.2 исопльзуем навигацию через табы
                  */
-//                fr = PagerFragment.Polls.newInstance();
                 fr = PollFragment.newInstance();
                 break;
             case NavigationMenuItem.SETTINGS:
                 Statistics.propertiesFragment();
                 GoogleStatistics.AGNavigation.propertiesFragment();
-                fr = ru.mos.polls.newsettings.ui.fragment.SettingsFragment.instance();
+                fr = ru.mos.polls.settings.ui.fragment.SettingsFragment.instance();
                 tag = TAG_SETTINGS;
                 break;
             case NavigationMenuItem.SUPPORT:
@@ -531,13 +530,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         socialController.post(socialPostValue, socialPostValue.getSocialId());
                     }
                 };
-//                fr = AboutAppFragment.newInstance(socialListener);
                 fr = AboutAppFragment.instance(socialListener);
                 tag = TAG_ABOUT;
                 break;
             case NavigationMenuItem.NOVELTY:
-//                ActionBarNavigationController.setNoveltyNavigation(this);
-//                fr = new ActiveInnovationsFragment();
                 fr = InnovationFragment.newInstance();
                 tag = TAG_NOVELTY;
                 Statistics.innovationsListFragment();

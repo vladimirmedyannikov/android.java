@@ -36,6 +36,7 @@ import ru.mos.polls.newprofile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.newprofile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.newprofile.vm.NewFlatFragmentVM;
 import ru.mos.polls.profile.gui.fragment.BindingSocialFragment;
+import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.wizardprofile.ui.adapter.WizardProfilePagerAdapter;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardAvatarFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
@@ -305,6 +306,7 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                         Events.ProgressableEvents events = (Events.ProgressableEvents) o;
                         switch (events.getEventType()) {
                             case Events.ProgressableEvents.BEGIN:
+                                if (getFragment() != null) GuiUtils.hideKeyboard(getFragment().getView());
                                 getComponent(ProgressableUIComponent.class).begin();
                                 break;
                             case Events.ProgressableEvents.END:

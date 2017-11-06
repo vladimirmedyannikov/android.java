@@ -628,7 +628,7 @@
     <string name="title_view_meeting">Собрание участников</string>
     <string name="hint_without_registration">Вход свободный</string>
     <string name="verify">Установить связь</string>
-    <string name="pgu_verify_descriprion">Введенный псевдоним и пароль используется только для связывания учетных записей и не сохраняются в системе</string>
+    <string name="pgu_verify_descriprion">Введенный псевдоним и пароль используется только для связывания учетных записей и не сохраняется в системе</string>
     <string name="title_pgu_verify">Верификация</string>
     <string name="bind">Привязать</string>
     <string name="bind_other">Привязать другой профиль</string>

@@ -28,6 +28,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
 
     private SwitchCompat subscribeQuestionsEmail;
     private SubscribesAPIController subscribesController;
+    public List<Integer> finishedPollList;
 
     public PollActiveFragmentVM(PollBaseFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
@@ -36,6 +37,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
     @Override
     protected void initialize(FragmentTabPollBinding binding) {
         pollType = PollAdapter.Type.ITEM_ACTIVE;
+        finishedPollList = new ArrayList<>();
         super.initialize(binding);
         subscribeQuestionsEmail = binding.emailNew;
         subscribesController = new SubscribesAPIController();
@@ -115,15 +117,22 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
                         adapter.notifyDataSetChanged();
                         break;
                     case Events.PollEvents.FINISHED_POLL:
-                        poll.setStatus(Poll.Status.PASSED.status);
-                        poll.setPassedDate(System.currentTimeMillis() / 1000);
-                        adapter.removeItem(poll);
-                        list.remove(poll);
-                        AGApplication.bus().send(new Events.PollEvents(Events.PollEvents.ADD_OLD_POLL, poll));
-                        updateView();
+                        processFinishedPoll(poll);
                         break;
                 }
             }
+        }
+    }
+
+    private void processFinishedPoll(Poll poll) {
+        if (!finishedPollList.contains(poll.getId())) {
+            finishedPollList.add(poll.getId());
+            poll.setStatus(Poll.Status.PASSED.status);
+            poll.setPassedDate(System.currentTimeMillis() / 1000);
+            adapter.removeItem(poll);
+            list.remove(poll);
+            AGApplication.bus().send(new Events.PollEvents(Events.PollEvents.ADD_OLD_POLL, poll));
+            updateView();
         }
     }
 }

@@ -857,7 +857,7 @@ public abstract class SocialUIController {
                 hint = activity.getString(R.string.social_hint_for_achievement);
             } else if (appPostValue.isForNovelty()) {
                 hint = String.format(activity.getString(R.string.social_text_hint),
-                        activity.getString(R.string.social_hint_value_for_poll));
+                        activity.getString(R.string.social_hint_value_for_novelty));
             }
             visibility = View.VISIBLE;
         }

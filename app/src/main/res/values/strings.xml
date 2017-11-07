@@ -436,6 +436,7 @@
     <string name="survey_title" formatted="false">Вопрос %s из %s</string>
     <string name="help">Нужна помощь?</string>
     <string name="social_hint_value_for_poll">прохождения голосования</string>
+    <string name="social_hint_value_for_novelty">оценки новинки</string>
     <string name="social_hint_value_event">отметки на мероприятии</string>
     <string name="support_progress_message">Отправка сообщения..</string>
     <string name="email_un_correct">Некорректный формат введенного адреса электронной почты, отправка сообщения невозможна</string>

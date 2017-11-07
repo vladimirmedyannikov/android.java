@@ -34,8 +34,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 
     public void deletePage(int page) {
-        pages.remove(page);
-        notifyDataSetChanged();
+        if (page < pages.size()) {
+            pages.remove(page);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

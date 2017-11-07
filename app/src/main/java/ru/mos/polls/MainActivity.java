@@ -30,6 +30,7 @@ import ru.mos.elk.Dialogs;
 import ru.mos.elk.api.API;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.ProfileManager;
+import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
@@ -50,18 +51,17 @@ import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
+import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
 import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.about.ui.fragment.AboutAppFragment;
-import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
-import ru.mos.polls.profile.ui.fragment.ProfileFragment;
-import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
+import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -605,9 +605,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (smsInviteController.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+        smsInviteController.onActivityResult(requestCode, resultCode, data);
         socialController.onActivityResult(requestCode, resultCode, data);
         if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
             navFragment.selectItem(-1);

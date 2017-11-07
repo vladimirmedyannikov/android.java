@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
@@ -17,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
@@ -26,6 +24,8 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.friend.ContactsManager;
+import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.util.SMSUtils;
 
 public class SmsInviteController {
@@ -33,10 +33,12 @@ public class SmsInviteController {
     private static final int REQUEST_CODE = 1234;
 
     private BaseActivity activity;
+    private ContactsManager contactsManager;
     private boolean isTask;
 
     public SmsInviteController(BaseActivity a) {
         activity = a;
+        initContactsController();
     }
 
     public void process(boolean isTask) {
@@ -51,9 +53,7 @@ public class SmsInviteController {
                         if (activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
                             Statistics.beforeSendInviteFriends();
                             GoogleStatistics.QuestsFragment.beforeSendInviteFriends(1);
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-                            activity.startActivityForResult(intent, REQUEST_CODE);
+                            contactsManager.chooseContact(activity);
                         } else {
                             Toast.makeText(activity, R.string.sms_could_not_send, Toast.LENGTH_SHORT).show();
                         }
@@ -67,38 +67,27 @@ public class SmsInviteController {
                 }).show();
     }
 
-    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        boolean result = false;
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == BaseActivity.RESULT_OK) {
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri != null) {
-                        Cursor c = null;
-                        try {
-                            c = activity.getContentResolver().query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE}, null, null, null); // на android c API 10 замечена особенность в поле ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER - храниться номер в обратном порядке; видимо, так в обратном порядке быстрее хранить удобнее для ускорение выборки http://stackoverflow.com/questions/4579009/android-why-number-key-return-the-number-in-reverse-order
-                            if (c != null && c.moveToFirst()) {
-                                String number = c.getString(0);
-                                try {
-                                    sendSms(number);
-                                    /**
-                                     * обработка ошибок и успеха реализована в SMSUtils
-                                     */
-                                } catch (Exception ignored) {
-
-                                }
-                            }
-                        } finally {
-                            if (c != null) {
-                                c.close();
-                            }
-                        }
-                    }
-                    result = true;
-                }
+    private void initContactsController() {
+        contactsManager = new ContactsManager(activity);
+        contactsManager.setCallback(new ContactsManager.Callback() {
+            @Override
+            public void onChooseContacts(String number) {
+                number = FriendGuiUtils.formatPhone(number);
+                sendSms("+" + number);
             }
-        }
-        return result;
+
+            @Override
+            public void onGetAllContacts(List<String> numbers) {
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        contactsManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void sendSms(String phoneNumber) {

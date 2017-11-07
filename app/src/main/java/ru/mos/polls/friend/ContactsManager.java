@@ -49,6 +49,16 @@ public class ContactsManager {
     }
 
     /**
+     * Выбор одного контакта из телефонной книги, используется
+     * в сочетании с {@link #onActivityResult(int, int, Intent)}
+     */
+    public void chooseContact(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        activity.startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    /**
      * Отправка {@link android.provider.Telephony.Sms}
      *
      * @param phoneNumber {@link String} телефонный номер

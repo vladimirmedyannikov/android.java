@@ -65,13 +65,6 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
 
             TransitionManager.beginDelayedTransition(getBinding().root, transitionSet);
             getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
-
-
-            TransitionManager.beginDelayedTransition(getBinding().root, fade);
-            getBinding().root.setVisibility(on ? View.GONE : View.VISIBLE);
-
-            TransitionManager.beginDelayedTransition(getBinding().root, fade);
-            getBinding().progress.setVisibility(on ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -115,6 +108,9 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
                                 invisibleProfileContainer.setVisibility(View.VISIBLE);
                                 break;
                             case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
+                                if (adapter != null) {
+                                    adapter.deletePage(1);
+                                }
                                 goneSlidingTabs(true);
                                 break;
                             case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO:

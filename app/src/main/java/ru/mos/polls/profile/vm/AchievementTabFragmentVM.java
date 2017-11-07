@@ -8,27 +8,20 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.ilich.juggler.change.Add;
-import me.ilich.juggler.change.Remove;
 import ru.mos.elk.profile.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
-import ru.mos.polls.friend.state.FriendStatisticFragmentState;
-import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.profile.service.AchievementsSelect;
+import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.profile.ui.fragment.AchievementTabFragment;
-import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.StubUtils;
 
@@ -78,19 +71,6 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
                         if (friendId != 0) {
                             if (result.getAchievements().size() == 0) {
                                 AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO));
-                                /**
-                                 * для красивой анимации
-                                 */
-                                Timer timer = new Timer();
-                                TimerTask timerTask = new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        if ((getFragment().getParentFragment()) != null && ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate() != null) {
-                                            ((FriendProfileTabFragment) getFragment().getParentFragment()).navigate().state(Remove.closeCurrentActivity(), Add.newActivity(new FriendStatisticFragmentState(((FriendProfileTabFragment) getFragment().getParentFragment()).getFriend()), BaseActivity.class));
-                                        }
-                                    }
-                                };
-                                timer.schedule(timerTask, 500);
                             } else {
                                 AGApplication.bus().send(new Events.FriendEvents(Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO));
                             }

@@ -507,7 +507,7 @@ public class AgUser implements Serializable {
 
     public String getSurnameAndFirstName() {
         String surAndFis = String.format("%s %s", surname, firstName);
-        return surAndFis.equalsIgnoreCase("") ? "Имя не заполнено" : surAndFis;
+        return surAndFis.trim().equalsIgnoreCase("") ? "Имя не заполнено" : surAndFis;
     }
 
     public String getFullUserName() {

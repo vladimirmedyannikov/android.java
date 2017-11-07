@@ -11,9 +11,9 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.ItemPassedPollBinding;
-import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
 
 /**
  * Created by Trunks on 14.09.2017.
@@ -49,8 +49,7 @@ public class PollItemOldVM extends RecyclerBaseViewModel<Poll, ItemPassedPollBin
         if (poll.isPassed()) {
             StringBuilder sb = new StringBuilder();
             if (poll.getPoints() > 0) {
-                sb.append(v.getContext().getString(R.string.credited) + " ");
-                String points = PointsManager.getSuitableString(v.getContext(), R.array.survey_points_pluse, poll.getPoints());
+                String points = PointsManager.getSuitableString(v.getContext(), R.array.poll_passed_points, poll.getPoints());
                 points = String.format(points, poll.getPoints());
                 sb.append(points + " ");
             } else {

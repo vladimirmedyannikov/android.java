@@ -220,9 +220,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                             case Events.ProfileEvents.EDIT_USER_INFO:
                                 navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
                                 break;
-                            case Events.ProfileEvents.QUEST_PROFILE_FLAT:
-                                navigateTo().state(Add.newActivityForResult(new QuestProfileState(VoidParams.instance()), BaseActivity.class, ActionSurveyVariant.REQUEST_FILLING_LOCATION_DATA));
-                                break;
                         }
                     }
                     if (o instanceof Events.FriendEvents) {

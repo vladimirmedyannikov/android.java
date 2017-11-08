@@ -611,8 +611,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        smsInviteController.onActivityResult(requestCode, resultCode, data);
-        socialController.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            smsInviteController.onActivityResult(requestCode, resultCode, data);
+            socialController.onActivityResult(requestCode, resultCode, data);
+        }
         if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
             navFragment.selectItem(-1);
             getSupportFragmentManager()

@@ -11,7 +11,7 @@
         style="@style/item.linear.horizontal"
         android:paddingTop="@dimen/pd_xsmall"
         android:paddingBottom="@dimen/pd_xsmall"
-        android:paddingLeft="@dimen/pd_xxsmall">
+        android:paddingLeft="@dimen/pd_xxxxsmall">
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/flat_residence_toggle"

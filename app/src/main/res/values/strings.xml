@@ -785,9 +785,9 @@
     <string name="avatar_sources_title">Выберите источник фотографии</string>
     <string name="src_gallery">ГАЛЕРЕЯ</string>
     <string name="src_camera">КАМЕРА</string>
-    <string name="flat_title_registration">Адрес регистрации</string>
-    <string name="flat_title_residence">Адрес проживания</string>
-    <string name="flat_title_work">Адрес работы</string>
+    <string name="flat_title_registration">Адрес регистрации:</string>
+    <string name="flat_title_residence">Адрес проживания:</string>
+    <string name="flat_title_work">Адрес работы:</string>
     <string name="flat_residence_equal_flat_registration">Адрес проживания совпадает с адресом регистрации</string>
     <string name="profile_filled_title" formatted="false">профиль заполнен на %d%%</string>
     <string name="mainmenu_friends_title">Друзья</string>

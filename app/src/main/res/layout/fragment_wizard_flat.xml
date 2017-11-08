@@ -11,10 +11,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/pd_normal">
+                android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
+                    android:padding="@dimen/pd_small"
                     android:id="@+id/social_status_wrapper"
                     style="@style/text_input_layout"
                     android:visibility="gone">
@@ -29,9 +29,11 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:paddingLeft="@dimen/pd_normal"
+                    android:paddingTop="@dimen/pd_normal"
+                    android:paddingRight="@dimen/pd_normal"
                     android:id="@+id/wizard_flat_title"
                     style="@style/text.normal.black"
-                    android:paddingLeft="@dimen/pd_xxxsmall"
                     android:text="@string/flat_title_registration"/>
             </LinearLayout>
 

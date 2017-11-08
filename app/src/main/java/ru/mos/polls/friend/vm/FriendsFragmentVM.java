@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import ru.mos.polls.friend.vm.list.FriendAddItemVW;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.GuiUtils;
+import ru.mos.polls.util.NetworkUtils;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -56,10 +58,15 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
     protected UIComponentHolder createComponentHolder() {
         return new UIComponentHolder.Builder()
                 .with(new PullableUIComponent(() -> {
-                    progressable = getPullableProgressable();
-                    adapter.clear();
-                    adapter.notifyDataSetChanged();
-                    loadMyFriends();
+                    if (NetworkUtils.hasInternetConnection(getActivity())) {
+                        progressable = getPullableProgressable();
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
+                        loadMyFriends();
+                    } else {
+                        GuiUtils.displayOkMessage(getActivity(), R.string.default_no_internet_err, null);
+                        getPullableProgressable().end();
+                    }
                 }))
                 .with(new ProgressableUIComponent())
                 .build();
@@ -78,14 +85,18 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
     public void onViewCreated() {
         super.onViewCreated();
         progressable = getProgressable();
-        loadMyFriends();
-        initContactsController();
-        chooseContact();
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            loadMyFriends();
+            initContactsController();
+            chooseContact();
+            BadgeManager.uploadAllFriendsAsReaded((BaseActivity) getActivity());
+            LocalBroadcastManager
+                    .getInstance(getActivity())
+                    .sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
+        } else {
+            GuiUtils.displayOkMessage(getActivity(), R.string.default_no_internet_err, null);
+        }
 
-        BadgeManager.uploadAllFriendsAsReaded((BaseActivity) getActivity());
-        LocalBroadcastManager
-                .getInstance(getActivity())
-                .sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
     }
 
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
@@ -179,7 +190,7 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Ваш друг ещё не является пользователем системы \"Активный гражданин\". Вы хотите пригласить вашего друга?")
                 .setPositiveButton(R.string.ag_yes, (dialog, which) -> {
-                    String[] messages = new String[] {
+                    String[] messages = new String[]{
                             "Я - Активный гражданин - А ТЫ? Давай вместе сделаем город лучше!",
                             "http://ag.mos.ru"
                     };
@@ -189,4 +200,4 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
                 .show();
     }
 
- }
+}

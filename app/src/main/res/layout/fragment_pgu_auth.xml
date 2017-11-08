@@ -32,9 +32,12 @@
             <Button
                 android:id="@+id/pgu_connect_btn"
                 style="@style/button.centered"
+                android:layout_centerInParent="false"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@id/pguTitle"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/pd_xlarge"
+                android:layout_marginBottom="@dimen/pd_xxxlarge"
                 android:minWidth="@dimen/vs_xxlarge"
                 android:text="Связать профили"
                 android:textSize="@dimen/ts_normal"/>
@@ -49,6 +52,7 @@
                 android:padding="@dimen/pd_xsmall"
                 android:paddingBottom="@dimen/pd_xxsmall"
                 android:paddingTop="@dimen/pd_xxsmall"
+                android:layout_marginBottom="@dimen/pd_xxxlarge"
                 android:text="@string/pgu_rebind"
                 android:visibility="gone"/>
 

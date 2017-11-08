@@ -60,6 +60,7 @@ import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
+import ru.mos.polls.profile.state.QuestProfileState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
@@ -73,6 +74,7 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
+import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
@@ -191,6 +193,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         subscribeEventsBus();
         findFriends();
     }
+
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void findFriends() {
         if (ContactsController.Manager.isNeedUpdate(this)) {
@@ -616,8 +619,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        smsInviteController.onActivityResult(requestCode, resultCode, data);
-        socialController.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            smsInviteController.onActivityResult(requestCode, resultCode, data);
+            socialController.onActivityResult(requestCode, resultCode, data);
+        }
         if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
             navFragment.selectItem(-1);
             getSupportFragmentManager()

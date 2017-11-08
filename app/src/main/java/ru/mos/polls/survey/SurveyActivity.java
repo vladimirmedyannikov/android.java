@@ -156,6 +156,7 @@ public class SurveyActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("onActivityResult  SurveyActivity" + requestCode);
         socialController.onActivityResult(requestCode, resultCode, data);
         tryToExecuteActionCallback(requestCode);
         /**

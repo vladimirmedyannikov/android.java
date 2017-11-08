@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/edit_user_flat_card"
+            style="@style/wrap"
+            android:layout_below="@+id/edit_user_family_card"
+            android:layout_marginTop="@dimen/pd_normal">
+
+            <LinearLayout
+                style="@style/linear"
+                android:padding="@dimen/pd_xxsmall">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/edit_flat_registration"
+                    style="@style/edit_profile"
+                    android:hint="Адрес регистрации" />
+
+                <include layout="@layout/ag_separator" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/edit_flat_residence"
+                    style="@style/edit_profile"
+                    android:hint="Адрес проживания" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -32,6 +32,7 @@ public class Events {
         public static final int UPDATE_USER_INFO = 3;
         public static final int UPDATE_FLAT = 4;
         public static final int PROFILE_LOADED = 5;
+        public static final int QUEST_PROFILE_FLAT = 6;
         private AgUser agUser;
         private Flat flat;
 

@@ -1,9 +1,10 @@
 package ru.mos.polls.informer;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
+import android.view.WindowManager;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.BuildConfig;
@@ -11,11 +12,20 @@ import ru.mos.polls.R;
 import ru.mos.polls.util.GuiUtils;
 
 /**
- * Проверка доступности новой версии приложения {@link #process(BaseActivity)}
+ * Проверка доступности новой версии приложения {@link #process()}
  * @since 2.3.0
  */
 
 public class InformerUIController {
+
+    private AlertDialog versionDialog;
+    private BaseActivity elkActivity;
+    private boolean active = false;
+
+    public InformerUIController(BaseActivity elkActivity) {
+        this.elkActivity = elkActivity;
+        versionDialog = null;
+    }
 
     public interface Compare {
         int EQUALS = 0;
@@ -26,17 +36,16 @@ public class InformerUIController {
      * Проверка доступности новой версии приложения</br>
      * Если пользователю ранее показвалось окно о доступности новой верии для текущуй версии {@link BuildConfig#VERSION_NAME},
      * то проверка доступности новой версии выполняться не будет {@link Manager}
-     * @param elkActivity {@link BaseActivity}
      */
-    public static void process(final BaseActivity elkActivity) {
+    public void process() {
         if (!Manager.wasShow(elkActivity)) {
             final InformetApiController.Callback callback = new InformetApiController.Callback() {
                 @Override
                 public void onGet(String actualAppVersion) {
                     if (actualAppVersion != null
                             && compareVersionNames(BuildConfig.VERSION_NAME, actualAppVersion) == Compare.MORE) {
-                        Manager.setShow(elkActivity);
-                        displayNotification(elkActivity, actualAppVersion);
+//                        Manager.setShow(elkActivity);
+                        versionDialog = displayNotification(actualAppVersion);
                     }
                 }
 
@@ -50,31 +59,51 @@ public class InformerUIController {
 
     /**
      * Отображение предложения обновиться
-     * @param context {@link Context}
      * @param newVersion наименование версии доступного обновления {@link String}
      */
-    public static void displayNotification(final Context context, String newVersion) {
-        String message = String.format(context.getString(R.string.informer_message_about_new_version), newVersion);
+    public AlertDialog displayNotification(String newVersion) {
+        String message = String.format(elkActivity.getString(R.string.informer_message_about_new_version), newVersion);
         DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Manager.setShow(context);
+                Manager.setShow(elkActivity);
+                versionDialog = null;
             }
         };
         DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                GuiUtils.browseAppInGooglePlayMarket(context);
-                Manager.setShow(context);
+                GuiUtils.browseAppInGooglePlayMarket(elkActivity);
+                Manager.setShow(elkActivity);
+                versionDialog = null;
             }
         };
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(elkActivity);
         builder.setTitle(R.string.update_app)
                 .setMessage(message)
                 .setCancelable(false)
                 .setNegativeButton(R.string.close, cancelListener)
-                .setPositiveButton(R.string.update, okListener)
-                .show();
+                .setPositiveButton(R.string.update, okListener);
+        AlertDialog alertDialog = builder.create();
+        try {
+            if (active) {
+                alertDialog.show();
+            }
+        } catch (WindowManager.BadTokenException ignored) {
+        }
+        return alertDialog;
+    }
+
+    public void elkIsPaused() {
+        active = false;
+    }
+
+    public void elkIsResume() {
+        active = true;
+    }
+
+    public AlertDialog getVersionDialog() {
+        return versionDialog;
     }
 
     /**

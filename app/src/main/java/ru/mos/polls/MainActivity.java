@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.List;
@@ -113,6 +114,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private SmsInviteController smsInviteController;
     private SocialController socialController;
     private QuestStateController questStateController;
+    private InformerUIController informerUIController;
     private NavigationDrawerFragment navFragment;
     private DrawerLayout drawerLayout;
     /**
@@ -167,6 +169,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
         socialController = new SocialController(this);
         smsInviteController = new SmsInviteController(this);
+        informerUIController = new InformerUIController(this);
         questStateController = QuestStateController.getInstance();
 
         navFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -278,13 +281,14 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onResume() {
         super.onResume();
+        informerUIController.elkIsResume();
+        informerUIController.process();
         LocalBroadcastManager.getInstance(this).registerReceiver(smsSuccessReceiver, new IntentFilter(SMSUtils.SUCCESS_SEND_INVITE_MESSAGE_FILTER));
         socialController.getEventController().registerCallback(postCallback);
         SocialUIController.registerPostingReceiver(this);
         if (PreviewAppActivity.isNeedPreview(this)) {
             PreviewAppActivity.start(this);
         }
-        InformerUIController.process(this);
         /**
          * Проверка доступности работы с местоположением
          */
@@ -316,6 +320,13 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onPause() {
         super.onPause();
+        informerUIController.elkIsPaused();
+        if (informerUIController.getVersionDialog() != null) {
+            try {
+                informerUIController.getVersionDialog().dismiss();
+            } catch (WindowManager.BadTokenException ignored) {
+            }
+        }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(smsSuccessReceiver);
         SocialUIController.unregisterPostingReceiver(this);
         socialController.getEventController().unregisterAllCallback();

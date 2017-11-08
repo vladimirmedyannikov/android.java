@@ -264,17 +264,17 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                                 wizardFilledList.put(AVATAR, true);
                                 break;
                             case Events.WizardEvents.WIZARD_EMAIL:
-                                wizardFilledList.put(EMAIL, true);
+                                wizardFilledList.put(EMAIL, false);
                                 break;
                             case Events.WizardEvents.WIZARD_PERSONAL:
-                                wizardFilledList.put(PERSONAL, true);
+                                wizardFilledList.put(PERSONAL, false);
                                 break;
                             case Events.WizardEvents.WIZARD_FAMILY:
-                                wizardFilledList.put(FAMILY, true);
+                                wizardFilledList.put(FAMILY, false);
                                 checkBirthdayKidsFr();
                                 break;
                             case Events.WizardEvents.WIZARD_KIDS:
-                                wizardFilledList.put(TAG_BIRTHDAYKIDS, true);
+                                wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
                                 break;
                             case Events.WizardEvents.WIZARD_REGISTRATION:
                                 wizardFilledList.put(TAG_REGISTRATION, true);
@@ -335,9 +335,16 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                 frViewedList.put(frViewedList.size() + 1, false);
                 reDrawDots();
             } else {
-                EditPersonalInfoFragment epif = (EditPersonalInfoFragment) list.get(nextPosition);
-                epif.getViewModel().setAgUser(agUser);
-                epif.getViewModel().setView(EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
+                for (Fragment fragment : list) {
+                    if (fragment instanceof EditPersonalInfoFragment) {
+                        EditPersonalInfoFragment epif = (EditPersonalInfoFragment) fragment;
+                        if (epif.getViewModel() != null && epif.getViewModel().getPersonalType() == EditPersonalInfoFragmentVM.BIRTHDAY_KIDS) {
+                            epif.getViewModel().setAgUser(agUser);
+                            epif.getViewModel().setView(EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
+                            break;
+                        }
+                    }
+                }
             }
         }
         if (tagFr.contains(TAG_BIRTHDAYKIDS) && agUser.getChildCount() == 0) {

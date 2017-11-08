@@ -41,7 +41,7 @@ public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalIn
 
     @Override
     protected EditPersonalInfoFragmentVM onCreateViewModel(FragmentNewEditPersonalInfoBinding binding) {
-        return new EditPersonalInfoFragmentVM(this, getBinding());
+        return new EditPersonalInfoFragmentVM(this, binding);
     }
 
     @Override

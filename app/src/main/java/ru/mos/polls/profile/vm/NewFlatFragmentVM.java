@@ -465,6 +465,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                                 break;
                             case FLAT_TYPE_RESIDENCE:
                                 wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
+                                residenceToggle.setClickable(false);
                                 break;
                             case FLAT_TYPE_WORK:
                                 wizardType = Events.WizardEvents.WIZARD_WORK;

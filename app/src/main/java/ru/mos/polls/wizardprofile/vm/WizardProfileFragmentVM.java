@@ -306,7 +306,8 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                         Events.ProgressableEvents events = (Events.ProgressableEvents) o;
                         switch (events.getEventType()) {
                             case Events.ProgressableEvents.BEGIN:
-                                if (getFragment() != null) GuiUtils.hideKeyboard(getFragment().getView());
+                                if (getFragment() != null)
+                                    GuiUtils.hideKeyboard(getFragment().getView());
                                 getComponent(ProgressableUIComponent.class).begin();
                                 break;
                             case Events.ProgressableEvents.END:
@@ -396,9 +397,13 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
 
     public void doNext() {
         Fragment bd = list.get(pager.getCurrentItem());
-        if (bd instanceof NavigateFragment) {
+        boolean isCurrFrFilled = wizardFilledList.get(tagFr.get(pager.getCurrentItem()));
+        if (bd instanceof NavigateFragment && !isCurrFrFilled) {
             NavigateFragment wpdf = (NavigateFragment) bd;
             wpdf.doRequestAction();
+        } else {
+            slideNextPage();
+            return;
         }
         if (isLastPage) {
             getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
@@ -409,7 +414,7 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         }
         if (bd instanceof WizardFlatFragment) {
             WizardFlatFragment wff = (WizardFlatFragment) bd;
-            if (wff.getViewModel().checkWorkFlatWizard())
+            if (wff.getViewModel().checkWorkFlatWizard() || isCurrFrFilled)
                 slideNextPage();
         }
     }

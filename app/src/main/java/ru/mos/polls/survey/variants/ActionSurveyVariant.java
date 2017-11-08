@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.profile.ui.activity.QuestActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.survey.StatusProcessor;
 import ru.mos.polls.survey.VerificationException;
@@ -46,8 +47,7 @@ public class ActionSurveyVariant extends SurveyVariant {
     @Override
     public void onClick(Activity context, Fragment fragment, boolean checked) {
         if (actionName.equals("fillFlats")) {
-            ProfileQuestActivity.startActivityAddFlat(fragment);
-            AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.QUEST_PROFILE_FLAT));
+            QuestActivity.startActivityAddFlat(fragment);
         }
     }
 

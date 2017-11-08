@@ -1,5 +1,6 @@
 package ru.mos.polls.survey;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.profile.ui.activity.QuestActivity;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
@@ -36,6 +38,7 @@ import ru.mos.polls.survey.source.StubSurveyDataSource;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
 import ru.mos.polls.survey.summary.ProgressView;
+import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.survey.variants.SelectSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.select.GorodSelectObject;
@@ -278,7 +281,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (ProfileQuestActivity.onResult(requestCode, resultCode)) {
+        if (requestCode == QuestActivity.REQUEST_ADD_FLAT && resultCode == Activity.RESULT_OK) {
             loadSurvey(pollId, questionId);
         } else {
             this.requestCode = requestCode;
@@ -596,7 +599,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
         if (survey != null) {
             if (survey.getKind().isHearing()) {
                 callback.onSurveyInterrupted(survey);
-                ((SurveyActivity)getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             } else {
                 try {
                     survey.verify();
@@ -605,7 +608,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
                 }
                 survey.endTiming();
                 manager.saveCurrentPage(survey);
-                ((SurveyActivity)getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             }
         }
     }

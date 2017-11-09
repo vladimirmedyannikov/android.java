@@ -1,5 +1,7 @@
 package ru.mos.polls.poll.vm;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 
@@ -7,15 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.elk.BaseActivity;
-import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.model.Filter;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
-import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.subscribes.controller.SubscribesAPIController;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
@@ -131,7 +132,9 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
             poll.setPassedDate(System.currentTimeMillis() / 1000);
             adapter.removeItem(poll);
             list.remove(poll);
-            AGApplication.bus().send(new Events.PollEvents(Events.PollEvents.ADD_OLD_POLL, poll));
+            Intent oldPollIntent = new Intent(PollOldFragmentVM.ACTION_ADD_OLD_POLL);
+            oldPollIntent.putExtra(PollOldFragmentVM.ARG_POLL, poll);
+            LocalBroadcastManager.getInstance(getFragment().getContext()).sendBroadcast(oldPollIntent);
             updateView();
         }
     }

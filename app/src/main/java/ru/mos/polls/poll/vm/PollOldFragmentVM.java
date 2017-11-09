@@ -1,13 +1,18 @@
 package ru.mos.polls.poll.vm;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import java.util.List;
 
 import ru.mos.polls.GoogleStatistics;
-import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.model.Filter;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 
@@ -16,6 +21,18 @@ import ru.mos.polls.poll.ui.adapter.PollAdapter;
  */
 
 public class PollOldFragmentVM extends PollBaseFragmentVM {
+    public static final String ACTION_ADD_OLD_POLL = "ru.mos.polls.poll.vm.action_add_old_poll";
+    public static final String ARG_POLL = "arg_poll";
+
+    private BroadcastReceiver addOldPollReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Poll poll = (Poll) intent.getSerializableExtra(ARG_POLL);
+            list.add(0, poll);
+            adapter.addOldPoll(poll);
+        }
+    };
+
     public PollOldFragmentVM(PollBaseFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
     }
@@ -29,16 +46,19 @@ public class PollOldFragmentVM extends PollBaseFragmentVM {
     }
 
     @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(addOldPollReceiver, new IntentFilter(ACTION_ADD_OLD_POLL));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(addOldPollReceiver);
+    }
+
+    @Override
     protected void eventsBusPollAction(Object o) {
-        if (o instanceof Events.PollEvents) {
-            Events.PollEvents action = (Events.PollEvents) o;
-            switch (action.getEventType()) {
-                case Events.PollEvents.ADD_OLD_POLL:
-                    list.add(0, action.getPoll());
-                    adapter.addOldPoll(action.getPoll());
-                    break;
-            }
-        }
     }
 
     @Override

@@ -41,17 +41,8 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     }
 
     public void addOldPoll(Poll poll) {
-        boolean isAdded = false;
-        for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
-            if (poll.getId() == ((Poll) recyclerBaseViewModel.getModel()).getId()) {
-                isAdded = true;
-                break;
-            }
-        }
-        if (!isAdded) {
-            list.add(0, new PollItemOldVM(poll));
-            notifyDataSetChanged();
-        }
+        list.add(0, new PollItemOldVM(poll));
+        notifyDataSetChanged();
     }
 
     public void removeItem(Poll poll) {

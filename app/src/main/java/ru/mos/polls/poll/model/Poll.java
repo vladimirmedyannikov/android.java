@@ -6,10 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 
-public class Poll {
+public class Poll implements Serializable {
     private int id;
     private String title;
     private int points;

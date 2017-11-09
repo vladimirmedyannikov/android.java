@@ -86,6 +86,7 @@ public class SourcesVotingFragmentVM extends PullablePaginationFragmentVM<Source
                 = new HandlerApiResponseSubscriber<EmptyResult[]>(getFragment().getContext(), getProgressable()) {
             @Override
             protected void onResult(EmptyResult[] result) {
+                adapter.notifyDataSetChanged();
             }
         };
         AGApplication

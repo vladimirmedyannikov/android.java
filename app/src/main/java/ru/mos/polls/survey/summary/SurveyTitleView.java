@@ -155,7 +155,7 @@ public class SurveyTitleView extends HtmlTitleView {
             }
             String result = PointsManager.getSuitableString(getContext(), res, survey.getPoints());
             result = String.format(result, survey.getPoints());
-            price.setText(result);
+            price.setText(survey.isOld() ? survey.getFormattedTitle(getContext()) : result);
             price.setTextColor(getResources().getColor(survey.getColorForTitle()));
             price.setVisibility(View.VISIBLE);
         }

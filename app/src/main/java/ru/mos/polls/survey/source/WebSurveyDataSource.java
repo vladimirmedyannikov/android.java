@@ -1,6 +1,8 @@
 package ru.mos.polls.survey.source;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley2.RequestQueue;
@@ -26,6 +28,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.poll.vm.PollActiveFragmentVM;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.hearing.controller.HearingApiController;
@@ -125,7 +128,14 @@ public class WebSurveyDataSource implements SurveyDataSource {
                 stParams.put("id", String.valueOf(survey.getId()));
                 stParams.put("success", isInterrupted ? "Cancel" : "Final");
                 Statistics.customEvent("poll passaging", stParams);
-                AGApplication.bus().send(new Events.PollEvents(isInterrupted ? Events.PollEvents.INTERRUPTED_POLL : Events.PollEvents.FINISHED_POLL, survey.getId()));
+                if (isInterrupted) {
+                    AGApplication.bus().send(new Events.PollEvents(Events.PollEvents.INTERRUPTED_POLL, survey.getId()));
+                } else {
+                    Intent intent = new Intent(PollActiveFragmentVM.ACTION_POLL_IS_PASSED);
+                    intent.putExtra(PollActiveFragmentVM.ARG_POLL_ID, survey.getId());
+                    LocalBroadcastManager.getInstance(actionBarActivity).sendBroadcast(intent);
+                }
+//                AGApplication.bus().send(new Events.PollEvents(isInterrupted ? Events.PollEvents.INTERRUPTED_POLL : Events.PollEvents.FINISHED_POLL, survey.getId()));
                 JSONObject statusJsonObject = json.optJSONObject("status");
                 final int currentPoints = statusJsonObject.optInt("current_points");
                 final int price = json.optInt("added_points");

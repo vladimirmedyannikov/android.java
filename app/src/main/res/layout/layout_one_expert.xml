@@ -8,6 +8,7 @@
 
     <RelativeLayout
         style="@style/wrap"
+        android:layout_marginLeft="@dimen/pd_xxsmall"
         android:layout_gravity="center">
 
         <ProgressBar

@@ -1,6 +1,9 @@
 package ru.mos.polls.poll.vm;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -27,9 +30,21 @@ import ru.mos.polls.subscribes.model.Subscription;
 
 public class PollActiveFragmentVM extends PollBaseFragmentVM {
 
+    public static final String ACTION_POLL_IS_PASSED = "ru.mos.polls.poll.vm.poll_is_passed";
+    public static final String ARG_POLL_ID = "arg_poll_id";
+
     private SwitchCompat subscribeQuestionsEmail;
     private SubscribesAPIController subscribesController;
     public List<Integer> finishedPollList;
+
+    private BroadcastReceiver passedPollReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long pollId = intent.getLongExtra(ARG_POLL_ID, 0);
+            Poll poll = adapter.getPoll(pollId);
+            processFinishedPoll(poll);
+        }
+    };
 
     public PollActiveFragmentVM(PollBaseFragment fragment, FragmentTabPollBinding binding) {
         super(fragment, binding);
@@ -47,6 +62,18 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         setListeners();
         updateView();
         loadSubscribe();
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(passedPollReceiver, new IntentFilter(ACTION_POLL_IS_PASSED));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(passedPollReceiver);
     }
 
     @Override
@@ -95,7 +122,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         if (o instanceof Events.PollEvents) {
             Events.PollEvents action = (Events.PollEvents) o;
             switch (action.getEventType()) {
-                case Events.PollEvents.FINISHED_POLL:
+//                case Events.PollEvents.FINISHED_POLL:
                 case Events.PollEvents.INTERRUPTED_POLL:
                     processPoll(action.getPollId(), action.getEventType());
                     break;
@@ -117,9 +144,9 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
                         poll.setStatus(Poll.Status.INTERRUPTED.status);
                         adapter.notifyDataSetChanged();
                         break;
-                    case Events.PollEvents.FINISHED_POLL:
-                        processFinishedPoll(poll);
-                        break;
+//                    case Events.PollEvents.FINISHED_POLL:
+//                        processFinishedPoll(poll);
+//                        break;
                 }
             }
         }

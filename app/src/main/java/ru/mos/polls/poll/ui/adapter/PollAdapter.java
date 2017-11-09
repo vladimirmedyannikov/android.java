@@ -5,9 +5,9 @@ import java.util.List;
 
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.vm.item.PollItemActiveVM;
 import ru.mos.polls.poll.vm.item.PollItemOldVM;
-import ru.mos.polls.poll.model.Poll;
 
 /**
  * Created by Trunks on 14.09.2017.
@@ -41,8 +41,17 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     }
 
     public void addOldPoll(Poll poll) {
-        list.add(0, new PollItemOldVM(poll));
-        notifyDataSetChanged();
+        boolean isAdded = false;
+        for (RecyclerBaseViewModel recyclerBaseViewModel : list) {
+            if (poll.getId() == ((Poll) recyclerBaseViewModel.getModel()).getId()) {
+                isAdded = true;
+                break;
+            }
+        }
+        if (!isAdded) {
+            list.add(0, new PollItemOldVM(poll));
+            notifyDataSetChanged();
+        }
     }
 
     public void removeItem(Poll poll) {

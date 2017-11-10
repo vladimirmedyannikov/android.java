@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
+
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -21,11 +22,14 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ContactsManager;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
+import ru.mos.polls.friend.state.FriendProfileState;
 import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
@@ -79,6 +83,24 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
         adapter = new FriendsAdapter();
         adapter.add(new FriendAddItemVW(() -> contactsManager.chooseContact(getFragment())));
         binding.list.setAdapter(adapter);
+        subscribeEventsBus();
+    }
+
+    private void subscribeEventsBus() { //переснести
+        disposables.add(AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.FriendEvents) {
+                            Events.FriendEvents action = (Events.FriendEvents) o;
+                            if (action.getId() == Events.FriendEvents.FRIEND_START_PROFILE) {
+                                getFragment().navigateToActivityForResult(new FriendProfileState(action.getFriend()),0);
+                            }
+                        }
+                    }
+                }));
     }
 
     @Override
@@ -144,6 +166,11 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
             public void onError(Exception e) {
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void loadMyFriends() {

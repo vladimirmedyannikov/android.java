@@ -31,6 +31,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;
 import ru.mos.polls.base.ui.dialog.OnDateSetCallback;
 import ru.mos.polls.base.view.DictionaryView;
@@ -121,21 +122,24 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     public void onViewCreated() {
         super.onViewCreated();
         setClickListener();
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.ProfileEvents) {
-                        Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.ProfileEvents.UPDATE_USER_INFO:
-                                AgUser changed = action.getAgUser();
-                                this.savedUser = changed;
-                                refreshView(savedUser);
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.ProfileEvents) {
+                            Events.ProfileEvents action = (Events.ProfileEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.ProfileEvents.UPDATE_USER_INFO:
+                                    AgUser changed = action.getAgUser();
+                                    savedUser = changed;
+                                    refreshView(savedUser);
+                                    break;
+                            }
                         }
                     }
-                });
+                }));
     }
 
     @Override

@@ -19,6 +19,7 @@ import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentWizardFlatBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.FragmentViewModel;
@@ -86,29 +87,32 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     public void setRxEventBusListener() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.ProfileEvents) {
-                        Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.ProfileEvents.UPDATE_USER_INFO:
-                                AgUser changed = action.getAgUser();
-                                agUser = changed;
-                                setSocialStatusView();
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.ProfileEvents) {
+                            Events.ProfileEvents action = (Events.ProfileEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.ProfileEvents.UPDATE_USER_INFO:
+                                    AgUser changed = action.getAgUser();
+                                    agUser = changed;
+                                    setSocialStatusView();
+                                    break;
+                            }
+                        }
+                        if (o instanceof Events.WizardEvents) {
+                            Events.WizardEvents action = (Events.WizardEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.WizardEvents.WIZARD_CHANGE_FLAT_FR:
+                                    rotateFragment();
+                                    break;
+                            }
                         }
                     }
-                    if (o instanceof Events.WizardEvents) {
-                        Events.WizardEvents action = (Events.WizardEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.WizardEvents.WIZARD_CHANGE_FLAT_FR:
-                                rotateFragment();
-                                break;
-                        }
-                    }
-                });
+                }));
     }
 
     private void rotateFragment() {
@@ -173,7 +177,7 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     public boolean isSocialStatusSeted() {
-        return socialStatus.getText().length() < 0;
+        return socialStatus.getText().length() == 0;
     }
 
     public boolean checkWorkFlatWizard() {
@@ -184,8 +188,6 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
         if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && isSocialStatusSeted()) {
             Toast.makeText(getActivity(), "Укажите род деятельности", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
-
         }
         return true;
     }

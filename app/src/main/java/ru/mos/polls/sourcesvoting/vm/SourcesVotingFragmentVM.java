@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
 import ru.mos.polls.profile.service.model.EmptyResult;
@@ -68,15 +69,18 @@ public class SourcesVotingFragmentVM extends PullablePaginationFragmentVM<Source
     }
 
     public void setRxEventsBusListener() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.SourcesVotingEvents) {
-                        Events.SourcesVotingEvents events = (Events.SourcesVotingEvents) o;
-                        subscribeSourcesVoting(events.getSourcesVotingId(), events.isEnable());
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.SourcesVotingEvents) {
+                            Events.SourcesVotingEvents events = (Events.SourcesVotingEvents) o;
+                            subscribeSourcesVoting(events.getSourcesVotingId(), events.isEnable());
+                        }
                     }
-                });
+                }));
     }
 
     public void subscribeSourcesVoting(int sourcesId, boolean enable) {

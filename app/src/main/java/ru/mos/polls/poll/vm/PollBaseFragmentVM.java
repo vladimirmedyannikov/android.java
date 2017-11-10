@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.service.PollSelect;
@@ -45,12 +46,15 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
     }
 
     protected void subscribeEventsBus() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    eventsBusPollAction(o);
-                });
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        eventsBusPollAction(o);
+                    }
+                }));
     }
 
     protected abstract void eventsBusPollAction(Object o);

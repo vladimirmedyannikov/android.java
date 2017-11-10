@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.states.VoidParams;
@@ -212,8 +213,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     }
 
     @SuppressWarnings("VisibleForTests")
+    Disposable disposable;
+
     private void subscribeEventsBus() { //переснести
-        AGApplication.bus().toObserverable()
+        disposable = AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
@@ -223,12 +226,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                             case Events.ProfileEvents.EDIT_USER_INFO:
                                 navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
                                 break;
-                        }
-                    }
-                    if (o instanceof Events.FriendEvents) {
-                        Events.FriendEvents action = (Events.FriendEvents) o;
-                        if (action.getId() == Events.FriendEvents.FRIEND_START_PROFILE) {
-                            navigateTo().state(Add.newActivity(new FriendProfileState(action.getFriend()), BaseActivity.class));
                         }
                     }
                     if (o instanceof Events.APPEvents) {
@@ -318,6 +315,12 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 isGPSEnableDialogShowed = true;
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        disposable.dispose();
+        super.onDestroy();
     }
 
     @Override

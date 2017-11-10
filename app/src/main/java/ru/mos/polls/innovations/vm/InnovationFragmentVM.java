@@ -7,6 +7,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentInnovationsListBinding;
 import ru.mos.polls.helpers.TitleHelper;
@@ -54,18 +55,21 @@ public class InnovationFragmentVM extends PullablePaginationFragmentVM<Innovatio
     }
 
     private void subscribeEventsBus() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.InnovationsEvents) {
-                        Events.InnovationsEvents action = (Events.InnovationsEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.InnovationsEvents.PASSED_INNOVATIONS:
-                                adapter.updateInnovations(action.getInnovationId(), action.getRating(), action.getPassedDate());
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.InnovationsEvents) {
+                            Events.InnovationsEvents action = (Events.InnovationsEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.InnovationsEvents.PASSED_INNOVATIONS:
+                                    adapter.updateInnovations(action.getInnovationId(), action.getRating(), action.getPassedDate());
+                                    break;
+                            }
                         }
                     }
-                });
+                }));
     }
 }

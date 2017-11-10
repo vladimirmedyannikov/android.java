@@ -1,6 +1,7 @@
 package ru.mos.polls.base.rxjava;
 
-import io.reactivex.Observable;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -15,16 +16,21 @@ public class RxEventBus {
     }
 
     private PublishSubject<Object> bus = PublishSubject.create();
+    private final BackpressureStrategy mBackpressureStrategy = BackpressureStrategy.BUFFER;
 
     public void send(Object o) {
         bus.onNext(o);
     }
 
-    public Observable<Object> toObserverable() {
-        return bus;
+    public Flowable<Object> toObserverable() {
+        return bus.toFlowable(mBackpressureStrategy);
     }
 
     public boolean hasObservers() {
         return bus.hasObservers();
+    }
+
+    public <T> Flowable<T> filteredObservable(final Class<T> eventClass) {
+        return bus.ofType(eventClass).toFlowable(mBackpressureStrategy);
     }
 }

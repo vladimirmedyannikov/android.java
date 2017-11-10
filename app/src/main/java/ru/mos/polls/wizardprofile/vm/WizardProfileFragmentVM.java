@@ -29,6 +29,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
@@ -251,71 +252,74 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
     }
 
     public void setRxEventsBusListener() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.WizardEvents) {
-                        Events.WizardEvents events = (Events.WizardEvents) o;
-                        agUser = new AgUser(getActivity());
-                        percent = events.getPercentFillProfile();
-                        switch (events.getEventType()) {
-                            case Events.WizardEvents.WIZARD_AVATAR:
-                                wizardFilledList.put(AVATAR, true);
-                                break;
-                            case Events.WizardEvents.WIZARD_EMAIL:
-                                wizardFilledList.put(EMAIL, false);
-                                break;
-                            case Events.WizardEvents.WIZARD_PERSONAL:
-                                wizardFilledList.put(PERSONAL, false);
-                                break;
-                            case Events.WizardEvents.WIZARD_FAMILY:
-                                wizardFilledList.put(FAMILY, false);
-                                checkBirthdayKidsFr();
-                                break;
-                            case Events.WizardEvents.WIZARD_KIDS:
-                                wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
-                                break;
-                            case Events.WizardEvents.WIZARD_REGISTRATION:
-                                wizardFilledList.put(TAG_REGISTRATION, true);
-                                break;
-                            case Events.WizardEvents.WIZARD_RESIDENCE:
-                                wizardFilledList.put(TAG_RESIDENCE, true);
-                                break;
-                            case Events.WizardEvents.WIZARD_WORK:
-                            case Events.WizardEvents.WIZARD_SOCIAL_STATUS:
-                                wizardFilledList.put(EXTRAINFO, true);
-                                break;
-                            case Events.WizardEvents.WIZARD_SOCIAL:
-                                wizardFilledList.put(SOCIAL, true);
-                                break;
-                            case Events.WizardEvents.WIZARD_PGU:
-                                wizardFilledList.put(PGU, true);
-                                break;
-                        }
-                        if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER
-                                && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
-                                && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR
-                                && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL_STATUS) {
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+
+                        if (o instanceof Events.WizardEvents) {
+                            Events.WizardEvents events = (Events.WizardEvents) o;
+                            agUser = new AgUser(getActivity());
+                            percent = events.getPercentFillProfile();
+                            switch (events.getEventType()) {
+                                case Events.WizardEvents.WIZARD_AVATAR:
+                                    wizardFilledList.put(AVATAR, true);
+                                    break;
+                                case Events.WizardEvents.WIZARD_EMAIL:
+                                    wizardFilledList.put(EMAIL, false);
+                                    break;
+                                case Events.WizardEvents.WIZARD_PERSONAL:
+                                    wizardFilledList.put(PERSONAL, false);
+                                    break;
+                                case Events.WizardEvents.WIZARD_FAMILY:
+                                    wizardFilledList.put(FAMILY, false);
+                                    checkBirthdayKidsFr();
+                                    break;
+                                case Events.WizardEvents.WIZARD_KIDS:
+                                    wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
+                                    break;
+                                case Events.WizardEvents.WIZARD_REGISTRATION:
+                                    wizardFilledList.put(TAG_REGISTRATION, true);
+                                    break;
+                                case Events.WizardEvents.WIZARD_RESIDENCE:
+                                    wizardFilledList.put(TAG_RESIDENCE, true);
+                                    break;
+                                case Events.WizardEvents.WIZARD_WORK:
+                                    wizardFilledList.put(EXTRAINFO, true);
+                                    break;
+                                case Events.WizardEvents.WIZARD_SOCIAL:
+                                    wizardFilledList.put(SOCIAL, true);
+                                    break;
+                                case Events.WizardEvents.WIZARD_PGU:
+                                    wizardFilledList.put(PGU, true);
+                                    break;
+                            }
+                            if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL_STATUS) {
+                                slideNextPage();
+                            }
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
-                            slideNextPage();
+                        }
+                        if (o instanceof Events.ProgressableEvents) {
+                            Events.ProgressableEvents events = (Events.ProgressableEvents) o;
+                            switch (events.getEventType()) {
+                                case Events.ProgressableEvents.BEGIN:
+                                    if (getFragment() != null)
+                                        GuiUtils.hideKeyboard(getFragment().getView());
+                                    getComponent(ProgressableUIComponent.class).begin();
+                                    break;
+                                case Events.ProgressableEvents.END:
+                                    getComponent(ProgressableUIComponent.class).end();
+                                    break;
+                            }
                         }
                     }
-                    if (o instanceof Events.ProgressableEvents) {
-                        Events.ProgressableEvents events = (Events.ProgressableEvents) o;
-                        switch (events.getEventType()) {
-                            case Events.ProgressableEvents.BEGIN:
-                                if (getFragment() != null)
-                                    GuiUtils.hideKeyboard(getFragment().getView());
-                                getComponent(ProgressableUIComponent.class).begin();
-                                break;
-                            case Events.ProgressableEvents.END:
-                                getComponent(ProgressableUIComponent.class).end();
-                                break;
-                        }
-                    }
-                });
+                }));
     }
 
     public void slideNextPage() {
@@ -415,14 +419,6 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         if (isLastPage) {
             getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
             getActivity().finish();
-        }
-        if (bd instanceof BindingSocialFragment) {
-            slideNextPage();
-        }
-        if (bd instanceof WizardFlatFragment) {
-            WizardFlatFragment wff = (WizardFlatFragment) bd;
-            if (wff.getViewModel().checkWorkFlatWizard() || isCurrFrFilled)
-                slideNextPage();
         }
     }
 

@@ -21,6 +21,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentFriendTabBinding;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
@@ -93,33 +94,35 @@ public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<Fri
     }
 
     private void subscribeEventsBus() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.FriendEvents) {
-                        Events.FriendEvents action = (Events.FriendEvents) o;
-                        switch (action.getId()) {
-                            case Events.FriendEvents.FRIEND_INVISIBLE:
-                                isInvisible = true;
-                                slidingTabs.setVisibility(View.GONE);
-                                pager.setVisibility(View.GONE);
-                                avatar.setImageResource(R.drawable.ic_avatar_default);
-                                invisibleProfileContainer.setVisibility(View.VISIBLE);
-                                break;
-                            case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
-                                if (adapter != null) {
-                                    adapter.deletePage(1);
-                                }
-                                goneSlidingTabs(true);
-                                break;
-                            case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO:
-                                goneSlidingTabs(false);
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.FriendEvents) {
+                            Events.FriendEvents action = (Events.FriendEvents) o;
+                            switch (action.getId()) {
+                                case Events.FriendEvents.FRIEND_INVISIBLE:
+                                    isInvisible = true;
+                                    slidingTabs.setVisibility(View.GONE);
+                                    pager.setVisibility(View.GONE);
+                                    avatar.setImageResource(R.drawable.ic_avatar_default);
+                                    invisibleProfileContainer.setVisibility(View.VISIBLE);
+                                    break;
+                                case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_ZERO:
+                                    if (adapter != null) {
+                                        adapter.deletePage(1);
+                                    }
+                                    goneSlidingTabs(true);
+                                    break;
+                                case Events.FriendEvents.FRIEND_ACHIEVEMENT_DOWNLOAD_RESULT_NOT_ZERO:
+                                    goneSlidingTabs(false);
+                                    break;
+                            }
                         }
                     }
-
-                });
+                }));
     }
 
     protected void selectTab(int tabNumber) {

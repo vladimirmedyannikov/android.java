@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.FragmentViewModel;
@@ -76,20 +77,23 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
      */
 
     public void setRxEventsBusListener() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.WizardEvents) {
-                        Events.WizardEvents events = (Events.WizardEvents) o;
-                        switch (events.getEventType()) {
-                            case Events.WizardEvents.WIZARD_UPDATE_GENDER:
-                                agUser = new AgUser(getActivity());
-                                setMartialStatusView(agUser.getGender());
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.WizardEvents) {
+                            Events.WizardEvents events = (Events.WizardEvents) o;
+                            switch (events.getEventType()) {
+                                case Events.WizardEvents.WIZARD_UPDATE_GENDER:
+                                    agUser = new AgUser(getActivity());
+                                    setMartialStatusView(agUser.getGender());
+                                    break;
+                            }
                         }
                     }
-                });
+                }));
     }
 
     public void setMartialStatusView(AgUser.Gender gender) {

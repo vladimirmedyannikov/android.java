@@ -16,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentNewProfileBinding;
 import ru.mos.polls.profile.ui.adapter.PagerAdapter;
@@ -71,19 +72,22 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
     }
 
     private void subscribeEventsBus() {
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.ProfileEvents) {
-                        Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.ProfileEvents.PROFILE_LOADED:
-                                goneSlidingTabs(false);
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.ProfileEvents) {
+                            Events.ProfileEvents action = (Events.ProfileEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.ProfileEvents.PROFILE_LOADED:
+                                    goneSlidingTabs(false);
+                                    break;
+                            }
                         }
                     }
-                });
+                }));
     }
 
     @Override

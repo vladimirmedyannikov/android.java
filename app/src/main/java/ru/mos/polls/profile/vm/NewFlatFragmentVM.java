@@ -36,6 +36,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
@@ -117,22 +118,25 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     public void onViewCreated() {
         super.onViewCreated();
         setListener();
-        AGApplication.bus().toObserverable()
+        disposables.add(AGApplication.bus().toObserverable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (o instanceof Events.ProfileEvents) {
-                        Events.ProfileEvents action = (Events.ProfileEvents) o;
-                        switch (action.getEventType()) {
-                            case Events.ProfileEvents.UPDATE_FLAT:
-                                Flat upDateFlat = action.getFlat();
-                                if (upDateFlat != null) {
-                                    flat = upDateFlat;
-                                }
-                                break;
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.ProfileEvents) {
+                            Events.ProfileEvents action = (Events.ProfileEvents) o;
+                            switch (action.getEventType()) {
+                                case Events.ProfileEvents.UPDATE_FLAT:
+                                    Flat upDateFlat = action.getFlat();
+                                    if (upDateFlat != null) {
+                                        flat = upDateFlat;
+                                    }
+                                    break;
+                            }
                         }
                     }
-                });
+                }));
     }
 
     @Override
@@ -586,7 +590,6 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         if (isHideWarnings || flatType == FLAT_TYPE_OWN) {
             warningContainer.setVisibility(View.GONE);
         } else {
-            System.out.println("setEditingBlocked");
             if (!flat.isEmpty() && !flat.isEnable()) {
                 tvWarningEditingBlocked.setText(getFragment().getString(ru.mos.polls.R.string.error_full_editing_blocked));
                 if (!forWizard) tvErrorEditingBlocked.setVisibility(View.VISIBLE);

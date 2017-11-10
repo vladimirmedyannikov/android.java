@@ -59,13 +59,11 @@ public class BindingSocialFragment extends Fragment {
         return new BindingSocialFragment();
     }
 
-//    private ProgressDialog progressDialog;
     private Unbinder unbinder;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
     private List<AppSocial> changedSocials, savedSocials;
     private ProgressableUIComponent progressableUIComponent;
-    boolean isAnySocialBinded;
     @BindView(R.id.socialShareNotify)
     SwitchCompat socialShareNotify;
     @BindView(R.id.notifyContainer)
@@ -74,7 +72,7 @@ public class BindingSocialFragment extends Fragment {
     private AuthCallback authCallback = new AuthCallback() {
         @Override
         public void authSuccess(Social social) {
-            bindSocial(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
+            bindSocial(((AppStorable) Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
         }
 
         @Override
@@ -186,7 +184,6 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void refreshSocials() {
-//        showProgress(getString(R.string.update_social_message));
         progressableUIComponent.begin();
         AgSocialApiController.LoadSocialListener listener = new AgSocialApiController.LoadSocialListener() {
             @Override
@@ -194,13 +191,11 @@ public class BindingSocialFragment extends Fragment {
                 changedSocials.clear();
                 changedSocials.addAll(loadedSocials);
                 socialBindAdapter.notifyDataSetChanged();
-//                hideProgress();
                 progressableUIComponent.end();
             }
 
             @Override
             public void onError() {
-//                hideProgress();
                 progressableUIComponent.end();
             }
         };
@@ -208,7 +203,6 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void bindSocial(final AppSocial social) {
-//        showProgress(getString(R.string.bind_progress_message));
         progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
@@ -216,10 +210,7 @@ public class BindingSocialFragment extends Fragment {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 saveProfilePercentFill(percentFill);
                 if (isTask) {
-                    if (!isAnySocialBinded) {
-                        AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, percentFill));
-                        isAnySocialBinded = true;
-                    }
+                    AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, percentFill));
                     Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
                     Statistics.profileSocialLogin(loadedSocial.getName());
@@ -235,13 +226,11 @@ public class BindingSocialFragment extends Fragment {
                     }
                 }
                 socialBindAdapter.notifyDataSetChanged();
-//                hideProgress();
                 progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
-//                hideProgress();
                 progressableUIComponent.end();
             }
         };
@@ -253,7 +242,6 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void unBindSocial(final AppSocial social) {
-//        showProgress(getString(R.string.unbind_progress_message));
         progressableUIComponent.begin();
         AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
             @Override
@@ -261,6 +249,7 @@ public class BindingSocialFragment extends Fragment {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
                 saveProfilePercentFill(percentFill);
                 if (isTask) {
+                    AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL, percentFill));
                     Statistics.taskSocialLogin(loadedSocial.getName());
                 } else {
                     Statistics.profileSocialLogin(loadedSocial.getName());
@@ -268,31 +257,14 @@ public class BindingSocialFragment extends Fragment {
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 social.setIsLogin(false);
                 socialBindAdapter.notifyDataSetChanged();
-//                hideProgress();
                 progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
-//                hideProgress();
                 progressableUIComponent.end();
             }
         };
         AgSocialApiController.unbindSocialFromAg((BaseActivity) getActivity(), social, listener);
     }
-
-//    private void showProgress(String message) {
-//        progressDialog = new ProgressDialog(getActivity());
-//        progressDialog.setMessage(message);
-//        progressDialog.show();
-//    }
-//
-//    private void hideProgress() {
-//        try {
-//            if (progressDialog != null) {
-//                progressDialog.dismiss();
-//            }
-//        } catch (Exception ignored) {
-//        }
-//    }
 }

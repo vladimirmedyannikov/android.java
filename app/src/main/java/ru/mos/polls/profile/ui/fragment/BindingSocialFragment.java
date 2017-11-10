@@ -72,7 +72,7 @@ public class BindingSocialFragment extends Fragment {
     private AuthCallback authCallback = new AuthCallback() {
         @Override
         public void authSuccess(Social social) {
-            bindSocial(((AppStorable) Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
+            bindSocial(((AppStorable)Configurator.getInstance(getContext()).getStorable()).get(social.getId()));
         }
 
         @Override
@@ -231,6 +231,8 @@ public class BindingSocialFragment extends Fragment {
 
             @Override
             public void onError(AppSocial social) {
+//                hideProgress();
+                Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 progressableUIComponent.end();
             }
         };

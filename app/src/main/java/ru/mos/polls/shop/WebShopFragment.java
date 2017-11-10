@@ -59,7 +59,7 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * @since 1.9.2
  */
 public class WebShopFragment extends Fragment implements MainActivity.Callback {
-    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "shop.ag.mos.ru" : "filezilla.ru/get/";
+    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "shop.ag.mos.ru" : "dev.shop.ag.mos.ru";
     private static final String urlPattern = "http://%s/catalog";
     private static final String url = String.format(urlPattern, host);
     private static final String cookiesPattern = "EMPSESSION=%s";

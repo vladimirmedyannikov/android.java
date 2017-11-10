@@ -1,5 +1,7 @@
 package ru.mos.polls.shop;
 
+import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,8 +9,10 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.MailTo;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -32,6 +38,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.BuildConfig;
@@ -43,13 +51,15 @@ import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.util.NetworkUtils;
 
+import static android.content.Context.DOWNLOAD_SERVICE;
+
 /**
  * Магазин поощрений
  *
  * @since 1.9.2
  */
 public class WebShopFragment extends Fragment implements MainActivity.Callback {
-    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "shop.ag.mos.ru" : "dev.shop.ag.mos.ru";
+    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "shop.ag.mos.ru" : "filezilla.ru/get/";
     private static final String urlPattern = "http://%s/catalog";
     private static final String url = String.format(urlPattern, host);
     private static final String cookiesPattern = "EMPSESSION=%s";
@@ -73,6 +83,11 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
     @BindView(R.id.root)
     View root;
 
+    CookieManager cookieManager;
+    private static final String[] WRITE_EXTERNAL_STORAGE = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    public static final int WRITE_EXTERNAL_REQUEST_CODE = 788;
 
     @OnClick(R.id.internet_lost_reload)
     public void refresh() {
@@ -124,6 +139,35 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
         Statistics.shopBuy();
         GoogleStatistics.AGNavigation.shopBuy();
         checkInternetConnection();
+        setWebViewDownloadListener();
+    }
+
+    public void setWebViewDownloadListener() {
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            if (EasyPermissions.hasPermissions(getActivity(), WRITE_EXTERNAL_STORAGE)) {
+                downloadFile(url, userAgent, contentDisposition, mimetype);
+            } else {
+                EasyPermissions.requestPermissions(getActivity(), "Для сохранения файла необходимо разрешение", WRITE_EXTERNAL_REQUEST_CODE, WRITE_EXTERNAL_STORAGE);
+            }
+        });
+    }
+
+    @AfterPermissionGranted(WRITE_EXTERNAL_REQUEST_CODE)
+    public void downloadFile(String url, String userAgent, String contentDisposition, String mimetype) {
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setMimeType(mimetype);
+        cookieManager = CookieManager.getInstance();
+        PersistentConfig persistentConfig = new PersistentConfig(activity.getApplicationContext());
+        persistentConfig.setCookie(getCookies(Session.getSession(activity.getApplicationContext())));
+        cookieManager.setCookie(host, persistentConfig.getCookieString());
+        request.setDescription("Downloading file...");
+        request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        DownloadManager dManager = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
+        dManager.enqueue(request);
     }
 
     @Override

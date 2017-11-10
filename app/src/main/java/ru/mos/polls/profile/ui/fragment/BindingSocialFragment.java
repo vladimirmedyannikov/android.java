@@ -242,6 +242,7 @@ public class BindingSocialFragment extends Fragment {
             @Override
             public void onError(AppSocial social) {
 //                hideProgress();
+                Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 progressableUIComponent.end();
             }
         };

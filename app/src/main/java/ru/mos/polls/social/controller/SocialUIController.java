@@ -43,7 +43,6 @@ import ru.mos.polls.social.model.Error;
 import ru.mos.polls.social.model.Message;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.util.AgTextUtil;
-import ru.mos.polls.util.GuiUtils;
 import ru.mos.social.model.Configurator;
 
 /**
@@ -930,13 +929,13 @@ public abstract class SocialUIController {
                     if (listener != null) {
                         AppPostValue appPostValue = item.getAppPostValue();
                         appPostValue.setTitle(item.getTitle());
-                        if (appPostValue.isEnable()) {
+//                        if (appPostValue.isEnable()) {
                             processPosting(appPostValue);
-                        } else {
-                            GuiUtils.displayYesOrNotDialog(getContext(),
-                                    String.format(getContext().getString(R.string.repeated_posting_message), appPostValue.getTypeNameForPostingRepeat(), AppSocial.getNormalSocialName(appPostValue.getSocialId())),
-                                    (dialog1, which) -> processPosting(appPostValue), null);
-                        }
+//                        } else {
+//                            GuiUtils.displayYesOrNotDialog(getContext(),
+//                                    String.format(getContext().getString(R.string.repeated_posting_message), appPostValue.getTypeNameForPostingRepeat(), AppSocial.getNormalSocialName(appPostValue.getSocialId())),
+//                                    (dialog1, which) -> processPosting(appPostValue), null);
+//                        }
                     }
                 }
             });

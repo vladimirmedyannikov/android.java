@@ -137,6 +137,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                         }
                     }
                 }));
+        configViews(flatType);
     }
 
     @Override
@@ -260,12 +261,6 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     public void visibilityFlatInput(int gone) {
         addFlatLayout.setVisibility(gone);
         warningContainer.setVisibility(gone);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        configViews(flatType);
     }
 
     @Override
@@ -553,6 +548,10 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 .setDuration(ANIMATION_DURATION_MILLS)
                 .alpha(1.0f)
                 .setListener(listener);
+    }
+
+    public void hideDistrictArea() {
+        areaAndDistrictLayout.setVisibility(View.GONE);
     }
 
     private void requestDistrictAndArea(Value v) {

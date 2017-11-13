@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.view.View;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,7 +67,11 @@ public class ImagePickerController {
         Intent pictureChooseIntent = null;
         switch (sourceType) {
             case TAKE_PHOTO:
-                cameraPictureUrl = createImageUri(fragment);
+                try {
+                    cameraPictureUrl = createImageUri(fragment);
+                } catch (UnsupportedOperationException e) {
+                    cameraPictureUrl = getImageUri();
+                }
                 pictureChooseIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 pictureChooseIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPictureUrl);
                 chooseCode = REQUEST_CAMERA;
@@ -104,6 +110,12 @@ public class ImagePickerController {
     public static Uri getCropedUri(Intent data) {
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
         return result.getUri();
+    }
+
+    public static Uri getImageUri() {
+        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM", new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()));
+        Uri imgUri = Uri.fromFile(file);
+        return imgUri;
     }
 
     public static Uri getUri(int requestCode, Intent data) {

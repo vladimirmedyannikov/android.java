@@ -1,10 +1,21 @@
 package ru.mos.polls.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.transition.ChangeBounds;
+import android.support.transition.Fade;
+import android.support.transition.TransitionManager;
+import android.support.transition.TransitionSet;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ListView;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -16,7 +27,9 @@ import org.json.JSONObject;
 
 import java.util.Timer;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.adapters.DynamicsAdapter;
@@ -25,6 +38,7 @@ import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.common.controller.ExtendScrollableController;
 import ru.mos.polls.common.controller.ScrollableController;
 import ru.mos.polls.common.model.PageInfo;
@@ -50,6 +64,10 @@ public class NewsDynamicFragment extends AgDynamicFragment {
     private Timer timer;
     private AbsListView list;
     private ExtendScrollableController extendScrollableController;
+    @BindView(R.id.mosNews)
+    CardView mosNews;
+    boolean mosNewsVisible;
+    ViewGroup root;
 
     @Override
     protected void onBeforeActivityStart(ResultTableLink element) {
@@ -81,9 +99,24 @@ public class NewsDynamicFragment extends AgDynamicFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.news_fragment, container, false);
+        unbinder = ButterKnife.bind(this, root);
+        return root;
+    }
+
+    @OnClick(R.id.mosNews)
+    public void openNewsSite() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.mos.ru/news/"));
+        startActivity(intent);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = ButterKnife.findById(getView(), android.R.id.list);
+        root = ButterKnife.findById(getView(), R.id.root);
+        ViewCompat.setNestedScrollingEnabled(list, true);
         ScrollableController.OnLastItemVisibleListener onLastItemVisibleListener = new ScrollableController.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
@@ -93,6 +126,15 @@ public class NewsDynamicFragment extends AgDynamicFragment {
         ExtendScrollableController.ScrollListener scrollListener = new ExtendScrollableController.ScrollListener() {
             @Override
             public void onScrolled(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem == 0) {
+                    UIhelper.hideWithFadeView(false, mosNews, mosNews);
+                    mosNewsVisible = true;
+                }
+                if (mosNewsVisible && firstVisibleItem > 4) {
+                    UIhelper.hideWithFadeView(true, mosNews, mosNews);
+                    mosNewsVisible = false;
+                }
+
             }
         };
         extendScrollableController

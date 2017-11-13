@@ -3,9 +3,14 @@ package ru.mos.polls.base.ui.rvdecoration;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.transition.ChangeBounds;
+import android.support.transition.Fade;
+import android.support.transition.TransitionManager;
+import android.support.transition.TransitionSet;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.*;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -57,5 +62,21 @@ public class UIhelper {
             public void onLoadingCancelled(String s, View view) {
             }
         });
+    }
+
+    public static void hideWithFadeView(boolean on, ViewGroup rootView, View view) {
+        Fade fade = new Fade();
+        fade.setDuration(500);
+
+        ChangeBounds changeBounds = new ChangeBounds();
+        changeBounds.setDuration(500);
+
+        TransitionSet transitionSet = new TransitionSet();
+        transitionSet.addTransition(fade);
+        transitionSet.addTransition(changeBounds);
+        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
+
+        TransitionManager.beginDelayedTransition(rootView, transitionSet);
+        view.setVisibility(on ? View.GONE : View.VISIBLE);
     }
 }

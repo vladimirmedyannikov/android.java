@@ -17,6 +17,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
+import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentNewProfileBinding;
 import ru.mos.polls.profile.ui.adapter.PagerAdapter;
@@ -35,23 +36,6 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
 
     public ProfileFragmentVM(ProfileFragment fragment, FragmentNewProfileBinding binding) {
         super(fragment, binding);
-    }
-
-    private void goneSlidingTabs(boolean on) {
-        Fade fade = new Fade();
-        fade.setDuration(500);
-
-        ChangeBounds changeBounds = new ChangeBounds();
-        changeBounds.setDuration(500);
-
-        TransitionSet transitionSet = new TransitionSet();
-        transitionSet.addTransition(fade);
-        transitionSet.addTransition(changeBounds);
-        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
-
-        TransitionManager.beginDelayedTransition(getBinding().rootTab, transitionSet);
-        getBinding().slidingTabs.setVisibility(on ? View.GONE : View.VISIBLE);
-
     }
 
     @Override
@@ -82,7 +66,7 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
                             Events.ProfileEvents action = (Events.ProfileEvents) o;
                             switch (action.getEventType()) {
                                 case Events.ProfileEvents.PROFILE_LOADED:
-                                    goneSlidingTabs(false);
+                                    UIhelper.hideWithFadeView(false, getBinding().rootTab, getBinding().slidingTabs);
                                     break;
                             }
                         }

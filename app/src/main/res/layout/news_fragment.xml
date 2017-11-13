@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/root"
+        android:background="@drawable/ag_back"
+        android:paddingLeft="@dimen/pd_normal"
+        android:paddingRight="@dimen/pd_normal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+
+            <include
+                android:id="@+id/mosNews"
+                layout="@layout/layout_mos_news" />
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/ptrLayout"
+                style="@style/root"
+                android:layout_below="@+id/mosNews">
+
+                <ListView
+                    android:id="@android:id/list"
+                    style="@style/root"
+                    android:divider="@drawable/ag_list_divider"
+                    android:listSelector="@drawable/ag_list_selector" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <TextView
+                android:id="@android:id/empty"
+                style="@style/emptylist" />
+        </RelativeLayout>
+
+        <include layout="@layout/layout_internet_connection_lost" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

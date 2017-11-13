@@ -74,9 +74,6 @@ public class AppSocial extends Social{
 
     public static Observable<List<AppSocial>> getObservableSavedSocials(Context context) {
         List<AppSocial> list = Configurator.getInstance(context).getStorable().getAll();
-        for (AppSocial appSocial : list) {
-            appSocial.setIsLogin(!appSocial.getToken().isEmpty());
-        }
         return Observable.just(list);
     }
 
@@ -112,6 +109,16 @@ public class AppSocial extends Social{
         }else {
             token = new Token();
         }
+    }
+
+    @Override
+    public JSONObject asJson() {
+        JSONObject res = super.asJson();
+        try {
+            res.put(IS_LOGON, isLogon);
+        } catch (Exception ignored) {
+        }
+        return res;
     }
 
     public AppSocial(int id, String name, int icon, Token token) {

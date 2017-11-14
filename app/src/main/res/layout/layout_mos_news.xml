@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mosNews"
     style="@style/item"
-    android:layout_marginBottom="@dimen/pd_normal"
-    android:layout_marginTop="@dimen/pd_normal">
+    app:cardElevation="@dimen/pd_xsmall"
+    android:layout_margin="@dimen/pd_small">
 
-
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/red_border"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatImageView
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:gravity="center_horizontal|center_vertical"
-            android:text="Новости правительства Москвы"
+            android:text="@string/news_government_moscow"
             android:textColor="@color/red" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

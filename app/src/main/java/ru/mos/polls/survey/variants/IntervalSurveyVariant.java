@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import ru.mos.polls.R;
 import ru.mos.polls.survey.StatusProcessor;
 import ru.mos.polls.survey.VerificationException;
+import ru.mos.polls.survey.variants.values.IntVariantValue;
 import ru.mos.polls.survey.variants.values.VariantValue;
 
 /**
@@ -243,7 +244,15 @@ public class IntervalSurveyVariant extends SurveyVariant {
 
         @Override
         protected boolean isCorrect(VariantValue startVariantValue, VariantValue endVariantValue) {
+            System.out.println("StartVariantValueListener startVariantValue " + startVariantValue.asString());
+            System.out.println("StartVariantValueListener endVariantValue " + endVariantValue.asString());
+            System.out.println("StartVariantValueListener startVariantValue.compareTo(endVariantValue) " + startVariantValue.compareTo(endVariantValue));
             boolean result = startVariantValue.compareTo(endVariantValue) <= 0;
+            if (startVariantValue instanceof IntVariantValue) {
+                int start = ((IntVariantValue) startVariantValue).value;
+                int end = ((IntVariantValue) endVariantValue).value;
+                result = end < start;
+            }
             if (!result) {
                 Toast.makeText(context, context.getString(R.string.start_variant_value_toast_msg), Toast.LENGTH_SHORT).show();
                 startVariantValue.showEditor(context, new StartVariantValueListener(context));
@@ -261,7 +270,15 @@ public class IntervalSurveyVariant extends SurveyVariant {
 
         @Override
         protected boolean isCorrect(VariantValue startVariantValue, VariantValue endVariantValue) {
+            System.out.println("EndVariantValueListener startVariantValue " + startVariantValue.asString());
+            System.out.println("EndVariantValueListener endVariantValue " + endVariantValue.asString());
+            System.out.println("EndVariantValueListener startVariantValue.compareTo(endVariantValue) " + startVariantValue.compareTo(endVariantValue));
             boolean result = startVariantValue.compareTo(endVariantValue) <= 0;
+            if (startVariantValue instanceof IntVariantValue) {
+                int start = ((IntVariantValue) startVariantValue).value;
+                int end = ((IntVariantValue) endVariantValue).value;
+                result = end > start;
+            }
             if (!result) {
                 Toast.makeText(context, context.getString(R.string.end_variant_value_toast_msg), Toast.LENGTH_SHORT).show();
                 endVariantValue.showEditor(context, new EndVariantValueListener(context));

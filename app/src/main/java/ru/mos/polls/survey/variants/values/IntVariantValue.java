@@ -18,7 +18,7 @@ public class IntVariantValue implements VariantValue {
     private static final int DEFAULT_MAX = 100;
 
     private boolean changed = false;
-    public int value;
+    public Integer value;
     private String title;
     private int min;
     private int max;
@@ -47,7 +47,7 @@ public class IntVariantValue implements VariantValue {
 
     @Override
     public String asString() {
-        return Integer.toString(value);
+        return value != null ? value.toString() : "";
     }
 
     @Override
@@ -109,7 +109,6 @@ public class IntVariantValue implements VariantValue {
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listener.onCancel();
                 dialog.cancel();
             }
         });
@@ -128,8 +127,9 @@ public class IntVariantValue implements VariantValue {
     public int compareTo(VariantValue another) {
         int result = 0;
         if (another instanceof IntVariantValue) {
-            int anotherValue = ((IntVariantValue) another).value;
-            result = Integer.valueOf(value).compareTo(anotherValue);
+            if (value != null && ((IntVariantValue) another).value != null) {
+                result = value.compareTo(((IntVariantValue) another).value);
+            }
         }
         return result;
     }

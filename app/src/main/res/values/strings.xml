@@ -731,6 +731,7 @@
     <string name="free_entrace">Вход свободный</string>
     <string name="signin_closed">Запись на собрание завершена</string>
     <string name="signin_to_meeting">Записаться на собрание</string>
+    <string name="meeting_preview">Запись еще не началась</string>
     <string name="your_position">ВАША ПОЗИЦИЯ</string>
     <string name="date_variant_value_toast_msg" formatted="false">"Дата должна быть не больше %s. (Сейчас %s)"</string>
     <string name="date_variant_value_toast_interval_msg" formatted="false">"Дата должна быть в интервале от %s до %s. (Сейчас %s)</string>

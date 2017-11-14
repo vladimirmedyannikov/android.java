@@ -133,27 +133,27 @@ public class MeetingActivity extends ToolbarAbstractActivity {
 
     private void refreshAction() {
         if (meeting.getDate() < System.currentTimeMillis() || meeting.isClosed() && !meeting.getConditions().isWithoutRegistration()) {
-            hintWithoutRegistration.setVisibility(View.VISIBLE);
-            hintWithoutRegistration.setText(getString(R.string.meeting_held));
-            hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));
-            checkHearing.setVisibility(View.GONE);
+            setButtonDisabled(getString(R.string.meeting_held));
         } else if (meeting.isRegistered()) {
             checkHearing.setEnabled(false);
             checkHearing.setText(getString(R.string.you_singin_meeting));
         } else if (meeting.getConditions().isWithoutRegistration()) {
-            hintWithoutRegistration.setVisibility(View.VISIBLE);
-            hintWithoutRegistration.setText(getString(R.string.free_entrace));
-            hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));
-            checkHearing.setVisibility(View.GONE);
+            setButtonDisabled(getString(R.string.free_entrace));
         } else if (meeting.getEndRegistration() < System.currentTimeMillis()) {
-            hintWithoutRegistration.setVisibility(View.VISIBLE);
-            hintWithoutRegistration.setText(getString(R.string.signin_closed));
-            hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));
-            checkHearing.setVisibility(View.GONE);
+            setButtonDisabled(getString(R.string.signin_closed));
+        } else if (meeting.isPreview()) {
+            setButtonDisabled(getString(R.string.meeting_preview));
         } else {
             checkHearing.setEnabled(true);
             checkHearing.setText(R.string.signin_to_meeting);
         }
+    }
+
+    private void setButtonDisabled(String string) {
+        hintWithoutRegistration.setVisibility(View.VISIBLE);
+        hintWithoutRegistration.setText(string);
+        hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));
+        checkHearing.setVisibility(View.GONE);
     }
 
     private void displayConditions() {

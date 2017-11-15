@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/title"
             android:text="@{viewModel.title}"
-            android:textColor="@{viewModel.active ? @color/greenText : @color/ag_red}"
+            android:textColor="@{viewModel.active ? @color/greenText : @color/black}"
             style="@style/text.large.black" />
 
         <TextView

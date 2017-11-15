@@ -165,7 +165,7 @@ public abstract class PointsManager {
         context.getSharedPreferences(PREFS, Activity.MODE_PRIVATE).edit().clear().commit();
     }
 
-    public static String getPointUnitString(Context context, int count) {
+    public static String getPointUnitString(Context context, long count) {
         final String countStr = String.valueOf(count);
         if (countStr.length() >= 2) {
             final int endNum = Integer.parseInt(countStr.substring(countStr.length() - 2));

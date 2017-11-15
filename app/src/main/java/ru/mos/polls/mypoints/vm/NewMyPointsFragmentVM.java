@@ -173,10 +173,10 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
         tvCurrentPointsUnit.setText(PointsManager.getPointUnitString(getActivity(), getPointsValue()));
     }
 
-    public int getPointsValue() {
-        int points = status.getCurrentPoints();
+    public long getPointsValue() {
+        long points = status.getCurrentPoints();
         if ("debit".equalsIgnoreCase((currentAction.toString()))) {
-            points = status.getCurrentPoints();
+            points = status.getAllPoints();
         } else if ("credit".equalsIgnoreCase(currentAction.toString())) {
             points = status.getSpentPoints();
         } else if ("blocked".equalsIgnoreCase(currentAction.toString())) {

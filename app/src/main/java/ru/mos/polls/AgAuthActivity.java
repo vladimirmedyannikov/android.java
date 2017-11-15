@@ -353,6 +353,12 @@ public class AgAuthActivity extends AuthActivity {
     }
 
     @Override
+    protected void onUserLeaveHint() {
+        GuiUtils.hideKeyboard(etLogin);
+        super.onUserLeaveHint();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_REGISTER && resultCode == RESULT_OK) {

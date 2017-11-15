@@ -10,6 +10,7 @@ import android.view.View;
 import java.util.List;
 
 import ru.mos.polls.GoogleStatistics;
+import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.model.Filter;
 import ru.mos.polls.poll.model.Poll;
@@ -48,6 +49,7 @@ public class PollOldFragmentVM extends PollBaseFragmentVM {
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        recyclerUIComponent.setEmptyText(R.string.poll_old_empty_title);
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(addOldPollReceiver, new IntentFilter(ACTION_ADD_OLD_POLL));
     }
 

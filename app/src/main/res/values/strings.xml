@@ -818,4 +818,5 @@
     <string formatted="false" name="remove_addresses_dialog_message">Удалить адрес собственности \"%s\"?</string>
     <string name="empty_flat_error">Некорректный адрес</string>
     <string name="news_government_moscow">Новости правительства Москвы</string>
+    <string name="poll_old_empty_title">Вы еще не участвовали ни в одном голосовании</string>
 </resources>

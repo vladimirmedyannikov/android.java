@@ -46,6 +46,7 @@ public class PollItemOldVM extends RecyclerBaseViewModel<Poll, ItemPassedPollBin
 
     public void displayDescription(TextView v, Poll poll) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        v.setTextColor(v.getContext().getResources().getColor(R.color.gray_light));
         if (poll.isPassed()) {
             StringBuilder sb = new StringBuilder();
             if (poll.getPoints() > 0) {

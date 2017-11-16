@@ -156,6 +156,9 @@ public class EventActivity extends ToolbarAbstractActivity {
         SocialUIController.registerPostingReceiver(this);
         if (LocationController.isLocationNetworkProviderEnabled(this) || LocationController.isLocationGPSProviderEnabled(this)) {
             if (!isRuntimePermissionRejected) {
+                if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) { //надо протестить на физдевайсе
+                    refreshEvent();
+                }
                 getLocationController();
             }
         } else {

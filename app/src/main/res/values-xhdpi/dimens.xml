@@ -42,8 +42,8 @@
     <!-- view size !-->
     <dimen name="vs_xxxsmall">30dp</dimen>
     <dimen name="vs_xxsmall">40dp</dimen>
-    <dimen name="vs_xsmall">60dp</dimen>
-    <dimen name="vs_small">75dp</dimen>
+    <dimen name="vs_xsmall">55dp</dimen>
+    <dimen name="vs_small">60dp</dimen>
     <dimen name="vs_normal">100dp</dimen>
     <dimen name="vs_xnormal">130dp</dimen>
     <dimen name="vs_large">150dp</dimen>

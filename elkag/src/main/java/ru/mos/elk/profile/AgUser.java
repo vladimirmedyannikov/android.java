@@ -731,9 +731,12 @@ public class AgUser implements Serializable {
     public int getCount() {
         return count;
     }
-
+    public boolean achievementCount() {
+        int value = count - 3;
+        return value > 0;
+    }
     public String getAchievementsCount() {
-        return String.format("+%d", getCount());
+        return String.format("+%d", getCount() - 3);
     }
 
     public String getAvatar() {

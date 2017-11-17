@@ -59,7 +59,7 @@
                 android:layout_toEndOf="@+id/agUser_achievement_layer"
                 android:layout_toRightOf="@+id/agUser_achievement_layer"
                 android:text="@{agUser.getAchievementsCount()}"
-                android:visibility="@{agUser.count > 0 ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{agUser.achievementCount ? View.VISIBLE : View.GONE}" />
         </RelativeLayout>
 
         <LinearLayout

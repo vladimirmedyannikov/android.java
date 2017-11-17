@@ -143,7 +143,7 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         tabLayout.setupWithViewPager(pager, true);
         setDotCustomView();
         setTabListener();
-        setNextButtonView(listSize);
+        setNextButtonView(tabLayout.getSelectedTabPosition() + 1);
     }
 
     @Override

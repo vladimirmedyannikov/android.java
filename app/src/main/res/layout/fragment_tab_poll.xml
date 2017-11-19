@@ -13,15 +13,6 @@
             android:id="@+id/root"
             style="@style/root">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
-                style="@style/root">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list"
-                    style="@style/root" />
-
-            </android.support.v4.widget.SwipeRefreshLayout>
 
             <TextView
                 android:id="@android:id/empty"
@@ -67,6 +58,16 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                style="@style/root">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    style="@style/root" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
         </RelativeLayout>
         <include layout="@layout/layout_internet_connection_lost" />
     </RelativeLayout>

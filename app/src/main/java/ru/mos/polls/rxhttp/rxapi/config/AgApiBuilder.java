@@ -23,14 +23,15 @@ import ru.mos.polls.BuildConfig;
 public class AgApiBuilder {
     public static final String URL_AG = "https://emp.mos.ru:443/";
     private static final String URL_AG_FORMATTED = "https://emp.mos.ru:443%s";
-    private static final String URL_AG_RESOURCE_FORMATTED = "http://test.service.ag.mos.ru%s";
+    private static final String URL_AG_RESOURCE_FORMATTED_TEST = "http://test.service.ag.mos.ru%s";
+    private static final String URL_AG_RESOURCE_FORMATTED = "http://service.ag.mos.ru%s";
 
     public static String url(String method) {
-        return  String.format(URL_AG_FORMATTED, method);
+        return String.format(URL_AG_FORMATTED, method);
     }
 
     public static String resourceURL(String method) {
-        return  String.format(URL_AG_RESOURCE_FORMATTED, method);
+        return String.format(BuildConfig.DEBUG ? URL_AG_RESOURCE_FORMATTED_TEST : URL_AG_RESOURCE_FORMATTED, method);
     }
 
     public static AgApi build() {

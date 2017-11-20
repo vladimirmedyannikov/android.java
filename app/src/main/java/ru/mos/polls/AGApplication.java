@@ -642,7 +642,6 @@ public class AGApplication extends MultiDexApplication {
                 .imageDownloader(new BaseImageDownloader(this))
                 .imageDecoder(new BaseImageDecoder(true))
                 .defaultDisplayImageOptions(getOptions())
-                .writeDebugLogs()
                 .build();
     }
 

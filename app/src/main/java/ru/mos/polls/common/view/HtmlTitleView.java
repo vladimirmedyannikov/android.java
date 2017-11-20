@@ -350,8 +350,6 @@ public class HtmlTitleView extends LinearLayout {
         fullContainer.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         fullContainer.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         fullContainer.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        fullContainer.getSettings().setUseWideViewPort(true);
-        fullContainer.getSettings().setLoadWithOverviewMode(true);
         /**
          * Задает прозрачный фон для webview, но при отображении контента
          * webview промаргивает черным цветом, поэтому временно отключил

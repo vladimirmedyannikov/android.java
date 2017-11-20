@@ -35,6 +35,7 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.adapters.DynamicsAdapter;
 import ru.mos.elk.netframework.model.results.ResultTableLink;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
+import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -187,9 +188,10 @@ public class NewsDynamicFragment extends AgDynamicFragment {
                 }
             }
         };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+        Response.ErrorListener errorListener =  new StandartErrorListener(getActivity(), R.string.error_occurs)  {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                super.onErrorResponse(volleyError);
                 getPullToRefreshLayout().setRefreshing(false);
                 extendScrollableController.setAllowed(true);
             }

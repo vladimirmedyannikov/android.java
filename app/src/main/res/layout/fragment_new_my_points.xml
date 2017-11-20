@@ -73,6 +73,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0"
                     android:layout_weight="1">
+
+                    <TextView
+                        android:id="@android:id/empty"
+                        style="@style/emptylist" />
                     <android.support.v4.widget.SwipeRefreshLayout
                         android:id="@+id/swipe"
                         style="@style/root">
@@ -80,9 +84,6 @@
                             android:id="@+id/list"
                             style="@style/root" />
                     </android.support.v4.widget.SwipeRefreshLayout>
-                    <TextView
-                        android:id="@android:id/empty"
-                        style="@style/emptylist" />
                 </FrameLayout>
             </LinearLayout>
             <ProgressBar

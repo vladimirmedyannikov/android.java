@@ -585,6 +585,7 @@
     <string name="hint_for_fb">Например:\n%s</string>
     <string name="empty_post_text">Введите текст сообщения</string>
     <string name="hint_example_for_fb">Например, скопируйте текст:</string>
+    <string name="attention_posting_fb">Вы уже делились этой информацией в Facebook и Вам были начислены дополнительные баллы. Баллы начисляются только за первое сообщение. Вы хотите поделиться ещё раз?</string>
     <string name="title_answer">ОТВЕТЫ:</string>
     <string name="title_answer_passed">ВАШ ОТВЕТ:</string>
     <string name="title_answers_result">РАСПРЕДЕЛЕНИЕ ОТВЕТОВ:</string>

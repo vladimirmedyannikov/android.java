@@ -386,6 +386,8 @@ public abstract class SocialUIController {
         View innerView = View.inflate(context, R.layout.layout_change_social_post_text_for_fb, null);
         final EditText inputEditText = (EditText) innerView.findViewById(R.id.postText);
         final TextView hint = (TextView) innerView.findViewById(R.id.hint);
+        final View attention = innerView.findViewById(R.id.attention_repeat_posting);
+        attention.setVisibility(appPostValue.isEnable() ? View.GONE : View.VISIBLE);
         innerView.findViewById(R.id.symbols).setVisibility(View.GONE);
         hint.setText(appPostValue.getText());
         hint.setOnLongClickListener(new View.OnLongClickListener() {

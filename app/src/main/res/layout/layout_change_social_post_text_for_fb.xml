@@ -7,6 +7,18 @@
     <include layout="@layout/layout_change_social_post_text" />
 
     <TextView
+        android:id="@+id/attention_repeat_posting"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/pd_xxsmall"
+        android:paddingRight="@dimen/pd_xxsmall"
+        android:paddingTop="@dimen/pd_xxsmall"
+        android:text="@string/attention_posting_fb"
+        android:textColor="@color/greyHint"
+        android:textStyle="italic"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/pd_xxsmall"

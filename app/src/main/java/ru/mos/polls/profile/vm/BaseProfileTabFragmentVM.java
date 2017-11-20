@@ -95,8 +95,10 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void setAvatar() {
-        if (BadgesSource.getInstance().getAvatar() != null)
+        if (BadgesSource.getInstance().getAvatar() != null) {
             circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
+            circleImageView.invalidate();
+        }
     }
 
     void updateAvatar(Uri uri) {

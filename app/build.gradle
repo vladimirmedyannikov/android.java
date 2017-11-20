@@ -162,7 +162,7 @@ dependencies {
 
     compile 'com.googlecode.libphonenumber:libphonenumber:7.4.3'
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
     /**
      * Библиотека mos_social для работы с соцсетями

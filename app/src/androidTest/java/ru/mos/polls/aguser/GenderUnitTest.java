@@ -25,6 +25,15 @@ public class GenderUnitTest extends BaseUnitTest {
     }
 
     @Test
+    public void testParseLable() {
+        Assert.assertEquals(AgUser.Gender.parseLabel(female.toString()), female);
+
+        Assert.assertEquals(AgUser.Gender.parseLabel(male.toString()), male);
+
+        Assert.assertEquals(AgUser.Gender.parseLabel(nullValue.toString()), nullValue);
+    }
+
+    @Test
     public void testGetters() {
         AgUser.Gender female = AgUser.Gender.FEMALE;
         assertNotNullOrEmpty(female.getValue());

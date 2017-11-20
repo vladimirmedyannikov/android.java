@@ -75,6 +75,13 @@ public class SocialUnitTest extends BaseUnitTest {
     }
 
     @Test
+    public void validTest() {
+        AppSocial test = new AppSocial("test", fromTestRawAsJson("social.json"));
+        Assert.assertEquals(test.isLogon(), true);
+        Assert.assertEquals(test.isExpired(), false);
+    }
+
+    @Test
     public void fromPref() {
         AppSocial test = AppSocial.fromPreference(appContext, AppSocial.ID_FB);
         Assert.assertNotNull(test);

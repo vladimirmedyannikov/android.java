@@ -185,10 +185,10 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
     }
 
     public boolean checkField() {
-        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && isSocialStatusSeted()) {
-            Toast.makeText(getActivity(), "Укажите род деятельности", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (wizardFlatType == NewFlatFragmentVM.FLAT_TYPE_WORK && isSocialStatusSeted()) {
+//            Toast.makeText(getActivity(), "Укажите род деятельности", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 

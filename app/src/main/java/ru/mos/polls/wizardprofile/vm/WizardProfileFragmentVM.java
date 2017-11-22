@@ -274,7 +274,7 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                         if (o instanceof Events.WizardEvents) {
                             Events.WizardEvents events = (Events.WizardEvents) o;
                             agUser = new AgUser(getActivity());
-                            percent = events.getPercentFillProfile();
+                            percent = events.getPercentFillProfile() != 0 ? events.getPercentFillProfile() : percent;
                             switch (events.getEventType()) {
                                 case Events.WizardEvents.WIZARD_AVATAR:
                                     wizardFilledList.put(AVATAR, true);

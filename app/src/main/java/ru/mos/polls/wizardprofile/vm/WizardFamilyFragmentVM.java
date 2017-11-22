@@ -127,10 +127,10 @@ public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragme
     }
 
     public boolean checkField() {
-        if (selectedMartial == 0) {
-            Toast.makeText(getActivity(), "Укажите семейное положение", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (selectedMartial == 0) {
+//            Toast.makeText(getActivity(), "Укажите семейное положение", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 

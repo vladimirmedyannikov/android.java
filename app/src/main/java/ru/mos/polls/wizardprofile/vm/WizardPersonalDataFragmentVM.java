@@ -149,14 +149,14 @@ public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPerson
 
 
     public boolean checkField() {
-        if (birthdayDate.getText().length() == 0) {
-            Toast.makeText(getActivity(), "Укажите дату рождения", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (selectedGender == 0) {
-            Toast.makeText(getActivity(), "Укажите пол", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (birthdayDate.getText().length() == 0) {
+//            Toast.makeText(getActivity(), "Укажите дату рождения", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        if (selectedGender == 0) {
+//            Toast.makeText(getActivity(), "Укажите пол", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 

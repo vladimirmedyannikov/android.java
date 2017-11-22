@@ -152,9 +152,11 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         buildingNotFoundContainer.setOnClickListener(v -> customFlat());
         residenceToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             visibilityFlatInput(isChecked ? View.GONE : View.VISIBLE);
-            if (!isChecked && !flat.isEmpty()) {
-                showDeleteMenuIcon();
-            } else showConfirmMenuIcon();
+            if (!forWizard) {
+                if (!isChecked && !flat.isEmpty()) {
+                    showDeleteMenuIcon();
+                } else showConfirmMenuIcon();
+            }
         });
         etStreet.addTextChangedListener(new StreetWatcher((BaseActivity) getActivity(), etStreet, getFragment().getView().findViewById(R.id.pbStreet), new StreetWatcher.Listener() {
             @Override

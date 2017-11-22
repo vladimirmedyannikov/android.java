@@ -258,7 +258,19 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                 .subscribeWith(new RxEventDisposableSubscriber() {
                     @Override
                     public void onNext(Object o) {
-
+                        if (o instanceof Events.ProgressableEvents) {
+                            Events.ProgressableEvents events = (Events.ProgressableEvents) o;
+                            switch (events.getEventType()) {
+                                case Events.ProgressableEvents.BEGIN:
+                                    if (getFragment() != null)
+                                        GuiUtils.hideKeyboard(getFragment().getView());
+                                    getComponent(ProgressableUIComponent.class).begin();
+                                    break;
+                                case Events.ProgressableEvents.END:
+                                    getComponent(ProgressableUIComponent.class).end();
+                                    break;
+                            }
+                        }
                         if (o instanceof Events.WizardEvents) {
                             Events.WizardEvents events = (Events.WizardEvents) o;
                             agUser = new AgUser(getActivity());
@@ -304,18 +316,11 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                             }
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
-                        }
-                        if (o instanceof Events.ProgressableEvents) {
-                            Events.ProgressableEvents events = (Events.ProgressableEvents) o;
-                            switch (events.getEventType()) {
-                                case Events.ProgressableEvents.BEGIN:
-                                    if (getFragment() != null)
-                                        GuiUtils.hideKeyboard(getFragment().getView());
-                                    getComponent(ProgressableUIComponent.class).begin();
-                                    break;
-                                case Events.ProgressableEvents.END:
-                                    getComponent(ProgressableUIComponent.class).end();
-                                    break;
+                            if (isLastPage && (events.getEventType() == Events.WizardEvents.WIZARD_EMAIL
+                                    || events.getEventType() == Events.WizardEvents.WIZARD_PERSONAL
+                                    || ((events.getEventType() == Events.WizardEvents.WIZARD_FAMILY && agUser.getChildCount() == 0))
+                                    || events.getEventType() == Events.WizardEvents.WIZARD_KIDS)) {
+                                finishAction();
                             }
                         }
                     }
@@ -413,13 +418,20 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
             NavigateFragment wpdf = (NavigateFragment) bd;
             wpdf.doRequestAction();
         } else {
-            slideNextPage();
-            return;
+            if (!isLastPage) {
+                slideNextPage();
+            } else {
+                finishAction();
+            }
         }
-        if (isLastPage) {
-            getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
-            getActivity().finish();
+        if (isLastPage && bd instanceof PguAuthFragment) {
+            finishAction();
         }
+    }
+
+    public void finishAction() {
+        getActivity().setResult(WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE);
+        getActivity().finish();
     }
 
     public View getTabView() {

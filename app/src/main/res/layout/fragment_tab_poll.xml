@@ -13,7 +13,6 @@
             android:id="@+id/root"
             style="@style/root">
 
-
             <TextView
                 android:id="@android:id/empty"
                 style="@style/emptylist"
@@ -21,11 +20,20 @@
                 android:layout_marginTop="@dimen/pd_xxxlarge"
                 android:text="@string/empty_activepolls_hint" />
 
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                style="@style/root">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    style="@style/root" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
             <LinearLayout
                 android:id="@+id/subscriptionsContainer"
                 style="@style/item.linear"
-                android:visibility="gone"
-                android:layout_below="@android:id/empty">
+                android:layout_below="@android:id/empty"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/text.large.black"
@@ -36,7 +44,6 @@
                 <LinearLayout
                     style="@style/item.linear"
                     android:background="@drawable/background_text_field">
-
                     <!--E-mail-->
                     <RelativeLayout
                         style="@style/item.linear.horizontal"
@@ -58,17 +65,8 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
-                style="@style/root">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list"
-                    style="@style/root" />
-
-            </android.support.v4.widget.SwipeRefreshLayout>
         </RelativeLayout>
+
         <include layout="@layout/layout_internet_connection_lost" />
     </RelativeLayout>
 </layout>

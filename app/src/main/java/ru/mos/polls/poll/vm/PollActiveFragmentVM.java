@@ -105,7 +105,9 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
 
     public void setListeners() {
         subscribeQuestionsEmail.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            subscribeEmail(isChecked);
+            if (buttonView.isPressed()) {
+                subscribeEmail(isChecked);
+            }
         });
     }
 

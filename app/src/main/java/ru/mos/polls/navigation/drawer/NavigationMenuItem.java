@@ -44,7 +44,7 @@ public class NavigationMenuItem {
             ITEM_SHOP,
             ITEM_MY_POINTS,
             ITEM_PROFILE,
-            ITEM_FRIENDS,
+//            ITEM_FRIENDS, //вернуть в версии 2.5.0
             ITEM_SETTINGS,
             ITEM_ABOUT
     };

@@ -192,7 +192,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         initGeotargetManager();
 
         subscribeEventsBus();
-        findFriends();
+//        findFriends(); //вернуть в версии 2.5.0
     }
 
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)

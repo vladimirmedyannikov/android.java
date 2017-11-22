@@ -219,7 +219,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
         });
-        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));
+//        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
     }
 
     public void refreshView(AgUser agUser) {
@@ -239,7 +239,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         setKidsDateLayerView(agUser);
         setSocialBindingLayerRx();
         setPguStatusView(agUser);
-        setOwnPropertyView(agUser);
+//        setOwnPropertyView(agUser);  //вернуть в версии 2.5.0
     }
 
     public void setOwnPropertyView(AgUser agUser) {

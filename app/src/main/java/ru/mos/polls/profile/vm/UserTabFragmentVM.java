@@ -72,8 +72,8 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
     public void onViewCreated() {
         super.onViewCreated();
         progressable = getProgressable();
-        setView();
-        setListener();
+//        setView(); //вернуть в версии 2.5.0
+//        setListener(); //вернуть в версии 2.5.0
         setAchievementLayerView();
         setStatistics();
     }

@@ -82,6 +82,7 @@
                             android:checked="true"
                             android:textOff="@string/empty"
                             android:textOn="@string/empty"
+                            android:visibility="gone"
                             android:thumbTextPadding="@dimen/pd_xlarge"/>
                     </RelativeLayout>
                 </LinearLayout>

@@ -25,13 +25,20 @@ public class AgApiBuilder {
     private static final String URL_AG_FORMATTED = "https://emp.mos.ru:443%s";
     private static final String URL_AG_RESOURCE_FORMATTED_TEST = "http://test.service.ag.mos.ru%s";
     private static final String URL_AG_RESOURCE_FORMATTED = "http://service.ag.mos.ru%s";
+    private static final String URL_AG_RESOURCE_FORMATTED_UAT = "http://uat.service.ag.mos.ru%s";
 
     public static String url(String method) {
         return String.format(URL_AG_FORMATTED, method);
     }
 
     public static String resourceURL(String method) {
-        return String.format(BuildConfig.DEBUG ? URL_AG_RESOURCE_FORMATTED_TEST : URL_AG_RESOURCE_FORMATTED, method);
+        String url = URL_AG_RESOURCE_FORMATTED;
+        if (BuildConfig.BUILD_TYPE.equals("customer")) {
+            url = URL_AG_RESOURCE_FORMATTED_UAT;
+        } else if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            url = URL_AG_RESOURCE_FORMATTED_TEST;
+        }
+        return String.format(url, method);
     }
 
     public static AgApi build() {

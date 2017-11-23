@@ -103,7 +103,9 @@ public class ImagePickerController {
     public static void beginCrop(Fragment fragment, int requestCode, int resultCode, Intent data) {
         if (resultCode == AppCompatActivity.RESULT_OK && (requestCode == ImagePickerController.REQUEST_CAMERA || requestCode == ImagePickerController.REQUEST_GALLERY)) {
             Uri result = getUri(requestCode, data);
-            CropImage.activity(result).start(fragment.getContext(), fragment);
+            CropImage.activity(result)
+                    .setFixAspectRatio(true)
+                    .start(fragment.getContext(), fragment);
         }
     }
 

@@ -33,9 +33,11 @@ import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
+import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.profile.service.AvatarSet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.model.Media;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
@@ -95,7 +97,9 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void setAvatar() {
-        if (BadgesSource.getInstance().getAvatar() != null) {
+        if (NetworkUtils.hasInternetConnection(getActivity())) {
+            FriendGuiUtils.loadAvatar(circleImageView, AgApiBuilder.resourceURL(saved.getAvatar()));
+        } else if (BadgesSource.getInstance().getAvatar() != null) {
             circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
             circleImageView.invalidate();
         }

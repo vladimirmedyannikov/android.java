@@ -230,8 +230,8 @@ public class NavigationDrawerFragment extends Fragment {
 
                         @Override
                         public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            mUserAvatarImageView.setImageBitmap(bitmap);
                             BadgesSource.getInstance().setAvatar(url, bitmap);
-                            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_AVATAR_FROM_CACHE));
                         }
 
                         @Override

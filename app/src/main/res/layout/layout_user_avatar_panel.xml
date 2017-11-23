@@ -17,7 +17,6 @@
         style="@style/item"
         android:background="@color/actionbar_background"
         android:gravity="center"
-        android:layerType="hardware"
         android:paddingTop="@dimen/pd_xxlarge">
 
         <ImageView
@@ -34,7 +33,6 @@
             android:layout_width="@dimen/vs_xnormal"
             android:layout_height="@dimen/vs_xnormal"
             android:layout_weight="1"
-            android:layerType="software"
             android:src="@drawable/unlogin2"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp"

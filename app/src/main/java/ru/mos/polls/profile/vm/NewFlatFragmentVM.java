@@ -335,22 +335,20 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     }
 
     public void confirmAction() {
-        if (flat.isResidence()) {
-            if (residenceToggle.isChecked()) {
-                goAction();
-            } else {
-                if (TextUtils.isEmpty(flat.getFlatId()) && (TextUtils.isEmpty(flat.getStreet()) || TextUtils.isEmpty(flat.getBuilding()))) {
-                    Toast.makeText(getActivity(), R.string.empty_flat_error, Toast.LENGTH_SHORT).show();
-                } else {
-                    goAction();
+        if (forWizard) {
+            if (flat.isResidence() && residenceToggle.isChecked()) {
+                if (Flat.getRegistration(getActivity()).isEmpty()) {
+                    AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_RESIDENCE, 0));
+                    return;
                 }
+            } else if (TextUtils.isEmpty(flat.getFlatId()) && (TextUtils.isEmpty(flat.getStreet()) || TextUtils.isEmpty(flat.getBuilding()))) {
+                AGApplication.bus().send(new Events.WizardEvents(getWizardType(), 0));
+                return;
+            } else {
+                goAction();
             }
         } else {
-            if (TextUtils.isEmpty(flat.getFlatId()) && (TextUtils.isEmpty(flat.getStreet()) || TextUtils.isEmpty(flat.getBuilding()))) {
-                Toast.makeText(getActivity(), R.string.empty_flat_error, Toast.LENGTH_SHORT).show();
-            } else {
-                goAction();
-            }
+            goAction();
         }
     }
 
@@ -462,20 +460,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                         showDeleteMenuIcon();
                         getActivity().finish();
                     } else {
-                        int wizardType = 0;
-                        switch (flatType) {
-                            case FLAT_TYPE_REGISTRATION:
-                                wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
-                                break;
-                            case FLAT_TYPE_RESIDENCE:
-                                wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
-                                residenceToggle.setClickable(false);
-                                break;
-                            case FLAT_TYPE_WORK:
-                                wizardType = Events.WizardEvents.WIZARD_WORK;
-                                break;
-                        }
-                        AGApplication.bus().send(new Events.WizardEvents(wizardType, percent));
+                        AGApplication.bus().send(new Events.WizardEvents(getWizardType(), percent));
                     }
                 }
             }
@@ -485,6 +470,23 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservabl.subscribeWith(handler));
+    }
+
+    public int getWizardType() {
+        int wizardType = 0;
+        switch (flatType) {
+            case FLAT_TYPE_REGISTRATION:
+                wizardType = Events.WizardEvents.WIZARD_REGISTRATION;
+                break;
+            case FLAT_TYPE_RESIDENCE:
+                wizardType = Events.WizardEvents.WIZARD_RESIDENCE;
+                residenceToggle.setClickable(false);
+                break;
+            case FLAT_TYPE_WORK:
+                wizardType = Events.WizardEvents.WIZARD_WORK;
+                break;
+        }
+        return wizardType;
     }
 
     private void configViews(int flatType) {

@@ -169,11 +169,11 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
             public void onTabUnselected(TabLayout.Tab tab) {
                 frViewedList.put(tab.getPosition(), true);
                 try {
-                    boolean preWizardFr = wizardFilledList.get(tagFr.get(tab.getPosition()));
-                    if (tagFr.get(tab.getPosition()).equalsIgnoreCase(EMAIL) && !preWizardFr) {
-                        setDotColor(tab, R.drawable.wizard_profile_warning_dot);
-                        return;
-                    }
+//                    boolean preWizardFr = wizardFilledList.get(tagFr.get(tab.getPosition()));
+//                    if (tagFr.get(tab.getPosition()).equalsIgnoreCase(EMAIL) && !preWizardFr) {
+//                        setDotColor(tab, R.drawable.wizard_profile_warning_dot);
+//                        return;
+//                    }
 //                    if (preWizardFr) {
                     setDotColor(tab, R.drawable.wizard_profile_default_dot);
 //                    }

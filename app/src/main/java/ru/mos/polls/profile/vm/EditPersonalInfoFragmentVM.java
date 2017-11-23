@@ -304,7 +304,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
     }
 
     public boolean checkEmailValid() {
-        if (AgTextUtil.isEmailValid(email.getText().toString())) {
+        if (AgTextUtil.isEmailValid(email.getText().toString()) || email.getText().toString().trim().isEmpty()) {
             agUser.setEmail(email.getText().toString());
             return true;
         } else {

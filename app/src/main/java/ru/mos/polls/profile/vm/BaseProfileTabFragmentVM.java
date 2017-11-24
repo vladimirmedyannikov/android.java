@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
@@ -39,6 +43,7 @@ import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.model.Media;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 import ru.mos.polls.util.NetworkUtils;
@@ -51,6 +56,9 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     protected RecyclerView recyclerView;
     protected AgUser saved;
     protected CircleImageView circleImageView;
+    protected ProgressBar avatarProgress;
+    protected FrameLayout avatarContainer;
+    private Handler handler;
     public boolean isAvatarLoaded;
 
     public BaseProfileTabFragmentVM(F fragment, B binding) {
@@ -61,6 +69,12 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     protected void initialize(B binding) {
         if (recyclerView != null)
             UIhelper.setRecyclerList(recyclerView, getActivity());
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        handler = new Handler();
     }
 
     @Override
@@ -133,6 +147,7 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 .subscribeOn(Schedulers.io())
                 .flatMap(f -> { //конвертируем в base64
                     Media m = new Media(FileUtils.getFileExtension(f.getName()), FileUtils.getStringFile(f));
+                    progressAvatar(true);
                     return Observable.just(m);
                 }).observeOn(AndroidSchedulers.mainThread());
 
@@ -169,6 +184,12 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, result.getPercentFillProfile()));
                 setAvatarFromBadges();
                 refreshProfile();
+            }
+
+            @Override
+            public void onNext(@NonNull GeneralResponse<AvatarSet.Response.Result> generalResponse) {
+                super.onNext(generalResponse);
+                progressAvatar(false);
             }
         };
         Observable<AvatarSet.Response> responseObservable = AGApplication.api
@@ -229,5 +250,17 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     @Override
     public void onRequestPermissionsResult(int requestCode, @android.support.annotation.NonNull String[] permissions, @android.support.annotation.NonNull int[] grantResults) {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private void progressAvatar(boolean progress) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (avatarProgress != null && circleImageView != null) {
+                    avatarProgress.setVisibility(progress ? View.VISIBLE : View.GONE);
+                    circleImageView.setVisibility(progress ? View.GONE : View.VISIBLE);
+                }
+            }
+        });
     }
 }

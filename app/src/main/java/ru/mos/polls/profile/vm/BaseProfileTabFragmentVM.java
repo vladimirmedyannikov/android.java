@@ -100,9 +100,13 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
         if (NetworkUtils.hasInternetConnection(getActivity())) {
             FriendGuiUtils.loadAvatar(circleImageView, AgApiBuilder.resourceURL(saved.getAvatar()));
         } else if (BadgesSource.getInstance().getAvatar() != null) {
-            circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
-            circleImageView.invalidate();
+            setAvatarFromBadges();
         }
+    }
+
+    public void setAvatarFromBadges() {
+        circleImageView.setImageBitmap(BadgesSource.getInstance().getAvatar());
+        circleImageView.invalidate();
     }
 
     void updateAvatar(Uri uri) {
@@ -163,7 +167,8 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 saved.setPercentFillProfile(result.getPercentFillProfile());
                 saved.save(getActivity());
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, result.getPercentFillProfile()));
-                updateView();
+                setAvatarFromBadges();
+                refreshProfile();
             }
         };
         Observable<AvatarSet.Response> responseObservable = AGApplication.api

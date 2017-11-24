@@ -39,7 +39,12 @@ public class WizardAvatarFragmentVM extends BaseProfileTabFragmentVM<WizardAvata
     public void onResume() {
         super.onResume();
         if (isAvatarLoaded) {
-            setAvatar();
+            setAvatarFromBadges();
         }
+    }
+
+    @Override
+    public void refreshProfile() {
+
     }
 }

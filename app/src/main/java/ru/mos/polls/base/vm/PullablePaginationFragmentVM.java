@@ -80,14 +80,16 @@ public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,
 
     public RecyclerView.OnScrollListener getScrollableListener() {
         RecyclerScrollableController.OnLastItemVisibleListener onLastItemVisibleListener
-                = () -> {
-            if (isPaginationEnable) {
-                isPaginationEnable = false;
-                page.increment();
-                doRequest();
-            }
-        };
+                = this::manualPaginationIsDown;
         return new RecyclerScrollableController(onLastItemVisibleListener);
+    }
+
+    public void manualPaginationIsDown() {
+        if (isPaginationEnable) {
+            isPaginationEnable = false;
+            page.increment();
+            doRequest();
+        }
     }
 
     @Override

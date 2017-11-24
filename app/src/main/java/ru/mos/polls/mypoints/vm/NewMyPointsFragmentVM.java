@@ -1,6 +1,7 @@
 package ru.mos.polls.mypoints.vm;
 
 import android.content.Context;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
+import ru.mos.polls.base.component.ProgressableUIComponent;
+import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
 import ru.mos.polls.model.PointHistory;
@@ -28,6 +31,7 @@ import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.mypoints.ui.NewMyPointsAdapter;
 import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.StubUtils;
 
 /**
@@ -42,8 +46,10 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
     private TextView tvPoints;
     private TextView tvStatus;
     private TextView tvTitleBalance;
+    private NestedScrollView rootScrollView;
     private Status status;
     private List<String> action;
+    private boolean isFirstStart = true;
 
     /**
      * Хранит текущий тип списка баллов
@@ -61,10 +67,26 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
         tvPoints = binding.tvPoints;
         tvStatus = binding.tvStatus;
         tvTitleBalance = binding.tvTitleBalance;
+        rootScrollView = binding.rootPointsScrollView;
         adapter = new NewMyPointsAdapter();
         action = new ArrayList<>();
         currentAction = PointHistory.Action.ALL;
         tvCurrentPointsUnit.setOnClickListener(v -> showPopup(v));
+        /**
+         * требуется повесить слушателя на скролл NestedScrollView, т.к. внутри NestedScrollView
+         * не отрабатывает слушатель скрола от RecyclerView
+         */
+        rootScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(v.getChildAt(v.getChildCount() - 1) != null) {
+                    if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                            scrollY > oldScrollY) {
+                        manualPaginationIsDown();
+                    }
+                }
+            }
+        });
         super.initialize(binding);
     }
 
@@ -88,6 +110,13 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
 
     @Override
     public void doRequest() {
+        Progressable progressable;
+        if (isFirstStart) {
+            progressable = getComponent(ProgressableUIComponent.class);
+            isFirstStart = false;
+        } else {
+            progressable = getComponent(PullableUIComponent.class);
+        }
         HandlerApiResponseSubscriber<HistoryGet.Response.Result> handler =
                 new HandlerApiResponseSubscriber<HistoryGet.Response.Result>(getActivity(), progressable) {
                     @Override

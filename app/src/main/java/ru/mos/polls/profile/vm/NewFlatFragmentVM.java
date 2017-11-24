@@ -340,7 +340,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 if (Flat.getRegistration(getActivity()).isEmpty()) {
                     AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_RESIDENCE, 0));
                     return;
-                }
+                } else goAction();
             } else if (TextUtils.isEmpty(flat.getFlatId()) && (TextUtils.isEmpty(flat.getStreet()) || TextUtils.isEmpty(flat.getBuilding()))) {
                 AGApplication.bus().send(new Events.WizardEvents(getWizardType(), 0));
                 return;

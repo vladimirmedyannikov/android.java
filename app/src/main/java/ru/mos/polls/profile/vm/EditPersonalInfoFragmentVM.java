@@ -202,7 +202,7 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
                 personal.setEmail(agUser.getEmail());
                 break;
             case PERSONAL_FIO:
-                validationOk = true;
+                validationOk = checkFIOValid();
                 personal.setSurname(agUser.getSurname());
                 personal.setFirstname(agUser.getFirstName());
                 personal.setMiddlename(agUser.getMiddleName());
@@ -227,17 +227,17 @@ public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<Edi
     }
 
     public boolean checkFIOValid() {
-        if (checkTextForSpace(lastname.getText().toString())
-                && checkTextForSpace(firstname.getText().toString())
-                && checkTextForSpace(middlename.getText().toString())) {
+//        if (checkTextForSpace(lastname.getText().toString())
+//                && checkTextForSpace(firstname.getText().toString())
+//                && checkTextForSpace(middlename.getText().toString())) {
             agUser.setSurname(lastname.getText().toString());
             agUser.setFirstName(firstname.getText().toString());
             agUser.setMiddleName(middlename.getText().toString());
             return true;
-        } else {
-            Toast.makeText(getActivity(), "ФИО не заполнены", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        } else {
+//            Toast.makeText(getActivity(), "ФИО не заполнены", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
     }
 
     public boolean checkTextForSpace(String text) {

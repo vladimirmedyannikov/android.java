@@ -68,6 +68,7 @@
                         style="@style/item"/>
 
                     <RelativeLayout
+                        android:visibility="gone"
                         style="@style/item.linear.horizontal"
                         android:padding="@dimen/pd_xsmall">
 

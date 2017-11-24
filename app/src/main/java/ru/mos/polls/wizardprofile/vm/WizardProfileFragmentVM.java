@@ -293,13 +293,13 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                                     wizardFilledList.put(TAG_BIRTHDAYKIDS, false);
                                     break;
                                 case Events.WizardEvents.WIZARD_REGISTRATION:
-                                    wizardFilledList.put(TAG_REGISTRATION, true);
+                                    wizardFilledList.put(TAG_REGISTRATION, events.getPercentFillProfile() > 0);
                                     break;
                                 case Events.WizardEvents.WIZARD_RESIDENCE:
-                                    wizardFilledList.put(TAG_RESIDENCE, true);
+                                    wizardFilledList.put(TAG_RESIDENCE, events.getPercentFillProfile() > 0);
                                     break;
                                 case Events.WizardEvents.WIZARD_WORK:
-                                    wizardFilledList.put(EXTRAINFO, true);
+                                    wizardFilledList.put(EXTRAINFO, events.getPercentFillProfile() > 0);
                                     break;
                                 case Events.WizardEvents.WIZARD_SOCIAL:
                                     wizardFilledList.put(SOCIAL, true);

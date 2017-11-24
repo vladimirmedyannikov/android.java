@@ -79,7 +79,8 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("дата рождения", TextUtils.isEmpty(saved.getBirthday()) ? getFragment().getString(R.string.non_selected_female) : saved.getBirthday()));
         list.add(new UserInfo("пол", saved.getGender().toString()));
         list.add(new UserInfo("семейное положение", saved.getMaritalStatus().toString(saved.getGender())));
-        list.add(new UserInfo("количество детей", String.valueOf(saved.getChildCount())));
+        if (saved.getChildCount() > 0)
+            list.add(new UserInfo("количество детей", String.valueOf(saved.getChildCount())));
         list.add(new UserInfo("адрес регистрации", saved.getRegistration().getAddressTitle(getActivity().getBaseContext())));
         String residenceFlat = getRegistrationAddressTitle();
         list.add(new UserInfo("адрес проживания", residenceFlat));

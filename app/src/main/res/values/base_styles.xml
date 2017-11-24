@@ -272,6 +272,10 @@
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
     </style>
 
+    <style name="text.medium.black">
+        <item name="android:textColor">@color/black_light</item>
+    </style>
+
     <style name="text.up.green">
         <item name="android:textColor">@color/greenText</item>
     </style>

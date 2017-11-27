@@ -43,7 +43,7 @@ import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.model.Media;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 import ru.mos.polls.util.NetworkUtils;
@@ -59,6 +59,17 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     protected ProgressBar avatarProgress;
     protected FrameLayout avatarContainer;
     private Handler handler;
+    private Progressable avatarProgressable = new Progressable() {
+        @Override
+        public void begin() {
+            progressAvatar(true);
+        }
+
+        @Override
+        public void end() {
+            progressAvatar(false);
+        }
+    };
     public boolean isAvatarLoaded;
 
     public BaseProfileTabFragmentVM(F fragment, B binding) {
@@ -143,11 +154,11 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void uploadAvatarRequest(File file) {
+        progressAvatar(true);
         Observable<Media> media = Observable.just(file)
                 .subscribeOn(Schedulers.io())
                 .flatMap(f -> { //конвертируем в base64
                     Media m = new Media(FileUtils.getFileExtension(f.getName()), FileUtils.getStringFile(f));
-                    progressAvatar(true);
                     return Observable.just(m);
                 }).observeOn(AndroidSchedulers.mainThread());
 
@@ -173,6 +184,10 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void setAvatarRequest(String id) {
+        /**
+         * для избежания морганий при загрузке фотографии на сервер при использовании прогрессейбла на весь экран
+         */
+        progressable = avatarProgressable;
         HandlerApiResponseSubscriber<AvatarSet.Response.Result> handler
                 = new HandlerApiResponseSubscriber<AvatarSet.Response.Result>(getActivity(), progressable) {
             @Override
@@ -184,12 +199,6 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_AVATAR, result.getPercentFillProfile()));
                 setAvatarFromBadges();
                 refreshProfile();
-            }
-
-            @Override
-            public void onNext(@NonNull GeneralResponse<AvatarSet.Response.Result> generalResponse) {
-                super.onNext(generalResponse);
-                progressAvatar(false);
             }
         };
         Observable<AvatarSet.Response> responseObservable = AGApplication.api
@@ -253,14 +262,15 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     private void progressAvatar(boolean progress) {
-        handler.post(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (avatarProgress != null && circleImageView != null) {
                     avatarProgress.setVisibility(progress ? View.VISIBLE : View.GONE);
                     circleImageView.setVisibility(progress ? View.GONE : View.VISIBLE);
+                    circleImageView.clearAnimation();
                 }
             }
-        });
+        }, progress ? 0 : 500);
     }
 }

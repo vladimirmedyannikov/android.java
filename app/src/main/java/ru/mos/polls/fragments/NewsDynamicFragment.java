@@ -131,7 +131,7 @@ public class NewsDynamicFragment extends AgDynamicFragment {
                     UIhelper.hideWithFadeView(false, mosNews, mosNews);
                     mosNewsVisible = true;
                 }
-                if (mosNewsVisible && firstVisibleItem > 4) {
+                if (mosNewsVisible && firstVisibleItem > 2) {
                     UIhelper.hideWithFadeView(true, mosNews, mosNews);
                     mosNewsVisible = false;
                 }

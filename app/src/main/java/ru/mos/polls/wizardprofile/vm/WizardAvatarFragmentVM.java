@@ -26,6 +26,8 @@ public class WizardAvatarFragmentVM extends BaseProfileTabFragmentVM<WizardAvata
     @Override
     protected void initialize(FragmentMakeAvatarBinding binding) {
         circleImageView = binding.wizardAvatar.avatar;
+        avatarProgress = binding.wizardAvatar.avatarProgress;
+        avatarContainer = binding.wizardAvatar.avatarContainer;
         saved = new AgUser(getActivity());
     }
 

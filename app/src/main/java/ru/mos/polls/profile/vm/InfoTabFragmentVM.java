@@ -3,6 +3,7 @@ package ru.mos.polls.profile.vm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
@@ -61,6 +62,12 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         recyclerView = binding.agUserProfileList;
         socialBindingLayer = binding.agUserSocialBindingLayer;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
+        avatarProgress = binding.agUserAvatarPanel.avatarProgress;
+        if (avatarProgress != null) {
+            (avatarProgress).getIndeterminateDrawable()
+                    .setColorFilter(getFragment().getContext().getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+        }
+        avatarContainer = binding.agUserAvatarPanel.avatarContainer;
         percentFilledTitle = binding.agUserProfilePercentFillTitle;
         socialBindingStatus = binding.agUserSocialValue;
         percentFilledPb = binding.agUserProfileProgressbar;

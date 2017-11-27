@@ -1,6 +1,7 @@
 package ru.mos.polls.profile.vm;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -19,6 +20,7 @@ import ru.mos.elk.profile.Achievements;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.elk.profile.Statistics;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
@@ -60,6 +62,12 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
         super.initialize(binding);
         enableProfileVisibility = binding.agUserProfileVisibility;
         circleImageView = binding.agUserAvatarPanel.agUserImage;
+        avatarProgress = binding.agUserAvatarPanel.avatarProgress;
+        if (avatarProgress != null) {
+            (avatarProgress).getIndeterminateDrawable()
+                    .setColorFilter(getFragment().getContext().getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+        }
+        avatarContainer = binding.agUserAvatarPanel.avatarContainer;
         fi = binding.agUserStatusInfoPanel.agUserFi;
         achievementLayer = binding.agUserStatusInfoPanel.agUserAchievementLayer;
         achievementsValue = binding.agUserStatusInfoPanel.agUserAchievementValue;

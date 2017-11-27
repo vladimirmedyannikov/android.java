@@ -593,7 +593,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
 
     private void setEditingBlocked() {
         boolean isHideWarnings = getFragment().getArguments().getBoolean(NewFlatFragment.ARG_HIDE_WARNING_FOR_ADD_FLATS, false);
-        if (isHideWarnings || flatType == FLAT_TYPE_OWN) {
+        if (forWizard || isHideWarnings || flatType == FLAT_TYPE_OWN) {
             warningContainer.setVisibility(View.GONE);
         } else {
             if (!flat.isEmpty() && !flat.isEnable()) {

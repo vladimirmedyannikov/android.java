@@ -19,7 +19,6 @@
             android:background="@drawable/selector_item_list"
             android:hint="@{viewModel.hint}"
             android:onClick="@{(v)->viewModel.onClick(v)}"
-            android:paddingLeft="@dimen/pd_xxsmall"
             android:text="@{viewModel.title}"/>
 
         <android.support.v7.widget.AppCompatTextView

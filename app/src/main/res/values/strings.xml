@@ -220,7 +220,7 @@
     <string name="tw">Twitter</string>
     <string name="ok">Одноклассники</string>
     <string name="error_in_posting">Произошла ошибка при попытке рассказать друзьям в социальных сетях. Попробуйте рассказать друзьям позже</string>
-    <string name="post_success"/>
+    <string name="post_success" />
     <string name="error_duplicate_post_ru">Запись уже была добавлена, повторное добавление возможно через некоторое время</string>
     <string name="error_duplicate_post_in_facebook_en">This status update is identical to the last one you posted. Try posting something different, or delete your previous update.</string>
     <string name="post_added">Запись добавлена в социальную сеть. Текущий баланс %1$s %2$s.</string>
@@ -249,7 +249,7 @@
     <string name="add_new_address">Добавить новый адрес</string>
     <string name="title_select_address">Добавление адреса</string>
     <string name="last_post_time_not_allow_do_new_post">Вы уже сделали пост на стене в %s, попробуйте повторить операцию позже</string>
-    <string formatted="false" name="repeated_posting_message">Вы уже размещали %s в %s, хотите продолжить?</string>
+    <string name="repeated_posting_message" formatted="false">Вы уже размещали %s в %s, хотите продолжить?</string>
     <string name="my_addresses">Мои адреса</string>
     <string name="goToPolls">Перейти к вопросам</string>
     <string name="description">Описание</string>
@@ -319,7 +319,7 @@
     <string name="poll_decision">Оповещать меня о принятых решениях</string>
     <string name="sms">Sms</string>
     <string name="poll_new">Оповещать меня о новых голосованиях</string>
-    <string name="empty"/>
+    <string name="empty" />
     <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
     <string name="poll_effected">Оповещать меня об исполненных решениях</string>
     <string name="action_rss">Подписки</string>
@@ -527,7 +527,7 @@
     <string name="title_bind_pgu">Связь с pgu.mos.ru</string>
     <string name="error_full_editing_blocked">Изменить сохраненный адрес можно только один раз в течение трех месяцев. Дождитесь снятия ограничения или обратитесь в службу поддержки.</string>
     <string name="error_short_editing_blocked">Смена адреса заблокирована.</string>
-    <string name="warning_editing_blocked">Просим вас внимательно отнестись к заполнению адреса. Изменить сохраненный адрес можно только один раз в течение трех месяцев</string>
+    <string name="warning_editing_blocked">Внимание! Изменить сохраненный адрес можно только один раз в течении трех месяцев.</string>
     <string name="hint_not_auth_pgu">Мы не сохраняем пароль и используем его только для установки связи между профилями</string>
     <string name="pgu_rebind">Связать с другим профилем?</string>
     <string name="select">Выбрать</string>
@@ -816,7 +816,7 @@
     <string name="non_selected_female">Не указана</string>
     <string name="non_selected_many">Не указаны</string>
     <string name="achievement_tab_title">Достижение</string>
-    <string formatted="false" name="remove_addresses_dialog_message">Удалить адрес собственности \"%s\"?</string>
+    <string name="remove_addresses_dialog_message" formatted="false">Удалить адрес собственности \"%s\"?</string>
     <string name="empty_flat_error">Некорректный адрес</string>
     <string name="news_government_moscow">Новости правительства Москвы</string>
     <string name="poll_old_empty_title">Вы еще не участвовали ни в одном голосовании</string>

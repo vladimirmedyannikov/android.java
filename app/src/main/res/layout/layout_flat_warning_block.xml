@@ -19,16 +19,14 @@
             android:id="@+id/tvErrorEditingBlocked"
             style="@style/text.red"
             android:layout_toRightOf="@id/warningEditingBlocked"
-            android:paddingLeft="@dimen/pd_xsmall"
             android:text="@string/error_short_editing_blocked"
             android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvWarningEditingBlocked"
-            style="@style/text.normal.black"
+            style="@style/text.small.gray"
             android:layout_below="@id/tvErrorEditingBlocked"
             android:layout_toRightOf="@id/warningEditingBlocked"
-            android:paddingLeft="@dimen/pd_xsmall"
             android:text="@string/warning_editing_blocked"/>
     </RelativeLayout>
 </layout>

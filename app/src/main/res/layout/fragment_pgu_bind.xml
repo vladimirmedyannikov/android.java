@@ -42,23 +42,12 @@
                         android:hint="@string/pgu_hint_password"/>
 
                 </android.support.design.widget.TextInputLayout>
-                <!---->
-                <!--<EditText-->
-                <!--android:id="@+id/etLogin"-->
-                <!--style="@style/input.email"-->
-                <!--android:hint="@string/pgu_hint_email"-->
-                <!--android:imeOptions="actionNext"/>-->
-
-                <!--<EditText-->
-                <!--android:id="@+id/etPassword"-->
-                <!--style="@style/input.password"-->
-                <!--android:hint="@string/pgu_hint_password"/>-->
 
                 <TextView
                     android:id="@+id/tvError"
                     style="@style/auth_error"
                     android:paddingTop="@dimen/pd_xsmall"
-                    android:visibility="invisible"/>
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <Button
@@ -72,7 +61,7 @@
                 android:visibility="invisible"/>
 
             <TextView
-                style="@style/text.gray"
+                style="@style/text.small.gray"
                 android:layout_below="@id/et_auth_layer"
                 android:text="@string/hint_not_auth_pgu"/>
 

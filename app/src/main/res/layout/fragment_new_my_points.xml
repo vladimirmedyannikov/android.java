@@ -81,6 +81,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/my_points_history_title"
                             style="@style/text.medium.black"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/pd_normal"
@@ -99,7 +100,8 @@
 
                             <TextView
                                 android:id="@android:id/empty"
-                                style="@style/emptylist" />
+                                android:layout_width="@dimen/dp_0"
+                                android:layout_height="@dimen/dp_0" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/list"

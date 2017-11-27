@@ -46,6 +46,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
     private TextView tvPoints;
     private TextView tvStatus;
     private TextView tvTitleBalance;
+    private TextView myPointsHistoryTitle;
     private NestedScrollView rootScrollView;
     private Status status;
     private List<String> action;
@@ -68,6 +69,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
         tvStatus = binding.tvStatus;
         tvTitleBalance = binding.tvTitleBalance;
         rootScrollView = binding.rootPointsScrollView;
+        myPointsHistoryTitle = binding.myPointsHistoryTitle;
         adapter = new NewMyPointsAdapter();
         action = new ArrayList<>();
         currentAction = PointHistory.Action.ALL;
@@ -79,7 +81,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
         rootScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(v.getChildAt(v.getChildCount() - 1) != null) {
+                if (v.getChildAt(v.getChildCount() - 1) != null) {
                     if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
                             scrollY > oldScrollY) {
                         manualPaginationIsDown();
@@ -126,6 +128,7 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
                         status = result.getStatus();
                         setView();
                         recyclerUIComponent.refreshUI();
+                        myPointsHistoryTitle.setVisibility(result.getPoints().size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 };
         HistoryGet.Request request = new HistoryGet.Request(page);

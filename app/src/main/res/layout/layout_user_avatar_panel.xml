@@ -30,8 +30,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/agUser_image"
-            android:layout_width="@dimen/vs_xnormal"
-            android:layout_height="@dimen/vs_xnormal"
+            android:layout_width="@dimen/vs_large"
+            android:layout_height="@dimen/vs_large"
             android:layout_weight="1"
             android:src="@drawable/unlogin2"
             app:civ_border_color="@color/white"

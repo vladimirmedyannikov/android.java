@@ -9,8 +9,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
-            android:layout_width="@dimen/vs_xnormal"
-            android:layout_height="@dimen/vs_xnormal"
+            android:layout_width="@dimen/vs_large"
+            android:layout_height="@dimen/vs_large"
             android:layout_gravity="center"
             android:layout_margin="@dimen/pd_normal"
             android:src="@drawable/ic_avatar_default"

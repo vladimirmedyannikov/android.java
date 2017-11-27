@@ -21,6 +21,9 @@
                 android:id="@+id/mosNews"
                 layout="@layout/layout_mos_news" />
 
+            <TextView
+                android:id="@android:id/empty"
+                style="@style/emptylist" />
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/ptrLayout"
                 style="@style/root"
@@ -33,9 +36,6 @@
                     android:listSelector="@drawable/ag_list_selector" />
             </android.support.v4.widget.SwipeRefreshLayout>
 
-            <TextView
-                android:id="@android:id/empty"
-                style="@style/emptylist" />
         </RelativeLayout>
 
         <include layout="@layout/layout_internet_connection_lost" />

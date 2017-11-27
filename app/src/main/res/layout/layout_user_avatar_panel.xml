@@ -45,8 +45,8 @@
             <ProgressBar
                 android:id="@+id/avatar_progress"
                 android:visibility="gone"
-                android:layout_width="@dimen/vs_xnormal"
-                android:layout_height="@dimen/vs_xnormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center" />
         </FrameLayout>
 

@@ -6,10 +6,10 @@ import retrofit2.http.POST;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
-import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
+import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.service.AchievementsGet;
 import ru.mos.polls.profile.service.AchievementsSelect;
@@ -20,11 +20,11 @@ import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
-import ru.mos.polls.support.service.FeedbackSend;
-import ru.mos.polls.support.service.SubjectsLoad;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
+import ru.mos.polls.support.service.FeedbackSend;
+import ru.mos.polls.support.service.SubjectsLoad;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -105,7 +105,7 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
     Observable<AchievementsGet.Response> getAchievement(@Body AchievementsGet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
     Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)

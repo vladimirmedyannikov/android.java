@@ -194,14 +194,13 @@ public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, 
 
     public void wizardAction() {
         if (flatType == NewFlatFragmentVM.FLAT_TYPE_WORK && !isWorkFlatEmpty) {
-            AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL_STATUS, AgUser.getPercentFillProfile(getActivity())));
+            AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_SOCIAL_STATUS_ONLY, AgUser.getPercentFillProfile(getActivity())));
             return;
         }
-        if (checkField() && !isCustomFlat) {
+        if (!isCustomFlat) {
             newFlatFragment.getViewModel().confirmAction();
         } else {
-            if (checkField())
-                customFlatFragment.getViewModel().confirmAction();
+            customFlatFragment.getViewModel().confirmAction();
         }
     }
 

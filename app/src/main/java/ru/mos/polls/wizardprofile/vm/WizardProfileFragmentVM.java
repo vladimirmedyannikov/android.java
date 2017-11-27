@@ -301,18 +301,15 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                                 case Events.WizardEvents.WIZARD_WORK:
                                     wizardFilledList.put(EXTRAINFO, events.getPercentFillProfile() > 0);
                                     break;
+                                case Events.WizardEvents.WIZARD_SOCIAL_STATUS_ONLY:
+                                    wizardFilledList.put(EXTRAINFO, true);
+                                    break;
                                 case Events.WizardEvents.WIZARD_SOCIAL:
                                     wizardFilledList.put(SOCIAL, true);
                                     break;
                                 case Events.WizardEvents.WIZARD_PGU:
                                     wizardFilledList.put(PGU, true);
                                     break;
-                            }
-                            if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER
-                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
-                                    && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR
-                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL_STATUS) {
-                                slideNextPage();
                             }
                             setPercentegeTitleView(percent);
                             setProfileProgressbarView(percent);
@@ -321,6 +318,12 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
                                     || ((events.getEventType() == Events.WizardEvents.WIZARD_FAMILY && agUser.getChildCount() == 0))
                                     || events.getEventType() == Events.WizardEvents.WIZARD_KIDS)) {
                                 finishAction();
+                            }
+                            if (events.getEventType() != Events.WizardEvents.WIZARD_UPDATE_GENDER
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_CHANGE_FLAT_FR
+                                    && events.getEventType() != Events.WizardEvents.WIZARD_SOCIAL_STATUS) {
+                                slideNextPage();
                             }
                         }
                     }

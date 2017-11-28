@@ -369,6 +369,8 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                     Flat registrationFlat = Flat.getRegistration(getActivity());
                     residenceEntity.setBuilding_id(registrationFlat.getBuildingId());
                     residenceEntity.setArea_id(registrationFlat.getAreaId());
+                    residenceEntity.setStreet(registrationFlat.getStreet());
+                    residenceEntity.setBuilding(registrationFlat.getBuilding());
                 }
             } else {
                 residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());

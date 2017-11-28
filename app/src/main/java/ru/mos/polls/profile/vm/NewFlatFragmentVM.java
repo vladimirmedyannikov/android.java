@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley2.VolleyError;
 
@@ -38,15 +37,15 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
+import ru.mos.polls.profile.controller.FlatApiController;
+import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.state.CustomFlatState;
 import ru.mos.polls.profile.ui.fragment.CustomFlatFragment;
 import ru.mos.polls.profile.ui.fragment.NewFlatFragment;
-import ru.mos.polls.profile.controller.FlatApiController;
 import ru.mos.polls.profile.ui.views.BuildingWatcher;
 import ru.mos.polls.profile.ui.views.StreetWatcher;
-import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.polls.wizardprofile.vm.WizardCustomFlatListener;
@@ -367,7 +366,9 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 if (!TextUtils.isEmpty(flat.getFlatId())) {
                     residenceEntity.setKill(true);
                 } else {
-                    residenceEntity.setBuilding_id(Flat.getRegistration(getActivity()).getBuildingId());
+                    Flat registrationFlat = Flat.getRegistration(getActivity());
+                    residenceEntity.setBuilding_id(registrationFlat.getBuildingId());
+                    residenceEntity.setArea_id(registrationFlat.getAreaId());
                 }
             } else {
                 residenceEntity = new FlatsEntity.ResidenceEntity(flat.getBuildingId());

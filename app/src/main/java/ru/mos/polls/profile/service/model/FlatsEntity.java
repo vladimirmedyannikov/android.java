@@ -149,6 +149,26 @@ public class FlatsEntity {
             return flat_id;
         }
 
+        public String getFlat() {
+            return flat;
+        }
+
+        public String getBuilding() {
+            return building;
+        }
+
+        public String getStreet() {
+            return street;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public String getArea_id() {
+            return area_id;
+        }
+
         public void setFlat_id(String flat_id) {
             this.flat_id = flat_id;
         }

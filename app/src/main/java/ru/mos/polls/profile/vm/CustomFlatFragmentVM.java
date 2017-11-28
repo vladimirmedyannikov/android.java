@@ -169,13 +169,13 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                     , areaReference.getValue()));
             entity = new FlatsEntity(listEntity);
         }
-        sendFlat(new ProfileSet.Request(entity), entity);
+        sendFlat(new ProfileSet.Request(entity), areaReference);
     }
 
     /**
      * Отправляем адрес
      */
-    public void sendFlat(ProfileSet.Request request, final FlatsEntity flatsEntity) {
+    public void sendFlat(ProfileSet.Request request, final Reference areaReference) {
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
@@ -185,20 +185,18 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                 if (result != null) percent = result.getPercentFillProfile();
                 if (result.getFlats().getRegistration() != null) {
                     newFlat = result.getFlats().getRegistration();
-                    if (flatsEntity != null && flatsEntity.getRegistration() != null) newFlat.setAreaId(flatsEntity.getRegistration().getArea_id());
                     newFlat.setType(Flat.Type.REGISTRATION);
                 }
                 if (result.getFlats().getResidence() != null) {
                     newFlat = result.getFlats().getResidence();
-                    if (flatsEntity != null && flatsEntity.getResidence() != null) newFlat.setAreaId(flatsEntity.getResidence().getArea_id());
                     newFlat.setType(Flat.Type.RESIDENCE);
                 }
                 if (result.getFlats().getWork() != null) {
                     newFlat = result.getFlats().getWork();
-                    if (flatsEntity != null && flatsEntity.getWork() != null) newFlat.setAreaId(flatsEntity.getWork().getArea_id());
                     newFlat.setType(Flat.Type.WORK);
                 }
                 if (newFlat != null) {
+                    newFlat.setAreaId(areaReference.getValue());
                     newFlat.setEnable(!newFlat.isEnable());    //костыля потому что в FLAT result.enable = !flatJson.optBoolean("editing_blocked"); а GSON парсит в   @SerializedName("editing_blocked")
                     newFlat.save(getActivity());
                 }

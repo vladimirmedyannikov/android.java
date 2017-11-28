@@ -31,12 +31,12 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentCustomFlatBinding;
+import ru.mos.polls.profile.controller.FlatApiController;
+import ru.mos.polls.profile.model.Reference;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.ui.fragment.CustomFlatFragment;
 import ru.mos.polls.profile.ui.fragment.NewFlatFragment;
-import ru.mos.polls.profile.controller.FlatApiController;
-import ru.mos.polls.profile.model.Reference;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
@@ -169,13 +169,13 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                     , areaReference.getValue()));
             entity = new FlatsEntity(listEntity);
         }
-        sendFlat(new ProfileSet.Request(entity));
+        sendFlat(new ProfileSet.Request(entity), entity);
     }
 
     /**
      * Отправляем адрес
      */
-    public void sendFlat(ProfileSet.Request request) {
+    public void sendFlat(ProfileSet.Request request, final FlatsEntity flatsEntity) {
         HandlerApiResponseSubscriber<ProfileSet.Response.Result> handler
                 = new HandlerApiResponseSubscriber<ProfileSet.Response.Result>(getActivity(), getComponent(ProgressableUIComponent.class)) {
             @Override
@@ -185,14 +185,17 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                 if (result != null) percent = result.getPercentFillProfile();
                 if (result.getFlats().getRegistration() != null) {
                     newFlat = result.getFlats().getRegistration();
+                    if (flatsEntity != null && flatsEntity.getRegistration() != null) newFlat.setAreaId(flatsEntity.getRegistration().getArea_id());
                     newFlat.setType(Flat.Type.REGISTRATION);
                 }
                 if (result.getFlats().getResidence() != null) {
                     newFlat = result.getFlats().getResidence();
+                    if (flatsEntity != null && flatsEntity.getResidence() != null) newFlat.setAreaId(flatsEntity.getResidence().getArea_id());
                     newFlat.setType(Flat.Type.RESIDENCE);
                 }
                 if (result.getFlats().getWork() != null) {
                     newFlat = result.getFlats().getWork();
+                    if (flatsEntity != null && flatsEntity.getWork() != null) newFlat.setAreaId(flatsEntity.getWork().getArea_id());
                     newFlat.setType(Flat.Type.WORK);
                 }
                 if (newFlat != null) {

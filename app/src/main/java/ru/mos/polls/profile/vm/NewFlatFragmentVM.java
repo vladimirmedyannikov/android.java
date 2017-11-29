@@ -264,7 +264,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
 
     public void visibilityFlatInput(int gone) {
         addFlatLayout.setVisibility(gone);
-        warningContainer.setVisibility(gone);
+        if (!forWizard) warningContainer.setVisibility(gone);
     }
 
     @Override
@@ -599,6 +599,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         if (forWizard || isHideWarnings || flatType == FLAT_TYPE_OWN) {
             warningContainer.setVisibility(View.GONE);
         } else {
+            warningContainer.setVisibility(View.VISIBLE);
             if (!flat.isEmpty() && !flat.isEnable()) {
                 tvWarningEditingBlocked.setText(getFragment().getString(ru.mos.polls.R.string.error_full_editing_blocked));
                 if (!forWizard) tvErrorEditingBlocked.setVisibility(View.VISIBLE);

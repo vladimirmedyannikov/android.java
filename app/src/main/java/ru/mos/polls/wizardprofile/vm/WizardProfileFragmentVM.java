@@ -158,11 +158,11 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setNextButtonView(tab.getPosition() + 1);
-                try {
-                    setDotColor(tab, R.drawable.wizard_profile_selected_dot);
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    setDotColor(tab, R.drawable.wizard_profile_selected_dot);
+//                } catch (NullPointerException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override
@@ -175,7 +175,7 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
 //                        return;
 //                    }
 //                    if (preWizardFr) {
-                    setDotColor(tab, R.drawable.wizard_profile_default_dot);
+//                    setDotColor(tab, R.drawable.wizard_profile_default_dot);
 //                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -373,11 +373,11 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             boolean isViewed = frViewedList.get(i);
-            String tag = tagFr.get(i);
-            boolean isFilled = wizardFilledList.get(tag);
-            if (tag.equalsIgnoreCase(EMAIL) && !isFilled) {
-                setDotColor(tab, R.drawable.wizard_profile_warning_dot);
-            }
+//            String tag = tagFr.get(i);
+//            boolean isFilled = wizardFilledList.get(tag);
+//            if (tag.equalsIgnoreCase(EMAIL) && !isFilled) {
+//                setDotColor(tab, R.drawable.wizard_profile_warning_dot);
+//            }
 //            if (isViewed && !isFilled) {
 //            }
         }

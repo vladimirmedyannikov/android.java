@@ -4,6 +4,7 @@
     <RelativeLayout
         android:id="@+id/warningContainer"
         style="@style/item"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/pd_xlarge">
 
         <ImageView

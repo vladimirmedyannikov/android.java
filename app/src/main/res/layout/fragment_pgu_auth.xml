@@ -29,17 +29,15 @@
                 android:paddingTop="@dimen/pd_normal"
                 android:text="@string/pgu_auth_message" />
 
-
             <Button
                 android:id="@+id/pgu_connect_btn"
-                style="@style/button.centered.action"
-                android:layout_below="@id/pguTitle"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/pd_xxxlarge"
-                android:layout_marginTop="@dimen/pd_normal"
-                android:enabled="true"
+                style="@style/button.centered"
+                android:layout_centerInParent="false"
                 android:minWidth="160dp"
-                android:text="Связать профили" />
+                android:textSize="@dimen/ts_normal"
+                android:text="Связать профили"
+                android:layout_below="@+id/pguTitle"
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/rebind"

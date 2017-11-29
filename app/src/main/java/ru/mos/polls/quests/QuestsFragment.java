@@ -2,6 +2,7 @@ package ru.mos.polls.quests;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -308,31 +309,33 @@ public class QuestsFragment extends PullableFragment {
             private List<Quest> prepareQuests(List<Quest> quests) {
                 List<Quest> result = new ArrayList<Quest>();
                 for (Quest quest : quests) {
-                    /**
-                     * удаляем публичные слушания и анонсы из ленты
-                     */
-                    if (quest instanceof FavoriteSurveysQuest) {
-                        if (((FavoriteSurveysQuest) quest).isHearing()
-                                || ((FavoriteSurveysQuest) quest).isHearingPreview()) {
+                    if (quest != null) {
+                        /**
+                         * удаляем публичные слушания и анонсы из ленты
+                         */
+                        if (quest instanceof FavoriteSurveysQuest) {
+                            if (((FavoriteSurveysQuest) quest).isHearing()
+                                    || ((FavoriteSurveysQuest) quest).isHearingPreview()) {
+                                continue;
+                            }
+                        }
+                        /**
+                         * Убираем квест визарда из ленты если список задания пустой
+                         */
+                        if (((BackQuest) quest).getId().equalsIgnoreCase(ProfileQuest.ID_PERSONAL_WIZARD)) {
+                            if (((ProfileQuest) quest).idsList.size() == 0) continue;
+                        }
+                        /**
+                         * Удаляем рекламные блоки из ленты
+                         */
+                        if (quest instanceof AdvertisementQuest) {
                             continue;
                         }
+                        if (((BackQuest) quest).isHidden()) {
+                            continue;
+                        }
+                        result.add(quest);
                     }
-                    /**
-                     * Убираем квест визарда из ленты если список задания пустой
-                     */
-                    if (((BackQuest) quest).getId().equalsIgnoreCase(ProfileQuest.ID_PERSONAL_WIZARD)) {
-                        if (((ProfileQuest) quest).idsList.size() == 0) continue;
-                    }
-                    /**
-                     * Удаляем рекламные блоки из ленты
-                     */
-                    if (quest instanceof AdvertisementQuest) {
-                        continue;
-                    }
-                    if (((BackQuest) quest).isHidden()) {
-                        continue;
-                    }
-                    result.add(quest);
                 }
                 return result;
             }

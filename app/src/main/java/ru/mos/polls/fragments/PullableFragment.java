@@ -1,5 +1,6 @@
 package ru.mos.polls.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +15,7 @@ import ru.mos.polls.R;
 
 public abstract class PullableFragment extends Fragment {
 
-    private SwipeRefreshLayout ptrLayout;
+    protected SwipeRefreshLayout ptrLayout;
     protected Unbinder unbinder;
 
     @Override
@@ -28,7 +29,9 @@ public abstract class PullableFragment extends Fragment {
             StopRefreshListener listener = new StopRefreshListener();
             ptrLayout.setOnRefreshListener(getOnRefreshListener(listener, listener));
         }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ptrLayout.setProgressViewOffset(false, 0,200);
+        }
     }
 
     @Override

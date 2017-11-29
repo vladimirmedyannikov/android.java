@@ -114,15 +114,15 @@ public class QuestsFragment extends PullableFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-            ImageView imageView = new ImageView(getActivity());
-            imageView.setImageResource(R.drawable.logo);
-            ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-            actionBar.setCustomView(imageView, layoutParams);
-        }
+//        if (actionBar != null) {
+//            actionBar.setDisplayShowCustomEnabled(true);
+//            actionBar.setDisplayShowTitleEnabled(false);
+//            ImageView imageView = new ImageView(getActivity());
+//            imageView.setImageResource(R.drawable.logo);
+//            ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+//            layoutParams.gravity = Gravity.CENTER;
+//            actionBar.setCustomView(imageView, layoutParams);
+//        }
         setHasOptionsMenu(true);
     }
 

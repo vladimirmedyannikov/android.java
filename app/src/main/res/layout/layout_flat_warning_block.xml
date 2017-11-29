@@ -4,8 +4,9 @@
     <RelativeLayout
         android:id="@+id/warningContainer"
         style="@style/item"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/pd_xlarge">
+        android:visibility="visible"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="@dimen/pd_xnormal">
 
         <ImageView
             android:id="@+id/warningEditingBlocked"

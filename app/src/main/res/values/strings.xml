@@ -527,7 +527,7 @@
     <string name="title_bind_pgu">Связь с pgu.mos.ru</string>
     <string name="error_full_editing_blocked">Изменить сохраненный адрес можно только один раз в течение трех месяцев. Дождитесь снятия ограничения или обратитесь в службу поддержки.</string>
     <string name="error_short_editing_blocked">Смена адреса заблокирована.</string>
-    <string name="warning_editing_blocked">Внимание! Изменить сохраненный адрес можно только один раз в течении трех месяцев.</string>
+    <string name="warning_editing_blocked">Внимание! Изменить сохраненный адрес можно только один раз в течение трех месяцев.</string>
     <string name="hint_not_auth_pgu">Мы не сохраняем пароль и используем его только для установки связи между профилями</string>
     <string name="pgu_rebind">Связать с другим профилем?</string>
     <string name="select">Выбрать</string>

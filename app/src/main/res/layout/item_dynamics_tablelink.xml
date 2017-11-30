@@ -4,18 +4,31 @@
                 android:paddingBottom="@dimen/pd_xxsmall"
                 android:paddingTop="@dimen/pd_xxsmall">
 
+    <TextView
+        android:layout_alignParentTop="true"
+        android:id="@+id/tvTitle"
+        style="@style/text.normal"
+        android:textStyle="bold"/>
+
+    <com.android.volley2.toolbox.NetworkImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/tvTitle"
+        android:layout_alignParentRight="true"
+        android:layout_margin="12dp"
+        android:scaleType="centerCrop"/>
+
     <LinearLayout
         android:id="@+id/viewGroupColumns"
+        android:layout_below="@id/tvTitle"
         style="@style/linear"
         android:layout_toLeftOf="@+id/image">
 
         <TextView
-            android:id="@+id/tvTitle"
-            style="@style/text.normal"
-            android:textStyle="bold"/>
-
-        <TextView
             style="@style/text.small"
+            android:maxLines="4"
+            android:ellipsize="end"
             android:tag="VALUE"/>
 
         <TextView
@@ -23,11 +36,10 @@
             android:tag="VALUE"/>
     </LinearLayout>
 
-    <com.android.volley2.toolbox.NetworkImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="12dp"
-        android:scaleType="centerCrop"/>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/gray_light" />
 </RelativeLayout>

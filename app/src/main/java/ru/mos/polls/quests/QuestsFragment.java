@@ -247,6 +247,7 @@ public class QuestsFragment extends PullableFragment {
             adapter.notifyDataSetChanged();
         }
         update(null, null);
+        getActivity().setTitle(getString(R.string.title_ag));
     }
 
     @Override

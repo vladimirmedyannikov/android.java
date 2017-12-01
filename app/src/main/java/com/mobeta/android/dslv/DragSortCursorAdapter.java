@@ -19,11 +19,11 @@ import java.util.ArrayList;
  * mapping with the {@link #getCursorPositions()} method, which
  * returns the reordered list of Cursor positions.
  * <p/>
- * An instance of this class is passed
+ * An newInstance of this class is passed
  * to {@link com.mobeta.android.dslv.DragSortListView#setAdapter(ListAdapter)} and, since
  * this class implements the {@link com.mobeta.android.dslv.DragSortListView.DragSortListener}
  * interface, it is automatically set as the DragSortListener for
- * the DragSortListView instance.
+ * the DragSortListView newInstance.
  */
 public abstract class DragSortCursorAdapter extends CursorAdapter implements DragSortListView.DragSortListener {
 

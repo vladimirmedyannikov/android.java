@@ -41,7 +41,7 @@ import android.widget.TextView;
  * {@link #setViewImage(android.widget.ImageView, String)} is invoked. If no appropriate
  * binding can be found, an {@link IllegalStateException} is thrown.
  * <p/>
- * If this adapter is used with filtering, for instance in an
+ * If this adapter is used with filtering, for newInstance in an
  * {@link android.widget.AutoCompleteTextView}, you can use the
  * {@link android.widget.SimpleCursorAdapter.CursorToStringConverter} and the
  * {@link android.widget.FilterQueryProvider} interfaces
@@ -264,7 +264,7 @@ public class SimpleDragSortCursorAdapter extends ResourceDragSortCursorAdapter {
      * Returns the converter used to convert the filtering Cursor
      * into a String.
      *
-     * @return null if the converter does not exist or an instance of
+     * @return null if the converter does not exist or an newInstance of
      * {@link android.widget.SimpleCursorAdapter.CursorToStringConverter}
      * @see #setCursorToStringConverter(android.widget.SimpleCursorAdapter.CursorToStringConverter)
      * @see #getStringConversionColumn()

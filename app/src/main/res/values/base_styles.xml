@@ -381,6 +381,18 @@
         <item name="android:textSize">@dimen/ts_xlarge</item>
     </style>
 
+    <style name="emptylist_without_picture" parent="wrap">
+        <item name="android:textColor">@color/greyHint</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">@dimen/pd_xsmall</item>
+        <item name="android:layout_marginRight">@dimen/pd_xsmall</item>
+        <item name="android:drawablePadding">@dimen/pd_normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingBottom">@dimen/pd_xlarge</item>
+        <item name="android:textSize">@dimen/ts_xlarge</item>
+    </style>
+
     <style name="auth_error" parent="text">
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>

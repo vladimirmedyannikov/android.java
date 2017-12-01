@@ -50,7 +50,7 @@ import ru.mos.polls.util.NetworkUtils;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * Use the {@link DynamicFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * create an newInstance of this fragment.
  */
 public class DynamicFragment extends PullableFragment {
 

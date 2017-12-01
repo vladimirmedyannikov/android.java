@@ -14,10 +14,10 @@ import android.widget.AdapterView;
  * {@link SimpleFloatViewManager}, which provides basic float View
  * creation.
  * <p/>
- * An instance of this class is meant to be passed to the methods
+ * An newInstance of this class is meant to be passed to the methods
  * {@link com.mobeta.android.dslv.DragSortListView#setTouchListener()} and
  * {@link com.mobeta.android.dslv.DragSortListView#setFloatViewManager()} of your
- * {@link com.mobeta.android.dslv.DragSortListView} instance.
+ * {@link com.mobeta.android.dslv.DragSortListView} newInstance.
  */
 public class DragSortController extends SimpleFloatViewManager implements View.OnTouchListener, GestureDetector.OnGestureListener {
 
@@ -87,7 +87,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
      * and ON_DOWN drag init. By default, sorting is enabled, and
      * removal is disabled.
      *
-     * @param dslv The DSLV instance
+     * @param dslv The DSLV newInstance
      */
     public DragSortController(DragSortListView dslv) {
         this(dslv, 0, ON_DOWN, FLING_REMOVE);
@@ -104,7 +104,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
     /**
      * By default, sorting is enabled, and removal is disabled.
      *
-     * @param dslv         The DSLV instance
+     * @param dslv         The DSLV newInstance
      * @param dragHandleId The resource id of the View that represents
      *                     the drag handle in a list item.
      */

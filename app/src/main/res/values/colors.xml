@@ -4,6 +4,7 @@
     <color name="gray_lightest">#ccc</color>
     <color name="gray_pale">#d0d9d8</color>
     <color name="gray_light">#999</color>
+    <color name="gray_shadow">#34404040</color>
     <color name="gray_dark">#5a5b5b</color>
     <color name="green_light">#0eb0a0</color>
     <color name="green_lightest">#88d7ba</color>

@@ -158,7 +158,7 @@ public class MaskedEditText extends AppCompatEditText implements TextWatcher {
         return this.charRepresentation;
     }
     /**
-     * Generates positions for values characters. For instance:
+     * Generates positions for values characters. For newInstance:
      * Input data: mask = "+7(###)###-##-##
      * After method execution:
      * rawToMask = [3, 4, 5, 6, 8, 9, 11, 12, 14, 15]

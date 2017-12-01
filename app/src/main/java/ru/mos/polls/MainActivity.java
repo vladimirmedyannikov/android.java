@@ -37,12 +37,12 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
+import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
 import ru.mos.polls.event.controller.EventAPIController;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
-import ru.mos.polls.friend.state.FriendProfileState;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
@@ -61,7 +61,6 @@ import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
-import ru.mos.polls.profile.state.QuestProfileState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
@@ -75,7 +74,6 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
-import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
@@ -100,6 +98,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private static final String TAG_PROFILE = "profile";
     private static final String TAG_FREE_TIME = "free_time";
     private static final String TAG_MY_POINTS = "my_points";
+    private static final String TAG_ELECTRONIC_HOUSE = "electronic_house";
     private static final String TAG_ABOUT = "my_about";
     private static final String TAG_NEWS = "news";
     private static final String TAG_POLLS = "polls";
@@ -555,6 +554,11 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 fr = WebShopFragment.newInstance();
                 callback = (WebShopFragment) fr;
                 tag = TAG_SHOP;
+                break;
+            case NavigationMenuItem.ELECTRONIC_HOUSE:
+                // TODO: 01.12.17 прикрутить статистику
+                fr = ElectronicHouseFragment.newInstance();
+                tag = TAG_ELECTRONIC_HOUSE;
                 break;
         }
         if (fr != null) {

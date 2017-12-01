@@ -49,7 +49,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             year = Integer.parseInt(elem[2]);
         }
 
-        // Create a new instance of DatePickerDialog and return it\
+        // Create a new newInstance of DatePickerDialog and return it\
         dialog = new DatePickerDialog(getActivity(), this, year, month, day);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) { //#12147. maybe user backport https://github.com/SimonVT/android-datepicker
             DatePicker picker = dialog.getDatePicker();

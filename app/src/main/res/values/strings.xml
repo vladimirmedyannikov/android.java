@@ -111,6 +111,8 @@
     <string name="social_ok">Одноклассники</string>
     <string name="empty_passedpolls_hint">Вы не приняли участия ни в одном голосовании</string>
     <string name="empty_activepolls_hint">Новые голосования появятся в ближайшее время</string>
+    <string name="empty_housepolls_hint">В вашем доме пока не проходит никаких голосований.\n\nДобавьте адреса проживания, регистрации и собственности, чтобы не пропустить голосования.</string>
+    <string name="below_house_addresses_hint">Голосования для жильцов дома доступны по указанным адресам.\n\nДля участия в голосованиях собственников необходимо указать адреса собственности и связать профиль с профилем на mos.ru</string>
     <string name="empty_point_history"> </string>
     <string name="question_count_1" formatted="false">%s вопрос</string>
     <string name="question_count_2" formatted="false">%s вопросов</string>
@@ -382,6 +384,8 @@
     <string name="mainmenu_my_points">Мои баллы</string>
     <string name="mainmenu_profile">Мой профиль</string>
 
+    <string name="mainmenu_electronic_house">Электронный дом</string>
+
     <string name="mainmenu_settings">Настройки</string>
     <string name="mainmenu_support">Справка/Отзыв</string>
 
@@ -618,6 +622,7 @@
     <string name="innovation_rate_avg">средняя оценка:</string>
     <string name="title_view_image">Просмотр изображения</string>
     <string name="polls_title">Голосования</string>
+    <string name="my_addresses_title">Мои адреса</string>
     <string name="my_personal_data">Данные</string>
     <string name="title_help">Справка</string>
     <string name="error_permission_denied">Размещение в социальной сети \"Одноклассники\" временно недоступно</string>

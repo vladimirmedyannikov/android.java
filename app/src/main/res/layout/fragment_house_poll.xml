@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+
+            <TextView
+                android:id="@android:id/empty"
+                style="@style/emptylist_without_picture"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/pd_xxxlarge"
+                android:text="@string/empty_housepolls_hint" />
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                style="@style/root">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    style="@style/root" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+        <include layout="@layout/layout_internet_connection_lost" />
+    </RelativeLayout>
+</layout>

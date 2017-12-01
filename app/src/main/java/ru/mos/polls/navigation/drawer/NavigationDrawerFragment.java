@@ -74,7 +74,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final String PREF_LAST_SELECTED_POSITION = "navigation_drawer_last_selected_index";
 
     /**
-     * A pointer to the current callbacks instance (the Activity).
+     * A pointer to the current callbacks newInstance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
 
@@ -390,7 +390,7 @@ public class NavigationDrawerFragment extends Fragment {
 //            mDrawerLayout.openDrawer(mFragmentContainerView);
 //        }
 
-        // Defer code dependent on restoration of previous instance state.
+        // Defer code dependent on restoration of previous newInstance state.
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {

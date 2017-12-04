@@ -109,4 +109,6 @@
 
     <color name="tutorial_background">#f2f2f2</color>
     <color name="tutorial_description">#96a5ab</color>
+
+    <color name="fab_house_polls_add_color">#da4336</color>
 </resources>

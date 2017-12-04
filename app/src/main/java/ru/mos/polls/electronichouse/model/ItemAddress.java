@@ -3,9 +3,15 @@ package ru.mos.polls.electronichouse.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ilich.juggler.change.Add;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.profile.state.AddPrivatePropertyState;
+import ru.mos.polls.profile.state.NewFlatState;
+import ru.mos.polls.profile.state.PguAuthState;
+import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 
 /**
  * @author matek3022 (semenovmm@altarix.ru)
@@ -44,16 +50,16 @@ public class ItemAddress {
         List<ItemAddress> res = new ArrayList<>();
         AgUser user = new AgUser(mainActivity);
         res.add(new ItemAddress(mainActivity.getString(R.string.title_registration), () -> {
-            // TODO: 01.12.17 навигация в адрес регистрации 
+            mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), BaseActivity.class));
         }));
         res.add(new ItemAddress(mainActivity.getString(R.string.title_residance), () -> {
-            // TODO: 01.12.17 навигация в адрес проживания 
+            mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE), BaseActivity.class));
         }));
         res.add(new ItemAddress(mainActivity.getString(R.string.property_addresses), () -> {
-            // TODO: 01.12.17 навигация в адреса собственности 
+            mainActivity.navigateTo().state(Add.newActivity(new AddPrivatePropertyState(null), BaseActivity.class));
         }));
         res.add(new ItemAddress(mainActivity.getString(R.string.profile_pgu), () -> {
-            // TODO: 01.12.17 навигация в привязку к пгу
+            mainActivity.navigateTo().state(Add.newActivity(new PguAuthState(PguAuthState.PGU_STATUS), BaseActivity.class));
         }));
         return res;
     }

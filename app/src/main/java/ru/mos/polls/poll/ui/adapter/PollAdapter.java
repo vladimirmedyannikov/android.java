@@ -21,6 +21,10 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     public interface Type {
         int ITEM_ACTIVE = 0;
         int ITEM_OLD = 1;
+        /**
+         * флаг того, что функция добавления сама определяет тип
+         */
+        int ITEM_DEFAULT = -1;
     }
 
     public void add(List<Poll> polls, int type) {
@@ -33,6 +37,13 @@ public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
                     break;
                 case Type.ITEM_OLD:
                     pollVM = new PollItemOldVM(poll);
+                    break;
+                case Type.ITEM_DEFAULT:
+                    if (poll.isActive() || poll.isInterrupted()) {
+                        pollVM = new PollItemActiveVM(poll);
+                    } else {
+                        pollVM = new PollItemOldVM(poll);
+                    }
                     break;
             }
             content.add(pollVM);

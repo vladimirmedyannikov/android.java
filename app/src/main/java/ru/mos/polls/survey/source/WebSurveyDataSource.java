@@ -28,6 +28,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
 import ru.mos.polls.poll.vm.PollActiveFragmentVM;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
@@ -133,6 +134,9 @@ public class WebSurveyDataSource implements SurveyDataSource {
                 } else {
                     Intent intent = new Intent(PollActiveFragmentVM.ACTION_POLL_IS_PASSED);
                     intent.putExtra(PollActiveFragmentVM.ARG_POLL_ID, survey.getId());
+                    LocalBroadcastManager.getInstance(actionBarActivity).sendBroadcast(intent);
+                    intent = new Intent(HousePollFragmentVM.ACTION_POLL_CHANGED);
+                    intent.putExtra(HousePollFragmentVM.ARG_POLL, survey.getId());
                     LocalBroadcastManager.getInstance(actionBarActivity).sendBroadcast(intent);
                 }
 //                AGApplication.bus().send(new Events.PollEvents(isInterrupted ? Events.PollEvents.INTERRUPTED_POLL : Events.PollEvents.FINISHED_POLL, survey.getId()));

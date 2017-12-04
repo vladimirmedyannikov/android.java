@@ -8,6 +8,7 @@ import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.webview.ui.WebViewFragment;
 
 /**
  * Created by Trunks on 04.07.2017.
@@ -21,7 +22,7 @@ public class WebViewState extends ContentBelowToolbarState<WebViewState.WebViewP
 
     @Override
     protected JugglerFragment onConvertContent(WebViewParams params, @Nullable JugglerFragment fragment) {
-        return null;
+        return new WebViewFragment();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class WebViewState extends ContentBelowToolbarState<WebViewState.WebViewP
     @Nullable
     @Override
     public String getTitle(Context context, WebViewParams params) {
-        return "Заполнение профиля";
+        return "Заявка на голосование";
     }
 
     static class WebViewParams extends State.Params {

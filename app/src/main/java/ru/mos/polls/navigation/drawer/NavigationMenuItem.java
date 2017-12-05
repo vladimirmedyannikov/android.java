@@ -33,7 +33,7 @@ public class NavigationMenuItem {
     private static NavigationMenuItem ITEM_SHOP = new NavigationMenuItem(SHOP, R.string.mainmenu_shop);
     private static NavigationMenuItem ITEM_MY_POINTS = new NavigationMenuItem(MY_POINTS, R.string.mainmenu_my_points, BadgesSource.TAG_POINTS);
     private static NavigationMenuItem ITEM_PROFILE = new NavigationMenuItem(PROFILE, R.string.mainmenu_profile);
-    private static NavigationMenuItem ITEM_ELECTRONIC_HOUSE = new NavigationMenuItem(ELECTRONIC_HOUSE, R.string.mainmenu_electronic_house);
+    private static NavigationMenuItem ITEM_ELECTRONIC_HOUSE = new NavigationMenuItem(ELECTRONIC_HOUSE, R.string.mainmenu_electronic_house, BadgesSource.TAG_ELECTRONIC_HOUSE);
     private static NavigationMenuItem ITEM_SETTINGS = new NavigationMenuItem(SETTINGS, R.string.mainmenu_settings);
     private static NavigationMenuItem ITEM_FRIENDS = new NavigationMenuItem(FRIENDS, R.string.mainmenu_friends, BadgesSource.TAG_FRIENDS);
 

@@ -8,6 +8,8 @@ import ru.mos.polls.quests.quest.EventQuest;
 import ru.mos.polls.quests.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.quest.NewsQuest;
 import ru.mos.polls.quests.quest.NoveltyQuest;
+import ru.mos.polls.quests.quest.OssNewsQuest;
+import ru.mos.polls.quests.quest.OssPollQuest;
 import ru.mos.polls.quests.quest.OtherQuest;
 import ru.mos.polls.quests.quest.ProfileQuest;
 import ru.mos.polls.quests.quest.Quest;
@@ -54,6 +56,10 @@ public class QuestFactory {
             result = new NoveltyQuest(innerId, jsonObject);
         } else if (AchievementQuest.TYPE.equalsIgnoreCase(type)) {
             result = new AchievementQuest(innerId, jsonObject);
+        } else if (OssPollQuest.TYPE.equalsIgnoreCase(type)) {
+            result = new OssPollQuest(innerId, jsonObject);
+        } else if (OssNewsQuest.TYPE.equalsIgnoreCase(type)) {
+            result = new OssNewsQuest(innerId, jsonObject);
         } else {
             result = null;
         }

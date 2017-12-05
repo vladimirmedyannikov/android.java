@@ -43,6 +43,7 @@ public interface AgApi {
             String V_2_3_0 = "v2.3.0";
             String V_2_4_0 = "v2.4.0";
             String V_2_4_1 = "v2.4.1";
+            String V_2_5_0 = "v2.5.0";
             String CURRENT = V_2_4_0;
         }
 
@@ -120,7 +121,7 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.GET_HISTORY)
     Observable<HistoryGet.Response> getHistory(@Body HistoryGet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.SELECT)
+    @POST("/" + Api.Versions.V_2_5_0 + "/" + AgApi.Api.Controllers.POLL + "/" + AgApi.Api.Methods.SELECT)
     Observable<PollSelect.Response> pollselect(@Body PollSelect.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.SUPPORT + "/" + AgApi.Api.Methods.GET_FEEDBACK_SUBJECTS)

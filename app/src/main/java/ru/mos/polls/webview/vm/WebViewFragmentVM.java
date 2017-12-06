@@ -3,6 +3,7 @@ package ru.mos.polls.webview.vm;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,8 +21,8 @@ import ru.mos.polls.webview.ui.WebViewFragment;
  */
 
 public class WebViewFragmentVM extends FragmentViewModel<WebViewFragment, FragmentWebviewBinding> {
-    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "ag.mos.ru/poll/constructor" : "testing.ag.mos.ru/poll/constructor";
-    private static final String urlPattern = "http://%s/catalog";
+    private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "ag.mos.ru" : "testing.ag.mos.ru";
+    private static final String urlPattern = "http://%s/house/constructor";
     private static final String url = String.format(urlPattern, host);
     private static final String cookiesPattern = "EMPSESSION=%s";
 
@@ -47,10 +48,10 @@ public class WebViewFragmentVM extends FragmentViewModel<WebViewFragment, Fragme
     public void onViewCreated() {
         super.onViewCreated();
         cookieManager = CookieManager.getInstance();
-        cookieManager.setCookie(host, getCookies(Session.get().getSession()));
         setWebViewSetting();
         setWebViewClient();
         webView.invokeZoomPicker();
+        cookieManager.setCookie(host, getCookies(Session.get().getSession()));
         if (checkInternetConnection()) webView.loadUrl(url);
     }
 

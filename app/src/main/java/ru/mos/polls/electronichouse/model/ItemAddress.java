@@ -48,11 +48,12 @@ public class ItemAddress {
 
     public static List<ItemAddress> getDefault(final MainActivity mainActivity) {
         List<ItemAddress> res = new ArrayList<>();
-        AgUser user = new AgUser(mainActivity);
         res.add(new ItemAddress(mainActivity.getString(R.string.title_registration), () -> {
+            AgUser user = new AgUser(mainActivity);
             mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), BaseActivity.class));
         }));
         res.add(new ItemAddress(mainActivity.getString(R.string.title_residance), () -> {
+            AgUser user = new AgUser(mainActivity);
             mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE), BaseActivity.class));
         }));
         res.add(new ItemAddress(mainActivity.getString(R.string.property_addresses), () -> {

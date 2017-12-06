@@ -106,7 +106,7 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + AgApi.Api.Methods.GET_ACHIEVEMENTS)
     Observable<AchievementsGet.Response> getAchievement(@Body AchievementsGet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
+    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
     Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
 
     @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)

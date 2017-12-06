@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout style="@style/item.linear"
-             xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:paddingBottom="@dimen/thick_separator">
+<layout>
 
-    <RelativeLayout
-        android:id="@+id/headerRoot"
-        style="@style/root"
-        android:visibility="visible"
-        android:clipToPadding="false">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/item.linear"
+        android:paddingBottom="@dimen/thick_separator">
 
-        <View
-            android:id="@+id/fake_bar1"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/rect_shadow"
-            android:elevation="5dp"/>
+        <RelativeLayout
+            android:id="@+id/headerRoot"
+            style="@style/root"
+            android:clipToPadding="false"
+            android:visibility="visible">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userAvatar"
-            android:layout_width="@dimen/vs_xxsmall"
-            android:layout_height="@dimen/vs_xxsmall"
-            android:layout_centerInParent="true"
-            android:elevation="6dp"
-            android:src="@drawable/unlogin"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="@dimen/thin_separator"/>
-    </RelativeLayout>
-</FrameLayout>
+            <View
+                android:id="@+id/fake_bar1"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/rect_shadow"
+                android:elevation="5dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="@dimen/vs_xxsmall"
+                android:layout_height="@dimen/vs_xxsmall"
+                android:layout_centerInParent="true"
+                android:elevation="6dp"
+                android:src="@drawable/unlogin"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/thin_separator" />
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

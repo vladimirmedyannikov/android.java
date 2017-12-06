@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/rrPrice"
-                style="@style/quest_container"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
-    <TextView
-        android:id="@+id/points"
-        style="@style/text.large.white"
-        android:layout_centerHorizontal="true"
-        android:text="+50"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rrPrice"
+        style="@style/quest_container">
 
-    <TextView
-        android:id="@+id/points_title"
-        style="@style/text.small"
-        android:textColor="@color/text_helper_quest"
-        android:layout_below="@id/points"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-7dp"
-        android:text="@string/point_var_2"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/points"
+            style="@style/text.large.white"
+            android:layout_centerHorizontal="true"
+            android:text="+50" />
+
+        <TextView
+            android:id="@+id/points_title"
+            style="@style/text.small"
+            android:layout_below="@id/points"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-7dp"
+            android:text="@string/point_var_2"
+            android:textColor="@color/text_helper_quest" />
+    </RelativeLayout>
+</layout>

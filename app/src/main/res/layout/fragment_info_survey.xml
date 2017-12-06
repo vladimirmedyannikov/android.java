@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        style="@style/root"
+        android:background="@color/white">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <ScrollView style="@style/root">
+
+            <RelativeLayout
+                android:id="@+id/root"
+                style="@style/root">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/info_survey_title"
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_small"
+                    android:text="Приглашаем на субботник! (улюУхтомская 12 к.2)" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/info_survey_description"
+                    style="@style/text.normal.black"
+                    android:layout_below="@+id/info_survey_title"
+                    android:paddingBottom="@dimen/pd_xxxsmall"
+                    android:paddingLeft="@dimen/pd_small"
+                    android:paddingTop="@dimen/pd_xxxsmall"
+                    android:text="asdasdasdasdasdad asdasd asd asda s
+            d asd asd asdasd asd asd asd asd asd asd asd ad asd
+             asddfdfbisdbjnbjknstbnvbnsjkntbonbnsokbjtbinsbnnsfbskfnbk
+             sdfkg skbnstn skfng ksnthnsk flnf ksnrgl nsfgdnagkn dglkandfglk
+             nalnrglk andflk andrlkgn alkng laknglnfglkan rgn alkfdng alknrgl
+             nalgn akadng karkgn akdgn a;rng " />
+
+                <android.support.v7.widget.CardView
+                    style="@style/wrap"
+                    android:layout_below="@+id/info_survey_description"
+                    android:elevation="@dimen/pd_xsmall">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/info_survey_comment"
+                        style="@style/text.normal.black"
+                        android:layout_margin="@dimen/pd_normal"
+                        android:hint="Ваш комментарий"
+                        android:singleLine="true"
+                        android:text="Ваш комментарий: фывфывфв фвфы фывф ывфывфывфыв" />
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/poll_navigation_green_selector"
+            android:gravity="center"
+            android:text="@string/share"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_normal"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+</layout>

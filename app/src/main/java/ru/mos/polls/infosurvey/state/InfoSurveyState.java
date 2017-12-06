@@ -1,0 +1,60 @@
+package ru.mos.polls.infosurvey.state;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+
+import me.ilich.juggler.gui.JugglerFragment;
+import me.ilich.juggler.states.ContentBelowToolbarState;
+import me.ilich.juggler.states.State;
+import ru.mos.polls.R;
+import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.infosurvey.ui.InfoCommentFragment;
+import ru.mos.polls.infosurvey.ui.InfoSurveyFragment;
+
+/**
+ * Created by Trunks on 04.07.2017.
+ */
+
+public class InfoSurveyState extends ContentBelowToolbarState<InfoSurveyState.InfoSurveyParams> {
+    public static int TYPE_FR_INFO_SURVEY = 1;
+    public static int TYPE_FR_INFO_COMMENT = 2;
+
+    public InfoSurveyState(int pollId) {
+        super(new InfoSurveyParams(pollId));
+    }
+
+    @Override
+    protected JugglerFragment onConvertContent(InfoSurveyParams params, @Nullable JugglerFragment fragment) {
+        if (params.type == TYPE_FR_INFO_SURVEY)
+            return InfoSurveyFragment.newInstance(params.pollid);
+        else return InfoCommentFragment.newInstance();
+    }
+
+    @Override
+    protected JugglerFragment onConvertToolbar(InfoSurveyParams params, @Nullable JugglerFragment fragment) {
+        return CommonToolbarFragment.createBack();
+
+    }
+
+    @Nullable
+    @Override
+    public String getTitle(Context context, InfoSurveyParams params) {
+        if (params.type == TYPE_FR_INFO_SURVEY)
+            return context.getString(R.string.info_survey_title);
+        else return context.getString(R.string.comment);
+    }
+
+    static class InfoSurveyParams extends State.Params {
+        int pollid;
+        int type;
+
+        public InfoSurveyParams(int pollid) {
+            this.pollid = pollid;
+        }
+
+        public InfoSurveyParams(int pollid, int type) {
+            this.pollid = pollid;
+            this.type = type;
+        }
+    }
+}

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
+import ru.mos.polls.infosurvey.vm.InfoCommentFragmentVM;
 import ru.mos.polls.infosurvey.vm.InfoSurveyFragmentVM;
 import ru.mos.polls.util.GuiUtils;
 
@@ -14,7 +15,7 @@ import ru.mos.polls.util.GuiUtils;
  * Created by Trunks on 06.12.2017.
  */
 
-public class InfoCommentFragment extends MenuBindingFragment<InfoSurveyFragmentVM, FragmentInfoCommentBinding> {
+public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragmentVM, FragmentInfoCommentBinding> {
 
     public static InfoCommentFragment newInstance() {
         InfoCommentFragment f = new InfoCommentFragment();
@@ -24,8 +25,8 @@ public class InfoCommentFragment extends MenuBindingFragment<InfoSurveyFragmentV
     }
 
     @Override
-    protected InfoSurveyFragmentVM onCreateViewModel(FragmentInfoCommentBinding binding) {
-        return null;
+    protected InfoCommentFragmentVM onCreateViewModel(FragmentInfoCommentBinding binding) {
+        return new InfoCommentFragmentVM(this, binding);
     }
 
     @Override

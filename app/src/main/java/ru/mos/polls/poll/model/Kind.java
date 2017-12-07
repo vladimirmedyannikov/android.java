@@ -7,7 +7,8 @@ public enum Kind {
     STANDART("standart", "", android.R.color.transparent),
     HEARING_PREVIEW("hearing_preview", "публичное слушание", R.color.public_poll),
     HEARING("hearing", "публичное слушание", R.color.greenText),
-    SPECIAL("special", "специальное голосование", R.color.special_poll);
+    SPECIAL("special", "специальное голосование", R.color.special_poll),
+    MKD("mkd", "информирование", R.color.special_poll);
 
     public String kind;
     public String label;
@@ -23,6 +24,8 @@ public enum Kind {
             result = HEARING;
         } else if (SPECIAL.getKind().equalsIgnoreCase(kind)) {
             result = SPECIAL;
+        } else if (MKD.getKind().equalsIgnoreCase(kind)) {
+            result = MKD;
         }
         return result;
     }
@@ -48,15 +51,23 @@ public enum Kind {
     public boolean isHearingPreview() {
         return HEARING_PREVIEW.getKind().equalsIgnoreCase(kind);
     }
+
+    public boolean isMKD() {
+        return MKD.getKind().equalsIgnoreCase(kind);
+    }
+
     public static boolean isHearingPreview(String kind) {
         return HEARING_PREVIEW.getKind().equalsIgnoreCase(kind);
     }
+
     public boolean isSpecial() {
         return SPECIAL.getKind().equalsIgnoreCase(kind);
     }
+
     public static boolean isSpecial(String kind) {
         return SPECIAL.getKind().equalsIgnoreCase(kind);
     }
+
     public int getColor() {
         return color;
     }

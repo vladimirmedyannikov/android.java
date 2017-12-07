@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <GridLayout
+        android:id="@+id/grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="3">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/info_like_img"
+            android:layout_width="@dimen/vs_small"
+            android:layout_height="@dimen/vs_small"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_like_passive" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/info_dislike_img"
+            android:layout_width="@dimen/vs_small"
+            android:layout_height="@dimen/vs_small"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_dislike_passive" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/like_title"
+            style="@style/text.normal"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Нравится" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/dislike_title"
+            style="@style/text.normal"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Не нравится" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/like_count"
+            style="@style/text.large.green"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="71"
+            android:textSize="@dimen/ts_xxlarge" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/dislike_count"
+            style="@style/text.large.green"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/red"
+            android:textSize="@dimen/ts_xxlarge" />
+    </GridLayout>
+</layout>

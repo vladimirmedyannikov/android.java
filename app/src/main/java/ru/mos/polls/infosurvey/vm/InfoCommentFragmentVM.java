@@ -23,4 +23,13 @@ public class InfoCommentFragmentVM extends UIComponentFragmentViewModel<InfoComm
     protected UIComponentHolder createComponentHolder() {
         return null;
     }
+
+
+    public boolean isDataChanged() {
+        return true;
+    }
+
+    public void confirmAction() {
+
+    }
 }

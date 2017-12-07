@@ -26,7 +26,7 @@ public class InfoSurveyState extends ContentBelowToolbarState<InfoSurveyState.In
     @Override
     protected JugglerFragment onConvertContent(InfoSurveyParams params, @Nullable JugglerFragment fragment) {
         if (params.type == TYPE_FR_INFO_SURVEY)
-            return InfoSurveyFragment.newInstance(params.pollid);
+            return InfoSurveyFragment.newInstance(null, params.pollid);
         else return InfoCommentFragment.newInstance();
     }
 

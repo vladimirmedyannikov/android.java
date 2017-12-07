@@ -1,7 +1,6 @@
 package ru.mos.polls.newquests.vm.list;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.QuestSocialBinding;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.model.quest.SocialQuest;
@@ -11,7 +10,7 @@ import ru.mos.polls.newquests.model.quest.SocialQuest;
  *         on 06.12.17.
  */
 
-public class SocialQuestVM extends RecyclerBaseViewModel<SocialQuest, QuestSocialBinding> {
+public class SocialQuestVM extends PriceQuestVM<SocialQuest, QuestSocialBinding> {
     public SocialQuestVM(SocialQuest model, QuestSocialBinding viewDataBinding) {
         super(model, viewDataBinding);
     }
@@ -33,6 +32,7 @@ public class SocialQuestVM extends RecyclerBaseViewModel<SocialQuest, QuestSocia
     @Override
     public void onBind(QuestSocialBinding viewDataBinding) {
         super.onBind(viewDataBinding);
-        viewDataBinding.title.setText(model.getTitle());
+        viewDataBinding.icon.setImageResource(model.getIcon());
+        viewDataBinding.details.setText(model.getDetails());
     }
 }

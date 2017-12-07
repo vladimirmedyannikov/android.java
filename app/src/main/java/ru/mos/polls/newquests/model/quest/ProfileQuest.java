@@ -1,19 +1,12 @@
 package ru.mos.polls.newquests.model.quest;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import ru.mos.polls.PointsManager;
-import ru.mos.polls.R;
+import ru.mos.polls.newquests.model.QuestFamilyList;
 import ru.mos.polls.quests.QuestsFragment;
 
 public class ProfileQuest extends DetailsQuest {
@@ -27,45 +20,15 @@ public class ProfileQuest extends DetailsQuest {
     public static final String ID_BIND_TO_PGU = "bindToPGU";
     public static final String ID_PERSONAL_WIZARD = "personalWizard";
 
+    @SerializedName("sub_ids")
     public List<String> idsList;
+    @SerializedName("percent_fill_profile")
     public int percent;
 
-    public ProfileQuest(long innderId, JSONObject jsonObject) {
-        super(innderId, jsonObject);
-        getIds(jsonObject);
-    }
-
-    public void getIds(JSONObject jsonObject) {
-        try {
-            percent = jsonObject.optInt("percent_fill_profile");
-            JSONArray jsonArray = jsonObject.getJSONArray("sub_ids");
-            if (jsonArray != null) {
-                idsList = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    idsList.add(jsonArray.getString(i));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public View inflate(Context context, View convertView) {
-        if (convertView == null) {
-            convertView = View.inflate(context, R.layout.quest_profile, null);
-        }
-        TextView titleTextView = ButterKnife.findById(convertView, R.id.title);
-        TextView detailsTextView = ButterKnife.findById(convertView, R.id.details);
-        TextView pointsTextView = ButterKnife.findById(convertView, R.id.points);
-        TextView pointsTitleTextView = ButterKnife.findById(convertView, R.id.points_title);
-
-        titleTextView.setText(getTitle());
-        detailsTextView.setText(getDetails());
-        pointsTextView.setText(String.format(processPoints(getPoints()), getPoints()));
-        pointsTitleTextView.setText(PointsManager.getPointUnitString(context, getPoints()));
-
-        return convertView;
+    public ProfileQuest(long innerId, QuestFamilyList questFamilyList) {
+        super(innerId, questFamilyList);
+        idsList = questFamilyList.getIdsList();
+        percent = questFamilyList.getPercent();
     }
 
     @Override

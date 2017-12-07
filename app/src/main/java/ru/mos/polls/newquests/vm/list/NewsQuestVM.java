@@ -1,7 +1,6 @@
 package ru.mos.polls.newquests.vm.list;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.QuestNewsBinding;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.model.quest.NewsQuest;
@@ -11,7 +10,7 @@ import ru.mos.polls.newquests.model.quest.NewsQuest;
  *         on 06.12.17.
  */
 
-public class NewsQuestVM extends RecyclerBaseViewModel<NewsQuest, QuestNewsBinding> {
+public class NewsQuestVM extends QuestVM<NewsQuest, QuestNewsBinding> {
     public NewsQuestVM(NewsQuest model, QuestNewsBinding viewDataBinding) {
         super(model, viewDataBinding);
     }
@@ -28,5 +27,11 @@ public class NewsQuestVM extends RecyclerBaseViewModel<NewsQuest, QuestNewsBindi
     @Override
     public int getViewType() {
         return QuestsItemAdapter.NEWS;
+    }
+
+    @Override
+    public void onBind(QuestNewsBinding viewDataBinding) {
+        super.onBind(viewDataBinding);
+        questTitle.setText(model.getTitle());
     }
 }

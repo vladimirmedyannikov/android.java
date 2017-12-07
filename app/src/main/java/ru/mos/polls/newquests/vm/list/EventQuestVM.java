@@ -1,7 +1,6 @@
 package ru.mos.polls.newquests.vm.list;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.QuestEventBinding;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.model.quest.EventQuest;
@@ -11,7 +10,7 @@ import ru.mos.polls.newquests.model.quest.EventQuest;
  *         on 06.12.17.
  */
 
-public class EventQuestVM extends RecyclerBaseViewModel<EventQuest, QuestEventBinding> {
+public class EventQuestVM extends PriceQuestVM<EventQuest, QuestEventBinding> {
 
     public EventQuestVM(EventQuest model, QuestEventBinding viewDataBinding) {
         super(model, viewDataBinding);

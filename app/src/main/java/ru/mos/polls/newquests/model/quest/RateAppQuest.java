@@ -2,8 +2,9 @@ package ru.mos.polls.newquests.model.quest;
 
 import android.content.Context;
 
-import org.json.JSONObject;
+import com.google.gson.annotations.SerializedName;
 
+import ru.mos.polls.newquests.model.QuestFamilyList;
 import ru.mos.polls.quests.QuestsFragment;
 
 /**
@@ -11,26 +12,33 @@ import ru.mos.polls.quests.QuestsFragment;
  * @since 1.9
  */
 public class RateAppQuest extends SocialQuest {
-    private String appId;
+    @SerializedName("app_ids")
+    private AppIds appIds;
 
-    public RateAppQuest(long innerId, JSONObject jsonObject){
-        super(innerId, jsonObject);
-        appId = getAppId(jsonObject);
+    public RateAppQuest(long innerId, QuestFamilyList questFamilyList) {
+        super(innerId, questFamilyList);
+        appIds = questFamilyList.getAppIds();
     }
 
-    public static String getAppId(JSONObject questJson) {
+    public String getAppId() {
         String result = "ru.mos.polls";
-        if (questJson != null) {
-            questJson = questJson.optJSONObject("app_ids");
-            if (questJson != null) {
-                result = questJson.optString("android");
-            }
+        if (appIds != null) {
+            result = appIds.getAppId();
         }
         return result;
     }
 
     @Override
     public void onClick(Context context, QuestsFragment.Listener listener) {
-        listener.onRateThisApplication(appId);
+        listener.onRateThisApplication(getAppId());
+    }
+
+    public class AppIds {
+        @SerializedName("android")
+        private String appId;
+
+        public String getAppId() {
+            return appId;
+        }
     }
 }

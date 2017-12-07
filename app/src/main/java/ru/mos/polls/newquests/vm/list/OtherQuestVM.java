@@ -1,7 +1,6 @@
 package ru.mos.polls.newquests.vm.list;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.QuestOtherBinding;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.model.quest.OtherQuest;
@@ -11,7 +10,7 @@ import ru.mos.polls.newquests.model.quest.OtherQuest;
  *         on 06.12.17.
  */
 
-public class OtherQuestVM extends RecyclerBaseViewModel<OtherQuest, QuestOtherBinding> {
+public class OtherQuestVM extends QuestVM<OtherQuest, QuestOtherBinding> {
     public OtherQuestVM(OtherQuest model, QuestOtherBinding viewDataBinding) {
         super(model, viewDataBinding);
     }
@@ -33,5 +32,6 @@ public class OtherQuestVM extends RecyclerBaseViewModel<OtherQuest, QuestOtherBi
     @Override
     public void onBind(QuestOtherBinding viewDataBinding) {
         super.onBind(viewDataBinding);
+        questTitle.setText(model.getTitle());
     }
 }

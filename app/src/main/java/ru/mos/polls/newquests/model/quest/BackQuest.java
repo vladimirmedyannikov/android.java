@@ -2,11 +2,14 @@ package ru.mos.polls.newquests.model.quest;
 
 import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
+import ru.mos.polls.newquests.model.QuestFamilyList;
 import ru.mos.polls.quests.QuestsFragment;
 
 public abstract class BackQuest extends Quest {
@@ -31,21 +34,20 @@ public abstract class BackQuest extends Quest {
     public static final String ID_INVITE_FRIENDS = "inviteFriends";
     public static final String ID_RATE_THIS_APP = "rateThisApplication";
 
-    public BackQuest(long innerId, JSONObject jsonObject) {
-        super(innerId);
-        title = jsonObject.optString(TITLE);
-        points = jsonObject.optInt(POINTS);
-        priority = jsonObject.optInt(PRIORITY);
-        isHidden = jsonObject.optBoolean(HIDDEN);
-        details = jsonObject.optString(DETAILS);
-        id = jsonObject.optString(ID);
-        urlScheme = urlSchemeFromJson(jsonObject);
-        type = jsonObject.optString(TYPE);
-        icon = getIcon(jsonObject);
+    public BackQuest(long innerId, QuestFamilyList questFamilyList) {
+        super(innerId, questFamilyList);
+        points = questFamilyList.getPoints();
+        title = questFamilyList.getTitle();
+        type = questFamilyList.getType();
+        priority = questFamilyList.getPriority();
+        id = questFamilyList.getId();
+        details = questFamilyList.getDetails();
+        icon = getIcon();
+        isHidden = questFamilyList.isHidden();
+        urlScheme = questFamilyList.getUrlScheme();
     }
 
-    private int getIcon(JSONObject jsonObject) {
-        final String id = jsonObject.optString(ID);
+    public int getIcon() {
         int iconId;
         if (ID_INVITE_FRIENDS.equals(id)) {
             iconId = R.drawable.image_icon_category_friends;
@@ -66,11 +68,13 @@ public abstract class BackQuest extends Quest {
     /**
      * @since 1.8 появилась возможность скрывать quest
      */
+    @SerializedName("hidden")
     private boolean isHidden;
     /**
      * @since 1.9 запуск экранов через неявные интенты
      */
-    private String urlScheme;
+    @SerializedName("url_schemes")
+    private UrlSchemes urlScheme;
 
     public static String urlSchemeFromJson(JSONObject questJson) {
         String result = null;
@@ -122,7 +126,7 @@ public abstract class BackQuest extends Quest {
     }
 
     public String getUrlScheme() {
-        return urlScheme;
+        return urlScheme != null ? urlScheme.getShame() : null;
     }
 
     @Override
@@ -137,6 +141,15 @@ public abstract class BackQuest extends Quest {
             request.put("hide", willBeHide);
         } catch (JSONException ignored) {
 
+        }
+    }
+
+    public class UrlSchemes {
+        @SerializedName("android")
+        private String shame;
+
+        public String getShame() {
+            return shame;
         }
     }
 }

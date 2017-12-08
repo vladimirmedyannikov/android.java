@@ -28,7 +28,6 @@ import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
-import ru.mos.polls.survey.SurveyButtons;
 import ru.mos.polls.survey.SurveyFragment;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
@@ -109,6 +108,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             unbinder.unbind();
         }
     }
+
     public void setCallback(SurveyFragment.Callback c) {
         if (c == null) {
             callback = SurveyFragment.Callback.STUB;
@@ -147,23 +147,26 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             switch (buttonView.getId()) {
                 case R.id.info_like_img:
                     setLikeTitleColor(likeTitle, isChecked, R.color.green_light);
-                    dislikeImage.setChecked(!isChecked);
-                    surveyVariant1.setChecked(true);
-                    surveyVariant2.setChecked(false);
+                    setVariantAnswer(dislikeImage, isChecked, surveyVariant1, surveyVariant2);
                     break;
                 case R.id.info_dislike_img:
                     setLikeTitleColor(dislikeTitle, isChecked, R.color.red);
-                    likeImage.setChecked(!isChecked);
-                    surveyVariant2.setChecked(true);
-                    surveyVariant1.setChecked(false);
+                    setVariantAnswer(likeImage, isChecked, surveyVariant2, surveyVariant1);
                     break;
             }
         };
         return listener;
     }
 
+    public void setVariantAnswer(AppCompatCheckBox view, boolean isChecked, SurveyVariant surveyVariant1, SurveyVariant surveyVariant2) {
+        view.setChecked(!isChecked);
+        surveyVariant1.setChecked(isChecked);
+        surveyVariant2.setChecked(!isChecked);
+    }
+
     @OnClick(R.id.shareButton)
     public void onShateButtonClick() {
+        saveAnswer();
         manager.fill(survey);
         callback.onSurveyDone(survey);
     }

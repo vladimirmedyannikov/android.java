@@ -147,11 +147,13 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             switch (buttonView.getId()) {
                 case R.id.info_like_img:
                     setLikeTitleColor(likeTitle, isChecked, R.color.green_light);
+                    dislikeImage.setChecked(!isChecked);
                     surveyVariant1.setChecked(true);
                     surveyVariant2.setChecked(false);
                     break;
                 case R.id.info_dislike_img:
                     setLikeTitleColor(dislikeTitle, isChecked, R.color.red);
+                    likeImage.setChecked(!isChecked);
                     surveyVariant2.setChecked(true);
                     surveyVariant1.setChecked(false);
                     break;
@@ -162,6 +164,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     @OnClick(R.id.shareButton)
     public void onShateButtonClick() {
+        manager.fill(survey);
         callback.onSurveyDone(survey);
     }
 

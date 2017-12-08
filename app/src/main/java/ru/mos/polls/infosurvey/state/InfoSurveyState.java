@@ -19,15 +19,16 @@ public class InfoSurveyState extends ContentBelowToolbarState<InfoSurveyState.In
     public static int TYPE_FR_INFO_SURVEY = 1;
     public static int TYPE_FR_INFO_COMMENT = 2;
 
-    public InfoSurveyState(int pollId) {
-        super(new InfoSurveyParams(pollId));
+    public InfoSurveyState(long pollId, int type) {
+        super(new InfoSurveyParams(pollId, type));
     }
 
     @Override
     protected JugglerFragment onConvertContent(InfoSurveyParams params, @Nullable JugglerFragment fragment) {
-        if (params.type == TYPE_FR_INFO_SURVEY)
-            return InfoSurveyFragment.newInstance(null, params.pollid);
-        else return InfoCommentFragment.newInstance();
+//        if (params.type == TYPE_FR_INFO_SURVEY)
+//            return InfoSurveyFragment.newInstance(null, params.pollid);
+//        else return InfoCommentFragment.newInstance();
+        return InfoCommentFragment.newInstance();
     }
 
     @Override
@@ -45,14 +46,14 @@ public class InfoSurveyState extends ContentBelowToolbarState<InfoSurveyState.In
     }
 
     static class InfoSurveyParams extends State.Params {
-        int pollid;
+        long pollid;
         int type;
 
         public InfoSurveyParams(int pollid) {
             this.pollid = pollid;
         }
 
-        public InfoSurveyParams(int pollid, int type) {
+        public InfoSurveyParams(long pollid, int type) {
             this.pollid = pollid;
             this.type = type;
         }

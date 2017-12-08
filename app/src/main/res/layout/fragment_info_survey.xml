@@ -64,25 +64,25 @@
                     app:orientation="horizontal"
                     app:rowCount="3">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <android.support.v7.widget.AppCompatCheckBox
                         android:id="@+id/info_like_img"
-                        android:layout_width="@dimen/vs_small"
-                        android:layout_height="@dimen/vs_small"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
                         app:layout_columnWeight="1"
                         app:layout_gravity="center"
-                        app:layout_rowWeight="1"
-                        app:srcCompat="@drawable/ic_like_passive" />
+                        app:layout_rowWeight="1" />
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <android.support.v7.widget.AppCompatCheckBox
                         android:id="@+id/info_dislike_img"
-                        android:layout_width="@dimen/vs_small"
-                        android:layout_height="@dimen/vs_small"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
                         app:layout_columnWeight="1"
                         app:layout_gravity="center"
-                        app:layout_rowWeight="1"
-                        app:srcCompat="@drawable/ic_dislike_passive" />
+                        app:layout_rowWeight="1" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/like_title"
@@ -134,6 +134,7 @@
             android:background="@drawable/poll_navigation_green_selector"
             android:gravity="center"
             android:text="@string/share"
+            android:enabled="true"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/ts_normal"

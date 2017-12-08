@@ -1,14 +1,13 @@
 package ru.mos.polls.infosurvey.ui;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
 import ru.mos.polls.infosurvey.vm.InfoCommentFragmentVM;
-import ru.mos.polls.infosurvey.vm.InfoSurveyFragmentVM;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -16,6 +15,8 @@ import ru.mos.polls.util.GuiUtils;
  */
 
 public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragmentVM, FragmentInfoCommentBinding> {
+
+    public static String INFO_COMMENT_FRAGMENT_TAG = "infosurvey";
 
     public static InfoCommentFragment newInstance() {
         InfoCommentFragment f = new InfoCommentFragment();
@@ -54,8 +55,7 @@ public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragment
                         getViewModel().confirmAction();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-                        getActivity().setResult(Activity.RESULT_CANCELED);
-                        getActivity().finish();
+                        getFragmentManager().popBackStackImmediate();
                         break;
                 }
             };

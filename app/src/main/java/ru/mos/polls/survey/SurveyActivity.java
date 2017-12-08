@@ -15,24 +15,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.infosurvey.ui.InfoSurveyFragment;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
+import ru.mos.polls.survey.parsers.SurveyFactory;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
+import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
+
+import static android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled;
 
 
 public class SurveyActivity extends BaseActivity {
@@ -83,6 +91,7 @@ public class SurveyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_fragment_survey);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -201,12 +210,15 @@ public class SurveyActivity extends BaseActivity {
             public void onLoaded(Survey loadedSurvey) {
                 dismissProgressDialog();
                 survey = loadedSurvey;
+                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
                 setFragment();
             }
 
             @Override
             public void onError(String message) {
                 dismissProgressDialog();
+                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
+                setFragment();
             }
 
             private void dismissProgressDialog() {
@@ -218,6 +230,14 @@ public class SurveyActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    public static Survey getStub(Context context) {
+        return new Gson().fromJson(
+                StubUtils.fromRawAsJsonObject(context, R.raw.survey_hearing).toString(),
+                new TypeToken<Survey>() {
+                }.getType()
+        );
     }
 
     private boolean setSurveyId() {
@@ -258,6 +278,9 @@ public class SurveyActivity extends BaseActivity {
                 }
             }
             fragment = getSurveyFragment(survey, questionId);
+        }
+        if (survey.getKind().isMKD()) {
+            fragment = getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0));
         }
         replaceFragment(fragment);
     }
@@ -316,6 +339,12 @@ public class SurveyActivity extends BaseActivity {
 
     private Fragment getSurveyFragment(Survey survey, long questionId) {
         surveyFragment = SurveyFragment.newInstance(survey, questionId, isHearing);
+        surveyFragment.setCallback(getSurveyCallback());
+        return surveyFragment;
+    }
+
+    private Fragment getInfoSurveyFragment(Survey survey, long questionId) {
+        InfoSurveyFragment surveyFragment = InfoSurveyFragment.newInstance(survey, questionId);
         surveyFragment.setCallback(getSurveyCallback());
         return surveyFragment;
     }

@@ -5,8 +5,8 @@ import android.content.Context;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 
@@ -19,8 +19,8 @@ public class SocialQuest extends DetailsQuest {
     private static final String ID = "id";
     private int icon;
 
-    public SocialQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
+    public SocialQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
         icon = getIcon();
     }
 
@@ -40,7 +40,7 @@ public class SocialQuest extends DetailsQuest {
     }
 
     @Override
-    public void onClick(final Context context, final QuestsFragment.Listener listener) {
+    public void onClick(final Context context, final QuestsFragmentVM.Listener listener) {
         if (ID_POST_IN_SOCIAL.equals(getId())) {
             SocialUIController.showSocialsDialog((BaseActivity) context, new SocialUIController.SocialClickListener() {
                 @Override

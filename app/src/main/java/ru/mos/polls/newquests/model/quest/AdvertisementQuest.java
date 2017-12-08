@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
 public class AdvertisementQuest extends BackQuest {
     public static final String TYPE = "advertisement";
@@ -13,9 +13,9 @@ public class AdvertisementQuest extends BackQuest {
     @SerializedName("text_html")
     private String html;
 
-    public AdvertisementQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        html = questFamilyList.getHtml();
+    public AdvertisementQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        html = questFamilyElement.getHtml();
     }
 
 
@@ -28,7 +28,7 @@ public class AdvertisementQuest extends BackQuest {
     }
 
     @Override
-    public void onClick(Context context, QuestsFragment.Listener listener) {
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
         super.onClick(context, listener);
     }
 }

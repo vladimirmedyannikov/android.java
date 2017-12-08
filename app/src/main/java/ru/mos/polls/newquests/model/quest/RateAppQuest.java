@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
 /**
  * Задание для оценки приложения
@@ -15,9 +15,9 @@ public class RateAppQuest extends SocialQuest {
     @SerializedName("app_ids")
     private AppIds appIds;
 
-    public RateAppQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        appIds = questFamilyList.getAppIds();
+    public RateAppQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        appIds = questFamilyElement.getAppIds();
     }
 
     public String getAppId() {
@@ -29,7 +29,7 @@ public class RateAppQuest extends SocialQuest {
     }
 
     @Override
-    public void onClick(Context context, QuestsFragment.Listener listener) {
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
         listener.onRateThisApplication(getAppId());
     }
 

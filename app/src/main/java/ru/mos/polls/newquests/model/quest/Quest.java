@@ -2,14 +2,16 @@ package ru.mos.polls.newquests.model.quest;
 
 import android.content.Context;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import java.io.Serializable;
 
-public abstract class Quest {
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
+
+public abstract class Quest implements Serializable {
 
     private final long innerId;
 
-    public Quest(long innerId, QuestFamilyList questFamilyList) {
+    public Quest(long innerId, QuestFamilyElement questFamilyElement) {
         this.innerId = innerId;
     }
 
@@ -17,5 +19,5 @@ public abstract class Quest {
         return innerId;
     }
 
-    public abstract void onClick(Context context, QuestsFragment.Listener listener);
+    public abstract void onClick(Context context, QuestsFragmentVM.Listener listener);
 }

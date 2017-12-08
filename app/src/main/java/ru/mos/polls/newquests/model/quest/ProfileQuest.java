@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
 public class ProfileQuest extends DetailsQuest {
     public static final String TYPE_PROFILE = "profile";
@@ -25,14 +25,14 @@ public class ProfileQuest extends DetailsQuest {
     @SerializedName("percent_fill_profile")
     public int percent;
 
-    public ProfileQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        idsList = questFamilyList.getIdsList();
-        percent = questFamilyList.getPercent();
+    public ProfileQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        idsList = questFamilyElement.getIdsList();
+        percent = questFamilyElement.getPercent();
     }
 
     @Override
-    public void onClick(Context context, QuestsFragment.Listener listener) {
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
         if (ID_PERSONAL_WIZARD.equals(getId())) {
             listener.onWizardProfile(idsList, percent);
         } else if (ID_UPDATE_PERSONAL.equals(getId())) {

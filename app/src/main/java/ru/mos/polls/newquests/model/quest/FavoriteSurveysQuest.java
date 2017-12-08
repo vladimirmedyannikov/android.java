@@ -2,9 +2,9 @@ package ru.mos.polls.newquests.model.quest;
 
 import com.google.gson.annotations.SerializedName;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
-import ru.mos.polls.quests.QuestsFragment;
 
 public class FavoriteSurveysQuest extends BackQuest {
 
@@ -14,9 +14,9 @@ public class FavoriteSurveysQuest extends BackQuest {
     @SerializedName("kind")
     private Kind kind;
 
-    public FavoriteSurveysQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        kind = questFamilyList.getKind();
+    public FavoriteSurveysQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        kind = questFamilyElement.getKind();
     }
 
 
@@ -24,7 +24,7 @@ public class FavoriteSurveysQuest extends BackQuest {
         return Long.parseLong(getId());
     }
 
-    private void onClick(QuestsFragment.Listener listener) {
+    private void onClick(QuestsFragmentVM.Listener listener) {
         listener.onSurvey(getSurveyId());
     }
 

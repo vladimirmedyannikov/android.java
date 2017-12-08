@@ -1,13 +1,13 @@
 package ru.mos.polls.newquests.model.quest;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
 
 
 public class EventQuest extends BackQuest {
     public static final String TYPE = "events";
 
-    public EventQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
+    public EventQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
     }
 
 

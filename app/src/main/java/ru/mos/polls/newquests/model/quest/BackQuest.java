@@ -9,8 +9,8 @@ import org.json.JSONObject;
 
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
-import ru.mos.polls.newquests.model.QuestFamilyList;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
 public abstract class BackQuest extends Quest {
 
@@ -34,17 +34,23 @@ public abstract class BackQuest extends Quest {
     public static final String ID_INVITE_FRIENDS = "inviteFriends";
     public static final String ID_RATE_THIS_APP = "rateThisApplication";
 
-    public BackQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        points = questFamilyList.getPoints();
-        title = questFamilyList.getTitle();
-        type = questFamilyList.getType();
-        priority = questFamilyList.getPriority();
-        id = questFamilyList.getId();
-        details = questFamilyList.getDetails();
+    /**
+     * флаг того, что Quest сдвинут
+     */
+    private boolean swiped = false;
+
+
+    public BackQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        points = questFamilyElement.getPoints();
+        title = questFamilyElement.getTitle();
+        type = questFamilyElement.getType();
+        priority = questFamilyElement.getPriority();
+        id = questFamilyElement.getId();
+        details = questFamilyElement.getDetails();
         icon = getIcon();
-        isHidden = questFamilyList.isHidden();
-        urlScheme = questFamilyList.getUrlScheme();
+        isHidden = questFamilyElement.isHidden();
+        urlScheme = questFamilyElement.getUrlScheme();
     }
 
     public int getIcon() {
@@ -129,8 +135,16 @@ public abstract class BackQuest extends Quest {
         return urlScheme != null ? urlScheme.getShame() : null;
     }
 
+    public boolean isSwiped() {
+        return swiped;
+    }
+
+    public void setSwiped(boolean swiped) {
+        this.swiped = swiped;
+    }
+
     @Override
-    public void onClick(Context context, QuestsFragment.Listener listener) {
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
         UrlSchemeController.start(context, getUrlScheme());
     }
 

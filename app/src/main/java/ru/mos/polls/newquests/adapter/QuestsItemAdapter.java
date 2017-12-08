@@ -10,6 +10,7 @@ import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.newquests.model.quest.AchievementQuest;
 import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
+import ru.mos.polls.newquests.model.quest.BackQuest;
 import ru.mos.polls.newquests.model.quest.EventQuest;
 import ru.mos.polls.newquests.model.quest.FavoriteSurveysQuest;
 import ru.mos.polls.newquests.model.quest.NewsQuest;
@@ -20,7 +21,17 @@ import ru.mos.polls.newquests.model.quest.Quest;
 import ru.mos.polls.newquests.model.quest.RateAppQuest;
 import ru.mos.polls.newquests.model.quest.ResultsQuest;
 import ru.mos.polls.newquests.model.quest.SocialQuest;
-import ru.mos.polls.quests.QuestsFragment;
+import ru.mos.polls.newquests.vm.list.AchievementQuestVM;
+import ru.mos.polls.newquests.vm.list.AdvertisementQuestVM;
+import ru.mos.polls.newquests.vm.list.EventQuestVM;
+import ru.mos.polls.newquests.vm.list.FavouriteSurveysQuestVM;
+import ru.mos.polls.newquests.vm.list.NewsQuestVM;
+import ru.mos.polls.newquests.vm.list.NoveltyQuestsVM;
+import ru.mos.polls.newquests.vm.list.OtherQuestVM;
+import ru.mos.polls.newquests.vm.list.ProfileQuestVM;
+import ru.mos.polls.newquests.vm.list.RateAppQuestVM;
+import ru.mos.polls.newquests.vm.list.ResultsQuestVM;
+import ru.mos.polls.newquests.vm.list.SocialQuestVM;
 
 public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
 
@@ -38,8 +49,6 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
 
     private static final Map<Class<? extends Quest>, Integer> CLASSES = new HashMap<Class<? extends Quest>, Integer>();
 
-    private List<String> questForRemoveList = new ArrayList<>();
-
     static {
         CLASSES.put(ProfileQuest.class, PROFILE);
         CLASSES.put(SocialQuest.class, SOCIAL);
@@ -56,15 +65,104 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
 
 
     private List<Quest> quests;
-    private QuestsFragment.ItemRecyclerViewListener listener;
 
-    public QuestsItemAdapter(List<Quest> quests, QuestsFragment.ItemRecyclerViewListener listener) {
+    public QuestsItemAdapter(List<Quest> quests) {
         this.quests = quests;
-        this.listener = listener;
     }
 
     @Override
     public int getItemCount() {
         return quests.size();
+    }
+
+    public void removeItem(int position) {
+        if (quests.size() > 0 && position >= 0) {
+            quests.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        final Quest quest = quests.get(position);
+        final int result = CLASSES.get(quest.getClass());
+        return result;
+    }
+
+    public void redrawViewHolder(int position) {
+        ((BackQuest) quests.get(position)).setSwiped(true);
+        notifyItemChanged(position);
+    }
+
+    public void onCancelClick(String questId) {
+        for (int i = 0; i < quests.size(); i++) {
+            if (((BackQuest) quests.get(i)).getId().equals(questId)) {
+                ((BackQuest) quests.get(i)).setSwiped(false);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    public void add(List<BackQuest> quests) {
+        List<RecyclerBaseViewModel> data = new ArrayList<>();
+        for (BackQuest iterQuest : quests) {
+            RecyclerBaseViewModel model = null;
+            switch (iterQuest.getType()) {
+                case AchievementQuest.TYPE:
+                    model = new AchievementQuestVM((AchievementQuest) iterQuest);
+                    break;
+                case AdvertisementQuest.TYPE:
+                    model = new AdvertisementQuestVM((AdvertisementQuest) iterQuest);
+                    break;
+                case EventQuest.TYPE:
+                    model = new EventQuestVM((EventQuest) iterQuest);
+                    break;
+                case FavoriteSurveysQuest.ID_HEARING:
+                case FavoriteSurveysQuest.ID_POLL:
+                    model = new FavouriteSurveysQuestVM((FavoriteSurveysQuest) iterQuest);
+                    break;
+                case NewsQuest.TYPE:
+                    model = new NewsQuestVM((NewsQuest) iterQuest);
+                    break;
+                case NoveltyQuest.TYPE:
+                    model = new NoveltyQuestsVM((NoveltyQuest) iterQuest);
+                    break;
+                case OtherQuest.TYPE:
+                    model = new OtherQuestVM((OtherQuest) iterQuest);
+                    break;
+                case ProfileQuest.TYPE_PROFILE:
+                    model = new ProfileQuestVM((ProfileQuest) iterQuest);
+                    break;
+                case ResultsQuest.TYPE:
+                    model = new ResultsQuestVM((ResultsQuest) iterQuest);
+                    break;
+                case SocialQuest.TYPE_SOCIAL:
+                    try {
+                        //оценка приложения
+                        model = new RateAppQuestVM((RateAppQuest) iterQuest);
+                    } catch (ClassCastException e) {
+                        //соц сеть
+                        model = new SocialQuestVM((SocialQuest) iterQuest);
+                    }
+                    break;
+            }
+            data.add(model);
+        }
+        addData(data);
+    }
+
+    public void onJustClick(String questId) {
+
+    }
+
+    public void onDeleteClick(String questId) {
+        for (int i = 0; i < quests.size(); i++) {
+            if (((BackQuest) quests.get(i)).getId().equals(questId)) {
+                quests.remove(i);
+                notifyItemRemoved(i);
+                break;
+            }
+        }
     }
 }

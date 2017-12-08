@@ -13,7 +13,7 @@ import ru.mos.polls.poll.model.Kind;
  *         on 07.12.17.
  */
 
-public class QuestFamilyList {
+public class QuestFamilyElement {
     @SerializedName("sub_ids")
     private List<String> idsList;
     @SerializedName("percent_fill_profile")

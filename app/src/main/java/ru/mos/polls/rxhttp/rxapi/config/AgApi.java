@@ -10,6 +10,7 @@ import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mypoints.service.HistoryGet;
+import ru.mos.polls.newquests.service.PolltaskGet;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.service.AchievementsGet;
 import ru.mos.polls.profile.service.AchievementsSelect;
@@ -54,6 +55,7 @@ public interface AgApi {
             String MEDIA = "media";
             String POLL = "poll";
             String SUPPORT = "support";
+            String POLLTASK = "polltask";
         }
 
         interface Methods {
@@ -138,4 +140,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.SET_SOURCES)
     Observable<EmptyResponse> setSources(@Body SourcesSet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET)
+    Observable<PolltaskGet.Response> getPolltasks(@Body PolltaskGet.Request body);
 }

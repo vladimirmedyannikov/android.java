@@ -1,6 +1,8 @@
 package ru.mos.polls.newquests.vm.list;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -13,6 +15,8 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.QuestHtmlBannerBinding;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
+import ru.mos.polls.newquests.model.quest.BackQuest;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
 /**
  * @author matek3022 (semenovmm@altarix.ru)
@@ -84,9 +88,9 @@ public class AdvertisementQuestVM extends RecyclerBaseViewModel<AdvertisementQue
                         break;
                     case MotionEvent.ACTION_UP:
                         if (isClick) {
-                            // TODO: 07.12.17 переделать на бродкаст
-//                            UrlSchemeController.start(context, model.getUrlScheme());
-//                            QuestsApiController.hide((BaseActivity) context, ru.mos.polls.quests.quest.AdvertisementQuest.this, null);
+                            Intent intent = new Intent(QuestsFragmentVM.ACTION_ADVERTISEMENT_CLICK);
+                            intent.putExtra(QuestsFragmentVM.ARG_QUEST, (BackQuest) model);
+                            LocalBroadcastManager.getInstance(viewDataBinding.getRoot().getContext()).sendBroadcast(intent);
                         }
                         break;
 

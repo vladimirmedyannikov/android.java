@@ -2,7 +2,7 @@ package ru.mos.polls.newquests.model.quest;
 
 import com.google.gson.annotations.SerializedName;
 
-import ru.mos.polls.newquests.model.QuestFamilyList;
+import ru.mos.polls.newquests.model.QuestFamilyElement;
 
 
 public class NewsQuest extends BackQuest {
@@ -11,8 +11,8 @@ public class NewsQuest extends BackQuest {
     @SerializedName("link_url")
     private String linkUrl;
 
-    public NewsQuest(long innerId, QuestFamilyList questFamilyList) {
-        super(innerId, questFamilyList);
-        linkUrl = questFamilyList.getLinkUrl();
+    public NewsQuest(long innerId, QuestFamilyElement questFamilyElement) {
+        super(innerId, questFamilyElement);
+        linkUrl = questFamilyElement.getLinkUrl();
     }
 }

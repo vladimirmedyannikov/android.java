@@ -8,7 +8,7 @@
             android:id="@+id/root"
             style="@style/root">
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/ptrLayout"
+                android:id="@+id/swipe"
                 style="@style/root"
                 android:layout_marginTop="-28dp">
 
@@ -20,7 +20,7 @@
             </android.support.v4.widget.SwipeRefreshLayout>
 
             <LinearLayout
-                android:id="@id/empty"
+                android:id="@android:id/empty"
                 style="@style/item.linear"
                 android:paddingTop="@dimen/vs_xxsmall">
 

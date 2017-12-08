@@ -39,7 +39,6 @@ import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
 import ru.mos.polls.event.controller.EventAPIController;
-import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
@@ -65,7 +64,6 @@ import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
-import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.shop.WebShopFragment;
@@ -75,7 +73,6 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.util.SMSUtils;
-import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
@@ -396,94 +393,94 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_SUPPORT;
                 break;
             case NavigationMenuItem.QUESTS:
-                QuestsFragment qfr = new QuestsFragment();
+                ru.mos.polls.newquests.ui.QuestsFragment qfr = ru.mos.polls.newquests.ui.QuestsFragment.instance();
                 fr = qfr;
-                qfr.setListener(new QuestsFragment.Listener() {
-
-                    @Override
-                    public void onSurvey(long id) {
-                        Intent intent = SurveyActivity.getStartIntent(MainActivity.this, id, false);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onAllSurveys() {
-                    }
-
-                    @Override
-                    public void onUpdatePersonal() {
-                    }
-
-                    @Override
-                    public void onUpdateLocation() {
-                    }
-
-                    @Override
-                    public void onUpdateSocial() {
-                        UpdateSocialActivity.startActivityForQuest(MainActivity.this);
-                    }
-
-                    @Override
-                    public void onUpdateEmail() {
-                    }
-
-                    @Override
-                    public void onUpdateExtraInfo() {
-                    }
-
-                    @Override
-                    public void onUpdateFamilyInfo() {
-                    }
-
-                    @Override
-                    public void onBindToPgu() {
-                        PguAuthActivity.startActivityForQuest(MainActivity.this);
-                    }
-
-                    @Override
-                    public void onWizardProfile(List<String> list, int percent) {
-                        navigateTo().state(Add.newActivityForResult(new WizardProfileState(list, percent), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
-                    }
-
-                    @Override
-                    public void onRateThisApplication(String appId) {
-                        FunctionalHelper.startGooglePlay(MainActivity.this, appId);
-                    }
-
-                    @Override
-                    public void onInviteFriends(boolean isTask) {
-                        if (!runtimePermissionController.hasSmsSend()) {
-                            runtimePermissionController.requestSmsSend();
-                        } else {
-                            smsInviteController.process(isTask);
-                        }
-                    }
-
-                    @Override
-                    public void onSocialPost(AppPostValue appPostValue) {
-                        Statistics.taskSocialSharing(appPostValue.getSocialName());
-                        GoogleStatistics.QuestsFragment.taskSocialSharing(appPostValue.getSocialName());
-                        socialController.post(appPostValue, appPostValue.getSocialId());
-                    }
-
-                    @Override
-                    public void onNews(String title, String linkUrl) {
-                    }
-
-                    @Override
-                    public void onEvent(long eventId) {
-                        EventActivity.startActivity(MainActivity.this, eventId);
-                    }
-
-                    @Override
-                    public void onOther(String title, String linkUrl) {
-
-                    }
-
-                    @Override
-                    public void onResults(String title, String linkUrl) {
-                    }
-                });
+//                qfr.getViewModel().setListener(new QuestsFragmentVM.Listener() {
+//
+//                    @Override
+//                    public void onSurvey(long id) {
+//                        Intent intent = SurveyActivity.getStartIntent(MainActivity.this, id, false);
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onAllSurveys() {
+//                    }
+//
+//                    @Override
+//                    public void onUpdatePersonal() {
+//                    }
+//
+//                    @Override
+//                    public void onUpdateLocation() {
+//                    }
+//
+//                    @Override
+//                    public void onUpdateSocial() {
+//                        UpdateSocialActivity.startActivityForQuest(MainActivity.this);
+//                    }
+//
+//                    @Override
+//                    public void onUpdateEmail() {
+//                    }
+//
+//                    @Override
+//                    public void onUpdateExtraInfo() {
+//                    }
+//
+//                    @Override
+//                    public void onUpdateFamilyInfo() {
+//                    }
+//
+//                    @Override
+//                    public void onBindToPgu() {
+//                        PguAuthActivity.startActivityForQuest(MainActivity.this);
+//                    }
+//
+//                    @Override
+//                    public void onWizardProfile(List<String> list, int percent) {
+//                        navigateTo().state(Add.newActivityForResult(new WizardProfileState(list, percent), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
+//                    }
+//
+//                    @Override
+//                    public void onRateThisApplication(String appId) {
+//                        FunctionalHelper.startGooglePlay(MainActivity.this, appId);
+//                    }
+//
+//                    @Override
+//                    public void onInviteFriends(boolean isTask) {
+//                        if (!runtimePermissionController.hasSmsSend()) {
+//                            runtimePermissionController.requestSmsSend();
+//                        } else {
+//                            smsInviteController.process(isTask);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onSocialPost(AppPostValue appPostValue) {
+//                        Statistics.taskSocialSharing(appPostValue.getSocialName());
+//                        GoogleStatistics.QuestsFragment.taskSocialSharing(appPostValue.getSocialName());
+//                        socialController.post(appPostValue, appPostValue.getSocialId());
+//                    }
+//
+//                    @Override
+//                    public void onNews(String title, String linkUrl) {
+//                    }
+//
+//                    @Override
+//                    public void onEvent(long eventId) {
+//                        EventActivity.startActivity(MainActivity.this, eventId);
+//                    }
+//
+//                    @Override
+//                    public void onOther(String title, String linkUrl) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onResults(String title, String linkUrl) {
+//                    }
+//                });
                 tag = TAG_QUESTS;
                 break;
             case NavigationMenuItem.PROFILE:

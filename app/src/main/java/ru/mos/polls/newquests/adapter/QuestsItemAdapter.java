@@ -90,13 +90,21 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
     }
 
     public void redrawViewHolder(int position) {
+        if (list.get(position).getModel() != null) ((BackQuest) list.get(position).getModel()).setSwiped(true);
         ((BackQuest) quests.get(position)).setSwiped(true);
         notifyItemChanged(position);
+    }
+
+    @Override
+    public void clear() {
+        quests.clear();
+        super.clear();
     }
 
     public void onCancelClick(String questId) {
         for (int i = 0; i < quests.size(); i++) {
             if (((BackQuest) quests.get(i)).getId().equals(questId)) {
+                if (list.get(i).getModel() != null) ((BackQuest) list.get(i).getModel()).setSwiped(false);
                 ((BackQuest) quests.get(i)).setSwiped(false);
                 notifyItemChanged(i);
                 break;
@@ -104,11 +112,26 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
         }
     }
 
-    public void add(List<BackQuest> quests) {
+    public void onJustClick(String questId) {
+
+    }
+
+    public void onDeleteClick(String questId) {
+        for (int i = 0; i < quests.size(); i++) {
+            if (((BackQuest) quests.get(i)).getId().equals(questId)) {
+                if (list.get(i).getModel() != null) list.remove(i);
+                quests.remove(i);
+                notifyItemRemoved(i);
+                break;
+            }
+        }
+    }
+
+    public void add(List<Quest> quests) {
         List<RecyclerBaseViewModel> data = new ArrayList<>();
-        for (BackQuest iterQuest : quests) {
+        for (Quest iterQuest : quests) {
             RecyclerBaseViewModel model = null;
-            switch (iterQuest.getType()) {
+            switch (((BackQuest)iterQuest).getType()) {
                 case AchievementQuest.TYPE:
                     model = new AchievementQuestVM((AchievementQuest) iterQuest);
                     break;
@@ -119,6 +142,8 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
                     model = new EventQuestVM((EventQuest) iterQuest);
                     break;
                 case FavoriteSurveysQuest.ID_HEARING:
+                    model = new FavouriteSurveysQuestVM((FavoriteSurveysQuest) iterQuest);
+                    break;
                 case FavoriteSurveysQuest.ID_POLL:
                     model = new FavouriteSurveysQuestVM((FavoriteSurveysQuest) iterQuest);
                     break;
@@ -150,19 +175,5 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
             data.add(model);
         }
         addData(data);
-    }
-
-    public void onJustClick(String questId) {
-
-    }
-
-    public void onDeleteClick(String questId) {
-        for (int i = 0; i < quests.size(); i++) {
-            if (((BackQuest) quests.get(i)).getId().equals(questId)) {
-                quests.remove(i);
-                notifyItemRemoved(i);
-                break;
-            }
-        }
     }
 }

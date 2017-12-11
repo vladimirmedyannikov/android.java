@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,17 +62,16 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     public static final String ACTION_JUST_CLICK = "ru.mos.polls.newquests.vm.just_click";
     public static final String ACTION_DELETE_CLICK = "ru.mos.polls.newquests.vm.delete_click";
     public static final String ACTION_ADVERTISEMENT_CLICK = "ru.mos.polls.newquests.vm.advertisement_click";
-    public static final String ACTION_MENU_HIDE_NEWS_CLICK = "ru.mos.polls.newquests.vm.hide_news_click";
     public static final String ARG_QUEST = "quest";
 
     private Listener listener = Listener.STUB;
+    private Menu menu = null;
     public List<Quest> quests;
     private Unbinder unbinder;
-    public QuestsItemAdapter adapter;
     public ItemTouchHelper mItemTouchHelper;
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
-    private GoogleStatistics.QuestsFragment qf;
+    private boolean needRefreshAfterResume = false;
 
     private BroadcastReceiver cancelClickReceiver = new BroadcastReceiver() {
         @Override
@@ -119,7 +119,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                     @Override
                     public void onHide(boolean isHide) {
                         recyclerView.refreshDrawableState();
-//                        hideNewsMenu();
+                        hideNewsMenu();
                     }
                 };
                 QuestsApiController.hide((BaseActivity) getActivity(), quest, hideListener);
@@ -133,13 +133,6 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             BackQuest quest = (BackQuest) intent.getSerializableExtra(ARG_QUEST);
             UrlSchemeController.start(context, quest.getUrlScheme());
             QuestsApiController.hide((BaseActivity) context, quest, null);
-        }
-    };
-
-    private BroadcastReceiver menuHideNewsClickReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            hideAllNews();
         }
     };
 
@@ -164,18 +157,17 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new SpacesItemDecoration(2));
-
         super.initialize(binding);
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        needRefreshAfterResume = true;
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(clickReceiver, new IntentFilter(ACTION_JUST_CLICK));
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(deleteClickReceiver, new IntentFilter(ACTION_DELETE_CLICK));
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(cancelClickReceiver, new IntentFilter(ACTION_CANCEL_CLICK));
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(advertisementClickReceiver, new IntentFilter(ACTION_ADVERTISEMENT_CLICK));
-        LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(menuHideNewsClickReceiver, new IntentFilter(ACTION_MENU_HIDE_NEWS_CLICK));
     }
 
     @Override
@@ -191,8 +183,10 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             quests.addAll(filtered);
             adapter.notifyDataSetChanged();
         }
-//        doRequest();
         getActivity().setTitle(getFragment().getContext().getString(R.string.title_ag));
+        if (needRefreshAfterResume) {
+            resetData();
+        }
     }
 
     @OnClick(R.id.subscribe)
@@ -217,9 +211,9 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(deleteClickReceiver);
         LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(cancelClickReceiver);
         LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(advertisementClickReceiver);
-        LocalBroadcastManager.getInstance(getFragment().getContext()).unregisterReceiver(menuHideNewsClickReceiver);
         unbinder.unbind();
     }
+
 
     @Override
     public void doRequest() {
@@ -228,6 +222,8 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                     @Override
                     protected void onResult(PolltaskGet.Response.Result result) {
                         progressable = getPullableProgressable();
+                        quests.addAll(result.getTasks());
+                        hideNewsMenu();
                         adapter.add(result.getTasks());
                         isPaginationEnable = result.getTasks().size() >= page.getSize();
                         recyclerUIComponent.refreshUI();
@@ -259,24 +255,40 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         this.listener = listener;
     }
 
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 
-//    private void hideNewsMenu() {
-//        int coutNews = 0;
-//        if (quests != null) {
-//            for (Quest q : quests) {
-//                String type = ((BackQuest) q).getType();
-//                if (type.equals("news") || type.equals("results")) {
-//                    coutNews++;
-//                }
-//            }
-//            if (menu != null) {
-//                MenuItem hideNews = menu.findItem(R.id.hideNews);
-//                if (hideNews != null) {
-//                    hideNews.setVisible(coutNews > 10);
-//                }
-//            }
-//        }
-//    }
+    private void hideNewsMenu() {
+        int coutNews = 0;
+        if (quests != null) {
+            for (Quest q : quests) {
+                String type = ((BackQuest) q).getType();
+                if (type.equals("news") || type.equals("results")) {
+                    coutNews++;
+                }
+            }
+            if (coutNews <= 10) {
+                getFragment().hideMenuItem(R.id.hideNews);
+            } else {
+                getFragment().showMenuItem(R.id.hideNews);
+            }
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu() {
+        hideNewsMenu();
+    }
+
+    @Override
+    public void onOptionsItemSelected(int menuItemId) {
+        switch (menuItemId) {
+            case R.id.hideNews:
+                hideAllNews();
+                break;
+        }
+    }
 
     private void hideAllNews() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getFragment().getContext());
@@ -298,7 +310,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                             }
                         }
                         adapter.notifyDataSetChanged();
-//                        hideNewsMenu();
+                        hideNewsMenu();
                     }
                 };
                 QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);

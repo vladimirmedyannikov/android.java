@@ -6,13 +6,13 @@ import java.util.List;
 import ru.mos.polls.newquests.model.QuestFamilyElement;
 import ru.mos.polls.newquests.model.quest.AchievementQuest;
 import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
-import ru.mos.polls.newquests.model.quest.BackQuest;
 import ru.mos.polls.newquests.model.quest.EventQuest;
 import ru.mos.polls.newquests.model.quest.FavoriteSurveysQuest;
 import ru.mos.polls.newquests.model.quest.NewsQuest;
 import ru.mos.polls.newquests.model.quest.NoveltyQuest;
 import ru.mos.polls.newquests.model.quest.OtherQuest;
 import ru.mos.polls.newquests.model.quest.ProfileQuest;
+import ru.mos.polls.newquests.model.quest.Quest;
 import ru.mos.polls.newquests.model.quest.RateAppQuest;
 import ru.mos.polls.newquests.model.quest.ResultsQuest;
 import ru.mos.polls.newquests.model.quest.SocialQuest;
@@ -32,8 +32,8 @@ public class PolltaskGet {
 
         public static class Result {
             private List<QuestFamilyElement> tasks;
-            public List<BackQuest> getTasks() {
-                List<BackQuest> tasks = new ArrayList<>();
+            public List<Quest> getTasks() {
+                List<Quest> tasks = new ArrayList<>();
                 for (int i = 0; i < this.tasks.size(); i++) {
                     QuestFamilyElement currIterTask = this.tasks.get(i);
                     switch (currIterTask.getType()) {
@@ -47,8 +47,11 @@ public class PolltaskGet {
                             tasks.add(new EventQuest(i, currIterTask));
                             break;
                         case FavoriteSurveysQuest.ID_HEARING:
+                            tasks.add(new FavoriteSurveysQuest(i, currIterTask));
+                            break;
                         case FavoriteSurveysQuest.ID_POLL:
                             tasks.add(new FavoriteSurveysQuest(i, currIterTask));
+                            break;
                         case NewsQuest.TYPE:
                             tasks.add(new NewsQuest(i, currIterTask));
                             break;

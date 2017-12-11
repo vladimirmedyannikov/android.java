@@ -1,15 +1,12 @@
 package ru.mos.polls.newquests.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.MenuItem;
 
 import com.android.databinding.library.baseAdapters.BR;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
 import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 
@@ -18,7 +15,9 @@ import ru.mos.polls.newquests.vm.QuestsFragmentVM;
  *         on 06.12.17.
  */
 
-public class QuestsFragment extends BindingFragment<QuestsFragmentVM, LayoutQuestsBinding> {
+public class QuestsFragment extends MenuBindingFragment<QuestsFragmentVM, LayoutQuestsBinding> {
+
+    private QuestsFragmentVM.Listener listener = QuestsFragmentVM.Listener.STUB;
 
     public static QuestsFragment instance() {
         return new QuestsFragment();
@@ -39,27 +38,26 @@ public class QuestsFragment extends BindingFragment<QuestsFragmentVM, LayoutQues
         return R.layout.layout_quests;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        this.menu = menu;
-//        inflater.inflate(R.menu.main, menu);
-//        hideNewsMenu();
-//    }
+    @Override
+    public int getMenuResource() {
+        return R.menu.main;
+    }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.hideNews:
-                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(QuestsFragmentVM.ACTION_MENU_HIDE_NEWS_CLICK));
-                break;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getViewModel() != null) {
+            getViewModel().setListener(listener);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    public void setListener(QuestsFragmentVM.Listener listener) {
+        this.listener = listener;
     }
 }

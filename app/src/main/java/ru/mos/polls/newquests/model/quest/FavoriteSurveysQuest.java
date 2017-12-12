@@ -10,6 +10,7 @@ public class FavoriteSurveysQuest extends BackQuest {
 
     public static final String ID_POLL = "poll";
     public static final String ID_HEARING = "hearing";
+    public static final String ID_POLL_OSS = "poll_oss";
     public static final String KIND = "kind";
     @SerializedName("kind")
     private Kind kind;

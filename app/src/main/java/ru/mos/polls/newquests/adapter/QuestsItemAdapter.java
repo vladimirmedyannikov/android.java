@@ -13,6 +13,7 @@ import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
 import ru.mos.polls.newquests.model.quest.BackQuest;
 import ru.mos.polls.newquests.model.quest.EventQuest;
 import ru.mos.polls.newquests.model.quest.FavoriteSurveysQuest;
+import ru.mos.polls.newquests.model.quest.NewsOssQuest;
 import ru.mos.polls.newquests.model.quest.NewsQuest;
 import ru.mos.polls.newquests.model.quest.NoveltyQuest;
 import ru.mos.polls.newquests.model.quest.OtherQuest;
@@ -46,6 +47,7 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
     public static final int RATE_APP = 8;
     public static final int NOVELTY = 9;
     public static final int ACHIEVEMENT = 10;
+    public static final int NEWS_OSS = 11;
 
     private static final Map<Class<? extends Quest>, Integer> CLASSES = new HashMap<Class<? extends Quest>, Integer>();
 
@@ -61,6 +63,7 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
         CLASSES.put(RateAppQuest.class, RATE_APP);
         CLASSES.put(NoveltyQuest.class, NOVELTY);
         CLASSES.put(AchievementQuest.class, ACHIEVEMENT);
+        CLASSES.put(NewsOssQuest.class, NEWS_OSS);
     }
 
 

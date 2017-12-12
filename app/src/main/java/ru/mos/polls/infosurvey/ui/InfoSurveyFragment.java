@@ -92,7 +92,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     @BindView(R.id.like_count)
     AppCompatTextView likeCount;
-
     @BindView(R.id.dislike_count)
     AppCompatTextView dislikeCount;
 
@@ -165,6 +164,12 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             setLikeTitleColor(dislikeTitle, true, R.color.red);
             dislikeImage.setChecked(true);
             dislikeImage.setClickable(false);
+            SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
+            SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
+            likeCount.setVisibility(View.VISIBLE);
+            dislikeCount.setVisibility(View.VISIBLE);
+            likeCount.setText(String.valueOf(surveyVariant1.getVoters()));
+            dislikeCount.setText(String.valueOf(surveyVariant2.getVoters()));
         }
     }
 

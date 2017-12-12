@@ -210,7 +210,6 @@ public class SurveyActivity extends BaseActivity {
             public void onLoaded(Survey loadedSurvey) {
                 dismissProgressDialog();
                 survey = loadedSurvey;
-//                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
                 setFragment();
             }
 
@@ -261,6 +260,10 @@ public class SurveyActivity extends BaseActivity {
 
     private void setFragment() {
         Fragment fragment = getSummaryFragment(survey);
+        if (survey.getKind().isMKD()) {
+            replaceFragment(getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0)));
+            return;
+        }
         if (!survey.getKind().isHearing() && isRedirectNeed(survey)) {
             /**
              * По умолчанию первый вопрос
@@ -276,9 +279,6 @@ public class SurveyActivity extends BaseActivity {
                 }
             }
             fragment = getSurveyFragment(survey, questionId);
-        }
-        if (survey.getKind().isMKD()) {
-            fragment = getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0));
         }
         replaceFragment(fragment);
     }

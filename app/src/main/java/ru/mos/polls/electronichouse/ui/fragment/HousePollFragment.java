@@ -3,7 +3,7 @@ package ru.mos.polls.electronichouse.ui.fragment;
 import com.android.databinding.library.baseAdapters.BR;
 
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentHousePollBinding;
 import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
 
@@ -12,7 +12,7 @@ import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
  *         on 01.12.17.
  */
 
-public class HousePollFragment extends BindingFragment<HousePollFragmentVM, FragmentHousePollBinding> {
+public class HousePollFragment extends NavigateFragment<HousePollFragmentVM, FragmentHousePollBinding> {
 
     public static HousePollFragment newInstance() {
         return new HousePollFragment();

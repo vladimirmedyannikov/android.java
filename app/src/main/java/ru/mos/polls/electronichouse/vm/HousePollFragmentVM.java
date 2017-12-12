@@ -15,10 +15,12 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentHousePollBinding;
 import ru.mos.polls.electronichouse.ui.fragment.HousePollFragment;
@@ -27,6 +29,7 @@ import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.webview.state.WebViewState;
 
 
 public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollFragment, FragmentHousePollBinding, PollAdapter> {
@@ -131,8 +134,9 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
+    @SuppressWarnings("newApi")
     @OnClick(R.id.fab_add_house_poll)
     void addClick(View v) {
-        // TODO: 04.12.17 открываем веб вью на создание голосования
+        getFragment().navigateTo(new WebViewState(), BaseActivity.class);
     }
 }

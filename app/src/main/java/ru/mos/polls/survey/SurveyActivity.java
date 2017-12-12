@@ -241,7 +241,6 @@ public class SurveyActivity extends BaseActivity {
         Intent intent = getIntent();
         isHearing = intent.getBooleanExtra(EXTRA_IS_HEARING, false);
         surveyId = intent.getLongExtra(EXTRA_SURVEY_ID, -1);
-        surveyId = 1489;
         if (UrlSchemeController.hasUri(this)) {
             if (UrlSchemeController.isHearing(this)) {
                 isHearing = true;

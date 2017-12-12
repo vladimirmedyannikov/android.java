@@ -6,19 +6,22 @@ import ru.mos.polls.newquests.model.QuestFamilyElement;
 import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
 
-public class FavoriteSurveysQuest extends BackQuest {
+/**
+ * @author matek3022 (semenovmm@altarix.ru)
+ *         on 12.12.17.
+ */
 
-    public static final String ID_POLL = "poll";
-    public static final String ID_HEARING = "hearing";
-    public static final String KIND = "kind";
+public class SurveyOssQuest extends BackQuest {
+
+    public static final String TYPE = "poll_oss";
+
     @SerializedName("kind")
     private Kind kind;
 
-    public FavoriteSurveysQuest(long innerId, QuestFamilyElement questFamilyElement) {
+    public SurveyOssQuest(long innerId, QuestFamilyElement questFamilyElement) {
         super(innerId, questFamilyElement);
         kind = questFamilyElement.getKind();
     }
-
 
     public long getSurveyId() {
         return Long.parseLong(getId());
@@ -30,7 +33,7 @@ public class FavoriteSurveysQuest extends BackQuest {
 
     @Override
     public String toString() {
-        return "FavoriteQuest " + getId() + " " + getTitle();
+        return "SurveyOssQuest " + getId() + " " + getTitle();
     }
 
     public Kind getKind() {

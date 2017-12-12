@@ -8,6 +8,7 @@ import ru.mos.polls.newquests.model.quest.AchievementQuest;
 import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
 import ru.mos.polls.newquests.model.quest.EventQuest;
 import ru.mos.polls.newquests.model.quest.FavoriteSurveysQuest;
+import ru.mos.polls.newquests.model.quest.NewsOssQuest;
 import ru.mos.polls.newquests.model.quest.NewsQuest;
 import ru.mos.polls.newquests.model.quest.NoveltyQuest;
 import ru.mos.polls.newquests.model.quest.OtherQuest;
@@ -16,6 +17,7 @@ import ru.mos.polls.newquests.model.quest.Quest;
 import ru.mos.polls.newquests.model.quest.RateAppQuest;
 import ru.mos.polls.newquests.model.quest.ResultsQuest;
 import ru.mos.polls.newquests.model.quest.SocialQuest;
+import ru.mos.polls.newquests.model.quest.SurveyOssQuest;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
@@ -75,6 +77,12 @@ public class PolltaskGet {
                                 //соц сеть
                                 tasks.add(new SocialQuest(i, currIterTask));
                             }
+                            break;
+                        case SurveyOssQuest.TYPE:
+                            tasks.add(new SurveyOssQuest(i, currIterTask));
+                            break;
+                        case NewsOssQuest.TYPE:
+                            tasks.add(new NewsOssQuest(i, currIterTask));
                             break;
                     }
                 }

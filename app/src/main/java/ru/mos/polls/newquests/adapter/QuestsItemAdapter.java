@@ -22,10 +22,12 @@ import ru.mos.polls.newquests.model.quest.Quest;
 import ru.mos.polls.newquests.model.quest.RateAppQuest;
 import ru.mos.polls.newquests.model.quest.ResultsQuest;
 import ru.mos.polls.newquests.model.quest.SocialQuest;
+import ru.mos.polls.newquests.model.quest.SurveyOssQuest;
 import ru.mos.polls.newquests.vm.list.AchievementQuestVM;
 import ru.mos.polls.newquests.vm.list.AdvertisementQuestVM;
 import ru.mos.polls.newquests.vm.list.EventQuestVM;
 import ru.mos.polls.newquests.vm.list.FavouriteSurveysQuestVM;
+import ru.mos.polls.newquests.vm.list.NewsOssQuestVM;
 import ru.mos.polls.newquests.vm.list.NewsQuestVM;
 import ru.mos.polls.newquests.vm.list.NoveltyQuestsVM;
 import ru.mos.polls.newquests.vm.list.OtherQuestVM;
@@ -33,6 +35,7 @@ import ru.mos.polls.newquests.vm.list.ProfileQuestVM;
 import ru.mos.polls.newquests.vm.list.RateAppQuestVM;
 import ru.mos.polls.newquests.vm.list.ResultsQuestVM;
 import ru.mos.polls.newquests.vm.list.SocialQuestVM;
+import ru.mos.polls.newquests.vm.list.SurveyOssQuestVM;
 
 public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
 
@@ -48,6 +51,7 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
     public static final int NOVELTY = 9;
     public static final int ACHIEVEMENT = 10;
     public static final int NEWS_OSS = 11;
+    public static final int SURVEY_OSS = 12;
 
     private static final Map<Class<? extends Quest>, Integer> CLASSES = new HashMap<Class<? extends Quest>, Integer>();
 
@@ -64,6 +68,7 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
         CLASSES.put(NoveltyQuest.class, NOVELTY);
         CLASSES.put(AchievementQuest.class, ACHIEVEMENT);
         CLASSES.put(NewsOssQuest.class, NEWS_OSS);
+        CLASSES.put(SurveyOssQuest.class, SURVEY_OSS);
     }
 
 
@@ -173,6 +178,12 @@ public class QuestsItemAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel
                         //соц сеть
                         model = new SocialQuestVM((SocialQuest) iterQuest);
                     }
+                    break;
+                case SurveyOssQuest.TYPE:
+                    model = new SurveyOssQuestVM((SurveyOssQuest) iterQuest);
+                    break;
+                case NewsOssQuest.TYPE:
+                    model = new NewsOssQuestVM((NewsOssQuest) iterQuest);
                     break;
             }
             data.add(model);

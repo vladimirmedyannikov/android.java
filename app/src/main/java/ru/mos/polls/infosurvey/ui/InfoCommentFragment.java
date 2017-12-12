@@ -3,11 +3,11 @@ package ru.mos.polls.infosurvey.ui;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
 import ru.mos.polls.infosurvey.vm.InfoCommentFragmentVM;
+import ru.mos.polls.survey.Survey;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -17,10 +17,12 @@ import ru.mos.polls.util.GuiUtils;
 public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragmentVM, FragmentInfoCommentBinding> {
 
     public static String INFO_COMMENT_FRAGMENT_TAG = "infosurvey";
+    public static String ARG_INFO_SURVEY = "arg_survey";
 
-    public static InfoCommentFragment newInstance() {
+    public static InfoCommentFragment newInstance(Survey survey) {
         InfoCommentFragment f = new InfoCommentFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARG_INFO_SURVEY, survey);
         f.setArguments(args);
         return f;
     }
@@ -66,7 +68,8 @@ public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragment
             );
             return true;
         } else {
-            return false;
+            getFragmentManager().popBackStackImmediate();
+            return true;
         }
     }
 }

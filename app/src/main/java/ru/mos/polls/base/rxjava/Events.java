@@ -223,6 +223,26 @@ public class Events {
         }
     }
 
+    public static class InfoSurveyEvents extends BaseEvents {
+        public static final int COMMENTS = 1;
+
+        String comment;
+        String number;
+
+        public InfoSurveyEvents(String comment, String number) {
+            this.comment = comment;
+            this.number = number;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+    }
+
     abstract static class BaseEvents {
         protected int eventType;
 

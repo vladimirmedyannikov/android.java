@@ -1,5 +1,7 @@
 package ru.mos.polls.infosurvey.ui;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,17 +25,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.elk.BaseActivity;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.helpers.AppsFlyerConstants;
+import ru.mos.polls.social.controller.SocialUIController;
+import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.SurveyFragment;
 import ru.mos.polls.survey.VerificationException;
+import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
+import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
+import ru.mos.polls.survey.variants.values.CharVariantValue;
 
 /**
  * Created by Trunks on 06.12.2017.
@@ -76,14 +90,19 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     @BindView(R.id.shareButton)
     Button mSurveyButtons;
 
-    RadioboxSurveyQuestion surveyQuestion;
+    @BindView(R.id.like_count)
+    AppCompatTextView likeCount;
 
+    @BindView(R.id.dislike_count)
+    AppCompatTextView dislikeCount;
+
+    RadioboxSurveyQuestion surveyQuestion;
+    CheckboxSurveyQuestion checkboxSurveyQuestion;
     private SurveyFragment.Callback callback = SurveyFragment.Callback.STUB;
     InfoCommentFragment commentFragment;
     boolean isCommentFrAdded;
 
-    AppCompatTextView likeCount, dislikeCount;
-
+    Disposable disposable;
 
     public static InfoSurveyFragment newInstance(Survey survey, long idPoll) {
         InfoSurveyFragment f = new InfoSurveyFragment();
@@ -125,18 +144,86 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             survey = (Survey) extras.getSerializable(InfoSurveyFragment.ARG_SURVEY);
             pollId = extras.getLong(InfoSurveyFragment.ARG_POLL_ID);
             surveyQuestion = (RadioboxSurveyQuestion) survey.getFirstNotCheckedQuestion();
+            checkboxSurveyQuestion = (CheckboxSurveyQuestion) survey.getQuestionsList().get(1);
         }
         manager = new SharedPreferencesSurveyManager(getActivity());
         setCheckboxDrawable();
         setInfoTitle();
         setInfoDesc();
-
+        subscribeEventsBus();
+        setShareButtonView();
         setListeners();
+        setSurveyAnswer();
+        setLikeButtonView();
+    }
+
+    public void setLikeButtonView() {
+        if (survey.isPassed() || survey.isOld()) {
+            setLikeTitleColor(likeTitle, true, R.color.green_light);
+            likeImage.setChecked(true);
+            likeImage.setClickable(false);
+            setLikeTitleColor(dislikeTitle, true, R.color.red);
+            dislikeImage.setChecked(true);
+            dislikeImage.setClickable(false);
+        }
+    }
+
+    public void setSurveyAnswer() {
+        InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
+        if (commentSurveyVariant.isChecked()) {
+            CharVariantValue charVariantValue = (CharVariantValue) commentSurveyVariant.input;
+            if (!charVariantValue.isEmpty()) {
+                infoComment.setText(String.format(getString(R.string.your_comment), charVariantValue.getValue()));
+            }
+        }
+    }
+
+    public void setShareButtonView() {
+        if (survey.isActive() || survey.isInterrupted()) {
+            mSurveyButtons.setText(getString(R.string.result_innovation));
+        } else {
+            mSurveyButtons.setText(getString(R.string.share));
+            mSurveyButtons.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        disposable.dispose();
+        super.onDestroy();
+    }
+
+    private void subscribeEventsBus() {
+        disposable = AGApplication.bus().toObserverable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new RxEventDisposableSubscriber() {
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof Events.InfoSurveyEvents) {
+                            Events.InfoSurveyEvents events = (Events.InfoSurveyEvents) o;
+                            infoComment.setText(String.format(getString(R.string.your_comment), events.getComment()));
+                            InputSurveyVariant numberSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
+                            InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
+                            setCharValue(numberSurveyVariant, events.getNumber());
+                            setCharValue(commentSurveyVariant, events.getComment());
+                            isCommentFrAdded = false;
+                        }
+                    }
+                });
+    }
+
+    public void setCharValue(InputSurveyVariant inputSurveyVariant, String value) {
+        inputSurveyVariant.setChecked(true);
+        CharVariantValue charVariantValue = (CharVariantValue) inputSurveyVariant.input;
+        charVariantValue.setValue(value);
     }
 
     public void setListeners() {
-        likeImage.setOnCheckedChangeListener(getCheckboxListener());
-        dislikeImage.setOnCheckedChangeListener(getCheckboxListener());
+        if (survey.isActive() || survey.isInterrupted()) {
+            likeImage.setOnCheckedChangeListener(getCheckboxListener());
+            dislikeImage.setOnCheckedChangeListener(getCheckboxListener());
+        }
     }
 
 
@@ -144,6 +231,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
             SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
             SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
+            mSurveyButtons.setEnabled(true);
             switch (buttonView.getId()) {
                 case R.id.info_like_img:
                     setLikeTitleColor(likeTitle, isChecked, R.color.green_light);
@@ -165,15 +253,31 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     @OnClick(R.id.shareButton)
-    public void onShateButtonClick() {
-        saveAnswer();
-        manager.fill(survey);
-        callback.onSurveyDone(survey);
+    public void onShareButtonClick() {
+        if (survey.isActive() || survey.isInterrupted()) {
+            saveAnswer();
+            manager.fill(survey);
+            callback.onSurveyDone(survey);
+        } else {
+            SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
+                @Override
+                public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
+                    socialPostValue.setId(survey.getId());
+                    callback.onPosting(socialPostValue);
+                }
+
+                @Override
+                public void onCancel() {
+                    getActivity().finish();
+                }
+            };
+            SocialUIController.showSocialsDialogForPoll((BaseActivity) getActivity(), survey, false, listener);
+        }
     }
 
     @OnClick(R.id.info_survey_comment_card)
     public void onCommentClick() {
-        commentFragment = new InfoCommentFragment();
+        commentFragment = InfoCommentFragment.newInstance(survey);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager
                 .beginTransaction()
@@ -204,6 +308,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     public void onBackPressed() {
         if (isCommentFrAdded) {
             commentFragment.onBackPressed();
+            isCommentFrAdded = false;
         } else {
             interrupt();
         }
@@ -211,7 +316,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     @Override
     public void onUpPressed() {
-        interruptUp();
+        interrupt();
     }
 
     @Override
@@ -221,36 +326,14 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     public void interrupt() {
         if (survey != null) {
-            if (survey.getKind().isHearing()) {
-                callback.onSurveyInterrupted(survey);
-            } else {
-                try {
-                    survey.verify();
-                    survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
-                } catch (VerificationException ignored) {
-                }
-                survey.endTiming();
-                manager.saveCurrentPage(survey);
-                callback.onSurveyInterrupted(survey);
+            try {
+                survey.verify();
+                survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
+            } catch (VerificationException ignored) {
             }
-        }
-    }
-
-    public void interruptUp() {
-        if (survey != null) {
-            if (survey.getKind().isHearing()) {
-                callback.onSurveyInterrupted(survey);
-                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
-            } else {
-                try {
-                    survey.verify();
-                    survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
-                } catch (VerificationException ignored) {
-                }
-                survey.endTiming();
-                manager.saveCurrentPage(survey);
-                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
-            }
+            survey.endTiming();
+            manager.saveCurrentPage(survey);
+            ((SurveyActivity) getActivity()).doInterrupt(survey);
         }
     }
 

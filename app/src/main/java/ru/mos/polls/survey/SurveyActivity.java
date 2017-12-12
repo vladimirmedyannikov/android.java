@@ -210,15 +210,13 @@ public class SurveyActivity extends BaseActivity {
             public void onLoaded(Survey loadedSurvey) {
                 dismissProgressDialog();
                 survey = loadedSurvey;
-                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
+//                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
                 setFragment();
             }
 
             @Override
             public void onError(String message) {
                 dismissProgressDialog();
-                survey = SurveyFactory.fromJson(StubUtils.fromRawAsJsonObject(getBaseContext(), R.raw.survey_info));
-                setFragment();
             }
 
             private void dismissProgressDialog() {
@@ -244,7 +242,7 @@ public class SurveyActivity extends BaseActivity {
         Intent intent = getIntent();
         isHearing = intent.getBooleanExtra(EXTRA_IS_HEARING, false);
         surveyId = intent.getLongExtra(EXTRA_SURVEY_ID, -1);
-
+        surveyId = 1489;
         if (UrlSchemeController.hasUri(this)) {
             if (UrlSchemeController.isHearing(this)) {
                 isHearing = true;
@@ -389,7 +387,7 @@ public class SurveyActivity extends BaseActivity {
         return callback;
     }
 
-    private void doInterrupt(final Survey survey) {
+    public void doInterrupt(final Survey survey) {
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
             WebSurveyDataSource surveyDataSource = new WebSurveyDataSource(SurveyActivity.this);
             surveyDataSource.save(survey,

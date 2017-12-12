@@ -25,7 +25,7 @@ public class InputSurveyVariant extends SurveyVariant {
 
     private String text;
     private String hint;
-    private VariantValue input;
+    public VariantValue input;
     private TextView textTextView;
     private TextView inputTextView;
     private TextView stubTextView;

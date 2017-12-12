@@ -84,7 +84,7 @@ public class InfoSurveyFragmentVM  {
 //    }
 //
 //    public void setInfoComment() {
-//        String comment = String.format((getActivity().getString(R.string.comment) + ":%s "), " какой то");
+//        String commentEditText = String.format((getActivity().getString(R.string.commentEditText) + ":%s "), " какой то");
 //        infoComment.setText(comment);
 //    }
 //

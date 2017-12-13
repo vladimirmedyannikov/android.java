@@ -58,6 +58,7 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
+import ru.mos.polls.newquests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
@@ -65,7 +66,6 @@ import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
-import ru.mos.polls.quests.QuestsFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.shop.WebShopFragment;
@@ -396,9 +396,9 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_SUPPORT;
                 break;
             case NavigationMenuItem.QUESTS:
-                QuestsFragment qfr = new QuestsFragment();
+                ru.mos.polls.newquests.ui.QuestsFragment qfr = ru.mos.polls.newquests.ui.QuestsFragment.instance();
                 fr = qfr;
-                qfr.setListener(new QuestsFragment.Listener() {
+                qfr.setListener(new QuestsFragmentVM.Listener() {
 
                     @Override
                     public void onSurvey(long id) {

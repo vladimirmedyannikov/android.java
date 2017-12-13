@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        style="@style/root">
+
+        <RelativeLayout
+            android:id="@+id/root"
+            style="@style/root">
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
+                style="@style/root"
+                android:layout_marginTop="-28dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    style="@style/root"
+                    android:scrollbars="vertical" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <LinearLayout
+                android:id="@android:id/empty"
+                style="@style/item.linear"
+                android:paddingTop="@dimen/vs_xxsmall">
+
+                <TextView
+                    style="@style/text.large.gray"
+                    android:padding="@dimen/pd_xsmall"
+                    android:text="@string/empty_quest_list" />
+                <!--Социальные сети-->
+                <LinearLayout
+                    style="@style/item.linear"
+                    android:layout_marginTop="@dimen/pd_xxsmall"
+                    android:background="@drawable/background_text_field">
+
+                    <TextView
+                        android:id="@+id/subscribe"
+                        style="@style/basicIcon"
+                        android:drawableLeft="@drawable/rss"
+                        android:text="@string/do_subscribe" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <include layout="@layout/layout_internet_connection_lost" />
+    </RelativeLayout>
+</layout>

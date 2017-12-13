@@ -14,6 +14,11 @@ public class GpsRequestPermsManagerUintTest extends BaseUnitTest {
 
     @Test
     public void syncTest() {
-        Assert.assertFalse(GpsRequestPermsManager.isNeedRequestGps(appContext));
+        long currentTime = System.currentTimeMillis();
+        if (currentTime > GpsRequestPermsManager.getSyncTime(appContext)) {
+            Assert.assertFalse(GpsRequestPermsManager.isNeedRequestGps(appContext));
+        } else {
+            Assert.assertTrue(GpsRequestPermsManager.isNeedRequestGps(appContext));
+        }
     }
 }

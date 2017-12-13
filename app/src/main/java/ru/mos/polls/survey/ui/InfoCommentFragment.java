@@ -1,4 +1,4 @@
-package ru.mos.polls.infosurvey.ui;
+package ru.mos.polls.survey.ui;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
-import ru.mos.polls.infosurvey.vm.InfoCommentFragmentVM;
+import ru.mos.polls.survey.vm.InfoCommentFragmentVM;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.util.GuiUtils;
 

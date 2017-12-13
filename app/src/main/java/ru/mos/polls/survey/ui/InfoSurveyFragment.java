@@ -1,4 +1,4 @@
-package ru.mos.polls.infosurvey.ui;
+package ru.mos.polls.survey.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -156,6 +156,12 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         setLikeButtonView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(getString(R.string.poll_inform_title));
+    }
+
     public void setLikeButtonView() {
         if (survey.isPassed() || survey.isOld()) {
             setLikeTitleColor(likeTitle, true, R.color.green_light);
@@ -189,6 +195,9 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         } else {
             mSurveyButtons.setText(getString(R.string.share));
             mSurveyButtons.setEnabled(true);
+        }
+        if (survey.isOld()) {
+            mSurveyButtons.setVisibility(View.GONE);
         }
     }
 
@@ -313,6 +322,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     public void onBackPressed() {
         if (isCommentFrAdded) {
             commentFragment.onBackPressed();
+            getActivity().setTitle(getString(R.string.poll_inform_title));
             isCommentFrAdded = false;
         } else {
             interrupt();

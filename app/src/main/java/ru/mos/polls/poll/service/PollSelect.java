@@ -27,10 +27,10 @@ public class PollSelect {
         public Request(Page page, List<String> filters, Source ... sources) {
             super(page);
             this.filters = filters;
-            kindFilters = new ArrayList<>();
-            kindFilters.add(Kind.STANDART.getKind());
-            kindFilters.add(Kind.SPECIAL.getKind());
-            kindFilters.add(Kind.HEARING.getKind());
+//            kindFilters = new ArrayList<>();
+//            kindFilters.add(Kind.STANDART.getKind());
+//            kindFilters.add(Kind.SPECIAL.getKind());
+//            kindFilters.add(Kind.HEARING.getKind());
             if (sources.length > 0) {
                 this.sources = new ArrayList<>();
                 for (int i = 0; i < sources.length; i++) {

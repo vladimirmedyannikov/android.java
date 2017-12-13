@@ -1,21 +1,10 @@
-package ru.mos.polls.infosurvey.vm;
+package ru.mos.polls.survey.vm;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 
-import ru.mos.polls.R;
-import ru.mos.polls.base.component.ProgressableUIComponent;
-import ru.mos.polls.base.component.UIComponentFragmentViewModel;
-import ru.mos.polls.base.component.UIComponentHolder;
-import ru.mos.polls.databinding.FragmentInfoSurveyBinding;
-import ru.mos.polls.infosurvey.ui.InfoCommentFragment;
-import ru.mos.polls.infosurvey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.SurveyActivity;
 
 /**
  * Created by Trunks on 06.12.2017.

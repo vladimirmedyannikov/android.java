@@ -1,9 +1,8 @@
-package ru.mos.polls.infosurvey.vm;
+package ru.mos.polls.survey.vm;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import ru.mos.polls.AGApplication;
@@ -12,7 +11,7 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
-import ru.mos.polls.infosurvey.ui.InfoCommentFragment;
+import ru.mos.polls.survey.ui.InfoCommentFragment;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.variants.InputSurveyVariant;
@@ -55,6 +54,7 @@ public class InfoCommentFragmentVM extends UIComponentFragmentViewModel<InfoComm
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        getActivity().setTitle(getActivity().getString(R.string.comment));
         setSurveyAnswer();
         setCommentDescVisibility();
     }

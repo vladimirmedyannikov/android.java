@@ -21,24 +21,23 @@ public class PollSelect {
         List<String> kindFilters;
         @SerializedName("filters")
         List<String> filters;
-        @SerializedName("source")
+        @SerializedName("sources")
         List<String> sources;
 
-        public Request(Page page, List<String> filters, Source ... sources) {
+        public Request(Page page, List<Source> list) {
             super(page);
-            this.filters = filters;
-//            kindFilters = new ArrayList<>();
-//            kindFilters.add(Kind.STANDART.getKind());
-//            kindFilters.add(Kind.SPECIAL.getKind());
-//            kindFilters.add(Kind.HEARING.getKind());
-            if (sources.length > 0) {
+            if (list.size() > 0) {
                 this.sources = new ArrayList<>();
-                for (int i = 0; i < sources.length; i++) {
-                    this.sources.add(sources[i].toString());
+                for (Source source : list) {
+                    sources.add(source.toString());
                 }
             }
         }
 
+        public Request(Page page, List<String> filters, Source... sources) {
+            super(page);
+            this.filters = filters;
+        }
     }
 
     public static class Response extends GeneralResponse<Response.Result> {
@@ -53,8 +52,9 @@ public class PollSelect {
     }
 
     public enum Source {
-        OSS ("oss");
+        OSS("oss");
         public String title;
+
         Source(String title) {
             this.title = title;
         }

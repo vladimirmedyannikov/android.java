@@ -10,8 +10,7 @@ import ru.mos.polls.newquests.model.quest.SurveyOssQuest;
  *         on 12.12.17.
  */
 
-public class SurveyOssQuestVM extends PriceQuestVM<SurveyOssQuest, QuestOssPollBinding> {
-    public static final String ID_HEARING = "hearing";
+public class SurveyOssQuestVM extends QuestVM<SurveyOssQuest, QuestOssPollBinding> {
 
     public SurveyOssQuestVM(SurveyOssQuest model, QuestOssPollBinding viewDataBinding) {
         super(model, viewDataBinding);
@@ -34,8 +33,6 @@ public class SurveyOssQuestVM extends PriceQuestVM<SurveyOssQuest, QuestOssPollB
     @Override
     public void onBind(QuestOssPollBinding viewDataBinding) {
         super.onBind(viewDataBinding);
-        if (ID_HEARING.equalsIgnoreCase(model.getType())) {
-            questTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hearing, 0, 0, 0);
-        }
+        questTitle.setText(model.getTitle());
     }
 }

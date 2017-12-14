@@ -163,6 +163,13 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     public void setLikeButtonView() {
+        SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
+        SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
+        if (survey.isInterrupted()) {
+            dislikeImage.setChecked(surveyVariant1.isChecked());
+            likeImage.setChecked(surveyVariant2.isChecked());
+            return;
+        }
         if (survey.isPassed() || survey.isOld()) {
             setLikeTitleColor(likeTitle, true, R.color.green_light);
             likeImage.setChecked(true);
@@ -170,8 +177,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             setLikeTitleColor(dislikeTitle, true, R.color.red);
             dislikeImage.setChecked(true);
             dislikeImage.setClickable(false);
-            SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
-            SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
             likeCount.setVisibility(View.VISIBLE);
             dislikeCount.setVisibility(View.VISIBLE);
             likeCount.setText(String.valueOf(surveyVariant1.getVoters()));

@@ -122,11 +122,9 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
                         recyclerUIComponent.refreshUI();
                     }
                 };
-        List<String> filters = new ArrayList<>();
-        filters.add(Filter.AVAILABLE.toString());
-        filters.add(Filter.OLD.toString());
-        filters.add(Filter.PASSED.toString());
-        PollSelect.Request requestBody = new PollSelect.Request(page, filters, PollSelect.Source.OSS);
+        List<PollSelect.Source> sources = new ArrayList<>();
+        sources.add(PollSelect.Source.OSS);
+        PollSelect.Request requestBody = new PollSelect.Request(page, sources);
         Observable<PollSelect.Response> responseObservable = AGApplication.api
                 .pollselect(requestBody)
                 .subscribeOn(Schedulers.io())

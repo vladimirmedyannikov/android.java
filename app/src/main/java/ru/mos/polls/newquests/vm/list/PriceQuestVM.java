@@ -1,6 +1,7 @@
 package ru.mos.polls.newquests.vm.list;
 
 import android.databinding.ViewDataBinding;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,8 +16,10 @@ import ru.mos.polls.newquests.model.quest.BackQuest;
  */
 
 public abstract class PriceQuestVM<M extends BackQuest, VDB extends ViewDataBinding> extends QuestVM<M, VDB> {
+    @Nullable
     @BindView(R.id.points)
     public TextView priceTextView;
+    @Nullable
     @BindView(R.id.points_title)
     public TextView priceTitleTextView;
 

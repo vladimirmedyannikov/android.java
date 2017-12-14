@@ -34,6 +34,7 @@ import ru.mos.polls.survey.filter.Filter;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
 import ru.mos.polls.survey.questions.ListViewSurveyQuestion;
+import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.status.ActiveStatusProcessor;
 import ru.mos.polls.survey.status.OldStatusProcessor;
@@ -441,6 +442,21 @@ public class Survey implements Serializable {
         long current = System.currentTimeMillis();
         boolean b = current > endDate;
         return b;
+    }
+
+    public boolean isInformSurveyOk() {
+        boolean questSize = getQuestionsList().size() == 2;
+        boolean isRadioButton = getQuestionsList().get(0) instanceof RadioboxSurveyQuestion;
+        boolean isRBhas2Variants = false;
+        boolean isRBVariantsText = false;
+        if (isRadioButton) {
+            RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) getQuestionsList().get(0);
+            isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().size() == 2;
+            isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().get(0).
+
+        } else return false;
+
+        return true;
     }
 
     private boolean hasStatus(Status status) {

@@ -142,7 +142,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         if (extras != null) {
             survey = (Survey) extras.getSerializable(InfoSurveyFragment.ARG_SURVEY);
             pollId = extras.getLong(InfoSurveyFragment.ARG_POLL_ID);
-            surveyQuestion = (RadioboxSurveyQuestion) survey.getFirstNotCheckedQuestion();
+            surveyQuestion = (RadioboxSurveyQuestion) survey.getQuestionsList().get(0);
             checkboxSurveyQuestion = (CheckboxSurveyQuestion) survey.getQuestionsList().get(1);
         }
         manager = new SharedPreferencesSurveyManager(getActivity());

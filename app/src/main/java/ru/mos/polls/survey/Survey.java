@@ -33,6 +33,7 @@ import ru.mos.polls.survey.experts.DetailsExpertsActivity;
 import ru.mos.polls.survey.filter.Filter;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
+import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.ListViewSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
@@ -43,8 +44,11 @@ import ru.mos.polls.survey.status.PassedEndedStatusProcessor;
 import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
 import ru.mos.polls.survey.summary.SurveyTitleView;
+import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
+import ru.mos.polls.survey.variants.TextSurveyVariant;
 import ru.mos.polls.survey.variants.select.IntentExtraProcessor;
+import ru.mos.polls.survey.variants.values.CharVariantValue;
 
 /**
  * Весь опрос. Включает в себя вопросы.
@@ -445,18 +449,33 @@ public class Survey implements Serializable {
     }
 
     public boolean isInformSurveyOk() {
-        boolean questSize = getQuestionsList().size() == 2;
-        boolean isRadioButton = getQuestionsList().get(0) instanceof RadioboxSurveyQuestion;
-        boolean isRBhas2Variants = false;
-        boolean isRBVariantsText = false;
-        if (isRadioButton) {
-            RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) getQuestionsList().get(0);
-            isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().size() == 2;
-            isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().get(0).
-
-        } else return false;
-
-        return true;
+        boolean isSurveyWellFormed = getQuestionsList().size() == 2;
+        try {
+            boolean isRadioButton = getQuestionsList().get(0) instanceof RadioboxSurveyQuestion;
+            if (isRadioButton) {
+                RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) getQuestionsList().get(0);
+                boolean isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().size() == 2;
+                boolean isRBVariantsText  = radioboxSurveyQuestion.getVariantsList().get(0) instanceof TextSurveyVariant && radioboxSurveyQuestion.getVariantsList().get(1) instanceof TextSurveyVariant;
+                if (!isRBhas2Variants || !isRBVariantsText) return false;
+            } else return false;
+            boolean isCheckBoxButton = getQuestionsList().get(1) instanceof CheckboxSurveyQuestion;
+            if (isCheckBoxButton) {
+                CheckboxSurveyQuestion checkboxSurveyQuestion = (CheckboxSurveyQuestion) getQuestionsList().get(1);
+                boolean isCBhas2Variants = checkboxSurveyQuestion.getVariantsList().size() == 2;
+                boolean isCBVariantsInput = checkboxSurveyQuestion.getVariantsList().get(0) instanceof InputSurveyVariant && checkboxSurveyQuestion.getVariantsList().get(1) instanceof InputSurveyVariant;
+                if (isCBVariantsInput) {
+                    boolean isCBCharVarinantsInput = ((InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0)).input instanceof CharVariantValue
+                            && ((InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1)).input instanceof CharVariantValue;
+                    if (!isCBCharVarinantsInput) return false;
+                }
+                if (!isCBhas2Variants || !isCBVariantsInput) return false;
+            } else return false;
+            if (filters.size() > 0) return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return isSurveyWellFormed;
     }
 
     private boolean hasStatus(Status status) {

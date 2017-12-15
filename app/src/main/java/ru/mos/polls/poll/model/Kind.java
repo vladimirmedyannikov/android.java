@@ -27,6 +27,8 @@ public enum Kind {
             result = SPECIAL;
         } else if (MKD.getKind().equalsIgnoreCase(kind)) {
             result = MKD;
+        } else if (INFORM.getKind().equalsIgnoreCase(kind)) {
+            result = INFORM;
         }
         return result;
     }

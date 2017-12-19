@@ -8,6 +8,7 @@
         <LinearLayout
             android:id="@+id/root"
             style="@style/root"
+            android:padding="@dimen/pd_xxsmall"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingBottom="@dimen/pd_normal">

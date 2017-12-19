@@ -5,7 +5,7 @@
     android:viewportWidth="198.4">
     <group>
         <path
-            android:fillColor="@color/red"
+            android:fillColor="@color/dislike_color"
             android:pathData="M98.8,7.9c50.4,0 91.3,40.9 91.3,91.3c0,50.4 -40.9,91.3 -91.3,91.3c-50.4,0 -91.3,-40.9 -91.3,-91.3C7.5,48.8 48.4,7.9 98.8,7.9L98.8,7.9z M 0,0" />
     </group>
     <group>

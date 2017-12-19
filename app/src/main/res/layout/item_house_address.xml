@@ -6,10 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <TextView
         android:id="@+id/title"
-        style="@style/text.xlarge.gray"
-        android:textColor="@color/greyHint"
+        style="@style/text.normal.black"
         android:padding="@dimen/pd_normal"
-        android:textSize="@dimen/ts_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Адрес теста"/>

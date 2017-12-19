@@ -10,13 +10,12 @@
 
     <LinearLayout
         style="@style/item.linear.horizontal"
-
-        android:padding="@dimen/pd_xsmall">
+        android:paddingTop="@dimen/pd_xsmall"
+        android:paddingBottom="@dimen/pd_xsmall">
 
         <LinearLayout
             style="@style/item.linear"
             android:layout_weight="1"
-            android:paddingLeft="@dimen/pd_xxsmall"
             android:paddingRight="@dimen/pd_xxsmall">
 
             <TextView

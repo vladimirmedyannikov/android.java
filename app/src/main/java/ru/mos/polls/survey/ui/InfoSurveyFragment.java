@@ -174,7 +174,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             setLikeTitleColor(likeTitle, true, R.color.green_light);
             likeImage.setChecked(true);
             likeImage.setClickable(false);
-            setLikeTitleColor(dislikeTitle, true, R.color.red);
+            setLikeTitleColor(dislikeTitle, true, R.color.dislike_color);
             dislikeImage.setChecked(true);
             dislikeImage.setClickable(false);
             likeCount.setVisibility(View.VISIBLE);
@@ -257,7 +257,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                     setVariantAnswer(dislikeImage, isChecked, surveyVariant1, surveyVariant2);
                     break;
                 case R.id.info_dislike_img:
-                    setLikeTitleColor(dislikeTitle, isChecked, R.color.red);
+                    setLikeTitleColor(dislikeTitle, isChecked, R.color.dislike_color);
                     setVariantAnswer(likeImage, isChecked, surveyVariant2, surveyVariant1);
                     break;
             }

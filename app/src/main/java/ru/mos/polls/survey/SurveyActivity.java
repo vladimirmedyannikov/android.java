@@ -258,9 +258,11 @@ public class SurveyActivity extends BaseActivity {
 
     private void setFragment() {
         Fragment fragment = getSummaryFragment(survey);
-        if (survey.getKind().isMKD()) {
-            replaceFragment(getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0)));
-            return;
+        if (survey.getKind().isMKD() || survey.getKind().isInform()) {
+            if (survey.isInformSurveyOk()) {
+                replaceFragment(getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0)));
+                return;
+            }
         }
         if (!survey.getKind().isHearing() && isRedirectNeed(survey)) {
             /**

@@ -111,4 +111,6 @@
     <color name="tutorial_description">#96a5ab</color>
 
     <color name="fab_house_polls_add_color">#da4336</color>
+    <color name="electronic_house_back_color">#f2faf1</color>
+    <color name="electronic_house_hint_color">#9da29c</color>
 </resources>

@@ -28,7 +28,7 @@ public abstract class BadgeApiController {
      */
     public static void refresh(final BaseActivity elkActivity, final BadgesListener listener) {
         String url = API.getURL(
-                UrlManager.url(UrlManager.V240,
+                UrlManager.url(UrlManager.V250,
                         UrlManager.Controller.POLL_BADGES,
                         UrlManager.Methods.GET)
         );

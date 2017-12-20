@@ -43,9 +43,9 @@ import ru.mos.polls.profile.state.AddPrivatePropertyState;
 import ru.mos.polls.profile.state.EditPersonalInfoState;
 import ru.mos.polls.profile.state.NewFlatState;
 import ru.mos.polls.profile.state.PguAuthState;
+import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
-import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.AppSocial;
 
@@ -219,7 +219,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
         });
-//        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
+        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
     }
 
     public void refreshView(AgUser agUser) {
@@ -239,7 +239,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         setKidsDateLayerView(agUser);
         setSocialBindingLayerRx();
         setPguStatusView(agUser);
-//        setOwnPropertyView(agUser);  //вернуть в версии 2.5.0
+        setOwnPropertyView(agUser);  //вернуть в версии 2.5.0
     }
 
     public void setOwnPropertyView(AgUser agUser) {

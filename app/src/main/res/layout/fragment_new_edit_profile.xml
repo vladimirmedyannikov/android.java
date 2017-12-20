@@ -199,7 +199,6 @@
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:visibility="gone"
                         android:id="@+id/edit_user_private_property"
                         style="@style/linear"
                         android:layout_below="@+id/edit_user_work_card"

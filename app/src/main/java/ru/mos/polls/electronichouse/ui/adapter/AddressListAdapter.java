@@ -22,8 +22,10 @@ import ru.mos.polls.electronichouse.model.ItemAddress;
 public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.Holder>{
 
     private List<ItemAddress> addresses;
+    private MainActivity mainActivity;
 
     public AddressListAdapter(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
         addresses = ItemAddress.getDefault(mainActivity);
     }
 
@@ -36,7 +38,12 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     @Override
     public void onBindViewHolder(AddressListAdapter.Holder holder, int position) {
         holder.title.setText(addresses.get(position).getTitle());
-        holder.title.setOnClickListener(v -> addresses.get(position).doAction());
+        holder.value.setText(addresses.get(position).getValue());
+        holder.textContainer.setOnClickListener(v -> addresses.get(position).doAction());
+    }
+
+    public void refreshData() {
+        addresses = ItemAddress.getDefault(mainActivity);
     }
 
     @Override
@@ -47,6 +54,10 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     class Holder extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.value)
+        TextView value;
+        @BindView(R.id.text_container)
+        View textContainer;
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

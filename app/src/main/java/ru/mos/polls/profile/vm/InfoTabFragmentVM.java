@@ -93,7 +93,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         list.add(new UserInfo("адрес проживания", residenceFlat));
         list.add(new UserInfo("род деятельности", AgSocialStatus.fromPreferences(getActivity().getBaseContext()).get(saved.getAgSocialStatus()).getTitle()));
         list.add(new UserInfo("адрес работы/учебы", saved.getWork().getAddressTitle(getFragment().getContext())));
-//        list.add(new UserInfo("адреса собственности", saved.getOwnPropertyList(getActivity()).size() > 0 ? "Указаны" : "Не указаны"));  //вернуть в версии 2.5.0
+        list.add(new UserInfo("адреса собственности", saved.getOwnPropertyList(getActivity()).size() > 0 ? "Указаны" : "Не указаны"));  //вернуть в версии 2.5.0
         String pguConnected = saved.isPguConnected() ? "Подключено" : "Не указана";
         list.add(new UserInfo("связь с mos.ru", pguConnected));
         UserInfoAdapter userStatisticsAdapter = new UserInfoAdapter(onItemClickListener, list);

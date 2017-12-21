@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,8 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     AppCompatTextView infoDesc;
     @BindView(R.id.info_survey_comment)
     AppCompatTextView infoComment;
-
+    @BindView(R.id.info_survey_apartament_number)
+    AppCompatTextView infoApartamentNumber;
     @BindView(R.id.info_like_img)
     AppCompatCheckBox likeImage;
 
@@ -192,6 +194,13 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                 infoComment.setText(String.format(getString(R.string.your_comment), charVariantValue.getValue()));
             }
         }
+        InputSurveyVariant apNumSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
+        if (commentSurveyVariant.isChecked()) {
+            CharVariantValue charVariantValue = (CharVariantValue) apNumSurveyVariant.input;
+            if (!charVariantValue.isEmpty()) {
+                infoApartamentNumber.setText(String.format(getString(R.string.apartament_number_answer), charVariantValue.getValue()));
+            }
+        }
     }
 
     public void setShareButtonView() {
@@ -221,7 +230,8 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                     public void onNext(Object o) {
                         if (o instanceof Events.InfoSurveyEvents) {
                             Events.InfoSurveyEvents events = (Events.InfoSurveyEvents) o;
-                            infoComment.setText(String.format(getString(R.string.your_comment), events.getComment()));
+                            infoComment.setText(TextUtils.isEmpty(events.getComment()) ? "" : String.format(getString(R.string.your_comment), events.getComment()));
+                            infoApartamentNumber.setText(TextUtils.isEmpty(events.getNumber()) ? "" : String.format(getString(R.string.apartament_number_answer), events.getNumber()));
                             InputSurveyVariant numberSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
                             InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
                             setCharValue(numberSurveyVariant, events.getNumber());

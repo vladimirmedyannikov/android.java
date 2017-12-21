@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mask="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            style="@style/root.padding"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/root"
+                style="@style/linear"
+                android:paddingTop="@dimen/pd_normal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ru.mos.polls.maskedettext.MaskedEditText
+                        android:id="@+id/et_code_country"
+                        style="@style/input"
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="@dimen/pd_xxsmall"
+                        android:background="#00000000"
+                        android:inputType="phone"
+                        android:textColor="@color/disable_code_country"
+                        mask:char_representation="#"
+                        mask:mask="+#" />
+
+                    <ru.mos.polls.maskedettext.MaskedEditText
+                        android:id="@+id/etLogin"
+                        style="@style/input"
+                        android:inputType="phone"
+                        mask:char_representation="#"
+                        mask:mask="### ### ####"
+                        mask:mask_fill="" />
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/password"
+                    style="@style/edit_profile.input"
+                    android:hint="@string/password_or_code"
+                    android:paddingTop="@dimen/pd_normal" />
+
+                <TextView
+                    android:id="@+id/tvError"
+                    style="@style/text.center.red"
+                    android:layout_margin="@dimen/pd_xxsmall" />
+
+                <TextView
+                    style="@style/text"
+                    android:layout_marginRight="4dp"
+                    android:paddingTop="@dimen/pd_normal"
+                    android:text="@string/auth_description"
+                    android:textColor="@color/offer_text" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

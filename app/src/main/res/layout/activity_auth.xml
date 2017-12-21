@@ -14,9 +14,9 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:paddingTop="@dimen/pd_normal"
             android:id="@+id/topContainer"
-            style="@style/linear">
+            style="@style/linear"
+            android:paddingTop="@dimen/pd_normal">
 
             <include
                 layout="@layout/layout_auth_logo"
@@ -35,11 +35,11 @@
                 <ru.mos.polls.maskedettext.MaskedEditText
                     android:id="@+id/et_code_country"
                     style="@style/input"
-                    android:background="#00000000"
-                    android:textColor="@color/disable_code_country"
                     android:layout_width="wrap_content"
                     android:layout_marginRight="@dimen/pd_xxsmall"
+                    android:background="#00000000"
                     android:inputType="phone"
+                    android:textColor="@color/disable_code_country"
                     mask:char_representation="#"
                     mask:mask="+#" />
 
@@ -51,13 +51,6 @@
                     mask:mask="### ### ####"
                     mask:mask_fill="" />
             </LinearLayout>
-
-            <!--<EditText-->
-            <!--android:id="@+id/etLogin"-->
-            <!--style="@style/input.phone"-->
-            <!--android:hint="@string/ag_hint_phone_email"-->
-            <!--android:imeOptions="actionNext" />-->
-
 
             <EditText
                 android:id="@+id/etPassword"
@@ -101,10 +94,16 @@
             <include layout="@layout/layout_empty_view" />
 
             <TextView
-                android:id="@+id/help"
+                android:id="@+id/registered_in_service"
                 style="@style/text.link.green"
                 android:layout_marginBottom="@dimen/pd_xxsmall"
                 android:layout_marginTop="@dimen/pd_xxlarge"
+                android:text="@string/registered_in_service" />
+
+            <TextView
+                android:id="@+id/help"
+                style="@style/text.link.green"
+                android:layout_marginBottom="@dimen/pd_xxsmall"
                 android:text="@string/help" />
 
         </LinearLayout>

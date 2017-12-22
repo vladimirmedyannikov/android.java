@@ -44,6 +44,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
 
     public void refreshData() {
         addresses = ItemAddress.getDefault(mainActivity);
+        notifyDataSetChanged();
     }
 
     @Override

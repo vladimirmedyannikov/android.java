@@ -24,17 +24,18 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:onClick="@{()-> listener.onIconDeleteClick(viewModel.flatId)}"
-            android:padding="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_xxsmall"
+            android:paddingBottom="@dimen/pd_xxsmall"
             app:srcCompat="@drawable/ic_inr_cross_circle" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/address_title"
             style="@style/text.normal.black"
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/pd_xxxsmall"
             android:layout_toLeftOf="@+id/address_icon_delete"
             android:layout_toStartOf="@+id/address_icon_delete"
-            android:padding="@dimen/pd_xxsmall"
+            android:paddingTop="@dimen/pd_xxsmall"
+            android:paddingBottom="@dimen/pd_xxsmall"
             android:text="@{viewModel.propertyAddress}" />
     </RelativeLayout>
 </layout>

@@ -49,17 +49,18 @@
                     android:id="@+id/password"
                     style="@style/edit_profile.input"
                     android:hint="@string/password_or_code"
+                    android:inputType="numberDecimal"
                     android:paddingTop="@dimen/pd_normal" />
 
                 <TextView
                     android:id="@+id/tvError"
                     style="@style/text.center.red"
-                    android:layout_margin="@dimen/pd_xxsmall" />
+                    android:paddingTop="@dimen/pd_xxxsmall" />
 
                 <TextView
-                    style="@style/text"
+                    style="@style/text.normal"
                     android:layout_marginRight="4dp"
-                    android:paddingTop="@dimen/pd_normal"
+                    android:paddingTop="@dimen/pd_xxxsmall"
                     android:text="@string/auth_description"
                     android:textColor="@color/offer_text" />
             </LinearLayout>

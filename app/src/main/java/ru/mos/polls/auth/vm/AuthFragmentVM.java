@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.TextView;
@@ -59,6 +60,11 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
         edCodeCountry.setText("7");
         tvError = binding.tvError;
         progressable = new ProgressableUIComponent();
+        Bundle bundle = getFragment().getArguments();
+        if (bundle != null) {
+            phoneNumber.setText(bundle.getString(AuthFragment.ARG_PHONE));
+        }
+        GuiUtils.showKeyboard(phoneNumber);
     }
 
     @Override
@@ -145,7 +151,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
         } else {
             intent = new Intent(getActivity(), MainActivity.class);
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
 

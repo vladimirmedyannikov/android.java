@@ -15,8 +15,8 @@ import ru.mos.polls.base.ui.CommonToolbarFragment;
 public class AuthState extends ContentBelowToolbarState<AuthState.Params> {
 
 
-    public AuthState() {
-        super(new Params());
+    public AuthState(String phone) {
+        super(new Params(phone));
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AuthState extends ContentBelowToolbarState<AuthState.Params> {
 
     @Override
     protected JugglerFragment onConvertContent(AuthState.Params params, @Nullable JugglerFragment fragment) {
-        return new AuthFragment();
+        return AuthFragment.newInstance(params.phone);
     }
 
     @Override
@@ -39,7 +39,11 @@ public class AuthState extends ContentBelowToolbarState<AuthState.Params> {
         return CommonToolbarFragment.createBack();
     }
 
-    static class Params extends State.Params{
+    static class Params extends State.Params {
+        String phone;
 
+        public Params(String phone) {
+            this.phone = phone;
+        }
     }
 }

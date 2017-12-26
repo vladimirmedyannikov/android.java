@@ -210,7 +210,7 @@ public class AgAuthActivity extends AuthActivity {
 
     @OnClick(R.id.registered_in_service)
     public void authInService() {
-        navigateTo().state(Add.newActivity(new AuthState(), BaseActivity.class));
+        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), BaseActivity.class));
     }
 
     @OnEditorAction(R.id.etPassword)

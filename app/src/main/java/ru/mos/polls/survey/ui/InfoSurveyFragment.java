@@ -187,18 +187,19 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     public void setSurveyAnswer() {
-        InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
-        if (commentSurveyVariant.isChecked()) {
-            CharVariantValue charVariantValue = (CharVariantValue) commentSurveyVariant.input;
-            if (!charVariantValue.isEmpty()) {
-                infoComment.setText(String.format(getString(R.string.your_comment), charVariantValue.getValue()));
+        if (!survey.isActive()) {
+            InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
+            if (commentSurveyVariant.isChecked()) {
+                CharVariantValue charVariantValue = (CharVariantValue) commentSurveyVariant.input;
+                if (!charVariantValue.isEmpty()) {
+                    infoComment.setText(String.format(getString(R.string.your_comment), charVariantValue.getValue()));
+                }
             }
-        }
-        InputSurveyVariant apNumSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
-        if (commentSurveyVariant.isChecked()) {
-            CharVariantValue charVariantValue = (CharVariantValue) apNumSurveyVariant.input;
-            if (!charVariantValue.isEmpty()) {
-                infoApartamentNumber.setText(String.format(getString(R.string.apartament_number_answer), charVariantValue.getValue()));
+            InputSurveyVariant apNumSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
+            if (commentSurveyVariant.isChecked()) {
+                CharVariantValue charVariantValue = (CharVariantValue) apNumSurveyVariant.input;
+                String appNum = !charVariantValue.isEmpty() ? charVariantValue.getValue() : "-";
+                infoApartamentNumber.setText(String.format(getString(R.string.apartament_number_answer), appNum));
             }
         }
     }
@@ -281,9 +282,16 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         surveyVariant2.setChecked(!isChecked);
     }
 
+    public void checkComment() {
+        if (TextUtils.isEmpty(infoComment.getText())) {
+            setCharValue((InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1), "-");
+        }
+    }
+
     @OnClick(R.id.shareButton)
     public void onShareButtonClick() {
         if (survey.isActive() || survey.isInterrupted()) {
+            checkComment();
             saveAnswer();
             manager.fill(survey);
             callback.onSurveyDone(survey);

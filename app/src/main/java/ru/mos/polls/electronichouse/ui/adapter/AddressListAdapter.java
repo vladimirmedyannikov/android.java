@@ -1,5 +1,6 @@
 package ru.mos.polls.electronichouse.ui.adapter;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import ru.mos.polls.electronichouse.model.ItemAddress;
  *         on 01.12.17.
  */
 
-public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.Holder>{
+public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.Holder> {
 
     private List<ItemAddress> addresses;
     private MainActivity mainActivity;
@@ -38,8 +39,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     @Override
     public void onBindViewHolder(AddressListAdapter.Holder holder, int position) {
         holder.title.setText(addresses.get(position).getTitle());
-        holder.value.setText(addresses.get(position).getValue());
-        holder.textContainer.setOnClickListener(v -> addresses.get(position).doAction());
+        holder.check.setVisibility(addresses.get(position).isChecked() ? View.VISIBLE : View.GONE);
     }
 
     public void refreshData() {
@@ -55,10 +55,11 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     class Holder extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
         TextView title;
-        @BindView(R.id.value)
-        TextView value;
+        @BindView(R.id.ic_check)
+        AppCompatImageView check;
         @BindView(R.id.text_container)
         View textContainer;
+
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

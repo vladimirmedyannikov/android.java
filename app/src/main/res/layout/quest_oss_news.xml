@@ -20,7 +20,7 @@
                     android:id="@+id/title"
                     style="@style/quest_title"
                     android:layout_gravity="center_vertical"
-                    android:drawableLeft="@drawable/icons_white"
+                    android:drawableLeft="@drawable/icons_green"
                     android:drawablePadding="@dimen/pd_xxsmall"
                     android:textColor="@color/green_light" />
             </LinearLayout>

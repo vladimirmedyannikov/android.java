@@ -10,7 +10,7 @@
         android:id="@+id/text_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/pd_normal">
+        android:padding="@dimen/pd_xsmall">
 
         <TextView
             android:id="@+id/title"
@@ -32,9 +32,4 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:layout_below="@+id/text_container"
-        android:background="@color/gray_light"/>
 </RelativeLayout>

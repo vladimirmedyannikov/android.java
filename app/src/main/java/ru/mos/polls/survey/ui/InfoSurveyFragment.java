@@ -75,6 +75,8 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     AppCompatTextView infoTitle;
     @BindView(R.id.info_survey_description)
     AppCompatTextView infoDesc;
+    @BindView(R.id.info_survey_more_description)
+    AppCompatTextView infoDescMore;
     @BindView(R.id.info_survey_comment)
     AppCompatTextView infoComment;
     @BindView(R.id.info_survey_apartament_number)
@@ -88,6 +90,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     AppCompatTextView likeTitle;
     @BindView(R.id.dislike_title)
     AppCompatTextView dislikeTitle;
+
 
     @BindView(R.id.shareButton)
     Button mSurveyButtons;
@@ -151,11 +154,28 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         setCheckboxDrawable();
         setInfoTitle();
         setInfoDesc();
+        setInfoDescMore();
         subscribeEventsBus();
         setShareButtonView();
         setListeners();
         setSurveyAnswer();
         setLikeButtonView();
+    }
+
+    public void setInfoDescMore() {
+        if (!TextUtils.isEmpty(survey.getTextFullHtml())) {
+            infoDescMore.setVisibility(View.VISIBLE);
+            infoDescMore.setOnClickListener(v -> {
+                String descMore = infoDescMore.getText().toString();
+                if (descMore.equalsIgnoreCase(getString(R.string.title_more))) {
+                    infoDescMore.setText(getText(R.string.title_less));
+                    infoDesc.setText(Html.fromHtml(survey.getTextFullHtml()));
+                } else {
+                    infoDescMore.setText(getText(R.string.title_more));
+                    setInfoDesc();
+                }
+            });
+        }
     }
 
     @Override
@@ -207,6 +227,9 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     public void setShareButtonView() {
         if (survey.isActive() || survey.isInterrupted()) {
             mSurveyButtons.setText(getString(R.string.result_innovation));
+            if (survey.isActive()) {
+                mSurveyButtons.setVisibility(View.GONE);
+            }
         } else {
             mSurveyButtons.setText(getString(R.string.share));
             mSurveyButtons.setEnabled(true);
@@ -262,6 +285,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
             SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
             SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
             mSurveyButtons.setEnabled(true);
+            mSurveyButtons.setVisibility(View.VISIBLE);
             switch (buttonView.getId()) {
                 case R.id.info_like_img:
                     setLikeTitleColor(likeTitle, isChecked, R.color.green_light);

@@ -18,7 +18,7 @@
             <LinearLayout
                 android:id="@+id/root"
                 style="@style/linear"
-                android:paddingTop="@dimen/pd_normal">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -830,7 +830,7 @@
     <string name="poll_inform_title">Информирование</string>
     <string name="registered_in_service">Есть регистрация в сервисах Москвы?</string>
     <string name="password_or_code">Пароль (код)</string>
-    <string name="auth_description">Если вы уже получали код или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль (код) для входа.Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
+    <string name="auth_description">Если вы уже получали код или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль (код) для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
 </resources>

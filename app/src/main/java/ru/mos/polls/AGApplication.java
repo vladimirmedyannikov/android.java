@@ -150,7 +150,7 @@ public class AGApplication extends MultiDexApplication {
 
         API.registerPush(this);
 
-        API.setBuildVersionName(UrlManager.V241);
+        API.setBuildVersionName(UrlManager.V250);
         VolleyLog.setIsDebug(!BuildConfig.BUILD_TYPE.equals("release"));
 
         GCMBroadcastReceiver.addAction("promo", getPromoAction());

@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
-import me.ilich.juggler.states.VoidParams;
+import me.ilich.juggler.states.State;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
@@ -14,24 +14,35 @@ import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
  * Created by Trunks on 06.06.2017.
  */
 
-public class EditProfileState extends ContentBelowToolbarState<VoidParams> {
-    public EditProfileState(@Nullable VoidParams params) {
-        super(params);
+public class EditProfileState extends ContentBelowToolbarState<EditProfileState.Params> {
+    public EditProfileState(int scrollCoord) {
+        super(new Params(scrollCoord));
     }
 
     @Override
-    protected JugglerFragment onConvertContent(VoidParams params, @Nullable JugglerFragment fragment) {
-        return EditProfileFragment.newInstance();
+    protected JugglerFragment onConvertContent(EditProfileState.Params params, @Nullable JugglerFragment fragment) {
+        return EditProfileFragment.newInstance(params.scrollCoord);
     }
 
     @Override
-    protected JugglerFragment onConvertToolbar(VoidParams params, @Nullable JugglerFragment fragment) {
+    protected JugglerFragment onConvertToolbar(EditProfileState.Params params, @Nullable JugglerFragment fragment) {
         return CommonToolbarFragment.createBack();
     }
 
     @Nullable
     @Override
-    public String getTitle(Context context, VoidParams params) {
+    public String getTitle(Context context, EditProfileState.Params params) {
         return context.getString(R.string.edit_profile);
+    }
+
+    /**
+     * координата на которой были на экране {@link ru.mos.polls.profile.vm.InfoTabFragmentVM}
+     */
+    static class Params extends State.Params {
+        int scrollCoord;
+
+        public Params(int scrollCoord) {
+            this.scrollCoord = scrollCoord;
+        }
     }
 }

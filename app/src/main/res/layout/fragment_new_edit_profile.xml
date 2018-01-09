@@ -21,7 +21,9 @@
             android:id="@+id/root"
             style="@style/root">
 
-            <android.support.v4.widget.NestedScrollView style="@style/linear">
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nestedScrollViewEditProfile"
+                style="@style/linear">
 
                 <RelativeLayout style="@style/linear">
 

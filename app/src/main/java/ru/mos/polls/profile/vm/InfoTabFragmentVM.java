@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.annotation.DrawableRes;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -43,6 +44,8 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     Observable<List<AppSocial>> socialListObservable;
     AppCompatTextView percentFilledTitle;
     AppCompatTextView socialBindingStatus;
+    LinearLayout topContainer;
+    NestedScrollView nestedScrollView;
     ProgressBar percentFilledPb;
 
     public InfoTabFragmentVM(InfoTabFragment fragment, FragmentInfoTabProfileBinding binding) {
@@ -54,7 +57,7 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     public void showDialogEditProfile() {
         GuiUtils.displayYesOrNotDialog(getFragment().getContext(),
                 R.string.title_dialog_edit_profile,
-                (dialog, which) -> editUserInfo(), null);
+                (dialog, which) -> editUserInfo(true), null);
     }
 
     @Override
@@ -71,6 +74,8 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
         percentFilledTitle = binding.agUserProfilePercentFillTitle;
         socialBindingStatus = binding.agUserSocialValue;
         percentFilledPb = binding.agUserProfileProgressbar;
+        nestedScrollView = binding.root;
+        topContainer = binding.topContainer;
         saved = new AgUser(getActivity());
         super.initialize(binding);
         binding.setClickListener(this);
@@ -178,6 +183,18 @@ public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment,
     @Override
     public void makePhoto() {
         showChooseMediaDialog();
+    }
+
+    public void editUserInfo(boolean withScroll) {
+        if (withScroll) {
+            /**
+             * отрезаем блок с автатаркой пользователя, для вычисления текущей позиции для скрола
+             */
+            int currCoord = nestedScrollView.getScrollY() - topContainer.getMeasuredHeight();
+            AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.EDIT_USER_INFO, currCoord < 0 ? 0 : currCoord));
+        } else {
+            editUserInfo();
+        }
     }
 
     @Override

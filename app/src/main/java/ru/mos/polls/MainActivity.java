@@ -25,7 +25,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.states.VoidParams;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
@@ -223,7 +222,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.ProfileEvents action = (Events.ProfileEvents) o;
                         switch (action.getEventType()) {
                             case Events.ProfileEvents.EDIT_USER_INFO:
-                                navigateTo().state(Add.newActivity(new EditProfileState(VoidParams.instance()), BaseActivity.class));
+                                navigateTo().state(Add.newActivity(new EditProfileState(action.getUserInfoScrollCoord()), BaseActivity.class));
                                 break;
                         }
                     }

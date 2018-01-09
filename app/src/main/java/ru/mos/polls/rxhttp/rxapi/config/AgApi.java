@@ -141,6 +141,6 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLL + "/" + Api.Methods.SET_SOURCES)
     Observable<EmptyResponse> setSources(@Body SourcesSet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_0 + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET)
+    @POST("/" + AgApi.Api.Versions.V_2_5_0 + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET)
     Observable<PolltaskGet.Response> getPolltasks(@Body PolltaskGet.Request body);
 }

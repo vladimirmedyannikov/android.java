@@ -8,7 +8,7 @@ public enum Kind {
     HEARING_PREVIEW("hearing_preview", "публичное слушание", R.color.public_poll),
     HEARING("hearing", "публичное слушание", R.color.greenText),
     SPECIAL("special", "специальное голосование", R.color.special_poll),
-    INFORM("inform", "информирование", R.color.special_poll),
+    INFORM("informer", "информирование", R.color.special_poll),
     MKD("mkd", "информирование", R.color.special_poll);
 
     public String kind;

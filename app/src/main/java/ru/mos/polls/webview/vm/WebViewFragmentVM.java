@@ -1,9 +1,14 @@
 package ru.mos.polls.webview.vm;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -69,6 +74,26 @@ public class WebViewFragmentVM extends FragmentViewModel<WebViewFragment, Fragme
                 super.onPageFinished(view, url);
                 setProgress(false);
             }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                final Uri uri = Uri.parse(url);
+                return handleUri(uri);
+            }
+
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                final Uri uri = request.getUrl();
+                return handleUri(uri);
+            }
+
+            private boolean handleUri(final Uri uri) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                getActivity().startActivity(intent);
+                return true;
+            }
         });
     }
 
@@ -99,8 +124,8 @@ public class WebViewFragmentVM extends FragmentViewModel<WebViewFragment, Fragme
     public void setWebViewSetting() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(false);
+        webSettings.setSupportZoom(false);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 

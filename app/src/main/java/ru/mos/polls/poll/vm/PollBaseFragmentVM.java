@@ -13,6 +13,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
@@ -77,7 +78,12 @@ public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<Po
                 };
         List<String> filters = new ArrayList<>();
         addFilters(filters);
-        PollSelect.Request requestBody = new PollSelect.Request(page, filters);
+        List<String> kindFilter = new ArrayList<>();
+        kindFilter.add(Kind.STANDART.getKind());
+        kindFilter.add(Kind.HEARING.getKind());
+        kindFilter.add(Kind.SPECIAL.getKind());
+        kindFilter.add(Kind.HEARING_PREVIEW.getKind());
+        PollSelect.Request requestBody = new PollSelect.Request(page, filters, kindFilter);
         Observable<PollSelect.Response> responseObservable = AGApplication.api
                 .pollselect(requestBody)
                 .subscribeOn(Schedulers.io())

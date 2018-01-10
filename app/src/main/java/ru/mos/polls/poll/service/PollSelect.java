@@ -34,9 +34,10 @@ public class PollSelect {
             }
         }
 
-        public Request(Page page, List<String> filters, Source... sources) {
+        public Request(Page page, List<String> filters, List<String> kindFilters) {
             super(page);
             this.filters = filters;
+            this.kindFilters = kindFilters;
         }
     }
 

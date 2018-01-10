@@ -767,7 +767,7 @@
     <string name="code_confirm_send">Подтвердить</string>
     <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения</string>
     <string name="help_phone_not_correct">Неправильный номер?</string>
-    <string name="hint_sms_sent">Мы отправили SMS с кодом на ваш номер</string>
+    <string name="hint_sms_sent">Мы отправили SMS с паролем на ваш номер</string>
     <string name="tutorial_cancel">Завершить</string>
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
@@ -829,8 +829,8 @@
     <string name="your_comment" formatted="false">Ваш комментарий: %s</string>
     <string name="poll_inform_title">Информирование</string>
     <string name="registered_in_service">Есть регистрация в сервисах Москвы?</string>
-    <string name="password_or_code">Пароль (код)</string>
-    <string name="auth_description">Если вы уже получали код или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль (код) для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
+    <string name="password_or_code">Пароль</string>
+    <string name="auth_description">Если вы уже получали пароль или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
 </resources>

@@ -99,7 +99,6 @@ public class InputSurveyVariant extends SurveyVariant {
 
     @Override
     public void onClick(Activity context, Fragment fragment, boolean checked) {
-
         if (checked) {
             input.showEditor(context, new VariantValue.Listener() {
                 @Override
@@ -115,8 +114,9 @@ public class InputSurveyVariant extends SurveyVariant {
                     getListener().onCancel();
                 }
             });
+        } else {
+            getListener().onClicked();
         }
-
     }
 
     @Override

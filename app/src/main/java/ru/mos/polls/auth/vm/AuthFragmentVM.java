@@ -99,7 +99,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
             return false;
         }
         if (!checkPassword()) {
-            Toast.makeText(getActivity(), "Введите пароль или код", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Введите пароль", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

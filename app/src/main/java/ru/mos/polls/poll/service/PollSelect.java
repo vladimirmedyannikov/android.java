@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
@@ -23,21 +22,41 @@ public class PollSelect {
         List<String> filters;
         @SerializedName("sources")
         List<String> sources;
+        @SerializedName("sources_exclude")
+        List<String> excludeSources;
 
-        public Request(Page page, List<Source> list) {
+        public Request(Page page, List<Source> sources, List<Source> excludeSources) {
             super(page);
-            if (list.size() > 0) {
+            if (sources != null && sources.size() > 0) {
                 this.sources = new ArrayList<>();
-                for (Source source : list) {
-                    sources.add(source.toString());
+                for (Source source : sources) {
+                    this.sources.add(source.toString());
+                }
+            }
+            if (excludeSources != null && excludeSources.size() > 0) {
+                this.excludeSources = new ArrayList<>();
+                for (Source excludeSource : excludeSources) {
+                    this.excludeSources.add(excludeSource.toString());
                 }
             }
         }
 
-        public Request(Page page, List<String> filters, List<String> kindFilters) {
+        public Request(Page page, List<String> filters, List<String> kindFilters, List<Source> sources, List<Source> excludeSources) {
             super(page);
             this.filters = filters;
             this.kindFilters = kindFilters;
+            if (sources != null && sources.size() > 0) {
+                this.sources = new ArrayList<>();
+                for (Source source : sources) {
+                    this.sources.add(source.toString());
+                }
+            }
+            if (excludeSources != null && excludeSources.size() > 0) {
+                this.excludeSources = new ArrayList<>();
+                for (Source excludeSource : excludeSources) {
+                    this.excludeSources.add(excludeSource.toString());
+                }
+            }
         }
     }
 

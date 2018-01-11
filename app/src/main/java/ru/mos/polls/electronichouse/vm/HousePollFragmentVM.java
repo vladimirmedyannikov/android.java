@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.ilich.juggler.change.Add;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
@@ -24,7 +23,6 @@ import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentHousePollBinding;
 import ru.mos.polls.electronichouse.ui.fragment.HousePollFragment;
-import ru.mos.polls.poll.model.Filter;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
@@ -124,7 +122,7 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
                 };
         List<PollSelect.Source> sources = new ArrayList<>();
         sources.add(PollSelect.Source.OSS);
-        PollSelect.Request requestBody = new PollSelect.Request(page, sources);
+        PollSelect.Request requestBody = new PollSelect.Request(page, sources, null);
         Observable<PollSelect.Response> responseObservable = AGApplication.api
                 .pollselect(requestBody)
                 .subscribeOn(Schedulers.io())

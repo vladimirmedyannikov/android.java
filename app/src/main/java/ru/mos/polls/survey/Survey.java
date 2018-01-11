@@ -55,6 +55,18 @@ import ru.mos.polls.survey.variants.values.CharVariantValue;
  */
 public class Survey implements Serializable {
 
+    public static final int CODE_ERROR_SURVEY_FILLED_LESS_ANSWERS = 15191;
+    public static final int CODE_ERROR_SURVEY_FILLED_MORE_ANSWERS = 15192;
+    public static final int CODE_ERROR_SURVEY_FILLED_PARENT_ANSWERS = 15193;
+    public static final int CODE_ERROR_SURVEY_FILLED_ONLY_ONE_ANSWER = 15194;
+    public static final int CODE_ERROR_SURVEY_FILLED_EMPTY_ANSWER = 15195;
+    public static final int CODE_ERROR_SURVEY_FILLED_NOT_USER_ANSWER = 15197;
+    public static final int CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_LESS = 15158;
+    public static final int CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_MORE = 15159;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_LESS = 15160;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_MORE = 15161;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_IS_LESS_THAN_START_VALUE = 15162;
+
     /**
      * Айдишник опроса
      */

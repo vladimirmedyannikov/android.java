@@ -270,6 +270,18 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                 case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
                 case HearingApiController.ERROR_PGU_USER_DATA:
                     break;
+                case Survey.CODE_ERROR_SURVEY_FILLED_EMPTY_ANSWER:
+                case Survey.CODE_ERROR_SURVEY_FILLED_LESS_ANSWERS:
+                case Survey.CODE_ERROR_SURVEY_FILLED_MORE_ANSWERS:
+                case Survey.CODE_ERROR_SURVEY_FILLED_NOT_USER_ANSWER:
+                case Survey.CODE_ERROR_SURVEY_FILLED_ONLY_ONE_ANSWER:
+                case Survey.CODE_ERROR_SURVEY_FILLED_PARENT_ANSWERS:
+                case Survey.CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_LESS:
+                case Survey.CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_MORE:
+                case Survey.CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_LESS:
+                case Survey.CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_MORE:
+                case Survey.CODE_ERROR_SURVEY_FILLED_END_VALUE_IS_LESS_THAN_START_VALUE:
+                    break;
                 default:
                     Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
             }

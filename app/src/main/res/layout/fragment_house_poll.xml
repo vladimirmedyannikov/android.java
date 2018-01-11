@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout style="@style/root">
 
@@ -8,7 +8,7 @@
             android:id="@+id/progress"
             style="@style/item"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/root"
@@ -22,7 +22,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/empty_housepolls_hint"
                 android:textColor="@color/gray_light"
-                android:textSize="@dimen/ts_normal" />
+                android:textSize="@dimen/ts_normal"/>
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipe"
@@ -30,7 +30,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"
-                    style="@style/root" />
+                    style="@style/root"/>
             </android.support.v4.widget.SwipeRefreshLayout>
 
             <android.support.design.widget.FloatingActionButton
@@ -40,13 +40,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="30dp"
+                android:visibility="gone"
                 app:backgroundTint="@color/fab_house_polls_add_color"
                 app:borderWidth="0dp"
                 app:elevation="6dp"
                 app:fabSize="normal"
-                app:srcCompat="@drawable/fab_compat_src" />
+                app:srcCompat="@drawable/fab_compat_src"/>
         </RelativeLayout>
 
-        <include layout="@layout/layout_internet_connection_lost" />
+        <include layout="@layout/layout_internet_connection_lost"/>
     </RelativeLayout>
 </layout>

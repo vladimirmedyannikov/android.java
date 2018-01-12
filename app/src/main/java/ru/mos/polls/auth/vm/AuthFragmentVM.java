@@ -94,7 +94,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
     }
 
     public boolean checkLoginAndPassword() {
-        if (!checkCodeText() && checkPhoneText()) {
+        if (!checkPhoneText()) {
             Toast.makeText(getActivity(), "Введите номер телефона", Toast.LENGTH_SHORT).show();
             return false;
         }

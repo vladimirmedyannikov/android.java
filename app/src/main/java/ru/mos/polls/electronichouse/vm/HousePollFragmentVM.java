@@ -2,8 +2,10 @@ package ru.mos.polls.electronichouse.vm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
@@ -19,7 +21,6 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
-import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentHousePollBinding;
 import ru.mos.polls.electronichouse.ui.fragment.HousePollFragment;
@@ -27,7 +28,8 @@ import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.webview.state.WebViewState;
+import ru.mos.polls.util.GuiUtils;
+import ru.mos.polls.util.UrlHelper;
 
 
 public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollFragment, FragmentHousePollBinding, PollAdapter> {
@@ -133,6 +135,11 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
     @SuppressWarnings("newApi")
     @OnClick(R.id.fab_add_house_poll)
     void addClick(View v) {
-        getFragment().navigateTo(new WebViewState(), BaseActivity.class);
+//        getFragment().navigateTo(new WebViewState(), BaseActivity.class);
+        GuiUtils.displayYesOrNotDialog(getActivity(), getActivity().getString(R.string.go_to_house_poll_desc), (DialogInterface.OnClickListener) (dialog, which) -> {
+            Uri uri = Uri.parse(UrlHelper.getMainUrl());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            getActivity().startActivity(intent);
+        }, null);
     }
 }

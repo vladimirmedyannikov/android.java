@@ -21,6 +21,7 @@
                     android:id="@+id/info_number_app"
                     style="@style/edit_profile.input"
                     android:hint="Номер квартиры"
+                    android:digits="0123456789"
                     android:inputType="numberDecimal" />
 
             </android.support.design.widget.TextInputLayout>

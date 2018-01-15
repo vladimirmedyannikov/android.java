@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
-
 import com.appsflyer.AppsFlyerLib;
 
 import java.util.List;
@@ -188,8 +187,8 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         SurveyVariant surveyVariant1 = surveyQuestion.getVariantsList().get(0);
         SurveyVariant surveyVariant2 = surveyQuestion.getVariantsList().get(1);
         if (survey.isInterrupted()) {
-            dislikeImage.setChecked(surveyVariant1.isChecked());
-            likeImage.setChecked(surveyVariant2.isChecked());
+            likeImage.setChecked(surveyVariant1.isChecked());
+            dislikeImage.setChecked(surveyVariant2.isChecked());
             return;
         }
         if (survey.isPassed() || survey.isOld()) {

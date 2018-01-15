@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
+import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
@@ -161,6 +162,13 @@ public class SurveyActivity extends BaseActivity {
         }
     }
 
+    /**
+     * т.к. Juggler не используется, но идет наследование от {@link BaseActivity}
+     * то срабатывает {@link JugglerActivity#onSupportNavigateUp()}
+     * при нажатии экранной стрелки "<-" в {@link ru.mos.polls.survey.vm.InfoCommentFragmentVM}
+     * в котором вызвается {@link Activity#finish()}
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         if (currentFragment != null && currentFragment instanceof InfoSurveyFragment) {

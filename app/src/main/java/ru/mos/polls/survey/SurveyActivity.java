@@ -24,7 +24,6 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
@@ -32,6 +31,7 @@ import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
+import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
@@ -158,6 +158,15 @@ public class SurveyActivity extends BaseActivity {
             callback.onBackPressed();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (currentFragment != null && currentFragment instanceof InfoSurveyFragment) {
+            return false;
+        } else {
+            return super.onSupportNavigateUp();
         }
     }
 

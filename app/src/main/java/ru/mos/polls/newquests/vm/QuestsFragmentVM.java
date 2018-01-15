@@ -75,7 +75,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     public ItemTouchHelper mItemTouchHelper;
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
-//    private boolean needRefreshAfterResume = false;
+    private boolean needRefreshAfterResume = false;
 
     private BroadcastReceiver cancelClickReceiver = new BroadcastReceiver() {
         @Override
@@ -174,7 +174,6 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-//        needRefreshAfterResume = true;
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(clickReceiver, new IntentFilter(ACTION_JUST_CLICK));
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(deleteClickReceiver, new IntentFilter(ACTION_DELETE_CLICK));
         LocalBroadcastManager.getInstance(getFragment().getContext()).registerReceiver(cancelClickReceiver, new IntentFilter(ACTION_CANCEL_CLICK));
@@ -195,9 +194,10 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             adapter.notifyDataSetChanged();
         }
         getActivity().setTitle(getFragment().getContext().getString(R.string.title_ag));
-//        if (needRefreshAfterResume) {
-//            resetData();
-//        }
+        if (needRefreshAfterResume) {
+            resetData();
+        }
+        needRefreshAfterResume = true;
     }
 
     @OnClick(R.id.subscribe)

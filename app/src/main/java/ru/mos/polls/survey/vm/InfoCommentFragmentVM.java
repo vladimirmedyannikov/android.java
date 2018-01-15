@@ -1,6 +1,5 @@
 package ru.mos.polls.survey.vm;
 
-import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -37,23 +36,27 @@ public class InfoCommentFragmentVM extends UIComponentFragmentViewModel<InfoComm
         numberEditText = binding.infoNumberApp;
         commentEditText = binding.infoComment;
         infoCommentDescription = binding.infoCommentDescription;
-        Bundle bundle = getFragment().getArguments();
-        if (bundle != null) {
-            survey = (Survey) bundle.getSerializable(InfoCommentFragment.ARG_INFO_SURVEY);
-            if (survey != null) {
-                checkboxSurveyQuestion = (CheckboxSurveyQuestion) survey.getQuestionsList().get(1);
-                InputSurveyVariant numberSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
-                InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
+        checkSurveyNull();
+        if (survey != null) {
+            checkboxSurveyQuestion = (CheckboxSurveyQuestion) survey.getQuestionsList().get(1);
+            InputSurveyVariant numberSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
+            InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
 
-                numberEditText.setText(numberSurveyVariant.getText() != null ? numberSurveyVariant.getText() : "");
-                commentEditText.setText(commentSurveyVariant.getText() != null ? commentSurveyVariant.getText() : "");
-            }
+            numberEditText.setText(numberSurveyVariant.getText() != null ? numberSurveyVariant.getText() : "");
+            commentEditText.setText(commentSurveyVariant.getText() != null ? commentSurveyVariant.getText() : "");
+        }
+    }
+
+    private void checkSurveyNull() {
+        if (survey == null) {
+            setSurvey(getFragment().getSurvey());
         }
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
+        checkSurveyNull();
         getActivity().setTitle(getActivity().getString(R.string.comment));
         setSurveyAnswer();
         setCommentDescVisibility();
@@ -108,5 +111,9 @@ public class InfoCommentFragmentVM extends UIComponentFragmentViewModel<InfoComm
     public void confirmAction() {
         AGApplication.bus().send(new Events.InfoSurveyEvents(commentEditText.getText().toString(), numberEditText.getText().toString()));
         getFragment().getFragmentManager().popBackStackImmediate();
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 }

@@ -1,7 +1,6 @@
 package ru.mos.polls.survey.ui;
 
 import android.content.DialogInterface;
-import android.os.Bundle;
 
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
@@ -17,13 +16,11 @@ import ru.mos.polls.util.GuiUtils;
 public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragmentVM, FragmentInfoCommentBinding> {
 
     public static String INFO_COMMENT_FRAGMENT_TAG = "infosurvey";
-    public static String ARG_INFO_SURVEY = "arg_survey";
+    public Survey survey;
 
     public static InfoCommentFragment newInstance(Survey survey) {
         InfoCommentFragment f = new InfoCommentFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_INFO_SURVEY, survey);
-        f.setArguments(args);
+        f.setSurvey(survey);
         return f;
     }
 
@@ -71,5 +68,13 @@ public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragment
             getFragmentManager().popBackStackImmediate();
             return true;
         }
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
+    public Survey getSurvey() {
+        return survey;
     }
 }

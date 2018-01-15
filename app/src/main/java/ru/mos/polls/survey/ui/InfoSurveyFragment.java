@@ -110,8 +110,8 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     public static InfoSurveyFragment newInstance(Survey survey, long idPoll) {
         InfoSurveyFragment f = new InfoSurveyFragment();
         Bundle args = new Bundle();
+        f.setSurvey(survey);
         args.putLong(ARG_POLL_ID, idPoll);
-        args.putSerializable(ARG_SURVEY, survey);
         f.setArguments(args);
         return f;
     }
@@ -144,7 +144,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         super.onViewCreated(view, savedInstanceState);
         Bundle extras = getArguments();
         if (extras != null) {
-            survey = (Survey) extras.getSerializable(InfoSurveyFragment.ARG_SURVEY);
             pollId = extras.getLong(InfoSurveyFragment.ARG_POLL_ID);
             surveyQuestion = (RadioboxSurveyQuestion) survey.getQuestionsList().get(0);
             checkboxSurveyQuestion = (CheckboxSurveyQuestion) survey.getQuestionsList().get(1);
@@ -414,6 +413,10 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                 }
             }
         }
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 
     private boolean isSurveyVerifyOk() {

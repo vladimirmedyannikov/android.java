@@ -195,7 +195,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         }
         getActivity().setTitle(getFragment().getContext().getString(R.string.title_ag));
         if (needRefreshAfterResume) {
-            resetData();
+            doRequest();
         }
         needRefreshAfterResume = true;
     }
@@ -237,6 +237,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                         qlist = prepareQuests(qlist);
                         qlist = QuestStateController.getInstance().process(qlist);
                         quests.clear();
+                        adapter.clear();
                         quests.addAll(qlist);
                         adapter.add(quests);
                         hideNewsMenu();

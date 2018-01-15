@@ -10,7 +10,7 @@ import ru.mos.polls.newquests.model.quest.SurveyOssQuest;
  *         on 12.12.17.
  */
 
-public class SurveyOssQuestVM extends QuestVM<SurveyOssQuest, QuestOssPollBinding> {
+public class SurveyOssQuestVM extends PriceQuestVM<SurveyOssQuest, QuestOssPollBinding> {
 
     public SurveyOssQuestVM(SurveyOssQuest model, QuestOssPollBinding viewDataBinding) {
         super(model, viewDataBinding);

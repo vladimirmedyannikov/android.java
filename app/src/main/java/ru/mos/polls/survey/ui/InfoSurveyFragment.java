@@ -44,7 +44,6 @@ import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
-import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
@@ -60,7 +59,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     private Unbinder unbinder;
     private Survey survey;
-    private SurveyDataSource surveyDataSource;
 
     private SharedPreferencesSurveyManager manager;
     private long questionId;
@@ -386,14 +384,18 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     public void interrupt() {
         if (survey != null) {
-            try {
-                survey.verify();
-                survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
-            } catch (VerificationException ignored) {
+            if (surveyQuestion.isChecked() || ((checkboxSurveyQuestion.getVariantsList().get(1)).isChecked()) || ((checkboxSurveyQuestion.getVariantsList().get(0)).isChecked())) {
+                try {
+                    survey.verify();
+                    survey.getQuestion(survey.getCurrentQuestionId()).setPassed(true);
+                } catch (VerificationException ignored) {
+                }
+                survey.endTiming();
+                manager.saveCurrentPage(survey);
+                ((SurveyActivity) getActivity()).doInterrupt(survey);
+            } else {
+                getActivity().finish();
             }
-            survey.endTiming();
-            manager.saveCurrentPage(survey);
-            ((SurveyActivity) getActivity()).doInterrupt(survey);
         }
     }
 

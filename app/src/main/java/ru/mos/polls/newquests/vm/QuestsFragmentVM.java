@@ -241,7 +241,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                         quests.addAll(qlist);
                         adapter.add(quests);
                         hideNewsMenu();
-                        isPaginationEnable = result.getTasks().size() >= page.getSize();
+                        isPaginationEnable = false;
                         recyclerUIComponent.refreshUI();
                     }
 

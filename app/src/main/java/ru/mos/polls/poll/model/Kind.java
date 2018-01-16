@@ -9,6 +9,7 @@ public enum Kind {
     HEARING("hearing", "публичное слушание", R.color.greenText),
     SPECIAL("special", "специальное голосование", R.color.special_poll),
     INFORM("informer", "информирование", R.color.special_poll),
+    OSS("oss", "голосование собственников", R.color.greenText),
     MKD("mkd", "информирование", R.color.special_poll);
 
     public String kind;
@@ -29,6 +30,8 @@ public enum Kind {
             result = MKD;
         } else if (INFORM.getKind().equalsIgnoreCase(kind)) {
             result = INFORM;
+        } else if (OSS.getKind().equalsIgnoreCase(kind)) {
+            result = OSS;
         }
         return result;
     }

@@ -45,5 +45,10 @@ public class KindUnitTest extends BaseUnitTest {
         Assert.assertEquals(inform.isInform(), true);
         Assert.assertEquals(inform.getLabel(), "информирование");
         Assert.assertEquals(inform.getColor(), R.color.special_poll);
+
+        Kind oss = Kind.parse("oss");
+        Assert.assertEquals(Kind.OSS, oss);
+        Assert.assertEquals(oss.getLabel(), "голосование собственников");
+        Assert.assertEquals(oss.getColor(), R.color.greenText);
     }
 }

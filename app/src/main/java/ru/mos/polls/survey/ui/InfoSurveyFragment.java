@@ -43,7 +43,7 @@ import ru.mos.polls.survey.SurveyFragment;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
-import ru.mos.polls.survey.questions.SurveyQuestion;
+import ru.mos.polls.survey.summary.SurveyTitleView;
 import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
@@ -68,12 +68,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     @BindView(R.id.info_survey_comment_card)
     CardView infoCommentCard;
-    @BindView(R.id.info_survey_title)
-    AppCompatTextView infoTitle;
-    @BindView(R.id.info_survey_description)
-    AppCompatTextView infoDesc;
-    @BindView(R.id.info_survey_more_description)
-    AppCompatTextView infoDescMore;
     @BindView(R.id.info_survey_comment)
     AppCompatTextView infoComment;
     @BindView(R.id.info_survey_apartament_number)
@@ -96,6 +90,9 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     AppCompatTextView likeCount;
     @BindView(R.id.dislike_count)
     AppCompatTextView dislikeCount;
+
+    @BindView(R.id.surveyTitleView)
+    SurveyTitleView surveyTitleView;
 
     RadioboxSurveyQuestion surveyQuestion;
     CheckboxSurveyQuestion checkboxSurveyQuestion;
@@ -148,8 +145,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         }
         manager = new SharedPreferencesSurveyManager(getActivity());
         setCheckboxDrawable();
-        setInfoTitle();
-        setInfoDesc();
         setInfoDescMore();
         subscribeEventsBus();
         setShareButtonView();
@@ -159,19 +154,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     public void setInfoDescMore() {
-        if (!TextUtils.isEmpty(survey.getTextFullHtml())) {
-            infoDescMore.setVisibility(View.VISIBLE);
-            infoDescMore.setOnClickListener(v -> {
-                String descMore = infoDescMore.getText().toString();
-                if (descMore.equalsIgnoreCase(getString(R.string.title_more))) {
-                    infoDescMore.setText(getText(R.string.title_less));
-                    infoDesc.setText(Html.fromHtml(survey.getTextFullHtml()));
-                } else {
-                    infoDescMore.setText(getText(R.string.title_more));
-                    setInfoDesc();
-                }
-            });
-        }
+        surveyTitleView.display(survey);
     }
 
     @Override
@@ -353,14 +336,6 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         dislikeImage.setButtonDrawable(R.drawable.ic_dislike_selector);
     }
 
-    public void setInfoTitle() {
-        infoTitle.setText(survey.getTitle());
-    }
-
-    public void setInfoDesc() {
-        infoDesc.setText(Html.fromHtml(survey.getTextShortHtml()));
-    }
-
     @Override
     public void onBackPressed() {
         if (isCommentFrAdded) {
@@ -419,18 +394,5 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     public void setSurvey(Survey survey) {
         this.survey = survey;
-    }
-
-    private boolean isSurveyVerifyOk() {
-        List<SurveyQuestion> questionList = survey.getFilteredQuestionList();
-        boolean isAllQuestionHasAnswer = true;
-        for (SurveyQuestion question : questionList) {
-            try {
-                question.verify();
-            } catch (VerificationException e) {
-                isAllQuestionHasAnswer = false;
-            }
-        }
-        return isAllQuestionHasAnswer;
     }
 }

@@ -36,36 +36,15 @@
                 style="@style/root"
                 android:layout_marginTop="@dimen/pd_normal">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/info_survey_title"
-                    style="@style/text.large.black"
-                    android:paddingLeft="@dimen/pd_small"
-                    android:textStyle="bold" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/info_survey_description"
-                    style="@style/text.normal.black"
-                    android:layout_below="@+id/info_survey_title"
-                    android:paddingLeft="@dimen/pd_small"
-                    android:paddingTop="@dimen/pd_xxxsmall" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/info_survey_more_description"
-                    style="@style/text.green"
-                    android:layout_below="@+id/info_survey_description"
-                    android:layout_centerHorizontal="true"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="@dimen/pd_normal"
-                    android:text="@string/title_more"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
+                <ru.mos.polls.survey.summary.SurveyTitleView
+                    android:id="@+id/surveyTitleView"
+                    style="@style/item"
+                    app:contentChangingType="simple" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/info_survey_comment_card"
                     style="@style/linear"
-                    android:layout_below="@+id/info_survey_more_description"
+                    android:layout_below="@+id/surveyTitleView"
                     android:elevation="@dimen/pd_xsmall">
 
                     <LinearLayout style="@style/linear">

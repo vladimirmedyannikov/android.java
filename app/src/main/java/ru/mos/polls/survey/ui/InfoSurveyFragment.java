@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.CompoundButton;
 
 import com.appsflyer.AppsFlyerLib;
 
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,6 +153,16 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     public void setInfoDescMore() {
         surveyTitleView.display(survey);
+        surveyTitleView.setStateListener(new SurveyTitleView.StateListener() {
+            @Override
+            public void onExpand() {
+                getView().scrollTo(0,0);
+            }
+
+            @Override
+            public void onCollapse() {
+            }
+        });
     }
 
     @Override

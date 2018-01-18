@@ -17,6 +17,7 @@ android:
     - tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - android-$ANDROID_API_LEVEL
+    - android-22
     - addon-google_apis-google-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
     - add-on

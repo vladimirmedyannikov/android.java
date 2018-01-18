@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -248,11 +249,17 @@ public class QuestsFragment extends PullableFragment {
         }
         update(null, null);
         getActivity().setTitle(getString(R.string.title_ag));
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
     }
 
     public void setListener(Listener listener) {

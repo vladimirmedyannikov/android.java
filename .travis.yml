@@ -25,7 +25,7 @@ android:
     - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
     - add-on
     - extra
- licenses:
+  licenses:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
     - google-gdk-license-.+

@@ -31,7 +31,7 @@ notifications:
 #    - sklyarovdv@mos.ru
 #    - fastsilver2009@gmail.com
 
-cache:р
+cache:
   directories:
     - $HOME/.m2
     - $HOME/.gradle

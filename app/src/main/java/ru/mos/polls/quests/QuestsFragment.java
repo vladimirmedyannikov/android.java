@@ -39,6 +39,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.fragments.PullableFragment;
+import ru.mos.polls.mainbanner.BannerController;
 import ru.mos.polls.mainbanner.BannerItem;
 import ru.mos.polls.mainbanner.HeaderDecoration;
 import ru.mos.polls.mainbanner.HidingScrollListener;
@@ -79,6 +80,7 @@ public class QuestsFragment extends PullableFragment {
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
     private GoogleStatistics.QuestsFragment qf;
+    BannerController bannerController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class QuestsFragment extends PullableFragment {
         callback = new SwipeItemTouchHelper(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(listView);
+        bannerController = new BannerController(listView);
         return root;
     }
 
@@ -245,16 +248,9 @@ public class QuestsFragment extends PullableFragment {
         }
         update(null, null);
         getActivity().setTitle(getString(R.string.title_ag));
-
-
-        MainBannerView bannerView = new MainBannerView(getContext());
-        List<BannerItem> list = new ArrayList<>();
-        list.add(new BannerItem(R.drawable.ic_banner_citizens, "Активных граждан", 1974943));
-        list.add(new BannerItem(R.drawable.ic_banner_hearing_passed, "Прошло голосований", 2703));
-        list.add(new BannerItem(R.drawable.ic_banner_citizens_vote, "Принято мнений", 85928639));
-        bannerView.addItems(list);
-        listView.addItemDecoration(new HeaderDecoration(bannerView));
+        bannerController.requestStatistic();
     }
+
 
     @Override
     public void onStop() {

@@ -12,25 +12,30 @@
 
 
         <LinearLayout
-            android:paddingLeft="@dimen/pd_xsmall"
-            android:layout_toRightOf="@id/banner_item_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_toEndOf="@id/banner_item_img"
+            android:layout_toRightOf="@id/banner_item_img"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/pd_xxsmall"
             android:paddingStart="@dimen/pd_xxsmall">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/banner_item_title"
                 style="@style/text.small.green"
-                android:textSize="@dimen/banner_title"
-                android:text="@string/password" />
+                android:text="@string/password"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/banner_title" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:layout_marginTop="-4dp"
+                android:paddingTop="-4dp"
                 android:id="@+id/banner_item_value"
                 style="@style/text.xxlarge.green"
+                android:text="1111111111"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/banner_value"
-                android:text="1111111111" />
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

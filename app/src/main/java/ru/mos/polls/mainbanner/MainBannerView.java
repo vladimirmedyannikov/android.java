@@ -66,6 +66,10 @@ public class MainBannerView extends LinearLayout {
         adapter.add(list);
     }
 
+    public void clearData() {
+        adapter.clear();
+    }
+
     public void hideViews() {
         animate()
                 .translationY(-getHeight())

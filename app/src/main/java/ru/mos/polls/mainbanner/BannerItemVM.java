@@ -1,5 +1,10 @@
 package ru.mos.polls.mainbanner;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemMainBannerBinding;
@@ -28,6 +33,13 @@ public class BannerItemVM extends RecyclerBaseViewModel<BannerItem, ItemMainBann
         super.onBind(viewDataBinding);
         viewDataBinding.bannerItemImg.setImageResource(model.image);
         viewDataBinding.bannerItemTitle.setText(model.title);
-        viewDataBinding.bannerItemValue.setText(String.valueOf(model.value));
+
+        DecimalFormat formatter = new DecimalFormat();
+        formatter.applyPattern("###,###,###,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        formatter.setDecimalFormatSymbols(symbols);
+        String formattedString = formatter.format(model.value);
+        viewDataBinding.bannerItemValue.setText(formattedString);
     }
 }

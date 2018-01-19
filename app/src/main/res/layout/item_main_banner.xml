@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout style="@style/wrap">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/banner_item_img"
+            android:layout_width="@dimen/banner_image"
+            android:layout_height="@dimen/banner_image"
+            app:srcCompat="@drawable/ic_banner_citizens_vote" />
+
+
+        <LinearLayout
+            android:paddingLeft="@dimen/pd_xsmall"
+            android:layout_toRightOf="@id/banner_item_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/banner_item_img"
+            android:paddingStart="@dimen/pd_xxsmall">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/banner_item_title"
+                style="@style/text.small.green"
+                android:textSize="@dimen/banner_title"
+                android:text="@string/password" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/banner_item_value"
+                style="@style/text.xxlarge.green"
+                android:textSize="@dimen/banner_value"
+                android:text="1111111111" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,8 +1,6 @@
 package ru.mos.polls.quests;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -10,24 +8,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +39,10 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.fragments.PullableFragment;
+import ru.mos.polls.mainbanner.BannerItem;
+import ru.mos.polls.mainbanner.HeaderDecoration;
+import ru.mos.polls.mainbanner.HidingScrollListener;
+import ru.mos.polls.mainbanner.MainBannerView;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.QuestsApiController;
@@ -64,7 +61,6 @@ import ru.mos.polls.quests.view.SwipeItemTouchHelper;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
-import ru.mos.polls.util.StubUtils;
 
 public class QuestsFragment extends PullableFragment {
 
@@ -249,11 +245,15 @@ public class QuestsFragment extends PullableFragment {
         }
         update(null, null);
         getActivity().setTitle(getString(R.string.title_ag));
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        MainBannerView bannerView = new MainBannerView(getContext());
+        List<BannerItem> list = new ArrayList<>();
+        list.add(new BannerItem(R.drawable.ic_banner_citizens, "Активных граждан", 1974943));
+        list.add(new BannerItem(R.drawable.ic_banner_hearing_passed, "Прошло голосований", 2703));
+        list.add(new BannerItem(R.drawable.ic_banner_citizens_vote, "Принято мнений", 85928639));
+        bannerView.addItems(list);
+        listView.addItemDecoration(new HeaderDecoration(bannerView));
     }
 
     @Override

@@ -1,86 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/root">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorlayout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".sample.MainActivity">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/ptrLayout"
+    <!--<ru.mos.polls.mainbanner.MainBannerView-->
+    <!--android:id="@+id/banner_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ptrLayout"
+        style="@style/root"
+        android:layout_marginTop="-28dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
             style="@style/root"
-            android:layout_marginTop="-28dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:scrollbars="vertical" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                style="@style/root"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <LinearLayout
+        android:id="@id/empty"
+        style="@style/item.linear"
+        android:paddingTop="@dimen/vs_xxsmall">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="?attr/colorPrimary"
-                    android:src="@drawable/sss_fon"
-                    app:layout_collapseMode="parallax"/>
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-
+        <TextView
+            style="@style/text.large.gray"
+            android:padding="@dimen/pd_xsmall"
+            android:text="@string/empty_quest_list" />
+        <!--Социальные сети-->
         <LinearLayout
-            android:id="@id/empty"
             style="@style/item.linear"
-            android:paddingTop="@dimen/vs_xxsmall">
+            android:layout_marginTop="@dimen/pd_xxsmall"
+            android:background="@drawable/background_text_field">
 
             <TextView
-                style="@style/text.large.gray"
-                android:padding="@dimen/pd_xsmall"
-                android:text="@string/empty_quest_list"/>
-            <!--Социальные сети-->
-            <LinearLayout
-                style="@style/item.linear"
-                android:layout_marginTop="@dimen/pd_xxsmall"
-                android:background="@drawable/background_text_field">
-
-                <TextView
-                    android:id="@+id/subscribe"
-                    style="@style/basicIcon"
-                    android:drawableLeft="@drawable/rss"
-                    android:text="@string/do_subscribe"/>
-            </LinearLayout>
+                android:id="@+id/subscribe"
+                style="@style/basicIcon"
+                android:drawableLeft="@drawable/rss"
+                android:text="@string/do_subscribe" />
         </LinearLayout>
+    </LinearLayout>
 
-        <include layout="@layout/layout_internet_connection_lost"/>
-    </android.support.design.widget.CoordinatorLayout>
+    <include layout="@layout/layout_internet_connection_lost" />
 </RelativeLayout>

@@ -1,6 +1,4 @@
 sudo: required
-dist: trusty
-group: edge
 
 language: android
 jdk: oraclejdk8
@@ -45,20 +43,7 @@ cache:
     - $HOME/.m2
     - $HOME/.gradle
 
-before_install:
-- mkdir "$ANDROID_HOME/licenses" || true
-- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-- chmod +x gradlew
-- echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
-- echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
-#Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
-
 before_script:
-  - echo "y" | android update sdk -a --no-ui --filter android-23
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-23
-  - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
   - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi google_apis/$ANDROID_ABI
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator

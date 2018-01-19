@@ -22,6 +22,8 @@
 
         <TextView
             android:id="@+id/description"
+            android:text="@{viewModel.getDescriptionForActivePollDataBinding(context)}"
+            android:visibility="@{viewModel.getDescriptionVisibleForActivePollDataBinding}"
             style="@style/text.gray" />
 
         <TextView

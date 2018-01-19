@@ -1,6 +1,9 @@
 package ru.mos.polls.poll.model;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +11,10 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+
+import ru.mos.polls.PointsManager;
+import ru.mos.polls.R;
+import ru.mos.polls.databinding.ItemActivePollBinding;
 
 
 public class Poll implements Serializable {
@@ -185,6 +192,56 @@ public class Poll implements Serializable {
 
     public long getPassedDate() {
         return passedDate;
+    }
+
+    /**
+     * для использования в item_active_poll.xml
+     * т.к. в методе {@link ru.mos.polls.poll.vm.item.PollItemActiveVM#onBind(ItemActivePollBinding)}
+     * метод {@link ru.mos.polls.poll.vm.item.PollItemActiveVM#displayDescription(TextView, Poll)}
+     * отрабатывает не всегда корректно, связано с самим dataBinding
+     * @param context
+     * @return
+     */
+    public String getDescriptionForActivePollDataBinding(Context context) {
+        if (getPoints() > 0) {
+            String result = PointsManager.getSuitableString(context, R.array.survey_points_pluse, getPoints());
+            result = String.format(result, getPoints());
+            if (Kind.isHearing(getKind())) {
+                result += ", " + context.getString(R.string.title_hearing_survey_summary).toLowerCase();
+            } else if (Kind.isSpecial(getKind())) {
+                result += ", " + context.getString(R.string.special_hearing).toLowerCase();
+            }
+            return result;
+        } else {
+            String result = "";
+            if (Kind.isHearing(getKind())) {
+                result += context.getString(R.string.title_hearing_survey_summary);
+            } else if (Kind.isSpecial(getKind())) {
+                result += context.getString(R.string.special_hearing);
+            }
+            return result;
+        }
+    }
+
+    /**
+     * для использования в item_active_poll.xml
+     * т.к. в методе {@link ru.mos.polls.poll.vm.item.PollItemActiveVM#onBind(ItemActivePollBinding)}
+     * метод {@link ru.mos.polls.poll.vm.item.PollItemActiveVM#displayDescription(TextView, Poll)}
+     * отрабатывает не всегда корректно, связано с самим dataBinding
+     * @return
+     */
+    public int getDescriptionVisibleForActivePollDataBinding() {
+        if (getPoints() > 0) {
+            return View.VISIBLE;
+        } else {
+            if (Kind.isHearing(getKind())) {
+                return View.VISIBLE;
+            } else if (Kind.isSpecial(getKind())) {
+                return View.VISIBLE;
+            } else {
+                return View.GONE;
+            }
+        }
     }
 
     public enum Status {

@@ -16,18 +16,20 @@ env:
 android:
   components:
     - tools # to get the new `repository-11.xml`
-    - build-tools-25.0.3
+    - build-tools-25.0.3 #for app
+    - build-tools-25.0.0 #for elkag
     - platform-tools
+    - extra-android-m2repository # for design library
+        # Google Play Services
+    - extra-google-google_play_services
+        # Support library
+    - extra-android-support
+        # Latest artifacts in local repository
+    - extra-google-m2repository
     - android-$ANDROID_API_LEVEL
     - android-$EMULATOR_API
     - addon-google_apis-google-$ANDROID_API_LEVEL # google play services
-    - extra-android-m2repository # for design library
-    # Google Play Services
-    - extra-google-google_play_services
-    # Support library
-    - extra-android-support
-    # Latest artifacts in local repository
-    - extra-google-m2repository
+
     - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!

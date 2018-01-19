@@ -16,12 +16,20 @@ env:
 
 android:
   components:
-    - tools
+    - tools # to get the new `repository-11.xml`
+    - platform-tools
+    - tools # to install Android SDK tools 25.1.x
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - android-$ANDROID_API_LEVEL
     - android-$EMULATOR_API
     - addon-google_apis-google-$ANDROID_API_LEVEL # google play services
     - extra-android-m2repository # for design library
+    # Google Play Services
+    - extra-google-google_play_services
+    # Support library
+    - extra-android-support
+    # Latest artifacts in local repository
+    - extra-google-m2repository
     - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
@@ -31,6 +39,9 @@ android:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
     - google-gdk-license-.+
+
+before_install:
+  - yes | sdkmanager "platforms;android-25"
 
 notifications:
   email:
@@ -44,7 +55,7 @@ cache:
     - $HOME/.gradle
 
 before_script:
-  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi google_apis/$ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &

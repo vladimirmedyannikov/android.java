@@ -463,4 +463,18 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         return fr.getViewModel().isCustomFlat;
     }
 
+
+    public static List<String> getIdsList() {
+        List<String> ids = new ArrayList<>();
+        ids.add(AVATAR);
+        ids.add(EMAIL);
+        ids.add(PERSONAL);
+        ids.add(FAMILY);
+        ids.add(LOCATION_REGISTRATION);
+        ids.add(LOCATION_RESIDENCE);
+        ids.add(EXTRAINFO);
+        ids.add(SOCIAL);
+        ids.add(PGU);
+        return ids;
+    }
 }

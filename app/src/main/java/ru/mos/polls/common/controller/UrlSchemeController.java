@@ -27,6 +27,7 @@ public abstract class UrlSchemeController {
     public static final String ACHIEVEMENT_HOST = "achievement";
     public static final String INNOVATION_HOST = "novelty";
     public static final String ADVERTISEMENT = "advertisement";
+    public static final String PERSONAL_WIZARD = "personalWizard";
 
     public static final String ACHIEVEMENT_ID = "achievement_id";
     public static final String POLL_ID = "poll_id";

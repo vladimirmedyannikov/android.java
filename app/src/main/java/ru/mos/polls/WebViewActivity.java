@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
+import android.net.MailTo;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,9 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -108,7 +107,18 @@ public class WebViewActivity extends ToolbarAbstractActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 boolean urlAllowed = isUrlAllowedForLoad(url);
                 boolean isOnline = isOnline(WebViewActivity.this);
-                if (urlAllowed && isOnline) {
+                boolean isFirstUrl = isFirstUrl(url);
+                if (url.startsWith("mailto:")) {
+                    MailTo mt = MailTo.parse(url);
+                    Intent i = newEmailIntent(WebViewActivity.this, mt.getTo(), mt.getSubject(), mt.getBody(), mt.getCc());
+                    startActivity(i);
+                    view.reload();
+                    return true;
+                }
+                /**
+                 * если url не первый, то открываем в браузере
+                 */
+                if ((urlAllowed && isOnline) || !isFirstUrl) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                     return true;
@@ -138,6 +148,16 @@ public class WebViewActivity extends ToolbarAbstractActivity {
                 getString(R.string.default_web_view_title) : title);
         webView.loadUrl(firstUrl);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public static Intent newEmailIntent(Context context, String address, String subject, String body, String cc) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_CC, cc);
+        intent.setType("message/rfc822");
+        return intent;
     }
 
     @OnClick(R.id.internet_lost_reload)
@@ -217,6 +237,34 @@ public class WebViewActivity extends ToolbarAbstractActivity {
             webView.goBack();
         else
             super.onBackPressed();
+    }
+
+    /**
+     * при сравнении удаляем протоколы http и/или https
+     * т.к. они могут быть разные для
+     * @param url
+     * так и для {@link WebViewActivity#firstUrl}
+     * @return
+     */
+    private boolean isFirstUrl(String url) {
+        String newFirstUrl = "";
+        String newUrl = "";
+        if (firstUrl.contains("https")) {
+            newFirstUrl = firstUrl.replace("https", "");
+        } else if (firstUrl.contains("http")) {
+            newFirstUrl = firstUrl.replace("http", "");
+        }
+        if (url.contains("https")) {
+            newUrl = url.replace("https", "");
+        } else if (url.contains("http")) {
+            newUrl = url.replace("http", "");
+        }
+
+        if (newFirstUrl.equals("") || newUrl.equals("")) {
+            return url.equals(firstUrl);
+        } else {
+            return newUrl.equals(newFirstUrl);
+        }
     }
 
     private boolean isOnline(Context context) {

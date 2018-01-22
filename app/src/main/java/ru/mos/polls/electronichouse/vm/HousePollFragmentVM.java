@@ -43,10 +43,12 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
             long pollId = intent.getLongExtra(ARG_POLL, 0);
             if (adapter != null) {
                 Poll poll = adapter.getPoll(pollId);
-                adapter.removeItem(poll);
-                poll.setStatus(Poll.Status.PASSED.status);
-                poll.setPassedDate(System.currentTimeMillis() / 1000L);
-                adapter.addOldPoll(poll);
+                if (poll != null) {
+                    adapter.removeItem(poll);
+                    poll.setStatus(Poll.Status.PASSED.status);
+                    poll.setPassedDate(System.currentTimeMillis() / 1000L);
+                    adapter.addOldPoll(poll);
+                }
             }
         }
     };

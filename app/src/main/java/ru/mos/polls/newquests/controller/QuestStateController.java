@@ -24,6 +24,8 @@ public class QuestStateController {
     private List<Object> executedQuestQueue;
     private boolean isUpdateSocialAvaible;
 
+    private List<String> idsList;
+
     private QuestStateController() {
         executedQuestQueue = new ArrayList<>();
     }
@@ -54,6 +56,9 @@ public class QuestStateController {
                 result.add(quest);
                 if (((BackQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
                     isUpdateSocialAvaible = true;
+                if (((BackQuest) quest).getId().equals(ProfileQuest.ID_PERSONAL_WIZARD)) { //сохраняем списод заданий визарда для urlScheme
+                    idsList = ((ProfileQuest) quest).idsList;
+                }
             }
         }
         return result;
@@ -90,5 +95,12 @@ public class QuestStateController {
 
     public List<Object> getExecutedQuestQueue() {
         return executedQuestQueue;
+    }
+
+    public List<String> getIdsList() {
+        if (idsList == null) {
+            idsList = new ArrayList<>();
+        }
+        return idsList;
     }
 }

@@ -331,6 +331,9 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                  */
                 if (((BackQuest) quest).getId().equalsIgnoreCase(ProfileQuest.ID_PERSONAL_WIZARD)) {
                     if (((ProfileQuest) quest).idsList.size() == 0) continue;
+                    else {
+
+                    }
                 }
                 /**
                  * Удаляем рекламные блоки из ленты

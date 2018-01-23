@@ -26,6 +26,7 @@ public class BannerController {
 
     public BannerController(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
+        bannerView = new MainBannerView(recyclerView.getContext());
     }
 
     public void requestStatistic() {
@@ -33,7 +34,7 @@ public class BannerController {
             @Override
             protected void onResult(GetBannerStatistics.Response.Result result) {
                 bannerView.clearData();
-                bannerView.addItems(prepareList(result.getList()));
+                bannerView.addItems(prepareList(result.getUsersCount(), result.getPassedPollsCount(), result.getPollsCount()));
                 if (!headerAdded) {
                     recyclerView.addItemDecoration(new HeaderDecoration(bannerView));
                     headerAdded = true;
@@ -42,10 +43,6 @@ public class BannerController {
 
             @Override
             public void onError(Throwable throwable) {
-                if (!headerAdded) {
-                    addHeader();
-                    headerAdded = true;
-                }
             }
         };
         AGApplication
@@ -57,11 +54,11 @@ public class BannerController {
     }
 
 
-    public List<BannerItem> prepareList(List<Long> list) {
+    public List<BannerItem> prepareList(long usersCount, long pollsPassed, long voteCount) {
         List<BannerItem> result = new ArrayList<>();
-        result.add(new BannerItem(R.drawable.ic_banner_citizens, "Активных граждан", list.get(0)));
-        result.add(new BannerItem(R.drawable.ic_banner_hearing_passed, "Прошло голосований", list.get(1)));
-        result.add(new BannerItem(R.drawable.ic_banner_citizens_vote, "Принято мнений", list.get(2)));
+        result.add(new BannerItem(R.drawable.ic_banner_citizens, "Активных граждан", usersCount));
+        result.add(new BannerItem(R.drawable.ic_banner_hearing_passed, "Прошло голосований", pollsPassed));
+        result.add(new BannerItem(R.drawable.ic_banner_citizens_vote, "Принято мнений", voteCount));
         return result;
     }
 

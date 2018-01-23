@@ -34,7 +34,7 @@ public class BannerController {
             @Override
             protected void onResult(GetBannerStatistics.Response.Result result) {
                 bannerView.clearData();
-                bannerView.addItems(prepareList(result.getUsersCount(), result.getPassedPollsCount(), result.getPollsCount()));
+                bannerView.addItems(prepareList(result.getUsersCount(), result.getPollsCount(), result.getPassedPollsCount()));
                 if (!headerAdded) {
                     recyclerView.addItemDecoration(new HeaderDecoration(bannerView));
                     headerAdded = true;

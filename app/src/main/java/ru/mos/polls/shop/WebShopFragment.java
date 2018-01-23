@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -160,6 +159,7 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
         PersistentConfig persistentConfig = new PersistentConfig(activity.getApplicationContext());
         persistentConfig.setCookie(getCookies(Session.getSession(activity.getApplicationContext())));
         cookieManager.setCookie(host, persistentConfig.getCookieString());
+        request.addRequestHeader("Cookie", getCookies(Session.getSession(activity.getApplicationContext())));
         request.setDescription("Downloading file...");
         request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
         request.allowScanningByMediaScanner();

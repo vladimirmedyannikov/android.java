@@ -462,5 +462,4 @@ public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<Wizard
         WizardFlatFragment fr = (WizardFlatFragment) list.get(pager.getCurrentItem());
         return fr.getViewModel().isCustomFlat;
     }
-
 }

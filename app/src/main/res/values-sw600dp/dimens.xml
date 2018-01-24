@@ -60,5 +60,6 @@
     <dimen name="banner_top_pad">54dp</dimen>
     <dimen name="banner_right_pad">54dp</dimen>
     <dimen name="banner_pad">14dp</dimen>
+    <dimen name="banner_project_title_size">16sp</dimen>
 
 </resources>

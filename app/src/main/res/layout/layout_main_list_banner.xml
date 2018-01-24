@@ -5,10 +5,12 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/text.green"
+        style="@style/text.small.green"
         android:layout_width="match_parent"
         android:background="@color/yellow"
         android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/banner_project_title_size"
         android:text="Проект Мэра" />
 
     <FrameLayout

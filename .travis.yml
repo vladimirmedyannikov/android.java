@@ -52,13 +52,13 @@ android:
     - tools
     - android-25
     - android-$API
-#    - extra-android-m2repository # for design library
+    - extra-android-m2repository # for design library
 #        # Google Play Services
 #    - extra-google-google_play_services
 #        # Support library
 #    - extra-android-support
 #        # Latest artifacts in local repository
-#    - extra-google-m2repository
+    - extra-google-m2repository
 #    - android-$ANDROID_API_LEVEL
 #    - android-$EMULATOR_API
 #    - addon-google_apis-google-$ANDROID_API_LEVEL # google play services
@@ -101,8 +101,8 @@ install:
   - echo yes | sdkmanager "tools"
 #  - echo yes | sdkmanager "platforms;android-25"
 #  - echo yes | sdkmanager "platforms;android-${API}"
-  - echo yes | sdkmanager "extras;android;m2repository"
-  - echo yes | sdkmanager "extras;google;m2repository"
+#  - echo yes | sdkmanager "extras;android;m2repository"
+#  - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
   - echo yes | sdkmanager "$EMULATOR"

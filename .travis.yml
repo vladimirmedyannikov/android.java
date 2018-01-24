@@ -96,7 +96,7 @@ install:
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
   - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-25"
+#  - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "platforms;android-${API}"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"

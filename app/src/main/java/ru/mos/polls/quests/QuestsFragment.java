@@ -90,7 +90,7 @@ public class QuestsFragment extends PullableFragment {
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
-        listView.addItemDecoration(new SpacesItemDecoration(2));
+//        listView.addItemDecoration(new SpacesItemDecoration(2));
 
         quests = new ArrayList<>();
         adapter = new QuestsItemAdapter(quests, itemListener);

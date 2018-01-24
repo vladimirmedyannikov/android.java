@@ -3,6 +3,11 @@
     style="@style/root">
 
 
+    <!--<ru.mos.polls.mainbanner.MainBannerView-->
+    <!--android:id="@+id/banner_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/ptrLayout"
         style="@style/root"

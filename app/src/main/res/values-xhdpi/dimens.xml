@@ -57,5 +57,6 @@
     <dimen name="banner_top_pad">30dp</dimen>
     <dimen name="banner_right_pad">22dp</dimen>
     <dimen name="banner_pad">14dp</dimen>
+    <dimen name="banner_project_title_size">10sp</dimen>
 
 </resources>

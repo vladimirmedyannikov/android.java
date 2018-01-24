@@ -1,17 +1,47 @@
-sudo: false
+sudo: required
 
 language: android
 jdk: oraclejdk8
 
+group: stable
+dist: precise
+env: API=23
+
 env:
   global:
-    - ANDROID_API_LEVEL=23
-    - EMULATOR_API=23
-    - ANDROID_TAG=google_apis
-    - ANDROID_ABI=armeabi-v7a
-    # wait up to 60 minutes for adb to connect to emulator
-    - ADB_INSTALL_TIMEOUT=60
-    - QEMU_AUDIO_DRV=none # Remove audio
+#    - ANDROID_API_LEVEL=23
+#    - EMULATOR_API=23
+#    - ANDROID_TAG=google_apis
+#    - ANDROID_ABI=armeabi-v7a
+#    # wait up to 60 minutes for adb to connect to emulator
+#    - ADB_INSTALL_TIMEOUT=60
+#    - QEMU_AUDIO_DRV=none # Remove audio
+
+    - DIR=constraint-layout-start
+    - API=23
+    - TAG=google_apis
+    - ABI=armeabi-v7a
+    - QEMU_AUDIO_DRV=none
+    - GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\"
+    - ANDROID_HOME=/usr/local/android-sdk-25.0.3
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - ADB_INSTALL_TIMEOUT=20
+
+notifications:
+  email:
+#    - elizarov1988@gmail.com
+    - matek3022@gmail.com
+#    - sklyarovdv@mos.ru
+#    - fastsilver2009@gmail.com
+
+cache:
+  directories:
+#    - $HOME/.m2
+#    - $HOME/.gradle
+    - ${TRAVIS_BUILD_DIR}/gradle/caches/
+    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
+
 
 android:
   components:
@@ -19,46 +49,78 @@ android:
     - build-tools-25.0.3 #for app
     - build-tools-25.0.0 #for elkag
     - platform-tools
-    - extra-android-m2repository # for design library
-        # Google Play Services
-    - extra-google-google_play_services
-        # Support library
-    - extra-android-support
-        # Latest artifacts in local repository
-    - extra-google-m2repository
-    - android-$ANDROID_API_LEVEL
-    - android-$EMULATOR_API
-    - addon-google_apis-google-$ANDROID_API_LEVEL # google play services
-
-    - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
-    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
-    - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
-    - add-on
-    - extra
+    - tools
+#    - extra-android-m2repository # for design library
+#        # Google Play Services
+#    - extra-google-google_play_services
+#        # Support library
+#    - extra-android-support
+#        # Latest artifacts in local repository
+#    - extra-google-m2repository
+#    - android-$ANDROID_API_LEVEL
+#    - android-$EMULATOR_API
+#    - addon-google_apis-google-$ANDROID_API_LEVEL # google play services
+#
+#    - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
+#    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+#    - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
+#    - add-on
+#    - extra
   licenses:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
     - google-gdk-license-.+
 
 before_install:
-  - yes | sdkmanager "platforms;android-25"
+#  - yes | sdkmanager "platforms;android-25"
+  - export EMULATOR=\"system-images;android-${API};${TAG};${ABI}\"
+  - echo 'count=0' > /home/travis/.android/repositories.cfg
 
-notifications:
-  email:
-    - elizarov1988@gmail.com
-    - matek3022@gmail.com
-#    - sklyarovdv@mos.ru
-#    - fastsilver2009@gmail.com
+install:
+  - sdkmanager --list || true
+  - sdkmanager --uninstall \"system-images;android-15;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"system-images;android-16;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"system-images;android-17;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"system-images;android-18;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"system-images;android-19;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"system-images;android-21;default;armeabi-v7a\"
+  - sdkmanager --uninstall \"extras;google;google_play_services\"
+  - sdkmanager --uninstall \"extras;android;support\"
+  - sdkmanager --uninstall \"platforms;android-10\"
+  - sdkmanager --uninstall \"platforms;android-15\"
+  - sdkmanager --uninstall \"platforms;android-16\"
+  - sdkmanager --uninstall \"platforms;android-17\"
+  - sdkmanager --uninstall \"platforms;android-18\"
+  - sdkmanager --uninstall \"platforms;android-19\"
+  - sdkmanager --uninstall \"platforms;android-20\"
+  - sdkmanager --uninstall \"platforms;android-21\"
+  - sdkmanager --uninstall \"build-tools;21.1.2\"
+  - echo yes | sdkmanager \"tools\"
+  - echo yes | sdkmanager \"platforms;android-25\"
+  - echo yes | sdkmanager \"platforms;android-${API}\"
+  - echo yes | sdkmanager \"extras;android;m2repository\"
+  - echo yes | sdkmanager \"extras;google;m2repository\"
+  - echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2\"
+  - echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2\"
+  - echo yes | sdkmanager \"$EMULATOR\"
+  - echo no | avdmanager create avd -n acib -k \"$EMULATOR\" -f --abi \"$ABI\" --tag \"$TAG\"
+  - emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -verbose -qemu -m 512 &
+  - adb wait-for-device get-serialno
+  - cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew --version
+  - cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew clean build
+  - sdkmanager --list || true
 
-cache:
-  directories:
-    - $HOME/.m2
-    - $HOME/.gradle
 
 before_script:
-  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi $ANDROID_ABI --tag $ANDROID_TAG
-  - emulator -avd test -no-skin -no-window &
+#  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi $ANDROID_ABI --tag $ANDROID_TAG
+#  - emulator -avd test -no-skin -no-window &
+#  - android-wait-for-emulator
+#  - adb shell input keyevent 82 &
   - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - sleep 30
   - adb shell input keyevent 82 &
 
-script: ./gradlew connectedAndroidTest
+script: cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew connectedAndroidTest

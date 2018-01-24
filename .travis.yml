@@ -50,6 +50,8 @@ android:
     - build-tools-25.0.0 #for elkag
     - platform-tools
     - tools
+    - android-25
+    - android-$API
 #    - extra-android-m2repository # for design library
 #        # Google Play Services
 #    - extra-google-google_play_services
@@ -72,7 +74,8 @@ android:
     - google-gdk-license-.+
 
 before_install:
-#  - yes | sdkmanager "platforms;android-25"
+  - yes | sdkmanager "platforms;android-25"
+  - yes | sdkmanager "platforms;android-${API}"
   - export EMULATOR="system-images;android-${API};${TAG};${ABI}"
   - echo 'count=0' > /home/travis/.android/repositories.cfg
 
@@ -97,7 +100,7 @@ install:
   - sdkmanager --uninstall "build-tools;21.1.2"
   - echo yes | sdkmanager "tools"
 #  - echo yes | sdkmanager "platforms;android-25"
-  - echo yes | sdkmanager "platforms;android-${API}"
+#  - echo yes | sdkmanager "platforms;android-${API}"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"

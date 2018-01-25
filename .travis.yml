@@ -163,6 +163,14 @@ android:
     - extra-android-m2repository
     # Specify at least one system image
     - sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+
+before_install:
+  - yes | sdkmanager "platforms;android-25"
+  - yes | sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 
 before_script:
   # Create and start emulator

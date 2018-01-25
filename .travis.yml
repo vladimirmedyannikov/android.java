@@ -180,4 +180,4 @@ before_script:
   - adb -s emulator-5554 shell input keyevent 82 &
 
 script:
-  - ./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace
+  - ./gradlew clean connectedAndroidTest -PdisablePreDex --stacktrace

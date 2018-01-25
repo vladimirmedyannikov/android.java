@@ -178,4 +178,4 @@ before_script:
   - android-wait-for-emulator
 
 script:
-  - ./gradlew clean check connectedCheck connectedAndroidTest
+  - ./gradlew clean connectedAndroidTest

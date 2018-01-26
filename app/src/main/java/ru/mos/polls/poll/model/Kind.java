@@ -46,6 +46,10 @@ public enum Kind {
         return INFORM.getKind().equalsIgnoreCase(kind);
     }
 
+    public boolean isOSS() {
+        return OSS.getKind().equalsIgnoreCase(kind);
+    }
+
     public boolean isStandart() {
         return STANDART.getKind().equalsIgnoreCase(kind);
     }

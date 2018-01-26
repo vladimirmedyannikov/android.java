@@ -23,8 +23,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 //apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'jacoco-android' //codeCov
-
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -73,7 +71,6 @@ android {
             minifyEnabled false
             shrinkResources false
             debuggable true
-            testCoverageEnabled true
         }
     }
 
@@ -128,7 +125,6 @@ android {
 
                 debug {
                     signingConfig signingConfigs.debug
-                    testCoverageEnabled true
                 }
             }
         }

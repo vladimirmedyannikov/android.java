@@ -115,7 +115,7 @@ public class Survey implements Serializable {
 
     private List<DetailsExpert> detailsExperts;
 
-    private Listener listener = Listener.STUB;
+    private Listener listener = STUB;
     private String title;
     private String textFullHtml;
     private String textShortHtml;
@@ -182,7 +182,7 @@ public class Survey implements Serializable {
 
     public void setListener(final Listener listener) {
         if (listener == null) {
-            this.listener = Listener.STUB;
+            this.listener = STUB;
         } else {
             this.listener = listener;
         }
@@ -903,31 +903,31 @@ public class Survey implements Serializable {
         }
     }
 
+    public static final Listener STUB = new Listener() {
+
+        @Override
+        public void onSurveyVariantBeforeClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantAfterClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantOnCommit(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantOnCancel(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onRefreshSurvey() {
+        }
+
+    };
+
     public interface Listener {
-
-        public static final Listener STUB = new Listener() {
-
-            @Override
-            public void onSurveyVariantBeforeClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantAfterClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantOnCommit(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantOnCancel(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onRefreshSurvey() {
-            }
-
-        };
 
         /**
          * Вызывается перед нажатием на вариант ответа

@@ -54,4 +54,8 @@ before_script:
   - adb -s emulator-5554 shell input keyevent 82 &
 
 script:
+  - ./gradlew connectedCheck
   - ./gradlew clean connectedAndroidTest -PdisablePreDex --stacktrace
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

@@ -33,6 +33,11 @@ import ru.mos.polls.helpers.TextHelper;
 public abstract class PromoController {
 
     private static ProgressDialog progressDialog;
+    public static PromoResponse promolistener;
+
+    public static void setPromoResponse(PromoResponse promoResponse) {
+        promolistener = promoResponse;
+    }
 
     /**
      * Диалог для ввода промокода
@@ -103,6 +108,7 @@ public abstract class PromoController {
             public void onResponse(JSONObject jsonObject) {
                 dismissProgress();
                 parseResult(activity, promoCode, jsonObject);
+                if (promolistener != null) promolistener.onResponse();
             }
         };
         Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
@@ -112,6 +118,7 @@ public abstract class PromoController {
                 dismissProgress();
                 String error = String.format(activity.getString(R.string.error_occurs), volleyError.getMessage());
                 Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
+                if (promolistener != null) promolistener.onError();
             }
         };
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(url, requestJson, responseListener, errorListener);
@@ -190,5 +197,11 @@ public abstract class PromoController {
     private static void hideSoftInput(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public interface PromoResponse {
+        void onResponse();
+
+        void onError();
     }
 }

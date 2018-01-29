@@ -164,12 +164,16 @@ public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPoi
                     result = true;
                     break;
             }
-            adapter.clear();
-            page.reset();
+            clearList();
             doRequest();
             return result;
         });
         popup.show();
+    }
+
+    public void clearList() {
+        adapter.clear();
+        page.reset();
     }
 
     private void setView() {

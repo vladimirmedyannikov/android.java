@@ -59,11 +59,25 @@ public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, 
          * Оставляем исопльзование кастомного экшен бара для этого экрана, т.к
          * иконка нестандартная
          */
+        PromoController.PromoResponse listener = new PromoController.PromoResponse() {
+
+            @Override
+            public void onResponse() {
+                getViewModel().clearList();
+                getViewModel().doRequest();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        };
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Statistics.shopPromoCode();
                 GoogleStatistics.AGNavigation.shopPromoCode();
+                PromoController.setPromoResponse(listener);
                 PromoController.showInputDialog((BaseActivity) getActivity());
             }
         };

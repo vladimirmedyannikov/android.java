@@ -73,6 +73,13 @@ android {
             minifyEnabled false
             shrinkResources false
             debuggable true
+//            testCoverageEnabled true
+        }
+
+        codecov {
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
             testCoverageEnabled true
         }
     }
@@ -127,6 +134,11 @@ android {
                 }
 
                 debug {
+                    signingConfig signingConfigs.debug
+//                    testCoverageEnabled true
+                }
+
+                codecov {
                     signingConfig signingConfigs.debug
                     testCoverageEnabled true
                 }

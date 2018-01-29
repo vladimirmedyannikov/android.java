@@ -242,6 +242,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof Events.InfoSurveyEvents) {
+                            getActivity().setTitle(getString(R.string.poll_inform_title));
                             Events.InfoSurveyEvents events = (Events.InfoSurveyEvents) o;
                             infoComment.setText(TextUtils.isEmpty(events.getComment()) ? "" : String.format(getString(R.string.your_comment), events.getComment()));
                             infoApartamentNumber.setText(TextUtils.isEmpty(events.getNumber()) ? "" : String.format(getString(R.string.apartament_number_answer), events.getNumber()));

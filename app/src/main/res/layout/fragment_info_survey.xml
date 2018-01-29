@@ -28,6 +28,7 @@
             android:visibility="visible" />
 
         <ScrollView
+            android:id="@+id/scrl"
             style="@style/root"
             android:layout_above="@+id/shareButton">
 

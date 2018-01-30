@@ -34,6 +34,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     useLibrary 'org.apache.http.legacy'
+    testBuildType "codecov"
 
     defaultConfig {
         applicationId "ru.mos.polls"
@@ -55,6 +56,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

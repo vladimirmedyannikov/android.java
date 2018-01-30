@@ -55,7 +55,5 @@ before_script:
 
 script:
   - ./gradlew createCodecovCoverageReport
-  - ./gradlew clean connectedAndroidTest -PdisablePreDex --stacktrace
-
-after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - ./gradlew clean connectedAndroidTest -PdisablePreDex --stacktrace

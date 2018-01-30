@@ -155,7 +155,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
     }
 
     private void processFinishedPoll(Poll poll) {
-        if (!finishedPollList.contains(poll.getId())) {
+        if (poll != null && !finishedPollList.contains(poll.getId())) {
             finishedPollList.add(poll.getId());
             poll.setStatus(Poll.Status.PASSED.status);
             poll.setPassedDate(System.currentTimeMillis() / 1000);

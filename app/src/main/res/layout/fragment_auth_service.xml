@@ -49,7 +49,6 @@
                     android:id="@+id/password"
                     style="@style/edit_profile.input"
                     android:hint="@string/password_or_code"
-                    android:inputType="numberDecimal"
                     android:paddingTop="@dimen/pd_normal" />
 
                 <TextView

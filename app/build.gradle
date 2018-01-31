@@ -141,7 +141,10 @@ android {
                 }
 
                 codecov {
+                    applicationIdSuffix = ".codecov"
                     signingConfig signingConfigs.debug
+                    minifyEnabled false
+                    debuggable true
                     testCoverageEnabled true
                 }
             }

@@ -71,5 +71,9 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
         }
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
     public abstract int getMenuResource();
 }

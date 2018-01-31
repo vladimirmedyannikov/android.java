@@ -28,6 +28,12 @@ public class AgApiBuilder {
     private static final String URL_AG_RESOURCE_FORMATTED = "http://service.ag.mos.ru%s";
     private static final String URL_AG_RESOURCE_FORMATTED_UAT = "http://uat.service.ag.mos.ru%s";
 
+    public static boolean forTestProd;
+
+    public static void setForTestProd(boolean forTestProd) {
+        AgApiBuilder.forTestProd = forTestProd;
+    }
+
     public static String url(String method) {
         return String.format(URL_AG_FORMATTED, method);
     }
@@ -93,6 +99,7 @@ public class AgApiBuilder {
 
     public static Token token() {
         Token result = Token.RELEASE;
+        if (forTestProd) return result;
         if (BuildConfig.BUILD_TYPE.equals("customer")) {
             result = Token.UAT;
         } else if (BuildConfig.BUILD_TYPE.equals("debug")) {

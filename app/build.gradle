@@ -34,7 +34,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     useLibrary 'org.apache.http.legacy'
-//    testBuildType "codecov"
+    testBuildType "codecov"
 
     defaultConfig {
         applicationId "ru.mos.polls"

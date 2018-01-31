@@ -46,7 +46,7 @@ before_install:
   - yes | sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 
 before_script:
-  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - ./gradlew assembleCodecov jacocoTestReport assembleAndroidTest
   # Create and start emulator
   - echo no | android create avd --force -n test1 -t android-$ANDROID_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test1 -no-skin -no-audio -no-window &
@@ -54,7 +54,7 @@ before_script:
   - adb -s emulator-5554 shell input keyevent 82 &
 
 script:
-  - ./gradlew clean connectedAndroidTest -PdisablePreDex --stacktrace
+  - ./gradlew connectedAndroidTest -PdisablePreDex --stacktrace
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -67,8 +67,8 @@ android {
         codecov {
             storeFile file("../debug.keystore")
             keyAlias 'androiddebugkey'
-            keyPassword 'androiddebugkey'
-            storePassword 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
         }
     }
 

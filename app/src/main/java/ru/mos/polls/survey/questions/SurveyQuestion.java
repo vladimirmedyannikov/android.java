@@ -37,7 +37,7 @@ public abstract class SurveyQuestion implements Serializable {
     private Information information;
     private final String hint;
     private boolean passed = false;
-    private Listener listener = Listener.STUB;
+    private Listener listener = STUB;
     private List<DetailsExpert> detailsExperts;
     private final int votersCount;
     private final int votersVariantsCount;
@@ -65,7 +65,7 @@ public abstract class SurveyQuestion implements Serializable {
 
     public void setListener(Listener listener) {
         if (listener == null) {
-            this.listener = Listener.STUB;
+            this.listener = STUB;
         } else {
             this.listener = listener;
         }
@@ -320,31 +320,31 @@ public abstract class SurveyQuestion implements Serializable {
         return votersVariantsCount;
     }
 
+    public static Listener STUB = new Listener() {
+
+        @Override
+        public void onBeforeClick(SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onAfterClick(SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onCommmit(SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onCancel(SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void refreshSurvey() {
+        }
+
+    };
+
     public interface Listener {
-
-        public static Listener STUB = new Listener() {
-
-            @Override
-            public void onBeforeClick(SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onAfterClick(SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onCommmit(SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onCancel(SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void refreshSurvey() {
-            }
-
-        };
 
         void onBeforeClick(SurveyVariant surveyVariant);
 

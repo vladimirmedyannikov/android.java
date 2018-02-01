@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ScrollView;
 
 import com.appsflyer.AppsFlyerLib;
 
@@ -153,10 +154,11 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
 
     public void setInfoDescMore() {
         surveyTitleView.display(survey);
+        ScrollView sv = (ScrollView) getView().findViewById(R.id.scrl);
         surveyTitleView.setStateListener(new SurveyTitleView.StateListener() {
             @Override
             public void onExpand() {
-                getView().scrollTo(0,0);
+                sv.fullScroll(ScrollView.FOCUS_UP);
             }
 
             @Override
@@ -240,6 +242,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof Events.InfoSurveyEvents) {
+                            getActivity().setTitle(getString(R.string.poll_inform_title));
                             Events.InfoSurveyEvents events = (Events.InfoSurveyEvents) o;
                             infoComment.setText(TextUtils.isEmpty(events.getComment()) ? "" : String.format(getString(R.string.your_comment), events.getComment()));
                             infoApartamentNumber.setText(TextUtils.isEmpty(events.getNumber()) ? "" : String.format(getString(R.string.apartament_number_answer), events.getNumber()));

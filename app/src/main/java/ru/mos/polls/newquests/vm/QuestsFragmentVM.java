@@ -33,6 +33,7 @@ import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
+import ru.mos.polls.mainbanner.BannerController;
 import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
 import ru.mos.polls.newquests.controller.QuestStateController;
 import ru.mos.polls.newquests.controller.QuestsApiController;
@@ -76,7 +77,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
     private boolean needRefreshAfterResume = false;
-
+    BannerController bannerController;
     private BroadcastReceiver cancelClickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -164,11 +165,11 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         layoutManager = new LinearLayoutManager(getFragment().getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(2));
         recyclerView.addOnScrollListener(getScrollableListener());
         page = new Page();
         isPaginationEnable = true;
         recyclerUIComponent = new RecyclerUIComponent(adapter);
+        bannerController = new BannerController(recyclerView);
     }
 
     @Override
@@ -198,6 +199,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             doRequest();
         }
         needRefreshAfterResume = true;
+        bannerController.requestStatistic();
     }
 
     @OnClick(R.id.subscribe)
@@ -331,9 +333,6 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                  */
                 if (((BackQuest) quest).getId().equalsIgnoreCase(ProfileQuest.ID_PERSONAL_WIZARD)) {
                     if (((ProfileQuest) quest).idsList.size() == 0) continue;
-                    else {
-
-                    }
                 }
                 /**
                  * Удаляем рекламные блоки из ленты

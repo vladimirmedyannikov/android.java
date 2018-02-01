@@ -9,6 +9,7 @@ import ru.mos.polls.friend.service.FriendProfile;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
+import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.newquests.service.PolltaskGet;
 import ru.mos.polls.poll.service.PollSelect;
@@ -78,6 +79,7 @@ public interface AgApi {
             String STATISTICS = "statistics";
             String GET_SOURCES = "getSources";
             String SET_SOURCES = "setSources";
+            String GET_BANNER_STATISTICS = "getBasicStatistics";
         }
     }
 
@@ -143,4 +145,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET)
     Observable<PolltaskGet.Response> getPolltasks(@Body PolltaskGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLLTASK + "/" + Api.Methods.GET_BANNER_STATISTICS)
+    Observable<GetBannerStatistics.Response> getBannerStatistics();
 }

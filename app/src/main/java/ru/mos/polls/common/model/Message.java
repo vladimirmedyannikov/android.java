@@ -13,6 +13,7 @@ import me.ilich.juggler.change.Add;
 import me.ilich.juggler.change.Remove;
 import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
@@ -94,17 +95,17 @@ public class Message {
                      */
                     Uri uri = Uri.parse(urlScheme);
                     String host = uri.getHost();
+                    if (host.equalsIgnoreCase("task") && UrlSchemeController.PERSONAL_WIZARD.equalsIgnoreCase(uri.getQueryParameter("task_id"))) {
+                        context.navigateTo().state(Add.newActivityForResult(new WizardProfileState(ru.mos.polls.newquests.controller.QuestStateController.getInstance().getIdsList(), AgUser.getPercentFillProfile(context)), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
+                        onClose.run();
+                        return;
+                    }
                     if (UrlSchemeController.EVENTS_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.POLLTASKS_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.NEWS_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.NOVELTIES_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.TASK_HOST.equalsIgnoreCase(host)) {
-//                        MainActivity.close();
-                    }
-                    if (host.equalsIgnoreCase("task") && UrlSchemeController.PERSONAL_WIZARD.equalsIgnoreCase(uri.getQueryParameter("task_id"))) {
-                        context.navigateTo().state(Remove.closeCurrentActivity(), Add.newActivityForResult(new WizardProfileState(ru.mos.polls.newquests.controller.QuestStateController.getInstance().getIdsList(), AgUser.getPercentFillProfile(context)), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
-//                        onClose.run();
-                        return;
+                        MainActivity.close();
                     }
                     /**
                      * запуск экрана

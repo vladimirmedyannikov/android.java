@@ -9,8 +9,7 @@
             style="@style/root">
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipe"
-                style="@style/root"
-                android:layout_marginTop="-28dp">
+                style="@style/root">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"

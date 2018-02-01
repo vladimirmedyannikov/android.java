@@ -166,6 +166,7 @@ public class SurveyUnitTest extends BaseUnitTest {
 
         Assert.assertFalse(surveyHearing.getKind().isMKD());
         Assert.assertFalse(surveyHearing.getKind().isInform());
+        Assert.assertFalse(surveyHearing.getKind().isOSS());
         Assert.assertFalse(surveyHearing.isInformSurveyOk());
 
         Survey surveyInform= SurveyFactory.fromJson(fromTestRawAsJson("survey_info.json"));

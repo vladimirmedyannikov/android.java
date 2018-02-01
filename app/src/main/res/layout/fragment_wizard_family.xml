@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        style="@style/linear"
-        android:background="@color/white"
-        android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView style="@style/root">
 
         <LinearLayout
-            style="@style/item"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/pd_small"
-            android:paddingRight="@dimen/pd_small"
-            android:paddingTop="@dimen/pd_xxxsmall">
+            style="@style/linear"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/text.small.gray"
-                android:text="Семейное положение"
-                android:textSize="@dimen/ts_xsmall" />
+            <LinearLayout
+                style="@style/item"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/pd_small"
+                android:paddingRight="@dimen/pd_small"
+                android:paddingTop="@dimen/pd_xxxsmall">
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/edit_martial_status"
-                android:layout_marginTop="@dimen/pd_pd_xxxsmall_m"
-                style="@style/edit_profile.input" />
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/text.small.gray"
+                    android:text="Семейное положение"
+                    android:textSize="@dimen/ts_xsmall" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/edit_martial_status"
+                    style="@style/edit_profile.input"
+                    android:layout_marginTop="@dimen/pd_pd_xxxsmall_m" />
 
 
-            <View
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginTop="@dimen/pd_pd_xxxsmall_m"
+                    android:background="@color/black_lightest" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="3px"
-                android:layout_marginTop="@dimen/pd_pd_xxxsmall_m"
-                android:background="@color/black_lightest" />
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

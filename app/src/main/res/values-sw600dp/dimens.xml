@@ -54,4 +54,12 @@
     <dimen name="vs_xxxlarge">220dp</dimen>
     <dimen name="vs_xxxxlarge">240dp</dimen>
 
+    <dimen name="banner_image">50dp</dimen>
+    <dimen name="banner_title">20sp</dimen>
+    <dimen name="banner_value">32sp</dimen>
+    <dimen name="banner_top_pad">54dp</dimen>
+    <dimen name="banner_right_pad">54dp</dimen>
+    <dimen name="banner_pad">14dp</dimen>
+    <dimen name="banner_project_title_size">16sp</dimen>
+
 </resources>

@@ -66,9 +66,9 @@ android {
     signingConfigs {
         codecov {
             storeFile file("../debug.keystore")
-            keyAlias 'android'
-            keyPassword 'android'
-            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'androiddebugkey'
+            storePassword 'androiddebugkey'
         }
     }
 

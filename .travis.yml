@@ -46,6 +46,7 @@ before_install:
   - yes | sdkmanager "platforms;android-${ANDROID_API_LEVEL}"
 
 before_script:
+  # Create codecov report
   - ./gradlew assembleCodecov jacocoTestReport assembleAndroidTest
   # Create and start emulator
   - echo no | android create avd --force -n test1 -t android-$ANDROID_API_LEVEL --abi $ANDROID_ABI

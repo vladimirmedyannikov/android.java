@@ -1,8 +1,6 @@
 package ru.mos.polls.quests;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -12,21 +10,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +39,11 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.fragments.PullableFragment;
+import ru.mos.polls.mainbanner.BannerController;
+import ru.mos.polls.mainbanner.BannerItem;
+import ru.mos.polls.mainbanner.HeaderDecoration;
+import ru.mos.polls.mainbanner.HidingScrollListener;
+import ru.mos.polls.mainbanner.MainBannerView;
 import ru.mos.polls.queries.QuestsRequest;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.QuestsApiController;
@@ -63,7 +62,6 @@ import ru.mos.polls.quests.view.SwipeItemTouchHelper;
 import ru.mos.polls.quests.view.questviewholder.QuestsViewHolder;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
-import ru.mos.polls.util.StubUtils;
 
 public class QuestsFragment extends PullableFragment {
 
@@ -82,6 +80,7 @@ public class QuestsFragment extends PullableFragment {
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
     private GoogleStatistics.QuestsFragment qf;
+    BannerController bannerController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class QuestsFragment extends PullableFragment {
         layoutManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(layoutManager);
         listView.setHasFixedSize(true);
-        listView.addItemDecoration(new SpacesItemDecoration(2));
+//        listView.addItemDecoration(new SpacesItemDecoration(2));
 
         quests = new ArrayList<>();
         adapter = new QuestsItemAdapter(quests, itemListener);
@@ -102,6 +101,7 @@ public class QuestsFragment extends PullableFragment {
         callback = new SwipeItemTouchHelper(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(listView);
+        bannerController = new BannerController(listView);
         return root;
     }
 
@@ -248,11 +248,14 @@ public class QuestsFragment extends PullableFragment {
         }
         update(null, null);
         getActivity().setTitle(getString(R.string.title_ag));
+        bannerController.requestStatistic();
     }
+
 
     @Override
     public void onStop() {
         super.onStop();
+
     }
 
     public void setListener(Listener listener) {

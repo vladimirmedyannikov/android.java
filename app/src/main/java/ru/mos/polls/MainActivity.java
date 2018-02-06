@@ -57,7 +57,7 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.newquests.vm.QuestsFragmentVM;
+import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
@@ -395,7 +395,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_SUPPORT;
                 break;
             case NavigationMenuItem.QUESTS:
-                ru.mos.polls.newquests.ui.QuestsFragment qfr = ru.mos.polls.newquests.ui.QuestsFragment.instance();
+                ru.mos.polls.quests.ui.QuestsFragment qfr = ru.mos.polls.quests.ui.QuestsFragment.instance();
                 fr = qfr;
                 qfr.setListener(new QuestsFragmentVM.Listener() {
 

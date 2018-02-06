@@ -21,12 +21,12 @@ import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
-import ru.mos.polls.quests.quest.AchievementQuest;
-import ru.mos.polls.quests.quest.AdvertisementQuest;
-import ru.mos.polls.quests.quest.BackQuest;
-import ru.mos.polls.quests.quest.NewsQuest;
-import ru.mos.polls.quests.quest.Quest;
-import ru.mos.polls.quests.quest.SocialQuest;
+import ru.mos.polls.quests.model.quest.AchievementQuest;
+import ru.mos.polls.quests.model.quest.AdvertisementQuest;
+import ru.mos.polls.quests.model.quest.BackQuest;
+import ru.mos.polls.quests.model.quest.NewsQuest;
+import ru.mos.polls.quests.model.quest.Quest;
+import ru.mos.polls.quests.model.quest.SocialQuest;
 
 
 public abstract class QuestsApiController {

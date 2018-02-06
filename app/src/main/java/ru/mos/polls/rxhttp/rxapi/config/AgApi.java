@@ -11,7 +11,7 @@ import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
-import ru.mos.polls.newquests.service.PolltaskGet;
+import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.service.AchievementsGet;
 import ru.mos.polls.profile.service.AchievementsSelect;

@@ -3,8 +3,8 @@ package ru.mos.polls.navigation.actionbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.ActionBarHelper;
 
 /**

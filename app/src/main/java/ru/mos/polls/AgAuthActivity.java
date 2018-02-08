@@ -47,11 +47,11 @@ import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
-import ru.mos.elk.api.API;
-import ru.mos.elk.auth.AuthActivity;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.api.API;
 import ru.mos.polls.auth.state.AuthState;
+import ru.mos.polls.base.activity.AuthActivity;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
@@ -224,7 +224,7 @@ public class AgAuthActivity extends AuthActivity {
 
     @OnClick(R.id.registered_in_service)
     public void authInService() {
-        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), BaseActivity.class));
+        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
     @OnEditorAction(R.id.etPassword)

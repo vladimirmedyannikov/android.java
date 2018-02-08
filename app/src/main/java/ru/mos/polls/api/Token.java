@@ -1,4 +1,4 @@
-package ru.mos.elk.api;
+package ru.mos.polls.api;
 
 public enum Token {
     AG("ag_test_token", "ag_uat_token3","35e59a5eaab111e3b266416c74617269");

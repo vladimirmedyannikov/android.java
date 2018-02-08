@@ -1,4 +1,4 @@
-package ru.mos.elk.profile;
+package ru.mos.polls.profile;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -14,10 +14,8 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
-import ru.mos.elk.api.API;
 import ru.mos.elk.auth.AuthActivity;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
@@ -25,7 +23,10 @@ import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
-import ru.mos.elk.push.GCMBroadcastReceiver;
+import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.push.GCMBroadcastReceiver;
 
 /**
  * Менеджер для работы сервисами профиля пользователя аг

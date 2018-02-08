@@ -11,7 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.volley2.RequestQueue;
 import com.android.volley2.toolbox.Volley;
 
-import ru.mos.elk.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
+
 
 /**
  * Инкапсулирует общие, нужные методы

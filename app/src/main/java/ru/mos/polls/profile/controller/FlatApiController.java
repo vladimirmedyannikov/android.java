@@ -10,14 +10,14 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.profile.model.Reference;
 

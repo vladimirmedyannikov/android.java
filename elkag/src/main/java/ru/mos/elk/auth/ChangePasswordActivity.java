@@ -17,9 +17,6 @@ import org.json.JSONObject;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
-import ru.mos.elk.api.API;
-import ru.mos.elk.netframework.request.StringRequest;
-import ru.mos.elk.netframework.utils.StandartErrorListener;
 
 public class ChangePasswordActivity extends BaseActivity {
     private static final int MIN_PASSWORD_LENGTH = 5;
@@ -56,8 +53,8 @@ public class ChangePasswordActivity extends BaseActivity {
                         finish();
                     }
                 };
-                addRequest(new StringRequest(API.getURL(PATH),
-                        getQueryParams(), listener, new StandartErrorListener(ChangePasswordActivity.this, R.string.elk_cant_changePassword, dialog)), dialog);
+//                addRequest(new StringRequest(API.getURL(PATH),
+//                        getQueryParams(), listener, new StandartErrorListener(ChangePasswordActivity.this, R.string.elk_cant_changePassword, dialog)), dialog);
             }
         });
 

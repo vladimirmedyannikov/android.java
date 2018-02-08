@@ -17,11 +17,11 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.helpers.TextHelper;
 

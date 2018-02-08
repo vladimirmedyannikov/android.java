@@ -1,31 +1,65 @@
 package ru.mos.polls;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import ru.mos.elk.auth.RegisterActivity;
+import com.android.volley2.Response;
+import com.android.volley2.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ru.mos.elk.Dialogs;
+import ru.mos.elk.Statistics;
+import ru.mos.elk.netframework.request.StringRequest;
+import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.popup.PopupController;
 
-public class AgRegisterActivity extends RegisterActivity {
+public class AgRegisterActivity extends BaseActivity {
     private GoogleStatistics.Registry statistics = new GoogleStatistics.Registry();
 
     private EditText phone;
     private CheckBox cbAgreeOffer;
+    private EditText etPhoneNumber;
+    protected TextView tvError;
+
+    private View btnAction;
+    private int waitId = R.string.elk_wait_registration;
+    private int successId = R.string.elk_succeeded_register;
+
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+
+        configActionButton();
+        configPhoneEdit();
+        tvError = (TextView) findViewById(ru.mos.elk.R.id.tvError);
+        ru.mos.elk.Statistics.authEnterRegistration();
 
         Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer_link));
         TextView offer = (TextView) findViewById(R.id.tvOffer);
@@ -93,20 +127,6 @@ public class AgRegisterActivity extends RegisterActivity {
         super.onStop();
     }
 
-    @Override
-    protected void register() {
-        if (cbAgreeOffer.isChecked() && phone.getText().length() > 0) {
-            super.register();
-        }
-    }
-
-    @Override
-    protected void onRegistrationSuccess() {
-        super.onRegistrationSuccess();
-        startAuth();
-        statistics.check(true);
-    }
-
     private void startAuth() {
         Intent authIntent = new Intent(AgRegisterActivity.this, AgAuthActivity.class);
         authIntent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
@@ -125,5 +145,123 @@ public class AgRegisterActivity extends RegisterActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void configActionButton() {
+        btnAction = findViewById(ru.mos.elk.R.id.btnAction);
+        btnAction.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
+    }
+
+    public void setMessages(int waitId, int successId) {
+        this.waitId = waitId;
+        this.successId = successId;
+    }
+
+    private void configPhoneEdit() {
+        etPhoneNumber = (EditText) findViewById(ru.mos.elk.R.id.etPhoneNumber);
+        TextWatcher watcher = new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                btnAction.setEnabled(etPhoneNumber.getText().length() == 10);
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+        etPhoneNumber.addTextChangedListener(watcher);
+        etPhoneNumber.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (etPhoneNumber.getText().length() == 10 && (actionId == ru.mos.elk.R.id.actionLogin || actionId == EditorInfo.IME_ACTION_DONE)) {
+                    register();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    public JSONObject getQueryParams() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("msisdn", "7" + etPhoneNumber.getText().toString());
+            JSONObject deviceInfo = new JSONObject();
+            deviceInfo.put("os", "Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")");
+            deviceInfo.put("device", Build.MODEL + " (" + Build.MANUFACTURER + ")");
+            params.put("client_info", deviceInfo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return params;
+    }
+
+    public EditText getPhoneEdit() {
+        return etPhoneNumber;
+    }
+
+    protected void register() {
+        if (cbAgreeOffer.isChecked() && phone.getText().length() > 0) {
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(etPhoneNumber.getWindowToken(), 0);
+            tvError.setVisibility(View.GONE);
+
+            dialog = Dialogs.showProgressDialog(this, waitId);
+            Response.Listener<String> listener = new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    onRegistrationSuccess();
+                }
+
+            };
+            Response.ErrorListener errListener = new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    onRegistrationFail(error, dialog);
+                }
+            };
+            String url = API.getURL("json/v0.3/auth/user/recoverypassword");
+            addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
+        }
+    }
+
+    protected void onRegistrationFail(VolleyError error, ProgressDialog dialog) {
+        dialog.dismiss();
+        tvError.setText(error.getMessage());
+        tvError.setVisibility(View.VISIBLE);
+    }
+
+    protected void onRegistrationSuccess() {
+        if (successId == R.string.elk_succeeded_register)
+            ru.mos.elk.Statistics.regitrated();
+        else if (successId == R.string.elk_succeeded_restore)
+            Statistics.passwRecovered();
+        dialog.dismiss();
+        Toast.makeText(this, successId, Toast.LENGTH_LONG).show();
+        String phone = etPhoneNumber.getText().toString();
+
+        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
+        prefs.edit().putString(AgUser.PHONE, "7" + phone).commit();
+        startAuth();
+        statistics.check(true);
+    }
+
+    protected int getLayout() {
+        return ru.mos.elk.R.layout.activity_register;
     }
 }

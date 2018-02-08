@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.mos.elk.api.API;
+import ru.mos.polls.api.API;
 import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 

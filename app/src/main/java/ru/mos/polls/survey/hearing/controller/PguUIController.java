@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguRebindActivity;

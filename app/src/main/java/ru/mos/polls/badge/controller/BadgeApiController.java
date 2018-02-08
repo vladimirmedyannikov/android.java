@@ -6,13 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
 import ru.mos.polls.badge.model.Badge;
 import ru.mos.polls.badge.model.State;
+import ru.mos.polls.base.activity.BaseActivity;
 
 /**
  * Икапсуляция получения бейджей с сервера

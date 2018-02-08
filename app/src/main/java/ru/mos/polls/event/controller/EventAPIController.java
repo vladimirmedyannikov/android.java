@@ -1,7 +1,6 @@
 package ru.mos.polls.event.controller;
 
 import android.app.ProgressDialog;
-import android.util.Log;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -13,13 +12,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.common.model.PageInfo;
 import ru.mos.polls.common.model.Position;

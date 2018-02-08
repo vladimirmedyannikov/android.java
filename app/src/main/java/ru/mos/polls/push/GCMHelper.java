@@ -1,4 +1,4 @@
-package ru.mos.elk.push;
+package ru.mos.polls.push;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

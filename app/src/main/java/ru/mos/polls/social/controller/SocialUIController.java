@@ -30,10 +30,10 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.List;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.event.model.Event;
 import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
 import ru.mos.polls.social.model.AppPostItem;

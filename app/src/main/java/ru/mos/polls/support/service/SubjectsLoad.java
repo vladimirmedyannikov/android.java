@@ -2,7 +2,7 @@ package ru.mos.polls.support.service;
 
 import java.util.List;
 
-import ru.mos.elk.api.Token;
+import ru.mos.polls.api.Token;
 import ru.mos.polls.support.model.Subject;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 

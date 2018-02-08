@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 
 import me.ilich.juggler.change.Add;
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -15,6 +13,8 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarDynamicActivity;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.WebViewActivity;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;

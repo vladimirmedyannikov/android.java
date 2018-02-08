@@ -27,7 +27,6 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.profile.AgUser;
 
@@ -138,8 +137,8 @@ public class RegisterActivity extends BaseActivity {
                 onRegistrationFail(error, dialog);
 			}
 		};
-		String url = API.getURL("json/v0.3/auth/user/recoverypassword");
-        addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
+//		String url = API.getURL("json/v0.3/auth/user/recoverypassword");
+//        addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
     }
 
     protected void onRegistrationFail(VolleyError error, ProgressDialog dialog) {

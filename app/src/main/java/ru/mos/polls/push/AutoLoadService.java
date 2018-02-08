@@ -1,4 +1,4 @@
-package ru.mos.elk.push;
+package ru.mos.polls.push;
 
 import android.app.Service;
 import android.content.Intent;
@@ -16,10 +16,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.ResponseErrorCode;
 import ru.mos.elk.simplenet.ServiceJSONClient;
 import ru.mos.elk.simplenet.URLMethod;
+import ru.mos.polls.api.API;
 
 public class AutoLoadService extends Service {    
     public final static String TASK = "Task";
@@ -58,7 +58,7 @@ public class AutoLoadService extends Service {
 	private void pushRegister() {
 		final SharedPreferences prefs = getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE);
         final String guid = API.getGUID(this);
-		
+
 		Thread gcmThread = new Thread() {
 			public void run() {
 				try {
@@ -73,10 +73,10 @@ public class AutoLoadService extends Service {
 						putInt(GCMHelper.PROPERTY_APP_VERSION, curAppVersion).
 						putBoolean(GCMHelper.PROPERTY_ON_SERVER, false).commit();
 					}
-					
+
 					if(!prefs.getBoolean(GCMHelper.PROPERTY_ON_SERVER,false)){
 						JSONObject params = new JSONObject();
-						
+
 						JSONObject deviceInfo = new JSONObject();
 						deviceInfo.put("guid", guid);
 						deviceInfo.put("object_id", registrationId);
@@ -84,7 +84,7 @@ public class AutoLoadService extends Service {
 						deviceInfo.put("app_version", GCMHelper.getAppVersionName(getApplicationContext()));
 						params.put("device_info", deviceInfo);
 						params.put("empAction", "registerPush");
-						
+
 						ServiceJSONClient client = new ServiceJSONClient();
 						client.communicate(URLMethod.POST, API.getURL(GCMHelper.REGISTER_PATH), params);
 						if(client.getErrorCode()==HttpURLConnection.HTTP_OK){

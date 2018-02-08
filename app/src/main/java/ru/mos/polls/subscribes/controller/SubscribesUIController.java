@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.NotificationController;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.event.model.Event;
 import ru.mos.polls.subscribes.manager.SubscribeManager;

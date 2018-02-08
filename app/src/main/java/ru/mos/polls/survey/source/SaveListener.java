@@ -14,7 +14,6 @@ import com.android.volley2.VolleyError;
 
 import org.json.JSONObject;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
@@ -22,6 +21,7 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;

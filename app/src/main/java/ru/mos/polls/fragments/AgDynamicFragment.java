@@ -2,7 +2,6 @@ package ru.mos.polls.fragments;
 
 import android.os.Bundle;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.netframework.adapters.ActionInterceptor;
 import ru.mos.elk.netframework.adapters.DynamicManager;
 import ru.mos.elk.netframework.model.results.ResultTableLink;
@@ -10,6 +9,7 @@ import ru.mos.elk.netframework.model.results.ResultType;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.WebViewActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.quests.controller.QuestsApiController;
 
 public class AgDynamicFragment extends DynamicFragment {

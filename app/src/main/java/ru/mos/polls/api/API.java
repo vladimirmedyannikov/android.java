@@ -1,4 +1,4 @@
-package ru.mos.elk.api;
+package ru.mos.polls.api;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,9 @@ import android.net.Uri;
 
 import java.util.UUID;
 
-import ru.mos.elk.push.AutoLoadService;
-import ru.mos.elk.push.GCMHelper;
+import ru.mos.polls.push.AutoLoadService;
+import ru.mos.polls.push.GCMHelper;
+
 
 public class API {
     private static boolean isDebug = true;

@@ -26,7 +26,7 @@ import java.util.Map;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.R;
-import ru.mos.elk.api.API;
+//import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.model.results.Result;
 import ru.mos.elk.netframework.model.results.ResultButton;
 import ru.mos.elk.netframework.model.results.ResultLink;
@@ -192,10 +192,10 @@ public class DynamicManager {
         requestQueue.getCache().clear();
     }
 
-    public static String makeCacheKey(Context context, String path){
-        String baseUrl = API.getURL(path);
-        return String.valueOf(baseUrl.hashCode());
-    }
+//    public static String makeCacheKey(Context context, String path){
+//        String baseUrl = API.getURL(path);
+//        return String.valueOf(baseUrl.hashCode());
+//    }
 
     private void cancelService(){
     	requestQueue.cancelAll(getClass());

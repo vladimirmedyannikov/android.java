@@ -1,4 +1,4 @@
-package ru.mos.elk;
+package ru.mos.polls.base.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -25,6 +25,7 @@ import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.actionmode.ActionDescription;
 import ru.mos.elk.actionmode.SearchDescription;
 import ru.mos.elk.netframework.utils.BitmapLruCache;
+import ru.mos.polls.api.API;
 
 public class BaseActivity extends JugglerActivity {
 	public static final String INTENT_LOGOUT = "ru.mos.elk.pages.LOGOUT";
@@ -120,7 +121,7 @@ public class BaseActivity extends JugglerActivity {
      * clears all queries with path
      * @param path - path to use in clearAll logic*/
     public void invalidate(String path){
-//        requestQueue.getCache().invalidate(API.getURL(path), true);
+        requestQueue.getCache().invalidate(API.getURL(path), true);
     }
 
     public static void setFlurryKey(String key){

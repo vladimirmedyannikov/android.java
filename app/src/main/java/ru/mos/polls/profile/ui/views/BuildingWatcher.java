@@ -13,12 +13,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.R;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 
 
 public class BuildingWatcher implements TextWatcher {

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.elk.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 
 /**
  * Содержит общие методы для классов экранов, использвоать

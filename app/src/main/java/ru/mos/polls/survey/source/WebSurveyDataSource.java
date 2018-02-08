@@ -17,9 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Statistics;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.OkHttpStack;
 import ru.mos.elk.netframework.request.Session;
@@ -27,6 +25,8 @@ import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
 import ru.mos.polls.poll.vm.PollActiveFragmentVM;

@@ -21,8 +21,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import me.ilich.juggler.gui.JugglerActivity;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.social.controller.SocialUIController;

@@ -8,12 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.BR;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PromoController;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
 import ru.mos.polls.helpers.ActionBarHelper;

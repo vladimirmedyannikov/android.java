@@ -3,8 +3,8 @@ package ru.mos.polls.settings.vm;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import ru.mos.elk.BaseActivity;
-import ru.mos.elk.profile.ProfileManager;
+import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;

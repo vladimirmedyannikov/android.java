@@ -1,4 +1,4 @@
-package ru.mos.elk.auth;
+package ru.mos.polls.base.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,15 +17,20 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.volley2.VolleyError;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
+import ru.mos.elk.auth.RestoreActivity;
+import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.ProfileManager;
+import ru.mos.polls.push.GCMHelper;
 
 public class AuthActivity extends BaseActivity {
     private static final String LOGIN = "login";
@@ -52,7 +57,6 @@ public class AuthActivity extends BaseActivity {
         etPassword = ButterKnife.findById(this, R.id.etPassword);
         tvError = ButterKnife.findById(this, R.id.tvError);
         configLogin();
-//        configureRegister();
         configureRestore();
         configureEdits();
         configSkip();
@@ -77,46 +81,46 @@ public class AuthActivity extends BaseActivity {
         imm.hideSoftInputFromWindow(etPassword.getWindowToken(), 0);
         tvError.setVisibility(View.GONE);
 
-//        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
-//            @Override
-//            public void onLoaded(AgUser agUser) {
-//                dialog.dismiss();
-//                onLogon();
-//            }
-//
-//            @Override
-//            public void onError(VolleyError error) {
-//                dialog.dismiss();
-//                if (error != null) {
-//                    if (error.getErrorCode() != ERROR_CODE_423)
-//                    onLoginFault(error.getMessage());
-//                    showErrorDialog(error.getErrorCode());
-//                }
-//            }
-//        };
-//        ProfileManager.getProfile(this, getQueryParams(), agUserListener, false);
+        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+            @Override
+            public void onLoaded(AgUser agUser) {
+                dialog.dismiss();
+                onLogon();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                dialog.dismiss();
+                if (error != null) {
+                    if (error.getErrorCode() != ERROR_CODE_423)
+                    onLoginFault(error.getMessage());
+                    showErrorDialog(error.getErrorCode());
+                }
+            }
+        };
+        ProfileManager.getProfile(this, getQueryParams(), agUserListener, false);
     }
 
     private JSONObject getQueryParams() {
         JSONObject params = new JSONObject();
         JSONObject auth = new JSONObject();
-//        try {
-//            auth.put(LOGIN, makeLogin(etLogin.getText().toString()));
-//            auth.put(PASSWORD, etPassword.getText().toString());
-//            auth.put(GCMHelper.GUID, getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE).getString(GCMHelper.GUID, null));
-//            params.put(Session.AUTH, auth);
-//            SharedPreferences gcmPrefs = getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE);
-//            if (!gcmPrefs.getBoolean(GCMHelper.PROPERTY_ON_SERVER, false)) {
-//                JSONObject deviceInfo = new JSONObject();
-//                deviceInfo.put("guid", gcmPrefs.getString(GCMHelper.GUID, null));
-//                deviceInfo.put("object_id", gcmPrefs.getString(GCMHelper.PROPERTY_REG_ID, null));
-//                deviceInfo.put("user_agent", "Android");
-//                deviceInfo.put("app_version", GCMHelper.getAppVersionName(this));
-//                params.put("device_info", deviceInfo);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            auth.put(LOGIN, makeLogin(etLogin.getText().toString()));
+            auth.put(PASSWORD, etPassword.getText().toString());
+            auth.put(GCMHelper.GUID, getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE).getString(GCMHelper.GUID, null));
+            params.put(Session.AUTH, auth);
+            SharedPreferences gcmPrefs = getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE);
+            if (!gcmPrefs.getBoolean(GCMHelper.PROPERTY_ON_SERVER, false)) {
+                JSONObject deviceInfo = new JSONObject();
+                deviceInfo.put("guid", gcmPrefs.getString(GCMHelper.GUID, null));
+                deviceInfo.put("object_id", gcmPrefs.getString(GCMHelper.PROPERTY_REG_ID, null));
+                deviceInfo.put("user_agent", "Android");
+                deviceInfo.put("app_version", GCMHelper.getAppVersionName(this));
+                params.put("device_info", deviceInfo);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return params;
     }
@@ -124,25 +128,6 @@ public class AuthActivity extends BaseActivity {
     protected String makeLogin(String loginString) {
         return "7" + loginString;
     }
-
-//    protected void onLogon(JSONObject jsonUserData) {
-//        Statistics.logon();
-//        Bundle extras = getIntent().getExtras();
-//        if(!extras.getBoolean(JUST_AUTHORIZE, false)){
-//            Intent intent = new Intent(this, (Class<?>) extras.getSerializable(PASSED_ACTIVITY));
-//            intent.putExtras(extras);
-//            startActivity(intent);
-//        }
-//        finish();
-//
-//        Context cntxt = getApplicationContext();
-//		AgProfileManager.clearStoredData(cntxt);
-//        AgProfileManager.storeCommon(cntxt, jsonUserData.optJSONObject("common"));
-//		AgProfileManager.storePersonal(cntxt, jsonUserData.optJSONObject("personal"));
-//
-//        API.registerPush(cntxt);
-//        API.refreshData(cntxt);
-//	}
 
     protected void onLogon() {
         Statistics.logon();
@@ -244,17 +229,6 @@ public class AuthActivity extends BaseActivity {
             }
         });
     }
-
-//    protected void configureRegister() {
-//        findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(AuthActivity.this, RegisterActivity.class);
-//                startActivityForResult(intent, REQUEST_REGISTER);
-//            }
-//        });
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

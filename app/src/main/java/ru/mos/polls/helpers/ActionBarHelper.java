@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 
 
 public abstract class ActionBarHelper {

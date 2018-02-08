@@ -11,10 +11,10 @@ import android.net.Uri;
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Constants;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.db.PollsData;
 import ru.mos.polls.db.PollsData.TPointHistory;
 import ru.mos.polls.db.PollsProvider;

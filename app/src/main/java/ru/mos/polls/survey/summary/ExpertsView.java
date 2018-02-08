@@ -20,9 +20,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.experts.DetailsExpert;
 import ru.mos.polls.survey.questions.SurveyQuestion;

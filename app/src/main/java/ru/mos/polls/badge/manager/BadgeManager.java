@@ -2,10 +2,10 @@ package ru.mos.polls.badge.manager;
 
 import android.content.IntentFilter;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.badge.controller.BadgeApiController;
 import ru.mos.polls.badge.model.Badge;
 import ru.mos.polls.badge.model.BadgesSource;
+import ru.mos.polls.base.activity.BaseActivity;
 
 /**
  * Инкапсулирует

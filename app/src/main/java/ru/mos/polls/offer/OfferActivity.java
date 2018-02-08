@@ -16,10 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
 
 public class OfferActivity extends BaseActivity {
 

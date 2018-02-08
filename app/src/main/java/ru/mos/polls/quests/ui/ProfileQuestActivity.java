@@ -13,7 +13,7 @@ import com.android.volley2.VolleyError;
 import org.json.JSONObject;
 
 import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.ProfileManager;
+import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;

@@ -3,8 +3,8 @@ package ru.mos.polls.quests.model.quest;
 import android.app.Dialog;
 import android.content.Context;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.quests.model.QuestFamilyElement;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.social.controller.SocialUIController;

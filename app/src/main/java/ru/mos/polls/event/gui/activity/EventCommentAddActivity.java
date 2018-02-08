@@ -17,10 +17,10 @@ import com.android.volley2.VolleyError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.event.controller.EventAPIController;
 import ru.mos.polls.event.model.EventComment;
 import ru.mos.polls.helpers.TitleHelper;

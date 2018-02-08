@@ -36,7 +36,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.ElkTextUtils;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.AGApplication;
@@ -47,6 +46,7 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.badge.model.Personal;
 import ru.mos.polls.badge.model.State;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.util.AgTextUtil;
 

@@ -8,9 +8,9 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.api.API;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
 
 public class ServiceSelectActivity extends SelectActivity {
 

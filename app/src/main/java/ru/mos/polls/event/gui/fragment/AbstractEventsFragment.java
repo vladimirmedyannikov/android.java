@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.ScrollableController;
 import ru.mos.polls.common.model.PageInfo;

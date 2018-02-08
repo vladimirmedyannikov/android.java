@@ -16,13 +16,13 @@ import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Set;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.elk.R;
-import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
 import ru.mos.elk.profile.flat.StreetAdapter;
 import ru.mos.elk.profile.flat.Value;
 import ru.mos.polls.UrlManager;
+import ru.mos.polls.api.API;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.TextHelper;
 
 

@@ -11,9 +11,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.model.Filter;

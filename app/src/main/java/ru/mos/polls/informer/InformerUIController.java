@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.util.GuiUtils;
 
 /**

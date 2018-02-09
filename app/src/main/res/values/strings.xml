@@ -112,7 +112,7 @@
     <string name="empty_passedpolls_hint">Вы не приняли участия ни в одном голосовании</string>
     <string name="empty_activepolls_hint">Новые голосования появятся в ближайшее время</string>
     <string name="empty_housepolls_hint">В вашем доме пока не проходит никаких голосований.\n\nДобавьте адреса проживания, регистрации и собственности, чтобы не пропустить голосования.</string>
-    <string name="below_house_addresses_hint">Голосования для жильцов дома доступны по указанным адресам.\n\nДля участия в голосованиях собственников необходимо указать адреса собственности и связать профиль с профилем на mos.ru</string>
+    <string name="below_house_addresses_hint">Голосования для жильцов дома доступны по указанным в профиле адресам регистрации или проживания.\n\nДля участия в голосованиях собственников необходимо указать адреса собственности и связать профиль с профилем на mos.ru</string>
     <string name="empty_point_history"> </string>
     <string name="question_count_1" formatted="false">%s вопрос</string>
     <string name="question_count_2" formatted="false">%s вопросов</string>

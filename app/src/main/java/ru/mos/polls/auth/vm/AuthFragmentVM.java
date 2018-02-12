@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.netframework.request.Session;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.GoogleStatistics;

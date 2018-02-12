@@ -32,7 +32,7 @@ import org.json.JSONObject;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.Statistics;
 import ru.mos.elk.netframework.request.StringRequest;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.popup.PopupController;

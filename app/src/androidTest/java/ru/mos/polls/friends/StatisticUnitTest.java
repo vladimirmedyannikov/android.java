@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ru.mos.elk.profile.Statistics;
+import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.friend.model.Statistic;
 

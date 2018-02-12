@@ -27,7 +27,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.AGApplication;

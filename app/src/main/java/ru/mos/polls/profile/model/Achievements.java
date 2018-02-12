@@ -1,4 +1,4 @@
-package ru.mos.elk.profile;
+package ru.mos.polls.profile.model;
 
 
 import com.google.gson.annotations.SerializedName;

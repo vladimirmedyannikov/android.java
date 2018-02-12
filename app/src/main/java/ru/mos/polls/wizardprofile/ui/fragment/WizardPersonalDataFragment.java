@@ -2,7 +2,7 @@ package ru.mos.polls.wizardprofile.ui.fragment;
 
 import android.os.Bundle;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;

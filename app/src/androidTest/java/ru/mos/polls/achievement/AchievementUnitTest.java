@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import ru.mos.elk.profile.Achievements;
+import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.profile.vm.AchievementVM;
 import ru.mos.polls.profile.model.Achievement;

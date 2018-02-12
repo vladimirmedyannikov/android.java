@@ -2,7 +2,7 @@ package ru.mos.polls.profile.ui.fragment;
 
 import android.os.Bundle;
 
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.base.ui.MenuBindingFragment;

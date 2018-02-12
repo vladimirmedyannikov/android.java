@@ -3,7 +3,7 @@ package ru.mos.polls.aguser;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.BaseUnitTest;
 
 /**

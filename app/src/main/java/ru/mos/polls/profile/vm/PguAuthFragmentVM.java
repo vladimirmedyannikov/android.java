@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentPguAuthBinding;
 import ru.mos.polls.base.vm.FragmentViewModel;

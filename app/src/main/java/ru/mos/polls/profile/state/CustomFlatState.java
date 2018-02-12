@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.profile.ui.fragment.CustomFlatFragment;
 

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import ru.mos.elk.profile.Achievements;
+import ru.mos.polls.profile.model.Achievements;
 
 
 /**

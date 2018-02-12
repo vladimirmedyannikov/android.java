@@ -9,7 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import ru.mos.elk.profile.Achievements;
+import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;

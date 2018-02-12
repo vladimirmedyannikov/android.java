@@ -2,7 +2,7 @@ package ru.mos.polls.profile.ui.adapter;
 
 import java.util.List;
 
-import ru.mos.elk.profile.Statistics;
+import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.UserStatsItemBinding;
 import ru.mos.polls.base.ui.adapter.BaseAdapter;

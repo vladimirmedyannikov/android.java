@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import ru.mos.elk.R;
 import ru.mos.elk.netframework.request.JsonArrayRequest;
-import ru.mos.elk.profile.flat.Value;
+import ru.mos.polls.profile.model.flat.Value;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;

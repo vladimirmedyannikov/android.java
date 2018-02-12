@@ -21,7 +21,7 @@ import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;

@@ -3,9 +3,10 @@ package ru.mos.polls.profile.service;
 
 import com.google.gson.annotations.SerializedName;
 
+
 import java.util.List;
 
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;

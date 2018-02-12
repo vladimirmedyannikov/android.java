@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.api.API;

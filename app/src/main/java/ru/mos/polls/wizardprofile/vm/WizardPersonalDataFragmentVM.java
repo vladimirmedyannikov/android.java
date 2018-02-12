@@ -8,15 +8,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.BirthDateParser;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.BirthDateParser;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.base.ui.dialog.DatePickerFragment;

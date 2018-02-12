@@ -1,7 +1,7 @@
 package ru.mos.polls.profile.vm;
 
 
-import ru.mos.elk.profile.AgSocialStatus;
+import ru.mos.polls.profile.model.AgSocialStatus;
 import ru.mos.polls.databinding.ItemAgSocialStatusBinding;
 import ru.mos.polls.base.vm.BaseVM;
 

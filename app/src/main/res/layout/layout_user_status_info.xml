@@ -7,7 +7,7 @@
 
         <variable
             name="agUser"
-            type="ru.mos.elk.profile.AgUser" />
+            type="ru.mos.polls.profile.model.AgUser" />
     </data>
 
     <LinearLayout

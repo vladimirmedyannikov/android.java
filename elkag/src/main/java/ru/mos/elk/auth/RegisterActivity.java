@@ -27,8 +27,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
-import ru.mos.elk.netframework.request.StringRequest;
-import ru.mos.elk.profile.AgUser;
+//import ru.mos.elk.profile.AgUser;
 
 public class RegisterActivity extends BaseActivity {
     private EditText etPhoneNumber;
@@ -156,8 +155,8 @@ public class RegisterActivity extends BaseActivity {
         Toast.makeText(RegisterActivity.this, successId, Toast.LENGTH_LONG).show();
         String phone = etPhoneNumber.getText().toString();
 
-        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
-        prefs.edit().putString(AgUser.PHONE, "7"+phone).commit();
+//        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
+//        prefs.edit().putString(AgUser.PHONE, "7"+phone).commit();
     }
 
     protected int getLayout() {

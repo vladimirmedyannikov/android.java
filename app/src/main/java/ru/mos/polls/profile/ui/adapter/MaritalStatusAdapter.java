@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 
 public class MaritalStatusAdapter extends ArrayAdapter<AgUser.MaritalStatus> {

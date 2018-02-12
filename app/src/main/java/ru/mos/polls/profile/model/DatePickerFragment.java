@@ -1,4 +1,4 @@
-package ru.mos.elk.profile;
+package ru.mos.polls.profile.model;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;

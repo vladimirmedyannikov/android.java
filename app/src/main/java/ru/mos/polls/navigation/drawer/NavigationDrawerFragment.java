@@ -37,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ru.mos.elk.ElkTextUtils;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.Constants;

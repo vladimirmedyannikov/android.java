@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.base.ui.MenuBindingFragment;

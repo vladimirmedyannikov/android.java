@@ -1,7 +1,7 @@
 package ru.mos.polls.profile.vm;
 
 
-import ru.mos.elk.profile.Statistics;
+import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.databinding.UserStatsItemBinding;
 import ru.mos.polls.base.vm.BaseVM;
 

@@ -28,7 +28,7 @@ import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
 import ru.mos.elk.auth.RestoreActivity;
 import ru.mos.elk.netframework.request.Session;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.push.GCMHelper;
 

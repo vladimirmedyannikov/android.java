@@ -1,6 +1,6 @@
 package ru.mos.polls.profile.vm;
 
-import ru.mos.elk.profile.AgSocialStatus;
+import ru.mos.polls.profile.model.AgSocialStatus;
 
 /**
  * Created by Trunks on 07.07.2017.

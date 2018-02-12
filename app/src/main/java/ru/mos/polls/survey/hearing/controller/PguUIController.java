@@ -6,12 +6,11 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;

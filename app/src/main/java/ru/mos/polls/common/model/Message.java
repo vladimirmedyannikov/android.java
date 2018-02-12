@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BaseActivity;

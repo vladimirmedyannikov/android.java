@@ -25,7 +25,7 @@ import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
-import ru.mos.elk.profile.AgUser;
+//import ru.mos.elk.profile.AgUser;
 
 public class AuthActivity extends BaseActivity {
     private static final String LOGIN = "login";
@@ -187,10 +187,10 @@ public class AuthActivity extends BaseActivity {
     }
 
     protected void configureEdits() {
-        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
-        String phone = prefs.getString(AgUser.PHONE, null);
-        if (phone != null && phone.length() > 1)
-            etLogin.setText(phone.substring(1));
+//        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
+//        String phone = prefs.getString(AgUser.PHONE, null);
+//        if (phone != null && phone.length() > 1)
+//            etLogin.setText(phone.substring(1));
         TextWatcher watcher = new TextWatcher() {
 
             @Override

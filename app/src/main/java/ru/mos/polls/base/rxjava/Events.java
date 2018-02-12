@@ -1,8 +1,8 @@
 package ru.mos.polls.base.rxjava;
 
 
-import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.poll.model.Poll;
 

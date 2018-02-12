@@ -2,7 +2,7 @@ package ru.mos.polls.friend.model;
 
 import java.util.List;
 
-import ru.mos.elk.profile.Statistics;
+import ru.mos.polls.profile.model.Statistics;
 
 
 /**

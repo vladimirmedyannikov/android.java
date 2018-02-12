@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;

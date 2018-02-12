@@ -1,4 +1,4 @@
-package ru.mos.elk.profile.flat;
+package ru.mos.polls.profile.model.flat;
 
 import android.content.Context;
 import android.view.LayoutInflater;

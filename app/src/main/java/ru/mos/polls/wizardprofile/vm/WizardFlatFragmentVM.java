@@ -8,15 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.elk.profile.AgSocialStatus;
-import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.AgSocialStatus;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;

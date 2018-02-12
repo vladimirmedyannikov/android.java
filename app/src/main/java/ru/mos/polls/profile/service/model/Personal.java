@@ -2,7 +2,7 @@ package ru.mos.polls.profile.service.model;
 
 import java.util.List;
 
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 
 /**
  * Created by wlTrunks on 14.07.2017.

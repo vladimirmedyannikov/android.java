@@ -1,4 +1,4 @@
-package ru.mos.elk.profile;
+package ru.mos.polls.profile.model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,7 +25,7 @@ import java.util.Locale;
 
 import ru.mos.elk.Constants;
 import ru.mos.elk.ElkTextUtils;
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.flat.Flat;
 
 /**
  * Структура данных для работы с данными пользователя АГ

@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import ru.mos.elk.profile.AgUser;
-
 /**
  * Created by Trunks on 27.07.2017.
  */

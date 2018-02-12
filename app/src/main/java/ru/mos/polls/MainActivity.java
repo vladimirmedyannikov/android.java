@@ -28,7 +28,7 @@ import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.api.API;
 import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;

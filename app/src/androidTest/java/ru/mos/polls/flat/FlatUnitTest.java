@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.BaseUnitTest;
 
 /**

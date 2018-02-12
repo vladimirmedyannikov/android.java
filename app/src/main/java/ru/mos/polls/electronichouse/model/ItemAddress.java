@@ -5,15 +5,9 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ilich.juggler.change.Add;
-import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BaseActivity;
-import ru.mos.polls.profile.state.AddPrivatePropertyState;
-import ru.mos.polls.profile.state.NewFlatState;
-import ru.mos.polls.profile.state.PguAuthState;
-import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 
 /**
  * @author matek3022 (semenovmm@altarix.ru)

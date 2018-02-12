@@ -3,8 +3,8 @@ package ru.mos.polls.profile.vm;
 import android.app.Activity;
 import android.widget.TextView;
 
-import ru.mos.elk.profile.AgUser;
-import ru.mos.elk.profile.flat.Flat;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;

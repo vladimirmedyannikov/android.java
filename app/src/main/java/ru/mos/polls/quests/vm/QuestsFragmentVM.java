@@ -301,6 +301,11 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     @Override
     public void onOptionsItemSelected(int menuItemId) {
         switch (menuItemId) {
+            case R.id.action_invite_friends:
+                if (listener != null) {
+                    listener.onInviteFriends(true);
+                }
+                break;
             case R.id.hideNews:
                 hideAllNews();
                 break;

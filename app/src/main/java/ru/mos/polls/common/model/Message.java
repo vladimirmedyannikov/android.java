@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import org.json.JSONObject;
 
 import me.ilich.juggler.change.Add;
-import me.ilich.juggler.change.Remove;
 import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.MainActivity;
@@ -96,7 +95,7 @@ public class Message {
                     Uri uri = Uri.parse(urlScheme);
                     String host = uri.getHost();
                     if (host.equalsIgnoreCase("task") && UrlSchemeController.PERSONAL_WIZARD.equalsIgnoreCase(uri.getQueryParameter("task_id"))) {
-                        context.navigateTo().state(Add.newActivityForResult(new WizardProfileState(ru.mos.polls.newquests.controller.QuestStateController.getInstance().getIdsList(), AgUser.getPercentFillProfile(context)), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
+                        context.navigateTo().state(Add.newActivityForResult(new WizardProfileState(ru.mos.polls.quests.controller.QuestStateController.getInstance().getIdsList(), AgUser.getPercentFillProfile(context)), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
                         onClose.run();
                         return;
                     }

@@ -3,16 +3,16 @@ package ru.mos.polls.quests.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.polls.quests.quest.BackQuest;
-import ru.mos.polls.quests.quest.ProfileQuest;
-import ru.mos.polls.quests.quest.Quest;
-import ru.mos.polls.quests.quest.SocialQuest;
+import ru.mos.polls.quests.model.quest.BackQuest;
+import ru.mos.polls.quests.model.quest.ProfileQuest;
+import ru.mos.polls.quests.model.quest.Quest;
+import ru.mos.polls.quests.model.quest.SocialQuest;
 
 /**
  * Контроллер для хранения в памяти списка идентификаторов выполненных заданий
  *
- * @see #add(ru.mos.polls.quests.quest.BackQuest)  добавления идентификатора задания в список пройденных
- * @see #process(java.util.List) фильтрайия списка заданий, в соотвествии с уже выполеннными заданиями
+ * @see #add(BackQuest)  добавления идентификатора задания в список пройденных
+ * @see #process(List) фильтрайия списка заданий, в соотвествии с уже выполеннными заданиями
  * @since 1.9
  */
 public class QuestStateController {
@@ -23,6 +23,8 @@ public class QuestStateController {
      */
     private List<Object> executedQuestQueue;
     private boolean isUpdateSocialAvaible;
+
+    private List<String> idsList;
 
     private QuestStateController() {
         executedQuestQueue = new ArrayList<>();
@@ -54,6 +56,9 @@ public class QuestStateController {
                 result.add(quest);
                 if (((BackQuest) quest).getId().equals(ProfileQuest.ID_UPDATE_SOCIAL))
                     isUpdateSocialAvaible = true;
+                if (((BackQuest) quest).getId().equals(ProfileQuest.ID_PERSONAL_WIZARD)) { //сохраняем списод заданий визарда для urlScheme
+                    idsList = ((ProfileQuest) quest).idsList;
+                }
             }
         }
         return result;
@@ -90,5 +95,12 @@ public class QuestStateController {
 
     public List<Object> getExecutedQuestQueue() {
         return executedQuestQueue;
+    }
+
+    public List<String> getIdsList() {
+        if (idsList == null) {
+            idsList = new ArrayList<>();
+        }
+        return idsList;
     }
 }

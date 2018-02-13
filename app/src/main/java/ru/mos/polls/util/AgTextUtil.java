@@ -4,6 +4,8 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
+import org.json.JSONObject;
+
 import java.nio.CharBuffer;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -81,5 +83,18 @@ public abstract class AgTextUtil {
 
     public static boolean isStringNoEmpty(String text) {
         return text != null && !"null".equalsIgnoreCase(text);
+    }
+
+    public static String getString(JSONObject jsonObject, String tag, String defaultValue) {
+        String result = jsonObject.optString(tag);
+        if (isEmpty(result)) {
+            result = defaultValue;
+        }
+        return result;
+    }
+
+    public static boolean isEmpty(String target) {
+        return android.text.TextUtils.isEmpty(target)
+                || "null".equalsIgnoreCase(target);
     }
 }

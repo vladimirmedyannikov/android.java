@@ -10,9 +10,9 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
+import ru.mos.polls.util.AgTextUtil;
 
 import static ru.mos.polls.Statistics.isAuthFromPhone;
 
@@ -64,7 +64,7 @@ public abstract class GoogleStatistics {
          * @param error отправляем текст ошибки, если передаем пустую строку или null, то отправится "Ок"
          */
         public void errorOccurs(String error) {
-            sendEvent(ElkTextUtils.isEmpty(error) ? "Ok" : error);
+            sendEvent(AgTextUtil.isEmpty(error) ? "Ok" : error);
         }
 
         /**
@@ -183,7 +183,7 @@ public abstract class GoogleStatistics {
         private static final String CATEGORY = "Vosstanovlenie_Parolya";
 
         public void errorOccurs(String error) {
-            sendEvent(CATEGORY, "Vosstanovit", ElkTextUtils.isEmpty(error) ? "Ok" : error);
+            sendEvent(CATEGORY, "Vosstanovit", AgTextUtil.isEmpty(error) ? "Ok" : error);
         }
 
         public void authClick() {
@@ -230,7 +230,7 @@ public abstract class GoogleStatistics {
         }
 
         public void sendEvent(String subject, String error) {
-            GoogleStatistics.sendEvent("Obratnaya_Svyaz", subject, ElkTextUtils.isEmpty(error) ? "Ok" : error);
+            GoogleStatistics.sendEvent("Obratnaya_Svyaz", subject, AgTextUtil.isEmpty(error) ? "Ok" : error);
         }
     }
 

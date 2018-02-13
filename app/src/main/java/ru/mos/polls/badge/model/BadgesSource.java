@@ -11,7 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import ru.mos.elk.ElkTextUtils;
+import ru.mos.polls.util.AgTextUtil;
+
 
 public class BadgesSource {
 
@@ -212,7 +213,7 @@ public class BadgesSource {
         if (state != null) {
             if (state.getPersonal() != null) {
                 String url = state.getPersonal().getIcon();
-                if (ElkTextUtils.isEmpty(url)) {
+                if (AgTextUtil.isEmpty(url)) {
                     urlProcessor.process(null);
                 } else {
                     if (lastAvatartUrl == null || !url.equals(lastAvatartUrl)) {
@@ -244,7 +245,7 @@ public class BadgesSource {
     }
 
     public boolean hasLastAvatarUrl() {
-        return !ElkTextUtils.isEmpty(lastAvatartUrl) && !"null".equalsIgnoreCase(lastAvatartUrl);
+        return !AgTextUtil.isEmpty(lastAvatartUrl) && !"null".equalsIgnoreCase(lastAvatartUrl);
     }
 
     private Bitmap copyBitmap(Bitmap bitmap) {

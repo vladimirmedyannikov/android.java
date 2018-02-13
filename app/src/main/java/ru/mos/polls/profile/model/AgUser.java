@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Locale;
 
 import ru.mos.elk.Constants;
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.profile.model.flat.Flat;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Структура данных для работы с данными пользователя АГ
@@ -185,9 +185,9 @@ public class AgUser implements Serializable {
     }
 
     public boolean isEmptyPersonal() {
-        return ElkTextUtils.isEmpty(surname) || ElkTextUtils.isEmpty(firstName)
-                || ElkTextUtils.isEmpty(birthday) || gender.isEmpty() /*|| TextUtils.isEmpty(email)*/
-                || ElkTextUtils.isEmpty(phone);
+        return AgTextUtil.isEmpty(surname) || AgTextUtil.isEmpty(firstName)
+                || AgTextUtil.isEmpty(birthday) || gender.isEmpty() /*|| TextUtils.isEmpty(email)*/
+                || AgTextUtil.isEmpty(phone);
     }
 
     public boolean isEmptyFlats() {
@@ -435,7 +435,7 @@ public class AgUser implements Serializable {
     }
 
     private boolean isFilledAndChanged(String old, String changed, boolean isTask) {
-        return (isTask || !ElkTextUtils.isEmpty(changed)) && !old.equalsIgnoreCase(changed);
+        return (isTask || !AgTextUtil.isEmpty(changed)) && !old.equalsIgnoreCase(changed);
     }
 
     private boolean isFilledAndChanged(int old, int changed) {
@@ -511,7 +511,7 @@ public class AgUser implements Serializable {
     }
 
     public String getFullUserName() {
-        if (ElkTextUtils.isEmpty(surname) && ElkTextUtils.isEmpty(firstName) && ElkTextUtils.isEmpty(middleName)) {
+        if (AgTextUtil.isEmpty(surname) && AgTextUtil.isEmpty(firstName) && AgTextUtil.isEmpty(middleName)) {
             return "";
         }
         return String.format("%s %s %s", surname, firstName, middleName);
@@ -852,7 +852,7 @@ public class AgUser implements Serializable {
     public void parseStatistic(Context context, JSONObject json) {
         JSONObject statistics = json.optJSONObject("statistics");
         if (statistics != null) {
-            status = ElkTextUtils.getString(statistics, "status", "Новичок");
+            status = AgTextUtil.getString(statistics, "status", "Новичок");
             rating = statistics.optLong("rating");
             percentFillProfile = statistics.optInt("percent_fill_profile");
             saveJsonArray(context, statistics, Statistics.STATISTICS_PARAMS);
@@ -917,20 +917,20 @@ public class AgUser implements Serializable {
     private void parsePersonal(JSONObject json) {
         JSONObject personalJson = json.optJSONObject("personal");
         if (personalJson != null) {
-            surname = ElkTextUtils.getString(personalJson, "surname", "");
-            firstName = ElkTextUtils.getString(personalJson, "firstname", "");
-            middleName = ElkTextUtils.getString(personalJson, "middlename", "");
-            birthday = ElkTextUtils.getString(personalJson, "birthday", "");
+            surname = AgTextUtil.getString(personalJson, "surname", "");
+            firstName = AgTextUtil.getString(personalJson, "firstname", "");
+            middleName = AgTextUtil.getString(personalJson, "middlename", "");
+            birthday = AgTextUtil.getString(personalJson, "birthday", "");
             gender = Gender.parse(personalJson.optString("sex"));
-            email = ElkTextUtils.getString(personalJson, "email", "");
-            phone = ElkTextUtils.getString(personalJson, "phone", "");
+            email = AgTextUtil.getString(personalJson, "email", "");
+            phone = AgTextUtil.getString(personalJson, "phone", "");
             maritalStatus = MaritalStatus.parse(personalJson.optString("marital_status"));
             childCount = personalJson.optInt("childrens_count");
             childBirthdays = childBirthdaysFromJson(personalJson);
             isCarExist = personalJson.optBoolean("car_exist");
             agSocialStatus = personalJson.optInt("social_status");
-            registrationDate = ElkTextUtils.getString(personalJson, "registration_date", "");
-            avatar = ElkTextUtils.getString(personalJson, "avatar", "");
+            registrationDate = AgTextUtil.getString(personalJson, "registration_date", "");
+            avatar = AgTextUtil.getString(personalJson, "avatar", "");
         }
     }
 

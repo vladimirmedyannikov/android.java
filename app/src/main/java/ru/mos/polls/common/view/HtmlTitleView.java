@@ -16,10 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AnimationHelper;
 import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Компонент для отображения информации о вопросе: краткое, полное описание
@@ -121,14 +121,14 @@ public class HtmlTitleView extends LinearLayout {
      */
     protected final void display(String titleValue, String shortValue, String fullValue) {
         final Algorithm algorithm;
-        if (ElkTextUtils.isEmpty(shortValue)) {
+        if (AgTextUtil.isEmpty(shortValue)) {
             algorithm = new NoShortTextAlgorithm(titleValue, shortValue, fullValue);
         } else {
             algorithm = new HasShortTextAlgorithm(titleValue, shortValue, fullValue);
         }
 
         action.setVisibility(VISIBLE);
-        if (ElkTextUtils.isEmpty(fullValue)) {
+        if (AgTextUtil.isEmpty(fullValue)) {
             action.setVisibility(GONE);
             divider.setVisibility(View.VISIBLE);
             removePaddingFromContent();

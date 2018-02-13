@@ -14,10 +14,10 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.elk.R;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Структура данных для работы с данными по квартирам пользователя
@@ -121,21 +121,21 @@ public class Flat implements Serializable {
         if (flatsJson != null) {
             JSONObject flatJson = flatsJson.optJSONObject(type.getType());
             if (flatJson != null) {
-                result.flat = ElkTextUtils.getString(flatJson, "flat", "");
-                result.flatId = ElkTextUtils.getString(flatJson, "flat_id", "");
-                result.buildingId = ElkTextUtils.getString(flatJson, "building_id", "");
-                result.building = ElkTextUtils.getString(flatJson, "building", "");
-                result.street = ElkTextUtils.getString(flatJson, "street", "");
-                result.city = ElkTextUtils.getString(flatJson, "city", "");
+                result.flat = AgTextUtil.getString(flatJson, "flat", "");
+                result.flatId = AgTextUtil.getString(flatJson, "flat_id", "");
+                result.buildingId = AgTextUtil.getString(flatJson, "building_id", "");
+                result.building = AgTextUtil.getString(flatJson, "building", "");
+                result.street = AgTextUtil.getString(flatJson, "street", "");
+                result.city = AgTextUtil.getString(flatJson, "city", "");
                 result.enable = !flatJson.optBoolean("editing_blocked");
                 if (flatJson.has("district")) {
-                    result.district = ElkTextUtils.getString(flatJson, "district", "");
+                    result.district = AgTextUtil.getString(flatJson, "district", "");
                 }
                 if (flatJson.has("area")) {
-                    result.area = ElkTextUtils.getString(flatJson, "area", "");
+                    result.area = AgTextUtil.getString(flatJson, "area", "");
                 }
                 if (flatJson.has("area_id")) {
-                    result.areaId = ElkTextUtils.getString(flatJson, "area_id", "");
+                    result.areaId = AgTextUtil.getString(flatJson, "area_id", "");
                 }
                 result.type = type;
             }
@@ -286,7 +286,7 @@ public class Flat implements Serializable {
         if (flatsJson != null) {
             try {
                 JSONObject flatJson = asJsonForAdd();
-                if (!ElkTextUtils.isEmpty(flatId)) {
+                if (!AgTextUtil.isEmpty(flatId)) {
                     flatJson = asJsonForUpdate();
                 }
                 flatsJson.put(type.getType(), flatJson);
@@ -376,10 +376,10 @@ public class Flat implements Serializable {
     }
 
     public boolean isEmpty() {
-        return ElkTextUtils.isEmpty(buildingId)
+        return AgTextUtil.isEmpty(buildingId)
 //                && TextUtils.isEmpty(flat)
-                && ElkTextUtils.isEmpty(building)
-                && ElkTextUtils.isEmpty(street);
+                && AgTextUtil.isEmpty(building)
+                && AgTextUtil.isEmpty(street);
     }
 
     public String getViewTitle(Context context) {

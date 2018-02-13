@@ -36,7 +36,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
@@ -306,23 +305,23 @@ public class NavigationDrawerFragment extends Fragment {
     private void doRefreshUserInfo(String phone, String firstName, String surname) {
         phone = AgTextUtil.getPhoneFormat(phone);
         final String name;
-        if (ElkTextUtils.isEmpty(firstName) && !ElkTextUtils.isEmpty(surname)) {
+        if (AgTextUtil.isEmpty(firstName) && !AgTextUtil.isEmpty(surname)) {
             name = surname;
-        } else if (!ElkTextUtils.isEmpty(firstName) && ElkTextUtils.isEmpty(surname)) {
+        } else if (!AgTextUtil.isEmpty(firstName) && AgTextUtil.isEmpty(surname)) {
             name = firstName;
-        } else if (!ElkTextUtils.isEmpty(firstName) && !ElkTextUtils.isEmpty(surname)) {
+        } else if (!AgTextUtil.isEmpty(firstName) && !AgTextUtil.isEmpty(surname)) {
             name = surname + " " + firstName;
         } else {
             name = null;
         }
-        if (!ElkTextUtils.isEmpty(phone) && ElkTextUtils.isEmpty(name)) {
+        if (!AgTextUtil.isEmpty(phone) && AgTextUtil.isEmpty(name)) {
             mUserNameTextView.setText(phone);
             mUserPhoneTextView.setVisibility(View.GONE);
-        } else if (ElkTextUtils.isEmpty(phone) && !ElkTextUtils.isEmpty(name)) {
+        } else if (AgTextUtil.isEmpty(phone) && !AgTextUtil.isEmpty(name)) {
             mUserPhoneTextView.setText(name);
             mUserPhoneTextView.setVisibility(View.VISIBLE);
             mUserNameTextView.setVisibility(View.GONE);
-        } else if (!ElkTextUtils.isEmpty(phone) && !ElkTextUtils.isEmpty(name)) {
+        } else if (!AgTextUtil.isEmpty(phone) && !AgTextUtil.isEmpty(name)) {
             mUserNameTextView.setText(name);
             mUserPhoneTextView.setVisibility(View.VISIBLE);
             mUserPhoneTextView.setText(phone);

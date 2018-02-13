@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 
 import org.json.JSONObject;
 
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.R;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Сообщение от сервера при выполнении задания
@@ -58,7 +58,7 @@ public class QuestMessage {
     }
 
     public boolean isEmpty() {
-        return ElkTextUtils.isEmpty(text);
+        return AgTextUtil.isEmpty(text);
     }
 
     public String getTitle() {

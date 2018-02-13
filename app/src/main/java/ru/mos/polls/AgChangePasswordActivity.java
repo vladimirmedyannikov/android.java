@@ -19,7 +19,6 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import ru.mos.elk.Dialogs;
-import ru.mos.elk.auth.ChangePasswordActivity;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.api.API;

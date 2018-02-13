@@ -2,11 +2,11 @@ package ru.mos.polls.quests.vm.list;
 
 import android.view.View;
 
-import ru.mos.elk.ElkTextUtils;
 import ru.mos.polls.R;
 import ru.mos.polls.databinding.QuestAchievementBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.AchievementQuest;
+import ru.mos.polls.util.AgTextUtil;
 
 /**
  * @author matek3022 (semenovmm@altarix.ru)
@@ -37,7 +37,7 @@ public class AchievementQuestVM extends QuestVM<AchievementQuest, QuestAchieveme
         super.onBind(viewDataBinding);
         questTitle.setText(model.getTitle());
         viewDataBinding.details.setText(model.getDetails());
-        if (ElkTextUtils.isEmpty(model.getDetails())) {
+        if (AgTextUtil.isEmpty(model.getDetails())) {
             viewDataBinding.details.setVisibility(View.GONE);
         }
     }

@@ -136,7 +136,6 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.feedback)
     public void onFeedback() {
-//        AgSupportActivity.startActivity(this);
         navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
     }
 

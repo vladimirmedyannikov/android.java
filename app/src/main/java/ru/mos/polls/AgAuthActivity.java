@@ -6,20 +6,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
-import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,39 +35,40 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
-import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.elk.Dialogs;
 import ru.mos.elk.netframework.request.StringRequest;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.api.API;
 import ru.mos.polls.auth.state.AuthState;
-import ru.mos.polls.base.activity.AuthActivity;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.profile.ui.activity.AchievementActivity;
-import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.support.state.SupportState;
+import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 
 
-public class AgAuthActivity extends AuthActivity {
+public class AgAuthActivity extends BaseActivity {
     private static final int SMS_PERMISSION_REQUEST = 9825;
     protected Toolbar toolbar;
     private static final String[] SMS_PERMS = {
-            Manifest.permission.RECEIVE_SMS,
-            Manifest.permission.SEND_SMS
+            Manifest.permission.RECEIVE_SMS
     };
-
+    public static final String SKIP_ACTIVITY = "ru.mos.polls.auth.SKIP_ACTIVITY";
+    public static final String PASSED_ACTIVITY = "ru.mos.polls.auth.PASSED_ACTIVITY";
+    public static final String JUST_AUTHORIZE = "ru.mos.polls.auth.JUST_AUTHORIZE";
     private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();
+    protected static final int ERROR_CODE_423 = 423;
+    protected static final int REQUEST_REGISTER = 1;
+    protected static final int REQUEST_RESTORE = 2;
     @BindView(R.id.cbAgreeOffer)
     CheckBox cbAgreeOffer;
 
@@ -79,11 +76,8 @@ public class AgAuthActivity extends AuthActivity {
     MaskedEditText codeCountry;
     @BindView(R.id.etLogin)
     MaskedEditText etLogin;
-
-    @OnCheckedChanged(R.id.cbAgreeOffer)
-    void offerCheckBox() {
-        checkForEnable();
-    }
+    @BindView(R.id.tvError)
+    TextView tvError;
 
     public static void start(Context context) {
         Intent activity = new Intent(context, AgAuthActivity.class);
@@ -93,10 +87,12 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_auth);
+        ButterKnife.bind(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Ваш телефон");
-
+        configureEdits();
         /**
          * код по умолчанию +7, при этом без возможности редактирования
          */
@@ -107,9 +103,7 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (EasyPermissions.hasPermissions(this, SMS_PERMS)) {
-            GuiUtils.showKeyboard(etLogin);
-        }
+        GuiUtils.showKeyboard(etLogin);
     }
 
 
@@ -144,15 +138,10 @@ public class AgAuthActivity extends AuthActivity {
         }
     }
 
-    @Override
     protected void configureEdits() {
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
-        Spannable text = new SpannableString(getString(R.string.ag_agree_with_offer));
-        int startPosition = GuiUtils.getStartPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
-        int endPosition = GuiUtils.getEndPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
-        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green_light)), startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        text.setSpan(new UnderlineSpan(), startPosition, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        text.setSpan(new ClickableSpan() {
+        offer.setPaintFlags(offer.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GuiUtils.hideKeyboard(v);
@@ -164,9 +153,7 @@ public class AgAuthActivity extends AuthActivity {
                         false,
                         false);
             }
-        }, startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        offer.setText(text);
-        offer.setMovementMethod(LinkMovementMethod.getInstance());
+        });
         String phone = AgUser.getPhone(this);
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));
@@ -174,7 +161,6 @@ public class AgAuthActivity extends AuthActivity {
         checkPermissions();
     }
 
-    @Override
     public void onClickLogin(View view) {
         GuiUtils.hideKeyboard(view);
 
@@ -226,16 +212,6 @@ public class AgAuthActivity extends AuthActivity {
         navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.ui.BaseActivity.class));
     }
 
-    @OnEditorAction(R.id.etPassword)
-    boolean actionListener(int actionId) {
-        if ((cbAgreeOffer.isChecked() && etLogin.getText().length() > 0 && etPassword.getText().length() > 0) &&
-                (actionId == ru.mos.elk.R.id.actionLogin || actionId == EditorInfo.IME_ACTION_DONE)) {
-            onClickLogin(null);
-            return true;
-        }
-        return false;
-    }
-
     @OnEditorAction(R.id.etLogin)
     boolean actionLoginListener(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -247,17 +223,9 @@ public class AgAuthActivity extends AuthActivity {
     @OnClick(R.id.help)
     void help() {
         AbstractActivity.hideSoftInput(AgAuthActivity.this, etLogin);
-//        String phone = etLogin.getText().toString();
-//        PopupController.authOrRegistry(AgAuthActivity.this, phone);
         statistics.helpClick();
         new GoogleStatistics.Auth().feedbackClick();
-//        AgSupportActivity.startActivity(this);
         navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
-    }
-
-    @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void textChangeListener() {
-//        checkForEnable();
     }
 
     @OnFocusChange(value = {R.id.etLogin, R.id.etPassword})
@@ -272,11 +240,6 @@ public class AgAuthActivity extends AuthActivity {
 
     public boolean checkPhoneText() {
         return etLogin.getUnmaskedText().length() == 10;
-    }
-
-    private void checkForEnable() {
-        btnLogin.setEnabled(cbAgreeOffer.isChecked()
-                && etLogin.getText().toString().length() == 10);
     }
 
     private void checkPermissions() {
@@ -312,45 +275,18 @@ public class AgAuthActivity extends AuthActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected String makeLogin(String loginString) {
-        try {
-            Long.parseLong(loginString);
-            return "7" + loginString;
-        } catch (NumberFormatException e) {
-            return loginString;
-        }
-    }
-
-    @Override
-    protected void onLogon() {
-        try {
-            super.onLogon();
-        } catch (Exception ignored) {
-        }
-        /**
-         * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}
-         * в {@link Session}
-         */
-        Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(this));
-
-        startFromUri(getIntent());
-        Statistics.auth(etLogin.getUnmaskedText(), true);
-        statistics.auth(etLogin.getUnmaskedText(), true);
-        statistics.check(true);
-    }
-
-    @Override
     protected void onLoginFault(String errorMessage) {
-        super.onLoginFault(errorMessage);
+        ScrollView sv = ButterKnife.findById(this, R.id.scrollView);
+        sv.pageScroll(View.FOCUS_DOWN);
+        tvError.setText(errorMessage);
+        tvError.setVisibility(View.VISIBLE);
+        tvError.requestFocus();
         Statistics.auth(etLogin.getUnmaskedText(), false);
         statistics.check(false);
         statistics.errorOccurs(errorMessage);
     }
 
-    @Override
     protected void showErrorDialog(int error) {
-        super.showErrorDialog(error);
         switch (error) {
             case ERROR_CODE_423:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(AgAuthActivity.this);
@@ -380,6 +316,16 @@ public class AgAuthActivity extends AuthActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_REGISTER:
+            case REQUEST_RESTORE:
+                if (resultCode == RESULT_OK)
+                    etLogin.setText(data.getStringExtra("phone"));
+                break;
+
+            default:
+                break;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_REGISTER && resultCode == RESULT_OK) {
             AppsFlyerLib.sendTrackingWithEvent(this, AppsFlyerConstants.REGISTRATION, "");

@@ -58,6 +58,10 @@ public class RuntimePermissionController {
      */
     public void requestRuntimePermission(final String permission, final int requestCode) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{permission},
+                    requestCode);
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setMessage(R.string.permission_not_available)
                     .setPositiveButton(R.string.app_continue, new DialogInterface.OnClickListener() {
@@ -69,10 +73,6 @@ public class RuntimePermissionController {
                         }
                     });
             builder.show();
-        } else {
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{permission},
-                    requestCode);
         }
     }
 

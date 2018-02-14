@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:minHeight="75dp"
         android:minWidth="75dp"
-        android:src="@drawable/ic_launcher_v230"/>
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         style="@style/header.up"

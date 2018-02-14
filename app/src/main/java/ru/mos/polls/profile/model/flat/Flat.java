@@ -15,8 +15,8 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import ru.mos.elk.R;
-import ru.mos.elk.db.UserData;
-import ru.mos.elk.db.UserDataProvider;
+import ru.mos.polls.db.UserData;
+import ru.mos.polls.db.UserDataProvider;
 import ru.mos.polls.util.AgTextUtil;
 
 /**

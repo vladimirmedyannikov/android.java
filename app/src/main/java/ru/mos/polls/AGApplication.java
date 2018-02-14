@@ -29,8 +29,8 @@ import org.json.JSONArray;
 import java.io.File;
 import java.util.List;
 
-import ru.mos.elk.db.UserData;
-import ru.mos.elk.db.UserDataProvider;
+import ru.mos.polls.db.UserData;
+import ru.mos.polls.db.UserDataProvider;
 import ru.mos.polls.api.API;
 import ru.mos.polls.api.Token;
 import ru.mos.polls.base.activity.BaseActivity;

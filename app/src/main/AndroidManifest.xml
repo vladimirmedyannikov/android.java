@@ -422,7 +422,7 @@
         </receiver>
 
         <receiver
-            android:name="ru.mos.elk.push.GCMBroadcastReceiver"
+            android:name="ru.mos.polls.push.GCMBroadcastReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -456,6 +456,14 @@
         </receiver>
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        <provider
+            android:name="ru.mos.polls.db.UserDataProvider"
+            android:authorities="@string/elk_authority"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".push.AutoLoadService"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"

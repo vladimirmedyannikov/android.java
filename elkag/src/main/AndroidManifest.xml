@@ -38,8 +38,6 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/AuthTheme.NoActionBar" />
 
-        <provider android:name=".db.UserDataProvider" android:authorities="@string/elk_authority" android:exported="false" android:enabled="true"/>
-        <service android:name=".push.AutoLoadService" android:exported="false"/>
     </application>
 
 </manifest>

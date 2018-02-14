@@ -1,4 +1,4 @@
-package ru.mos.elk.db;
+package ru.mos.polls.db;
 
 import com.annotatedsql.annotation.provider.Provider;
 import com.annotatedsql.annotation.provider.URI;

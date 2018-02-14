@@ -661,6 +661,7 @@
     <string name="number_format_exception">При отправке смс произошла ошибка, возможно, номер телефона не соответствует требуемому формату</string>
     <string name="app_continue">Продолжить</string>
     <string name="permission_not_available">Для корректной работы приложения, требуется получить разрешение</string>
+    <string name="permission_not_available_goto_settings">Для корректной работы приложения, требуется получить разрешение.\nПерейти в настройки приложения?</string>
     <string name="register_code">Получить код подтверждения</string>
     <string name="has_code">Уже есть код подтверждения</string>
     <string name="password_confirm">Установка пароля</string>

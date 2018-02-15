@@ -101,6 +101,8 @@ public class IntervalSurveyVariant extends SurveyVariant {
     public void onClick(Activity context, Fragment fragment, boolean checked) {
         if (checked) {
             showSelectDialog(context);
+        } else {
+            getListener().onClicked();
         }
     }
 

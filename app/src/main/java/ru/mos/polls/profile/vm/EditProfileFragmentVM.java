@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,9 +44,9 @@ import ru.mos.polls.profile.state.AddPrivatePropertyState;
 import ru.mos.polls.profile.state.EditPersonalInfoState;
 import ru.mos.polls.profile.state.NewFlatState;
 import ru.mos.polls.profile.state.PguAuthState;
+import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
-import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.AppSocial;
 
@@ -54,6 +55,12 @@ import ru.mos.polls.social.model.AppSocial;
  */
 
 public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
+
+    /**
+     * аргумент координаты для перемотки экрана в то месте, на котором были в {@link InfoTabFragmentVM}
+     */
+    public static final String ARG_COORD = "arg_coord";
+
     DictionaryView gender;
     DictionaryView maritalStatus;
     ArrayAdapter genderAdapter;
@@ -80,10 +87,13 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     View kidsDateLayer;
     TextView socialBindTitle;
     LinearLayout socialBindingLayer;
+    NestedScrollView nestedScrollView;
     Observable<List<AppSocial>> socialListObserable;
     public static final String PREFS = "profile_prefs";
     public static final String TIME_SYNQ = "time_synq";
     public static final long INTERVAL_SYNQ = 15 * 60 * 1000;
+
+    private boolean isScrolled = false;
 
     public EditProfileFragmentVM(EditProfileFragment fragment, FragmentNewEditProfileBinding binding) {
         super(fragment, binding);
@@ -116,6 +126,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostStatus = binding.editBindingMosStatus;
         privateProperty = binding.editPrivateProperty;
         privatePropertyStatus = binding.editPrivatePropertyStatus;
+        nestedScrollView = binding.nestedScrollViewEditProfile;
     }
 
     @Override
@@ -140,6 +151,13 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
                         }
                     }
                 }));
+    }
+
+    private void scrollToPrevPosition() {
+        if (!isScrolled) {
+            nestedScrollView.scrollTo(0, getFragment().getCoordScroll());
+            isScrolled = true;
+        }
     }
 
     @Override
@@ -186,6 +204,12 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         savedUser = new AgUser(getActivity());
         socialListObserable = AppSocial.getObservableSavedSocials(getActivity());
         refreshView(savedUser);
+        getFragment().getView().post(new Runnable() {
+            @Override
+            public void run() {
+                scrollToPrevPosition();
+            }
+        });
     }
 
     public void setClickListener() {
@@ -219,7 +243,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         bindingMostTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
         });
-//        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
+        privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
     }
 
     public void refreshView(AgUser agUser) {
@@ -239,7 +263,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
         setKidsDateLayerView(agUser);
         setSocialBindingLayerRx();
         setPguStatusView(agUser);
-//        setOwnPropertyView(agUser);  //вернуть в версии 2.5.0
+        setOwnPropertyView(agUser);  //вернуть в версии 2.5.0
     }
 
     public void setOwnPropertyView(AgUser agUser) {

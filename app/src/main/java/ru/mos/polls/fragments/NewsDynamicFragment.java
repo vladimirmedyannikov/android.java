@@ -3,10 +3,6 @@ package ru.mos.polls.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.transition.ChangeBounds;
-import android.support.transition.Fade;
-import android.support.transition.TransitionManager;
-import android.support.transition.TransitionSet;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 
 import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
@@ -154,7 +149,7 @@ public class NewsDynamicFragment extends AgDynamicFragment {
     private void load() {
         getPullToRefreshLayout().setRefreshing(true);
         extendScrollableController.setAllowed(false);
-        String url = API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET));
+        String url = API.getURL(UrlManager.url(UrlManager.V250, UrlManager.Controller.NEWS, UrlManager.Methods.GET));
         JSONObject requestJson = new JSONObject();
         try {
             requestJson.put("count_per_page", pagination.getCountPerPage());

@@ -46,6 +46,8 @@ import ru.mos.elk.api.API;
 import ru.mos.elk.auth.AuthActivity;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.profile.AgUser;
+import ru.mos.polls.auth.state.AuthState;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
@@ -100,7 +102,9 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GuiUtils.showKeyboard(etLogin);
+        if (EasyPermissions.hasPermissions(this, SMS_PERMS)) {
+            GuiUtils.showKeyboard(etLogin);
+        }
     }
 
 
@@ -204,6 +208,11 @@ public class AgAuthActivity extends AuthActivity {
             e.printStackTrace();
         }
         return params;
+    }
+
+    @OnClick(R.id.registered_in_service)
+    public void authInService() {
+        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), BaseActivity.class));
     }
 
     @OnEditorAction(R.id.etPassword)

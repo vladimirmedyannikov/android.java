@@ -1,12 +1,7 @@
 package ru.mos.polls.profile.vm;
 
 import android.support.design.widget.TabLayout;
-import android.support.transition.ChangeBounds;
-import android.support.transition.Fade;
-import android.support.transition.TransitionManager;
-import android.support.transition.TransitionSet;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +37,7 @@ public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, Fragme
     protected void initialize(FragmentNewProfileBinding binding) {
         List<PagerAdapter.Page> pages = getPages();
         pager = binding.pager;
+        pager.setOffscreenPageLimit(3);
         PagerAdapter adapter = new PagerAdapter(getFragment().getChildFragmentManager(), pages);
         pager.setAdapter(adapter);
 

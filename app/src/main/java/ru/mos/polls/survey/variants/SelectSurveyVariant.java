@@ -66,6 +66,8 @@ public class SelectSurveyVariant extends SurveyVariant {
         if (checked) {
             statusProcessor.processChecked(tv, this);
             selectObject.onClick(context, fragment);
+        } else {
+            getListener().onClicked();
         }
     }
 

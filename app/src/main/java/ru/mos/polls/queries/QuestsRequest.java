@@ -7,8 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.elk.netframework.request.GeneralRequest;
-import ru.mos.polls.quests.QuestFactory;
-import ru.mos.polls.quests.quest.Quest;
+import ru.mos.polls.quests.model.quest.Quest;
 
 
 public class QuestsRequest extends GeneralRequest<Quest[]> {
@@ -23,8 +22,8 @@ public class QuestsRequest extends GeneralRequest<Quest[]> {
         Quest[] result = new Quest[tasksJsonArray.length()];
         for (int i = 0; i < tasksJsonArray.length(); i++) {
             JSONObject jsonTask = tasksJsonArray.optJSONObject(i);
-            Quest quest = QuestFactory.parse(i, jsonTask);
-            result[i] = quest;
+//            Quest quest = QuestFactory.parse(i, jsonTask);
+//            result[i] = quest;
         }
 
         return result;

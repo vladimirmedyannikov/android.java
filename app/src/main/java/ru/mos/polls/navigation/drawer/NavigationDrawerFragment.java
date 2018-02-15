@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -56,6 +57,10 @@ import ru.mos.polls.util.AgTextUtil;
  */
 public class NavigationDrawerFragment extends Fragment {
     /**
+     * Action for opened profile
+     */
+    public static final String ACTION_NEED_OPEN_PROFILE = "ru.mos.polls.navigation.drawer.action_need_open_profile";
+    /**
      * File name with preferences
      */
     private static final String PREFS = NavigationDrawerFragment.class.getName() + "_prefs";
@@ -72,9 +77,8 @@ public class NavigationDrawerFragment extends Fragment {
      * Last selected item's index
      */
     private static final String PREF_LAST_SELECTED_POSITION = "navigation_drawer_last_selected_index";
-
     /**
-     * A pointer to the current callbacks instance (the Activity).
+     * A pointer to the current callbacks newInstance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
 
@@ -106,6 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
     private BroadcastReceiver reloadFromServerBroadcastReceiver;
     private BroadcastReceiver reloadFromCacheBroadcastReceiver;
     private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
+    private BroadcastReceiver needOpenProfileReceiver;
 
     public NavigationDrawerFragment() {
     }
@@ -171,6 +176,19 @@ public class NavigationDrawerFragment extends Fragment {
         };
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(reloadAvatarFromCacheBroadcastReceiver, BadgeManager.RELOAD_AVATAR_FROM_CACHE_INTENT_FILTER);
 
+        needOpenProfileReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                for (int i = 0; i < adapter.getItems().length; i++) {
+                    if (adapter.getItems()[i].getId() == NavigationMenuItem.PROFILE) {
+                        selectItem(i);
+                        break;
+                    }
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(needOpenProfileReceiver, new IntentFilter(ACTION_NEED_OPEN_PROFILE));
+
         mTimerReloadFromServer = new Timer("AG bages from server");
         mTimerReloadFromServer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -186,6 +204,7 @@ public class NavigationDrawerFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(reloadFromServerBroadcastReceiver);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(reloadFromCacheBroadcastReceiver);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(reloadAvatarFromCacheBroadcastReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(needOpenProfileReceiver);
         mTimerReloadFromServer.cancel();
         mTimerReloadFromServer.purge();
     }
@@ -390,7 +409,7 @@ public class NavigationDrawerFragment extends Fragment {
 //            mDrawerLayout.openDrawer(mFragmentContainerView);
 //        }
 
-        // Defer code dependent on restoration of previous instance state.
+        // Defer code dependent on restoration of previous newInstance state.
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {

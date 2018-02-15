@@ -11,9 +11,10 @@ public class UrlManager {
     public static String V230 = "2.3.0";
     public static String V240 = "2.4.0";
     public static String V241 = "2.4.1";
+    public static String V250 = "2.5.0";
 
     public static String url(String controller, String method) {
-        return String.format("v%s/%s/%s", V240/*BuildConfig.VERSION_NAME*/, controller, method);
+        return String.format("v%s/%s/%s", V250/*BuildConfig.VERSION_NAME*/, controller, method);
     }
 
     /**

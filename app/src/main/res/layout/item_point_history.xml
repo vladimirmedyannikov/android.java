@@ -10,13 +10,12 @@
 
     <LinearLayout
         style="@style/item.linear.horizontal"
-
-        android:padding="@dimen/pd_xsmall">
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingTop="@dimen/pd_xsmall">
 
         <LinearLayout
             style="@style/item.linear"
             android:layout_weight="1"
-            android:paddingLeft="@dimen/pd_xxsmall"
             android:paddingRight="@dimen/pd_xxsmall">
 
             <TextView
@@ -42,14 +41,14 @@
                 android:id="@+id/tvPoints"
                 style="@style/text.green"
                 android:drawablePadding="@dimen/pd_xxsmall"
-                android:textColor="@{viewModel.isRefilled() ? @color/greenText : @color/ag_red}" />
+                android:textColor="@color/greenText" />
 
             <TextView
                 android:id="@+id/tvPointsText"
                 style="@style/text.green"
                 android:drawablePadding="@dimen/pd_xxsmall"
                 android:text="@{@plurals/points_count(viewModel.points)}"
-                android:textColor="@{viewModel.isRefilled() ? @color/greenText : @color/ag_red}" />
+                android:textColor="@color/greenText" />
         </LinearLayout>
     </LinearLayout>
 </layout>

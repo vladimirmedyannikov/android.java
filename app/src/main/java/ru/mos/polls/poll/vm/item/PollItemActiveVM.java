@@ -1,5 +1,6 @@
 package ru.mos.polls.poll.vm.item;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,9 +10,9 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.ItemActivePollBinding;
-import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
+import ru.mos.polls.poll.ui.adapter.PollAdapter;
 
 /**
  * Created by Trunks on 14.09.2017.
@@ -42,7 +43,11 @@ public class PollItemActiveVM extends RecyclerBaseViewModel<Poll, ItemActivePoll
         super.onBind(viewDataBinding);
         viewDataBinding.setViewModel(model);
         viewDataBinding.notifyChange();
-        displayDescription(viewDataBinding.description, model);
+        /**
+         * см {@link Poll#getDescriptionForActivePollDataBinding(Context)}
+         * и {@link Poll#getDescriptionVisibleForActivePollDataBinding()}
+         */
+//        displayDescription(viewDataBinding.description, model);
         displayInterruptedMark(viewDataBinding.interrupted, model);
         setListener(viewDataBinding.baseInfoContainer, model);
     }

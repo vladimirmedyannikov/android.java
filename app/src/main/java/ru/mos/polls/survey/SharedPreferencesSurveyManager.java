@@ -140,6 +140,7 @@ public class SharedPreferencesSurveyManager {
             JSONArray answersJsonArray = survey.getAnswersJson();
             String answersName = getAnsewersName(surveyId);
             String answers = answersJsonArray.toString();
+
             editor.putString(answersName, answers);
 
             editor.commit();

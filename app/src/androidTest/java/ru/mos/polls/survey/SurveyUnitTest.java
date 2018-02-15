@@ -13,6 +13,7 @@ import java.util.List;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
 import ru.mos.polls.survey.filter.LessTimeFilter;
+import ru.mos.polls.survey.parsers.SurveyFactory;
 import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
@@ -158,4 +159,20 @@ public class SurveyUnitTest extends BaseUnitTest {
         testSurvey = new Survey(surveyId, Survey.Status.INTERRUPTED, testListSQ);
         Assert.assertEquals(testSurvey.isInterrupted(), true);
     }
+
+    @Test
+    public void testSurveyInfo() {
+        Survey surveyHearing = SurveyFactory.fromJson(fromTestRawAsJson("survey_hearing.json"));
+
+        Assert.assertFalse(surveyHearing.getKind().isMKD());
+        Assert.assertFalse(surveyHearing.getKind().isInform());
+        Assert.assertFalse(surveyHearing.getKind().isOSS());
+        Assert.assertFalse(surveyHearing.isInformSurveyOk());
+
+        Survey surveyInform= SurveyFactory.fromJson(fromTestRawAsJson("survey_info.json"));
+
+        Assert.assertTrue(surveyInform.getKind().isMKD() || surveyInform.getKind().isInform());
+        Assert.assertTrue(surveyInform.isInformSurveyOk());
+    }
+
 }

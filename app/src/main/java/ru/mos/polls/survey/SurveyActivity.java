@@ -15,8 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
+import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.common.controller.UrlSchemeController;
@@ -28,11 +32,15 @@ import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
+import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
+import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
+
+import static android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled;
 
 
 public class SurveyActivity extends BaseActivity {
@@ -83,6 +91,7 @@ public class SurveyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_fragment_survey);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -153,6 +162,22 @@ public class SurveyActivity extends BaseActivity {
         }
     }
 
+    /**
+     * т.к. Juggler не используется, но идет наследование от {@link BaseActivity}
+     * то срабатывает {@link JugglerActivity#onSupportNavigateUp()}
+     * при нажатии экранной стрелки "<-" в {@link ru.mos.polls.survey.vm.InfoCommentFragmentVM}
+     * в котором вызвается {@link Activity#finish()}
+     * @return
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (currentFragment != null && currentFragment instanceof InfoSurveyFragment) {
+            return false;
+        } else {
+            return super.onSupportNavigateUp();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -220,11 +245,18 @@ public class SurveyActivity extends BaseActivity {
         });
     }
 
+    public static Survey getStub(Context context) {
+        return new Gson().fromJson(
+                StubUtils.fromRawAsJsonObject(context, R.raw.survey_hearing).toString(),
+                new TypeToken<Survey>() {
+                }.getType()
+        );
+    }
+
     private boolean setSurveyId() {
         Intent intent = getIntent();
         isHearing = intent.getBooleanExtra(EXTRA_IS_HEARING, false);
         surveyId = intent.getLongExtra(EXTRA_SURVEY_ID, -1);
-
         if (UrlSchemeController.hasUri(this)) {
             if (UrlSchemeController.isHearing(this)) {
                 isHearing = true;
@@ -243,6 +275,12 @@ public class SurveyActivity extends BaseActivity {
 
     private void setFragment() {
         Fragment fragment = getSummaryFragment(survey);
+        if (survey.getKind().isMKD() || survey.getKind().isInform()) {
+            if (survey.isInformSurveyOk()) {
+                replaceFragment(getInfoSurveyFragment(survey, survey.getQuestionsOrder().get(0)));
+                return;
+            }
+        }
         if (!survey.getKind().isHearing() && isRedirectNeed(survey)) {
             /**
              * По умолчанию первый вопрос
@@ -320,6 +358,12 @@ public class SurveyActivity extends BaseActivity {
         return surveyFragment;
     }
 
+    private Fragment getInfoSurveyFragment(Survey survey, long questionId) {
+        InfoSurveyFragment surveyFragment = InfoSurveyFragment.newInstance(survey, questionId);
+        surveyFragment.setCallback(getSurveyCallback());
+        return surveyFragment;
+    }
+
     public SurveyFragment.Callback getSurveyCallback() {
         SurveyFragment.Callback callback = new SurveyFragment.Callback() {
 
@@ -360,7 +404,7 @@ public class SurveyActivity extends BaseActivity {
         return callback;
     }
 
-    private void doInterrupt(final Survey survey) {
+    public void doInterrupt(final Survey survey) {
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
             WebSurveyDataSource surveyDataSource = new WebSurveyDataSource(SurveyActivity.this);
             surveyDataSource.save(survey,

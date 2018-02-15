@@ -142,7 +142,7 @@ public abstract class PopupController {
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 10, 10);
-        popupWindow.update(0, 0, -1, -1);
+//        popupWindow.update(0, 0, -1, -1);
     }
 
     /**

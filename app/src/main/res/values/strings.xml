@@ -111,6 +111,8 @@
     <string name="social_ok">Одноклассники</string>
     <string name="empty_passedpolls_hint">Вы не приняли участия ни в одном голосовании</string>
     <string name="empty_activepolls_hint">Новые голосования появятся в ближайшее время</string>
+    <string name="empty_housepolls_hint">В вашем доме пока не проходит никаких голосований.\n\nДобавьте адреса проживания, регистрации и собственности, чтобы не пропустить голосования.</string>
+    <string name="below_house_addresses_hint">Голосования для жильцов дома доступны по указанным в профиле адресам регистрации или проживания.\n\nДля участия в голосованиях собственников необходимо указать адреса собственности и связать профиль с профилем на mos.ru</string>
     <string name="empty_point_history"> </string>
     <string name="question_count_1" formatted="false">%s вопрос</string>
     <string name="question_count_2" formatted="false">%s вопросов</string>
@@ -382,6 +384,8 @@
     <string name="mainmenu_my_points">Мои баллы</string>
     <string name="mainmenu_profile">Мой профиль</string>
 
+    <string name="mainmenu_electronic_house">Электронный дом</string>
+
     <string name="mainmenu_settings">Настройки</string>
     <string name="mainmenu_support">Справка/Отзыв</string>
 
@@ -618,6 +622,7 @@
     <string name="innovation_rate_avg">средняя оценка:</string>
     <string name="title_view_image">Просмотр изображения</string>
     <string name="polls_title">Голосования</string>
+    <string name="my_addresses_title">Мои адреса</string>
     <string name="my_personal_data">Данные</string>
     <string name="title_help">Справка</string>
     <string name="error_permission_denied">Размещение в социальной сети \"Одноклассники\" временно недоступно</string>
@@ -656,6 +661,7 @@
     <string name="number_format_exception">При отправке смс произошла ошибка, возможно, номер телефона не соответствует требуемому формату</string>
     <string name="app_continue">Продолжить</string>
     <string name="permission_not_available">Для корректной работы приложения, требуется получить разрешение</string>
+    <string name="permission_not_available_goto_settings">Для корректной работы приложения, требуется получить разрешение.\nПерейти в настройки приложения?</string>
     <string name="register_code">Получить код подтверждения</string>
     <string name="has_code">Уже есть код подтверждения</string>
     <string name="password_confirm">Установка пароля</string>
@@ -762,7 +768,7 @@
     <string name="code_confirm_send">Подтвердить</string>
     <string name="get_permission">Для корректной работы приложения необходимо предоставить некоторые разрешения</string>
     <string name="help_phone_not_correct">Неправильный номер?</string>
-    <string name="hint_sms_sent">Мы отправили SMS с кодом на ваш номер</string>
+    <string name="hint_sms_sent">Мы отправили SMS с паролем на ваш номер</string>
     <string name="tutorial_cancel">Завершить</string>
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
@@ -770,7 +776,7 @@
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
-    <string name="auth_error_confirm_code_not_correct">Неверный код подтверждения</string>
+    <string name="auth_error_confirm_code_not_correct">Ошибка авторизации</string>
     <string name="permission_camera_gallery">Для корректной работы необходимо предоставить доступ к камере и внутренней памяти устройства</string>
     <string name="crop_image_menu_crop">Вырезать</string>
     <string name="crop_image_menu_flip_horizontally">Перевернуть по горизонтали</string>
@@ -799,7 +805,7 @@
     <string name="title_item_add_friend">Добавить друга</string>
     <string name="profile_title">Профиль</string>
     <string name="friend_profile_invisible">Пользователь скрыл свои данные</string>
-    <string name="success_send_sms">СМС \"%s\" успешно доставлено</string>
+    <string name="success_send_sms">СМС\n\"%s\"\nуспешно доставлено</string>
     <string name="error_send_sms">К сожалению, не удалось доставить СМС \"%s\"</string>
     <string name="title_dialog_edit_profile">Вы хотите перейти в режим редактирования данных?</string>
     <string name="empty_achievement_list">Информации по достижениям нет</string>
@@ -820,4 +826,13 @@
     <string name="empty_flat_error">Некорректный адрес</string>
     <string name="news_government_moscow">Новости правительства Москвы</string>
     <string name="poll_old_empty_title">Вы еще не участвовали ни в одном голосовании</string>
+    <string name="info_survey_title">Информирование</string>
+    <string name="your_comment" formatted="false">Ваш комментарий: %s</string>
+    <string name="poll_inform_title">Информирование</string>
+    <string name="registered_in_service">Есть регистрация в сервисах Москвы?</string>
+    <string name="password_or_code">Пароль</string>
+    <string name="auth_description">Если вы уже получали пароль или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
+    <string name="apartament_number">Номер квартиры</string>
+    <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
+    <string name="go_to_house_poll_desc">Вы можете подать заявку на проведение голосования, если зарегистрированы или являетесь собственником в вашем доме. Заявки подаются на сайте ag.mos.ru. Свяжите свой профиль с профилем на mos.ru и перейдите на сайт для размещения заявки.\nПерейти на сайт?</string>
 </resources>

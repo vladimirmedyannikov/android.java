@@ -8,9 +8,9 @@ import android.text.TextUtils;
 
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AgAuthActivity;
-import ru.mos.polls.quests.quest.ProfileQuest;
-import ru.mos.polls.quests.quest.RateAppQuest;
-import ru.mos.polls.quests.quest.SocialQuest;
+import ru.mos.polls.quests.model.quest.ProfileQuest;
+import ru.mos.polls.quests.model.quest.RateAppQuest;
+import ru.mos.polls.quests.model.quest.SocialQuest;
 
 /**
  * Инкапсулирует обработку неявного старта экрана через url scheme
@@ -27,6 +27,7 @@ public abstract class UrlSchemeController {
     public static final String ACHIEVEMENT_HOST = "achievement";
     public static final String INNOVATION_HOST = "novelty";
     public static final String ADVERTISEMENT = "advertisement";
+    public static final String PERSONAL_WIZARD = "personalWizard";
 
     public static final String ACHIEVEMENT_ID = "achievement_id";
     public static final String POLL_ID = "poll_id";

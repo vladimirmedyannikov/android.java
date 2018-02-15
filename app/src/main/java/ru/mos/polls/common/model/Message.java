@@ -9,10 +9,16 @@ import android.text.TextUtils;
 
 import org.json.JSONObject;
 
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.gui.JugglerActivity;
+import ru.mos.elk.profile.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.wizardprofile.state.WizardProfileState;
+import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 /**
  * Структура данных для хранения информации для кастомных сообщений после отправки опроса и выполенния чекина
@@ -65,7 +71,7 @@ public class Message {
      * @param postType             - тип совершаемого поста, требуется для метода flurry
      * @param id                   - идентификатор опроса или мероприятия,также исопльзуется для метода flurry
      */
-    public void showCustomMessage(final Context context,
+    public void showCustomMessage(final JugglerActivity context,
                                   final AppPostValue questResultPostValue,
                                   final AppPostValue.Type postType,
                                   final long id,
@@ -88,6 +94,11 @@ public class Message {
                      */
                     Uri uri = Uri.parse(urlScheme);
                     String host = uri.getHost();
+                    if (host.equalsIgnoreCase("task") && UrlSchemeController.PERSONAL_WIZARD.equalsIgnoreCase(uri.getQueryParameter("task_id"))) {
+                        context.navigateTo().state(Add.newActivityForResult(new WizardProfileState(ru.mos.polls.quests.controller.QuestStateController.getInstance().getIdsList(), AgUser.getPercentFillProfile(context)), BaseActivity.class, WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE));
+                        onClose.run();
+                        return;
+                    }
                     if (UrlSchemeController.EVENTS_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.POLLTASKS_HOST.equalsIgnoreCase(host)
                             || UrlSchemeController.NEWS_HOST.equalsIgnoreCase(host)
@@ -133,7 +144,8 @@ public class Message {
         builder.setPositiveButton(R.string.survey_done_ok, null);
         builder.show();
     }
-    public void showDialog(final Context context){
+
+    public void showDialog(final Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (!TextUtils.isEmpty(title) && !"null".equalsIgnoreCase(title)) {
             builder.setTitle(title);
@@ -142,6 +154,7 @@ public class Message {
         builder.setPositiveButton(R.string.survey_done_ok, null);
         builder.show();
     }
+
     private boolean isEmpty(String target) {
         return TextUtils.isEmpty(target) || "null".equalsIgnoreCase(target);
     }

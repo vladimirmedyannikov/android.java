@@ -8,7 +8,6 @@ import java.util.List;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
-import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 

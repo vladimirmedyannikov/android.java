@@ -1,8 +1,6 @@
 package ru.mos.polls.badge.model;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -52,6 +50,11 @@ public class BadgesSource {
      */
     public static final String TAG_POINTS = "scores";
 
+    /**
+     * Электронный дом
+     */
+    public static final String TAG_ELECTRONIC_HOUSE = "electronic_house";
+
     private State state;
     private final List<Badge> badgeList = new ArrayList<>();
 
@@ -88,6 +91,9 @@ public class BadgesSource {
                     break;
                 case TAG_FRIENDS:
                     s = get(Badge.Type.FRIENDS);
+                    break;
+                case TAG_ELECTRONIC_HOUSE:
+                    s = get(Badge.Type.OSS);
                     break;
                 default:
                     s = null;

@@ -1,0 +1,75 @@
+{
+  "details": {
+    "id": 1489,
+    "title": "Информирование (ул. Флотская 74)",
+    "text_full_html": "",
+    "text_short_html": "<p>Это пример текста информирования.&nbsp;<span>Попробовать угощения из короля фруктов, посмотреть генеральный прогон нового спектакля цирковой студии, освоить современные танцевальные па, поучаствовать в фотозаездах и пригласить маму в кино &mdash; mos.ru предлагает меню последних выходных уходящей осени.</span></p>",
+    "points": 0,
+    "status": "old",
+    "show_poll_stats": false,
+    "pushed_mark": null,
+    "kind": "mkd",
+    "begin_date": 1511522340,
+    "end_date": 1512040750,
+    "type": "list"
+  },
+  "experts": [],
+  "questions": [
+    {
+      "id": 23339,
+      "question": "",
+      "question_full_html": "",
+      "question_short_html": "<p>Вам нравится данное предложение?</p>",
+      "type": "radiobutton",
+      "hint": "",
+      "is_required": false,
+      "experts": [],
+      "variants": [
+        {
+          "id": "208016",
+          "priority": "208016",
+          "text": "Нравится",
+          "kind": "text",
+          "constraints": null
+        },
+        {
+          "id": "208017",
+          "priority": "208017",
+          "text": "Не нравится",
+          "kind": "text",
+          "constraints": null
+        }
+      ]
+    },
+    {
+      "id": 23340,
+      "question": "",
+      "question_full_html": "",
+      "question_short_html": "<p>Оставьте комментарий</p>",
+      "type": "checkbox",
+      "hint": "",
+      "is_required": false,
+      "experts": [],
+      "variants": [
+        {
+          "id": "208018",
+          "priority": "208018",
+          "text": "",
+          "kind": "input",
+          "constraints": null,
+          "input_type": "char"
+        },
+        {
+          "id": "208019",
+          "priority": "208019",
+          "text": "",
+          "kind": "input",
+          "constraints": null,
+          "input_type": "char"
+        }
+      ]
+    }
+  ],
+  "filters": [],
+  "values": []
+}

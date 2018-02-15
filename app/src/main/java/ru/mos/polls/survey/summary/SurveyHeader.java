@@ -115,7 +115,7 @@ public class SurveyHeader extends FrameLayout {
     private void displaySpecialMark(Survey survey) {
         boolean active = survey.isActive() || survey.isInterrupted();
         int visibility = GONE;
-        if (active && !survey.getKind().isStandart()) {
+        if (active && (survey.getKind().isHearing() || survey.getKind().isSpecial())) {
             visibility = VISIBLE;
             int color = getContext().getResources().getColor(survey.getKind().getColor());
             kind.setTextColor(color);

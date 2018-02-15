@@ -4,6 +4,7 @@
     <color name="gray_lightest">#ccc</color>
     <color name="gray_pale">#d0d9d8</color>
     <color name="gray_light">#999</color>
+    <color name="gray_shadow">#34404040</color>
     <color name="gray_dark">#5a5b5b</color>
     <color name="green_light">#0eb0a0</color>
     <color name="green_lightest">#88d7ba</color>
@@ -108,4 +109,10 @@
 
     <color name="tutorial_background">#f2f2f2</color>
     <color name="tutorial_description">#96a5ab</color>
+
+    <color name="fab_house_polls_add_color">#da4336</color>
+    <color name="tab_unselected">#9bdcd6</color>
+    <color name="dislike_color">#E74C3C</color>
+    <color name="electronic_house_back_color">#f2faf1</color>
+    <color name="electronic_house_hint_color">#9da29c</color>
 </resources>

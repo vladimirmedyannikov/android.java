@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/root"
+        style="@style/root">
+
+        <RelativeLayout style="@style/root">
+
+
+            <TextView
+                android:id="@android:id/empty"
+                style="@style/emptylist_without_picture"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/pd_normal"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/below_house_addresses_hint"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/ts_normal"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@android:id/empty"
+                android:background="@color/white"/>
+
+            <Button
+                android:id="@+id/profileButton"
+                style="@style/button.centered"
+                android:layout_below="@id/list"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="false"
+                android:layout_marginBottom="@dimen/pd_xlarge"
+                android:minWidth="250dp"
+                android:layout_marginTop="@dimen/pd_xlarge"
+                android:padding="@dimen/pd_xnormal"
+                android:text="Перейти в профиль"
+                android:textSize="@dimen/ts_normal"/>
+
+            <View
+                android:id="@+id/shadow"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/list"
+                android:background="@drawable/dropshadow"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

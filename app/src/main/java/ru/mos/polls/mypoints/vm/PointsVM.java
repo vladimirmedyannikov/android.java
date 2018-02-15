@@ -54,6 +54,9 @@ public class PointsVM extends RecyclerBaseViewModel<Points, ItemPointHistoryBind
     public void setView() {
         tvWriteOffDate.setText(df.format(new Date(model.getDate() * 1000)));
         tvTitle.setText(model.getTitle());
+        int color = isRefilled() ? tvPoints.getResources().getColor(R.color.greenText) : tvPoints.getResources().getColor(R.color.ag_red);
+        tvPointsText.setTextColor(color);
+        tvPoints.setTextColor(color);
         if (isRefilled()) {
             tvPoints.setText("+" + model.getPoints());
         } else {

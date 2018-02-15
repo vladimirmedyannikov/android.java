@@ -70,26 +70,28 @@ public class ImageSurveyVariant extends SurveyVariant {
             }
         });
         ImageLoader imageLoader = AGApplication.getImageLoader();
-        imageLoader.loadImage(url, new ImageLoadingListener() {
+        imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
             @Override
-            public void onLoadingStarted(String s, View view) {
+            public void onLoadingStarted(String imageUri, View view) {
+
             }
 
             @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 imageView.setVisibility(View.GONE);
             }
 
             @Override
-            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                if (bitmap != null) {
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                if (loadedImage != null) {
                     imageView.setVisibility(View.VISIBLE);
-                    imageView.setImageBitmap(bitmap);
+                    imageView.setImageBitmap(loadedImage);
                 }
             }
 
             @Override
-            public void onLoadingCancelled(String s, View view) {
+            public void onLoadingCancelled(String imageUri, View view) {
+
             }
         });
         return v;

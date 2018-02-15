@@ -34,7 +34,7 @@
             <EditText
                 android:id="@+id/etCode"
                 style="@style/input.phone"
-                android:hint="@string/ag_hint_code"
+                android:hint="@string/password"
                 android:imeOptions="actionNext" />
 
             <TextView

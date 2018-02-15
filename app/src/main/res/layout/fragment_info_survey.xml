@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        style="@style/root"
+        android:background="@color/white">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vs_xxsmall"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/poll_navigation_green_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/share"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_normal"
+            android:visibility="visible" />
+
+        <ScrollView
+            android:id="@+id/scrl"
+            style="@style/root"
+            android:layout_above="@+id/shareButton">
+
+            <RelativeLayout
+                android:id="@+id/root"
+                style="@style/root"
+                android:layout_marginTop="@dimen/pd_normal">
+
+                <ru.mos.polls.survey.summary.SurveyTitleView
+                    android:id="@+id/surveyTitleView"
+                    style="@style/item"
+                    app:contentChangingType="simple" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/info_survey_comment_card"
+                    style="@style/linear"
+                    android:layout_below="@+id/surveyTitleView"
+                    android:elevation="@dimen/pd_xsmall">
+
+                    <LinearLayout style="@style/linear">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/info_survey_comment"
+                            style="@style/text.normal.black"
+                            android:layout_margin="@dimen/pd_xsmall"
+                            android:hint="Ваш комментарий"
+                            android:singleLine="true" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/info_survey_apartament_number"
+                            style="@style/text.normal.black"
+                            android:layout_margin="@dimen/pd_xsmall"
+                            android:hint="@string/apartament_number"
+                            android:singleLine="true" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.GridLayout
+                    android:id="@+id/info_grid_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/info_survey_comment_card"
+                    android:paddingBottom="@dimen/vs_xsmall"
+                    android:paddingTop="@dimen/pd_small"
+                    app:columnCount="2"
+                    app:orientation="horizontal"
+                    app:rowCount="3">
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/info_like_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/info_dislike_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/like_title"
+                        style="@style/text.normal"
+                        android:gravity="center"
+                        android:text="Нравится"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/dislike_title"
+                        style="@style/text.normal"
+                        android:gravity="center"
+                        android:text="Не нравится"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/like_count"
+                        style="@style/text.large.green"
+                        android:gravity="center"
+                        android:textSize="@dimen/ts_xxlarge"
+                        android:visibility="gone"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/dislike_count"
+                        style="@style/text.large.green"
+                        android:gravity="center"
+                        android:textColor="@color/dislike_color"
+                        android:textSize="@dimen/ts_xxlarge"
+                        android:visibility="gone"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="center"
+                        app:layout_rowWeight="1" />
+                </android.support.v7.widget.GridLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

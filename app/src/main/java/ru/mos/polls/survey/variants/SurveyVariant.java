@@ -44,7 +44,7 @@ public abstract class SurveyVariant implements Serializable {
     private final long innerId;
     private final int percent;
     private final int voters;
-    private Listener listener = Listener.STUB;
+    private Listener listener = STUB;
     protected StatusProcessor statusProcessor;
 
     /**
@@ -106,7 +106,7 @@ public abstract class SurveyVariant implements Serializable {
 
     public void setListener(Listener l) {
         if (l == null) {
-            listener = Listener.STUB;
+            listener = STUB;
         } else {
             listener = l;
         }
@@ -163,31 +163,31 @@ public abstract class SurveyVariant implements Serializable {
     public abstract boolean onActivityResultOk(Intent data);
 
     public abstract boolean onActivityResultCancel(Intent data);
+    public static final Listener STUB = new Listener() {
 
+        @Override
+        public void onClicked() {
+        }
+
+        @Override
+        public void onCommit() {
+        }
+
+        @Override
+        public void onCancel() {
+        }
+
+        @Override
+        public void performParentClick() {
+        }
+
+        @Override
+        public void refreshSurvey() {
+        }
+    };
     public interface Listener {
 
-        public static final Listener STUB = new Listener() {
 
-            @Override
-            public void onClicked() {
-            }
-
-            @Override
-            public void onCommit() {
-            }
-
-            @Override
-            public void onCancel() {
-            }
-
-            @Override
-            public void performParentClick() {
-            }
-
-            @Override
-            public void refreshSurvey() {
-            }
-        };
 
         /**
          * Вызывать когда на варинт обрабатывает нажатие сразу, без показа диалога или другого активити и тп.

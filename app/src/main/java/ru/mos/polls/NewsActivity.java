@@ -16,7 +16,7 @@ public class NewsActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        DynamicFragment fr = NewsDynamicFragment.newInstance(getString(R.string.title_results), "", API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
+        DynamicFragment fr = NewsDynamicFragment.newInstance(getString(R.string.title_results), "", API.getURL(UrlManager.url(UrlManager.V250, UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
 
         getSupportFragmentManager()
                 .beginTransaction()

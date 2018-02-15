@@ -95,7 +95,8 @@ public class Badge {
         POLLS("poll"),
         NOVELTIES("novelty"),
         NEWS("news"),
-        FRIENDS("friends");
+        FRIENDS("friends"),
+        OSS("oss");
 
         public static Type parse(String value) {
             Type result = null;
@@ -107,6 +108,8 @@ public class Badge {
                 result = NEWS;
             } else if (FRIENDS.value.equalsIgnoreCase(value)) {
                 result = FRIENDS;
+            } else if (OSS.value.equalsIgnoreCase(value)) {
+                result = OSS;
             }
             return result;
         }

@@ -106,7 +106,6 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                             FunctionalHelper.startGooglePlay(getActivity());
                             break;
                         case AboutItem.FEEDBACK:
-//                        AgSupportActivity.startActivity(getActivity());
                             getFragment().navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
                             break;
                     }

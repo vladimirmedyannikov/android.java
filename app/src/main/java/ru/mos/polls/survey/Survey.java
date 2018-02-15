@@ -33,7 +33,9 @@ import ru.mos.polls.survey.experts.DetailsExpertsActivity;
 import ru.mos.polls.survey.filter.Filter;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
+import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.ListViewSurveyQuestion;
+import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.status.ActiveStatusProcessor;
 import ru.mos.polls.survey.status.OldStatusProcessor;
@@ -42,13 +44,28 @@ import ru.mos.polls.survey.status.PassedEndedStatusProcessor;
 import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
 import ru.mos.polls.survey.summary.SurveyTitleView;
+import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
+import ru.mos.polls.survey.variants.TextSurveyVariant;
 import ru.mos.polls.survey.variants.select.IntentExtraProcessor;
+import ru.mos.polls.survey.variants.values.CharVariantValue;
 
 /**
  * Весь опрос. Включает в себя вопросы.
  */
 public class Survey implements Serializable {
+
+    public static final int CODE_ERROR_SURVEY_FILLED_LESS_ANSWERS = 15191;
+    public static final int CODE_ERROR_SURVEY_FILLED_MORE_ANSWERS = 15192;
+    public static final int CODE_ERROR_SURVEY_FILLED_PARENT_ANSWERS = 15193;
+    public static final int CODE_ERROR_SURVEY_FILLED_ONLY_ONE_ANSWER = 15194;
+    public static final int CODE_ERROR_SURVEY_FILLED_EMPTY_ANSWER = 15195;
+    public static final int CODE_ERROR_SURVEY_FILLED_NOT_USER_ANSWER = 15197;
+    public static final int CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_LESS = 15158;
+    public static final int CODE_ERROR_SURVEY_FILLED_START_VALUE_ANSWER_IS_MORE = 15159;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_LESS = 15160;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_ANSWER_IS_MORE = 15161;
+    public static final int CODE_ERROR_SURVEY_FILLED_END_VALUE_IS_LESS_THAN_START_VALUE = 15162;
 
     /**
      * Айдишник опроса
@@ -98,7 +115,7 @@ public class Survey implements Serializable {
 
     private List<DetailsExpert> detailsExperts;
 
-    private Listener listener = Listener.STUB;
+    private Listener listener = STUB;
     private String title;
     private String textFullHtml;
     private String textShortHtml;
@@ -165,7 +182,7 @@ public class Survey implements Serializable {
 
     public void setListener(final Listener listener) {
         if (listener == null) {
-            this.listener = Listener.STUB;
+            this.listener = STUB;
         } else {
             this.listener = listener;
         }
@@ -441,6 +458,36 @@ public class Survey implements Serializable {
         long current = System.currentTimeMillis();
         boolean b = current > endDate;
         return b;
+    }
+
+    public boolean isInformSurveyOk() {
+        boolean isSurveyWellFormed = getQuestionsList().size() == 2;
+        try {
+            boolean isRadioButton = getQuestionsList().get(0) instanceof RadioboxSurveyQuestion;
+            if (isRadioButton) {
+                RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) getQuestionsList().get(0);
+                boolean isRBhas2Variants = radioboxSurveyQuestion.getVariantsList().size() == 2;
+                boolean isRBVariantsText  = radioboxSurveyQuestion.getVariantsList().get(0) instanceof TextSurveyVariant && radioboxSurveyQuestion.getVariantsList().get(1) instanceof TextSurveyVariant;
+                if (!isRBhas2Variants || !isRBVariantsText) return false;
+            } else return false;
+            boolean isCheckBoxButton = getQuestionsList().get(1) instanceof CheckboxSurveyQuestion;
+            if (isCheckBoxButton) {
+                CheckboxSurveyQuestion checkboxSurveyQuestion = (CheckboxSurveyQuestion) getQuestionsList().get(1);
+                boolean isCBhas2Variants = checkboxSurveyQuestion.getVariantsList().size() == 2;
+                boolean isCBVariantsInput = checkboxSurveyQuestion.getVariantsList().get(0) instanceof InputSurveyVariant && checkboxSurveyQuestion.getVariantsList().get(1) instanceof InputSurveyVariant;
+                if (isCBVariantsInput) {
+                    boolean isCBCharVarinantsInput = ((InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0)).input instanceof CharVariantValue
+                            && ((InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1)).input instanceof CharVariantValue;
+                    if (!isCBCharVarinantsInput) return false;
+                }
+                if (!isCBhas2Variants || !isCBVariantsInput) return false;
+            } else return false;
+            if (filters.size() > 0) return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return isSurveyWellFormed;
     }
 
     private boolean hasStatus(Status status) {
@@ -856,31 +903,31 @@ public class Survey implements Serializable {
         }
     }
 
+    public static final Listener STUB = new Listener() {
+
+        @Override
+        public void onSurveyVariantBeforeClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantAfterClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantOnCommit(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onSurveyVariantOnCancel(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
+        }
+
+        @Override
+        public void onRefreshSurvey() {
+        }
+
+    };
+
     public interface Listener {
-
-        public static final Listener STUB = new Listener() {
-
-            @Override
-            public void onSurveyVariantBeforeClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantAfterClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantOnCommit(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onSurveyVariantOnCancel(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-            }
-
-            @Override
-            public void onRefreshSurvey() {
-            }
-
-        };
 
         /**
          * Вызывается перед нажатием на вариант ответа

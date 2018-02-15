@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
+import ru.mos.polls.BR;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.profile.vm.WizardRequestInterfaceListener;
 
@@ -21,6 +22,11 @@ public abstract class NavigateFragment<VM extends FragmentViewModel, B extends V
 
     public void navigateTo(State state, Class<? extends JugglerActivity> activityClass) {
         navigateTo().state(Add.newActivity(state, activityClass));
+    }
+
+    @Override
+    public int getVariable() {
+        return BR.viewModel;
     }
 
     @Override

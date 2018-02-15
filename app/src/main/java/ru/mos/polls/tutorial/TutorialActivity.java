@@ -10,8 +10,13 @@ import ru.mos.polls.R;
 
 public class TutorialActivity extends AppCompatActivity {
     public static void start(Context context) {
-        Intent activity = new Intent(context, TutorialActivity.class);
+        Intent activity = getTutorialActivityIntent(context);
         context.startActivity(activity);
+    }
+
+
+    public static Intent getTutorialActivityIntent(Context context) {
+        return new Intent(context, TutorialActivity.class);
     }
 
     @Override

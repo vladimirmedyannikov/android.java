@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/linear"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:paddingBottom="@dimen/pd_xxsmall"
                 android:paddingTop="@dimen/pd_xxsmall">
 
-    <TextView
-        android:layout_alignParentTop="true"
-        android:id="@+id/tvTitle"
-        style="@style/text.normal"
-        android:textStyle="bold"/>
 
     <com.android.volley2.toolbox.NetworkImageView
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@id/tvTitle"
         android:layout_alignParentRight="true"
-        android:layout_margin="12dp"
+        android:layout_margin="8dp"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:id="@+id/viewGroupColumns"
-        android:layout_below="@id/tvTitle"
         style="@style/linear"
+        android:paddingBottom="@dimen/pd_xxsmall"
         android:layout_toLeftOf="@+id/image">
 
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/text.normal"
+            android:textStyle="bold" />
         <TextView
             style="@style/text.small"
             android:maxLines="4"

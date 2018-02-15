@@ -95,7 +95,7 @@ public class Request extends Thread {
     }
 
     /**
-     * Class builder for lazy initialization instance of Request
+     * Class builder for lazy initialization newInstance of Request
      */
     public static class Builder {
         private String url;
@@ -157,7 +157,7 @@ public class Request extends Thread {
         }
 
         /**
-         * Call to create instance of request, set params to instance and execute
+         * Call to create newInstance of request, set params to newInstance and execute
          */
         public void build() {
             Request request = new Request();
@@ -197,7 +197,7 @@ public class Request extends Thread {
 
     /**
      * Interface for validation response
-     * It has STUB instance, witch set true if response HttpCode == 200
+     * It has STUB newInstance, witch set true if response HttpCode == 200
      */
     public interface OnValidateResponseListener {
         OnValidateResponseListener STUB = new OnValidateResponseListener() {

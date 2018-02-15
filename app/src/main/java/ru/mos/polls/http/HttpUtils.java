@@ -33,7 +33,7 @@ public class HttpUtils {
      *
      * @param method   - url
      * @param envelope - envelope for post request
-     * @return - HttpResult instance for response
+     * @return - HttpResult newInstance for response
      */
     public static HttpResult post(String method, String envelope) {
         return post(method, envelope, null);
@@ -45,7 +45,7 @@ public class HttpUtils {
      * @param method   - url
      * @param envelope - string envelope for post request
      * @param headers  - headrs for request
-     * @return - HttpResult instance for response
+     * @return - HttpResult newInstance for response
      */
     public static HttpResult post(String method, String envelope, Map<String, String> headers) {
         final DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -68,7 +68,7 @@ public class HttpUtils {
                 httpPost.setHeader(header.getKey(), header.getValue());
         }
         /**
-         * execute request and generate HttpResult instance
+         * execute request and generate HttpResult newInstance
          */
         final HttpResult resultHttpResult = new HttpResult();
         try {
@@ -95,7 +95,7 @@ public class HttpUtils {
      * Call to execute get request without headers
      *
      * @param method - url
-     * @return - HttpResult instance for response
+     * @return - HttpResult newInstance for response
      */
     public static HttpResult get(String method) {
         return get(method, null);
@@ -106,7 +106,7 @@ public class HttpUtils {
      *
      * @param method  - url
      * @param headers - headers
-     * @return - HttpResult instance for response
+     * @return - HttpResult newInstance for response
      */
     public static HttpResult get(String method, Map<String, String> headers) {
         final DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -129,7 +129,7 @@ public class HttpUtils {
                 httpGet.setHeader(header.getKey(), header.getValue());
         }
         /**
-         * execute request and generate HttpResult instance
+         * execute request and generate HttpResult newInstance
          */
         final HttpResult resultHttpResult = new HttpResult();
         try {

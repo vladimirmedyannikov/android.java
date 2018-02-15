@@ -35,9 +35,22 @@ public class Events {
         public static final int QUEST_PROFILE_FLAT = 6;
         private AgUser agUser;
         private Flat flat;
+        /**
+         * координата на которой были на экране {@link ru.mos.polls.profile.vm.InfoTabFragmentVM}
+         */
+        private int userInfoScrollCoord = 0;
 
         public ProfileEvents(int eventType) {
             this.eventType = eventType;
+        }
+
+        public ProfileEvents(int eventType, int userInfoScrollCoord) {
+            this.eventType = eventType;
+            this.userInfoScrollCoord = userInfoScrollCoord;
+        }
+
+        public int getUserInfoScrollCoord() {
+            return userInfoScrollCoord;
         }
 
         public ProfileEvents(int eventType, AgUser agUser) {
@@ -220,6 +233,26 @@ public class Events {
 
         public boolean isEnable() {
             return enable;
+        }
+    }
+
+    public static class InfoSurveyEvents extends BaseEvents {
+        public static final int COMMENTS = 1;
+
+        String comment;
+        String number;
+
+        public InfoSurveyEvents(String comment, String number) {
+            this.comment = comment;
+            this.number = number;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public String getNumber() {
+            return number;
         }
     }
 

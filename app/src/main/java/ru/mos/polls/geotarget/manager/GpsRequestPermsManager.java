@@ -13,9 +13,14 @@ public class GpsRequestPermsManager {
     private static final long GPS_PERMISSION_REQUEST = 14 * 24 * 60 * 60 * 1000;
 
     public static boolean isNeedRequestGps(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-        long syncTime =  prefs.getLong(SYNC_TIME, System.currentTimeMillis());
+        long syncTime = getSyncTime(context);
         return System.currentTimeMillis() >= syncTime;
+    }
+
+    public static long getSyncTime(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        long syncTime = prefs.getLong(SYNC_TIME, System.currentTimeMillis());
+        return syncTime;
     }
 
     public static void incrementSyncTime(Context context) {

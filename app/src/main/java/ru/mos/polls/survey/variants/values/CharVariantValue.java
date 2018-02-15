@@ -47,6 +47,14 @@ public class CharVariantValue implements VariantValue {
         this.max = max;
     }
 
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public void setTitle(String s) {
         title = s;

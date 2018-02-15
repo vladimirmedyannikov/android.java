@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.Constants;
-import ru.mos.elk.Dialogs;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.actionmode.ActionDescription;
 import ru.mos.elk.actionmode.SearchDescription;
 import ru.mos.elk.netframework.adapters.ActionInterceptor;

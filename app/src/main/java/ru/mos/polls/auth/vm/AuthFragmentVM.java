@@ -15,7 +15,7 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.Dialogs;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -117,7 +117,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
                 GoogleStatistics.Auth.auth(phoneNumber.getUnmaskedText(), true);
                 statistics.check(true);
                 dialog.dismiss();
-                ru.mos.elk.Statistics.logon();
+                Statistics.logon();
                 onAuthCompleted();
                 /**
                  * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}

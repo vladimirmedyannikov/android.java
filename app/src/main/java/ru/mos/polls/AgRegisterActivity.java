@@ -29,8 +29,7 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.Dialogs;
-import ru.mos.elk.Statistics;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.api.API;
@@ -248,7 +247,7 @@ public class AgRegisterActivity extends BaseActivity {
 
     protected void onRegistrationSuccess() {
         if (successId == R.string.elk_succeeded_register)
-            ru.mos.elk.Statistics.regitrated();
+            Statistics.registration();
         else if (successId == R.string.elk_succeeded_restore)
             Statistics.passwRecovered();
         dialog.dismiss();

@@ -4,16 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.android.volley2.Response.ErrorListener;
 import com.android.volley2.VolleyError;
 
 import ru.mos.elk.BaseActivity;
-import ru.mos.elk.Dialogs;
 import ru.mos.elk.netframework.request.ResponseErrorCode;
 
 public class StandartErrorListener implements ErrorListener {
@@ -39,17 +34,6 @@ public class StandartErrorListener implements ErrorListener {
             context.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
             return;
         }
-//        if (context instanceof AppCompatActivity) {
-//            AppCompatActivity act = (AppCompatActivity) context;
-//            if (act.isFinishing())
-//                Toast.makeText(context, buildErrorMessage(error.getMessage()), Toast.LENGTH_LONG).show();
-//            else {
-//                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1 && act.getWindow().hasFeature(Window.FEATURE_INDETERMINATE_PROGRESS)) //FIXME API LEVEL 11 REQUIRED!
-//                    act.setSupportProgressBarIndeterminateVisibility(false);
-//                Dialogs.showAlertMessage(context, buildErrorMessage(error.getMessage()));
-//            }
-//        } else
-//            Toast.makeText(context, buildErrorMessage(error.getMessage()), Toast.LENGTH_LONG).show();
         if (progressDialog != null)
             progressDialog.dismiss();
     }

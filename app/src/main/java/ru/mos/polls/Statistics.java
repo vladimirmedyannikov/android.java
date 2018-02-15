@@ -26,7 +26,9 @@ public class Statistics {
     public static void registration() {
         FlurryAgent.logEvent("registration");
     }
-
+    public static void passwRecovered() {
+        FlurryAgent.logEvent("password recovery");
+    }
     /**
      * Экран авторизации, авторизация по e-mail или по номеру телефона
      *
@@ -605,5 +607,9 @@ public class Statistics {
      */
     public static void taskFillProfileAddressWork() {
         FlurryAgent.logEvent("task_fill_profile_address_work");
+    }
+
+    public static void logon() {
+        FlurryAgent.logEvent("authorization");
     }
 }

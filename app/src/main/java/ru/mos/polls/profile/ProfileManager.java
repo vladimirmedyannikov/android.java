@@ -14,9 +14,9 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.elk.Dialogs;
-import ru.mos.elk.R;
-import ru.mos.elk.auth.AuthActivity;
+import ru.mos.polls.AgAuthActivity;
+import ru.mos.polls.R;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.db.UserData;
 import ru.mos.polls.db.UserDataProvider;
 import ru.mos.elk.netframework.request.JsonObjectRequest;
@@ -180,7 +180,7 @@ public abstract class ProfileManager {
     public static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity) {
         Intent intent = new Intent(elkActivity, authActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(AuthActivity.PASSED_ACTIVITY, afterLoginActivity);
+        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, afterLoginActivity);
         elkActivity.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
         elkActivity.startActivity(intent);
         elkActivity.finish();

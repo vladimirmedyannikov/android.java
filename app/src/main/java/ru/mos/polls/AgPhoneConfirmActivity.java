@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
-import ru.mos.elk.Dialogs;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -159,7 +159,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 GoogleStatistics.Auth.auth(phone, true);
                 statistics.check(true);
                 dialog.dismiss();
-                ru.mos.elk.Statistics.logon();
+                Statistics.logon();
                 onAuthCompleted();
                 /**
                  * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}

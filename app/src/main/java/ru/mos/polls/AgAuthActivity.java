@@ -40,7 +40,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.elk.Dialogs;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.AgUser;

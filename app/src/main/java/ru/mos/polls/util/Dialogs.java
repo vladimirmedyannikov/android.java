@@ -1,4 +1,4 @@
-package ru.mos.elk;
+package ru.mos.polls.util;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

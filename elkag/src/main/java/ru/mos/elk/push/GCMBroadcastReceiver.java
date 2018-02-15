@@ -96,6 +96,9 @@ public class GCMBroadcastReceiver extends BroadcastReceiver{
         builder.setStyle(new NotificationCompat.BigTextStyle().
                 setBigContentTitle(msgTitle).
                 bigText(msgBody));
+        if (action.getPushChanel() != null) {
+            builder.setChannelId(action.getPushChanel().getId());
+        }
         Notification notification = builder.build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
@@ -122,6 +125,8 @@ public class GCMBroadcastReceiver extends BroadcastReceiver{
         int getLargeIcon();
 
         boolean isPushNotValid();
+
+        PushChannel getPushChanel();
     }
 
     //FIXME method to send new registrationId to 3rd party server!!

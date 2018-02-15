@@ -1,10 +1,14 @@
 package ru.mos.polls;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.android.volley2.VolleyLog;
@@ -35,6 +39,7 @@ import ru.mos.elk.api.Token;
 import ru.mos.elk.db.UserData;
 import ru.mos.elk.db.UserDataProvider;
 import ru.mos.elk.push.GCMBroadcastReceiver;
+import ru.mos.elk.push.PushChannel;
 import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.geotarget.GeotargetApiController;
 import ru.mos.polls.geotarget.manager.AreasManager;
@@ -153,16 +158,7 @@ public class AGApplication extends MultiDexApplication {
         API.setBuildVersionName(UrlManager.V250);
         VolleyLog.setIsDebug(!BuildConfig.BUILD_TYPE.equals("release"));
 
-        GCMBroadcastReceiver.addAction("promo", getPromoAction());
-        GCMBroadcastReceiver.addAction("share", getShareAction());
-        GCMBroadcastReceiver.addAction("ag_new", getNewPollAction());
-        GCMBroadcastReceiver.addAction("moscow_news", getNewsAction());
-        GCMBroadcastReceiver.addAction("novelty_new", getNewNoveltyAction());
-        GCMBroadcastReceiver.addAction("achievement_recd", getNewAchievementAction());
-        GCMBroadcastReceiver.addAction("hearing_new", getNewHearing());
-        GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew());
-        GCMBroadcastReceiver.addAction("geotarget_area_remove", removeGeotargetArea());
-        GCMBroadcastReceiver.addAction("geotarget_areas_update", updateGeotargetAreas());
+        pushRegister();
 
         getContentResolver().query(UserDataProvider.getContentWithLimitUri(UserData.Cars.URI_CONTENT, 1), null, null, null, null).close(); //work around falling when query db before created
 
@@ -214,7 +210,73 @@ public class AGApplication extends MultiDexApplication {
         return bus;
     }
 
-    public GCMBroadcastReceiver.PushAction getNewHearing() {
+    /**
+     * Метод инициализации пушей
+     */
+    private void pushRegister() {
+        PushChannel promoChannel = new PushChannel("promo", R.string.promo_push_string);
+        createChannel(getApplicationContext(), promoChannel);
+        GCMBroadcastReceiver.addAction("promo", getPromoAction(promoChannel));
+
+        PushChannel shareChannel = new PushChannel("share", R.string.share_push_string);
+        createChannel(getApplicationContext(), shareChannel);
+        GCMBroadcastReceiver.addAction("share", getShareAction(shareChannel));
+
+        PushChannel pollChannel = new PushChannel("ag_new", R.string.new_poll_push_string);
+        createChannel(getApplicationContext(), pollChannel);
+        GCMBroadcastReceiver.addAction("ag_new", getNewPollAction(pollChannel));
+
+        PushChannel moscowNewsChannel = new PushChannel("moscow_news", R.string.moscow_news_push_string);
+        createChannel(getApplicationContext(), moscowNewsChannel);
+        GCMBroadcastReceiver.addAction("moscow_news", getNewsAction(moscowNewsChannel));
+
+        PushChannel noveltyChannel = new PushChannel("novelty_new", R.string.novelty_push_string);
+        createChannel(getApplicationContext(), noveltyChannel);
+        GCMBroadcastReceiver.addAction("novelty_new", getNewNoveltyAction(noveltyChannel));
+
+        PushChannel achievementChannel = new PushChannel("achievement_recd", R.string.achievement_push_string);
+        createChannel(getApplicationContext(), achievementChannel);
+        GCMBroadcastReceiver.addAction("achievement_recd", getNewAchievementAction(achievementChannel));
+
+        PushChannel hearingChannel = new PushChannel("hearing_new", R.string.hearing_push_string);
+        createChannel(getApplicationContext(), hearingChannel);
+        GCMBroadcastReceiver.addAction("hearing_new", getNewHearing(hearingChannel));
+
+        PushChannel newsPollChannel = new PushChannel("ag_poll_news", R.string.news_poll_push_string);
+        createChannel(getApplicationContext(), newsPollChannel);
+        GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew(newsPollChannel));
+
+        PushChannel geotargetRemovePollChannel = new PushChannel("geotarget_area_remove", R.string.geotarget_area_remove_push_string);
+        createChannel(getApplicationContext(), geotargetRemovePollChannel);
+        GCMBroadcastReceiver.addAction("geotarget_area_remove", removeGeotargetArea(geotargetRemovePollChannel));
+
+        PushChannel geotargetUpdatePollChannel = new PushChannel("geotarget_areas_update", R.string.geotarget_area_update_push_string);
+        createChannel(getApplicationContext(), geotargetUpdatePollChannel);
+        GCMBroadcastReceiver.addAction("geotarget_areas_update", updateGeotargetAreas(geotargetUpdatePollChannel));
+    }
+
+    /**
+     * Метод, инициализирующий каналы пушей для Android 8 и выше
+     *
+     * @param appContext контекст приложения
+     * @param channel   канал пуша для создания
+     */
+    private static void createChannel(Context appContext, @NonNull PushChannel channel) {
+        if (appContext != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                String channelId = channel.getId();
+                String channelName = appContext.getString(channel.getChannelNameId());
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+                notificationChannel.enableLights(true);
+                notificationChannel.enableVibration(true);
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
+    }
+
+    public GCMBroadcastReceiver.PushAction getNewHearing(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             public long hearingId;
 
@@ -248,10 +310,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getPromoAction() {
+    public GCMBroadcastReceiver.PushAction getPromoAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             public String message;
 
@@ -287,10 +354,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getShareAction() {
+    public GCMBroadcastReceiver.PushAction getShareAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
 
             @Override
@@ -323,10 +395,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getNewPollAction() {
+    public GCMBroadcastReceiver.PushAction getNewPollAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             public long pollId;
             private String areaIds;
@@ -375,10 +452,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return pollId == 0;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getNewNoveltyAction() {
+    public GCMBroadcastReceiver.PushAction getNewNoveltyAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             public long id;
 
@@ -412,10 +494,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getNewAchievementAction() {
+    public GCMBroadcastReceiver.PushAction getNewAchievementAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             public String id;
 
@@ -448,10 +535,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getNewsAction() {
+    public GCMBroadcastReceiver.PushAction getNewsAction(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
 
             @Override
@@ -484,10 +576,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isPushNotValid() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction getAgNew() {
+    public GCMBroadcastReceiver.PushAction getAgNew(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             private String id;
             private String link, linkTitle;
@@ -527,10 +624,15 @@ public class AGApplication extends MultiDexApplication {
             public boolean isSilent() {
                 return false;
             }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
         };
     }
 
-    public GCMBroadcastReceiver.PushAction removeGeotargetArea() {
+    public GCMBroadcastReceiver.PushAction removeGeotargetArea(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
             private int id;
 
@@ -570,10 +672,15 @@ public class AGApplication extends MultiDexApplication {
                 return true;
             }
 
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
+            }
+
         };
     }
 
-    public GCMBroadcastReceiver.PushAction updateGeotargetAreas() {
+    public GCMBroadcastReceiver.PushAction updateGeotargetAreas(PushChannel pushChannel) {
         return new GCMBroadcastReceiver.PushAction() {
 
             @Override
@@ -612,6 +719,11 @@ public class AGApplication extends MultiDexApplication {
             @Override
             public boolean isPushNotValid() {
                 return true;
+            }
+
+            @Override
+            public PushChannel getPushChanel() {
+                return pushChannel;
             }
 
         };

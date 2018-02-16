@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import java.io.File;
 import java.util.List;
 
+import ru.mos.polls.push.PushChannel;
 import ru.mos.polls.db.UserData;
 import ru.mos.polls.db.UserDataProvider;
 import ru.mos.polls.api.API;

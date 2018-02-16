@@ -115,4 +115,6 @@
     <color name="dislike_color">#E74C3C</color>
     <color name="electronic_house_back_color">#f2faf1</color>
     <color name="electronic_house_hint_color">#9da29c</color>
+
+    <color name="ic_launcher_background">#007A6C</color>
 </resources>

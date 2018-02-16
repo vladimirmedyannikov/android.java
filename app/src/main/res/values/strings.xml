@@ -835,4 +835,18 @@
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
     <string name="go_to_house_poll_desc">Вы можете подать заявку на проведение голосования, если зарегистрированы или являетесь собственником в вашем доме. Заявки подаются на сайте ag.mos.ru. Свяжите свой профиль с профилем на mos.ru и перейдите на сайт для размещения заявки.\nПерейти на сайт?</string>
+    <string name="promo_push_string">Информационное уведомление</string>
+    <string name="share_push_string">Поделиться с друзьями</string>
+    <string name="new_poll_push_string">Новые голосования</string>
+    <string name="moscow_news_push_string">Новости</string>
+    <string name="novelty_push_string">Новинки</string>
+    <string name="achievement_push_string">Достижения</string>
+    <string name="hearing_push_string">Публичные слушания</string>
+    <string name="news_poll_push_string">Новости о голосованиях</string>
+    <string name="geotarget_area_remove_push_string">Уведомление об исключении зоны геотаргетинга</string>
+    <string name="geotarget_area_update_push_string">Уведомление об обновлении зоны геотаргетинга</string>
+
+    <string name="push_group_other">Другое</string>
+    <string name="push_group_news">Новости</string>
+    <string name="push_group_polls">Голосования</string>
 </resources>

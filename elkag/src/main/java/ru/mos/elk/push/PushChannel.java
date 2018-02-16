@@ -9,9 +9,12 @@ public class PushChannel {
 
     private int channelNameId;
 
-    public PushChannel(String id, @StringRes int channelNameId) {
+    private String groupId;
+
+    public PushChannel(String id, @StringRes int channelNameId, String groupId) {
         this.id = id;
         this.channelNameId = channelNameId;
+        this.groupId = groupId;
     }
 
     public String getId() {
@@ -23,4 +26,7 @@ public class PushChannel {
         return channelNameId;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
 }

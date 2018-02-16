@@ -845,4 +845,8 @@
     <string name="news_poll_push_string">Новости о голосованиях</string>
     <string name="geotarget_area_remove_push_string">Уведомление об исключении зоны геотаргетинга</string>
     <string name="geotarget_area_update_push_string">Уведомление об обновлении зоны геотаргетинга</string>
+
+    <string name="push_group_other">Другое</string>
+    <string name="push_group_news">Новости</string>
+    <string name="push_group_polls">Голосования</string>
 </resources>

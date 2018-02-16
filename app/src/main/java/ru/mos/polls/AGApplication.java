@@ -1,6 +1,7 @@
 package ru.mos.polls;
 
 import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.multidex.MultiDexApplication;
 
 import com.android.volley2.VolleyLog;
@@ -214,45 +216,70 @@ public class AGApplication extends MultiDexApplication {
      * Метод инициализации пушей
      */
     private void pushRegister() {
-        PushChannel promoChannel = new PushChannel("promo", R.string.promo_push_string);
+
+        /**
+         * Перед айди групп стоит цифра, т.к. идет сортировка в настройках приложения
+         * Группа "другое"
+         */
+        String otherGroupId = "2other_group";
+        int otherGroupName = R.string.push_group_other;
+        createChannelGroup(getApplicationContext(), otherGroupId, otherGroupName);
+
+        PushChannel promoChannel = new PushChannel("promo", R.string.promo_push_string, otherGroupId);
         createChannel(getApplicationContext(), promoChannel);
         GCMBroadcastReceiver.addAction("promo", getPromoAction(promoChannel));
 
-        PushChannel shareChannel = new PushChannel("share", R.string.share_push_string);
+        PushChannel shareChannel = new PushChannel("share", R.string.share_push_string, otherGroupId);
         createChannel(getApplicationContext(), shareChannel);
         GCMBroadcastReceiver.addAction("share", getShareAction(shareChannel));
 
-        PushChannel pollChannel = new PushChannel("ag_new", R.string.new_poll_push_string);
-        createChannel(getApplicationContext(), pollChannel);
-        GCMBroadcastReceiver.addAction("ag_new", getNewPollAction(pollChannel));
-
-        PushChannel moscowNewsChannel = new PushChannel("moscow_news", R.string.moscow_news_push_string);
-        createChannel(getApplicationContext(), moscowNewsChannel);
-        GCMBroadcastReceiver.addAction("moscow_news", getNewsAction(moscowNewsChannel));
-
-        PushChannel noveltyChannel = new PushChannel("novelty_new", R.string.novelty_push_string);
-        createChannel(getApplicationContext(), noveltyChannel);
-        GCMBroadcastReceiver.addAction("novelty_new", getNewNoveltyAction(noveltyChannel));
-
-        PushChannel achievementChannel = new PushChannel("achievement_recd", R.string.achievement_push_string);
+        PushChannel achievementChannel = new PushChannel("achievement_recd", R.string.achievement_push_string, otherGroupId);
         createChannel(getApplicationContext(), achievementChannel);
         GCMBroadcastReceiver.addAction("achievement_recd", getNewAchievementAction(achievementChannel));
 
-        PushChannel hearingChannel = new PushChannel("hearing_new", R.string.hearing_push_string);
-        createChannel(getApplicationContext(), hearingChannel);
-        GCMBroadcastReceiver.addAction("hearing_new", getNewHearing(hearingChannel));
-
-        PushChannel newsPollChannel = new PushChannel("ag_poll_news", R.string.news_poll_push_string);
-        createChannel(getApplicationContext(), newsPollChannel);
-        GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew(newsPollChannel));
-
-        PushChannel geotargetRemovePollChannel = new PushChannel("geotarget_area_remove", R.string.geotarget_area_remove_push_string);
+        PushChannel geotargetRemovePollChannel = new PushChannel("geotarget_area_remove", R.string.geotarget_area_remove_push_string, otherGroupId);
         createChannel(getApplicationContext(), geotargetRemovePollChannel);
         GCMBroadcastReceiver.addAction("geotarget_area_remove", removeGeotargetArea(geotargetRemovePollChannel));
 
-        PushChannel geotargetUpdatePollChannel = new PushChannel("geotarget_areas_update", R.string.geotarget_area_update_push_string);
+        PushChannel geotargetUpdatePollChannel = new PushChannel("geotarget_areas_update", R.string.geotarget_area_update_push_string, otherGroupId);
         createChannel(getApplicationContext(), geotargetUpdatePollChannel);
         GCMBroadcastReceiver.addAction("geotarget_areas_update", updateGeotargetAreas(geotargetUpdatePollChannel));
+
+        /**
+         * Группа "Новости"
+         */
+        String newsGroupId = "1news_group";
+        int newsGroupName = R.string.push_group_news;
+        createChannelGroup(getApplicationContext(), newsGroupId, newsGroupName);
+
+        PushChannel moscowNewsChannel = new PushChannel("moscow_news", R.string.moscow_news_push_string, newsGroupId);
+        createChannel(getApplicationContext(), moscowNewsChannel);
+        GCMBroadcastReceiver.addAction("moscow_news", getNewsAction(moscowNewsChannel));
+
+        PushChannel newsPollChannel = new PushChannel("ag_poll_news", R.string.news_poll_push_string, newsGroupId);
+        createChannel(getApplicationContext(), newsPollChannel);
+        GCMBroadcastReceiver.addAction("ag_poll_news", getAgNew(newsPollChannel));
+
+        /**
+         * Группа "Голосования"
+         */
+        String pollsGroupId = "0polls_group";
+        int pollsGroupName = R.string.push_group_polls;
+        createChannelGroup(getApplicationContext(), pollsGroupId, pollsGroupName);
+
+        PushChannel noveltyChannel = new PushChannel("novelty_new", R.string.novelty_push_string, pollsGroupId);
+        createChannel(getApplicationContext(), noveltyChannel);
+        GCMBroadcastReceiver.addAction("novelty_new", getNewNoveltyAction(noveltyChannel));
+
+        PushChannel hearingChannel = new PushChannel("hearing_new", R.string.hearing_push_string, pollsGroupId);
+        createChannel(getApplicationContext(), hearingChannel);
+        GCMBroadcastReceiver.addAction("hearing_new", getNewHearing(hearingChannel));
+
+        PushChannel pollChannel = new PushChannel("ag_new", R.string.new_poll_push_string, pollsGroupId);
+        createChannel(getApplicationContext(), pollChannel);
+        GCMBroadcastReceiver.addAction("ag_new", getNewPollAction(pollChannel));
+
+
     }
 
     /**
@@ -267,11 +294,36 @@ public class AGApplication extends MultiDexApplication {
             if (notificationManager != null) {
                 String channelId = channel.getId();
                 String channelName = appContext.getString(channel.getChannelNameId());
+                String channelGroupId = channel.getGroupId();
                 int importance = NotificationManager.IMPORTANCE_HIGH;
                 NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
                 notificationChannel.enableLights(true);
                 notificationChannel.enableVibration(true);
+                /**
+                 * указываем группу для уведомаления
+                 */
+                notificationChannel.setGroup(channelGroupId);
                 notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
+    }
+
+    /**
+     * Метод, инициализирующий группы уведовмлений для Android 8 и выше
+     *
+     * @param appContext контекст приложения
+     * @param channelGroupId айди канала
+     * @param channelGroupName название канала
+     */
+    private static void createChannelGroup(Context appContext, String channelGroupId, @StringRes int channelGroupName) {
+        if (appContext != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                /**
+                 * Создаем группу
+                 */
+                NotificationChannelGroup notificationChannelGroup = new NotificationChannelGroup(channelGroupId, appContext.getString(channelGroupName));
+                notificationManager.createNotificationChannelGroup(notificationChannelGroup);
             }
         }
     }

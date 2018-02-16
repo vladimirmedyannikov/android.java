@@ -1,5 +1,6 @@
 package ru.mos.polls.profile.model;
 
+
 import org.json.JSONObject;
 
 /**
@@ -8,8 +9,14 @@ import org.json.JSONObject;
  * @since 2.0.0
  */
 public class DistrictArea {
-    private String district;
-    private String area;
+    public String district;
+    public String area;
+
+
+    public DistrictArea(String district, String area) {
+        this.district = district;
+        this.area = area;
+    }
 
     public DistrictArea(JSONObject jsonObject) {
         district = jsonObject.optString("district_label");

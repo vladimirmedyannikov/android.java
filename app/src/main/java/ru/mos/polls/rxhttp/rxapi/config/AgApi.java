@@ -1,9 +1,10 @@
 package ru.mos.polls.rxhttp.rxapi.config;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import ru.mos.polls.changepassword.service.ChangePassword;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
@@ -12,6 +13,9 @@ import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
+import ru.mos.polls.profile.controller.service.GetDistrictArea;
+import ru.mos.polls.profile.controller.service.GetReference;
+import ru.mos.polls.profile.model.Reference;
 import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.service.AchievementsGet;
@@ -82,8 +86,9 @@ public interface AgApi {
             String GET_SOURCES = "getSources";
             String SET_SOURCES = "setSources";
             String GET_BANNER_STATISTICS = "getBasicStatistics";
-
-            String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
+            String GET_DISTRICT_AND_AREA = "getDistrictAndArea";
+            String GET_DISTRICTS = "getDistricts";
+            String GET_AREAS = "getAreas";
         }
     }
 
@@ -153,6 +158,12 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.POLLTASK + "/" + Api.Methods.GET_BANNER_STATISTICS)
     Observable<GetBannerStatistics.Response> getBannerStatistics();
 
-    @POST("/" + Api.Methods.CHANGE_PASSWORD)
-    Observable<GeneralResponse<String>> changePassword(@Body ChangePassword.Request body);
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_DISTRICT_AND_AREA)
+    Observable<GetDistrictArea.Response> getDistrictArea(@Body GetDistrictArea.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_DISTRICTS)
+    Observable<GeneralResponse<List<Reference>>> getDistricts();
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_AREAS)
+    Observable<GeneralResponse<List<Reference>>> getAreas(@Body GetReference.Request body);
 }

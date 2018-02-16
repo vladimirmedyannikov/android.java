@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,7 +35,7 @@ public class Reference {
     }
 
     public String getLabel() {
-        return label;
+        return label.replace("?", "");
     }
 
     public Reference(JSONObject jsonObject) {
@@ -57,7 +59,7 @@ public class Reference {
 
     @Override
     public String toString() {
-        return label;
+        return getLabel();
     }
 
     public static class Adapter extends ArrayAdapter<Reference> {

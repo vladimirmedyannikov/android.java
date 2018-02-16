@@ -25,6 +25,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.profile.controller.FlatApiControllerRX;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.model.flat.Value;
@@ -37,7 +38,6 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
-import ru.mos.polls.profile.controller.FlatApiController;
 import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
@@ -565,7 +565,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     }
 
     private void requestDistrictAndArea(Value v) {
-        FlatApiController.DistrictAreaListener districtAreaListener = new FlatApiController.DistrictAreaListener() {
+        FlatApiControllerRX.DistrictAreaListener listener = new FlatApiControllerRX.DistrictAreaListener() {
             @Override
             public void onLoaded(DistrictArea districtArea) {
                 if (districtArea != null) {
@@ -578,11 +578,11 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 hideAreaDistrict();
             }
         };
-        FlatApiController.getDistrictByArea((BaseActivity) getActivity(), v.getValue(), districtAreaListener);
+        FlatApiControllerRX.getDistrictByArea(v.getValue(), listener);
     }
 
     private void setupViewIfNotEmpty() {

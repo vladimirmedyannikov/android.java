@@ -11,8 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,17 +19,16 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.profile.controller.FlatApiControllerRX;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentCustomFlatBinding;
-import ru.mos.polls.profile.controller.FlatApiController;
 import ru.mos.polls.profile.model.Reference;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
@@ -301,7 +298,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
     }
 
     private void requestAreaList(String value) {
-        FlatApiController.ReferenceListener districtListener = new FlatApiController.ReferenceListener() {
+        FlatApiControllerRX.ReferenceListener listener = new FlatApiControllerRX.ReferenceListener() {
             @Override
             public void onLoaded(List<Reference> referenceList) {
                 if (referenceList != null) {
@@ -311,11 +308,11 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 refreshAreas();
             }
         };
-        FlatApiController.getReference((BaseActivity) getActivity(), districtListener, value);
+        FlatApiControllerRX.getAreas(listener, value);
     }
 
     private void refreshAreas() {
@@ -353,7 +350,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
     }
 
     private void requestDistrictList() {
-        FlatApiController.ReferenceListener districtListener = new FlatApiController.ReferenceListener() {
+        FlatApiControllerRX.ReferenceListener listener = new FlatApiControllerRX.ReferenceListener() {
             @Override
             public void onLoaded(List<Reference> referenceList) {
                 districtReference = referenceList;
@@ -362,12 +359,12 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 getDistrictList();
                 setDistrictSpinnerAdapter();
             }
         };
-        FlatApiController.getReference((BaseActivity) getActivity(), districtListener, null);
+        FlatApiControllerRX.getDistricts(listener);
     }
 
     private void getDistrictList() {

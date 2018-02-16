@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import ru.mos.elk.BaseActivity;
-import ru.mos.elk.Dialogs;
+//import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
 //import ru.mos.elk.profile.AgUser;
@@ -68,7 +68,7 @@ public class AuthActivity extends BaseActivity {
     }
 
     public void onClickLogin(View view) {
-        final ProgressDialog dialog = Dialogs.showProgressDialog(this, R.string.elk_wait_authorization);
+//        final ProgressDialog dialog = Dialogs.showProgressDialog(this, R.string.elk_wait_authorization);
         etLogin.clearFocus();
         etPassword.clearFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

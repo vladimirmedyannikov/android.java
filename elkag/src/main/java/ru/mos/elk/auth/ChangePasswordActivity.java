@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.elk.BaseActivity;
-import ru.mos.elk.Dialogs;
+//import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 
 public class ChangePasswordActivity extends BaseActivity {
@@ -43,13 +43,13 @@ public class ChangePasswordActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                final ProgressDialog dialog = Dialogs.showProgressDialog(ChangePasswordActivity.this, R.string.elk_wait_changePassword);
+//                final ProgressDialog dialog = Dialogs.showProgressDialog(ChangePasswordActivity.this, R.string.elk_wait_changePassword);
                 Listener<String> listener = new Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(ChangePasswordActivity.this, R.string.elk_succeeded_change, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+//                        dialog.dismiss();
                         finish();
                     }
                 };

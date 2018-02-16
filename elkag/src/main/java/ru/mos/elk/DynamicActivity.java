@@ -152,17 +152,17 @@ public class DynamicActivity extends BaseActivity {
 
             @Override
             public boolean onAct(final ResultText phone, int position) {
-                Dialogs.showYesNoDialog(DynamicActivity.this, -1, R.string.elk_phone_call, R.string.elk_yes, R.string.elk_no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int buttonId) {
-                        if (buttonId == DialogInterface.BUTTON_POSITIVE) {
-                            String uri = "tel:" + phone.getBody();
-                            Intent intent = new Intent(Intent.ACTION_CALL);
-                            intent.setData(Uri.parse(uri));
-                            startActivity(intent);
-                        }
-                    }
-                }, null);
+//                Dialogs.showYesNoDialog(DynamicActivity.this, -1, R.string.elk_phone_call, R.string.elk_yes, R.string.elk_no, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int buttonId) {
+//                        if (buttonId == DialogInterface.BUTTON_POSITIVE) {
+//                            String uri = "tel:" + phone.getBody();
+//                            Intent intent = new Intent(Intent.ACTION_CALL);
+//                            intent.setData(Uri.parse(uri));
+//                            startActivity(intent);
+//                        }
+//                    }
+//                }, null);
                 return true;
             }
         };

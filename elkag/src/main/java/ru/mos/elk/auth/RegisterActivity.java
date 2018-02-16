@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.elk.BaseActivity;
-import ru.mos.elk.Dialogs;
+//import ru.mos.elk.Dialogs;
 import ru.mos.elk.R;
 import ru.mos.elk.Statistics;
 //import ru.mos.elk.profile.AgUser;
@@ -118,7 +118,7 @@ public class RegisterActivity extends BaseActivity {
         imm.hideSoftInputFromWindow(etPhoneNumber.getWindowToken(), 0);
         tvError.setVisibility(View.GONE);
         
-        dialog = Dialogs.showProgressDialog(this, waitId);
+//        dialog = Dialogs.showProgressDialog(this, waitId);
         Listener<String> listener = new Listener<String>() {
 
 			@Override

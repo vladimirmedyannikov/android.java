@@ -97,7 +97,7 @@ public abstract class PguUIController {
     }
 
     public static void hearingSubscribe(final BaseActivity elkActivity, long hearingId, long meetingId) {
-        HearingApiController.HearingCheckListener listener = new HearingApiController.HearingCheckListener() {
+        HearingApiControllerRX.HearingCheckListener listener = new HearingApiControllerRX.HearingCheckListener() {
             @Override
             public void onSuccess(String title, String message) {
                 showSimpleDialog(elkActivity, title, message);
@@ -113,22 +113,22 @@ public abstract class PguUIController {
                 showSimpleDialog(elkActivity, null, message);
             }
         };
-        HearingApiController.hearingCheck(elkActivity, hearingId, meetingId, listener);
+        HearingApiControllerRX.hearingCheck(hearingId, meetingId, listener);
     }
 
     public static void hearingErrorProcess(final BaseActivity elkActivity, int code, String message) {
         switch (code) {
-            case HearingApiController.ERROR_SESSION_EXPIRED:
-            case HearingApiController.ERROR_PGU_NOT_ATTACHED:
-            case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
-            case HearingApiController.ERROR_PGU_SESSION_EXPIRED:
-            case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
+            case HearingApiControllerRX.ERROR_SESSION_EXPIRED:
+            case HearingApiControllerRX.ERROR_PGU_NOT_ATTACHED:
+            case HearingApiControllerRX.ERROR_CODE_NO_MASTER_SSO_ID:
+            case HearingApiControllerRX.ERROR_PGU_SESSION_EXPIRED:
+            case HearingApiControllerRX.ERROR_PGU_FLAT_NOT_VALID:
                 showBindToPGUDialog(elkActivity, message);
                 break;
-            case HearingApiController.ERROR_FIELDS_ARE_EMPTY:
-            case HearingApiController.ERROR_PGU_FLAT_NOT_MATCH:
-            case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
-            case HearingApiController.ERROR_PGU_USER_DATA:
+            case HearingApiControllerRX.ERROR_FIELDS_ARE_EMPTY:
+            case HearingApiControllerRX.ERROR_PGU_FLAT_NOT_MATCH:
+            case HearingApiControllerRX.ERROR_AG_FLAT_NOT_MATCH:
+            case HearingApiControllerRX.ERROR_PGU_USER_DATA:
                 showBindToPGUDialogForInvalidFields(elkActivity, message);
                 break;
             default:

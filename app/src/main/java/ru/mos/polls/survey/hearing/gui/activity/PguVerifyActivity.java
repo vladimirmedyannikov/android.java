@@ -20,7 +20,8 @@ import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.survey.hearing.controller.HearingApiController;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 
 
 public class PguVerifyActivity extends ToolbarAbstractActivity {
@@ -101,9 +102,10 @@ public class PguVerifyActivity extends ToolbarAbstractActivity {
 
     private void auth() {
         startProgress();
-        HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
+        HearingApiControllerRX.PguAuthListener listener1 = new HearingApiControllerRX.PguAuthListener() {
             @Override
-            public void onSuccess(QuestMessage questMessag, int percent) {
+            public void onSuccess(QuestMessage questMessage, int percent) {
+                AgUser.setPercentFillProfile(getApplicationContext(), percent);
                 stopProgress();
                 setResult(true);
                 finish();
@@ -116,7 +118,7 @@ public class PguVerifyActivity extends ToolbarAbstractActivity {
                 stopProgress();
             }
         };
-        HearingApiController.pguAuth(this, login.getText().toString(), password.getText().toString(), listener);
+        HearingApiControllerRX.pguAuth(this, login.getText().toString(), password.getText().toString(), listener1);
         AbstractActivity.hideSoftInput(PguVerifyActivity.this, password);
     }
 

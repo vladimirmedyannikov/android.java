@@ -33,6 +33,8 @@ import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
+import ru.mos.polls.survey.hearing.service.AuthPGU;
+import ru.mos.polls.survey.hearing.service.HearingCheck;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -63,6 +65,7 @@ public interface AgApi {
             String POLL = "poll";
             String SUPPORT = "support";
             String POLLTASK = "polltask";
+            String PGU = "pgu";
         }
 
         interface Methods {
@@ -89,6 +92,9 @@ public interface AgApi {
             String GET_DISTRICT_AND_AREA = "getDistrictAndArea";
             String GET_DISTRICTS = "getDistricts";
             String GET_AREAS = "getAreas";
+            String BINDING = "binding";
+            String AUTH = "auth";
+            String HEARING_CHECK = "hearingCheck";
         }
     }
 
@@ -166,4 +172,13 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_AREAS)
     Observable<GeneralResponse<List<Reference>>> getAreas(@Body GetReference.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.BINDING)
+    Observable<AuthPGU.Response> pguBinding(@Body AuthPGU.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.AUTH)
+    Observable<AuthPGU.Response> pguAuth(@Body AuthPGU.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.HEARING_CHECK)
+    Observable<HearingCheck.Response> hearingCheck(@Body HearingCheck.Request body);
 }

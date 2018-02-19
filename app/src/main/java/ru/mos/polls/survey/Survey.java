@@ -19,11 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.common.view.VotersView;
 import ru.mos.polls.model.Information;

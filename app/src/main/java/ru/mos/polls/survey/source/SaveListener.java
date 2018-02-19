@@ -29,7 +29,7 @@ import ru.mos.polls.subscribes.controller.SubscribesAPIController;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
-import ru.mos.polls.survey.hearing.controller.HearingApiController;
+import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
 import ru.mos.social.controller.SocialController;
 
@@ -264,11 +264,11 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
                 return;
             }
             switch (code) {
-                case HearingApiController.ERROR_PGU_NOT_ATTACHED:
-                case HearingApiController.ERROR_PGU_SESSION_EXPIRED:
-                case HearingApiController.ERROR_PGU_FLAT_NOT_VALID:
-                case HearingApiController.ERROR_AG_FLAT_NOT_MATCH:
-                case HearingApiController.ERROR_PGU_USER_DATA:
+                case HearingApiControllerRX.ERROR_PGU_NOT_ATTACHED:
+                case HearingApiControllerRX.ERROR_PGU_SESSION_EXPIRED:
+                case HearingApiControllerRX.ERROR_PGU_FLAT_NOT_VALID:
+                case HearingApiControllerRX.ERROR_AG_FLAT_NOT_MATCH:
+                case HearingApiControllerRX.ERROR_PGU_USER_DATA:
                     break;
                 case Survey.CODE_ERROR_SURVEY_FILLED_EMPTY_ANSWER:
                 case Survey.CODE_ERROR_SURVEY_FILLED_LESS_ANSWERS:

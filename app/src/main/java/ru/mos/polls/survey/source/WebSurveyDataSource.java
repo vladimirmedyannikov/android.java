@@ -32,7 +32,7 @@ import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
 import ru.mos.polls.poll.vm.PollActiveFragmentVM;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.hearing.controller.HearingApiController;
+import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 import ru.mos.polls.survey.parsers.SurveyFactory;
 
 public class WebSurveyDataSource implements SurveyDataSource {
@@ -156,7 +156,7 @@ public class WebSurveyDataSource implements SurveyDataSource {
             public void onErrorResponse(VolleyError volleyError) {
                 super.onErrorResponse(volleyError);
                 switch (volleyError.getErrorCode()) {
-                    case HearingApiController.ERROR_CODE_NO_MASTER_SSO_ID:
+                    case HearingApiControllerRX.ERROR_CODE_NO_MASTER_SSO_ID:
                         listener.onPguAuthError(volleyError.getMessage());
                         break;
                     default:

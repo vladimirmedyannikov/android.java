@@ -25,12 +25,11 @@ import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.popup.PopupController;
-import ru.mos.polls.survey.hearing.controller.HearingApiController;
+import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 import ru.mos.polls.util.GuiUtils;
 
 
@@ -51,6 +50,7 @@ public class PguBindFragment extends JugglerFragment {
 
     private Unbinder unbinder;
     private PguBindingListener pguBindingListener;
+    //ProgressDialog progressDialog;
 
     private ProgressableUIComponent progressableUIComponent;
 
@@ -82,6 +82,15 @@ public class PguBindFragment extends JugglerFragment {
         return root;
     }
 
+//    public void startProgress() {
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.show();
+//    }
+//
+//    public void stopProgress() {
+//        if (progressDialog != null) progressDialog.dismiss();
+//    }
+
 
     @Override
     public void onPause() {
@@ -99,21 +108,9 @@ public class PguBindFragment extends JugglerFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_confirm) {
-            if (checkField()) bind();
+            bind();
         }
         GuiUtils.hideKeyboard(getView());
-        return true;
-    }
-
-    public boolean checkField() {
-        if (login.getText().toString().length() == 0) {
-            GuiUtils.displayOkMessage(getActivity(), String.format("Поле %s пустое.", getActivity().getString(R.string.pgu_hint_email)), null);
-            return false;
-        }
-        if (password.getText().toString().length() == 0) {
-            GuiUtils.displayOkMessage(getActivity(), getString(R.string.warning_enter_password), null);
-            return false;
-        }
         return true;
     }
 
@@ -150,7 +147,7 @@ public class PguBindFragment extends JugglerFragment {
         setPguBindListener(pguBindingListener);
         pguBindingListener.onPrepare();
         progressableUIComponent.begin();
-        HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
+        HearingApiControllerRX.PguAuthListener listener1 = new HearingApiControllerRX.PguAuthListener() {
             @Override
             public void onSuccess(QuestMessage questMessage, int percent) {
                 AbstractActivity.hideSoftInput(getActivity(), password);
@@ -168,13 +165,13 @@ public class PguBindFragment extends JugglerFragment {
             }
 
             @Override
-            public void onError(String errorMessage) {
+            public void onError(String error) {
                 progressableUIComponent.end();
-                etPassword.setError(errorMessage);
+                etPassword.setError(error);
                 pguBindingListener.onError();
             }
         };
-        HearingApiController.pguBind((BaseActivity) getActivity(), login.getText().toString(), password.getText().toString(), listener);
+        HearingApiControllerRX.pguBind(getContext(), login.getText().toString(), password.getText().toString(), listener1);
     }
 
     public interface PguBindingListener {

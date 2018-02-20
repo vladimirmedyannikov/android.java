@@ -17,6 +17,7 @@ import butterknife.OnTextChanged;
 import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.helpers.TitleHelper;
@@ -118,7 +119,7 @@ public class PguVerifyActivity extends ToolbarAbstractActivity {
                 stopProgress();
             }
         };
-        HearingApiControllerRX.pguAuth(this, login.getText().toString(), password.getText().toString(), listener1);
+        HearingApiControllerRX.pguAuth(getDisposables(), this, login.getText().toString(), password.getText().toString(), listener1);
         AbstractActivity.hideSoftInput(PguVerifyActivity.this, password);
     }
 

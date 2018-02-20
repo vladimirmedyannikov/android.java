@@ -2,6 +2,8 @@ package ru.mos.polls.innovations.oldmodel;
 
 import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,9 +16,13 @@ import ru.mos.polls.R;
  *
  * @since 1.9
  */
+@Deprecated
 public class Rating implements Serializable {
+    @SerializedName("user_rating")
     private int userRating;
+    @SerializedName("full_rating")
     private double fullRating;
+    @SerializedName("full_count")
     private int fullCount;
     private int[] counts;
 

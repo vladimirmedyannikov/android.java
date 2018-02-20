@@ -26,6 +26,7 @@ import ru.mos.polls.profile.model.Reference;
  *
  * @since 2.0.0
  */
+@Deprecated
 public class FlatApiController {
 
     /**

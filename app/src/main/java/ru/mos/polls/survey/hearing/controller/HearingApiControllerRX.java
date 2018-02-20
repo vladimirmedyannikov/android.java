@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
@@ -46,7 +47,7 @@ public class HearingApiControllerRX {
      * @param pguPassword пароль пользователя на сайте pgu
      * @param listener    callback обработка результата авторизации
      */
-    public static void pguBind(final Context context, String pguLogin, String pguPassword, final HearingApiControllerRX.PguAuthListener listener) {
+    public static void pguBind(CompositeDisposable disposable, final Context context, String pguLogin, String pguPassword, final HearingApiControllerRX.PguAuthListener listener) {
         /**
          * в ходе запроса как обычно приходит сессия,
          * но это сессия пгу, восстанавливаем сессию аг
@@ -54,24 +55,24 @@ public class HearingApiControllerRX {
         final String agSessionId = Session.getSession(context);
         HandlerApiResponseSubscriber<AuthPGU.Response.Result> handler;
         handler = getPguHandler(context, listener, agSessionId);
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .pguBinding(new AuthPGU.Request(new AuthPGU.Auth(pguLogin, pguPassword, agSessionId), agSessionId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
-    public static void pguAuth(final Context context, String pguLogin, String pguPassword, final HearingApiControllerRX.PguAuthListener listener) {
+    public static void pguAuth(CompositeDisposable disposable, final Context context, String pguLogin, String pguPassword, final HearingApiControllerRX.PguAuthListener listener) {
         final String agSessionId = Session.getSession(context);
         HandlerApiResponseSubscriber<AuthPGU.Response.Result> handler;
         handler = getPguHandler(context, listener, agSessionId);
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .pguAuth(new AuthPGU.Request(new AuthPGU.Auth(pguLogin, pguPassword, agSessionId), agSessionId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
     @NonNull
@@ -112,11 +113,11 @@ public class HearingApiControllerRX {
     /**
      * Сообщение о желании пройти / прохождение собрания для слушания
      *
-     * @param hearingId   голосование слушания
-     * @param meetingId   идентификтаор собрания
-     * @param listener    callback обработки результатов оповещения
+     * @param hearingId голосование слушания
+     * @param meetingId идентификтаор собрания
+     * @param listener  callback обработки результатов оповещения
      */
-    public static void hearingCheck(long hearingId, long meetingId, final HearingApiControllerRX.HearingCheckListener listener) {
+    public static void hearingCheck(CompositeDisposable disposable, long hearingId, long meetingId, final HearingApiControllerRX.HearingCheckListener listener) {
         HandlerApiResponseSubscriber<HearingCheck.Response.Result> handler = new HandlerApiResponseSubscriber<HearingCheck.Response.Result>() {
             @Override
             protected void onResult(HearingCheck.Response.Result result) {
@@ -150,12 +151,12 @@ public class HearingApiControllerRX {
                 }
             }
         };
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .hearingCheck(new HearingCheck.Request(hearingId, meetingId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
     public interface PguAuthListener {

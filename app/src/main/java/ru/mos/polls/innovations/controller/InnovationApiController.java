@@ -28,6 +28,7 @@ import ru.mos.polls.innovations.oldmodel.Status;
  *
  * @since 1.9
  */
+@Deprecated
 public abstract class InnovationApiController {
     /**
      * Получение списка активных новинок

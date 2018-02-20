@@ -3,6 +3,8 @@ package ru.mos.polls.innovations.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Информация о городской новинке
@@ -11,7 +13,9 @@ import java.io.Serializable;
  * on 28.04.17 11:49.
  */
 public class Innovation implements Serializable {
-    private int id;
+
+    private static final SimpleDateFormat sdfFullDate = new SimpleDateFormat("dd.MM.yy");
+    private long id;
 
     private String title;
 
@@ -32,7 +36,7 @@ public class Innovation implements Serializable {
     @SerializedName("full_rating")
     private double fullRating;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -79,7 +83,7 @@ public class Innovation implements Serializable {
         this.status = status;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -105,5 +109,25 @@ public class Innovation implements Serializable {
 
     public void setFullRating(double fullRating) {
         this.fullRating = fullRating;
+    }
+
+    public boolean isActive() {
+        return hasStatus(Status.ACTIVE);
+    }
+
+    public boolean isPassed() {
+        return hasStatus(Status.PASSED);
+    }
+
+    public boolean isOld() {
+        return hasStatus(Status.OLD);
+    }
+
+    private boolean hasStatus(Status status) {
+        return this.status == status;
+    }
+
+    public String getReadableEndDate() {
+        return sdfFullDate.format(new Date(endDate * 1000));
     }
 }

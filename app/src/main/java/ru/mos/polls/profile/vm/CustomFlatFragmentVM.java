@@ -312,7 +312,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                 refreshAreas();
             }
         };
-        FlatApiControllerRX.getAreas(listener, value);
+        FlatApiControllerRX.getAreas(disposables, listener, value);
     }
 
     private void refreshAreas() {
@@ -364,7 +364,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
                 setDistrictSpinnerAdapter();
             }
         };
-        FlatApiControllerRX.getDistricts(listener);
+        FlatApiControllerRX.getDistricts(disposables, listener);
     }
 
     private void getDistrictList() {

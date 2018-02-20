@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.poll.model.Kind;
@@ -26,7 +27,7 @@ import ru.mos.polls.survey.service.GetExpertList;
 
 public class ExpertsApiControllerRX {
 
-    public static void loadDetailExperts(final Context context, long pollId, long questionId, boolean isHearing, final DetailsExpertListener listener) {
+    public static void loadDetailExperts(CompositeDisposable disposable, final Context context, long pollId, long questionId, boolean isHearing, final DetailsExpertListener listener) {
         HandlerApiResponseSubscriber<GetExpertList.Response.Result> handler = new HandlerApiResponseSubscriber<GetExpertList.Response.Result>(context) {
             @Override
             protected void onResult(GetExpertList.Response.Result result) {
@@ -58,12 +59,12 @@ public class ExpertsApiControllerRX {
         if (questionId != 0) {
             request.setQuestionId(questionId);
         }
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .getExpertsList(request)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
     public interface DetailsExpertListener {

@@ -11,6 +11,7 @@ import ru.mos.polls.innovations.model.ShortInnovation;
  *
  * @since 1.9
  */
+@Deprecated
 public class InnovationActiviti extends ShortInnovation {
     private String textShortHtml;
     private String textFullHtml;

@@ -4,6 +4,7 @@ package ru.mos.polls.profile.controller;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.profile.controller.service.GetDistrictArea;
@@ -25,7 +26,7 @@ public class FlatApiControllerRX {
      *
      * @since 2.0.0
      */
-    public static void getDistrictByArea(String areaNumber, final DistrictAreaListener districtAreaListener) {
+    public static void getDistrictByArea(CompositeDisposable disposable, String areaNumber, final DistrictAreaListener districtAreaListener) {
         HandlerApiResponseSubscriber<GetDistrictArea.Response.Result> handler = new HandlerApiResponseSubscriber<GetDistrictArea.Response.Result>() {
             @Override
             protected void onResult(GetDistrictArea.Response.Result result) {
@@ -38,12 +39,12 @@ public class FlatApiControllerRX {
                 districtAreaListener.onError();
             }
         };
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .getDistrictArea(new GetDistrictArea.Request(areaNumber))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
     /**
@@ -53,7 +54,7 @@ public class FlatApiControllerRX {
      * @param referenceListener
      * @since 2.0.0
      */
-    public static void getDistricts(final ReferenceListener referenceListener) {
+    public static void getDistricts(CompositeDisposable disposable, final ReferenceListener referenceListener) {
         HandlerApiResponseSubscriber<List<Reference>> handler = new HandlerApiResponseSubscriber<List<Reference>>() {
             @Override
             protected void onResult(List<Reference> result) {
@@ -66,15 +67,15 @@ public class FlatApiControllerRX {
                 referenceListener.onError();
             }
         };
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .getDistricts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
-    public static void getAreas(final ReferenceListener referenceListener, String value) {
+    public static void getAreas(CompositeDisposable disposable, final ReferenceListener referenceListener, String value) {
         HandlerApiResponseSubscriber<List<Reference>> handler = new HandlerApiResponseSubscriber<List<Reference>>() {
             @Override
             protected void onResult(List<Reference> result) {
@@ -87,13 +88,12 @@ public class FlatApiControllerRX {
                 referenceListener.onError();
             }
         };
-
-        AGApplication
+        disposable.add(AGApplication
                 .api
                 .getAreas(new GetReference.Request(value))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(handler);
+                .subscribeWith(handler));
     }
 
 

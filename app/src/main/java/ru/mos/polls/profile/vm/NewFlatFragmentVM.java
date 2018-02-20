@@ -582,7 +582,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                 hideAreaDistrict();
             }
         };
-        FlatApiControllerRX.getDistrictByArea(v.getValue(), listener);
+        FlatApiControllerRX.getDistrictByArea(disposables, v.getValue(), listener);
     }
 
     private void setupViewIfNotEmpty() {

@@ -23,7 +23,7 @@ import ru.mos.polls.survey.summary.ExpertsView;
 /**
  * Экран списка мнений экспертов<br/>
  * Каждое мнение эксперта описывается сущностью {@link DetailsExpert}<br/>
- * Получение экспертов осуществляется посредством {@link ExpertsApiControllerRX#loadDetailExperts(Context, long, long, boolean, ExpertsApiControllerRX.DetailsExpertListener)}
+ * Получение экспертов осуществляется посредством {@link ExpertsApiControllerRX#loadDetailExperts(io.reactivex.disposables.CompositeDisposable,Context, long, long, boolean, ExpertsApiControllerRX.DetailsExpertListener)}
  *
  * @since 1.8
  */
@@ -99,7 +99,7 @@ public class DetailsExpertsActivity extends ToolbarAbstractActivity {
 
             }
         };
-        ExpertsApiControllerRX.loadDetailExperts(this, pollId, questionId, isHearing, listener);
+        ExpertsApiControllerRX.loadDetailExperts(disposables, this, pollId, questionId, isHearing, listener);
     }
 
     private int getScrollPosition(List<DetailsExpert> detailsExperts) {

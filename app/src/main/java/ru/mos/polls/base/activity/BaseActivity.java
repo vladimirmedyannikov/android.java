@@ -152,4 +152,8 @@ public class BaseActivity extends JugglerActivity {
     	disposables.clear();
     	super.onDestroy();
     }
+
+    public CompositeDisposable getDisposables() {
+        return disposables;
+    }
 }

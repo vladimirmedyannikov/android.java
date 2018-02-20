@@ -113,7 +113,7 @@ public abstract class PguUIController {
                 showSimpleDialog(elkActivity, null, message);
             }
         };
-        HearingApiControllerRX.hearingCheck(hearingId, meetingId, listener);
+        HearingApiControllerRX.hearingCheck(elkActivity.getDisposables(), hearingId, meetingId, listener);
     }
 
     public static void hearingErrorProcess(final BaseActivity elkActivity, int code, String message) {

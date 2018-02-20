@@ -1,6 +1,5 @@
 package ru.mos.polls.innovations.ui.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,9 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,13 +30,13 @@ import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.common.view.HtmlTitleView;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.innovations.controller.InnovationApiController;
-import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
+import ru.mos.polls.innovations.controller.InnovationApiControllerRX;
+import ru.mos.polls.innovations.model.InnovationDetails;
+import ru.mos.polls.innovations.model.Status;
 import ru.mos.polls.innovations.ui.InnovationButtons;
-import ru.mos.polls.innovations.oldmodel.Rating;
 import ru.mos.polls.innovations.model.ShortInnovation;
-import ru.mos.polls.innovations.oldmodel.Status;
 import ru.mos.polls.innovations.ui.ChartsView;
+import ru.mos.polls.innovations.vm.item.UIInnovationViewHelper;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.util.NetworkUtils;
@@ -80,14 +77,6 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         return intent;
     }
 
-    public static InnovationActiviti onResult(int requestCode, int resultCode, Intent data) {
-        InnovationActiviti result = null;
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST) {
-            result = (InnovationActiviti) data.getSerializableExtra(EXTRA_INNOVATION);
-        }
-        return result;
-    }
-
     @BindView(R.id.loadingProgress)
     ProgressBar loadingProgress;
     @BindView(R.id.container)
@@ -108,7 +97,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     View root;
     private long innovationId;
 
-    private InnovationActiviti mInnovationActiviti;
+    private InnovationDetails innovationDetails;
 
     private SocialController socialController;
 
@@ -211,7 +200,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
 
     @Override
     public void onBackPressed() {
-        if (mInnovationActiviti != null && mInnovationActiviti.isActive()) {
+        if (innovationDetails != null && innovationDetails.isActive()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.message_innovation_has_not_mark)
                     .setPositiveButton(R.string.ag_yes, new DialogInterface.OnClickListener() {
@@ -236,9 +225,9 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     }
 
     private void setResult() {
-        if (mInnovationActiviti != null && mInnovationActiviti.isPassed()) {
+        if (innovationDetails != null && innovationDetails.isPassed()) {
             Intent result = new Intent();
-            result.putExtra(EXTRA_INNOVATION, mInnovationActiviti);
+            result.putExtra(EXTRA_INNOVATION, innovationDetails);
             setResult(RESULT_OK, result);
         }
     }
@@ -255,51 +244,46 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
 
     private void loadInnovation() {
         showLoading(true);
-        InnovationApiController.InnovationListener innovationListener = new InnovationApiController.InnovationListener() {
+
+        InnovationApiControllerRX.InnovationListener listener = new InnovationApiControllerRX.InnovationListener() {
             @Override
-            public void onLoaded(InnovationActiviti loadedInnovation) {
-                mInnovationActiviti = loadedInnovation;
-                mInnovationActiviti.setId(innovationId);
+            public void onLoaded(InnovationDetails innovationDetails) {
+                InnovationActivity.this.innovationDetails = innovationDetails;
+                InnovationActivity.this.innovationDetails.setId(innovationId);
                 refreshUI();
                 showLoading(false);
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                if (volleyError != null) {
-                    Toast.makeText(InnovationActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            public void onError() {
                 loadingProgress.setVisibility(View.GONE);
                 checkInternetConnection();
             }
         };
-        InnovationApiController.get(this, innovationId, innovationListener);
+        InnovationApiControllerRX.get(disposables, this, innovationId, listener);
     }
 
     private void fill() {
         startProgress();
-        InnovationApiController.FillNoveltyListener listener = new InnovationApiController.FillNoveltyListener() {
+        InnovationApiControllerRX.FillNoveltyListener listener = new InnovationApiControllerRX.FillNoveltyListener() {
             @Override
-            public void onSuccess(Rating rating, QuestMessage message, int allPoints) {
-                mInnovationActiviti.setStatus(Status.PASSED);
-                mInnovationActiviti.setRating(rating);
-                mInnovationActiviti.setPassedDate(System.currentTimeMillis() / 1000L);
+            public void onSuccess(ru.mos.polls.innovations.model.Rating rating, QuestMessage message, int allPoints) {
+                innovationDetails.setStatus(Status.PASSED);
+                innovationDetails.setRating(rating);
+                innovationDetails.setPassedDate(System.currentTimeMillis() / 1000L);
                 refreshUI();
                 stopProgress();
                 showResults(message, allPoints);
                 scrollToChart();
-                AGApplication.bus().send(new Events.InnovationsEvents(mInnovationActiviti.getId(), rating.getFullRating(), mInnovationActiviti.getPassedDate(), Events.InnovationsEvents.PASSED_INNOVATIONS));
+                AGApplication.bus().send(new Events.InnovationsEvents(innovationDetails.getId(), rating.getFullRating(), innovationDetails.getPassedDate(), Events.InnovationsEvents.PASSED_INNOVATIONS));
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                if (volleyError != null) {
-                    Toast.makeText(InnovationActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            public void onError() {
                 stopProgress();
             }
         };
-        InnovationApiController.fill(this, mInnovationActiviti.getId(), (int) ratingBar.getRating(), listener);
+        InnovationApiControllerRX.fill(disposables, this, innovationDetails.getId(), (int) ratingBar.getRating(), listener);
     }
 
     private void scrollToChart() {
@@ -320,7 +304,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                     SocialUIController.SocialClickListener listener = new SocialUIController.SocialClickListener() {
                         @Override
                         public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
-                            socialPostValue.setId(mInnovationActiviti.getId());
+                            socialPostValue.setId(innovationDetails.getId());
                             if (socialController != null) {
                                 socialController.post(socialPostValue, socialPostValue.getSocialId());
                             }
@@ -331,7 +315,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                             InnovationActivity.this.finish();
                         }
                     };
-                    SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, mInnovationActiviti, listener);
+                    SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, innovationDetails, listener);
                 }
 
                 @Override
@@ -350,11 +334,11 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                     }
                 }
             };
-            String share = getDialogMessage(mInnovationActiviti.getPoints(), allPoints);
+            String share = getDialogMessage(innovationDetails.getPoints(), allPoints);
             CustomDialogController.showShareDialog(this, share, listener);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getDialogMessage(mInnovationActiviti.getPoints(), allPoints));
+            builder.setMessage(getDialogMessage(innovationDetails.getPoints(), allPoints));
             builder.setCancelable(false);
             builder.setPositiveButton(R.string.ag_ok, new DialogInterface.OnClickListener() {
                 @Override
@@ -381,21 +365,23 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
     }
 
     private void refreshUI() {
-        htmlTitleView.display(mInnovationActiviti);
+        htmlTitleView.display(innovationDetails);
         processCharts();
         processRatingBar();
         processActions();
     }
 
     private void processCharts() {
-        chartsView.setVisibility(!mInnovationActiviti.isActive() ? View.VISIBLE : View.GONE);
-        chartsView.display(mInnovationActiviti);
+        chartsView.setVisibility(!innovationDetails.isActive() ? View.VISIBLE : View.GONE);
+        chartsView.display(innovationDetails);
     }
 
     private void processRatingBar() {
-        ratingBar.setRating(mInnovationActiviti.getRating().getUserRating());
-        ratingBar.setIsIndicator(!mInnovationActiviti.isActive());
-        if (mInnovationActiviti.isOld()) {
+        if (innovationDetails.getRating() != null) {
+            ratingBar.setRating(innovationDetails.getRating().getUserRating());
+        }
+        ratingBar.setIsIndicator(!innovationDetails.isActive());
+        if (innovationDetails.isOld()) {
             ratingBar.setVisibility(View.GONE);
             findViewById(R.id.hint).setVisibility(View.GONE);
             findViewById(R.id.ratingDisable).setVisibility(View.GONE);
@@ -407,28 +393,28 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         int innerPointsVisibility = View.GONE;
         String innPointTitleTxt = "";
         innovationButtons.setSendButtonDisabled();
-        switch (mInnovationActiviti.getStatus()) {
+        switch (innovationDetails.getStatus()) {
             case ACTIVE:
-                if (mInnovationActiviti.getPoints() > 0) {
-                    String suitableString = PointsManager.getSuitableString(this, R.array.survey_points_pluse, mInnovationActiviti.getPoints());
-                    innPointTitleTxt = String.format(suitableString, mInnovationActiviti.getPoints());
+                if (innovationDetails.getPoints() > 0) {
+                    String suitableString = PointsManager.getSuitableString(this, R.array.survey_points_pluse, innovationDetails.getPoints());
+                    innPointTitleTxt = String.format(suitableString, innovationDetails.getPoints());
                     innerPointsVisibility = View.VISIBLE;
                 }
                 break;
             case PASSED:
-                String pointTxt = PointsManager.getPointUnitString(this, mInnovationActiviti.getPoints());
+                String pointTxt = PointsManager.getPointUnitString(this, innovationDetails.getPoints());
                 innovationButtons.renderPassedButton();
-                if (mInnovationActiviti.getPoints() > 0) {
-                    String pointsAdded = getResources().getQuantityString(R.plurals.points_added, mInnovationActiviti.getPoints());
-                    innPointTitleTxt = String.format(getString(R.string.passed_points_formatted), pointsAdded, String.valueOf(mInnovationActiviti.getPoints()), pointTxt, mInnovationActiviti.getReadablePassedDate());
+                if (innovationDetails.getPoints() > 0) {
+                    String pointsAdded = getResources().getQuantityString(R.plurals.points_added, innovationDetails.getPoints());
+                    innPointTitleTxt = String.format(getString(R.string.passed_points_formatted), pointsAdded, String.valueOf(innovationDetails.getPoints()), pointTxt, UIInnovationViewHelper.getReadablePassedDate(innovationDetails.getPassedDate()));
                     innerPointsVisibility = View.VISIBLE;
                 } else {
-                    innPointTitleTxt = String.format(getString(R.string.vote_date_text), mInnovationActiviti.getReadablePassedDate());
+                    innPointTitleTxt = String.format(getString(R.string.vote_date_text), UIInnovationViewHelper.getReadablePassedDate(innovationDetails.getPassedDate()));
                     innerPointsVisibility = View.VISIBLE;
                 }
                 break;
             case OLD:
-                innPointTitleTxt = getString(R.string.innovation_ended) + " " + mInnovationActiviti.getReadableEndDate();
+                innPointTitleTxt = getString(R.string.innovation_ended) + " " + innovationDetails.getReadableEndDate();
                 innerPointsVisibility = View.VISIBLE;
                 innPointTitle.setTextColor(getResources().getColor(R.color.novelty_list_rate));
                 visibility = View.GONE;
@@ -452,7 +438,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                 InnovationActivity.this.finish();
             }
         };
-        SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, mInnovationActiviti, socialClickListener);
+        SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, innovationDetails, socialClickListener);
     }
 
     private void startFromUri() {

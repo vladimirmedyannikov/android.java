@@ -4,6 +4,7 @@ package ru.mos.polls.innovations.oldmodel;
  * Статус городской новинки
  * @since 1.9
  */
+@Deprecated
 public enum Status {
     PASSED("passed"),
     ACTIVE("active"),

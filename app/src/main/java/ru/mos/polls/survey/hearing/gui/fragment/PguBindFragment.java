@@ -21,6 +21,7 @@ import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
@@ -171,7 +172,7 @@ public class PguBindFragment extends JugglerFragment {
                 pguBindingListener.onError();
             }
         };
-        HearingApiControllerRX.pguBind(getContext(), login.getText().toString(), password.getText().toString(), listener1);
+        HearingApiControllerRX.pguBind(((BaseActivity) getActivity()).getDisposables(), getContext(), login.getText().toString(), password.getText().toString(), listener1);
     }
 
     public interface PguBindingListener {

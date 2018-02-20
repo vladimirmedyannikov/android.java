@@ -18,7 +18,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AnimationHelper;
-import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
+import ru.mos.polls.innovations.model.InnovationDetails;
 import ru.mos.polls.util.AgTextUtil;
 
 /**
@@ -88,7 +88,7 @@ public class HtmlTitleView extends LinearLayout {
         this.stateListener = stateListener;
     }
 
-    public void display(InnovationActiviti innovationActiviti) {
+    public void display(InnovationDetails innovationActiviti) {
         if (innovationActiviti != null) {
             prepare();
             display(innovationActiviti.getTitle(),

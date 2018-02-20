@@ -18,6 +18,7 @@ import ru.mos.polls.R;
  *
  * @since 1.9
  */
+@Deprecated
 public class ShortInnovation implements Serializable {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("DD MMMM");
     private static final SimpleDateFormat sdfFullDate = new SimpleDateFormat("dd.MM.yy");

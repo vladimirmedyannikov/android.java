@@ -34,8 +34,8 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.innovations.model.InnovationDetails;
 import ru.mos.polls.event.model.EventRX;
-import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.social.model.AppSocial;
@@ -107,7 +107,7 @@ public abstract class SocialUIController {
         AgSocialApiController.loadPostingData(activity, listener);
     }
 
-    public static void showSocialsDialogForNovelty(final BaseActivity activity, InnovationActiviti innovationActiviti, final SocialClickListener clickListener) {
+    public static void showSocialsDialogForNovelty(final BaseActivity activity, InnovationDetails innovationActiviti, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {

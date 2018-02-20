@@ -14,9 +14,9 @@ import ru.mos.polls.innovations.model.InnovationDetails;
 public class NoveltyGet {
     public static class Request extends AuthRequest {
         @SerializedName("novelty_id")
-        private int noveltyId;
+        private long noveltyId;
 
-        public Request(int noveltyId) {
+        public Request(long noveltyId) {
             this.noveltyId = noveltyId;
         }
     }

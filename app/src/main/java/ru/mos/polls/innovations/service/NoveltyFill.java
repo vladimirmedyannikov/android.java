@@ -2,6 +2,8 @@ package ru.mos.polls.innovations.service;
 
 import com.google.gson.annotations.SerializedName;
 
+import ru.mos.polls.common.model.QuestMessage;
+import ru.mos.polls.mypoints.model.Status;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.innovations.model.Rating;
@@ -15,11 +17,11 @@ public class NoveltyFill {
 
     public static class Request extends AuthRequest {
         @SerializedName("novelty_id")
-        private int noveltyId;
+        private long noveltyId;
         @SerializedName("user_rating")
         private int userRating;
 
-        public Request setNoveltyId(int noveltyId) {
+        public Request setNoveltyId(long noveltyId) {
             this.noveltyId = noveltyId;
             return this;
         }
@@ -32,20 +34,25 @@ public class NoveltyFill {
 
     public static class Response extends GeneralResponse<Response.Result> {
 
-        public  static class Result {
-            private Rating rating;
-//            @SerializedName("status")
-//            private Balance balance;
+        public static class Result {
+            Rating rating;
+            QuestMessage message;
+            @SerializedName("status")
+            Status status;
             @SerializedName("added_points")
-            private int addedPoints;
+            int addedPoints;
+
+            public QuestMessage getMessage() {
+                return message;
+            }
+
+            public Status getStatus() {
+                return status;
+            }
 
             public Rating getRating() {
                 return rating;
             }
-
-//            public Balance getBalance() {
-//                return balance;
-//            }
 
             public int getAddedPoints() {
                 return addedPoints;

@@ -17,8 +17,8 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
-import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
-import ru.mos.polls.innovations.oldmodel.Rating;
+import ru.mos.polls.innovations.model.InnovationDetails;
+import ru.mos.polls.innovations.model.Rating;
 
 /**
  * Исопльзуется на экране детальной информации о городской новинке {@link ru.mos.polls.innovations.ui.activity.InnovationActivity}
@@ -108,7 +108,7 @@ public class ChartsView extends LinearLayout {
         }
     }
 
-    public void display(InnovationActiviti innovationActiviti) {
+    public void display(InnovationDetails innovationActiviti) {
         display(innovationActiviti.getRating());
     }
 

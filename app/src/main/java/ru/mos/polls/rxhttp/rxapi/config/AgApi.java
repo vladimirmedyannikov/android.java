@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
+import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
@@ -67,6 +68,7 @@ public interface AgApi {
             String SUPPORT = "support";
             String POLLTASK = "polltask";
             String PGU = "pgu";
+            String UTILS = "utils";
         }
 
         interface Methods {
@@ -97,6 +99,7 @@ public interface AgApi {
             String AUTH = "auth";
             String HEARING_CHECK = "hearingCheck";
             String GET_EXPERTS_LIST = "getExpertsList";
+            String APP_VERSION = "appVersion";
         }
     }
 
@@ -186,4 +189,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET_EXPERTS_LIST)
     Observable<GetExpertList.Response> getExpertsList(@Body GetExpertList.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.UTILS + "/" + Api.Methods.APP_VERSION)
+    Observable<GetAppVersion.Response> getAppVersion(@Body GetAppVersion.Request body);
 }

@@ -13,6 +13,7 @@ import ru.mos.polls.util.GuiUtils;
 
 /**
  * Проверка доступности новой версии приложения {@link #process()}
+ *
  * @since 2.3.0
  */
 
@@ -32,6 +33,7 @@ public class InformerUIController {
         int MORE = -1;
         int LESS = 1;
     }
+
     /**
      * Проверка доступности новой версии приложения</br>
      * Если пользователю ранее показвалось окно о доступности новой верии для текущуй версии {@link BuildConfig#VERSION_NAME},
@@ -39,26 +41,27 @@ public class InformerUIController {
      */
     public void process() {
         if (!Manager.wasShow(elkActivity)) {
-            final InformetApiController.Callback callback = new InformetApiController.Callback() {
+            InformerApiControllerRX.Callback callback = new InformerApiControllerRX.Callback() {
                 @Override
                 public void onGet(String actualAppVersion) {
                     if (actualAppVersion != null
                             && compareVersionNames(BuildConfig.VERSION_NAME, actualAppVersion) == Compare.MORE) {
-//                        Manager.setShow(elkActivity);
                         versionDialog = displayNotification(actualAppVersion);
                     }
                 }
 
                 @Override
                 public void onError() {
+
                 }
             };
-            InformetApiController.loadActualAppVersion(elkActivity, callback);
+            InformerApiControllerRX.loadActualAppVersion(callback);
         }
     }
 
     /**
      * Отображение предложения обновиться
+     *
      * @param newVersion наименование версии доступного обновления {@link String}
      */
     public AlertDialog displayNotification(String newVersion) {
@@ -108,6 +111,7 @@ public class InformerUIController {
 
     /**
      * Сравенение {@link Compare} строк наименование версий
+     *
      * @param oldVersionName - текущее наименованиве версии
      * @param newVersionName - новое наименование версии
      * @return {@link Compare#EQUALS} - равны, {@link Compare#MORE} - newVersionName > oldVersionName, {@link Compare#LESS} - newVersionName < oldVersionName
@@ -117,7 +121,7 @@ public class InformerUIController {
         String[] oldNumbers = oldVersionName.split("\\.");
         String[] newNumbers = newVersionName.split("\\.");
         int maxIndex = Math.min(oldNumbers.length, newNumbers.length);
-        for (int i = 0; i < maxIndex; i ++) {
+        for (int i = 0; i < maxIndex; i++) {
             int oldVersionPart = Integer.valueOf(oldNumbers[i]);
             int newVersionPart = oldVersionPart;
             try {
@@ -133,7 +137,7 @@ public class InformerUIController {
             }
         }
         if (res == Compare.EQUALS && oldNumbers.length != newNumbers.length) {
-            res =  oldNumbers.length > newNumbers.length ? Compare.LESS : Compare.MORE;
+            res = oldNumbers.length > newNumbers.length ? Compare.LESS : Compare.MORE;
         }
         return res;
     }

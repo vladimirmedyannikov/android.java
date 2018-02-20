@@ -6,6 +6,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +21,9 @@ import ru.mos.polls.R;
  * @since 1.7
  */
 public class Position implements Serializable {
+    @SerializedName("lat")
     private double lat;
+    @SerializedName("long")
     private double lon;
     private String name;
     private String address;

@@ -34,7 +34,7 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.event.model.Event;
+import ru.mos.polls.event.model.EventRX;
 import ru.mos.polls.innovations.oldmodel.InnovationActiviti;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
@@ -159,7 +159,7 @@ public abstract class SocialUIController {
      * @param activity      elk ActionBarActivity
      * @param clickListener callback выбора соц сети
      */
-    public static void showSocialsDialogForEvent(final BaseActivity activity, Event event, final SocialClickListener clickListener) {
+    public static void showSocialsDialogForEvent(final BaseActivity activity, EventRX event, final SocialClickListener clickListener) {
         final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
@@ -169,7 +169,7 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForEvent(activity, event.getId(), listener);
+        AgSocialApiController.loadPostingDataForEvent(activity, event.getCommonBody().getId(), listener);
     }
 
     /**

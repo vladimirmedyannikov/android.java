@@ -21,6 +21,7 @@ import com.flurry.android.FlurryAgent;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.elk.actionmode.ActionDescription;
 import ru.mos.elk.actionmode.SearchDescription;
@@ -34,6 +35,7 @@ public class BaseActivity extends JugglerActivity {
     private static Set<Class<? extends Activity>> authRequered = new HashSet<Class<? extends Activity>>();
     private static String flurryKey = "stub";
     private BroadcastReceiver logoutReceiver = null;
+    protected CompositeDisposable disposables;
 
     public int addActionItem(Menu menu, final ActionDescription actionDescr) {
     	int titleRes = actionDescr.getTitleRes();
@@ -68,7 +70,7 @@ public class BaseActivity extends JugglerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        disposables = new CompositeDisposable();
         // see addAuthRequire
         if(authRequered.contains(getClass())) {
             logoutReceiver = new BroadcastReceiver() {
@@ -147,6 +149,7 @@ public class BaseActivity extends JugglerActivity {
             unregisterReceiver(logoutReceiver);
     	requestQueue.stop();
     	requestQueue = null;
+    	disposables.clear();
     	super.onDestroy();
     }
 }

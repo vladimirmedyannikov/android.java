@@ -1,14 +1,20 @@
 package ru.mos.polls.event.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 /**
  * Структура для хранения данных о старнице комментариев
  */
 public class CommentPageInfo {
+    @SerializedName("count_per_page")
     private int countPerPage;
+    @SerializedName("page_number")
     private int pageNumber;
+    @SerializedName("page_count")
     private int pageCount;
+    @SerializedName("all_events_count")
     private int allEventsCount;
 
     public CommentPageInfo() {

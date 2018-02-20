@@ -27,17 +27,14 @@ import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.polls.util.Dialogs;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.api.API;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
+import ru.mos.polls.api.API;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
-import ru.mos.polls.event.controller.EventAPIController;
+import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
@@ -59,6 +56,8 @@ import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
+import ru.mos.polls.profile.ProfileManager;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.state.EditProfileState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
@@ -73,6 +72,7 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
@@ -506,7 +506,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  * Проверяем есть ли текущие мерпориятяи,
                  * если их нет, то перебрасываем на список прошедших
                  */
-                EventAPIController.CheckHasCurrentEventsListener listener = new EventAPIController.CheckHasCurrentEventsListener() {
+                EventApiControllerRX.CheckHasCurrentEventsListener listener = new EventApiControllerRX.CheckHasCurrentEventsListener() {
                     @Override
                     public void hasCurrentEvents(boolean hasEvents) {
                         if (!hasEvents) {
@@ -514,7 +514,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         }
                     }
                 };
-                EventAPIController.hasCurrentEvents(this, listener);
+                EventApiControllerRX.hasCurrentEvents(disposables, listener);
                 fr = null;
                 break;
             case NavigationMenuItem.MY_POINTS:

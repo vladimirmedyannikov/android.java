@@ -22,7 +22,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -43,10 +42,11 @@ import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.common.model.Position;
-import ru.mos.polls.event.controller.EventAPIController;
+import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.gui.view.DrawableAlignedButton;
-import ru.mos.polls.event.model.Event;
 import ru.mos.polls.event.model.EventDetail;
+import ru.mos.polls.event.model.EventFromList;
+import ru.mos.polls.event.model.EventRX;
 import ru.mos.polls.event.model.Filter;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.social.controller.SocialUIController;
@@ -71,7 +71,7 @@ public class EventActivity extends ToolbarAbstractActivity {
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, Event event, Filter filter) {
+    public static void startActivity(Context context, EventFromList event, Filter filter) {
         Intent intent = new Intent(context, EventActivity.class);
         intent.putExtra(EXTRA_EVENT_ID, event.getId());
         intent.putExtra(EXTRA_LAT, event.getPosition().getLat());
@@ -108,7 +108,7 @@ public class EventActivity extends ToolbarAbstractActivity {
     private long eventId;
     private Position currentPosition;
     private Position eventPosition;
-    private Event event;
+    private EventRX event;
     private Filter filter;
 
     private LocationController locationController;
@@ -193,7 +193,7 @@ public class EventActivity extends ToolbarAbstractActivity {
     }
 
     public void checkIn() {
-        EventAPIController.CheckInListener checkInListener = new EventAPIController.CheckInListener() {
+        EventApiControllerRX.CheckInListener checkInListener = new EventApiControllerRX.CheckInListener() {
             @Override
             public void onChecked(int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, Message message) {
                 Statistics.enterCheckIn(eventId, true, false);
@@ -208,18 +208,18 @@ public class EventActivity extends ToolbarAbstractActivity {
                 } else {
                     showSuccessCheckInDialog(freezedPoints, spentPoints, allPoints, currentPoints, state);
                 }
-                event.setChecked();
+                event.getCommonBody().setChecked();
                 uiEventBuilder.processCheckIn();
                 processMenu();
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-                Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            public void onError() {
+//                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
+//                Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         };
-        EventAPIController.checkIn(this, event.getId(), currentPosition, checkInListener);
+        EventApiControllerRX.checkIn(disposables, event.getCommonBody().getId(), currentPosition, checkInListener);
     }
 
     @Override
@@ -247,7 +247,7 @@ public class EventActivity extends ToolbarAbstractActivity {
 
     private void processMenu() {
         if (AGApplication.IS_LOCAL_SUBSCRIBE_ENABLE && subscribeMenuItem != null) {
-            boolean isEnable = !event.isCheckIn() && !event.hasPastDate();
+            boolean isEnable = !event.getCommonBody().isCheckin() && !event.hasPastDate();
             subscribeMenuItem.setVisible(isEnable);
         }
     }
@@ -335,9 +335,9 @@ public class EventActivity extends ToolbarAbstractActivity {
     }
 
     private void refreshEvent() {
-        EventAPIController.EventListener eventListener = new EventAPIController.EventListener() {
+        EventApiControllerRX.EventListener eventListener = new EventApiControllerRX.EventListener() {
             @Override
-            public void onGetEvent(Event event) {
+            public void onGetEvent(EventRX event) {
                 EventActivity.this.event = event;
                 refreshControls(event);
                 uiEventBuilder.setUIVisible(View.VISIBLE);
@@ -346,18 +346,18 @@ public class EventActivity extends ToolbarAbstractActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-                Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            public void onError() {
+//                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
+//                Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 uiEventBuilder.setUIVisible(View.VISIBLE);
                 isEventLoaded = false;
             }
         };
         uiEventBuilder.setUIVisible(View.GONE);
-        EventAPIController.loadEvent(this, eventId, currentPosition, eventListener);
+        EventApiControllerRX.loadEvent(disposables, eventId, currentPosition, eventListener);
     }
 
-    private void refreshControls(Event event) {
+    private void refreshControls(EventRX event) {
         uiEventBuilder.build(event);
     }
 
@@ -395,7 +395,7 @@ public class EventActivity extends ToolbarAbstractActivity {
      * Класс инкапсулирует построение пользовательского интерфейса, наполнение его данными
      */
     class UIEventBuilder {
-        private Event event;
+        private EventRX event;
         private boolean isInit;
 
         private View.OnClickListener shareListener = new View.OnClickListener() {
@@ -455,13 +455,13 @@ public class EventActivity extends ToolbarAbstractActivity {
                 /**
                  * Проверяем удовлетворяет ли текущие местоположение минимальному расстоянию для чекина
                  */
-                if (event.isCheckInEnable(currentPosition)) {
+                if (event.getCommonBody().isCheckInEnable(currentPosition)) {
                     checkIn();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(EventActivity.this);
                     String message = String.format(
                             EventActivity.this.getString(R.string.distance_is_too_big),
-                            String.valueOf(event.getMaxCheckInDistance()));
+                            String.valueOf(event.getCommonBody().getMaxCheckinDistance()));
                     builder.setMessage(message);
                     builder.setPositiveButton(R.string.survey_done_ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -475,7 +475,7 @@ public class EventActivity extends ToolbarAbstractActivity {
             }
         };
 
-        public void build(Event event) {
+        public void build(EventRX event) {
             if (event == null) {
                 return;
             }
@@ -498,7 +498,7 @@ public class EventActivity extends ToolbarAbstractActivity {
 
         @OnClick(R.id.comment)
         void comnets() {
-            Intent intent = EventCommentsListActivity.getStartIntent(EventActivity.this, eventId, event.getType());
+            Intent intent = EventCommentsListActivity.getStartIntent(EventActivity.this, eventId, event.getCommonBody().getType());
             startActivity(intent);
         }
 
@@ -508,8 +508,8 @@ public class EventActivity extends ToolbarAbstractActivity {
 
         private void setScreenTitle() {
             String title = getString(R.string.about_event);
-            Event.Type type = event.getType();
-            if (type == Event.Type.PLACE) {
+            EventRX.CommonBody.Type type = event.getCommonBody().getType();
+            if (type == EventRX.CommonBody.Type.PLACE) {
                 title = getString(R.string.about_place);
             }
             TitleHelper.setTitle(EventActivity.this, title);
@@ -620,12 +620,12 @@ public class EventActivity extends ToolbarAbstractActivity {
         }
 
         private void setName() {
-            name.setText(event.getTitle());
+            name.setText(event.getCommonBody().getTitle());
         }
 
         private void setAddress() {
-            String firstAddress = event.getPosition().getName();
-            String secondAddress = event.getPosition().getAddress();
+            String firstAddress = event.getCommonBody().getPosition().getName();
+            String secondAddress = event.getCommonBody().getPosition().getAddress();
             String result = "";
             if (TextUtils.isEmpty(firstAddress) && TextUtils.isEmpty(secondAddress)) {
                 address.setVisibility(View.GONE);
@@ -672,7 +672,7 @@ public class EventActivity extends ToolbarAbstractActivity {
              * Отметиться здесь\Вы уже отметились
              */
             String result;
-            if (event.isCheckIn()) {
+            if (event.getCommonBody().isCheckin()) {
                 result = getString(R.string.share);
                 titleCheckIn.setText(result);
                 subtitleCheckIn.setVisibility(View.GONE);
@@ -696,8 +696,8 @@ public class EventActivity extends ToolbarAbstractActivity {
         }
 
         private void setAvrRating() {
-            if (event.getAvrRating() > 0) {
-                avrRating.setRating((float) event.getAvrRating());
+            if (event.getCommonBody().getAvrRating() > 0) {
+                avrRating.setRating((float) event.getCommonBody().getAvrRating());
 //                avrRating.setVisibility(View.VISIBLE);
             }
         }

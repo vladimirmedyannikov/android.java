@@ -15,6 +15,7 @@ import ru.mos.polls.common.model.Position;
  * Структура данных, которая используется как для хранения
  * элемента списка мероприятий, так и объекта с полным описанием мероприятия
  */
+@Deprecated
 public class Event {
     public static final int NOT_CALCULATED_DISTANCE = -1;
 

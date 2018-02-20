@@ -1,5 +1,7 @@
 package ru.mos.polls.event.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,8 +9,11 @@ import org.json.JSONObject;
  * Хранение детализации о мероприятии
  */
 public class EventDetail {
+    @SerializedName("title")
     private String title;
+    @SerializedName("body")
     private String body;
+    @SerializedName("min_row_count")
     private int minRowCount;
 
     public EventDetail(JSONObject eventDetailJson) {

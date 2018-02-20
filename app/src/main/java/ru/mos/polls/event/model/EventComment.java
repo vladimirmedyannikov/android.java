@@ -2,6 +2,8 @@ package ru.mos.polls.event.model;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 public class EventComment {
@@ -35,12 +37,19 @@ public class EventComment {
         return result;
     }
 
+    @SerializedName("id")
     private long id;
+    @SerializedName("author")
     private String author;
+    @SerializedName("title")
     private String title;
+    @SerializedName("body")
     private String body;
+    @SerializedName("rating")
     private double rating;
+    @SerializedName("checkin")
     private int checkin;
+    @SerializedName("update_date")
     private double updateDate;
 
     private final boolean editable;

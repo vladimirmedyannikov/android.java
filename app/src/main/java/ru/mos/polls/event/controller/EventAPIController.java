@@ -31,6 +31,7 @@ import ru.mos.polls.event.model.Filter;
 /**
  * Контроллер для работы с серверсайдом
  */
+@Deprecated
 public abstract class EventAPIController {
     private static final int DEFAULT_COUNT_PER_PAGE_COMMENT = 10;
     private static final int DEFAULT_PAGE_NUMBER_COMMENT = 1;

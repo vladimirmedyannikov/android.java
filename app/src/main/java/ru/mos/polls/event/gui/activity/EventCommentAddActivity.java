@@ -13,15 +13,13 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.event.controller.EventAPIController;
+import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.model.EventComment;
 import ru.mos.polls.helpers.TitleHelper;
 
@@ -141,7 +139,7 @@ public class EventCommentAddActivity extends BaseActivity {
         }
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.show();
-        EventAPIController.UpdateEventCommentListener updateEventCommentListener = new EventAPIController.UpdateEventCommentListener() {
+        EventApiControllerRX.UpdateEventCommentListener updateEventCommentListener = new EventApiControllerRX.UpdateEventCommentListener() {
 
             @Override
             public void onUpdated(boolean isUpdated) {
@@ -157,9 +155,9 @@ public class EventCommentAddActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 dismissProgress();
-                Toast.makeText(EventCommentAddActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EventCommentAddActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             private void dismissProgress() {
@@ -169,7 +167,7 @@ public class EventCommentAddActivity extends BaseActivity {
             }
 
         };
-        EventAPIController.updateComment(this, eventId, title, body, rating, updateEventCommentListener);
+        EventApiControllerRX.updateComment(disposables, eventId, title, body, rating, updateEventCommentListener);
     }
 
 }

@@ -11,11 +11,11 @@ import org.json.JSONObject;
 
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
@@ -44,6 +44,12 @@ public class Message {
     public Message(String title, String body) {
         this.title = title;
         this.body = body;
+    }
+
+    public Message(String title, String body, String urlScheme) {
+        this.title = title;
+        this.body = body;
+        this.urlScheme = urlScheme;
     }
 
     public String getTitle() {

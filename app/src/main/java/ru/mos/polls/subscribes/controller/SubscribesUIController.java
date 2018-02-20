@@ -29,7 +29,7 @@ import ru.mos.polls.NotificationController;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.QuestMessage;
-import ru.mos.polls.event.model.Event;
+import ru.mos.polls.event.model.EventRX;
 import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
@@ -74,7 +74,7 @@ public class SubscribesUIController {
         showDialog(survey.getId(), survey.getKind().isHearing(), innerView, listener);
     }
 
-    public void showSubscribeDialogForEvent(final Context context, final Event event) {
+    public void showSubscribeDialogForEvent(final Context context, final EventRX event) {
         showProgress(activity.getString(R.string.get_event_subscribe));
         SubscribesAPIController.StateListener listener = new SubscribesAPIController.StateListener() {
             @Override
@@ -84,7 +84,7 @@ public class SubscribesUIController {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!event.isEventYetGoing()) {
-                            saveEventSubscribe(event.getId());
+                            saveEventSubscribe(event.getCommonBody().getId());
                         }
                     }
                 };
@@ -93,7 +93,7 @@ public class SubscribesUIController {
                 if (event.isEventYetGoing()) {
                     title = R.string.close;
                 }
-                showDialog(event.getId(), false, innerView, listener, title);
+                showDialog(event.getCommonBody().getId(), false, innerView, listener, title);
             }
 
             @Override
@@ -101,7 +101,7 @@ public class SubscribesUIController {
                 hideProgress();
             }
         };
-        subscribesAPIController.loadEventSubscribes(activity, event.getId(), listener);
+        subscribesAPIController.loadEventSubscribes(activity, event.getCommonBody().getId(), listener);
     }
 
     public View getViewForEmail(EmailHelpListener emailHelpListener) {
@@ -193,7 +193,7 @@ public class SubscribesUIController {
         save.setEnabled(email.getText().length() > 0);
     }
 
-    private View getViewForEvent(Context context, List<Subscription> subscriptions, Event event) {
+    private View getViewForEvent(Context context, List<Subscription> subscriptions, EventRX event) {
         View result = View.inflate(activity, R.layout.layout_event_subscribe, null);
         findViewsForEvent(context, result, event);
         fillViewsForEvent(subscriptions);
@@ -201,7 +201,7 @@ public class SubscribesUIController {
         return result;
     }
 
-    private void findViewsForEvent(final Context context, View view, final Event event) {
+    private void findViewsForEvent(final Context context, View view, final EventRX event) {
         title = ButterKnife.findById(view, R.id.eventTitle);
         emailEvent =  ButterKnife.findById(view, R.id.emailEvent);
         pushEvent =  ButterKnife.findById(view, R.id.pushEvent);
@@ -215,11 +215,17 @@ public class SubscribesUIController {
             public void onClick(View v) {
                 Intent calendarIntent = new Intent(Intent.ACTION_EDIT);
                 calendarIntent.setType("vnd.android.cursor.item/event");
-                calendarIntent.putExtra("title", event.getTitle());
+                calendarIntent.putExtra("title", event.getCommonBody().getTitle());
                 calendarIntent.putExtra("beginTime", event.getMillsOfStartDate());
                 calendarIntent.putExtra("endTime", event.getMillsOfEndDate());
-                calendarIntent.putExtra("description", event.getDescription());
-                calendarIntent.putExtra("eventLocation", event.getPosition().getName() + " " + event.getPosition().getAddress());
+
+                /**
+                 * сейчас же берем первое описание из деталей
+                 * т.к. раньше тут писалась пустая строка,
+                 * т.к. это поле раньше было пустым для не укороченного события
+                 */
+                calendarIntent.putExtra("description", event.getDetails() != null ? event.getDetails().size() > 0 ? event.getDetails().get(0).getBody() : "" : "");
+                calendarIntent.putExtra("eventLocation", event.getCommonBody().getPosition().getName() + " " + event.getCommonBody().getPosition().getAddress());
                 context.startActivity(calendarIntent);
             }
         });

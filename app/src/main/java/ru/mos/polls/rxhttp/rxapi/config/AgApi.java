@@ -5,20 +5,23 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ru.mos.polls.event.controller.service.CheckinEvent;
+import ru.mos.polls.event.controller.service.GetEvent;
+import ru.mos.polls.event.controller.service.GetEventCommentsList;
+import ru.mos.polls.event.controller.service.GetEventsList;
+import ru.mos.polls.event.controller.service.UpdateEventComment;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
-import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
+import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.controller.service.GetDistrictArea;
 import ru.mos.polls.profile.controller.service.GetReference;
 import ru.mos.polls.profile.model.Reference;
-import ru.mos.polls.quests.service.PolltaskGet;
-import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.service.AchievementsGet;
 import ru.mos.polls.profile.service.AchievementsSelect;
 import ru.mos.polls.profile.service.AvatarSet;
@@ -28,15 +31,13 @@ import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
+import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
-import ru.mos.polls.survey.hearing.service.AuthPGU;
-import ru.mos.polls.survey.hearing.service.HearingCheck;
-import ru.mos.polls.survey.service.GetExpertList;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -67,8 +68,6 @@ public interface AgApi {
             String POLL = "poll";
             String SUPPORT = "support";
             String POLLTASK = "polltask";
-            String PGU = "pgu";
-            String UTILS = "utils";
         }
 
         interface Methods {
@@ -95,11 +94,11 @@ public interface AgApi {
             String GET_DISTRICT_AND_AREA = "getDistrictAndArea";
             String GET_DISTRICTS = "getDistricts";
             String GET_AREAS = "getAreas";
-            String BINDING = "binding";
-            String AUTH = "auth";
-            String HEARING_CHECK = "hearingCheck";
-            String GET_EXPERTS_LIST = "getExpertsList";
-            String APP_VERSION = "appVersion";
+            String EVENTS_LIST = "eventsList";
+            String GET_EVENT = "getEvent";
+            String CHECKIN_EVENT = "checkinEvent";
+            String EVENT_COMMENTS_LIST = "eventCommentsList";
+            String UPDATE_EVENT_COMMENT = "updateEventComment";
         }
     }
 
@@ -178,18 +177,18 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_AREAS)
     Observable<GeneralResponse<List<Reference>>> getAreas(@Body GetReference.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.BINDING)
-    Observable<AuthPGU.Response> pguBinding(@Body AuthPGU.Request body);
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.EVENTS_LIST)
+    Observable<GetEventsList.Response> getEventsList(@Body GetEventsList.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.AUTH)
-    Observable<AuthPGU.Response> pguAuth(@Body AuthPGU.Request body);
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET_EVENT)
+    Observable<GetEvent.Response> getEvent(@Body GetEvent.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.HEARING_CHECK)
-    Observable<HearingCheck.Response> hearingCheck(@Body HearingCheck.Request body);
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.CHECKIN_EVENT)
+    Observable<CheckinEvent.Response> checkinEvent(@Body CheckinEvent.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET_EXPERTS_LIST)
-    Observable<GetExpertList.Response> getExpertsList(@Body GetExpertList.Request body);
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.EVENT_COMMENTS_LIST)
+    Observable<GetEventCommentsList.Response> getEventCommentList(@Body GetEventCommentsList.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.UTILS + "/" + Api.Methods.APP_VERSION)
-    Observable<GetAppVersion.Response> getAppVersion(@Body GetAppVersion.Request body);
+    @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.UPDATE_EVENT_COMMENT)
+    Observable<UpdateEventComment.Response> updateEventComment(@Body UpdateEventComment.Request body);
 }

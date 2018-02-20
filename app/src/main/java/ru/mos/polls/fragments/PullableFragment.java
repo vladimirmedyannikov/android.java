@@ -2,6 +2,7 @@ package ru.mos.polls.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.android.volley2.Response;
 import com.android.volley2.VolleyError;
 
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.R;
 
 
@@ -17,6 +19,13 @@ public abstract class PullableFragment extends Fragment {
 
     protected SwipeRefreshLayout ptrLayout;
     protected Unbinder unbinder;
+    protected CompositeDisposable disposables;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        disposables = new CompositeDisposable();
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -40,6 +49,12 @@ public abstract class PullableFragment extends Fragment {
         if(unbinder !=null){
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
     }
 
     public SwipeRefreshLayout getPullToRefreshLayout() {

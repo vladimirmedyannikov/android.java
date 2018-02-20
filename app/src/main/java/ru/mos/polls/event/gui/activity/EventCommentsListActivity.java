@@ -18,8 +18,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +31,10 @@ import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.controller.ScrollableController;
-import ru.mos.polls.event.controller.EventAPIController;
+import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.model.CommentPageInfo;
-import ru.mos.polls.event.model.Event;
 import ru.mos.polls.event.model.EventComment;
+import ru.mos.polls.event.model.EventRX;
 import ru.mos.polls.helpers.ListViewHelper;
 
 
@@ -45,7 +43,7 @@ public class EventCommentsListActivity extends BaseActivity {
     private static final String EXTRA_EVENT_ID = "event_id";
     private static final String EXTRA_EVENT_TYPE = "event_type";
 
-    public static Intent getStartIntent(Context context, long evenId, Event.Type type) {
+    public static Intent getStartIntent(Context context, long evenId, EventRX.CommonBody.Type type) {
         Intent intent = new Intent(context, EventCommentsListActivity.class);
         intent.putExtra(EXTRA_EVENT_ID, evenId);
         String value = "";
@@ -91,6 +89,12 @@ public class EventCommentsListActivity extends BaseActivity {
         super.onResume();
         processVisible();
         refreshEventCommentList();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
     }
 
     @Override
@@ -156,7 +160,7 @@ public class EventCommentsListActivity extends BaseActivity {
      * скроллируется на первую позицию
      */
     private void refreshEventCommentList() {
-        EventAPIController.EventCommentListListener listener = new EventAPIController.EventCommentListListener() {
+        EventApiControllerRX.EventCommentListListener listener = new EventApiControllerRX.EventCommentListListener() {
             @Override
             public void onGetEventCommentList(EventComment myComment, List<EventComment> eventComments, CommentPageInfo commentPageInfo) {
                 /**
@@ -178,12 +182,12 @@ public class EventCommentsListActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-                Toast.makeText(EventCommentsListActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            public void onError() {
+//                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
+//                Toast.makeText(EventCommentsListActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         };
-        EventAPIController.loadEventCommentList(this, eventId, listener);
+        EventApiControllerRX.loadEventCommentList(disposables, eventId, listener);
     }
 
     /**
@@ -193,7 +197,7 @@ public class EventCommentsListActivity extends BaseActivity {
      */
     private void getNextEventCommentList() {
         setSupportProgressBarIndeterminateVisibility(true);
-        EventAPIController.EventCommentListListener listener = new EventAPIController.EventCommentListListener() {
+        EventApiControllerRX.EventCommentListListener listener = new EventApiControllerRX.EventCommentListListener() {
             @Override
             public void onGetEventCommentList(EventComment myComment, List<EventComment> eventComments, CommentPageInfo commentPageInfo) {
                 setSupportProgressBarIndeterminateVisibility(false);
@@ -217,7 +221,7 @@ public class EventCommentsListActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 setSupportProgressBarIndeterminateVisibility(false);
                 scrollableController.setAllowed(true);
             }
@@ -225,7 +229,7 @@ public class EventCommentsListActivity extends BaseActivity {
         if (currentCommentPageInfo != null) { // не было комментариев, перезапрашиаем последние 10 коментариев
             scrollableController.setAllowed(false);
             currentCommentPageInfo.incrementPage();
-            EventAPIController.loadEventCommentList(this, eventId, currentCommentPageInfo, listener);
+            EventApiControllerRX.loadEventCommentList(disposables, eventId, currentCommentPageInfo, listener);
         } else {
             refreshEventCommentList();
         }
@@ -248,7 +252,7 @@ public class EventCommentsListActivity extends BaseActivity {
      * Если удаление прошло успешно, то запрашиваем последние 10 коментариев, другие затираем
      */
     private void deleteComment() {
-        EventAPIController.UpdateEventCommentListener listener = new EventAPIController.UpdateEventCommentListener() {
+        EventApiControllerRX.UpdateEventCommentListener listener = new EventApiControllerRX.UpdateEventCommentListener() {
             @Override
             public void onUpdated(boolean isUpdated) {
                 if (isUpdated) {
@@ -257,12 +261,12 @@ public class EventCommentsListActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-                Toast.makeText(EventCommentsListActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            public void onError() {
+//                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
+//                Toast.makeText(EventCommentsListActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         };
-        EventAPIController.deleteComment(EventCommentsListActivity.this, eventId, listener);
+        EventApiControllerRX.deleteComment(disposables, eventId, listener);
     }
 
     private void updateComment() {

@@ -18,15 +18,15 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.common.model.Position;
 import ru.mos.polls.event.gui.activity.EventActivity;
-import ru.mos.polls.event.model.Event;
+import ru.mos.polls.event.model.EventFromList;
 import ru.mos.polls.event.model.Filter;
 
 
-public class EventAdapter extends ArrayAdapter<Event> {
+public class EventAdapter extends ArrayAdapter<EventFromList> {
     private Position currentPosition;
     private Filter filter;
 
-    public EventAdapter(Context context, List<Event> objects) {
+    public EventAdapter(Context context, List<EventFromList> objects) {
         super(context, R.layout.item_current_event, objects);
     }
 
@@ -41,7 +41,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         view = View.inflate(getContext(), R.layout.item_current_event, null);
-        Event event = null;
+        EventFromList event = null;
         try {
             event = getItem(position);
         } catch (Exception ignored) {
@@ -57,7 +57,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         return view;
     }
 
-    private void setOnClickListener(View view, final Event event) {
+    private void setOnClickListener(View view, final EventFromList event) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +66,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         });
     }
 
-    private void displayPoints(View view, Event event) {
+    private void displayPoints(View view, EventFromList event) {
         TextView pointsView = ButterKnife.findById(view,R.id.points);
         if (event.getPoints() > 0) {
             String s = PointsManager.getSuitableString(getContext(), R.array.survey_points_pluse, event.getPoints());
@@ -90,12 +90,12 @@ public class EventAdapter extends ArrayAdapter<Event> {
         }
     }
 
-    private void displayName(View view, Event event) {
+    private void displayName(View view, EventFromList event) {
         TextView name = ButterKnife.findById(view,R.id.name);
         name.setText(event.getTitle());
     }
 
-    private void displayDate(View view, Event event) {
+    private void displayDate(View view, EventFromList event) {
         TextView date = ButterKnife.findById(view,R.id.date);
         SimpleDateFormat sdfOldFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdfNewFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
@@ -108,7 +108,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         date.setText(result);
     }
 
-    private void displayAddress(View view, Event event) {
+    private void displayAddress(View view, EventFromList event) {
         TextView address = ButterKnife.findById(view, R.id.address);
         String value = event.getPosition().getName() + "\n" + event.getPosition().getAddress();
         if (!TextUtils.isEmpty(value) && !"\n".equalsIgnoreCase(value)) {
@@ -118,11 +118,11 @@ public class EventAdapter extends ArrayAdapter<Event> {
         }
     }
 
-    private void displayDistance(View view, Event event) {
+    private void displayDistance(View view, EventFromList event) {
         TextView distance = ButterKnife.findById(view, R.id.distance);
         distance.setVisibility(View.GONE);
         if (filter == Filter.CURRENT) {
-            if (event.getDistance() == Event.NOT_CALCULATED_DISTANCE && currentPosition != null && !currentPosition.isEmpty()) {
+            if (event.getDistance() == EventFromList.NOT_CALCULATED_DISTANCE && currentPosition != null && !currentPosition.isEmpty()) {
                 event.setDistance(currentPosition);
             }
             /**
@@ -131,7 +131,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
             int length = (int) (Math.log10(event.getDistance()) + 1);
             String result = "";
             if (length <= 3) { // метры
-                result = String.format(getContext().getString(R.string.distance_m), event.getDistance());
+                result = String.format(getContext().getString(R.string.distance_m), String.valueOf(event.getDistance()));
             } else {           // км
                 double km = event.getDistance() / 1000;
                 DecimalFormat df = new DecimalFormat("###.##");

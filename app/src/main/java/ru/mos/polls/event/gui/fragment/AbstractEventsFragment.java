@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,13 @@ import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.ScrollableController;
 import ru.mos.polls.common.model.PageInfo;
 import ru.mos.polls.common.model.Position;
-import ru.mos.polls.common.model.UserStatus;
 import ru.mos.polls.event.adapter.EventAdapter;
-import ru.mos.polls.event.controller.EventAPIController;
-import ru.mos.polls.event.model.Event;
+import ru.mos.polls.event.controller.EventApiControllerRX;
+import ru.mos.polls.event.model.EventFromList;
 import ru.mos.polls.event.model.Filter;
 import ru.mos.polls.fragments.PullableFragment;
 import ru.mos.polls.helpers.ActionBarHelper;
+import ru.mos.polls.mypoints.model.Status;
 
 
 public abstract class AbstractEventsFragment extends PullableFragment {
@@ -67,13 +66,13 @@ public abstract class AbstractEventsFragment extends PullableFragment {
     /**
      * Список мкроприятий
      */
-    protected List<Event> events;
+    protected List<EventFromList> events;
     /**
      * Используется для пейджинга в запросах, то есть
      * хранит текущую страницу и количество элментов на странице
      */
     protected PageInfo pageInfo;
-    protected UserStatus userStatus;
+    protected Status userStatus;
     protected Position currentPosition;
 
     @Override
@@ -100,7 +99,7 @@ public abstract class AbstractEventsFragment extends PullableFragment {
     protected void init() {
         ActionBarHelper.setNavigationModeList((BaseActivity) getActivity());
         pageInfo = new PageInfo();
-        events = new ArrayList<Event>();
+        events = new ArrayList<EventFromList>();
         adapter = getAdapter();
         getLocationController();
     }
@@ -184,7 +183,7 @@ public abstract class AbstractEventsFragment extends PullableFragment {
         refreshEvents(false, false);
     }
 
-    protected void refreshLocalParams(List<Event> events, PageInfo pageInfo, UserStatus userStatus) {
+    protected void refreshLocalParams(List<EventFromList> events, PageInfo pageInfo, Status userStatus) {
         this.events.addAll(events);
         this.pageInfo = pageInfo;
         this.userStatus = userStatus;
@@ -197,10 +196,6 @@ public abstract class AbstractEventsFragment extends PullableFragment {
     }
 
     protected void onPrepareLoadEvents(boolean isNeedProgress) {
-        if (isNeedProgress) {
-            ((BaseActivity) getActivity())
-                    .setSupportProgressBarIndeterminateVisibility(true);
-        }
         /**
          * Для искючения срабатывания несколько раз метода обратного вызова
          * при достижении конца списка голосований отключаем контроллер
@@ -211,9 +206,9 @@ public abstract class AbstractEventsFragment extends PullableFragment {
     protected void refreshEvents(final boolean isNeedProgress, final boolean isNeedScrollToNewItems) {
         isLastListEmpty = true;
         onPrepareLoadEvents(isNeedProgress);
-        EventAPIController.EventsListener listener = new EventAPIController.EventsListener() {
+        EventApiControllerRX.EventsListener listener = new EventApiControllerRX.EventsListener() {
             @Override
-            public void onLoad(List<Event> events, Filter filter, UserStatus userStatus, PageInfo pageInfo) {
+            public void onLoad(List<EventFromList> events, Filter filter, Status userStatus, PageInfo pageInfo) {
                 refreshLocalParams(events, pageInfo, userStatus);
                 adapter.notifyDataSetChanged();
                 scrollableController.setAllowed(true);
@@ -221,7 +216,7 @@ public abstract class AbstractEventsFragment extends PullableFragment {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
                 scrollableController.setAllowed(true);
                 hideProgress();
             }
@@ -238,7 +233,7 @@ public abstract class AbstractEventsFragment extends PullableFragment {
                 }
             }
         };
-        EventAPIController.loadEvents((BaseActivity) getActivity(), currentPosition, getFilter(), pageInfo, listener);
+        EventApiControllerRX.loadEvents(disposables, currentPosition, getFilter(), pageInfo, listener);
     }
 
     /**

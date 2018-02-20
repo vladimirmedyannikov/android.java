@@ -35,6 +35,7 @@ import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
 import ru.mos.polls.survey.hearing.service.AuthPGU;
 import ru.mos.polls.survey.hearing.service.HearingCheck;
+import ru.mos.polls.survey.service.GetExpertList;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -95,6 +96,7 @@ public interface AgApi {
             String BINDING = "binding";
             String AUTH = "auth";
             String HEARING_CHECK = "hearingCheck";
+            String GET_EXPERTS_LIST = "getExpertsList";
         }
     }
 
@@ -181,4 +183,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.HEARING_CHECK)
     Observable<HearingCheck.Response> hearingCheck(@Body HearingCheck.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET_EXPERTS_LIST)
+    Observable<GetExpertList.Response> getExpertsList(@Body GetExpertList.Request body);
 }

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import ru.mos.elk.BaseActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.helpers.TitleHelper;
@@ -24,7 +23,7 @@ import ru.mos.polls.survey.summary.ExpertsView;
 /**
  * Экран списка мнений экспертов<br/>
  * Каждое мнение эксперта описывается сущностью {@link DetailsExpert}<br/>
- * Получение экспертов осуществляется посредством {@link ExpertsApiController#loadDetailExperts(BaseActivity, long, long, boolean, ExpertsApiController.DetailsExpertListener)}
+ * Получение экспертов осуществляется посредством {@link ExpertsApiControllerRX#loadDetailExperts(Context, long, long, boolean, ExpertsApiControllerRX.DetailsExpertListener)}
  *
  * @since 1.8
  */
@@ -85,7 +84,7 @@ public class DetailsExpertsActivity extends ToolbarAbstractActivity {
     }
 
     private void loadDetailsExperts() {
-        ExpertsApiController.DetailsExpertListener listener = new ExpertsApiController.DetailsExpertListener() {
+        ExpertsApiControllerRX.DetailsExpertListener listener = new ExpertsApiControllerRX.DetailsExpertListener() {
             @Override
             public void onLoaded(List<DetailsExpert> detailsExperts) {
                 if (detailsExperts != null) {
@@ -97,9 +96,10 @@ public class DetailsExpertsActivity extends ToolbarAbstractActivity {
 
             @Override
             public void onError() {
+
             }
         };
-        ExpertsApiController.loadDetailExperts(this, pollId, questionId, isHearing, listener);
+        ExpertsApiControllerRX.loadDetailExperts(this, pollId, questionId, isHearing, listener);
     }
 
     private int getScrollPosition(List<DetailsExpert> detailsExperts) {

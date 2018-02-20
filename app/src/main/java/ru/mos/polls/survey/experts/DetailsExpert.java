@@ -2,6 +2,8 @@ package ru.mos.polls.survey.experts;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ import ru.mos.polls.helpers.TextHelper;
  */
 public class DetailsExpert implements Serializable {
     private long id;
+    @SerializedName("img_url")
     private String imgUrl;
     private String description;
     private String title;

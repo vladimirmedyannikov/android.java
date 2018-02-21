@@ -13,6 +13,8 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarDynamicActivity;
 import ru.mos.polls.UrlManager;
 import ru.mos.polls.WebViewActivity;
+import ru.mos.polls.about.model.AboutItem;
+import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.RecyclerUIComponent;
@@ -22,11 +24,9 @@ import ru.mos.polls.databinding.LayoutAboutAppBinding;
 import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
-import ru.mos.polls.about.model.AboutItem;
-import ru.mos.polls.about.ui.fragment.AboutAppFragment;
-import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.support.state.SupportState;
 
 /**
  * Created by matek3022 on 21.09.17.
@@ -90,7 +90,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                             getActivity().startActivity(intent);
                             break;
                         case AboutItem.SHARE_SOCIAL:
-                            SocialUIController.showSocialsDialog((BaseActivity) getActivity(), new SocialUIController.SocialClickListener() {
+                            SocialUIController.showSocialsDialog(disposables, (BaseActivity) getActivity(), new SocialUIController.SocialClickListener() {
                                 @Override
                                 public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
                                     socialListener.onSocialPost(appPostValue);
@@ -100,7 +100,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                                 public void onCancel() {
                                     getActivity().finish();
                                 }
-                            });
+                            }, null);
                             break;
                         case AboutItem.RATE_APP:
                             FunctionalHelper.startGooglePlay(getActivity());

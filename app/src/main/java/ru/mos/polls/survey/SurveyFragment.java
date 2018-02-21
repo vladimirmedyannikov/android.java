@@ -23,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.profile.ui.activity.QuestActivity;
-import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.questions.ListSurveyQuestion;
@@ -38,7 +38,6 @@ import ru.mos.polls.survey.source.StubSurveyDataSource;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSource;
 import ru.mos.polls.survey.summary.ProgressView;
-import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.survey.variants.SelectSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.select.GorodSelectObject;
@@ -72,10 +71,12 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
     private Intent data;
     private int requestCode;
     private SparseArray<SelectSurveyVariant> selectSurveyVariantList;
+    protected CompositeDisposable disposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        disposable = new CompositeDisposable();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         if (AGApplication.USE_STUB_SURVEY_DATASOURCE) {
@@ -128,9 +129,19 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         tryToSaveScrollableState();
+    }
+
+    public CompositeDisposable getDisposable() {
+        return disposable;
     }
 
     public SurveyFragment() {

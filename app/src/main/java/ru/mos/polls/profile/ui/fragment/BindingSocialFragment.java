@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
-import ru.mos.polls.profile.model.AgUser;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
@@ -29,8 +29,9 @@ import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.social.adapter.SocialBindAdapter;
-import ru.mos.polls.social.controller.AgSocialApiController;
+import ru.mos.polls.social.controller.SocialApiControllerRX;
 import ru.mos.polls.social.model.AppBindItem;
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.storable.AppStorable;
@@ -60,6 +61,7 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private Unbinder unbinder;
+    protected CompositeDisposable disposables;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
     private List<AppSocial> changedSocials, savedSocials;
@@ -89,6 +91,7 @@ public class BindingSocialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        disposables = new CompositeDisposable();
         init();
     }
 
@@ -111,6 +114,12 @@ public class BindingSocialFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
         socialController.getEventController().unregisterAllCallback();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
     }
 
     @Override
@@ -184,27 +193,23 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void refreshSocials() {
-        progressableUIComponent.begin();
-        AgSocialApiController.LoadSocialListener listener = new AgSocialApiController.LoadSocialListener() {
+        SocialApiControllerRX.LoadSocialListener listener = new SocialApiControllerRX.LoadSocialListener() {
             @Override
             public void onLoaded(List<AppSocial> loadedSocials) {
                 changedSocials.clear();
                 changedSocials.addAll(loadedSocials);
                 socialBindAdapter.notifyDataSetChanged();
-                progressableUIComponent.end();
             }
 
             @Override
             public void onError() {
-                progressableUIComponent.end();
             }
         };
-        AgSocialApiController.loadSocials((BaseActivity) getActivity(), listener);
+        SocialApiControllerRX.loadSocials(disposables, getContext(), listener, progressableUIComponent);
     }
 
     private void bindSocial(final AppSocial social) {
-        progressableUIComponent.begin();
-        AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
+        SocialApiControllerRX.SaveSocialListener listener = new SocialApiControllerRX.SaveSocialListener() {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
@@ -226,17 +231,15 @@ public class BindingSocialFragment extends Fragment {
                     }
                 }
                 socialBindAdapter.notifyDataSetChanged();
-                progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
 //                hideProgress();
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
-                progressableUIComponent.end();
             }
         };
-        AgSocialApiController.bindSocialToAg((BaseActivity) getActivity(), social, listener);
+        SocialApiControllerRX.bindSocialToAg(disposables, getContext(), social, listener, progressableUIComponent);
     }
 
     public void saveProfilePercentFill(int percentFill) {
@@ -244,8 +247,7 @@ public class BindingSocialFragment extends Fragment {
     }
 
     private void unBindSocial(final AppSocial social) {
-        progressableUIComponent.begin();
-        AgSocialApiController.SaveSocialListener listener = new AgSocialApiController.SaveSocialListener() {
+        SocialApiControllerRX.SaveSocialListener listener = new SocialApiControllerRX.SaveSocialListener() {
             @Override
             public void onSaved(final AppSocial loadedSocial, int freezedPoints, int spentPoints, int allPoints, int currentPoints, String state, int percentFill) {
                 LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(BadgeManager.ACTION_RELOAD_BAGES_FROM_SERVER));
@@ -259,14 +261,12 @@ public class BindingSocialFragment extends Fragment {
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 social.setIsLogin(false);
                 socialBindAdapter.notifyDataSetChanged();
-                progressableUIComponent.end();
             }
 
             @Override
             public void onError(AppSocial social) {
-                progressableUIComponent.end();
             }
         };
-        AgSocialApiController.unbindSocialFromAg((BaseActivity) getActivity(), social, listener);
+        SocialApiControllerRX.unbindSocialFromAg(disposables, getContext(), social, listener, progressableUIComponent);
     }
 }

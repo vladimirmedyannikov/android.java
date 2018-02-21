@@ -66,8 +66,9 @@ import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.shop.WebShopFragment;
-import ru.mos.polls.social.controller.AgSocialApiController;
+import ru.mos.polls.social.controller.SocialApiControllerRX;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
@@ -182,7 +183,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         startFromUri();
         Statistics.mainEnter();
         instance = this;
-        AgSocialApiController.loadSocials(this, null);
+        SocialApiControllerRX.loadSocials(disposables, this, null, Progressable.STUB);
         runtimePermissionController = new RuntimePermissionController(this);
 
         updateGeotargetAreas();
@@ -352,7 +353,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 break;
             case MODE_SHARE:
                 navFragment.selectItem(0);//todo replace with constant
-                SocialUIController.showSocialsDialog(this, new SocialUIController.SocialClickListener() {
+                SocialUIController.showSocialsDialog(disposables, this, new SocialUIController.SocialClickListener() {
                     @Override
                     public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
                         socialController.post(appPostValue, appPostValue.getSocialId());
@@ -362,7 +363,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     public void onCancel() {
                         MainActivity.this.finish();
                     }
-                });
+                }, null);
                 break;
             case MODE_NEWS:
                 navFragment.selectItem(3);//todo replace with constant
@@ -696,7 +697,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onPostInSocial() {
-                SocialUIController.showSocialsDialog(MainActivity.this, new SocialUIController.SocialClickListener() {
+                SocialUIController.showSocialsDialog(disposables, MainActivity.this, new SocialUIController.SocialClickListener() {
                     @Override
                     public void onClick(Context context, Dialog dialog, AppPostValue socialPostValue) {
                         Statistics.taskSocialSharing(socialPostValue.getSocialName());
@@ -708,7 +709,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     public void onCancel() {
                         MainActivity.this.finish();
                     }
-                });
+                }, null);
             }
 
             @Override

@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -79,6 +80,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     private Survey survey = null;
     private Callback callback = Callback.STUB;
     private boolean isHearing;
+    private CompositeDisposable disposable;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,6 +91,12 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
                 survey.getMeetings().get(0).setStatus(Meeting.Status.REGISTERED);
             }
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        disposable = new CompositeDisposable();
     }
 
     @Override
@@ -117,6 +125,12 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
     }
 
     @Override
@@ -396,7 +410,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
 
             }
         };
-        SocialUIController.showSocialsDialogForPoll((BaseActivity) getActivity(), survey, false, listener);
+        SocialUIController.showSocialsDialogForPoll(disposable, (BaseActivity) getActivity(), survey, false, listener, null);
     }
 
     public interface Callback {

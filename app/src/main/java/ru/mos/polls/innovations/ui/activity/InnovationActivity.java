@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,10 +31,10 @@ import ru.mos.polls.common.view.HtmlTitleView;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.innovations.controller.InnovationApiControllerRX;
 import ru.mos.polls.innovations.model.InnovationDetails;
-import ru.mos.polls.innovations.model.Status;
-import ru.mos.polls.innovations.ui.InnovationButtons;
 import ru.mos.polls.innovations.model.ShortInnovation;
+import ru.mos.polls.innovations.model.Status;
 import ru.mos.polls.innovations.ui.ChartsView;
+import ru.mos.polls.innovations.ui.InnovationButtons;
 import ru.mos.polls.innovations.vm.item.UIInnovationViewHelper;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
@@ -315,7 +314,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                             InnovationActivity.this.finish();
                         }
                     };
-                    SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, innovationDetails, listener);
+                    SocialUIController.showSocialsDialogForNovelty(disposables, InnovationActivity.this, innovationDetails, listener, null);
                 }
 
                 @Override
@@ -438,7 +437,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
                 InnovationActivity.this.finish();
             }
         };
-        SocialUIController.showSocialsDialogForNovelty(InnovationActivity.this, innovationDetails, socialClickListener);
+        SocialUIController.showSocialsDialogForNovelty(disposables, InnovationActivity.this, innovationDetails, socialClickListener, null);
     }
 
     private void startFromUri() {

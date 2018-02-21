@@ -280,7 +280,7 @@ public class SurveyButtons extends LinearLayout {
                                 fragment.getActivity().finish();
                             }
                         };
-                        SocialUIController.showSocialsDialogForPoll((BaseActivity) fragment.getActivity(), survey, false, listener);
+                        SocialUIController.showSocialsDialogForPoll(fragment.getDisposable(), (BaseActivity) fragment.getActivity(), survey, false, listener, null);
                     }
                 });
             } else {

@@ -82,6 +82,26 @@ public class AppPostValue extends PostValue {
         }
     }
 
+    public AppPostValue(String socialName, AppPostValue partOfPostValue, Type type, Object id) {
+        if (partOfPostValue != null) {
+            setSocialName(socialName);
+            setSocialId(socialName);
+            setText(partOfPostValue.getText());
+            setLink(partOfPostValue.getLink());
+            setImage("");
+            setNotify(true);
+            setType(type);
+            /**
+             * ограничение на постинг
+             */
+            boolean enable = true;
+            if (AGApplication.IS_POSTING_LIMITATION) {
+                enable = partOfPostValue.isEnable();
+            }
+            setEnable(enable);
+            setId(id);
+        }
+    }
     public String getTypeNameForPostingRepeat() {
         String result = "запись";
         if (type != null) {

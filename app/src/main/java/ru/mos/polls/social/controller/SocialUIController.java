@@ -30,12 +30,14 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.innovations.model.InnovationDetails;
 import ru.mos.polls.event.model.EventRX;
+import ru.mos.polls.innovations.model.InnovationDetails;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.social.model.AppSocial;
@@ -66,7 +68,7 @@ public abstract class SocialUIController {
                     = (Exception) intent.getSerializableExtra(EXTRA_POSTING_EXCEPTION);
             AppPostValue appPostValue
                     = (AppPostValue) intent.getSerializableExtra(EXTRA_POSTED_VALUE);
-            showPostingResult(context, appPostValue, postingException);
+            showPostingResult(new CompositeDisposable(), context, appPostValue, postingException, Progressable.STUB);
         }
     };
 
@@ -91,11 +93,10 @@ public abstract class SocialUIController {
     /**
      * Отображение списка социальных сетей для постинга сообщения, полученного с сс АГ
      *
-     * @param activity      elk ActionBarActivity
      * @param clickListener callback выбора соц сети
      */
-    public static void showSocialsDialog(final BaseActivity activity, final SocialClickListener clickListener) {
-        final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
+    public static void showSocialsDialog(CompositeDisposable disposable, final BaseActivity activity, final SocialClickListener clickListener, Progressable progressable) {
+        final SocialApiControllerRX.SocialPostValueListener listener = new SocialApiControllerRX.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
@@ -104,11 +105,11 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingData(activity, listener);
+        SocialApiControllerRX.loadPostingData(disposable, activity, listener, progressable);
     }
 
-    public static void showSocialsDialogForNovelty(final BaseActivity activity, InnovationDetails innovationActiviti, final SocialClickListener clickListener) {
-        final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
+    public static void showSocialsDialogForNovelty(CompositeDisposable disposable, final BaseActivity activity, InnovationDetails innovationActiviti, final SocialClickListener clickListener, Progressable progressable) {
+        final SocialApiControllerRX.SocialPostValueListener listener = new SocialApiControllerRX.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
@@ -117,11 +118,11 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForNovelty(activity, innovationActiviti.getId(), listener);
+        SocialApiControllerRX.loadPostingDataForNovelty(disposable, activity, innovationActiviti.getId(), listener, progressable);
     }
 
-    public static void showSocialsDialogForAchievement(final BaseActivity activity, String achievementId, final boolean isNeedCloseActivity, final SocialClickListener clickListener) {
-        final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
+    public static void showSocialsDialogForAchievement(CompositeDisposable disposable, final BaseActivity activity, String achievementId, final boolean isNeedCloseActivity, final SocialClickListener clickListener, Progressable progressable) {
+        final SocialApiControllerRX.SocialPostValueListener listener = new SocialApiControllerRX.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
@@ -130,7 +131,7 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForAchievement(activity, achievementId, listener);
+        SocialApiControllerRX.loadPostingDataForAchievement(disposable, activity, achievementId, listener, progressable);
     }
 
     /**
@@ -140,8 +141,8 @@ public abstract class SocialUIController {
      * @param isNeedCloseActivity закрывать ли текущий экран, вместе диалогом
      * @param clickListener       callback выбора соц сети
      */
-    public static void showSocialsDialogForPoll(final BaseActivity activity, Survey survey, final boolean isNeedCloseActivity, final SocialClickListener clickListener) {
-        final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
+    public static void showSocialsDialogForPoll(CompositeDisposable disposable, final BaseActivity activity, Survey survey, final boolean isNeedCloseActivity, final SocialClickListener clickListener, Progressable progressable) {
+        final SocialApiControllerRX.SocialPostValueListener listener = new SocialApiControllerRX.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
@@ -150,7 +151,7 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForPoll(activity, survey.getId(), survey.getKind().isHearing(), listener);
+        SocialApiControllerRX.loadPostingDataForPoll(disposable, activity, survey.getId(), survey.getKind().isHearing(), listener, progressable);
     }
 
     /**
@@ -159,8 +160,8 @@ public abstract class SocialUIController {
      * @param activity      elk ActionBarActivity
      * @param clickListener callback выбора соц сети
      */
-    public static void showSocialsDialogForEvent(final BaseActivity activity, EventRX event, final SocialClickListener clickListener) {
-        final AgSocialApiController.SocialPostValueListener listener = new AgSocialApiController.SocialPostValueListener() {
+    public static void showSocialsDialogForEvent(CompositeDisposable disposable, final BaseActivity activity, EventRX event, final SocialClickListener clickListener, Progressable progressable) {
+        final SocialApiControllerRX.SocialPostValueListener listener = new SocialApiControllerRX.SocialPostValueListener() {
             @Override
             public void onLoaded(List<AppPostItem> socialPostItems) {
                 if (socialPostItems != null && socialPostItems.size() > 0) {
@@ -169,7 +170,7 @@ public abstract class SocialUIController {
                 }
             }
         };
-        AgSocialApiController.loadPostingDataForEvent(activity, event.getCommonBody().getId(), listener);
+        SocialApiControllerRX.loadPostingDataForEvent(disposable, activity, event.getCommonBody().getId(), listener, progressable);
     }
 
     /**
@@ -479,12 +480,12 @@ public abstract class SocialUIController {
      * @param appPostValue  данные, которые запостили
      * @param postingException ошибка при постинге
      */
-    public static void showPostingResult(Context context, AppPostValue appPostValue, Exception postingException) {
+    public static void showPostingResult(CompositeDisposable disposable, Context context, AppPostValue appPostValue, Exception postingException, Progressable progressable) {
         boolean isPostingSuccess = postingException == null;
         if (isPostingSuccess) {
-            showPostingSuccessDialog(context, appPostValue);
+            showPostingSuccessDialog(disposable, context, appPostValue, progressable);
         } else {
-            showPostingErrorDialog(context, appPostValue, postingException);
+            showPostingErrorDialog(disposable, context, appPostValue, postingException, progressable);
         }
         processAfterStatistics(appPostValue, isPostingSuccess);
     }
@@ -626,9 +627,9 @@ public abstract class SocialUIController {
      * @param context         не elk ActionBarActivity, из broadcast receiver
      * @param appPostValue данные, которые успешно заполстили
      */
-    public static void showPostingSuccessDialog(final Context context, final AppPostValue appPostValue) {
+    public static void showPostingSuccessDialog(CompositeDisposable disposable, final Context context, final AppPostValue appPostValue, Progressable progressable) {
         if (appPostValue.isEnable() && appPostValue.isMustServerNotified()) {
-            AgSocialApiController.PostingNotifyListener listener = new AgSocialApiController.PostingNotifyListener() {
+            SocialApiControllerRX.PostingNotifyListener listener = new SocialApiControllerRX.PostingNotifyListener() {
                 @Override
                 public void onNotified(Message customMessage) {
                     /**
@@ -647,7 +648,7 @@ public abstract class SocialUIController {
                     showSimpleDialog(context, message);
                 }
             };
-            AgSocialApiController.notifyAboutPosting(context, appPostValue, listener);
+            SocialApiControllerRX.notifyAboutPosting(disposable, context, appPostValue, listener, progressable);
         } else {
             /**
              * если оповещать сервер АГ не требуется,
@@ -658,11 +659,11 @@ public abstract class SocialUIController {
         }
     }
 
-    public static void showPostingErrorDialog(Context context, AppPostValue appPostValue, String error) {
+    public static void showPostingErrorDialog(CompositeDisposable disposable, Context context, AppPostValue appPostValue, String error, Progressable progressable) {
         String message = context.getString(R.string.error_in_posting);
         if (Error.Ok.SESSION_IS_EXPIRED.equalsIgnoreCase(error)) {
             message = context.getString(R.string.error_validating_access_token);
-            clearAndUnbindSocial(context, appPostValue);
+            clearAndUnbindSocial(disposable, context, appPostValue, progressable);
         }
         showSimpleDialog(context, message);
     }
@@ -674,8 +675,8 @@ public abstract class SocialUIController {
      * @param appPostValue  данные, которые запостили
      * @param postingExсeption ошибка постинга
      */
-    private static void showPostingErrorDialog(Context context, AppPostValue appPostValue, Exception postingExсeption) {
-        String message = processErrorMessage(context, appPostValue.getSocialId(), postingExсeption);
+    private static void showPostingErrorDialog(CompositeDisposable disposable, Context context, AppPostValue appPostValue, Exception postingExсeption, Progressable progressable) {
+        String message = processErrorMessage(disposable, context, appPostValue.getSocialId(), postingExсeption, progressable);
         showSimpleDialog(context, message);
     }
 
@@ -687,7 +688,7 @@ public abstract class SocialUIController {
      * @param postingException должен содержать только код ошибки
      * @return текст ошибки, показываемый пользователю
      */
-    private static String processErrorMessage(Context context, int socialId, Exception postingException) {
+    private static String processErrorMessage(CompositeDisposable disposable, Context context, int socialId, Exception postingException, Progressable progressable) {
         String result = context.getString(R.string.error_in_posting);
         if (postingException != null) {
             int errorCode = -1;
@@ -708,11 +709,11 @@ public abstract class SocialUIController {
                         case Error.Facebook.ERROR_VALIDATING_ACCESS_TOKEN:
                         case Error.Facebook.ERROR_VALIDATING_ACCESS_TOKEN_AFTER_CHANGE_PASSWORD:
                             result = context.getString(R.string.error_validating_access_token);
-                            clearAndUnbindSocial(context, socialId);
+                            clearAndUnbindSocial(disposable, context, socialId, progressable);
                             break;
                         case Error.Facebook.USER_HAS_NOT_AUTHORIZED_THE_APPLICATION:
                             result = context.getString(R.string.error_has_not_auth_the_application);
-                            clearAndUnbindSocial(context, socialId);
+                            clearAndUnbindSocial(disposable, context, socialId, progressable);
                             break;
                         case Error.Facebook.UNKNOWN_ERROR:
                             result = context.getString(R.string.error_sharing_unknown);
@@ -730,11 +731,11 @@ public abstract class SocialUIController {
                     switch (errorCode) {
                         case Error.Vk.ERROR_AUTH_FAILED:
                             result = context.getString(R.string.error_validating_access_token);
-                            clearAndUnbindSocial(context, socialId);
+                            clearAndUnbindSocial(disposable, context, socialId, progressable);
                             break;
                         case Error.Vk.ERROR_TOKKEN_EXPIRED:
                             result = context.getString(R.string.error_expired_access_token);
-                            clearAndUnbindSocial(context, socialId);
+                            clearAndUnbindSocial(disposable, context, socialId, progressable);
                             break;
                     }
                     break;
@@ -742,7 +743,7 @@ public abstract class SocialUIController {
                     switch (errorCode) {
                         case Error.Ok.ERROR_SESSION_EXPIRED:
                             result = context.getString(R.string.error_validating_access_token);
-                            clearAndUnbindSocial(context, socialId);
+                            clearAndUnbindSocial(disposable, context, socialId, progressable);
                             break;
                         case Error.Ok.ERROR_PERMISSION_DENIED:
                             result = context.getString(R.string.error_permission_denied);
@@ -754,15 +755,15 @@ public abstract class SocialUIController {
         return result;
     }
 
-    public static void clearAndUnbindSocial(Context context, AppPostValue appPostValue) {
-        clearAndUnbindSocial(context, appPostValue.getSocialId());
+    public static void clearAndUnbindSocial(CompositeDisposable disposable, Context context, AppPostValue appPostValue, Progressable progressable) {
+        clearAndUnbindSocial(disposable, context, appPostValue.getSocialId(), progressable);
     }
 
-    private static void clearAndUnbindSocial(Context context, int socialId) {
+    private static void clearAndUnbindSocial(CompositeDisposable disposable, Context context, int socialId, Progressable progressable) {
         Configurator.getInstance(context).getStorable().clear(socialId);
         if (context instanceof BaseActivity) {
             AppSocial social = AppSocial.fromPreference(context, socialId);
-            AgSocialApiController.unbindSocialFromAg((BaseActivity) context, social, null);
+            SocialApiControllerRX.unbindSocialFromAg(disposable, (BaseActivity) context, social, null, progressable);
         }
     }
 

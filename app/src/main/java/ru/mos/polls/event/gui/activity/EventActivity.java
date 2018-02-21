@@ -322,7 +322,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                         EventActivity.this.finish();
                     }
                 };
-                SocialUIController.showSocialsDialogForEvent(EventActivity.this, event, listener);
+                SocialUIController.showSocialsDialogForEvent(disposables, EventActivity.this, event, listener, null);
             }
         });
         builder.show();
@@ -413,7 +413,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                         EventActivity.this.finish();
                     }
                 };
-                SocialUIController.showSocialsDialogForEvent(EventActivity.this, event, listener);
+                SocialUIController.showSocialsDialogForEvent(disposables, EventActivity.this, event, listener, null);
             }
         };
 

@@ -43,6 +43,7 @@ import ru.mos.social.model.Configurator;
  * 3) получение данных социальных сетей, привязанных к аккаунту АГ
  * <p/>
  */
+@Deprecated
 public abstract class AgSocialApiController {
     private static ProgressDialog pd;
 

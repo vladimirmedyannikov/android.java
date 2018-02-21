@@ -13,6 +13,7 @@ import ru.mos.polls.event.controller.service.UpdateEventComment;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
+import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
@@ -34,10 +35,17 @@ import ru.mos.polls.profile.service.VisibilitySet;
 import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.social.controller.service.GetSocialProfile;
+import ru.mos.polls.social.controller.service.LoadPostingData;
+import ru.mos.polls.social.controller.service.NotifyAboutPosting;
+import ru.mos.polls.social.controller.service.ProfileUpdateSocial;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
+import ru.mos.polls.survey.hearing.service.AuthPGU;
+import ru.mos.polls.survey.hearing.service.HearingCheck;
+import ru.mos.polls.survey.service.GetExpertList;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -68,6 +76,8 @@ public interface AgApi {
             String POLL = "poll";
             String SUPPORT = "support";
             String POLLTASK = "polltask";
+            String PGU = "pgu";
+            String UTILS = "utils";
         }
 
         interface Methods {
@@ -99,6 +109,15 @@ public interface AgApi {
             String CHECKIN_EVENT = "checkinEvent";
             String EVENT_COMMENTS_LIST = "eventCommentsList";
             String UPDATE_EVENT_COMMENT = "updateEventComment";
+            String BINDING = "binding";
+            String AUTH = "auth";
+            String HEARING_CHECK = "hearingCheck";
+            String GET_EXPERTS_LIST = "getExpertsList";
+            String APP_VERSION = "appVersion";
+            String GET_SOCIAL_INFO = "getSocialInfo";
+            String NOTIFY_SOCIAL_POSTED = "notifySocialPosted";
+            String PROFILE_GET_SOCIAL = "profileGetSocial";
+            String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
         }
     }
 
@@ -191,4 +210,31 @@ public interface AgApi {
 
     @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.UPDATE_EVENT_COMMENT)
     Observable<UpdateEventComment.Response> updateEventComment(@Body UpdateEventComment.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.BINDING)
+    Observable<AuthPGU.Response> pguBinding(@Body AuthPGU.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PGU + "/" + Api.Methods.AUTH)
+    Observable<AuthPGU.Response> pguAuth(@Body AuthPGU.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.HEARING_CHECK)
+    Observable<HearingCheck.Response> hearingCheck(@Body HearingCheck.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET_EXPERTS_LIST)
+    Observable<GetExpertList.Response> getExpertsList(@Body GetExpertList.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.UTILS + "/" + Api.Methods.APP_VERSION)
+    Observable<GetAppVersion.Response> getAppVersion(@Body GetAppVersion.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET_SOCIAL_INFO)
+    Observable<LoadPostingData.Response> getSocialInfo(@Body LoadPostingData.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.NOTIFY_SOCIAL_POSTED)
+    Observable<NotifyAboutPosting.Response> notifyAboutPosting(@Body NotifyAboutPosting.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.PROFILE_GET_SOCIAL)
+    Observable<GetSocialProfile.Response> getSocials(@Body GetSocialProfile.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.PROFILE_UPDATE_SOCIAL)
+    Observable<ProfileUpdateSocial.Response> updateSocial(@Body ProfileUpdateSocial.Request body);
 }

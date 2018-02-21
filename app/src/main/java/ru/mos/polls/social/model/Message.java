@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 import ru.mos.polls.R;
@@ -13,7 +15,11 @@ import ru.mos.polls.R;
  * Структура для хранения данных кастомного сообщения о постинге
  */
 public class Message {
-    private String title, text;
+
+    @SerializedName("title")
+    private String title;
+    @SerializedName("text")
+    private String text;
 
     public Message(JSONObject jsonObject) {
         if (jsonObject != null) {

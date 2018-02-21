@@ -42,7 +42,7 @@ public class SocialQuest extends DetailsQuest {
     @Override
     public void onClick(final Context context, final QuestsFragmentVM.Listener listener) {
         if (ID_POST_IN_SOCIAL.equals(getId())) {
-            SocialUIController.showSocialsDialog((BaseActivity) context, new SocialUIController.SocialClickListener() {
+            SocialUIController.showSocialsDialog(((BaseActivity) context).getDisposables(), (BaseActivity) context, new SocialUIController.SocialClickListener() {
                 @Override
                 public void onClick(Context context, Dialog dialog, AppPostValue appPostValue) {
                     listener.onSocialPost(appPostValue);
@@ -52,7 +52,7 @@ public class SocialQuest extends DetailsQuest {
                 public void onCancel() {
                     ((BaseActivity) context).finish();
                 }
-            });
+            }, null);
         } else if (ID_INVITE_FRIENDS.equals(getId())) {
             listener.onInviteFriends(true);
         }

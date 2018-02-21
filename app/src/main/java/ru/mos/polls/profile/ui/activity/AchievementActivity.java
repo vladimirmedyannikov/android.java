@@ -128,7 +128,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
                 AchievementActivity.this.finish();
             }
         };
-        SocialUIController.showSocialsDialogForAchievement(AchievementActivity.this, achievementId, false, listener);
+        SocialUIController.showSocialsDialogForAchievement(disposables, AchievementActivity.this, achievementId, false, listener, null);
     }
 
     private boolean getAchievement() {

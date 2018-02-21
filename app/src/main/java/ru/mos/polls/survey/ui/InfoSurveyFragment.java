@@ -19,12 +19,12 @@ import android.widget.ScrollView;
 
 import com.appsflyer.AppsFlyerLib;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
@@ -100,6 +100,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     boolean isCommentFrAdded;
 
     Disposable disposable;
+    private CompositeDisposable compositeDisposable;
 
     public static InfoSurveyFragment newInstance(Survey survey, long idPoll) {
         InfoSurveyFragment f = new InfoSurveyFragment();
@@ -108,6 +109,12 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         args.putLong(ARG_POLL_ID, idPoll);
         f.setArguments(args);
         return f;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -123,6 +130,12 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        compositeDisposable.clear();
     }
 
     public void setCallback(SurveyFragment.Callback c) {
@@ -322,7 +335,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                     getActivity().finish();
                 }
             };
-            SocialUIController.showSocialsDialogForPoll((BaseActivity) getActivity(), survey, false, listener);
+            SocialUIController.showSocialsDialogForPoll(compositeDisposable, (BaseActivity) getActivity(), survey, false, listener, null);
         }
     }
 

@@ -36,16 +36,16 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ru.mos.polls.profile.model.AgUser;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.Constants;
-import ru.mos.polls.badge.controller.BadgeApiController;
+import ru.mos.polls.badge.controller.BadgeApiControllerRX;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.badge.model.Personal;
 import ru.mos.polls.badge.model.State;
-import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.util.AgTextUtil;
 
@@ -106,6 +106,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     private Timer mTimerReloadFromServer;
 
+    private CompositeDisposable disposable;
+
     private BroadcastReceiver reloadFromServerBroadcastReceiver;
     private BroadcastReceiver reloadFromCacheBroadcastReceiver;
     private BroadcastReceiver reloadAvatarFromCacheBroadcastReceiver;
@@ -117,6 +119,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        disposable = new CompositeDisposable();
         adapter = new NavigationMenuAdapter(getActivity(), NavigationMenuItem.ITEMS_MENU);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
@@ -206,6 +209,7 @@ public class NavigationDrawerFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(needOpenProfileReceiver);
         mTimerReloadFromServer.cancel();
         mTimerReloadFromServer.purge();
+        disposable.clear();
     }
 
     @Override
@@ -216,7 +220,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void doRealodBadges() {
-        BadgeApiController.refresh((BaseActivity) getActivity(), new BadgeApiController.BadgesListener() {
+        BadgeApiControllerRX.refresh(disposable, new BadgeApiControllerRX.BadgesListener() {
             @Override
             public void onLoaded(State state) {
                 BadgesSource.getInstance().storeState(state);

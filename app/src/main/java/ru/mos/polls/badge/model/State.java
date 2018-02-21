@@ -46,6 +46,12 @@ public class State {
         }
     }
 
+    public State(Personal personal, int pointsCount, List<Badge> badges) {
+        this.personal = personal;
+        this.pointsCount = pointsCount;
+        this.badges = badges;
+    }
+
     public State(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         try {

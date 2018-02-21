@@ -19,6 +19,7 @@ import ru.mos.polls.base.activity.BaseActivity;
  *
  * @since 1.9.2
  */
+@Deprecated
 public abstract class BadgeApiController {
     /**
      * Получаем текущие данные по бейджам с сервера

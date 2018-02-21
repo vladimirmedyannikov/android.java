@@ -5,6 +5,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ru.mos.polls.badge.controller.service.BadgesGet;
+import ru.mos.polls.badge.controller.service.BadgesUpdate;
 import ru.mos.polls.event.controller.service.CheckinEvent;
 import ru.mos.polls.event.controller.service.GetEvent;
 import ru.mos.polls.event.controller.service.GetEventCommentsList;
@@ -78,6 +80,7 @@ public interface AgApi {
             String POLLTASK = "polltask";
             String PGU = "pgu";
             String UTILS = "utils";
+            String POLL_BADGES = "pollbadges";
         }
 
         interface Methods {
@@ -118,6 +121,7 @@ public interface AgApi {
             String NOTIFY_SOCIAL_POSTED = "notifySocialPosted";
             String PROFILE_GET_SOCIAL = "profileGetSocial";
             String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
+            String UPDATE = "update";
         }
     }
 
@@ -237,4 +241,10 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.PROFILE_UPDATE_SOCIAL)
     Observable<ProfileUpdateSocial.Response> updateSocial(@Body ProfileUpdateSocial.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL_BADGES + "/" + Api.Methods.GET)
+    Observable<BadgesGet.Response> getBadges(@Body BadgesGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL_BADGES + "/" + Api.Methods.UPDATE)
+    Observable<BadgesUpdate.Response> updateBadges(@Body BadgesUpdate.Request body);
 }

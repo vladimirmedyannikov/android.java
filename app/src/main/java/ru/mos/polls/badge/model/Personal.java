@@ -1,5 +1,7 @@
 package ru.mos.polls.badge.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +12,16 @@ import org.json.JSONObject;
  *
  */
 public class Personal {
-    private String phone, surname, firstName, middleName, icon;
+    @SerializedName("phone")
+    private String phone;
+    @SerializedName("surname")
+    private String surname;
+    @SerializedName("firstname")
+    private String firstName;
+    @SerializedName("middlename")
+    private String middleName;
+    @SerializedName("icon")
+    private String icon;
 
     public Personal(JSONObject json) {
         if (json != null) {

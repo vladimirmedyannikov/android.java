@@ -2,7 +2,7 @@ package ru.mos.polls.badge.manager;
 
 import android.content.IntentFilter;
 
-import ru.mos.polls.badge.controller.BadgeApiController;
+import ru.mos.polls.badge.controller.BadgeApiControllerRX;
 import ru.mos.polls.badge.model.Badge;
 import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -10,7 +10,7 @@ import ru.mos.polls.base.activity.BaseActivity;
 /**
  * Инкапсулирует
  * 1) кеширование данных по бейджам,
- * 2) синхронизацию данных по бейджам с сервера {@link ru.mos.polls.badge.controller.BadgeApiController}
+ * 2) синхронизацию данных по бейджам с сервера {@link ru.mos.polls.badge.controller.BadgeApiControllerRX}
  *
  * @since 1.9.2
  */
@@ -42,7 +42,7 @@ public abstract class BadgeManager {
      */
     public static void uploadReadedNews(BaseActivity activity) {
         long[] ids = BadgesSource.getInstance().getReadedNewsIds();
-        BadgeApiController.updateNews(activity, ids);
+        BadgeApiControllerRX.updateNews(activity.getDisposables(), ids);
     }
 
     /**
@@ -54,14 +54,14 @@ public abstract class BadgeManager {
     public static void uploadAllNewsAsReaded(BaseActivity elkActivity) {
         Badge badge = BadgesSource.getInstance().getBadgeNews();
         if (badge != null && badge.hasIds()) {
-            BadgeApiController.updateNews(elkActivity, badge.getIds());
+            BadgeApiControllerRX.updateNews(elkActivity.getDisposables(), badge.getIds());
         }
     }
 
     public static void uploadAllFriendsAsReaded(BaseActivity elkActivity) {
         Badge badge = BadgesSource.getInstance().getBadge(Badge.Type.FRIENDS);
         if (badge != null && badge.hasIds()) {
-            BadgeApiController.updateFriends(elkActivity, badge.getIds());
+            BadgeApiControllerRX.updateFriends(elkActivity.getDisposables(), badge.getIds());
         }
     }
 

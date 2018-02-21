@@ -1,5 +1,7 @@
 package ru.mos.polls.badge.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,13 +24,16 @@ public class Badge {
         return result;
     }
 
-    private Type type;
+    @SerializedName("type")
+    private String type;
+    @SerializedName("count")
     private int count;
+    @SerializedName("ids")
     private long[] ids;
 
     public Badge(JSONObject json) {
         if (json != null) {
-            type = Type.parse(json.optString("type"));
+            type = json.optString("type");
             count = json.optInt("count");
             JSONArray array = json.optJSONArray("ids");
             if (array != null) {
@@ -43,7 +48,7 @@ public class Badge {
     public JSONObject asJson() {
         JSONObject result = new JSONObject();
         try {
-            result.put("type", type.getValue());
+            result.put("type", type);
             result.put("count", count);
             result.put("ids", idsAsJson());
         } catch (JSONException ignored) {
@@ -64,23 +69,23 @@ public class Badge {
     }
 
     public boolean forPoll() {
-        return type.isPolls();
+        return getType().isPolls();
     }
 
     public boolean forNovelty() {
-        return type.isNovelties();
+        return getType().isNovelties();
     }
 
     public boolean forNew() {
-        return type.isNews();
+        return getType().isNews();
     }
 
     public boolean forFriends() {
-        return type.isFriends();
+        return getType().isFriends();
     }
 
     public Type getType() {
-        return type;
+        return Type.parse(type);
     }
 
     private JSONArray idsAsJson() {

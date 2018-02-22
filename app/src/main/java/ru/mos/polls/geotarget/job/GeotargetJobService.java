@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.disposables.CompositeDisposable;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.model.Position;
-import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.GeotargetApiControllerRX;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
@@ -31,6 +32,13 @@ public class GeotargetJobService extends JobService {
 
     private LocationController locationController;
     private boolean isYetLocationSent;
+    private CompositeDisposable disposable;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        disposable = new CompositeDisposable();
+    }
 
     @Override
     public boolean onStartJob(JobParameters job) {
@@ -77,6 +85,7 @@ public class GeotargetJobService extends JobService {
     public void onDestroy() {
         super.onDestroy();
         toLog("stop" + String.valueOf(counter));
+        disposable.clear();
     }
 
     private void toLog(String state) {
@@ -111,7 +120,7 @@ public class GeotargetJobService extends JobService {
          */
         if (selectedAreas.size() > 0) {
             toLog(areasToLog.toString());
-            GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+            GeotargetApiControllerRX.OnNotifyUserInAreaListener listener = new GeotargetApiControllerRX.OnNotifyUserInAreaListener() {
 
                 @Override
                 public void onSuccess(boolean success, List<Integer> disableAreaIds) {
@@ -128,7 +137,7 @@ public class GeotargetJobService extends JobService {
                 }
 
             };
-            GeotargetApiController.notifyAboutUserInArea(this,
+            GeotargetApiControllerRX.notifyAboutUserInArea(disposable,
                     selectedAreas,
                     listener);
         } else {

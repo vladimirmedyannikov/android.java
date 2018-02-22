@@ -28,9 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.model.Position;
-import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.GeotargetApiControllerRX;
 import ru.mos.polls.geotarget.model.Area;
 
 /**
@@ -164,13 +165,13 @@ public class GeotargetManager extends BroadcastReceiver {
         /**
          * информирование о том, что пользователь в указанной зоне
          */
-        GeotargetApiController.OnNotifyUserInAreaListener listener = new GeotargetApiController.OnNotifyUserInAreaListener() {
+        GeotargetApiControllerRX.OnNotifyUserInAreaListener listener = new GeotargetApiControllerRX.OnNotifyUserInAreaListener() {
             @Override
             public void onSuccess(boolean success, List<Integer> disableAreaIds) {
 
             }
         };
-        GeotargetApiController.notifyAboutUserInArea(context,
+        GeotargetApiControllerRX.notifyAboutUserInArea(new CompositeDisposable(), // TODO: 22.02.18 как оформить его здесь?
                 selectedAreas,
                 listener);
 

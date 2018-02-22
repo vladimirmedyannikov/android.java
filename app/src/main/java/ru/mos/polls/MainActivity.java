@@ -40,7 +40,7 @@ import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
-import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.geotarget.GeotargetApiControllerRX;
 import ru.mos.polls.geotarget.job.GeotargetJobManager;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.GpsRequestPermsManager;
@@ -262,7 +262,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     }
 
     private void updateGeotargetAreas() {
-        GeotargetApiController.OnAreasListener listener = new GeotargetApiController.OnAreasListener() {
+        GeotargetApiControllerRX.OnAreasListener listener = new GeotargetApiControllerRX.OnAreasListener() {
             @Override
             public void onLoaded(List<Area> loadedAreas) {
                 try {
@@ -273,7 +273,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 }
             }
         };
-        GeotargetApiController.loadAreas(this, listener);
+        GeotargetApiControllerRX.loadAreas(disposables, listener);
     }
 
     @Override

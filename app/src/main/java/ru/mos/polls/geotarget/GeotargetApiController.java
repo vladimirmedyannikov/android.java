@@ -21,7 +21,7 @@ import ru.mos.polls.geotarget.model.Area;
 /**
  * @since 2.3.0
  */
-
+@Deprecated
 public class GeotargetApiController {
 
     public static void loadAreas(Context context, final OnAreasListener listener) {

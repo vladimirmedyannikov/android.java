@@ -1,5 +1,7 @@
 package ru.mos.polls.geotarget.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +36,14 @@ public class Area implements Serializable {
         return result;
     }
 
+    @SerializedName("id")
     private int id;
+    @SerializedName("lat")
+    private double lat;
+    @SerializedName("lon")
+    private double lon;
     private Position position;
+    @SerializedName("r")
     private int r;
 
     public Area(JSONObject json) {
@@ -51,6 +59,7 @@ public class Area implements Serializable {
     }
 
     public Position getPosition() {
+        if (position == null) position = new Position(lat, lon);
         return position;
     }
 

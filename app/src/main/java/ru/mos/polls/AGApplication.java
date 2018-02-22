@@ -29,20 +29,21 @@ import org.json.JSONArray;
 import java.io.File;
 import java.util.List;
 
-import ru.mos.polls.push.PushChannel;
-import ru.mos.polls.db.UserData;
-import ru.mos.polls.db.UserDataProvider;
+import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.api.API;
 import ru.mos.polls.api.Token;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.RxEventBus;
-import ru.mos.polls.geotarget.GeotargetApiController;
+import ru.mos.polls.db.UserData;
+import ru.mos.polls.db.UserDataProvider;
+import ru.mos.polls.geotarget.GeotargetApiControllerRX;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.push.GCMBroadcastReceiver;
+import ru.mos.polls.push.PushChannel;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.session.Session;
@@ -581,7 +582,7 @@ public class AGApplication extends MultiDexApplication {
             public void onPushRecived(Intent intent) {
                 AreasManager areasManager = new PrefsAreasManager(getApplicationContext());
                 areasManager.clear();
-                GeotargetApiController.loadAreas(getApplicationContext(), new GeotargetApiController.OnAreasListener() {
+                GeotargetApiControllerRX.loadAreas(new CompositeDisposable(), new GeotargetApiControllerRX.OnAreasListener() { // TODO: 22.02.18 стоит ли вообще в пушах передавать CompositeDisposable при запросе?
                     @Override
                     public void onLoaded(List<Area> loadedAreas) {
                         AreasManager areasManager = new PrefsAreasManager(getApplicationContext());

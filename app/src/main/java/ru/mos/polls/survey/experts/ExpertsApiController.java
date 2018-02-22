@@ -32,6 +32,7 @@ import ru.mos.polls.survey.questions.SurveyQuestion;
  *
  * @since 1.8
  */
+@Deprecated
 public abstract class ExpertsApiController {
     public static void loadDetailExperts(final BaseActivity activity, long pollId, long questionId, boolean isHearing, final DetailsExpertListener listener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_EXPERTS_LIST));

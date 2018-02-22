@@ -23,6 +23,7 @@ import ru.mos.polls.common.model.QuestMessage;
  *
  * @since 1.8
  */
+@Deprecated
 public abstract class HearingApiController {
     /**
      * Возможные коды ошибок возникающие при вызове метода hearingCheck()

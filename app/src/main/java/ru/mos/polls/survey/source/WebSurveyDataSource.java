@@ -34,7 +34,7 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 import ru.mos.polls.survey.parsers.SurveyFactory;
-
+@Deprecated
 public class WebSurveyDataSource implements SurveyDataSource {
 
     private final BaseActivity actionBarActivity;

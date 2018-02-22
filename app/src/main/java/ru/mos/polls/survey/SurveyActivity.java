@@ -31,7 +31,7 @@ import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
-import ru.mos.polls.survey.source.WebSurveyDataSource;
+import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.StubUtils;
@@ -167,6 +167,7 @@ public class SurveyActivity extends BaseActivity {
      * то срабатывает {@link JugglerActivity#onSupportNavigateUp()}
      * при нажатии экранной стрелки "<-" в {@link ru.mos.polls.survey.vm.InfoCommentFragmentVM}
      * в котором вызвается {@link Activity#finish()}
+     *
      * @return
      */
     @Override
@@ -218,10 +219,8 @@ public class SurveyActivity extends BaseActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.show();
-
-        WebSurveyDataSource surveyDataSource = new WebSurveyDataSource(this);
-        surveyDataSource.load(surveyId, isHearing, new SurveyDataSource.LoadListener() {
-
+        WebSurveyDataSourceRX webSurveyDataSourceRX = new WebSurveyDataSourceRX(this);
+        webSurveyDataSourceRX.load(surveyId, isHearing, new SurveyDataSource.LoadListener() {
             @Override
             public void onLoaded(Survey loadedSurvey) {
                 dismissProgressDialog();
@@ -406,8 +405,8 @@ public class SurveyActivity extends BaseActivity {
 
     public void doInterrupt(final Survey survey) {
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
-            WebSurveyDataSource surveyDataSource = new WebSurveyDataSource(SurveyActivity.this);
-            surveyDataSource.save(survey,
+            WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX(SurveyActivity.this);
+            sourceRX.save(survey,
                     new SaveListener.SaveOnInterruptListener(SurveyActivity.this, survey), true);
         } else {
             finish();
@@ -440,7 +439,7 @@ public class SurveyActivity extends BaseActivity {
             if (ok) {
                 SharedPreferencesSurveyManager manager = new SharedPreferencesSurveyManager(SurveyActivity.this);
                 manager.saveCurrentPage(survey);
-                WebSurveyDataSource surveyDataSource = new WebSurveyDataSource(SurveyActivity.this);
+                WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX(SurveyActivity.this);
                 Runnable tryFinish = new Runnable() {
                     @Override
                     public void run() {
@@ -451,7 +450,7 @@ public class SurveyActivity extends BaseActivity {
                         }
                     }
                 };
-                surveyDataSource.save(survey, new SaveListener.SaveOnFinishListener(SurveyActivity.this, survey, socialController, tryFinish), false);
+                sourceRX.save(survey, new SaveListener.SaveOnFinishListener(SurveyActivity.this, survey, socialController, tryFinish), false);
             }
         } else {
             finish();

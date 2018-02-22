@@ -1,5 +1,7 @@
 package ru.mos.polls.rxhttp.rxapi.config;
 
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -15,8 +17,6 @@ import ru.mos.polls.event.controller.service.UpdateEventComment;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
-import ru.mos.polls.geotarget.service.GetAreas;
-import ru.mos.polls.geotarget.service.UserInArea;
 import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
@@ -49,7 +49,9 @@ import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
 import ru.mos.polls.survey.hearing.service.AuthPGU;
 import ru.mos.polls.survey.hearing.service.HearingCheck;
+import ru.mos.polls.survey.service.FillPoll;
 import ru.mos.polls.survey.service.GetExpertList;
+import ru.mos.polls.survey.service.GetPoll;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -83,7 +85,6 @@ public interface AgApi {
             String PGU = "pgu";
             String UTILS = "utils";
             String POLL_BADGES = "pollbadges";
-            String GEOTARGET = "geotarget";
         }
 
         interface Methods {
@@ -125,8 +126,6 @@ public interface AgApi {
             String PROFILE_GET_SOCIAL = "profileGetSocial";
             String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
             String UPDATE = "update";
-            String AREAS = "areas";
-            String USER_IN_AREA = "userInArea";
         }
     }
 
@@ -253,10 +252,9 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL_BADGES + "/" + Api.Methods.UPDATE)
     Observable<BadgesUpdate.Response> updateBadges(@Body BadgesUpdate.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.GEOTARGET + "/" + Api.Methods.AREAS)
-    Observable<GetAreas.Response> getAreas(@Body GetAreas.Request body);
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.GET)
+    Observable<GeneralResponse<JsonObject>> getPoll(@Body GetPoll.Request body);
 
-    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.GEOTARGET + "/" + Api.Methods.USER_IN_AREA)
-    Observable<UserInArea.Response> userInArea(@Body UserInArea.Request body);
-
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FILL)
+    Observable<FillPoll.Response> fillPoll(@Body FillPoll.Request body);
 }

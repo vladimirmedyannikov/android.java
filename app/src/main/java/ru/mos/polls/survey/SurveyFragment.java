@@ -36,7 +36,7 @@ import ru.mos.polls.survey.questions.ListSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.StubSurveyDataSource;
 import ru.mos.polls.survey.source.SurveyDataSource;
-import ru.mos.polls.survey.source.WebSurveyDataSource;
+import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.summary.ProgressView;
 import ru.mos.polls.survey.variants.SelectSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
@@ -82,7 +82,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
         if (AGApplication.USE_STUB_SURVEY_DATASOURCE) {
             surveyDataSource = new StubSurveyDataSource(getActivity());
         } else {
-            surveyDataSource = new WebSurveyDataSource((BaseActivity) getActivity());
+            surveyDataSource = new WebSurveyDataSourceRX((BaseActivity) getActivity());
         }
         manager = new SharedPreferencesSurveyManager(getActivity());
 

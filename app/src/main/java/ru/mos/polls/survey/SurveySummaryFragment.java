@@ -42,7 +42,7 @@ import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.model.Meeting;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
-import ru.mos.polls.survey.source.WebSurveyDataSource;
+import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.QuestionsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
@@ -392,7 +392,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
             }
 
         };
-        SurveyDataSource surveyDataSource = new WebSurveyDataSource((BaseActivity) getActivity());
+        SurveyDataSource surveyDataSource = new WebSurveyDataSourceRX((BaseActivity) getActivity());
         surveyDataSource.load(surveyId, isHearing, listener);
     }
 

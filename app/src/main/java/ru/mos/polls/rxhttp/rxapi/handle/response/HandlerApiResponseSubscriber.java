@@ -47,6 +47,10 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
         this.progressable.begin();
     }
 
+    public HandlerApiResponseSubscriber(ResponseErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
+
     protected abstract void onResult(R result);
 
     @Override

@@ -18,6 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.profile.service.model.EmptyResult;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.service.ChangePassword;
 import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
@@ -58,7 +64,6 @@ public class AgChangePasswordActivity extends BaseActivity {
 
     private void init() {
         Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar);
-//                (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -68,26 +73,28 @@ public class AgChangePasswordActivity extends BaseActivity {
     }
 
     private void configAction() {
-        btnAction = findViewById(ru.mos.elk.R.id.btnAction);
-        btnAction.setOnClickListener(new View.OnClickListener() {
+        btnAction = findViewById(R.id.btnAction);
+        btnAction.setOnClickListener(v -> {
+            final ProgressDialog dialog = Dialogs.showProgressDialog(AgChangePasswordActivity.this, R.string.elk_wait_changePassword);
+            HandlerApiResponseSubscriber<String> handler = new HandlerApiResponseSubscriber<String>(AgChangePasswordActivity.this, null) {
+                @Override
+                protected void onResult(String result) {
+                    Toast.makeText(AgChangePasswordActivity.this, R.string.elk_succeeded_change, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    finish();
+                }
 
-            @Override
-            public void onClick(View v) {
-                final ProgressDialog dialog = Dialogs.showProgressDialog(AgChangePasswordActivity.this, R.string.elk_wait_changePassword);
-                Response.Listener<String> listener = new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(AgChangePasswordActivity.this, R.string.elk_succeeded_change, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        finish();
-                    }
-                };
-                addRequest(new StringRequest(API.getURL(PATH),
-                        getQueryParams(), listener, new StandartErrorListener(AgChangePasswordActivity.this, R.string.elk_cant_changePassword, dialog)), dialog);
-            }
+                @Override
+                public void onErrorListener() {
+                    dialog.dismiss();
+                }
+            };
+            disposables.add(AGApplication.api
+                    .changePassword(new ChangePassword.Request(etOldPassword.getText().toString(), etNewPassword.getText().toString()))
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(handler));
         });
-
     }
 
     private void configureEdits() {
@@ -109,18 +116,6 @@ public class AgChangePasswordActivity extends BaseActivity {
 
         etOldPassword.addTextChangedListener(watcher);
         etNewPassword.addTextChangedListener(watcher);
-    }
-
-    public JSONObject getQueryParams() {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("old_password", etOldPassword.getText().toString());
-            params.put("new_password", etNewPassword.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return params;
     }
 
     private void configInfoMessage() {

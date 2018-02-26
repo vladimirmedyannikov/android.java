@@ -2,11 +2,11 @@ package ru.mos.polls;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
-import ru.mos.polls.api.API;
 import ru.mos.polls.fragments.DynamicFragment;
-import ru.mos.polls.fragments.NewsDynamicFragment;
+import ru.mos.polls.news.ui.NewsFragment;
 
 
 public class NewsActivity extends AbstractActivity {
@@ -16,11 +16,13 @@ public class NewsActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        DynamicFragment fr = NewsDynamicFragment.newInstance(getString(R.string.title_results), "", API.getURL(UrlManager.url(UrlManager.V250, UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
+//        DynamicFragment fr = NewsDynamicFragment.newInstance(getString(R.string.title_results), "", API.getURL(UrlManager.url(UrlManager.V250, UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
+
+        Fragment fragment = NewsFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, fr, "news")
+                .replace(R.id.container, fragment, "news")
                 .commit();
         Statistics.enterNews();
         GoogleStatistics.AGNavigation.enterNews();

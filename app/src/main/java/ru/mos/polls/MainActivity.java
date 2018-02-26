@@ -28,7 +28,6 @@ import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
@@ -37,7 +36,6 @@ import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
 import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.fragments.AgDynamicFragment;
-import ru.mos.polls.fragments.NewsDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiControllerRX;
@@ -54,6 +52,7 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
+import ru.mos.polls.news.ui.NewsFragment;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ProfileManager;
@@ -64,6 +63,7 @@ import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
+import ru.mos.polls.quests.controller.QuestsApiControllerRX;
 import ru.mos.polls.quests.controller.SmsInviteController;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
@@ -248,6 +248,24 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         switch (action.getEventType()) {
                             case Events.InnovationsEvents.OPEN_INNOVATIONS:
                                 InnovationActivity.startActivity(this, action.getInnovationId());
+                                break;
+                        }
+                    }
+                    if (o instanceof Events.NewsEvents) {
+                        Events.NewsEvents action = (Events.NewsEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.NewsEvents.OPEN_NEWS:
+                                Statistics.readNews(action.getNews().getId());
+                                GoogleStatistics.AGNavigation.readNews(action.getNews().getId());
+                                if (action.getNews().isNeedHideTask()) {
+                                    QuestsApiControllerRX.hideNews(disposables, this, action.getNews().getId(), null, Progressable.STUB);
+                                }
+                                WebViewActivity.startActivity(this,
+                                        action.getNews().getTitle(),
+                                        action.getNews().getLinkUrl(),
+                                        String.valueOf(action.getNews().getId()),
+                                        true,
+                                        true);
                                 break;
                         }
                     }
@@ -529,7 +547,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  */
                 Statistics.enterNews();
                 GoogleStatistics.AGNavigation.enterNews();
-                fr = NewsDynamicFragment.newInstance(getString(R.string.mainmenu_news), "", API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
+                //fr = NewsDynamicFragment.newInstance(getString(R.string.mainmenu_news), "", API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
+                fr = NewsFragment.newInstance();
                 tag = TAG_NEWS;
                 break;
             case NavigationMenuItem.ABOUT:

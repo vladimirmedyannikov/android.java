@@ -1,10 +1,11 @@
 package ru.mos.polls.base.rxjava;
 
 
+import ru.mos.polls.friend.model.Friend;
+import ru.mos.polls.news.model.News;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
-import ru.mos.polls.friend.model.Friend;
-import ru.mos.polls.poll.model.Poll;
 
 /**
  * Created by wlTrunks on 14.06.2017.
@@ -253,6 +254,21 @@ public class Events {
 
         public String getNumber() {
             return number;
+        }
+    }
+
+    public static class NewsEvents extends BaseEvents {
+        public static final int OPEN_NEWS = 1;
+
+        private News news;
+
+        public NewsEvents(News news) {
+            this.news = news;
+            eventType = OPEN_NEWS;
+        }
+
+        public News getNews() {
+            return news;
         }
     }
 

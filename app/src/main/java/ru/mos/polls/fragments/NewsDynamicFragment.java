@@ -40,7 +40,7 @@ import ru.mos.polls.common.controller.ScrollableController;
 import ru.mos.polls.common.model.PageInfo;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 
-
+@Deprecated
 public class NewsDynamicFragment extends AgDynamicFragment {
     public static final int FIRST_PAGE_NUMBER_FOR_NEWS = 2;
     public static final int COUNT_PER_PAGE_FOR_NEWS = 20;

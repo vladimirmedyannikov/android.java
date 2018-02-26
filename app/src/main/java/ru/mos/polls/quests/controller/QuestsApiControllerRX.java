@@ -19,6 +19,7 @@ import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.model.quest.NewsQuest;
 import ru.mos.polls.quests.model.quest.Quest;
 import ru.mos.polls.quests.model.quest.SocialQuest;
+import ru.mos.polls.rxhttp.rxapi.handle.error.ResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
@@ -113,7 +114,7 @@ public class QuestsApiControllerRX {
                 }
             };
         }
-        HandlerApiResponseSubscriber<Hide.Response.Result> handler = new HandlerApiResponseSubscriber<Hide.Response.Result>(context, progressable) {
+        HandlerApiResponseSubscriber<Hide.Response.Result> handler = new HandlerApiResponseSubscriber<Hide.Response.Result>(ResponseErrorHandler.STUB, progressable) {
             @Override
             protected void onResult(Hide.Response.Result result) {
                 if (listener != null)
@@ -122,7 +123,7 @@ public class QuestsApiControllerRX {
 
             @Override
             public void onError(Throwable throwable) {
-                super.onError(throwable);
+                //super.onError(throwable);
                 if (listener != null)
                     listener.onHide(false);
             }

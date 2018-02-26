@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.news.vm.item.NewsVM" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rootItem"
+        style="@style/item"
+        android:paddingBottom="@dimen/pd_xsmall"
+        android:paddingTop="@dimen/pd_xsmall">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:id="@+id/viewGroupColumns"
+            style="@style/linear"
+            android:paddingBottom="@dimen/pd_xxsmall"
+            android:layout_toLeftOf="@+id/image">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:text="@{viewModel.title}"
+                style="@style/text.normal"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvValueSecond"
+                android:text="@{viewModel.valueSecond}"
+                android:visibility="@{viewModel.valueSecondIsVisible()}"
+                style="@style/text.small"
+                android:maxLines="4"
+                android:ellipsize="end" />
+            <TextView
+                android:id="@+id/tvValueFirst"
+                android:text="@{viewModel.valueFirst}"
+                android:visibility="@{viewModel.valueFirstIsVisible()}"
+                style="@style/text.small" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

@@ -25,6 +25,7 @@ import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
+import ru.mos.polls.news.service.NewsGet;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.controller.service.GetAchievement;
 import ru.mos.polls.profile.controller.service.GetDistrictArea;
@@ -91,6 +92,7 @@ public interface AgApi {
             String UTILS = "utils";
             String POLL_BADGES = "pollbadges";
             String GEOTARGET = "geotarget";
+            String NEWS = "news";
         }
 
         interface Methods {
@@ -283,4 +285,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.HIDE)
     Observable<Hide.Response> questsHide(@Body Hide.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.NEWS + "/" + Api.Methods.GET)
+    Observable<NewsGet.Response> getNews(@Body NewsGet.Request body);
 }

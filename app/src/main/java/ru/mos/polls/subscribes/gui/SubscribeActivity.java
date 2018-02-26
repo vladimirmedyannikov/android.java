@@ -13,9 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +25,7 @@ import butterknife.OnClick;
 import ru.mos.polls.NotificationController;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
-import ru.mos.polls.subscribes.controller.SubscribesAPIController;
+import ru.mos.polls.subscribes.controller.SubscribesAPIControllerRX;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
 
@@ -53,8 +50,6 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
     @BindView(R.id.subscribeContainer)
     ScrollView subscribeContainer;
 
-    private SubscribesAPIController subscribesController = new SubscribesAPIController();
-
     private SparseArray<Boolean> changedList = new SparseArray<>();
     boolean[] savedArrayValue;
 
@@ -69,15 +64,16 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
 
     public void save() {
         final List<Subscription> subscriptions = getCurrentSubscribe();
-        subscribesController.saveSubscribesForPolls(this, subscriptions, null, new SubscribesAPIController.SaveListener() {
+        SubscribesAPIControllerRX.saveSubscribesForPolls(disposables, this, subscriptions, null, new SubscribesAPIControllerRX.SaveListener() {
             @Override
-            public void onSaved(JSONObject jsonObject) {
+            public void onSaved() {
                 Toast.makeText(SubscribeActivity.this, R.string.subscribe_settings_are_saved, Toast.LENGTH_SHORT).show();
-                SubscribesAPIController.sendStatisticsForProfile(subscriptions);
+                SubscribesAPIControllerRX.sendStatisticsForProfile(subscriptions);
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
+            public void onError() {
+
             }
         });
     }
@@ -130,7 +126,7 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
 
     private void getSubscribeState() {
         setSubscribeProgressVisibility(true);
-        SubscribesAPIController.StateListener stateListener = new SubscribesAPIController.StateListener() {
+        SubscribesAPIControllerRX.StateListener listener = new SubscribesAPIControllerRX.StateListener() {
             @Override
             public void onSubscriptionsState(List<Subscription> typeChanells) {
                 refreshControls(typeChanells);
@@ -143,7 +139,8 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
                 setSubscribeProgressVisibility(false);
             }
         };
-        subscribesController.loadAllSubscribes(this, stateListener);
+
+        SubscribesAPIControllerRX.loadAllSubscribes(getDisposables(),this,listener);
     }
 
     private void createSwitchLists() {

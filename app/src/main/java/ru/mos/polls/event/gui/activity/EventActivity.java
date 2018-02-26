@@ -215,8 +215,6 @@ public class EventActivity extends ToolbarAbstractActivity {
 
             @Override
             public void onError() {
-//                String errorMessage = String.format(getString(R.string.error_occurs), volleyError.getMessage());
-//                Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         };
         EventApiControllerRX.checkIn(disposables, event.getCommonBody().getId(), currentPosition, checkInListener);

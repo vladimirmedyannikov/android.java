@@ -442,6 +442,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onUpdateEmail() {
+                        EmailQuestActivity.startActivity(MainActivity.this);
                     }
 
                     @Override

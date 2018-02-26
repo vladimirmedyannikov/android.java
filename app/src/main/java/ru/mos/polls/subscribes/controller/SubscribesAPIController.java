@@ -26,6 +26,7 @@ import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
 
+@Deprecated
 public class SubscribesAPIController {
 
     public void setEmailsSubscribe(BaseActivity elkActivity, String email, List<Subscription> subscriptions, final SaveListener saveListener) {

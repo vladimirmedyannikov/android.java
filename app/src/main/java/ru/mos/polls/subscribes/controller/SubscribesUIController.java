@@ -13,9 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley2.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,11 +53,9 @@ public class SubscribesUIController {
     private EditText email;
     private SwitchCompat pollsDecisions, news, pollsEffected, newPolls;
 
-    private SubscribesAPIController subscribesAPIController;
 
     public SubscribesUIController(BaseActivity activity) {
         this.activity = activity;
-        subscribesAPIController = new SubscribesAPIController();
     }
 
     public void showSubscribeDialogForPoll(final Survey survey) {
@@ -76,16 +71,13 @@ public class SubscribesUIController {
 
     public void showSubscribeDialogForEvent(final Context context, final EventRX event) {
         showProgress(activity.getString(R.string.get_event_subscribe));
-        SubscribesAPIController.StateListener listener = new SubscribesAPIController.StateListener() {
+        SubscribesAPIControllerRX.StateListener listener = new SubscribesAPIControllerRX.StateListener() {
             @Override
-            public void onSubscriptionsState(List<Subscription> subscriptions) {
-                View innerView = getViewForEvent(context, subscriptions, event);
-                DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!event.isEventYetGoing()) {
-                            saveEventSubscribe(event.getCommonBody().getId());
-                        }
+            public void onSubscriptionsState(List<Subscription> typeChanells) {
+                View innerView = getViewForEvent(context, typeChanells, event);
+                DialogInterface.OnClickListener listener = (dialog, which) -> {
+                    if (!event.isEventYetGoing()) {
+                        saveEventSubscribe(event.getCommonBody().getId());
                     }
                 };
                 hideProgress();
@@ -101,7 +93,7 @@ public class SubscribesUIController {
                 hideProgress();
             }
         };
-        subscribesAPIController.loadEventSubscribes(activity, event.getCommonBody().getId(), listener);
+        SubscribesAPIControllerRX.loadEventSubscribes(activity.getDisposables(), activity, event.getCommonBody().getId(), listener);
     }
 
     public View getViewForEmail(EmailHelpListener emailHelpListener) {
@@ -118,10 +110,10 @@ public class SubscribesUIController {
         TextView title = (TextView) v.findViewById(R.id.title);
         title.setVisibility(forQuest ? View.GONE : View.VISIBLE);
 
-        email =  ButterKnife.findById(v, R.id.email);
+        email = ButterKnife.findById(v, R.id.email);
         pollsDecisions = ButterKnife.findById(v, R.id.emailPollsDecisions);
-        news =  ButterKnife.findById(v, R.id.emailNews);
-        newPolls =  ButterKnife.findById(v, R.id.emailNewPolls);
+        news = ButterKnife.findById(v, R.id.emailNews);
+        newPolls = ButterKnife.findById(v, R.id.emailNewPolls);
 
         Button skip = (Button) v.findViewById(R.id.btnContinue);
         skip.setOnClickListener(new View.OnClickListener() {
@@ -137,28 +129,24 @@ public class SubscribesUIController {
             @Override
             public void onClick(View v) {
                 showProgress(activity.getString(R.string.set_emails_subscribe));
-                SubscribesAPIController.SaveListener saveListener = new SubscribesAPIController.SaveListener() {
+                SubscribesAPIControllerRX.SetEmailListener listener = new SubscribesAPIControllerRX.SetEmailListener() {
                     @Override
-                    public void onSaved(JSONObject jsonObject) {
+                    public void onSaved(QuestMessage message) {
                         hideProgress();
                         if (emailHelpListener != null) {
-                            QuestMessage questMessage = new QuestMessage(jsonObject);
-                            emailHelpListener.onSave(questMessage);
+                            emailHelpListener.onSave(message);
                         }
                     }
 
                     @Override
-                    public void onError(VolleyError volleyError) {
+                    public void onError() {
                         hideProgress();
-                        Toast.makeText(activity, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                         if (emailHelpListener != null) {
                             emailHelpListener.onError();
                         }
                     }
                 };
-                String emailValue = email.getText().toString();
-                List<Subscription> subscriptions = getCurrentSubscribeForEmail();
-                subscribesAPIController.setEmailsSubscribe(activity, emailValue, subscriptions, saveListener);
+                SubscribesAPIControllerRX.setEmailsSubscribe(activity.getDisposables(), activity, email.getText().toString(), getCurrentSubscribeForEmail(), listener);
             }
         };
 
@@ -203,8 +191,8 @@ public class SubscribesUIController {
 
     private void findViewsForEvent(final Context context, View view, final EventRX event) {
         title = ButterKnife.findById(view, R.id.eventTitle);
-        emailEvent =  ButterKnife.findById(view, R.id.emailEvent);
-        pushEvent =  ButterKnife.findById(view, R.id.pushEvent);
+        emailEvent = ButterKnife.findById(view, R.id.emailEvent);
+        pushEvent = ButterKnife.findById(view, R.id.pushEvent);
         switchContainer = ButterKnife.findById(view, R.id.switchContainer);
 
         pushEvent.setOnCheckedChangeListener(NotificationController.checkingEnablePush(context));
@@ -260,7 +248,7 @@ public class SubscribesUIController {
 
     private void saveSubscribe(long pollId, boolean isHearing) {
         List<Subscription> subscriptions = getCurrentSubscribe();
-        SubscribesAPIController.sendStatisticsForPoll(subscriptions, pollId);
+        SubscribesAPIControllerRX.sendStatisticsForPoll(subscriptions, pollId);
         SubscribeManager.save(activity, pollId, isHearing, subscriptions);
     }
 
@@ -269,7 +257,7 @@ public class SubscribesUIController {
         subscriptions.add(
                 getSubscribe(Subscription.TYPE_EVENT_APPROACHING, emailEvent, pushEvent, null));
         long[] eventIds = new long[]{eventId};
-        subscribesAPIController.saveSubscribesForEvents(activity, subscriptions, eventIds, null);
+        SubscribesAPIControllerRX.saveSubscribesForEvents(activity.getDisposables(), activity, subscriptions, eventIds, null);
     }
 
     private View getViewForPoll(long pollId, boolean isHearing) {

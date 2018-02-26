@@ -4,9 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
 
 
-import org.json.JSONObject;
-
-import java.util.List;
 
 import ru.mos.polls.mypoints.model.Status;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;

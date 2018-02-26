@@ -1,5 +1,7 @@
 package ru.mos.polls.subscribes.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +35,9 @@ public class Subscription {
         return result;
     }
 
+    @SerializedName("subscription_type")
     private final String type;
+    @SerializedName("channels")
     private List<Channel> channels = new ArrayList<Channel>();
 
     public Subscription(String type) {

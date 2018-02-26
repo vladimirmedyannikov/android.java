@@ -13,14 +13,13 @@ import java.util.List;
 
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentTabPollBinding;
 import ru.mos.polls.poll.model.Filter;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
-import ru.mos.polls.subscribes.controller.SubscribesAPIController;
+import ru.mos.polls.subscribes.controller.SubscribesAPIControllerRX;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
 
@@ -34,7 +33,6 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
     public static final String ARG_POLL_ID = "arg_poll_id";
 
     private SwitchCompat subscribeQuestionsEmail;
-    private SubscribesAPIController subscribesController;
     public List<Integer> finishedPollList;
 
     private BroadcastReceiver passedPollReceiver = new BroadcastReceiver() {
@@ -56,7 +54,6 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         finishedPollList = new ArrayList<>();
         super.initialize(binding);
         subscribeQuestionsEmail = binding.emailNew;
-        subscribesController = new SubscribesAPIController();
         Statistics.enterPollsActive();
         GoogleStatistics.Survey.enterPollsActive();
         setListeners();
@@ -82,7 +79,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
     }
 
     public void loadSubscribe() {
-        subscribesController.loadAllSubscribes((BaseActivity) getActivity(), new SubscribesAPIController.StateListener() {
+        SubscribesAPIControllerRX.StateListener listener = new SubscribesAPIControllerRX.StateListener() {
             @Override
             public void onSubscriptionsState(List<Subscription> typeChanells) {
                 for (Subscription subscription : typeChanells) {
@@ -94,13 +91,14 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
                         }
                     }
                 }
-
             }
 
             @Override
             public void onError() {
             }
-        });
+        };
+
+        SubscribesAPIControllerRX.loadAllSubscribes(disposables, getActivity(), listener);
     }
 
     public void setListeners() {
@@ -116,7 +114,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         Subscription subscription = new Subscription(Subscription.TYPE_AG_NEW);
         subscription.getChannels().add(new Channel(Channel.CHANNEL_EMAIL, isChecked));
         subscriptions.add(subscription);
-        subscribesController.saveAllSubscribes((BaseActivity) getActivity(), subscriptions);
+        SubscribesAPIControllerRX.saveAllSubscribes(disposables, getActivity(), subscriptions);
     }
 
     @Override

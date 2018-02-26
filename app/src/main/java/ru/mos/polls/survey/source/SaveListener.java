@@ -10,10 +10,6 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
-
-import org.json.JSONObject;
-
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
@@ -25,7 +21,7 @@ import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.model.Message;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
-import ru.mos.polls.subscribes.controller.SubscribesAPIController;
+import ru.mos.polls.subscribes.controller.SubscribesAPIControllerRX;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
@@ -112,18 +108,15 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
         }
 
         private void sendSubscribes(final int price, final int currentPoints, final AppPostValue questResultPostValue) {
-            SubscribesAPIController subscribesAPIController = new SubscribesAPIController();
-
-            subscribesAPIController.saveSubscribes(activity, survey.getId(), survey.getKind().isHearing(), new SubscribesAPIController.SaveListener() {
+            SubscribesAPIControllerRX.saveSubscribes(activity.getDisposables(), activity, survey.getId(), survey.getKind().isHearing(), new SubscribesAPIControllerRX.SaveListener() {
                 @Override
-                public void onSaved(JSONObject jsonObject) {
+                public void onSaved() {
                     dismissProgressDialog();
                     showResults(price, currentPoints, questResultPostValue);
                 }
 
                 @Override
-                public void onError(VolleyError volleyError) {
-                    Toast.makeText(activity, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                public void onError() {
                     dismissProgressDialog();
                     showResults(price, currentPoints, questResultPostValue);
                 }

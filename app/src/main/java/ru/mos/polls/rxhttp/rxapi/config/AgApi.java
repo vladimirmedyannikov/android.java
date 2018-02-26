@@ -2,6 +2,7 @@ package ru.mos.polls.rxhttp.rxapi.config;
 
 import com.google.gson.JsonObject;
 
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -51,6 +52,7 @@ import ru.mos.polls.social.controller.service.NotifyAboutPosting;
 import ru.mos.polls.social.controller.service.ProfileUpdateSocial;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
+import ru.mos.polls.subscribes.service.SubscriptionService;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
 import ru.mos.polls.survey.hearing.service.AuthPGU;
@@ -136,6 +138,9 @@ public interface AgApi {
             String UPDATE = "update";
             String AREAS = "areas";
             String USER_IN_AREA = "userInArea";
+            String SET_USER_EMAIL = "setUserEmail";
+            String GET_SUBSCRIPTIONS = "getSubscriptions";
+            String SET_SUBSCRIPTIONS = "setSubscriptions";
             String GET_ACHIEVEMENT = "getAchievement";
             String HIDE_GROUP = "hideGroup";
             String HIDE = "hide";
@@ -285,6 +290,15 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.HIDE)
     Observable<Hide.Response> questsHide(@Body Hide.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_USER_EMAIL)
+    Observable<SubscriptionService.Response> setUserEMail(@Body SubscriptionService.RequestSetEmail body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_SUBSCRIPTIONS)
+    Observable<GeneralResponse<JsonObject>> getSubscriptions(@Body SubscriptionService.LoadSubscription body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_SUBSCRIPTIONS)
+    Observable<EmptyResponse> setSubscriptions(@Body SubscriptionService.SaveSubscription body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.NEWS + "/" + Api.Methods.GET)
     Observable<NewsGet.Response> getNews(@Body NewsGet.Request body);

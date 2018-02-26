@@ -28,7 +28,7 @@ import ru.mos.polls.quests.model.quest.NewsQuest;
 import ru.mos.polls.quests.model.quest.Quest;
 import ru.mos.polls.quests.model.quest.SocialQuest;
 
-
+@Deprecated
 public abstract class QuestsApiController {
     public static void hideRateThisApp(BaseActivity elkActivity, HideListener hideListener) {
         setVisibilityQuest(elkActivity, SocialQuest.TYPE_SOCIAL, SocialQuest.ID_RATE_THIS_APP, true, hideListener);

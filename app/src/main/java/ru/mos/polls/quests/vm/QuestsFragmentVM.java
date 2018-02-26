@@ -1,4 +1,4 @@
-package ru.mos.polls.newquests.vm;
+package ru.mos.polls.quests.vm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,27 +33,27 @@ import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
-import ru.mos.polls.fortesters.TestersController;
-import ru.mos.polls.newquests.adapter.QuestsItemAdapter;
-import ru.mos.polls.newquests.controller.QuestStateController;
-import ru.mos.polls.newquests.controller.QuestsApiController;
-import ru.mos.polls.newquests.model.quest.AdvertisementQuest;
-import ru.mos.polls.newquests.model.quest.BackQuest;
-import ru.mos.polls.newquests.model.quest.FavoriteSurveysQuest;
-import ru.mos.polls.newquests.model.quest.NewsQuest;
-import ru.mos.polls.newquests.model.quest.OtherQuest;
-import ru.mos.polls.newquests.model.quest.ProfileQuest;
-import ru.mos.polls.newquests.model.quest.Quest;
-import ru.mos.polls.newquests.model.quest.RateAppQuest;
-import ru.mos.polls.newquests.model.quest.ResultsQuest;
-import ru.mos.polls.newquests.model.quest.SocialQuest;
-import ru.mos.polls.newquests.service.PolltaskGet;
-import ru.mos.polls.newquests.ui.QuestsFragment;
-import ru.mos.polls.newquests.ui.view.SpacesItemDecoration;
-import ru.mos.polls.newquests.ui.view.SwipeItemTouchHelper;
+import ru.mos.polls.mainbanner.BannerController;
+import ru.mos.polls.quests.adapter.QuestsItemAdapter;
+import ru.mos.polls.quests.controller.QuestStateController;
+import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.quests.model.quest.AdvertisementQuest;
+import ru.mos.polls.quests.model.quest.BackQuest;
+import ru.mos.polls.quests.model.quest.FavoriteSurveysQuest;
+import ru.mos.polls.quests.model.quest.NewsQuest;
+import ru.mos.polls.quests.model.quest.OtherQuest;
+import ru.mos.polls.quests.model.quest.ProfileQuest;
+import ru.mos.polls.quests.model.quest.Quest;
+import ru.mos.polls.quests.model.quest.RateAppQuest;
+import ru.mos.polls.quests.model.quest.ResultsQuest;
+import ru.mos.polls.quests.model.quest.SocialQuest;
+import ru.mos.polls.quests.service.PolltaskGet;
+import ru.mos.polls.quests.ui.QuestsFragment;
+import ru.mos.polls.quests.ui.view.SwipeItemTouchHelper;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
@@ -77,7 +77,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     public ItemTouchHelper.Callback callback;
     private RecyclerView.LayoutManager layoutManager;
     private boolean needRefreshAfterResume = false;
-
+    BannerController bannerController;
     private BroadcastReceiver cancelClickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -103,7 +103,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                  * Скрываем блок из ленты
                  */
                 if (isNeedHide(quest)) {
-                    QuestsApiController.hide((BaseActivity) getActivity(), quest, null);
+                    QuestsApiControllerRX.hide(disposables, getFragment().getContext(), quest, null, Progressable.STUB);
                 }
             }
         }
@@ -120,14 +120,14 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                     Statistics.deleteSurveyHearing();
                     GoogleStatistics.QuestsFragment.deleteSurveyHearing();
                 }
-                QuestsApiController.HideListener hideListener = new QuestsApiController.HideListener() {
+                QuestsApiControllerRX.HideListener hideListener = new QuestsApiControllerRX.HideListener() {
                     @Override
                     public void onHide(boolean isHide) {
                         recyclerView.refreshDrawableState();
                         hideNewsMenu();
                     }
                 };
-                QuestsApiController.hide((BaseActivity) getActivity(), quest, hideListener);
+                QuestsApiControllerRX.hide(disposables, getFragment().getContext(), quest, hideListener, Progressable.STUB);
             }
         }
     };
@@ -137,7 +137,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         public void onReceive(Context context, Intent intent) {
             BackQuest quest = (BackQuest) intent.getSerializableExtra(ARG_QUEST);
             UrlSchemeController.start(context, quest.getUrlScheme());
-            QuestsApiController.hide((BaseActivity) context, quest, null);
+            QuestsApiControllerRX.hide(disposables, getFragment().getContext(), quest, null, Progressable.STUB);
         }
     };
 
@@ -165,11 +165,11 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
         layoutManager = new LinearLayoutManager(getFragment().getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(2));
         recyclerView.addOnScrollListener(getScrollableListener());
         page = new Page();
         isPaginationEnable = true;
         recyclerUIComponent = new RecyclerUIComponent(adapter);
+        bannerController = new BannerController(recyclerView);
     }
 
     @Override
@@ -199,6 +199,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             doRequest();
         }
         needRefreshAfterResume = true;
+        bannerController.requestStatistic();
     }
 
     @OnClick(R.id.subscribe)
@@ -295,14 +296,17 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
     @Override
     public void onCreateOptionsMenu() {
-        new TestersController(getFragment().getMenu());
         hideNewsMenu();
     }
 
     @Override
     public void onOptionsItemSelected(int menuItemId) {
-        TestersController.switchTestApi(menuItemId, getActivity());
         switch (menuItemId) {
+            case R.id.action_invite_friends:
+                if (listener != null) {
+                    listener.onInviteFriends(true);
+                }
+                break;
             case R.id.hideNews:
                 hideAllNews();
                 break;
@@ -358,7 +362,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             public void onClick(DialogInterface dialog, int which) {
                 Statistics.hideAllNews();
                 GoogleStatistics.QuestsFragment.hideAllNews();
-                QuestsApiController.HideQuestListner hideListener = new QuestsApiController.HideQuestListner() {
+                QuestsApiControllerRX.HideQuestListner hideListener = new QuestsApiControllerRX.HideQuestListner() {
                     @Override
                     public void hideQuests(ArrayList<String> idsList) {
                         for (String s : idsList) {
@@ -373,7 +377,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                         hideNewsMenu();
                     }
                 };
-                QuestsApiController.hideAllNews((BaseActivity) getActivity(), quests, hideListener);
+                QuestsApiControllerRX.hideAllNews(disposables, getFragment().getContext(), quests, hideListener, null);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -387,7 +391,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
     /**
      * * Из-за особенностей обработки клика для блока AdvertisementQuest вызов на
-     * * удаление вызывается внутри блока {@link ru.mos.polls.quests.quest.AdvertisementQuest}
+     * * удаление вызывается внутри блока {@link ru.mos.polls.quests.model.quest.AdvertisementQuest}
      * *
      * * @param quest
      * * @return

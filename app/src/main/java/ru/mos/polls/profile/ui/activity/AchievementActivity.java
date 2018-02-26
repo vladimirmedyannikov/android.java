@@ -23,7 +23,8 @@ import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.profile.controller.BadgeViewController;
 import ru.mos.polls.profile.controller.ProfileApiControllerRX;
 import ru.mos.polls.profile.model.Achievement;
-import ru.mos.polls.quests.controller.QuestsApiController;
+import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.social.callback.PostCallback;
@@ -146,7 +147,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
             @Override
             public void onLoaded(Achievement achievement) {
                 if (achievement.isNeedHideTask()) {
-                    QuestsApiController.hideAchievement(AchievementActivity.this, achievement.getId().toString(), null);
+                    QuestsApiControllerRX.hideAchievement(disposables, AchievementActivity.this, achievement.getId().toString(), null, Progressable.STUB);
                 }
                 refreshUI(achievement);
             }

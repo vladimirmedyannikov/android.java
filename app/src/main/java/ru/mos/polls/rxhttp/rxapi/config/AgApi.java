@@ -39,6 +39,8 @@ import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
+import ru.mos.polls.quests.controller.service.Hide;
+import ru.mos.polls.quests.controller.service.HideNews;
 import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
@@ -133,6 +135,8 @@ public interface AgApi {
             String AREAS = "areas";
             String USER_IN_AREA = "userInArea";
             String GET_ACHIEVEMENT = "getAchievement";
+            String HIDE_GROUP = "hideGroup";
+            String HIDE = "hide";
         }
     }
 
@@ -273,4 +277,10 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ACHIEVEMENT)
     Observable<GetAchievement.Response> getAchievement(@Body GetAchievement.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.HIDE_GROUP)
+    Observable<HideNews.Response> questsHideNews(@Body HideNews.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.HIDE)
+    Observable<Hide.Response> questsHide(@Body Hide.Request body);
 }

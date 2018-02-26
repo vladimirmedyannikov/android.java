@@ -9,8 +9,8 @@ import ru.mos.elk.netframework.model.results.ResultType;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.WebViewActivity;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.quests.controller.QuestsApiController;
+import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
 public class AgDynamicFragment extends DynamicFragment {
 
@@ -38,7 +38,7 @@ public class AgDynamicFragment extends DynamicFragment {
                 GoogleStatistics.AGNavigation.readNews(i);
                 onBeforeActivityStart(element);
                 if (element.isNeedHideTask()) {
-                    QuestsApiController.hideNews((BaseActivity) getActivity(), element.getId(), null);
+                    QuestsApiControllerRX.hideNews(disposables, getContext(), element.getId(), null, Progressable.STUB);
                 }
                 WebViewActivity.startActivity(getActivity(),
                         element.getTitle(),

@@ -31,7 +31,8 @@ import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.api.API;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
-import ru.mos.polls.quests.controller.QuestsApiController;
+import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.NetworkUtils;
 
 
@@ -197,7 +198,7 @@ public class WebViewActivity extends ToolbarAbstractActivity {
                 if (isShareEnable) {
                     findShareUrl(newsId);
                 }
-                QuestsApiController.hideNews(this, newsId, null);
+                QuestsApiControllerRX.hideNews(disposables,this, newsId, null, Progressable.STUB);
             } catch (Exception ignored) {
             }
     }
@@ -288,7 +289,7 @@ public class WebViewActivity extends ToolbarAbstractActivity {
                         if (isShareEnable) {
                             findShareUrl(Long.parseLong(newsId));
                         }
-                        QuestsApiController.hideNews(WebViewActivity.this, Long.parseLong(newsId), null);
+                        QuestsApiControllerRX.hideNews(disposables, WebViewActivity.this, Long.parseLong(newsId), null, Progressable.STUB);
                     }
                 } catch (Exception ignored) {
                 }

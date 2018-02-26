@@ -1,5 +1,7 @@
 package ru.mos.polls.profile.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,12 +14,19 @@ import java.util.List;
  * появилась в версии 1.9
  */
 public class Achievement implements Serializable {
+    @SerializedName("id")
     private String id;
+    @SerializedName("img_url")
     private String imageUrl;
+    @SerializedName("title")
     private String title;
+    @SerializedName("description")
     private String description;
+    @SerializedName("body")
     private String body;
+    @SerializedName("is_next")
     private boolean isNext;
+    @SerializedName("need_hide_task")
     private boolean isNeedHideTask;
 
     public static List<Achievement> fromJsonArray(JSONArray jsonArray) {

@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 import com.android.volley2.toolbox.ImageLoader;
 
 import butterknife.BindView;
@@ -23,7 +21,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.profile.controller.BadgeViewController;
-import ru.mos.polls.profile.controller.ProfileApiController;
+import ru.mos.polls.profile.controller.ProfileApiControllerRX;
 import ru.mos.polls.profile.model.Achievement;
 import ru.mos.polls.quests.controller.QuestsApiController;
 import ru.mos.polls.social.controller.SocialUIController;
@@ -144,7 +142,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     }
 
     private void loadAchievement() {
-        ProfileApiController.AchievementListener listener = new ProfileApiController.AchievementListener() {
+        ProfileApiControllerRX.AchievementListener listener = new ProfileApiControllerRX.AchievementListener() {
             @Override
             public void onLoaded(Achievement achievement) {
                 if (achievement.isNeedHideTask()) {
@@ -154,13 +152,13 @@ public class AchievementActivity extends ToolbarAbstractActivity {
             }
 
             @Override
-            public void onError(VolleyError volleyError) {
-                if (volleyError != null) {
-                    Toast.makeText(AchievementActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            public void onError() {
+//                if (volleyError != null) {
+//                    Toast.makeText(AchievementActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
             }
         };
-        ProfileApiController.loadAchievement(this, achievementId, listener);
+        ProfileApiControllerRX.loadAchievement(disposables, achievementId, listener);
     }
 
     private void refreshUI(final Achievement achievement) {

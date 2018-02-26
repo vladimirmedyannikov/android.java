@@ -6,7 +6,6 @@ import com.android.volley2.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import ru.mos.elk.netframework.request.JsonObjectRequest;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.elk.netframework.utils.StandartErrorListener;
@@ -21,6 +20,7 @@ import ru.mos.polls.profile.model.Achievement;
  * Здесь собраны далеко не все методы сервиса
  * <p/>
  */
+@Deprecated
 public abstract class ProfileApiController {
       public static void loadAchievement(BaseActivity elkActivity, String achievementId, final AchievementListener achievementListener) {
         String url = API.getURL(UrlManager.url(UrlManager.Controller.AGPROFILE, UrlManager.Methods.GET_ACHIEVEMENT));

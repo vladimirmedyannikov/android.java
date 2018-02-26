@@ -17,6 +17,8 @@ import ru.mos.polls.event.controller.service.UpdateEventComment;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
+import ru.mos.polls.geotarget.service.GetAreas;
+import ru.mos.polls.geotarget.service.UserInArea;
 import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
@@ -24,6 +26,7 @@ import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.poll.service.PollSelect;
+import ru.mos.polls.profile.controller.service.GetAchievement;
 import ru.mos.polls.profile.controller.service.GetDistrictArea;
 import ru.mos.polls.profile.controller.service.GetReference;
 import ru.mos.polls.profile.model.Reference;
@@ -85,6 +88,7 @@ public interface AgApi {
             String PGU = "pgu";
             String UTILS = "utils";
             String POLL_BADGES = "pollbadges";
+            String GEOTARGET = "geotarget";
         }
 
         interface Methods {
@@ -126,6 +130,9 @@ public interface AgApi {
             String PROFILE_GET_SOCIAL = "profileGetSocial";
             String PROFILE_UPDATE_SOCIAL = "profileUpdateSocial";
             String UPDATE = "update";
+            String AREAS = "areas";
+            String USER_IN_AREA = "userInArea";
+            String GET_ACHIEVEMENT = "getAchievement";
         }
     }
 
@@ -257,4 +264,13 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FILL)
     Observable<FillPoll.Response> fillPoll(@Body FillPoll.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.GEOTARGET + "/" + Api.Methods.AREAS)
+    Observable<GetAreas.Response> getAreas(@Body GetAreas.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.GEOTARGET + "/" + Api.Methods.USER_IN_AREA)
+    Observable<UserInArea.Response> userInArea(@Body UserInArea.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ACHIEVEMENT)
+    Observable<GetAchievement.Response> getAchievement(@Body GetAchievement.Request body);
 }

@@ -31,10 +31,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
-import ru.mos.polls.PromoController;
+import ru.mos.polls.PromoControllerRX;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.db.PollsData;
 import ru.mos.polls.db.PollsProvider;
 import ru.mos.polls.helpers.ActionBarHelper;
@@ -78,7 +77,7 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
             public void onClick(View v) {
                 Statistics.shopPromoCode();
                 GoogleStatistics.AGNavigation.shopPromoCode();
-                PromoController.showInputDialog((BaseActivity) getActivity());
+                PromoControllerRX.showInputDialog(disposables, getContext(), null);
             }
         };
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 import me.ilich.juggler.change.Add;
@@ -27,7 +29,11 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
  * @since 1.8
  */
 public class Message {
-    private String title, body, urlScheme;
+    @SerializedName("title")
+    private String title;
+    @SerializedName("text")
+    private String body;
+    private String urlScheme;
 
     public Message(JSONObject jsonObject) {
         if (jsonObject != null) {

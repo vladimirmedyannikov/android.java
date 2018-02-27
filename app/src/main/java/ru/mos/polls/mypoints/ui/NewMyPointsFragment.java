@@ -10,10 +10,9 @@ import android.view.View;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.GoogleStatistics;
-import ru.mos.polls.PromoController;
+import ru.mos.polls.PromoControllerRX;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewMyPointsBinding;
 import ru.mos.polls.helpers.ActionBarHelper;
@@ -59,7 +58,7 @@ public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, 
          * Оставляем исопльзование кастомного экшен бара для этого экрана, т.к
          * иконка нестандартная
          */
-        PromoController.PromoResponse listener = new PromoController.PromoResponse() {
+        PromoControllerRX.PromoResponse listener = new PromoControllerRX.PromoResponse() {
 
             @Override
             public void onResponse() {
@@ -77,8 +76,8 @@ public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, 
             public void onClick(View v) {
                 Statistics.shopPromoCode();
                 GoogleStatistics.AGNavigation.shopPromoCode();
-                PromoController.setPromoResponse(listener);
-                PromoController.showInputDialog((BaseActivity) getActivity());
+                PromoControllerRX.setPromoResponse(listener);
+                PromoControllerRX.showInputDialog(disposable, getContext(), null);
             }
         };
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();

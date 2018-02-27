@@ -11,6 +11,7 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.base.vm.FragmentViewModel;
@@ -26,11 +28,18 @@ import ru.mos.polls.util.GuiUtils;
 public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment  {
 
     protected abstract VM onCreateViewModel(B binding);
+    protected CompositeDisposable disposable;
 
     private B binding;
     private VM viewModel;
 
     private Bundle savedInstanceState;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        disposable = new CompositeDisposable();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +97,7 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
     @Override
     public void onDestroy() {
         super.onDestroy();
+        disposable.clear();
         viewModel.onDestroy();
     }
 

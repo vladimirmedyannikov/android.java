@@ -30,6 +30,7 @@ import ru.mos.polls.helpers.TextHelper;
  * Диалог для ввода промокода {@link #showInputDialog(BaseActivity)}<br/>
  * Добавление промокода на сервере АГ {@link #notifyServer(BaseActivity, String)}
  */
+@Deprecated
 public abstract class PromoController {
 
     private static ProgressDialog progressDialog;

@@ -2,7 +2,6 @@ package ru.mos.polls.rxhttp.rxapi.config;
 
 import com.google.gson.JsonObject;
 
-
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -48,6 +47,7 @@ import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.service.ChangePassword;
+import ru.mos.polls.service.PromoAddCode;
 import ru.mos.polls.social.controller.service.GetSocialProfile;
 import ru.mos.polls.social.controller.service.LoadPostingData;
 import ru.mos.polls.social.controller.service.NotifyAboutPosting;
@@ -97,6 +97,7 @@ public interface AgApi {
             String POLL_BADGES = "pollbadges";
             String GEOTARGET = "geotarget";
             String NEWS = "news";
+            String PROMOCODE = "PromoCode";
         }
 
         interface Methods {
@@ -147,6 +148,7 @@ public interface AgApi {
             String GET_ACHIEVEMENT = "getAchievement";
             String HIDE_GROUP = "hideGroup";
             String HIDE = "hide";
+            String ADD_CODE = "AddCode";
 
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
             String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
@@ -315,6 +317,9 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.NEWS + "/" + Api.Methods.GET)
     Observable<NewsGet.Response> getNews(@Body NewsGet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PROMOCODE + "/" + Api.Methods.ADD_CODE)
+    Observable<PromoAddCode.Response> addCode(@Body PromoAddCode.Request body);
 
     @POST("/" + Api.Methods.CHANGE_PASSWORD)
     Observable<GeneralResponse<String>> changePassword(@Body ChangePassword.Request body);

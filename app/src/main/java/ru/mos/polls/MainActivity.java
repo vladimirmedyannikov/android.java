@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -64,7 +64,7 @@ import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.QuestsApiControllerRX;
-import ru.mos.polls.quests.controller.SmsInviteController;
+import ru.mos.polls.quests.controller.SmsInviteControllerRX;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.shop.WebShopFragment;
@@ -113,7 +113,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             android.Manifest.permission.ACCESS_FINE_LOCATION
     };
 
-    private SmsInviteController smsInviteController;
+    private SmsInviteControllerRX SmsInviteControllerRX;
     private SocialController socialController;
     private QuestStateController questStateController;
     private InformerUIController informerUIController;
@@ -145,7 +145,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private BroadcastReceiver smsSuccessReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            smsInviteController.notifyBackEnd(intent.getStringExtra(SMSUtils.SENDING_PHONE_NUMBER));
+            SmsInviteControllerRX.notifyBackEnd(intent.getStringExtra(SMSUtils.SENDING_PHONE_NUMBER));
         }
     };
 
@@ -160,6 +160,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         setSupportProgressBarIndeterminateVisibility(false);
 
@@ -169,7 +170,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         actionBarDrawerToggle.syncState();
 
         socialController = new SocialController(this);
-        smsInviteController = new SmsInviteController(this);
+        SmsInviteControllerRX = new SmsInviteControllerRX(this);
         informerUIController = new InformerUIController(this);
         questStateController = QuestStateController.getInstance();
 
@@ -472,11 +473,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     public void onInviteFriends(boolean isTask) {
                         if (!runtimePermissionController.hasSmsSend()) {
                             runtimePermissionController.requestSmsSend();
-                        } else if (!runtimePermissionController.hasRequestReadPhoneState()
-                                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                            runtimePermissionController.requestReadPhoneState();
                         } else {
-                            smsInviteController.process(isTask);
+                            SmsInviteControllerRX.process(isTask);
                         }
                     }
 
@@ -639,24 +637,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (runtimePermissionController.smsReceivePermissionGranted(requestCode, grantResults)) {
-            /**
-             * для 8 андроида при отправке смс получаем эксепшн
-             * java.lang.SecurityException: Neither user 10199 nor current process has android.permission.READ_PHONE_STATE.
-             */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (runtimePermissionController.hasRequestReadPhoneState()) {
-                    smsInviteController.process(true);
-                } else {
-                    runtimePermissionController.requestReadPhoneState();
-                }
-            } else {
-                smsInviteController.process(true);
-            }
-        }
-        if (runtimePermissionController.readPhoneStatePermissionGranted(requestCode, grantResults)) {
-            smsInviteController.process(true);
+            SmsInviteControllerRX.process(true);
         }
         initGeotargetManager();
     }
@@ -665,7 +647,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
-            smsInviteController.onActivityResult(requestCode, resultCode, data);
+            SmsInviteControllerRX.onActivityResult(requestCode, resultCode, data);
             socialController.onActivityResult(requestCode, resultCode, data);
         }
         if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
@@ -734,7 +716,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onInviteFriends() {
-                smsInviteController.process(true);
+                SmsInviteControllerRX.process(true);
             }
 
             @Override

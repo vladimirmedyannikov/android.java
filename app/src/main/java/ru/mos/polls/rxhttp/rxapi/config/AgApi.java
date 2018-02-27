@@ -43,6 +43,7 @@ import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
 import ru.mos.polls.quests.controller.service.Hide;
 import ru.mos.polls.quests.controller.service.HideNews;
+import ru.mos.polls.quests.controller.service.SmsInviteNotice;
 import ru.mos.polls.quests.service.PolltaskGet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
@@ -149,6 +150,7 @@ public interface AgApi {
             String HIDE_GROUP = "hideGroup";
             String HIDE = "hide";
             String ADD_CODE = "AddCode";
+            String SMS_INVITATION_NOTICE = "smsInvitationNotice";
 
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
             String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
@@ -320,6 +322,9 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.PROMOCODE + "/" + Api.Methods.ADD_CODE)
     Observable<PromoAddCode.Response> addCode(@Body PromoAddCode.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.SMS_INVITATION_NOTICE)
+    Observable<SmsInviteNotice.Response> noticeSmsInvited(@Body SmsInviteNotice.Request body);
 
     @POST("/" + Api.Methods.CHANGE_PASSWORD)
     Observable<GeneralResponse<String>> changePassword(@Body ChangePassword.Request body);

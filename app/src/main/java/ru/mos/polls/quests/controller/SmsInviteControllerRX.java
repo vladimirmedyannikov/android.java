@@ -6,29 +6,28 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.elk.netframework.request.JsonObjectRequest;
-import ru.mos.elk.netframework.utils.StandartErrorListener;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.UrlManager;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.friend.ContactsManager;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
+import ru.mos.polls.quests.controller.service.SmsInviteNotice;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.SMSUtils;
-@Deprecated
-public class SmsInviteController {
+
+/**
+ * @author matek3022 (semenovmm@altarix.ru)
+ *         on 27.02.18.
+ */
+
+public class SmsInviteControllerRX {
 
     private static final int REQUEST_CODE = 1234;
 
@@ -36,7 +35,7 @@ public class SmsInviteController {
     private ContactsManager contactsManager;
     private boolean isTask;
 
-    public SmsInviteController(BaseActivity a) {
+    public SmsInviteControllerRX(BaseActivity a) {
         activity = a;
         initContactsController();
     }
@@ -99,41 +98,30 @@ public class SmsInviteController {
 
     public void notifyBackEnd(String number) {
         number = number.replace("+", "").replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
-        String url = API.getURL(UrlManager.url(UrlManager.Controller.POLLTASK, UrlManager.Methods.SMS_INVITATION_NOTICE));
-        JSONObject jsonRequest = new JSONObject();
-        JSONArray phonesJsonArray = new JSONArray();
-        phonesJsonArray.put(number);
-        try {
-            jsonRequest.put("phones", phonesJsonArray);
-        } catch (JSONException e) {
-        }
-        Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
+        List<String> phones = new ArrayList<>();
+        phones.add(number);
+        HandlerApiResponseSubscriber<SmsInviteNotice.Response.Result> handler = new HandlerApiResponseSubscriber<SmsInviteNotice.Response.Result>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
+            protected void onResult(SmsInviteNotice.Response.Result result) {
                 /**
-                * обработка успеха реализована в SMSUtils
-                */
+                 * обработка успеха реализована в SMSUtils
+                 */
                 Statistics.afterSendInviteFriends(true);
                 GoogleStatistics.QuestsFragment.afterSendInviteFriends(true);
             }
-        };
-        Response.ErrorListener errorListener = new StandartErrorListener(activity, R.string.error_occurs) {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                super.onErrorResponse(volleyError);
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage(volleyError.getMessage());
-                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
+            public void onError(Throwable throwable) {
+                super.onError(throwable);
                 Statistics.afterSendInviteFriends(false);
                 GoogleStatistics.QuestsFragment.afterSendInviteFriends(false);
             }
         };
-        JsonObjectRequest request = new JsonObjectRequest(url, jsonRequest, listener, errorListener);
-        activity.addRequest(request);
+        activity.getDisposables().add(AGApplication
+                .api
+                .noticeSmsInvited(new SmsInviteNotice.Request(phones))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(handler));
     }
 }

@@ -15,38 +15,33 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import ru.mos.elk.netframework.request.JsonObjectRequest;
-import ru.mos.elk.netframework.utils.StandartErrorListener;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.helpers.SearchViewCustomizer;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.survey.variants.select.model.Objects;
+import ru.mos.polls.survey.variants.select.service.SelectService;
 
-public abstract class SelectActivity extends ToolbarAbstractActivity {
+public abstract class SelectActivity<T extends Objects> extends ToolbarAbstractActivity {
 
     public static final String EMPTY_TEXT = "empty_text";
-
+    T model;
     @BindView(R.id.list)
     ListView listView;
     @BindView(R.id.empty)
     TextView emptyTextView;
-    private Adapter adapter;
+    protected Adapter adapter;
     private IntentExtraProcessor intentExtraProcessor = new IntentExtraProcessor();
 
-    private JsonObjectRequest request;
+    SelectService.Request request;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -54,20 +49,11 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
         setSupportProgressBarIndeterminateVisibility(false);
         ButterKnife.bind(this);
         intentExtraProcessor.initialize(getIntent());
-
+        request = new SelectService.Request();
         adapter = new Adapter();
 
 
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                JSONObject jsonObject = adapter.getItem(position);
-//                onLoadFromJson(jsonObject);
-//                sendResult();
-//            }
-//        });
-
         String title = intentExtraProcessor.getTitle();
         if (!TextUtils.isEmpty(title)) {
             setTitle(title);
@@ -79,8 +65,8 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
 
     @OnItemClick(R.id.list)
     void onItemListClick(int position) {
-        JSONObject jsonObject = adapter.getItem(position);
-        onLoadFromJson(jsonObject);
+        T jsonObject = adapter.getItem(position);
+        getDataFromObject(jsonObject);
         sendResult();
     }
 
@@ -107,57 +93,29 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
         } else {
             s = searchView.getQuery().toString();
         }
+        processRequest(s);
         doRequest(s);
     }
 
-    protected abstract void onLoadFromJson(JSONObject jsonObject);
+    protected abstract void getDataFromObject(T object);
 
-    protected abstract void processRequestJson(String search, JSONObject requestJsonObject) throws JSONException;
-
-    protected abstract String onGetUrl();
+    protected abstract void processRequest(String search);
 
     protected abstract void addDataToIntent(Intent data);
 
     protected abstract View onNewView();
 
-    protected abstract void onConvertView(View convertView, JSONObject jsonObject);
+    protected abstract void onConvertView(View convertView, T object);
 
-    private void doRequest(String s) {
-        if (request != null) {
-            request.cancel();
-        }
-        setSupportProgressBarIndeterminateVisibility(true);
-        JSONObject requestJsonObject = new JSONObject();
-        try {
-            processRequestJson(s, requestJsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String url = onGetUrl();
-        Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                JSONArray jsonArray = jsonObject.optJSONArray("objects");
-                setSupportProgressBarIndeterminateVisibility(false);
-                if (jsonArray.length() > 0) {
-                    emptyTextView.setVisibility(View.GONE);
-                } else {
-                    emptyTextView.setVisibility(View.VISIBLE);
-                }
-                adapter.setData(jsonArray);
-                adapter.notifyDataSetChanged();
-            }
-        };
-        Response.ErrorListener errorListener = new StandartErrorListener(this, R.string.error_occurs) {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                super.onErrorResponse(volleyError);
-                setSupportProgressBarIndeterminateVisibility(false);
-                Toast.makeText(SelectActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-        request = new JsonObjectRequest(url, requestJsonObject, listener, errorListener);
-        addRequest(request);
+    protected abstract void doRequest(String s);
+
+    protected void setEmptyTextVisibility(int size) {
+        emptyTextView.setVisibility(size > 0 ? View.GONE : View.VISIBLE);
+    }
+
+    protected void addItemList(List<T> list) {
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
     }
 
     private void sendResult() {
@@ -165,6 +123,17 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
         addDataToIntent(data);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    protected HandlerApiResponseSubscriber<SelectService.Result<T>> getHandler() {
+        HandlerApiResponseSubscriber<SelectService.Result<T>> handler = new HandlerApiResponseSubscriber<SelectService.Result<T>>(this, null) {
+            @Override
+            protected void onResult(SelectService.Result<T> result) {
+                setEmptyTextVisibility(result.getObjects().size());
+                addItemList(result.getObjects());
+            }
+        };
+        return handler;
     }
 
     private SearchView searchView;
@@ -184,6 +153,7 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                processRequest(newText);
                 doRequest(newText);
                 return false;
             }
@@ -200,28 +170,28 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
 
     }
 
-    private class Adapter extends BaseAdapter implements Filterable {
+    public class Adapter extends BaseAdapter implements Filterable {
 
-        private JSONArray jsonArray = new JSONArray();
+        private List<T> list = new ArrayList<>();
 
-        public void setData(JSONArray data) {
-            this.jsonArray = data;
+        public void setList(List<T> list) {
+            this.list = list;
         }
 
         @Override
         public int getCount() {
-            return jsonArray.length();
+            return list.size();
         }
 
         @Override
-        public JSONObject getItem(int position) {
-            return jsonArray.optJSONObject(position);
+        public T getItem(int position) {
+            return list.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            JSONObject jsonObject = getItem(position);
-            long id = jsonObject.optInt("id");
+            T object = getItem(position);
+            long id = object.getId();
             return id;
         }
 
@@ -230,8 +200,8 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
             if (convertView == null) {
                 convertView = onNewView();
             }
-            JSONObject jsonObject = getItem(position);
-            onConvertView(convertView, jsonObject);
+            T item = getItem(position);
+            onConvertView(convertView, item);
             return convertView;
         }
 
@@ -240,5 +210,4 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
             return null;
         }
     }
-
 }

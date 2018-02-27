@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.UrlManager;
-import ru.mos.polls.api.API;
+import ru.mos.polls.survey.variants.select.model.FindObjects;
 
-public class GorodSelectActivity extends SelectActivity {
+public class GorodSelectActivity extends SelectActivity<FindObjects> {
 
     public static final String EXTRA_CATEGORORY = "category";
     public static final String EXTRA_OBJECT_ID = "id";
@@ -20,7 +21,7 @@ public class GorodSelectActivity extends SelectActivity {
 
     private String category;
     private String address;
-    private String objectId;
+    private int objectId;
     private String parent;
 
     @Override
@@ -31,23 +32,18 @@ public class GorodSelectActivity extends SelectActivity {
     }
 
     @Override
-    protected void onLoadFromJson(JSONObject jsonObject) {
-        objectId = jsonObject.optString("id");
-        address = jsonObject.optString("address");
+    protected void getDataFromObject(FindObjects object) {
+        objectId = object.getId();
+        address = object.getAddress();
     }
 
     @Override
-    protected void processRequestJson(String search, JSONObject requestJsonObject) throws JSONException {
-        requestJsonObject.put("soesg_category_code", category);
-        requestJsonObject.put("search", search);
-        if (!parent.isEmpty()) {
-            requestJsonObject.put("parent", parent);
+    protected void processRequest(String search) {
+        request.setSoesgCategoryCode(category);
+        request.setSearch(search);
+        if (parent != null) {
+            request.setParent(parent);
         }
-    }
-
-    @Override
-    protected String onGetUrl() {
-        return API.getURL(UrlManager.url(UrlManager.Controller.SOESG, UrlManager.Methods.FIND_OBJECTS));
     }
 
     @Override
@@ -62,10 +58,21 @@ public class GorodSelectActivity extends SelectActivity {
     }
 
     @Override
-    protected void onConvertView(View convertView, JSONObject jsonObject) {
+    protected void onConvertView(View convertView, FindObjects object) {
         TextView textView = (TextView) convertView.findViewById(R.id.text);
-        String title = jsonObject.optString("address");
+        String title = object.getAddress();
         textView.setText(title);
     }
 
+    @Override
+    protected void doRequest(String s) {
+        disposables.add(AGApplication
+                .api
+                .findObjects(request)
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getHandler()));
+    }
 }
+

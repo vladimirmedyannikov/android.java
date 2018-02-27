@@ -196,9 +196,11 @@ public class AGApplication extends MultiDexApplication {
          * Отключить, когда полность перейдем на использование {@link Session}
          * Временная синхронизация сессий между стармы и новыми фреймворками
          */
-        if (ru.mos.elk.netframework.request.Session.isAuthorized(this)) {
-            Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(this));
-        }
+        ru.mos.elk.netframework.request.Session.initialize(getApplicationContext());
+        ru.mos.elk.netframework.request.Session.setSession(Session.get().getSession());
+//        if (ru.mos.elk.netframework.request.Session.isAuthorized(this)) {
+//            Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(this));
+//        }
 //        component = DaggerAppComponent.builder().build();
         /**
          * Пока не удалось перенести инициализацию

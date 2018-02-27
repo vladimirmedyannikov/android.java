@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.UrlManager;
-import ru.mos.polls.api.API;
+import ru.mos.polls.survey.variants.select.model.VariantsObjects;
 
-public class ServiceSelectActivity extends SelectActivity {
+public class ServiceSelectActivity extends SelectActivity<VariantsObjects> {
 
     public static final String EXTRA_CATEGORORY = "category";
     public static final String EXTRA_ID = "id";
@@ -33,24 +35,19 @@ public class ServiceSelectActivity extends SelectActivity {
     }
 
     @Override
-    protected void onLoadFromJson(JSONObject jsonObject) {
-        id = jsonObject.optLong("id");
-        title = jsonObject.optString("title");
-        address = jsonObject.optString("descrpiption");
+    protected void getDataFromObject(VariantsObjects object) {
+        id = object.getId();
+        title = object.getTitle();
+        address = object.getDescription();
     }
 
     @Override
-    protected void processRequestJson(String search, JSONObject requestJsonObject) throws JSONException {
-        requestJsonObject.put("category", category);
-        requestJsonObject.put("search", search);
+    protected void processRequest(String search) {
+        request.setCategory(category);
+        request.setSearch(search);
         if (parent != null) {
-            requestJsonObject.put("parent", parent);
+            request.setParent(parent);
         }
-    }
-
-    @Override
-    protected String onGetUrl() {
-        return API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.FIND_VARIANTS));
     }
 
     @Override
@@ -66,13 +63,25 @@ public class ServiceSelectActivity extends SelectActivity {
     }
 
     @Override
-    protected void onConvertView(View convertView, JSONObject jsonObject) {
+    protected void onConvertView(View convertView, VariantsObjects object) {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.title);
         TextView descriptionTextView = (TextView) convertView.findViewById(R.id.description);
-        String title = jsonObject.optString("title");
-        String description = jsonObject.optString("address");
+        String title = object.getTitle();
+        String description = object.getAddress();
         titleTextView.setText(title);
         descriptionTextView.setText(description);
+    }
+
+    @Override
+    protected void doRequest(String s) {
+        disposables.add(AGApplication
+                .api
+                .findVariants(request)
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getHandler()));
+
     }
 
 }

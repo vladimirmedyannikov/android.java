@@ -63,6 +63,7 @@ import ru.mos.polls.survey.hearing.service.HearingCheck;
 import ru.mos.polls.survey.service.FillPoll;
 import ru.mos.polls.survey.service.GetExpertList;
 import ru.mos.polls.survey.service.GetPoll;
+import ru.mos.polls.survey.variants.select.service.SelectService;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -151,6 +152,8 @@ public interface AgApi {
             String HIDE = "hide";
             String ADD_CODE = "AddCode";
             String SMS_INVITATION_NOTICE = "smsInvitationNotice";
+            String FIND_OBJECTS = "findObjects";
+            String FIND_VARIANTS = "findVariants";
 
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
             String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
@@ -334,4 +337,10 @@ public interface AgApi {
 
     @POST("/" + Api.Methods.LOG_OUT)
     Observable<EmptyResponse> logOut(@Body ProfileGet.LoginRequest body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FIND_VARIANTS)
+    Observable<SelectService.VariantsResponse> findVariants(@Body SelectService.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FIND_OBJECTS)
+    Observable<SelectService.ObjectsResponse> findObjects(@Body SelectService.Request body);
 }

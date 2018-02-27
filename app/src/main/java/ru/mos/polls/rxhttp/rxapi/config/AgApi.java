@@ -37,6 +37,7 @@ import ru.mos.polls.profile.service.AchievementsSelect;
 import ru.mos.polls.profile.service.AvatarSet;
 import ru.mos.polls.profile.service.EmptyResponse;
 import ru.mos.polls.profile.service.GetStatistics;
+import ru.mos.polls.profile.service.ProfileGet;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
@@ -109,6 +110,7 @@ public interface AgApi {
             String UPLOAD = "upload";
             String SELECT_ACHIEVEMENTS = "selectAchievements";
             String GET_ACHIEVEMENTS = "getAchievement";
+            String GET_PROFILE = "getProfile";
             String SET_PROFILE = "setProfile";
             String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
             String VISIBLE = "visible";
@@ -147,6 +149,8 @@ public interface AgApi {
             String HIDE = "hide";
 
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
+            String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
+            String LOG_OUT = "json/v0.2/auth/user/logout";
         }
     }
 
@@ -179,6 +183,12 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.SET_PROFILE)
     Observable<ProfileSet.Response> setProfile(@Body ProfileSet.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_PROFILE)
+    Observable<GeneralResponse<JsonObject>> getProfile(@Body AuthRequest body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_PROFILE)
+    Observable<GeneralResponse<JsonObject>> login(@Body ProfileGet.LoginRequest body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
     Observable<StreetGet.Response> getAddressStreetList(@Body StreetGet.Request body);
@@ -308,4 +318,10 @@ public interface AgApi {
 
     @POST("/" + Api.Methods.CHANGE_PASSWORD)
     Observable<GeneralResponse<String>> changePassword(@Body ChangePassword.Request body);
+
+    @POST("/" + Api.Methods.RECOVERY_PASSWORD)
+    Observable<GeneralResponse<Object>> recoveryPassword(@Body ProfileGet.RecoveryRequest body);
+
+    @POST("/" + Api.Methods.LOG_OUT)
+    Observable<EmptyResponse> logOut(@Body ProfileGet.LoginRequest body);
 }

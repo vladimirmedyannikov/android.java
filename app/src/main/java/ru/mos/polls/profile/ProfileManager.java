@@ -34,6 +34,7 @@ import ru.mos.polls.push.GCMBroadcastReceiver;
  * @since 1.9
  * on 24.02.15.
  */
+@Deprecated
 public abstract class ProfileManager {
     /**
      * Получение данных пользователя

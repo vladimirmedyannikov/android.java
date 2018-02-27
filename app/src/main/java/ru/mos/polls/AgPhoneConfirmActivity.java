@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,11 +30,11 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.util.Dialogs;
 import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
 import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.support.state.SupportState;
@@ -152,7 +151,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
         GuiUtils.hideKeyboard(etCode);
         tvError.setVisibility(View.GONE);
 
-        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+        ProfileManagerRX.AgUserListener listener = new ProfileManagerRX.AgUserListener() {
             @Override
             public void onLoaded(AgUser agUser) {
                 Statistics.auth(phone, true);
@@ -161,21 +160,16 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 dialog.dismiss();
                 Statistics.logon();
                 onAuthCompleted();
-                /**
-                 * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}
-                 * в {@link ru.mos.polls.rxhttp.session.Session}
-                 */
-                ru.mos.polls.rxhttp.session.Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(AgPhoneConfirmActivity.this));
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String message, int code) {
                 dialog.dismiss();
                 Statistics.auth(phone, false);
                 statistics.check(false);
-                statistics.errorOccurs(error.getMessage());
-                String errorMessage = error.getMessage();
-                if (error.getErrorCode() == CONFIRM_CODE_NOT_VALID) {
+                statistics.errorOccurs(message);
+                String errorMessage = message;
+                if (code == CONFIRM_CODE_NOT_VALID) {
                     errorMessage = getString(R.string.auth_error_confirm_code_not_correct);
                 }
                 tvError.setText(errorMessage);
@@ -183,7 +177,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
                 tvError.requestFocus();
             }
         };
-        ProfileManager.getProfile(this, getQueryParams(), agUserListener, true);
+        ProfileManagerRX.login(disposables, AgPhoneConfirmActivity.this, ProfileManagerRX.getRequest(AgPhoneConfirmActivity.this, phone, etCode.getText().toString()), listener);
     }
 
     private void onAuthCompleted() {

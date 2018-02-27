@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -27,9 +26,8 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -209,32 +207,29 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void refreshProfile() {
-        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+        ProfileManagerRX.AgUserListener listener = new ProfileManagerRX.AgUserListener() {
             @Override
-            public void onLoaded(AgUser loadedAgUser) {
-                try {
-                    saved = loadedAgUser;
-                    progressable.end();
-                    updateView();
-                    AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
-                } catch (Exception ignored) {
-                }
+            public void onLoaded(AgUser agUser) {
+                saved = agUser;
+                progressable.end();
+                updateView();
+                AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String message, int code) {
                 saved = new AgUser(getActivity());
                 progressable.end();
                 updateView();
                 AGApplication.bus().send(new Events.ProfileEvents(Events.ProfileEvents.PROFILE_LOADED));
                 try {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                 } catch (Exception ignored) {
                 }
             }
         };
         if (NetworkUtils.hasInternetConnection(getActivity())) {
-            ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+            ProfileManagerRX.getProfile(disposables, getActivity(), listener);
         } else {
             progressable.end();
             Toast.makeText(getActivity(), getActivity().getString(R.string.internet_failed_to_connect), Toast.LENGTH_SHORT).show();

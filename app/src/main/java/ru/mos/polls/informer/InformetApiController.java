@@ -18,6 +18,7 @@ import ru.mos.polls.base.activity.BaseActivity;
  *  Получение актуальной версии приложения {@link #loadActualAppVersion(BaseActivity, Callback)}
  *  @since 2.3.0
  */
+@Deprecated
 public class InformetApiController {
 
     /**

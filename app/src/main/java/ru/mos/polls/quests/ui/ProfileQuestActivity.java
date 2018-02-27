@@ -6,20 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 
 import org.json.JSONObject;
 
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.ProfileManager;
-import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
-import ru.mos.polls.Statistics;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.model.QuestMessage;
-import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.model.quest.ProfileQuest;
 
 /**
@@ -118,28 +112,6 @@ public class ProfileQuestActivity extends ToolbarAbstractActivity  {
 
     private void doQuest() {
         startProgress();
-        ProfileManager.SaveAgUserListener saveAgUserListener = new ProfileManager.SaveAgUserListener() {
-            @Override
-            public void onSaved(JSONObject resultJson) {
-                changed.save(ProfileQuestActivity.this);
-                processResults(resultJson);
-                if (taskId.equalsIgnoreCase(ProfileQuest.ID_UPDATE_EXTRA_INFO)) {
-                    Statistics.taskFillProfileAddressWork();
-                    GoogleStatistics.AGNavigation.taskFillProfileAddressWork();
-                }
-                if (taskId.equalsIgnoreCase(ProfileQuest.ID_UPDATE_PERSONAL)){
-                    GoogleStatistics.AGNavigation.profileFillPersonal();
-                }
-                stopProgress();
-                QuestStateController.getInstance().add(taskId);
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                Toast.makeText(ProfileQuestActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                stopProgress();
-            }
-        };
     }
 
     private void processResults(JSONObject resultJson) {

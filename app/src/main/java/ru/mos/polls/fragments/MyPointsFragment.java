@@ -41,7 +41,7 @@ import ru.mos.polls.helpers.ActionBarHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.model.PointHistory;
 
-
+@Deprecated
 public class MyPointsFragment extends StatusFragment implements DialogInterface.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int POINT_HISTORY_ID = 4;
@@ -125,15 +125,15 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
          * пользователь не всегда догадыватеся сам обновить историю
          * полагает, что баллы не начислены и пишет в техподдержку
          */
-        PointsManager.refreshPointHistory((BaseActivity) activity, new Response.Listener<Object>() {
-            @Override
-            public void onResponse(Object o) {
-                processTitleBalance();
-                processStatus();
-                processPoints();
-                processPointUnits();
-            }
-        }, null);
+//        PointsManager.refreshPointHistory((BaseActivity) activity, new Response.Listener<Object>() {
+//            @Override
+//            public void onResponse(Object o) {
+//                processTitleBalance();
+//                processStatus();
+//                processPoints();
+//                processPointUnits();
+//            }
+//        }, null);
 
         processTitleBalance();
         processStatus();
@@ -159,16 +159,16 @@ public class MyPointsFragment extends StatusFragment implements DialogInterface.
                  * Обновляем историю начисления баллов
                  * и статус пользователя
                  */
-                PointsManager.refreshPointHistory((BaseActivity) getActivity(), new Response.Listener<Object>() {
-                    @Override
-                    public void onResponse(Object o) {
-                        getPullToRefreshLayout().setRefreshing(false);
-                        processTitleBalance();
-                        processPoints();
-                        processPointUnits();
-                        processStatus();
-                    }
-                }, errorListener);
+//                PointsManager.refreshPointHistory((BaseActivity) getActivity(), new Response.Listener<Object>() {
+//                    @Override
+//                    public void onResponse(Object o) {
+//                        getPullToRefreshLayout().setRefreshing(false);
+//                        processTitleBalance();
+//                        processPoints();
+//                        processPointUnits();
+//                        processStatus();
+//                    }
+//                }, errorListener);
             }
         };
     }

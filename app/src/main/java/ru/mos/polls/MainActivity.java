@@ -55,7 +55,7 @@ import ru.mos.polls.navigation.drawer.NavigationMenuItem;
 import ru.mos.polls.news.ui.NewsFragment;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
-import ru.mos.polls.profile.ProfileManager;
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.state.EditProfileState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
@@ -230,7 +230,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.APPEvents action = (Events.APPEvents) o;
                         switch (action.getEventType()) {
                             case Events.APPEvents.UNAUTHORIZED:
-                                ProfileManager.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
+                                ProfileManagerRX.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
                                 break;
                         }
                     }

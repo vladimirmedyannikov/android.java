@@ -26,8 +26,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 import com.appsflyer.AppsFlyerLib;
 
 import org.json.JSONException;
@@ -38,13 +36,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.polls.profile.service.ProfileGet;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.util.Dialogs;
-import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.api.API;
 import ru.mos.polls.auth.state.AuthState;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
@@ -163,34 +164,35 @@ public class AgAuthActivity extends BaseActivity {
 
     public void onClickLogin(View view) {
         GuiUtils.hideKeyboard(view);
-
         tvError.setVisibility(View.GONE);
-
         final ProgressDialog dialog = Dialogs.showProgressDialog(this, "Ожидайте..");
-        Response.Listener<String> listener = new Response.Listener<String>() {
-
+        HandlerApiResponseSubscriber<Object> handler = new HandlerApiResponseSubscriber<Object>(AgAuthActivity.this, null) {
             @Override
-            public void onResponse(String response) {
+            protected void onResult(Object result) {
                 dialog.dismiss();
                 finish();
                 AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getUnmaskedText());
             }
 
-        };
-        Response.ErrorListener errListener = new Response.ErrorListener() {
-
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onHasError(GeneralResponse<Object> generalResponse) {
+                super.onHasError(generalResponse);
                 dialog.dismiss();
-                if (error != null) {
-                    if (error.getErrorCode() != ERROR_CODE_423)
-                        onLoginFault(error.getMessage());
-                    showErrorDialog(error.getErrorCode());
+                if (generalResponse != null) {
+                    if (generalResponse.getErrorCode() != ERROR_CODE_423)
+                        onLoginFault(generalResponse.getErrorMessage());
+                    showErrorDialog(generalResponse.getErrorCode());
                 }
             }
         };
-        String url = API.getURL("json/v0.3/auth/user/recoverypassword");
-        addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
+        ProfileGet.RecoveryRequest recoveryRequest = new ProfileGet.RecoveryRequest();
+        recoveryRequest.setMsisdn(codeCountry.getUnmaskedText() + etLogin.getUnmaskedText());
+        recoveryRequest.setClientInfo(new ProfileGet.ClientInfoBean("Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")", Build.MODEL + " (" + Build.MANUFACTURER + ")"));
+        AGApplication.api
+                .recoveryPassword(recoveryRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(handler);
     }
 
     private JSONObject getQueryParams() {

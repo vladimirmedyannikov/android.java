@@ -1,27 +1,17 @@
 package ru.mos.polls;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 
 import ru.mos.elk.Constants;
-import ru.mos.elk.netframework.utils.StandartErrorListener;
-import ru.mos.polls.api.API;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.db.PollsData;
-import ru.mos.polls.db.PollsData.TPointHistory;
 import ru.mos.polls.db.PollsProvider;
 import ru.mos.polls.model.PointHistory;
 import ru.mos.polls.model.UserPoints;
-import ru.mos.polls.queries.PointHistoryListRequest;
-import ru.mos.polls.queries.PointsRequest;
+
 
 public abstract class PointsManager {
 
@@ -39,87 +29,87 @@ public abstract class PointsManager {
     private static boolean isHistoryLoad = false;
     private static boolean isUserPointsLoad = false;
 
-    /**
-     * обновляем опросы с сервера
-     */
-    public static synchronized void refreshPointHistory(final BaseActivity activity, final Response.Listener<Object> listener, final Response.ErrorListener errorListener) {
-        if (isHistoryLoad) return;
-        isHistoryLoad = true;
+//    /**
+//     * обновляем опросы с сервера
+//     */
+//    public static synchronized void refreshPointHistory(final BaseActivity activity, final Response.Listener<Object> listener, final Response.ErrorListener errorListener) {
+//        if (isHistoryLoad) return;
+//        isHistoryLoad = true;
+//
+//        final ProgressDialog pd = new ProgressDialog(activity);
+//        pd.setCancelable(false);
+//        pd.show();
+//
+//        activity.setSupportProgressBarIndeterminateVisibility(true);
+//        Response.Listener<PointHistory[]> mainListener = new Response.Listener<PointHistory[]>() {
+//            @Override
+//            public void onResponse(PointHistory[] pointHistories) {
+//                isHistoryLoad = false;
+//                activity.setSupportProgressBarIndeterminateVisibility(false);
+//                ContentResolver cr = activity.getContentResolver();
+//                cr.delete(PollsProvider.getContentUri(PollsData.TPointHistory.URI_CONTENT), null, null);
+//
+//                final Uri insertUri = PollsProvider.getContentUri(PollsData.TPointHistory.TABLE_NAME);
+//                ContentValues cv;
+//                for (PointHistory pointHistory : pointHistories) {
+//                    cv = new ContentValues();
+//                    cv.put(TPointHistory.TITLE, pointHistory.getTitle());
+//                    cv.put(TPointHistory.WRITE_OFF_DATE, pointHistory.getWriteOffDate());
+//                    cv.put(TPointHistory.POINTS, pointHistory.getPoints());
+//                    cv.put(TPointHistory.REFILL, pointHistory.isRefill() ? 1 : 0);
+//                    cv.put(TPointHistory.ACTION, pointHistory.getAction().toString());
+//                    cr.insert(insertUri, cv);
+//                }
+//                SharedPreferences prefs = activity.getSharedPreferences(PREFS, Activity.MODE_PRIVATE);
+//                prefs.edit().putLong(EXPIRE_HISTORY_TIME, System.currentTimeMillis() + 20L * Constants.MINUTE).commit();
+//
+//                if (pd != null) {
+//                    pd.dismiss();
+//                }
+//
+//                if (listener != null)
+//                    listener.onResponse(pointHistories);
+//            }
+//        };
+//        Response.ErrorListener errListener = new StandartErrorListener(activity, R.string.cant_load_point_history) {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                super.onErrorResponse(error);
+//                isHistoryLoad = false;
+//
+//                if (pd != null) {
+//                    pd.dismiss();
+//                }
+//
+//                if (errorListener != null)
+//                    errorListener.onErrorResponse(error);
+//            }
+//        };
+//        activity.addRequest(new PointHistoryListRequest(activity, API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_HISTORY)), null, mainListener, errListener));
+//    }
 
-        final ProgressDialog pd = new ProgressDialog(activity);
-        pd.setCancelable(false);
-        pd.show();
-
-        activity.setSupportProgressBarIndeterminateVisibility(true);
-        Response.Listener<PointHistory[]> mainListener = new Response.Listener<PointHistory[]>() {
-            @Override
-            public void onResponse(PointHistory[] pointHistories) {
-                isHistoryLoad = false;
-                activity.setSupportProgressBarIndeterminateVisibility(false);
-                ContentResolver cr = activity.getContentResolver();
-                cr.delete(PollsProvider.getContentUri(PollsData.TPointHistory.URI_CONTENT), null, null);
-
-                final Uri insertUri = PollsProvider.getContentUri(PollsData.TPointHistory.TABLE_NAME);
-                ContentValues cv;
-                for (PointHistory pointHistory : pointHistories) {
-                    cv = new ContentValues();
-                    cv.put(TPointHistory.TITLE, pointHistory.getTitle());
-                    cv.put(TPointHistory.WRITE_OFF_DATE, pointHistory.getWriteOffDate());
-                    cv.put(TPointHistory.POINTS, pointHistory.getPoints());
-                    cv.put(TPointHistory.REFILL, pointHistory.isRefill() ? 1 : 0);
-                    cv.put(TPointHistory.ACTION, pointHistory.getAction().toString());
-                    cr.insert(insertUri, cv);
-                }
-                SharedPreferences prefs = activity.getSharedPreferences(PREFS, Activity.MODE_PRIVATE);
-                prefs.edit().putLong(EXPIRE_HISTORY_TIME, System.currentTimeMillis() + 20L * Constants.MINUTE).commit();
-
-                if (pd != null) {
-                    pd.dismiss();
-                }
-
-                if (listener != null)
-                    listener.onResponse(pointHistories);
-            }
-        };
-        Response.ErrorListener errListener = new StandartErrorListener(activity, R.string.cant_load_point_history) {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
-                isHistoryLoad = false;
-
-                if (pd != null) {
-                    pd.dismiss();
-                }
-
-                if (errorListener != null)
-                    errorListener.onErrorResponse(error);
-            }
-        };
-        activity.addRequest(new PointHistoryListRequest(activity, API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_HISTORY)), null, mainListener, errListener));
-    }
-
-    public static synchronized void refreshUserPoints(final BaseActivity activity, final Response.Listener<Void> outListener) {
-        isUserPointsLoad = true;
-        activity.setSupportProgressBarIndeterminateVisibility(true);
-        Response.Listener<Void> listener = new Response.Listener<Void>() {
-            @Override
-            public void onResponse(Void v) {
-                isUserPointsLoad = false;
-                activity.setSupportProgressBarIndeterminateVisibility(false);
-
-                if (outListener != null)
-                    outListener.onResponse(v);
-            }
-        };
-        Response.ErrorListener errListener = new StandartErrorListener(activity, R.string.cant_load_user_points) {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
-                isUserPointsLoad = false;
-            }
-        };
-        activity.addRequest(new PointsRequest<Void>(activity, API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_POINTS)), null, listener, errListener));
-    }
+//    public static synchronized void refreshUserPoints(final BaseActivity activity, final Response.Listener<Void> outListener) {
+//        isUserPointsLoad = true;
+//        activity.setSupportProgressBarIndeterminateVisibility(true);
+//        Response.Listener<Void> listener = new Response.Listener<Void>() {
+//            @Override
+//            public void onResponse(Void v) {
+//                isUserPointsLoad = false;
+//                activity.setSupportProgressBarIndeterminateVisibility(false);
+//
+//                if (outListener != null)
+//                    outListener.onResponse(v);
+//            }
+//        };
+//        Response.ErrorListener errListener = new StandartErrorListener(activity, R.string.cant_load_user_points) {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                super.onErrorResponse(error);
+//                isUserPointsLoad = false;
+//            }
+//        };
+//        activity.addRequest(new PointsRequest<Void>(activity, API.getURL(UrlManager.url(UrlManager.Controller.POLL, UrlManager.Methods.GET_POINTS)), null, listener, errListener));
+//    }
 
     public static void storePoints(Context context, UserPoints userPoints) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS, Activity.MODE_PRIVATE);

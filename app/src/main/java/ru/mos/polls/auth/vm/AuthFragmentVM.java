@@ -1,25 +1,17 @@
 package ru.mos.polls.auth.vm;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.util.Dialogs;
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
@@ -31,7 +23,6 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentAuthServiceBinding;
 import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
 import ru.mos.polls.util.GuiUtils;
@@ -109,8 +100,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
         final ProgressDialog dialog = Dialogs.showProgressDialog(getActivity(), ru.mos.elk.R.string.elk_wait_authorization);
         GuiUtils.hideKeyboard(password);
         tvError.setVisibility(View.GONE);
-
-        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+        ProfileManagerRX.AgUserListener listener = new ProfileManagerRX.AgUserListener() {
             @Override
             public void onLoaded(AgUser agUser) {
                 Statistics.auth(phoneNumber.getUnmaskedText(), true);
@@ -119,21 +109,16 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
                 dialog.dismiss();
                 Statistics.logon();
                 onAuthCompleted();
-                /**
-                 * Дублируем сессию из {@link ru.mos.elk.netframework.request.ru.mos.elk.netframework.request.Session}
-                 * в {@link ru.mos.polls.rxhttp.session.Session}
-                 */
-                ru.mos.polls.rxhttp.session.Session.get().setSession(ru.mos.elk.netframework.request.Session.getSession(getActivity()));
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String message, int code) {
                 dialog.dismiss();
                 Statistics.auth(phoneNumber.getUnmaskedText(), false);
                 statistics.check(false);
-                statistics.errorOccurs(error.getMessage());
-                String errorMessage = error.getMessage();
-                if (error.getErrorCode() == CONFIRM_CODE_NOT_VALID) {
+                statistics.errorOccurs(message);
+                String errorMessage = message;
+                if (code == CONFIRM_CODE_NOT_VALID) {
                     errorMessage = getActivity().getString(R.string.auth_error_confirm_code_not_correct);
                 }
                 tvError.setText(errorMessage);
@@ -141,7 +126,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
                 tvError.requestFocus();
             }
         };
-        ProfileManager.getProfile((BaseActivity) getActivity(), getQueryParams(), agUserListener, true);
+        ProfileManagerRX.login(disposables, getActivity(), ProfileManagerRX.getRequest(getActivity(), phoneNumber.getUnmaskedText(), password.getText().toString()), listener);
     }
 
     private void onAuthCompleted() {
@@ -153,29 +138,5 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
-    }
-
-    private JSONObject getQueryParams() {
-        JSONObject params = new JSONObject();
-        JSONObject auth = new JSONObject();
-        try {
-            auth.put("login", "7" + phoneNumber.getUnmaskedText());
-            auth.put("password", password.getText().toString());
-            auth.put(GCMHelper.GUID, getActivity().getSharedPreferences(GCMHelper.PREFERENCES, Activity.MODE_PRIVATE).getString(GCMHelper.GUID, null));
-            params.put(Session.AUTH, auth);
-            SharedPreferences gcmPrefs = getActivity().getSharedPreferences(GCMHelper.PREFERENCES, Activity.MODE_PRIVATE);
-            if (!gcmPrefs.getBoolean(GCMHelper.PROPERTY_ON_SERVER, false)) {
-                JSONObject deviceInfo = new JSONObject();
-                deviceInfo.put("guid", gcmPrefs.getString(GCMHelper.GUID, null));
-                deviceInfo.put("object_id", gcmPrefs.getString(GCMHelper.PROPERTY_REG_ID, null));
-                deviceInfo.put("user_agent", "Android");
-                deviceInfo.put("app_version", GCMHelper.getAppVersionName(getActivity()));
-                params.put("device_info", deviceInfo);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return params;
     }
 }

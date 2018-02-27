@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.android.volley2.VolleyError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
@@ -121,9 +119,9 @@ public class AddressesPropertyFragmentVM extends UIComponentFragmentViewModel<Ad
 
     public void refreshProfile() {
         getComponent(ProgressableUIComponent.class).begin();
-        ProfileManager.AgUserListener agUserListener = new ProfileManager.AgUserListener() {
+        ProfileManagerRX.AgUserListener listener = new ProfileManagerRX.AgUserListener() {
             @Override
-            public void onLoaded(AgUser loadedAgUser) {
+            public void onLoaded(AgUser agUser) {
                 try {
                     getComponent(ProgressableUIComponent.class).end();
                     getComponent(PullableUIComponent.class).end();
@@ -134,16 +132,16 @@ public class AddressesPropertyFragmentVM extends UIComponentFragmentViewModel<Ad
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(String message, int code) {
                 getComponent(ProgressableUIComponent.class).end();
                 getComponent(PullableUIComponent.class).end();
                 try {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                 } catch (Exception ignored) {
                 }
             }
         };
-        ProfileManager.getProfile((BaseActivity) getActivity(), agUserListener);
+        ProfileManagerRX.getProfile(disposables, getActivity(), listener);
     }
 
     public void addProperty() {

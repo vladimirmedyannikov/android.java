@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.ProfileManager;
 import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
@@ -16,6 +15,7 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.changepassword.state.ChangePasswordState;
 import ru.mos.polls.databinding.LayoutSettingsBinding;
 import ru.mos.polls.geotarget.manager.GeotargetManager;
+import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.settings.model.Item;
 import ru.mos.polls.settings.ui.adapter.ItemsAdapter;
 import ru.mos.polls.settings.ui.fragment.SettingsFragment;
@@ -77,7 +77,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 GeotargetManager.stop(getFragment().getContext());
-                ProfileManager
+                ProfileManagerRX
                         .logOut((BaseActivity) getActivity(), AgAuthActivity.class, MainActivity.class);
             }
         });

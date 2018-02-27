@@ -12,22 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.service.ChangePassword;
 import ru.mos.polls.util.Dialogs;
-import ru.mos.elk.netframework.request.StringRequest;
-import ru.mos.elk.netframework.utils.StandartErrorListener;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.TitleHelper;
 

@@ -11,6 +11,7 @@ import ru.mos.polls.rxhttp.rxapi.handle.error.ResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.progreessable.DefaultProgressable;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
+import ru.mos.polls.rxhttp.session.Session;
 
 /**
  * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
@@ -60,11 +61,15 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
             return;
         }
         if (generalResponse.hasError()) {
-            errorHandler.onServerError(generalResponse.getErrorCode(), generalResponse.getErrorMessage());
-            onErrorListener();
+            onHasError(generalResponse);
         } else {
             onResult(generalResponse.getResult());
         }
+    }
+
+    public void onHasError(@NonNull GeneralResponse<R> generalResponse) {
+        errorHandler.onServerError(generalResponse.getErrorCode(), generalResponse.getErrorMessage());
+        onErrorListener();
     }
 
     @Override

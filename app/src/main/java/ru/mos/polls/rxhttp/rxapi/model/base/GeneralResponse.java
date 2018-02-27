@@ -1,5 +1,7 @@
 package ru.mos.polls.rxhttp.rxapi.model.base;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Модель, описывабщая стандартны формат ответа сервиса</br>
  *
@@ -18,6 +20,8 @@ public class GeneralResponse<Result> {
     private int errorCode;
     private String errorMessage;
     private Result result;
+    @SerializedName("session_id")
+    private String sessionId;
 
     public int getErrorCode() {
         return errorCode;
@@ -43,4 +47,11 @@ public class GeneralResponse<Result> {
         return errorCode == UNAUTHORIZED || errorCode == FORBIDDEN;
     }
 
+    public boolean hasSession() {
+        return sessionId != null;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
 }

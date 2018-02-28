@@ -22,7 +22,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -32,11 +31,12 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.ui.fragment.BindingSocialFragment;
 import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.profile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.profile.vm.NewFlatFragmentVM;
-import ru.mos.polls.profile.ui.fragment.BindingSocialFragment;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.wizardprofile.ui.adapter.WizardProfilePagerAdapter;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardAvatarFragment;
@@ -44,10 +44,6 @@ import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 27.07.2017.
- */
 
 public class WizardProfileFragmentVM extends UIComponentFragmentViewModel<WizardProfileFragment, FragmentWizardProfileBinding> {
 

@@ -5,8 +5,6 @@ import ru.mos.polls.rxhttp.session.Session;
 /**
  * Спецификация объекта-обработчика ошибок выполнения запроса
  *
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 21.05.17 17:39.
  */
 
 public interface ResponseErrorHandler {

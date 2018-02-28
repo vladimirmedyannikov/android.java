@@ -2,14 +2,10 @@ package ru.mos.polls.profile.vm;
 
 import android.text.TextUtils;
 
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemAddressePropertyBinding;
-
-/**
- * Created by Trunks on 25.10.2017.
- */
+import ru.mos.polls.profile.model.flat.Flat;
 
 public class AddressesPropertyVM extends RecyclerBaseViewModel<Flat, ItemAddressePropertyBinding> {
     onAddressesDeleteIconClickListener clickListener;

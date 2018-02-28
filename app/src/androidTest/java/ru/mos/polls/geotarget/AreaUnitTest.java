@@ -8,10 +8,6 @@ import java.util.List;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.geotarget.model.Area;
 
-/**
- * Created by Trunks on 22.11.2017.
- */
-
 public class AreaUnitTest extends BaseUnitTest {
 
     @Test

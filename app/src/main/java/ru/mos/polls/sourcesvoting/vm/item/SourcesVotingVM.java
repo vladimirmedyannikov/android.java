@@ -11,10 +11,6 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.ItemSourcesVotingBinding;
 import ru.mos.polls.sourcesvoting.model.SourcesVoting;
 
-/**
- * Created by Trunks on 13.10.2017.
- */
-
 public class SourcesVotingVM extends RecyclerBaseViewModel<SourcesVoting, ItemSourcesVotingBinding> {
 
     public SourcesVotingVM(SourcesVoting model) {

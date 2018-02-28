@@ -16,10 +16,6 @@ import ru.mos.polls.friend.vm.list.FriendAddItemVW;
 import ru.mos.polls.friend.vm.list.FriendItemVM;
 import ru.mos.polls.util.StubUtils;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.07.17 13:02.
- */
 
 public class FriendsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
 

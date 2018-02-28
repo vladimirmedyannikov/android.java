@@ -2,10 +2,6 @@ package ru.mos.polls.support.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by matek3022 on 18.09.17.
- */
-
 public class FeedbackInfo  {
 
     private String app;

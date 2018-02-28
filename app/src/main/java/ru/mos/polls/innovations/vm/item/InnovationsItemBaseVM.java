@@ -10,10 +10,6 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.innovations.model.Innovation;
 
-/**
- * Created by Trunks on 03.10.2017.
- */
-
 public abstract class InnovationsItemBaseVM<M extends Innovation, VDB extends ViewDataBinding> extends RecyclerBaseViewModel<M, VDB> {
     public InnovationsItemBaseVM(M model) {
         super(model);

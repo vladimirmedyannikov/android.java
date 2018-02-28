@@ -8,10 +8,6 @@ import java.util.List;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.profile.model.Reference;
 
-/**
- * Created by Trunks on 12.02.2017.
- */
-
 public class ReferenceUnitTest extends BaseUnitTest {
 
     @Test

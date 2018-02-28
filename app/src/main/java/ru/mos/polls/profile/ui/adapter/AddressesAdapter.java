@@ -3,15 +3,11 @@ package ru.mos.polls.profile.ui.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.base.BaseRecyclerAdapter;
 import ru.mos.polls.base.RecyclerBaseViewModel;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.vm.AddressesPropertyVM;
 import ru.mos.polls.profile.vm.onAddressesDeleteIconClickListener;
-
-/**
- * Created by Trunks on 25.10.2017.
- */
 
 public class AddressesAdapter extends BaseRecyclerAdapter<AddressesPropertyVM> {
     onAddressesDeleteIconClickListener clickListener;

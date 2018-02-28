@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,10 +19,6 @@ import ru.mos.polls.databinding.FragmentWebviewBinding;
 import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.util.NetworkUtils;
 import ru.mos.polls.webview.ui.WebViewFragment;
-
-/**
- * Created by Trunks on 04.12.2017.
- */
 
 public class WebViewFragmentVM extends FragmentViewModel<WebViewFragment, FragmentWebviewBinding> {
     private static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "ag.mos.ru" : "testing.ag.mos.ru";

@@ -14,10 +14,6 @@ import java.util.Collections;
 
 import ru.mos.polls.R;
 
-/**
- * Created by matek on 27.09.2017.
- */
-
 public class SMSUtils {
     public static final String SUCCESS_SEND_INVITE_MESSAGE_FILTER = "ru.mos.polls.util.success_send_invite_message_filter";
     public static final String SENDING_PHONE_NUMBER = "ru.mos.polls.util.sending_phone_number";

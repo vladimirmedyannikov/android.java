@@ -8,10 +8,6 @@ import ru.mos.polls.mypoints.model.Status;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 27.02.18.
- */
 
 public class SmsInviteNotice {
     public static class Request extends AuthRequest {

@@ -5,13 +5,9 @@ import android.content.DialogInterface;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
-import ru.mos.polls.survey.vm.InfoCommentFragmentVM;
 import ru.mos.polls.survey.Survey;
+import ru.mos.polls.survey.vm.InfoCommentFragmentVM;
 import ru.mos.polls.util.GuiUtils;
-
-/**
- * Created by Trunks on 06.12.2017.
- */
 
 public class InfoCommentFragment extends MenuBindingFragment<InfoCommentFragmentVM, FragmentInfoCommentBinding> {
 

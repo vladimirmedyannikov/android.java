@@ -5,11 +5,6 @@ import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.friend.model.Personal;
-
-/**
- * Created by Trunks on 15.11.2017.
- */
-
 public class PersonalUnitTest extends BaseUnitTest {
 
     @Test

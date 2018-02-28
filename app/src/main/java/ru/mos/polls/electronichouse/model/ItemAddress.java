@@ -5,14 +5,10 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.profile.model.AgUser;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class ItemAddress {
     private String title;

@@ -7,12 +7,7 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.LayoutFriendsBinding;
 import ru.mos.polls.friend.vm.FriendsFragmentVM;
-import ru.mos.polls.base.ui.BindingFragment;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 13:15.
- */
 
 public class FriendsFragment extends NavigateFragment<FriendsFragmentVM, LayoutFriendsBinding> {
     public static Fragment instance() {

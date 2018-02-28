@@ -11,10 +11,6 @@ import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.gui.JugglerToolbarFragment;
 import ru.mos.polls.R;
 
-/**
- * Created by wlTrunks on 14.06.2017.
- */
-
 public class CommonToolbarFragment extends JugglerToolbarFragment {
 
     public static JugglerFragment createBack() {

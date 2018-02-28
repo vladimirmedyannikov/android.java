@@ -2,10 +2,6 @@ package ru.mos.polls.mypoints.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Trunks on 24.08.2017.
- */
-
 public class Status {
 
     //    "points":{

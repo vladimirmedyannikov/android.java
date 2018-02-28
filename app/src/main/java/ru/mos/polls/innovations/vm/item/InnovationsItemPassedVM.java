@@ -8,10 +8,6 @@ import ru.mos.polls.databinding.ItemInnovationPassedBinding;
 import ru.mos.polls.innovations.model.Innovation;
 import ru.mos.polls.innovations.ui.adapter.InnovationsAdapter;
 
-/**
- * Created by Trunks on 03.10.2017.
- */
-
 public class InnovationsItemPassedVM extends InnovationsItemBaseVM<Innovation, ItemInnovationPassedBinding> {
     public InnovationsItemPassedVM(Innovation model) {
         super(model);

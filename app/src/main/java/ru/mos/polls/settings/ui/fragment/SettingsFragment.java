@@ -6,9 +6,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.LayoutSettingsBinding;
 import ru.mos.polls.settings.vm.SettingsFragmentVM;
 
-/**
- * Created by matek3022 on 25.09.17.
- */
 
 public class SettingsFragment extends NavigateFragment<SettingsFragmentVM, LayoutSettingsBinding> {
 

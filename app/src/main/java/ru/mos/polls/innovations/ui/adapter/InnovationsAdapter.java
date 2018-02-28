@@ -11,10 +11,6 @@ import ru.mos.polls.innovations.vm.item.InnovationsItemActiveVM;
 import ru.mos.polls.innovations.vm.item.InnovationsItemOldVM;
 import ru.mos.polls.innovations.vm.item.InnovationsItemPassedVM;
 
-/**
- * Created by Trunks on 02.10.2017.
- */
-
 public class InnovationsAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
     public interface Type {
         int ITEM_ACTIVE = 0;

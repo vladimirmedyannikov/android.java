@@ -10,9 +10,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.LayoutSupportBinding;
 import ru.mos.polls.support.vm.SupportFragmentVM;
 
-/**
- * Created by matek3022 on 13.09.17.
- */
 
 public class SupportFragment extends BindingFragment<SupportFragmentVM, LayoutSupportBinding> {
 

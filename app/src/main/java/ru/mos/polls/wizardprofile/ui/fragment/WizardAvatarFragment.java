@@ -1,19 +1,14 @@
 package ru.mos.polls.wizardprofile.ui.fragment;
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.databinding.FragmentMakeAvatarBinding;
 import ru.mos.polls.base.ui.NavigateFragment;
+import ru.mos.polls.databinding.FragmentMakeAvatarBinding;
 import ru.mos.polls.wizardprofile.vm.WizardAvatarFragmentVM;
-
-/**
- * Created by Trunks on 27.07.2017.
- */
 
 public class WizardAvatarFragment extends NavigateFragment<WizardAvatarFragmentVM, FragmentMakeAvatarBinding> {
     @Override

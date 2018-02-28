@@ -7,10 +7,6 @@ import java.util.List;
 import ru.mos.polls.profile.model.Achievements;
 
 
-/**
- * Created by wlTrunks on 29.08.2017.
- */
-
 public class AchievementsData {
     private int count;
     @SerializedName("last")

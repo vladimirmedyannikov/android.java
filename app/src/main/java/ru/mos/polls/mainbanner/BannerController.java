@@ -13,10 +13,6 @@ import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Trunks on 19.01.2018.
- */
-
 public class BannerController {
 
 

@@ -12,8 +12,6 @@ import ru.mos.polls.base.ui.BindingHolder;
 /**
  * Базовый адаптер для отображения списка {@link RecyclerBaseViewModel}
  *
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.07.17 10:22.
  */
 
 public class BaseRecyclerAdapter<RVM extends RecyclerBaseViewModel> extends RecyclerView.Adapter<BindingHolder> {

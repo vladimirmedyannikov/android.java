@@ -3,15 +3,11 @@ package ru.mos.polls.innovations.service;
 import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.common.model.QuestMessage;
+import ru.mos.polls.innovations.model.Rating;
 import ru.mos.polls.mypoints.model.Status;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.innovations.model.Rating;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 02.06.17 10:21.
- */
 
 public class NoveltyFill {
 

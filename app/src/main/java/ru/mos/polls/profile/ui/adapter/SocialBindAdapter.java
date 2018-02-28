@@ -9,10 +9,6 @@ import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.profile.vm.SocialVM;
 import ru.mos.polls.social.model.AppSocial;
 
-/**
- * Created by Trunks on 11.07.2017.
- */
-
 public class SocialBindAdapter extends BaseAdapter<SocialVM, BindingHolder<ItemBindSocialNewBinding>, ItemBindSocialNewBinding, AppSocial> {
 
     public SocialBindAdapter(List<AppSocial> list) {

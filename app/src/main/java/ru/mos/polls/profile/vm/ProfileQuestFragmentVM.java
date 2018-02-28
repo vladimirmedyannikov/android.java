@@ -3,18 +3,14 @@ package ru.mos.polls.profile.vm;
 import android.app.Activity;
 import android.widget.TextView;
 
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentProfileQuestBinding;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.state.NewFlatState;
 import ru.mos.polls.profile.ui.fragment.ProfileQuestFragment;
-
-/**
- * Created by Trunks on 08.11.2017.
- */
 
 public class ProfileQuestFragmentVM extends UIComponentFragmentViewModel<ProfileQuestFragment, FragmentProfileQuestBinding> {
 

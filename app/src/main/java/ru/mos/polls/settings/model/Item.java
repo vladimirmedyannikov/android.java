@@ -2,9 +2,6 @@ package ru.mos.polls.settings.model;
 
 import ru.mos.polls.R;
 
-/**
- * Created by matek3022 on 25.09.17.
- */
 
 public class Item {
     public static final int SUBSCRIBE = 10;

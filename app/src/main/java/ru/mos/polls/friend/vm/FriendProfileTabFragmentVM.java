@@ -29,10 +29,6 @@ import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.profile.ui.adapter.PagerAdapter;
 import ru.mos.polls.profile.ui.fragment.AchievementTabFragment;
 
-/**
- * Created by wlTrunks on 07.06.2017.
- */
-
 public class FriendProfileTabFragmentVM extends UIComponentFragmentViewModel<FriendProfileTabFragment, FragmentFriendTabBinding> {
     private ViewPager pager;
     private TabLayout slidingTabs;

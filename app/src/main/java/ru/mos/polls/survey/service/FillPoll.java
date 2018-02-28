@@ -3,15 +3,9 @@ package ru.mos.polls.survey.service;
 import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
 
-
-
 import ru.mos.polls.mypoints.model.Status;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-
-/**
- * Created by Trunks on 22.02.2018.
- */
 
 public class FillPoll {
     public static class Request extends AuthRequest {

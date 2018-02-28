@@ -6,10 +6,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentAddressesPropertyBinding;
 import ru.mos.polls.profile.vm.AddressesPropertyFragmentVM;
 
-/**
- * Created by Trunks on 25.10.2017.
- */
-
 public class AddressesPropertyFragment extends NavigateFragment<AddressesPropertyFragmentVM, FragmentAddressesPropertyBinding> {
 
     public static AddressesPropertyFragment newInstance() {

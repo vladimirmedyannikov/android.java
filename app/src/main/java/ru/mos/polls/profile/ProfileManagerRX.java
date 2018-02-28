@@ -33,10 +33,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.util.Dialogs;
 
-/**
- * Created by Trunks on 26.02.2018.
- */
-
 public class ProfileManagerRX {
 
     /**

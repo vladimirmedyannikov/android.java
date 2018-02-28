@@ -6,9 +6,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentInnovationsListBinding;
 import ru.mos.polls.innovations.vm.InnovationFragmentVM;
 
-/**
- * Created by Trunks on 02.10.2017.
- */
 
 public class InnovationFragment extends BindingFragment<InnovationFragmentVM, FragmentInnovationsListBinding> {
     public static InnovationFragment newInstance() {

@@ -13,10 +13,6 @@ import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.storable.AppStorable;
 
-/**
- * Created by Trunks on 11.04.2017.
- */
-
 public class SocialStorableUnitTest extends BaseUnitTest {
 
     Context appContext = InstrumentationRegistry.getTargetContext();

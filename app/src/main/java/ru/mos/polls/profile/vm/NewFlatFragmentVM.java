@@ -17,18 +17,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley2.VolleyError;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.controller.FlatApiControllerRX;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.model.flat.Flat;
-import ru.mos.polls.profile.model.flat.Value;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -38,7 +32,11 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.databinding.FragmentNewFlatBinding;
+import ru.mos.polls.profile.controller.FlatApiControllerRX;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.DistrictArea;
+import ru.mos.polls.profile.model.flat.Flat;
+import ru.mos.polls.profile.model.flat.Value;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.state.CustomFlatState;
@@ -49,10 +47,6 @@ import ru.mos.polls.profile.ui.views.StreetWatcher;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.polls.wizardprofile.vm.WizardCustomFlatListener;
-
-/**
- * Created by Trunks on 23.07.2017.
- */
 
 public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragment, FragmentNewFlatBinding> {
     public static final int FLAT_TYPE_REGISTRATION = 12234;

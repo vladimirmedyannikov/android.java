@@ -2,10 +2,6 @@ package ru.mos.polls.util;
 
 import ru.mos.polls.BuildConfig;
 
-/**
- * Created by Trunks on 12.01.2018.
- */
-
 public class UrlHelper {
 
     public static final String host = "release".equalsIgnoreCase(BuildConfig.BUILD_TYPE) ? "ag.mos.ru" : "testing.ag.mos.ru";

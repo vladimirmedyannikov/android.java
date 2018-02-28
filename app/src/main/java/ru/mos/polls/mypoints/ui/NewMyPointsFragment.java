@@ -19,10 +19,6 @@ import ru.mos.polls.helpers.ActionBarHelper;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.mypoints.vm.NewMyPointsFragmentVM;
 
-/**
- * Created by Trunks on 23.08.2017.
- */
-
 public class NewMyPointsFragment extends BindingFragment<NewMyPointsFragmentVM, FragmentNewMyPointsBinding> {
 
     public static NewMyPointsFragment newInstance() {

@@ -6,15 +6,12 @@ import android.support.annotation.Nullable;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
 
-/**
- * Created by Trunks on 04.07.2017.
- */
 
 public class EditPersonalInfoState extends ContentBelowToolbarState<EditPersonalInfoState.PesonalInfoParams> {
     public EditPersonalInfoState(AgUser agUser, int personalType) {

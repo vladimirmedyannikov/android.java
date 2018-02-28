@@ -4,10 +4,6 @@ import java.util.List;
 
 import ru.mos.polls.profile.model.AgUser;
 
-/**
- * Created by wlTrunks on 14.07.2017.
- */
-
 public class Personal {
     /**
      * surname : фамилия

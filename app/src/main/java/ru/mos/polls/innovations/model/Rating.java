@@ -6,10 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 31.05.17 11:11.
- */
 
 public class Rating implements Serializable {
     @SerializedName("user_rating")

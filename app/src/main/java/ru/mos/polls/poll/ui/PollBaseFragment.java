@@ -10,10 +10,6 @@ import ru.mos.polls.poll.vm.PollActiveFragmentVM;
 import ru.mos.polls.poll.vm.PollBaseFragmentVM;
 import ru.mos.polls.poll.vm.PollOldFragmentVM;
 
-/**
- * Created by Trunks on 14.09.2017.
- */
-
 public class PollBaseFragment extends BindingFragment<PollBaseFragmentVM, FragmentTabPollBinding> {
 
     public static String ARG_POLL_TYPE = "arg_poll_type";

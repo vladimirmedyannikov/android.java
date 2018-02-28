@@ -2,10 +2,6 @@ package ru.mos.polls.friend.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 11:52.
- */
 
 public class Personal {
     private String surname;

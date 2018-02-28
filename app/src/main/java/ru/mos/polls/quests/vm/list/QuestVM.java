@@ -14,10 +14,6 @@ import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.model.quest.Quest;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 07.12.17.
- */
 
 public abstract class QuestVM<M extends Quest, VDB extends ViewDataBinding> extends RecyclerBaseViewModel<M, VDB> {
     @BindView(R.id.title)

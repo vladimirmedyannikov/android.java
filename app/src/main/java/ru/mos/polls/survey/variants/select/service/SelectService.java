@@ -9,10 +9,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.survey.variants.select.model.FindObjects;
 import ru.mos.polls.survey.variants.select.model.VariantsObjects;
 
-/**
- * Created by Trunks on 27.02.2018.
- */
-
 public class SelectService {
 
     public static class Request extends AuthRequest {

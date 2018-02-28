@@ -15,10 +15,6 @@ import ru.mos.polls.electronichouse.ui.fragment.HouseAddressFragment;
 import ru.mos.polls.electronichouse.ui.fragment.HousePollFragment;
 import ru.mos.polls.profile.ui.adapter.PagerAdapter;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class ElectronicHouseFragmentVM extends UIComponentFragmentViewModel<ElectronicHouseFragment, LayoutElectronicHouseBinding> {
 

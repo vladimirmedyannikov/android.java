@@ -6,9 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.event.model.Filter;
 
-/**
- * Created by matek3022 on 12.09.17.
- */
 
 public class FilterUnitTest extends BaseUnitTest {
     @Test

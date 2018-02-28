@@ -8,10 +8,6 @@ import java.util.List;
 import ru.mos.polls.profile.model.flat.Value;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 
-/**
- * Created by Trunks on 13.07.2017.
- */
-
 public class StreetGet {
     public static class Request extends AuthRequest {
         private int limit;

@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName;
  * @see #getErrorMessage()  текст для отображения пользователю</br>
  * @see #getResult() значимые данные ответа запроса {@link Result}</br>
  * <p>
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 17.05.17 10:25.
  */
 
 public class GeneralResponse<Result> {

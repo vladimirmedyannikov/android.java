@@ -18,7 +18,6 @@ import ru.mos.polls.util.NetworkUtils;
 
 
 /**
- * Created by Trunks on 15.09.2017.
  * Базовый класс для запросов с пагинацией
  */
 public abstract class PullablePaginationFragmentVM<F extends JugglerFragment,

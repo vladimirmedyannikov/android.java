@@ -6,10 +6,6 @@ import android.support.v7.widget.CardView;
 
 import ru.mos.polls.survey.Survey;
 
-/**
- * Created by Trunks on 06.12.2017.
- */
-
 public class InfoSurveyFragmentVM  {
     CardView infoCommentCard;
     AppCompatTextView infoTitle, infoDesc, infoComment;

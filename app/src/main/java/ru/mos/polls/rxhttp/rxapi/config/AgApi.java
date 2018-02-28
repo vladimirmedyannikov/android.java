@@ -65,10 +65,6 @@ import ru.mos.polls.survey.service.GetExpertList;
 import ru.mos.polls.survey.service.GetPoll;
 import ru.mos.polls.survey.variants.select.service.SelectService;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 28.04.17 11:36.
- */
 
 public interface AgApi {
     /**

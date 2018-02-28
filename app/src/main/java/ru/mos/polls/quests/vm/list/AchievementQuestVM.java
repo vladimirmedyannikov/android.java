@@ -8,10 +8,6 @@ import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.AchievementQuest;
 import ru.mos.polls.util.AgTextUtil;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class AchievementQuestVM extends QuestVM<AchievementQuest, QuestAchievementBinding> {
     public AchievementQuestVM(AchievementQuest model, QuestAchievementBinding viewDataBinding) {

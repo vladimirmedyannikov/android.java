@@ -11,10 +11,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.support.ui.fragment.SupportFragment;
 
-/**
- * Created by matek3022 on 13.09.17.
- */
-
 public class SupportState extends ContentBelowToolbarState<SupportState.Params> {
 
     public SupportState(boolean startWithNewActivity) {

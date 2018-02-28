@@ -10,10 +10,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewProfileBinding;
 import ru.mos.polls.profile.vm.ProfileFragmentVM;
 
-/**
- * Created by Trunks on 06.06.2017.
- */
-
 public class ProfileFragment extends BindingFragment<ProfileFragmentVM, FragmentNewProfileBinding> {
 
     public static final int PAGE_START_PROFILE = 0;

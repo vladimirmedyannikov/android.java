@@ -5,14 +5,10 @@ import org.junit.Test;
 
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
+import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.poll.vm.item.PollItemActiveVM;
 import ru.mos.polls.poll.vm.item.PollItemOldVM;
-import ru.mos.polls.poll.model.Poll;
-
-/**
- * Created by Trunks on 02.11.2017.
- */
 
 public class PollItemVM extends BaseUnitTest {
 

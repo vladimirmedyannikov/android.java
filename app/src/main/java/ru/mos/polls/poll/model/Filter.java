@@ -1,9 +1,5 @@
 package ru.mos.polls.poll.model;
 
-/**
- * Created by Trunks on 03.11.2017.
- */
-
 public enum Filter {
     AVAILABLE("available"),
     PASSED("passed"),

@@ -6,10 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.social.model.Token;
 
-/**
- * Created by Trunks on 27.03.2017.
- */
-
 public class TokenDataUnitTest extends BaseUnitTest {
 
 

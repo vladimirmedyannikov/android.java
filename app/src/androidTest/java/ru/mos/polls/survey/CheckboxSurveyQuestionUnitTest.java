@@ -10,10 +10,6 @@ import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.variants.SurveyVariant;
 
-/**
- * Created by Trunks on 16.05.2017.
- */
-
 public class CheckboxSurveyQuestionUnitTest extends BaseUnitTest {
 
     @Test

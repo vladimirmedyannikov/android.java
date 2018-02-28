@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * @author Rajiv
  *         <p/>
  *         A Button which aligns its text and left drawable at center. Especially useful when we have buttons which don't wrap.
  *         <p/>

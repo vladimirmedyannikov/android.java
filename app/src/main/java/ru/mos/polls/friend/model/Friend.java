@@ -2,10 +2,6 @@ package ru.mos.polls.friend.model;
 
 import java.io.Serializable;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 11:25.
- */
 
 public class Friend implements Serializable {
     private int id;

@@ -10,10 +10,6 @@ import ru.mos.polls.databinding.LayoutFriendProfileBinding;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.vm.FriendStatisticFragmentVM;
 
-/**
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 14.08.17 21:27.
- */
 
 public class FriendStatisticFragment extends BindingFragment<FriendStatisticFragmentVM, LayoutFriendProfileBinding> {
     public static final String ARG_FRIEND = "arg_friend";

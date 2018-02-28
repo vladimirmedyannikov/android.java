@@ -8,10 +8,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.model.Message;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 20.02.18.
- */
 
 public class ProfileUpdateSocial {
     public static class Request extends AuthRequest {

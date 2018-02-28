@@ -1,13 +1,9 @@
 package ru.mos.polls.profile.vm;
 
 
-import ru.mos.polls.profile.model.Statistics;
-import ru.mos.polls.databinding.UserStatsItemBinding;
 import ru.mos.polls.base.vm.BaseVM;
-
-/**
- * Created by wlTrunks on 15.06.2017.
- */
+import ru.mos.polls.databinding.UserStatsItemBinding;
+import ru.mos.polls.profile.model.Statistics;
 
 public class UserStatisticsVM extends BaseVM<Statistics,UserStatsItemBinding> {
 

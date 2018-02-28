@@ -21,10 +21,6 @@ import ru.mos.polls.profile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.profile.ui.fragment.UserTabFragment;
 
-/**
- * Created by wlTrunks on 07.06.2017.
- */
-
 public class ProfileFragmentVM extends FragmentViewModel<ProfileFragment, FragmentNewProfileBinding> {
     private ViewPager pager;
     private TabLayout slidingTabs;

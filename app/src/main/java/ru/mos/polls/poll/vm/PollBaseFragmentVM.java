@@ -20,10 +20,6 @@ import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
-/**
- * Created by Trunks on 14.09.2017.
- */
-
 public abstract class PollBaseFragmentVM extends PullablePaginationFragmentVM<PollBaseFragment, FragmentTabPollBinding, PollAdapter> {
     public static final int ARG_ACTIVE_POLL = 0;
     public static final int ARG_OLD_POLL = 1;

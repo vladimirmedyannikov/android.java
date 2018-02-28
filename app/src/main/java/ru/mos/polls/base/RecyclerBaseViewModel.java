@@ -11,8 +11,6 @@ import ru.mos.polls.base.ui.BindingHolder;
  * ViewModel для элементов списков<br/>
  * Используется для отображения в {@link BaseRecyclerAdapter}
  *
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.07.17 12:45.
  */
 
 public abstract class RecyclerBaseViewModel<M, VDB extends ViewDataBinding> extends BaseViewModel<M, VDB>{

@@ -11,10 +11,6 @@ import me.ilich.juggler.states.State;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
-/**
- * Created by Trunks on 04.07.2017.
- */
-
 public class WizardProfileState extends ContentBelowToolbarState<WizardProfileState.WizardProfileParams> {
     public WizardProfileState(List<String> list, int percent) {
         super(new WizardProfileParams(list, percent));

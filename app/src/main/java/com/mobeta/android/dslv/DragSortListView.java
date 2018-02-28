@@ -53,7 +53,6 @@ import ru.mos.polls.R;
 /**
  * ListView subclass that mediates drag and drop resorting of items.
  *
- * @author heycosmo
  */
 public class DragSortListView extends ListView {
 
@@ -2525,7 +2524,6 @@ public class DragSortListView extends ListView {
      * {@link android.widget.BaseAdapter#notifyDataSetChanged()} or something like it
      * in your implementation.
      *
-     * @author heycosmo
      */
     public interface DropListener {
         public void drop(int from, int to);
@@ -2536,7 +2534,6 @@ public class DragSortListView extends ListView {
      * {@link android.widget.BaseAdapter#notifyDataSetChanged()} or something like it
      * in your implementation.
      *
-     * @author heycosmo
      */
     public interface RemoveListener {
         public void remove(int which);
@@ -2773,7 +2770,6 @@ public class DragSortListView extends ListView {
      * {@link com.mobeta.android.dslv.DragSortListView#setDragScrollProfile(com.mobeta.android.dslv.DragSortListView.DragScrollProfile)} to
      * set custom profile.
      *
-     * @author heycosmo
      */
     public interface DragScrollProfile {
         /**

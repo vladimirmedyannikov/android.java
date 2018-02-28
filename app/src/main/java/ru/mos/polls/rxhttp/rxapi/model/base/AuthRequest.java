@@ -4,10 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.rxhttp.session.Session;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.06.17 12:31.
- */
 
 public class AuthRequest {
     @SerializedName("auth")

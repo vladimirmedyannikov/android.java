@@ -22,10 +22,6 @@ import ru.mos.polls.quests.controller.service.SmsInviteNotice;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.SMSUtils;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 27.02.18.
- */
 
 public class SmsInviteControllerRX {
 

@@ -2,10 +2,6 @@ package ru.mos.polls.profile.service.model;
 
 import java.util.List;
 
-/**
- * Created by Trunks on 18.07.2017.
- */
-
 public class GetProfileResponse {
 
     /**

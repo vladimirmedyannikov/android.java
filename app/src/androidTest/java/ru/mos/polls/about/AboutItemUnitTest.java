@@ -7,10 +7,6 @@ import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
 import ru.mos.polls.about.model.AboutItem;
 
-/**
- * Created by Trunks on 22.11.2017.
- */
-
 public class AboutItemUnitTest extends BaseUnitTest {
 
     @Test

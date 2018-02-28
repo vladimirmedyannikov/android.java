@@ -8,10 +8,6 @@ import ru.mos.polls.databinding.QuestSocialBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.RateAppQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class RateAppQuestVM extends QuestVM<RateAppQuest, QuestSocialBinding> {
     public RateAppQuestVM(RateAppQuest model, QuestSocialBinding viewDataBinding) {

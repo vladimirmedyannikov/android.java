@@ -14,10 +14,6 @@ import ru.mos.polls.survey.variants.select.GorodSelectActivity;
 import ru.mos.polls.survey.variants.select.GorodSelectObject;
 import ru.mos.polls.survey.variants.values.IntVariantValue;
 
-/**
- * Created by Trunks on 17.05.2017.
- */
-
 public class SurveyVariantUnitTest extends BaseUnitTest {
 
     String UID = "uid";

@@ -2,13 +2,8 @@ package ru.mos.polls.mainbanner.service;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Trunks on 19.01.2018.
- */
 
 public class GetBannerStatistics {
 

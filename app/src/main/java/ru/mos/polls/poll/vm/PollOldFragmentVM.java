@@ -17,10 +17,6 @@ import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.PollBaseFragment;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 
-/**
- * Created by Trunks on 05.10.2017.
- */
-
 public class PollOldFragmentVM extends PollBaseFragmentVM {
     public static final String ACTION_ADD_OLD_POLL = "ru.mos.polls.poll.vm.action_add_old_poll";
     public static final String ARG_POLL = "arg_poll";

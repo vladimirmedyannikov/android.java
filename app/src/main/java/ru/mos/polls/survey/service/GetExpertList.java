@@ -8,10 +8,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.survey.experts.DetailsExpert;
 
-/**
- * Created by Trunks on 20.02.2018.
- */
-
 public class GetExpertList {
 
     public static class Request extends AuthRequest {

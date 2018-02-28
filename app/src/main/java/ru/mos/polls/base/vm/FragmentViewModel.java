@@ -12,10 +12,6 @@ import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.R;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
-/**
- * Created by wlTrunks on 07.06.2017.
- */
-
 public abstract class FragmentViewModel<F extends JugglerFragment, B extends ViewDataBinding> extends BaseObservable {
 
     protected abstract void initialize(B binding);

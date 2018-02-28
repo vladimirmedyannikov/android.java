@@ -6,9 +6,6 @@ import java.util.List;
 
 import ru.mos.polls.base.BaseRecyclerAdapter;
 
-/**
- * Created by Trunks on 18.01.2018.
- */
 
 public class BannerAdapter extends BaseRecyclerAdapter {
 

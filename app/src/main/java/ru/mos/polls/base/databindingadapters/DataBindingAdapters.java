@@ -5,10 +5,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-/**
- * Created by Trunks on 23.06.2017.
- */
-
 public class DataBindingAdapters {
 
     @BindingAdapter("imageUrl")

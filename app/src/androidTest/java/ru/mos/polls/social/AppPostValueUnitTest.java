@@ -13,10 +13,6 @@ import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.social.model.AppSocial;
 
-/**
- * Created by Trunks on 21.03.2017.
- */
-
 public class AppPostValueUnitTest extends BaseUnitTest {
 
     public static final String LINK = "link";

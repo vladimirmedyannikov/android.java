@@ -7,16 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-
 import java.util.List;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.base.ui.BindingHolder;
-
-
-/**
- * Created by Trunks on 19.06.2017.
- */
 
 public abstract class BaseAdapter<VM extends BaseObservable, VH extends BindingHolder, B extends ViewDataBinding, F> extends RecyclerView.Adapter<VH> {
     protected VM viewModel;

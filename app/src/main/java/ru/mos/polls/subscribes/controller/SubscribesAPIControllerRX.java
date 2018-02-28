@@ -27,9 +27,6 @@ import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
 import ru.mos.polls.subscribes.service.SubscriptionService;
 
-/**
- * Created by Trunks on 22.02.2018.
- */
 
 public class SubscribesAPIControllerRX {
 

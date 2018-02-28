@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestSocialBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.SocialQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class SocialQuestVM extends PriceQuestVM<SocialQuest, QuestSocialBinding> {
     public SocialQuestVM(SocialQuest model, QuestSocialBinding viewDataBinding) {

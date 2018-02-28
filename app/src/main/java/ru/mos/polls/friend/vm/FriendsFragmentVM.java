@@ -6,11 +6,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 
-
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -39,10 +37,6 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.NetworkUtils;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 13:18.
- */
 
 public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
     public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;

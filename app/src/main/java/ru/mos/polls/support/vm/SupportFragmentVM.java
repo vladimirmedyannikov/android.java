@@ -19,7 +19,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Remove;
 import ru.mos.elk.netframework.request.Session;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -27,19 +26,16 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutSupportBinding;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.support.model.Subject;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
 import ru.mos.polls.support.ui.adapter.SubjectAdapter;
 import ru.mos.polls.support.ui.fragment.SupportFragment;
-import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.NetworkUtils;
-
-/**
- * Created by matek3022 on 13.09.17.
- */
 
 public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragment, LayoutSupportBinding> {
 

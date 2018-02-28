@@ -8,8 +8,6 @@ import com.google.gson.annotations.SerializedName;
  * @see #PASSED - оцененные
  * @see #OLD - пропущенные, неоцененные пользователем
  *
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 28.04.17 11:53.
  */
 
 public enum Status {

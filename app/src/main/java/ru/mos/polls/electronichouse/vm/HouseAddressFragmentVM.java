@@ -9,10 +9,6 @@ import ru.mos.polls.databinding.FragmentHouseAddressBinding;
 import ru.mos.polls.electronichouse.ui.adapter.AddressListAdapter;
 import ru.mos.polls.electronichouse.ui.fragment.HouseAddressFragment;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class HouseAddressFragmentVM extends UIComponentFragmentViewModel<HouseAddressFragment, FragmentHouseAddressBinding> {
 

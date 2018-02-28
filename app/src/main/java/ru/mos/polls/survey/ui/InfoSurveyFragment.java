@@ -47,10 +47,6 @@ import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
 
-/**
- * Created by Trunks on 06.12.2017.
- */
-
 public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callback {
     public static final String ARG_POLL_ID = "poll_id";
     public static final String ARG_SURVEY = "survey";

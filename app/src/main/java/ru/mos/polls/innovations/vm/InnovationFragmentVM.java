@@ -16,10 +16,6 @@ import ru.mos.polls.innovations.ui.adapter.InnovationsAdapter;
 import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
-/**
- * Created by Trunks on 02.10.2017.
- */
-
 public class InnovationFragmentVM extends PullablePaginationFragmentVM<InnovationFragment, FragmentInnovationsListBinding, InnovationsAdapter> {
     public InnovationFragmentVM(InnovationFragment fragment, FragmentInnovationsListBinding binding) {
         super(fragment, binding);

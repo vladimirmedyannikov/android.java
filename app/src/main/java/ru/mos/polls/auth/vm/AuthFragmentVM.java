@@ -8,10 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import ru.mos.polls.profile.ProfileManagerRX;
-import ru.mos.polls.util.Dialogs;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
@@ -23,13 +19,12 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentAuthServiceBinding;
 import ru.mos.polls.maskedettext.MaskedEditText;
+import ru.mos.polls.profile.ProfileManagerRX;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.GuiUtils;
-
-/**
- * Created by Trunks on 21.12.2017.
- */
 
 public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, FragmentAuthServiceBinding> {
 

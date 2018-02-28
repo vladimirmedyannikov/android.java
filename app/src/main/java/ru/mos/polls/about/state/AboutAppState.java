@@ -8,13 +8,10 @@ import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentToolbarNavigationState;
 import me.ilich.juggler.states.VoidParams;
 import ru.mos.polls.R;
+import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.base.ui.NavigationFragmentJuggler;
-import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 
-/**
- * Created by matek3022 on 21.09.17.
- */
 
 public class AboutAppState extends ContentToolbarNavigationState<VoidParams> {
 

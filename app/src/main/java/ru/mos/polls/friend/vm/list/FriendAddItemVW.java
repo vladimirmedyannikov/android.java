@@ -5,10 +5,6 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.FriendAddItemBinding;
 import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.07.17 13:04.
- */
 
 public class FriendAddItemVW extends RecyclerBaseViewModel<Object, FriendAddItemBinding> {
 

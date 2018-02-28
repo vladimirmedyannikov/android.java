@@ -1,9 +1,5 @@
 package ru.mos.polls.sourcesvoting.model;
 
-/**
- * Created by Trunks on 13.10.2017.
- */
-
 public class SourcesVoting extends SourcesVotingSet {
 
     /**

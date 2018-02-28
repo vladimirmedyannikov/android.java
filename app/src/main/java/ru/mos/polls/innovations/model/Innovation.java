@@ -9,8 +9,6 @@ import java.util.Date;
 /**
  * Информация о городской новинке
  * <p>
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 28.04.17 11:49.
  */
 public class Innovation implements Serializable {
 

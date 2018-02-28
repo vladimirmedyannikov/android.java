@@ -18,11 +18,6 @@ import ru.mos.polls.quests.model.quest.AdvertisementQuest;
 import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
-
 public class AdvertisementQuestVM extends RecyclerBaseViewModel<AdvertisementQuest, QuestHtmlBannerBinding> {
     public AdvertisementQuestVM(AdvertisementQuest model, QuestHtmlBannerBinding viewDataBinding) {
         super(model, viewDataBinding);

@@ -6,10 +6,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by matek3022 on 15.09.17.
- */
-
 public class Subject {
     public static final int ID_SUBJECT_NOT_SELECTED = 0;
     public static final String TITLE_SUBJECT_NOT_SELECTED = "Не выбрана";

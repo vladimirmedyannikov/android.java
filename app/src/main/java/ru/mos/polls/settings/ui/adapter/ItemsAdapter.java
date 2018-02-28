@@ -11,9 +11,6 @@ import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.settings.model.Item;
 
-/**
- * Created by matek3022 on 25.09.17.
- */
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
     private Item[] items;

@@ -6,10 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.sourcesvoting.model.SourcesVoting;
 
-/**
- * Created by wlTrunks on 20.11.2017.
- */
-
 public class SourcesVotingUnitTest extends BaseUnitTest {
 
     @Test

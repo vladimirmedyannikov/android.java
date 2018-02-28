@@ -14,10 +14,6 @@ import ru.mos.polls.social.model.AppPostItem;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.social.model.AppSocial;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 20.02.18.
- */
 
 public class LoadPostingData {
     public static class Request extends AuthRequest {

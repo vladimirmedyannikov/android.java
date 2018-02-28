@@ -7,10 +7,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentHousePollBinding;
 import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class HousePollFragment extends NavigateFragment<HousePollFragmentVM, FragmentHousePollBinding> {
 

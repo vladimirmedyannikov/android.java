@@ -11,10 +11,6 @@ import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 13.10.17.
- */
 
 public class FriendStatisticFragmentState extends ContentBelowToolbarState<FriendStatisticFragmentState.FriendParams> {
 

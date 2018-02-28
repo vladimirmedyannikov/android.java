@@ -12,10 +12,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.profile.vm.EditProfileFragmentVM;
 
-/**
- * Created by wlTrunks on 14.06.2017.
- */
-
 public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, FragmentNewEditProfileBinding> {
     public static EditProfileFragment newInstance(int coordScreen) {
         EditProfileFragment f = new EditProfileFragment();

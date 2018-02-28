@@ -3,13 +3,9 @@ package ru.mos.polls.poll;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.poll.model.Poll;
 
-/**
- * Created by Trunks on 25.04.2017.
- */
 
 public class StatusUnitTest extends BaseUnitTest {
 

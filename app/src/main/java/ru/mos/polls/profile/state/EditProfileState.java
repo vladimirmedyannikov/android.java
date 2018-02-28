@@ -10,10 +10,6 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
 
-/**
- * Created by Trunks on 06.06.2017.
- */
-
 public class EditProfileState extends ContentBelowToolbarState<EditProfileState.Params> {
     public EditProfileState(int scrollCoord) {
         super(new Params(scrollCoord));

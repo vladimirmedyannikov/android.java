@@ -10,10 +10,6 @@ import ru.mos.polls.badge.model.Badge;
 import ru.mos.polls.badge.model.State;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 21.02.18.
- */
 
 public class BadgeApiControllerRX {
     /**

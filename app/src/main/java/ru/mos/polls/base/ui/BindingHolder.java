@@ -7,10 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-/**
- * Created by wlTrunks on 15.06.2017.
- */
-
 public class BindingHolder<B extends ViewDataBinding> extends RecyclerView.ViewHolder {
     private B binding;
 

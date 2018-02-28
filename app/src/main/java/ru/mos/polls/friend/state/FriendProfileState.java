@@ -11,10 +11,6 @@ import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 
-/**
- * Created by wlTrunks on 29.08.2017.
- */
-
 public class FriendProfileState extends ContentBelowToolbarState<FriendProfileState.FriendParams> {
 
 

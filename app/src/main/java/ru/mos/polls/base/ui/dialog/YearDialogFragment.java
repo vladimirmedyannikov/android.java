@@ -20,9 +20,6 @@ import java.util.List;
 
 import ru.mos.polls.R;
 
-/**
- * Created by Trunks on 10.07.2017.
- */
 
 public class YearDialogFragment extends DialogFragment {
     private RecyclerView recyclerView;

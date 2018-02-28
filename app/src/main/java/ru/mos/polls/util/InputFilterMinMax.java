@@ -3,10 +3,6 @@ package ru.mos.polls.util;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-/**
- * Created by Trunks on 23.07.2017.
- */
-
 public class InputFilterMinMax implements InputFilter {
 
     private int min, max;

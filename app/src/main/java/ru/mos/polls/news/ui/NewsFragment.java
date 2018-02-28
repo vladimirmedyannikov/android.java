@@ -11,10 +11,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewsBinding;
 import ru.mos.polls.news.vm.NewsFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 26.02.18.
- */
 
 public class NewsFragment extends BindingFragment<NewsFragmentVM, FragmentNewsBinding> {
 

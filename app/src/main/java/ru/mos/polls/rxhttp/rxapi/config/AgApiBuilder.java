@@ -16,10 +16,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.mos.polls.BuildConfig;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 28.04.17 11:59.
- */
 
 public class AgApiBuilder {
     public static final String URL_AG = "https://emp.mos.ru:443/";

@@ -10,15 +10,11 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentInfoCommentBinding;
-import ru.mos.polls.survey.ui.InfoCommentFragment;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
+import ru.mos.polls.survey.ui.InfoCommentFragment;
 import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
-
-/**
- * Created by Trunks on 06.12.2017.
- */
 
 public class InfoCommentFragmentVM extends UIComponentFragmentViewModel<InfoCommentFragment, FragmentInfoCommentBinding> {
 

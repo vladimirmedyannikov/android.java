@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.BaseUnitTest;
-import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.filter.Answer;
 import ru.mos.polls.survey.filter.EqualsFilter;
 import ru.mos.polls.survey.filter.LessTimeFilter;
@@ -18,10 +17,6 @@ import ru.mos.polls.survey.filter.conditions.OrCondition;
 import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.SimpleSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
-
-/**
- * Created by Trunks on 03.05.2017.
- */
 
 public class FilterUnitTest extends BaseUnitTest {
 

@@ -13,23 +13,19 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
-import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
 import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
 import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentWizardFamilyBinding;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.profile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFamilyFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
-
-/**
- * Created by Trunks on 31.07.2017.
- */
 
 public class WizardFamilyFragmentVM extends FragmentViewModel<WizardFamilyFragment, FragmentWizardFamilyBinding> {
     EditPersonalInfoFragment personalInfoFragment;

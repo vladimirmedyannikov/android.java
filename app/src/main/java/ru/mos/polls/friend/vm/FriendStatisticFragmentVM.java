@@ -15,8 +15,6 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.Achievements;
-import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -33,15 +31,13 @@ import ru.mos.polls.friend.ui.adapter.FriendProfileAdapter;
 import ru.mos.polls.friend.ui.fragment.FriendProfileTabFragment;
 import ru.mos.polls.friend.ui.fragment.FriendStatisticFragment;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
+import ru.mos.polls.profile.model.Achievements;
+import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.profile.ui.adapter.UserStatisticsAdapter;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.AgTextUtil;
 
-/**
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 14.08.17 21:30.
- */
 
 public class FriendStatisticFragmentVM extends UIComponentFragmentViewModel<FriendStatisticFragment, LayoutFriendProfileBinding> {
     private FriendProfileAdapter adapter;

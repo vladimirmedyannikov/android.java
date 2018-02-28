@@ -21,10 +21,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.AgSocialStatus;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.model.BirthDateParser;
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -38,6 +34,10 @@ import ru.mos.polls.base.ui.dialog.OnDateSetCallback;
 import ru.mos.polls.base.view.DictionaryView;
 import ru.mos.polls.base.view.model.DictionaryItem;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
+import ru.mos.polls.profile.model.AgSocialStatus;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.BirthDateParser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.profile.state.AddPrivatePropertyState;
@@ -49,10 +49,6 @@ import ru.mos.polls.profile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.social.model.AppSocial;
-
-/**
- * Created by wlTrunks on 14.06.2017.
- */
 
 public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProfileFragment, FragmentNewEditProfileBinding> {
 

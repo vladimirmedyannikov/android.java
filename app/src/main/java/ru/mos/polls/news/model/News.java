@@ -4,10 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 26.02.18.
- */
 
 public class News {
 

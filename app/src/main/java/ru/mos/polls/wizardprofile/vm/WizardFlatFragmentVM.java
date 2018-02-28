@@ -13,15 +13,15 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import ru.mos.polls.AGApplication;
+import ru.mos.polls.R;
+import ru.mos.polls.base.rxjava.Events;
+import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
+import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentWizardFlatBinding;
 import ru.mos.polls.profile.model.AgSocialStatus;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
-import ru.mos.polls.AGApplication;
-import ru.mos.polls.R;
-import ru.mos.polls.base.rxjava.RxEventDisposableSubscriber;
-import ru.mos.polls.databinding.FragmentWizardFlatBinding;
-import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.profile.state.EditPersonalInfoState;
 import ru.mos.polls.profile.ui.fragment.CustomFlatFragment;
@@ -29,10 +29,6 @@ import ru.mos.polls.profile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardFlatFragment;
-
-/**
- * Created by Trunks on 31.07.2017.
- */
 
 public class WizardFlatFragmentVM extends FragmentViewModel<WizardFlatFragment, FragmentWizardFlatBinding> implements WizardCustomFlatListener {
     NewFlatFragment newFlatFragment;

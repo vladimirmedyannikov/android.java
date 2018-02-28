@@ -1,9 +1,5 @@
 package ru.mos.polls.profile.service.model;
 
-/**
- * Created by Trunks on 13.07.2017.
- */
-
 public class Media {
     String extension;
     String base64;

@@ -15,10 +15,6 @@ import ru.mos.social.model.Token;
 
 import static ru.mos.social.controller.SocialController.isDbg;
 
-/**
- * Created by matek3022 on 28.08.17.
- */
-
 public class AppStorable extends BaseSharedPreferencesStorableManager {
     private ValidatorController validatorController;
 

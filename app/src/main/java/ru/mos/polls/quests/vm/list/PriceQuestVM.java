@@ -10,10 +10,6 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.quests.model.quest.BackQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 07.12.17.
- */
 
 public abstract class PriceQuestVM<M extends BackQuest, VDB extends ViewDataBinding> extends QuestVM<M, VDB> {
     @Nullable

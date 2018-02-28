@@ -2,16 +2,12 @@ package ru.mos.polls.wizardprofile.ui.fragment;
 
 import android.os.Bundle;
 
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentWizardFlatBinding;
 import ru.mos.polls.base.ui.NavigateFragment;
+import ru.mos.polls.databinding.FragmentWizardFlatBinding;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.wizardprofile.vm.WizardFlatFragmentVM;
-
-/**
- * Created by Trunks on 31.07.2017.
- */
 
 public class WizardFlatFragment extends NavigateFragment<WizardFlatFragmentVM, FragmentWizardFlatBinding> {
     public static final String ARG_AGUSER = "arg_aguser";

@@ -14,10 +14,6 @@ import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.ui.adapter.PollAdapter;
 
-/**
- * Created by Trunks on 14.09.2017.
- */
-
 public class PollItemActiveVM extends RecyclerBaseViewModel<Poll, ItemActivePollBinding> {
 
     public PollItemActiveVM(Poll model, ItemActivePollBinding viewDataBinding) {

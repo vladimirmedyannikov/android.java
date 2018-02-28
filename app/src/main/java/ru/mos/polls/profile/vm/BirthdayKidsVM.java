@@ -1,20 +1,16 @@
 package ru.mos.polls.profile.vm;
 
-import android.support.v4.app.FragmentManager;
 import android.databinding.Bindable;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import java.util.Calendar;
 
 import ru.mos.polls.BR;
-import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.base.ui.dialog.YearDialogFragment;
 import ru.mos.polls.base.vm.BaseVM;
+import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.profile.model.BirthdayKids;
-
-/**
- * Created by Trunks on 10.07.2017.
- */
 
 public class BirthdayKidsVM extends BaseVM<BirthdayKids, ItemBirthdayKidsBinding> {
     FragmentManager fr;

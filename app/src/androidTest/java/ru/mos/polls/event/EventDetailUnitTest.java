@@ -7,9 +7,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.event.model.EventDetail;
 
-/**
- * Created by matek3022 on 12.09.17.
- */
 
 public class EventDetailUnitTest extends BaseUnitTest {
     @Test

@@ -10,10 +10,6 @@ import ru.mos.polls.base.ui.RecyclerScrollableController;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 26.09.17 9:40.
- */
 
 public abstract class PaginationUIComponent<Result> extends UIComponent {
 

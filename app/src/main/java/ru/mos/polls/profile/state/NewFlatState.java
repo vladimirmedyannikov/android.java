@@ -6,15 +6,11 @@ import android.support.annotation.Nullable;
 import me.ilich.juggler.gui.JugglerFragment;
 import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.ui.fragment.NewFlatFragment;
 import ru.mos.polls.profile.vm.NewFlatFragmentVM;
-
-/**
- * Created by Trunks on 04.07.2017.
- */
 
 public class NewFlatState extends ContentBelowToolbarState<NewFlatState.FlatParams> {
     public NewFlatState(Flat flat, int flatType) {

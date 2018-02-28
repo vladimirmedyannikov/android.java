@@ -11,10 +11,6 @@ import ru.mos.polls.geotarget.service.GetAreas;
 import ru.mos.polls.geotarget.service.UserInArea;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 22.02.18.
- */
 
 public class GeotargetApiControllerRX {
 

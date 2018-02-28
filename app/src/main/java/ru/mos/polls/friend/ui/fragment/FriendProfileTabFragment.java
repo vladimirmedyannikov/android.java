@@ -12,10 +12,6 @@ import ru.mos.polls.databinding.FragmentFriendTabBinding;
 import ru.mos.polls.friend.model.Friend;
 import ru.mos.polls.friend.vm.FriendProfileTabFragmentVM;
 
-/**
- * Created by Trunks on 06.06.2017.
- */
-
 public class FriendProfileTabFragment extends BindingFragment<FriendProfileTabFragmentVM, FragmentFriendTabBinding> {
     public final static String ARG_FRIEND = "arg_friend";
 

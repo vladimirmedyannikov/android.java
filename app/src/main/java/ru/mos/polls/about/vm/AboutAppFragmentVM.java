@@ -28,9 +28,6 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.state.SupportState;
 
-/**
- * Created by matek3022 on 21.09.17.
- */
 
 public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFragment, LayoutAboutAppBinding> {
     private SocialListener socialListener;

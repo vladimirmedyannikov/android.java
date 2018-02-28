@@ -4,13 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.friend.model.Statistic;
-
-/**
- * Created by Trunks on 15.11.2017.
- */
+import ru.mos.polls.profile.model.Statistics;
 
 public class StatisticUnitTest extends BaseUnitTest {
     Statistic statistic;

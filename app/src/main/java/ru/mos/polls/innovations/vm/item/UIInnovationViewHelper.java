@@ -11,9 +11,6 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.innovations.model.Innovation;
 
-/**
- * Created by Trunks on 03.10.2017.
- */
 
 public class UIInnovationViewHelper {
     private static final SimpleDateFormat sdfFullDate = new SimpleDateFormat("dd.MM.yy");

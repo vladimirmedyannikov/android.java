@@ -3,12 +3,9 @@ package ru.mos.polls.support.service;
 import java.util.List;
 
 import ru.mos.polls.api.Token;
-import ru.mos.polls.support.model.Subject;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.support.model.Subject;
 
-/**
- * Created by matek3022 on 15.09.17.
- */
 
 public class SubjectsLoad {
     public static class Request {

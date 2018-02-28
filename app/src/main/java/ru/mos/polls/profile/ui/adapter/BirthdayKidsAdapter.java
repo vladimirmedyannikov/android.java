@@ -6,15 +6,11 @@ import android.support.v4.app.FragmentManager;
 import java.util.List;
 
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.base.ui.BindingHolder;
 import ru.mos.polls.base.ui.adapter.BaseAdapter;
+import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.profile.model.BirthdayKids;
 import ru.mos.polls.profile.vm.BirthdayKidsVM;
-
-/**
- * Created by Trunks on 07.07.2017.
- */
 
 public class BirthdayKidsAdapter extends BaseAdapter<BirthdayKidsVM, BindingHolder<ItemBirthdayKidsBinding>, ItemBirthdayKidsBinding, BirthdayKids> {
 

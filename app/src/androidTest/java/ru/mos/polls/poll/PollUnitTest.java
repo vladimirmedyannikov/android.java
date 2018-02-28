@@ -7,10 +7,6 @@ import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.model.Poll;
 
-/**
- * Created by Trunks on 18.04.2017.
- */
-
 public class PollUnitTest extends BaseUnitTest {
 
     @Test

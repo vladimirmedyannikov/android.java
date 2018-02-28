@@ -11,9 +11,6 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by wlTrunks on 07.06.2017.
- */
 
 public class PagerAdapter extends FragmentPagerAdapter {
 

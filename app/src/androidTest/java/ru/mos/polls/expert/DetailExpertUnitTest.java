@@ -9,10 +9,6 @@ import java.util.List;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.survey.experts.DetailsExpert;
 
-/**
- * Created by Trunks on 27.04.2017.
- */
-
 public class DetailExpertUnitTest extends BaseUnitTest {
     List<DetailsExpert> list;
 

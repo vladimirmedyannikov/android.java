@@ -6,10 +6,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.LayoutElectronicHouseBinding;
 import ru.mos.polls.electronichouse.vm.ElectronicHouseFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class ElectronicHouseFragment extends NavigateFragment<ElectronicHouseFragmentVM, LayoutElectronicHouseBinding> {
 

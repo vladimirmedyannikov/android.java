@@ -20,10 +20,6 @@ import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 21.03.17 12:07.
- */
 
 public class GeotargetJobService extends JobService {
     private static int counter = 0;

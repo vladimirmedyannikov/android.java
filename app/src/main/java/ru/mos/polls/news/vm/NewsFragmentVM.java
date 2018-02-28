@@ -24,10 +24,6 @@ import ru.mos.polls.news.ui.adapter.NewsAdapter;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 26.02.18.
- */
 
 public class NewsFragmentVM extends PullablePaginationFragmentVM<NewsFragment, FragmentNewsBinding, NewsAdapter> {
 

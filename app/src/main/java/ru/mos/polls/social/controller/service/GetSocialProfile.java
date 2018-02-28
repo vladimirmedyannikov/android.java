@@ -7,11 +7,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.social.model.Token;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 20.02.18.
- */
-
 public class GetSocialProfile {
     public static class Request extends AuthRequest {
         public Request() {

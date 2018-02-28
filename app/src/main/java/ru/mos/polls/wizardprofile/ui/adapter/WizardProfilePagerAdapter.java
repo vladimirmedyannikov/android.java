@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
- * Created by Trunks on 27.07.2017.
- */
-
 public class WizardProfilePagerAdapter extends FragmentStatePagerAdapter {
     List<Fragment> list;
 

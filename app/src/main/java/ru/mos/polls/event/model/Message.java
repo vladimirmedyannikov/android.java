@@ -2,10 +2,6 @@ package ru.mos.polls.event.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 20.02.18.
- */
 
 public class Message {
     private String title;

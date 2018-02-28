@@ -1,9 +1,5 @@
 package ru.mos.polls.mainbanner;
 
-/**
- * Created by Trunks on 19.01.2018.
- */
-
 public class BannerItem {
     int image;
     String title;

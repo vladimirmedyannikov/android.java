@@ -6,10 +6,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentWebviewBinding;
 import ru.mos.polls.webview.vm.WebViewFragmentVM;
 
-/**
- * Created by Trunks on 04.12.2017.
- */
-
 public class WebViewFragment extends NavigateFragment<WebViewFragmentVM, FragmentWebviewBinding> {
     @Override
     protected WebViewFragmentVM onCreateViewModel(FragmentWebviewBinding binding) {

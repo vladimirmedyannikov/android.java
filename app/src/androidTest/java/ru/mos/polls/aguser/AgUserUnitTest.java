@@ -7,13 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
-import ru.mos.polls.BaseUnitTest;
-
-/**
- * Created by Trunks on 31.05.2017.
- */
 
 public class AgUserUnitTest extends BaseUnitTest {
 

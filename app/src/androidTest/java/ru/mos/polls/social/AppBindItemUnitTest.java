@@ -6,10 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.social.model.AppBindItem;
 
-/**
- * Created by Trunks on 20.03.2017.
- */
-
 public class AppBindItemUnitTest extends BaseUnitTest {
 
     @Test

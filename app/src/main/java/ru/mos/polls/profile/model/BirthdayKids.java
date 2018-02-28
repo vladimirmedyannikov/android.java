@@ -1,9 +1,5 @@
 package ru.mos.polls.profile.model;
 
-/**
- * Created by Trunks on 10.07.2017.
- */
-
 public class BirthdayKids {
     private long birthdayYear;
     private String birtdayHints;

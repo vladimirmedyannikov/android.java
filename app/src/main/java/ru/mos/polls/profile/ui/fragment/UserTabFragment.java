@@ -4,13 +4,9 @@ import android.support.annotation.NonNull;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
 import ru.mos.polls.profile.vm.UserTabFragmentVM;
-
-/**
- * Created by wlTrunks on 07.06.2017.
- */
 
 public class UserTabFragment extends BindingFragment<UserTabFragmentVM, FragmentUserTabProfileBinding> {
 

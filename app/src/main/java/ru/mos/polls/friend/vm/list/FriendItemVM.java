@@ -11,10 +11,6 @@ import ru.mos.polls.friend.ui.adapter.FriendsAdapter;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.07.17 10:09.
- */
 
 public class FriendItemVM extends RecyclerBaseViewModel<Friend, FriendItemBinding> {
 

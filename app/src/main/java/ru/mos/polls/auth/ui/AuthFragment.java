@@ -7,10 +7,6 @@ import ru.mos.polls.auth.vm.AuthFragmentVM;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentAuthServiceBinding;
 
-/**
- * Created by Trunks on 21.12.2017.
- */
-
 public class AuthFragment extends MenuBindingFragment<AuthFragmentVM, FragmentAuthServiceBinding> {
     public static String ARG_PHONE = "arg_phone";
 

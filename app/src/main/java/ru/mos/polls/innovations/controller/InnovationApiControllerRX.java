@@ -2,7 +2,6 @@ package ru.mos.polls.innovations.controller;
 
 import android.content.Context;
 
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -13,10 +12,6 @@ import ru.mos.polls.innovations.model.Rating;
 import ru.mos.polls.innovations.service.NoveltyFill;
 import ru.mos.polls.innovations.service.NoveltyGet;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-
-/**
- * Created by Trunks on 20.02.2018.
- */
 
 public class InnovationApiControllerRX {
 

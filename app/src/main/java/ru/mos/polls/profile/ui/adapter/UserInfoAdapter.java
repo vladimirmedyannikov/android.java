@@ -11,10 +11,6 @@ import ru.mos.polls.databinding.UserInfoItemBinding;
 import ru.mos.polls.profile.model.UserInfo;
 import ru.mos.polls.profile.vm.UserInfoVM;
 
-/**
- * Created by Trunks on 19.06.2017.
- */
-
 public class UserInfoAdapter extends BaseAdapter<UserInfoVM, BindingHolder<UserInfoItemBinding>, UserInfoItemBinding, UserInfo> {
 
     private View.OnClickListener onItemClickListener;

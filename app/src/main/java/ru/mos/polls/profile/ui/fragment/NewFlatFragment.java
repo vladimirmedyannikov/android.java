@@ -2,16 +2,12 @@ package ru.mos.polls.profile.ui.fragment;
 
 import android.os.Bundle;
 
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentNewFlatBinding;
 import ru.mos.polls.base.ui.MenuBindingFragment;
+import ru.mos.polls.databinding.FragmentNewFlatBinding;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 04.07.2017.
- */
 
 public class NewFlatFragment extends MenuBindingFragment<NewFlatFragmentVM, FragmentNewFlatBinding> {
 

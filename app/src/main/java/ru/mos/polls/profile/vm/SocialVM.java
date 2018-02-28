@@ -8,10 +8,6 @@ import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.social.model.AppBindItem;
 import ru.mos.polls.social.model.AppSocial;
 
-/**
- * Created by Trunks on 23.06.2017.
- */
-
 public class SocialVM extends BaseVM<AppSocial,ItemBindSocialNewBinding> {
     AppCompatImageView unbindIcon;
 

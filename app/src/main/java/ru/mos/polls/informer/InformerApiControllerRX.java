@@ -7,10 +7,6 @@ import ru.mos.polls.BuildConfig;
 import ru.mos.polls.informer.service.GetAppVersion;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
-/**
- * Created by Trunks on 20.02.2018.
- */
-
 public class InformerApiControllerRX {
 
     public static void loadActualAppVersion(final Callback callback) {

@@ -2,16 +2,11 @@ package ru.mos.polls.mainbanner;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemMainBannerBinding;
 
-/**
- * Created by Trunks on 18.01.2018.
- */
 
 public class BannerItemVM extends RecyclerBaseViewModel<BannerItem, ItemMainBannerBinding> {
     public BannerItemVM(BannerItem model) {

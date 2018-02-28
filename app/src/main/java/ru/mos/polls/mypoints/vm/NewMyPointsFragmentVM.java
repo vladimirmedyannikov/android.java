@@ -34,10 +34,6 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.StubUtils;
 
-/**
- * Created by Trunks on 23.08.2017.
- */
-
 public class NewMyPointsFragmentVM extends PullablePaginationFragmentVM<NewMyPointsFragment,
         FragmentNewMyPointsBinding,
         NewMyPointsAdapter> {

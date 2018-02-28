@@ -3,10 +3,6 @@ package ru.mos.polls.mainbanner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by Trunks on 19.01.2018.
- */
-
 public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
     private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;

@@ -3,14 +3,10 @@ package ru.mos.polls.profile.ui.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.base.BaseRecyclerAdapter;
+import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.profile.vm.AchievementVM;
 import ru.mos.polls.profile.vm.OnAchievementClickListener;
-
-/**
- * Created by Trunks on 23.06.2017.
- */
 
 public class AchievementAdapter extends BaseRecyclerAdapter<AchievementVM> {
     OnAchievementClickListener listener;

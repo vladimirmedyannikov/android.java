@@ -15,10 +15,6 @@ import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.electronichouse.model.ItemAddress;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.Holder> {
 

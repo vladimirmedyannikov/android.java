@@ -7,10 +7,6 @@ import java.text.SimpleDateFormat;
 
 import ru.mos.polls.common.model.Position;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 16.02.18.
- */
 
 public class EventFromList {
 

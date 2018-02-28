@@ -20,10 +20,6 @@ import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SimpleSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 
-/**
- * Created by Trunks on 11.05.2017.
- */
-
 public class SurveyUnitTest extends BaseUnitTest {
     Survey testSurvey;
     long surveyId = 1;

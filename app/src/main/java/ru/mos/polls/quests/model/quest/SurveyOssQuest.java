@@ -2,14 +2,10 @@ package ru.mos.polls.quests.model.quest;
 
 import com.google.gson.annotations.SerializedName;
 
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.quests.model.QuestFamilyElement;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
-import ru.mos.polls.poll.model.Kind;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 12.12.17.
- */
 
 public class SurveyOssQuest extends BackQuest {
 

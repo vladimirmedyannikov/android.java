@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Trunks on 26.02.2018.
- */
-
 public class ProfileGet {
 
     public static class LoginRequest {

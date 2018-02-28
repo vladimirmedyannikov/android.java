@@ -23,10 +23,6 @@ import ru.mos.polls.subscribes.controller.SubscribesAPIControllerRX;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
 
-/**
- * Created by Trunks on 05.10.2017.
- */
-
 public class PollActiveFragmentVM extends PollBaseFragmentVM {
 
     public static final String ACTION_POLL_IS_PASSED = "ru.mos.polls.poll.vm.poll_is_passed";

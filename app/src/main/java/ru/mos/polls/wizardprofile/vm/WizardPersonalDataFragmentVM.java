@@ -14,21 +14,17 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import ru.mos.polls.R;
+import ru.mos.polls.base.ui.dialog.DatePickerFragment;
+import ru.mos.polls.base.ui.dialog.OnDateSetCallback;
+import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.BirthDateParser;
-import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentWizardPersonalDataBinding;
-import ru.mos.polls.base.ui.dialog.DatePickerFragment;
-import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.profile.ui.fragment.EditPersonalInfoFragment;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
-import ru.mos.polls.base.ui.dialog.OnDateSetCallback;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardPersonalDataFragment;
-
-/**
- * Created by Trunks on 31.07.2017.
- */
 
 public class WizardPersonalDataFragmentVM extends FragmentViewModel<WizardPersonalDataFragment, FragmentWizardPersonalDataBinding> {
     EditPersonalInfoFragment personalInfoFragment;

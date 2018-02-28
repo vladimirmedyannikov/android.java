@@ -9,17 +9,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
 import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemAchievementBinding;
+import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.profile.ui.adapter.AchievementAdapter;
-
-/**
- * Created by Trunks on 23.06.2017.
- */
 
 public class AchievementVM extends RecyclerBaseViewModel<Achievements, ItemAchievementBinding> {
     ImageView badge;

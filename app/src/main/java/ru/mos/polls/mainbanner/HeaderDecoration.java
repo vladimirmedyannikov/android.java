@@ -9,9 +9,6 @@ import android.graphics.Shader;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Trunks on 19.01.2018.
- */
 
 public class HeaderDecoration extends RecyclerView.ItemDecoration {
 

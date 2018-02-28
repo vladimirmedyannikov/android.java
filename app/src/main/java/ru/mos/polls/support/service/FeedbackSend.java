@@ -15,10 +15,6 @@ import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by matek3022 on 15.09.17.
- */
-
 public class FeedbackSend{
     public static class Request {
 

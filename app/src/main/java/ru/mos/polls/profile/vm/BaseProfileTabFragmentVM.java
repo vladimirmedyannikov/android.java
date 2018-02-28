@@ -26,8 +26,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.polls.profile.ProfileManagerRX;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -36,6 +34,8 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.friend.ui.utils.FriendGuiUtils;
+import ru.mos.polls.profile.ProfileManagerRX;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.service.AvatarSet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.model.Media;
@@ -45,10 +45,6 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 import ru.mos.polls.util.NetworkUtils;
-
-/**
- * Created by Trunks on 19.06.2017.
- */
 
 public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends UIComponentFragmentViewModel<F, B> implements EasyPermissions.PermissionCallbacks {
     protected RecyclerView recyclerView;

@@ -8,10 +8,6 @@ import ru.mos.polls.friend.model.Statistic;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 11:49.
- */
 
 public class FriendProfile {
     public static class Request extends AuthRequest {

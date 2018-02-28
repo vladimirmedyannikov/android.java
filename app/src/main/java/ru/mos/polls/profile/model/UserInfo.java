@@ -1,9 +1,5 @@
 package ru.mos.polls.profile.model;
 
-/**
- * Created by Trunks on 19.06.2017.
- */
-
 public class UserInfo {
 
     String title;

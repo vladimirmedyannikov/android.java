@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 20.02.18.
- */
 
 public class UpdateEventComment {
     public static class Request extends AuthRequest {

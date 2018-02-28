@@ -4,15 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import ru.mos.polls.innovations.model.Innovation;
 import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.model.base.PageAuthRequest;
-import ru.mos.polls.innovations.model.Innovation;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 17.05.17 11:22.
- */
 
 public class NoveltySelect {
 

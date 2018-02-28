@@ -15,10 +15,6 @@ import ru.mos.polls.survey.variants.values.FloatVariantValue;
 import ru.mos.polls.survey.variants.values.IntVariantValue;
 import ru.mos.polls.survey.variants.values.VariantValue;
 
-/**
- * Created by Trunks on 18.05.2017.
- */
-
 public class VariantValueUnitTest extends BaseUnitTest {
     String title = "title";
 

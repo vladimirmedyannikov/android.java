@@ -57,10 +57,6 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragment, LayoutQuestsBinding, QuestsItemAdapter> {
     public static final String ACTION_CANCEL_CLICK = "ru.mos.polls.newquests.vm.cancel_click";

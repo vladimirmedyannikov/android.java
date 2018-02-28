@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.ItemInnovationActiveBinding;
 import ru.mos.polls.innovations.model.Innovation;
 import ru.mos.polls.innovations.ui.adapter.InnovationsAdapter;
 
-/**
- * Created by Trunks on 02.10.2017.
- */
-
 public class InnovationsItemActiveVM extends InnovationsItemBaseVM<Innovation, ItemInnovationActiveBinding> {
     public InnovationsItemActiveVM(Innovation model) {
         super(model);

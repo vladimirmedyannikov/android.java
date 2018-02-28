@@ -6,10 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.social.model.Message;
 
-/**
- * Created by Trunks on 08.03.2017.
- */
-
 public class MessageUnitTest extends BaseUnitTest {
 
     @Test

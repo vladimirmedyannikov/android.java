@@ -11,12 +11,7 @@ import ru.mos.polls.rxhttp.rxapi.handle.error.ResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.progreessable.DefaultProgressable;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
-import ru.mos.polls.rxhttp.session.Session;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 15.06.17 7:51.
- */
 
 public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver<GeneralResponse<R>> {
 

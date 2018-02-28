@@ -9,10 +9,6 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.ItemNewsBinding;
 import ru.mos.polls.news.model.News;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 26.02.18.
- */
 
 public class NewsVM extends RecyclerBaseViewModel<News, ItemNewsBinding> {
 

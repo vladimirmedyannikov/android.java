@@ -12,22 +12,18 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
+import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.profile.service.AchievementsSelect;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.profile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.StubUtils;
-
-/**
- * Created by Trunks on 16.06.2017.
- */
 
 public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<AchievementTabFragment, FragmentAchievementTabProfileBinding, AchievementAdapter> implements OnAchievementClickListener {
     public List<Achievements> list;

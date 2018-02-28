@@ -12,13 +12,9 @@ import java.util.List;
 import ru.mos.polls.R;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.databinding.FragmentPollBinding;
-import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.poll.ui.PollBaseFragment;
+import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ui.adapter.PagerAdapter;
-
-/**
- * Created by Trunks on 14.09.2017.
- */
 
 public class PollFragmentVM extends FragmentViewModel<PollFragment, FragmentPollBinding> {
     private ViewPager pager;

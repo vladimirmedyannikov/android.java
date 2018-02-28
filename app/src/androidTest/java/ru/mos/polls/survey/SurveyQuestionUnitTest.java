@@ -1,7 +1,6 @@
 package ru.mos.polls.survey;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,10 +14,6 @@ import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.SimpleSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.variants.SurveyVariant;
-
-/**
- * Created by Trunks on 04.05.2017.
- */
 
 public class SurveyQuestionUnitTest extends BaseUnitTest {
 

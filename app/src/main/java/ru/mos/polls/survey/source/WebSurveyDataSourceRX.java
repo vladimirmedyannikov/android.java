@@ -34,10 +34,6 @@ import ru.mos.polls.survey.service.FillPoll;
 import ru.mos.polls.survey.service.GetPoll;
 import ru.mos.polls.util.GuiUtils;
 
-/**
- * Created by Trunks on 21.02.2018.
- */
-
 public class WebSurveyDataSourceRX implements SurveyDataSource {
 
     final BaseActivity actionBarActivity;

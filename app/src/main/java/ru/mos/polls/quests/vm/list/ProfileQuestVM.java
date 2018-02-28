@@ -8,11 +8,6 @@ import ru.mos.polls.databinding.QuestProfileBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.ProfileQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
-
 public class ProfileQuestVM extends PriceQuestVM<ProfileQuest, QuestProfileBinding> {
     public ProfileQuestVM(ProfileQuest model, QuestProfileBinding viewDataBinding) {
         super(model, viewDataBinding);

@@ -4,14 +4,10 @@ import android.os.Bundle;
 
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentPguAuthBinding;
 import ru.mos.polls.base.ui.NavigateFragment;
+import ru.mos.polls.databinding.FragmentPguAuthBinding;
 import ru.mos.polls.profile.vm.PguAuthFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 03.08.2017.
- */
 
 public class PguAuthFragment extends NavigateFragment<PguAuthFragmentVM, FragmentPguAuthBinding> {
     public static PguAuthFragment newInstance(boolean forWizard) {

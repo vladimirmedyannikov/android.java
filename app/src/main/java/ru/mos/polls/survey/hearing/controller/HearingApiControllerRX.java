@@ -15,10 +15,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.survey.hearing.service.AuthPGU;
 import ru.mos.polls.survey.hearing.service.HearingCheck;
 
-/**
- * Created by Trunks on 19.02.2018.
- */
-
 public class HearingApiControllerRX {
     /**
      * Возможные коды ошибок возникающие при вызове метода hearingCheck()

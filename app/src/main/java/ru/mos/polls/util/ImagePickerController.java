@@ -30,10 +30,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.R;
 
-/**
- * Created by Trunks on 20.06.2017.
- */
-
 public class ImagePickerController {
     public static final int MEDIA_PERMISSION_REQUEST_CODE = 987;
     public static final String[] MEDIA_PERMS = {

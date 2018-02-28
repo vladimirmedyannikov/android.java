@@ -3,7 +3,6 @@ package ru.mos.polls.profile.service;
 
 import com.google.gson.annotations.SerializedName;
 
-
 import java.util.List;
 
 import ru.mos.polls.profile.model.flat.Flat;
@@ -11,10 +10,6 @@ import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-
-/**
- * Created by wlTrunks on 14.07.2017.
- */
 
 public class ProfileSet extends AuthRequest {
 

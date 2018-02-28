@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestNoveltyBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.NoveltyQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class NoveltyQuestsVM extends PriceQuestVM<NoveltyQuest, QuestNoveltyBinding> {
     public NoveltyQuestsVM(NoveltyQuest model, QuestNoveltyBinding viewDataBinding) {

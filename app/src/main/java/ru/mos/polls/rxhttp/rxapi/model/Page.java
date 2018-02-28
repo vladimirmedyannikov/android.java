@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Объект для с пагинацией
  * @since 1.0
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 18.12.15 12:47.
  */
 public class Page {
     /**

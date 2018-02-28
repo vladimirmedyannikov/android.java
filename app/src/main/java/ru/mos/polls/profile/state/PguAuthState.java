@@ -11,10 +11,6 @@ import ru.mos.polls.base.ui.CommonToolbarFragment;
 import ru.mos.polls.profile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.survey.hearing.gui.fragment.PguBindFragment;
 
-/**
- * Created by Trunks on 04.07.2017.
- */
-
 public class PguAuthState extends ContentBelowToolbarState<PguAuthState.PguParams> {
 
     public static final int PGU_STATUS = 1;

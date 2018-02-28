@@ -5,17 +5,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
 import ru.mos.polls.base.ui.MenuBindingFragment;
+import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.vm.EditPersonalInfoFragmentVM;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 04.07.2017.
- */
 
 public class EditPersonalInfoFragment extends MenuBindingFragment<EditPersonalInfoFragmentVM, FragmentNewEditPersonalInfoBinding> {
 

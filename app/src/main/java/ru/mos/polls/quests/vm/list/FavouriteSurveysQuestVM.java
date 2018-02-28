@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestFavoriteSurveyBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.FavoriteSurveysQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class FavouriteSurveysQuestVM extends PriceQuestVM<FavoriteSurveysQuest, QuestFavoriteSurveyBinding> {
     public static final String ID_HEARING = "hearing";

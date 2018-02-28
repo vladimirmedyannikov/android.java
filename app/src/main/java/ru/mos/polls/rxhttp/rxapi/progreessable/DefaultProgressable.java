@@ -8,8 +8,6 @@ import android.os.Handler;
  * Прогресс загрузки поумолчанию
  * Прогресс отображается средствами {@link ProgressDialog}
  * @since 1.0
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.10.15 13:12.
  */
 public class DefaultProgressable implements Progressable {
     private final Context context;

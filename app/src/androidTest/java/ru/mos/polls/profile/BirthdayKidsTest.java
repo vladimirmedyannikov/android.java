@@ -6,10 +6,6 @@ import org.junit.Test;
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.profile.model.BirthdayKids;
 
-/**
- * Created by Trunks on 09.11.2017.
- */
-
 public class BirthdayKidsTest extends BaseUnitTest {
 
     @Test

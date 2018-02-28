@@ -12,10 +12,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.subscribes.model.Subscription;
 
-/**
- * Created by Trunks on 22.02.2018.
- */
-
 public class SubscriptionService {
     public static class RequestSetEmail extends AuthRequest {
         Personal personal;

@@ -6,10 +6,6 @@ import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentProfileQuestBinding;
 import ru.mos.polls.profile.vm.ProfileQuestFragmentVM;
 
-/**
- * Created by Trunks on 08.11.2017.
- */
-
 public class ProfileQuestFragment extends NavigateFragment<ProfileQuestFragmentVM, FragmentProfileQuestBinding> {
     @Override
     protected ProfileQuestFragmentVM onCreateViewModel(FragmentProfileQuestBinding binding) {

@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestResultsBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.ResultsQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 08.12.17.
- */
 
 public class ResultsQuestVM extends QuestVM<ResultsQuest, QuestResultsBinding> {
     public ResultsQuestVM(ResultsQuest model, QuestResultsBinding viewDataBinding) {

@@ -11,10 +11,6 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemPointHistoryBinding;
 import ru.mos.polls.mypoints.model.Points;
 
-/**
- * Created by Trunks on 24.08.2017.
- */
-
 public class PointsVM extends RecyclerBaseViewModel<Points, ItemPointHistoryBinding> {
     private final DateFormat df = new SimpleDateFormat("dd.MM.yyyy в HH:mm");
     TextView tvPoints;

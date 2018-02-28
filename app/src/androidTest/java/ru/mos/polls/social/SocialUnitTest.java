@@ -14,10 +14,6 @@ import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.social.storable.AppStorable;
 import ru.mos.social.model.Configurator;
 
-/**
- * Created by Trunks on 13.03.2017.
- */
-
 public class SocialUnitTest extends BaseUnitTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 

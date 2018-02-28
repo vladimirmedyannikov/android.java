@@ -7,10 +7,6 @@ import java.util.List;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 26.02.18.
- */
 
 public class HideNews {
     public static class Request extends AuthRequest {

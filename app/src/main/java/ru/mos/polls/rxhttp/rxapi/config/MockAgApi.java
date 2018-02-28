@@ -12,10 +12,6 @@ import io.reactivex.Observable;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.06.17 10:24.
- */
 
 public abstract class MockAgApi implements AgApi {
     private final Context context;

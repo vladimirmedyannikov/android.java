@@ -15,8 +15,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.AgSocialStatus;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -25,6 +23,8 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentNewEditPersonalInfoBinding;
+import ru.mos.polls.profile.model.AgSocialStatus;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.BirthdayKids;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.Personal;
@@ -36,10 +36,6 @@ import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.InputFilterMinMax;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 04.07.2017.
- */
 
 public class EditPersonalInfoFragmentVM extends UIComponentFragmentViewModel<EditPersonalInfoFragment, FragmentNewEditPersonalInfoBinding> implements OnSocialStatusItemClick {
     public static final int PERSONAL_EMAIL = 33344;

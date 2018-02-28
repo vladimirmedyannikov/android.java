@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestOssNewsBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.NewsOssQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 12.12.17.
- */
 
 public class NewsOssQuestVM extends QuestVM<NewsOssQuest, QuestOssNewsBinding> {
     public NewsOssQuestVM(NewsOssQuest model, QuestOssNewsBinding viewDataBinding) {

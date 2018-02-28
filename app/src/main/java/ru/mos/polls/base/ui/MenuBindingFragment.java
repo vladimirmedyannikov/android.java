@@ -11,9 +11,6 @@ import android.view.View;
 import ru.mos.polls.BR;
 import ru.mos.polls.base.vm.MenuFragmentVM;
 
-/**
- * Created by Trunks on 05.07.2017.
- */
 
 public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends ViewDataBinding> extends NavigateFragment<VM, B> {
     /**

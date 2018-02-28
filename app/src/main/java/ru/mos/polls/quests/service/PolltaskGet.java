@@ -21,10 +21,6 @@ import ru.mos.polls.quests.model.quest.SurveyOssQuest;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 10:53.
- */
 
 public class PolltaskGet {
     public static class Request extends AuthRequest {

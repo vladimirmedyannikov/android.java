@@ -13,8 +13,6 @@ import ru.mos.polls.util.GuiUtils;
  * @see #onSystemError(Throwable) отображение пользователю сообщения с общим текстом ошибки
  * @see #onNotAuthorizedServerError() оповещение о потери сессии {@link Session}
  *
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 21.05.17 17:49.
  */
 
 public class DefaultResponseErrorHandler implements ResponseErrorHandler {

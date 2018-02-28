@@ -11,10 +11,6 @@ import java.util.List;
 import ru.mos.polls.support.model.Subject;
 
 
-/**
- * Created by matek3022 on 15.09.17.
- */
-
 public class SubjectAdapter extends ArrayAdapter<Subject> {
     public SubjectAdapter(Context context, List<Subject> objects) {
         super(context, -1, objects);

@@ -17,10 +17,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
 
-/**
- * Created by Trunks on 18.01.2018.
- */
-
 public class MainBannerView extends LinearLayout {
     RecyclerView recyclerView;
     BannerAdapter adapter;

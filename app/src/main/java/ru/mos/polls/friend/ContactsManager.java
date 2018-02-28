@@ -16,8 +16,6 @@ import ru.mos.polls.util.SMSUtils;
 /**
  * Работа с контактами устройства {@link ContactsContract}
  *
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 01.08.17 22:14.
  */
 
 public class ContactsManager {

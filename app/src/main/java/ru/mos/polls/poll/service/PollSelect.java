@@ -10,10 +10,6 @@ import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.model.base.PageAuthRequest;
 
-/**
- * Created by Trunks on 15.09.2017.
- */
-
 public class PollSelect {
     public static class Request extends PageAuthRequest {
         @SerializedName("kind_filters")

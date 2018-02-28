@@ -2,10 +2,6 @@ package ru.mos.polls.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 27.02.18.
- */
 
 public class PromoAddStatus {
     @SerializedName("added_points")

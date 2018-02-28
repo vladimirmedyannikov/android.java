@@ -18,8 +18,6 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 /**
  * Логика поиска друзей {@link #silentFindFriends()}
  *
- * @author Sergey Elizarov (elizarov1988@gmail.com)
- *         on 07.08.17 17:35.
  */
 
 public class ContactsController {

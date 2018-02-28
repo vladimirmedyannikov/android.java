@@ -3,14 +3,8 @@ package ru.mos.polls.friends;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
-
 import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.friend.model.Friend;
-
-/**
- * Created by Trunks on 15.11.2017.
- */
 
 public class FriendUnitTest extends BaseUnitTest {
 

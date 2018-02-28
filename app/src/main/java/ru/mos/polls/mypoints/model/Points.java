@@ -1,9 +1,5 @@
 package ru.mos.polls.mypoints.model;
 
-/**
- * Created by Trunks on 24.08.2017.
- */
-
 public class Points {
 
     private long date;

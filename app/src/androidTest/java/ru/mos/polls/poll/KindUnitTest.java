@@ -8,10 +8,6 @@ import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.R;
 import ru.mos.polls.poll.model.Kind;
 
-/**
- * Created by Trunks on 25.04.2017.
- */
-
 public class KindUnitTest extends BaseUnitTest {
 
     @Test

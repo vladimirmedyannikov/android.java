@@ -6,10 +6,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentSourcesVotingBinding;
 import ru.mos.polls.sourcesvoting.vm.SourcesVotingFragmentVM;
 
-/**
- * Created by Trunks on 13.10.2017.
- */
-
 public class SourcesVotingFragment extends BindingFragment<SourcesVotingFragmentVM, FragmentSourcesVotingBinding> {
 
     public static SourcesVotingFragment newInstance() {

@@ -4,10 +4,6 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by wlTrunks on 14.06.2017.
- */
-
 public class RxEventBus {
     /**
      * Класс для отлавливания событий вместо броадкастов

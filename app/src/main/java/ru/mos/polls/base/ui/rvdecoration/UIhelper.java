@@ -22,10 +22,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 
-/**
- * Created by Trunks on 11.08.2017.
- */
-
 public class UIhelper {
 
     public static void setRecyclerList(RecyclerView recyclerView, Context context) {

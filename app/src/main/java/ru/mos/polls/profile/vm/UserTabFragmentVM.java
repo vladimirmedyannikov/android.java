@@ -16,9 +16,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.Achievements;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -27,6 +24,9 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentUserTabProfileBinding;
+import ru.mos.polls.profile.model.Achievements;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.Statistics;
 import ru.mos.polls.profile.service.EmptyResponse;
 import ru.mos.polls.profile.service.GetStatistics;
 import ru.mos.polls.profile.service.VisibilitySet;
@@ -38,9 +38,6 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.NetworkUtils;
 
-/**
- * Created by Trunks on 08.06.2017.
- */
 
 public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment, FragmentUserTabProfileBinding> implements AvatarPanelClickListener {
 

@@ -7,10 +7,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentHouseAddressBinding;
 import ru.mos.polls.electronichouse.vm.HouseAddressFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 01.12.17.
- */
 
 public class HouseAddressFragment extends BindingFragment<HouseAddressFragmentVM, FragmentHouseAddressBinding> {
 

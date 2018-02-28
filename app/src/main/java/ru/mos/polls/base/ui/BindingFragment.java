@@ -1,9 +1,5 @@
 package ru.mos.polls.base.ui;
 
-/**
- * Created by wlTrunks on 07.06.2017.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;

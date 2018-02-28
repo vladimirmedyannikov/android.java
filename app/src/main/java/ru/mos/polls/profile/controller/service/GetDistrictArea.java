@@ -6,9 +6,6 @@ import ru.mos.polls.profile.model.DistrictArea;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Trunks on 16.02.2018.
- */
 
 public class GetDistrictArea {
     public static class Request extends AuthRequest {

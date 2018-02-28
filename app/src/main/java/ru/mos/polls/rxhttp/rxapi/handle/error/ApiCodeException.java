@@ -1,9 +1,5 @@
 package ru.mos.polls.rxhttp.rxapi.handle.error;
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 13.06.17 11:59.
- */
 
 public class ApiCodeException extends Exception {
     private int serverCode;

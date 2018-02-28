@@ -21,10 +21,6 @@ import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.sourcesvoting.ui.SourcesVotingFragment;
 import ru.mos.polls.sourcesvoting.ui.adapter.SourcesVotingAdapter;
 
-/**
- * Created by Trunks on 13.10.2017.
- */
-
 public class SourcesVotingFragmentVM extends PullablePaginationFragmentVM<SourcesVotingFragment, FragmentSourcesVotingBinding, SourcesVotingAdapter> {
 
     public SourcesVotingFragmentVM(SourcesVotingFragment fragment, FragmentSourcesVotingBinding binding) {

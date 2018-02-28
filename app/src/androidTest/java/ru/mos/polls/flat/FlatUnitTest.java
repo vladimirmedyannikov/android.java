@@ -7,12 +7,8 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.BaseUnitTest;
-
-/**
- * Created by Trunks on 02.02.2017.
- */
+import ru.mos.polls.profile.model.flat.Flat;
 
 public class FlatUnitTest extends BaseUnitTest {
     Context appContext = InstrumentationRegistry.getTargetContext();

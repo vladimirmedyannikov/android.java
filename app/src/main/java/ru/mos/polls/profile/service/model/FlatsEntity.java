@@ -3,12 +3,6 @@ package ru.mos.polls.profile.service.model;
 
 import java.util.List;
 
-
-/**
- * Created by Trunks on 20.07.2017.
- */
-
-
 public class FlatsEntity {
 
     private RegistrationEntity registration;

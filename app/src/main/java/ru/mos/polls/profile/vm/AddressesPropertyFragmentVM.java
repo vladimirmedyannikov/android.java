@@ -6,16 +6,12 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.ProfileManagerRX;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -25,6 +21,9 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.ui.rvdecoration.UIhelper;
 import ru.mos.polls.databinding.FragmentAddressesPropertyBinding;
+import ru.mos.polls.profile.ProfileManagerRX;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.FlatsEntity;
 import ru.mos.polls.profile.state.NewFlatState;
@@ -32,10 +31,6 @@ import ru.mos.polls.profile.ui.adapter.AddressesAdapter;
 import ru.mos.polls.profile.ui.fragment.AddressesPropertyFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.GuiUtils;
-
-/**
- * Created by Trunks on 25.10.2017.
- */
 
 public class AddressesPropertyFragmentVM extends UIComponentFragmentViewModel<AddressesPropertyFragment, FragmentAddressesPropertyBinding> implements onAddressesDeleteIconClickListener {
     AddressesAdapter adapter;

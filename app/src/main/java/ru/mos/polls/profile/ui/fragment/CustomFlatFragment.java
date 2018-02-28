@@ -3,16 +3,12 @@ package ru.mos.polls.profile.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 
-import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentCustomFlatBinding;
 import ru.mos.polls.base.ui.MenuBindingFragment;
+import ru.mos.polls.databinding.FragmentCustomFlatBinding;
+import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.vm.CustomFlatFragmentVM;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 03.08.2017.
- */
 
 public class CustomFlatFragment extends MenuBindingFragment<CustomFlatFragmentVM, FragmentCustomFlatBinding> {
     public static final String EXTRA_FLAT = "extra_flat";

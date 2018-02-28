@@ -1,13 +1,9 @@
 package ru.mos.polls.profile.vm;
 
 
-import ru.mos.polls.databinding.UserInfoItemBinding;
 import ru.mos.polls.base.vm.BaseVM;
+import ru.mos.polls.databinding.UserInfoItemBinding;
 import ru.mos.polls.profile.model.UserInfo;
-
-/**
- * Created by Trunks on 19.06.2017.
- */
 
 public class UserInfoVM extends BaseVM<UserInfo, UserInfoItemBinding> {
 

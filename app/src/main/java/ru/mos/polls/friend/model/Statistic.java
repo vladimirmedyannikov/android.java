@@ -5,11 +5,6 @@ import java.util.List;
 import ru.mos.polls.profile.model.Statistics;
 
 
-/**
- * Created by Sergey Elizarov (sergey.elizarov@altarix.ru)
- * on 06.07.17 11:59.
- */
-
 public class Statistic {
     private String status;
     private int rating;

@@ -13,10 +13,6 @@ import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentWizardProfileBinding;
 import ru.mos.polls.wizardprofile.vm.WizardProfileFragmentVM;
 
-/**
- * Created by Trunks on 27.07.2017.
- */
-
 public class WizardProfileFragment extends BindingFragment<WizardProfileFragmentVM, FragmentWizardProfileBinding> {
 
     public static final int RESULT_CODE_START_PROFILE_FOR_INFO_PAGE = 19546;

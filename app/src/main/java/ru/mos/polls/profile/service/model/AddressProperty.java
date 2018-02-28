@@ -1,9 +1,5 @@
 package ru.mos.polls.profile.service.model;
 
-/**
- * Created by Trunks on 25.10.2017.
- */
-
 public class AddressProperty {
 
     /**

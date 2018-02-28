@@ -9,10 +9,6 @@ import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.poll.vm.item.PollItemActiveVM;
 import ru.mos.polls.poll.vm.item.PollItemOldVM;
 
-/**
- * Created by Trunks on 14.09.2017.
- */
-
 public class PollAdapter extends BaseRecyclerAdapter<RecyclerBaseViewModel> {
 
     public PollAdapter() {

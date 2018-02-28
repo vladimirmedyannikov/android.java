@@ -10,10 +10,6 @@ import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class QuestsFragment extends MenuBindingFragment<QuestsFragmentVM, LayoutQuestsBinding> {
 

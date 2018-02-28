@@ -3,12 +3,8 @@ package ru.mos.polls.aguser;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.BaseUnitTest;
-
-/**
- * Created by Trunks on 17.08.2017.
- */
+import ru.mos.polls.profile.model.AgUser;
 
 public class GenderUnitTest extends BaseUnitTest {
     AgUser.Gender female = AgUser.Gender.FEMALE;

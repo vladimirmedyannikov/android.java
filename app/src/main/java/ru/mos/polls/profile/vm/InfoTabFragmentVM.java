@@ -19,8 +19,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.polls.profile.model.AgSocialStatus;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -28,16 +26,14 @@ import ru.mos.polls.base.component.PullableUIComponent;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.databinding.FragmentInfoTabProfileBinding;
+import ru.mos.polls.profile.model.AgSocialStatus;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.UserInfo;
 import ru.mos.polls.profile.ui.adapter.UserInfoAdapter;
 import ru.mos.polls.profile.ui.fragment.InfoTabFragment;
 import ru.mos.polls.social.model.AppSocial;
 import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.GuiUtils;
-
-/**
- * Created by Trunks on 16.06.2017.
- */
 
 public class InfoTabFragmentVM extends BaseProfileTabFragmentVM<InfoTabFragment, FragmentInfoTabProfileBinding> implements AvatarPanelClickListener {
     LinearLayout socialBindingLayer;

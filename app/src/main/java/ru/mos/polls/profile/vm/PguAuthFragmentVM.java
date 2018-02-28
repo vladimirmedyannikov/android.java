@@ -5,18 +5,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.R;
-import ru.mos.polls.databinding.FragmentPguAuthBinding;
 import ru.mos.polls.base.vm.FragmentViewModel;
+import ru.mos.polls.databinding.FragmentPguAuthBinding;
+import ru.mos.polls.popup.PopupController;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.state.PguAuthState;
 import ru.mos.polls.profile.ui.fragment.PguAuthFragment;
-import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
-
-/**
- * Created by Trunks on 03.08.2017.
- */
 
 public class PguAuthFragmentVM extends FragmentViewModel<PguAuthFragment, FragmentPguAuthBinding> {
     public static final int PGU_AUTH = 13245;

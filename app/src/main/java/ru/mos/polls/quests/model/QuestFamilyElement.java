@@ -4,14 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.model.quest.RateAppQuest;
-import ru.mos.polls.poll.model.Kind;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 07.12.17.
- */
 
 public class QuestFamilyElement {
     @SerializedName("sub_ids")

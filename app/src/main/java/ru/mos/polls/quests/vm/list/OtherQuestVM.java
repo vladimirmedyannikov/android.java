@@ -5,10 +5,6 @@ import ru.mos.polls.databinding.QuestOtherBinding;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.model.quest.OtherQuest;
 
-/**
- * @author matek3022 (semenovmm@altarix.ru)
- *         on 06.12.17.
- */
 
 public class OtherQuestVM extends QuestVM<OtherQuest, QuestOtherBinding> {
     public OtherQuestVM(OtherQuest model, QuestOtherBinding viewDataBinding) {

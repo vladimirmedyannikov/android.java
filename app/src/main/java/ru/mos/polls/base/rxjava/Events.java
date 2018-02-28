@@ -7,10 +7,6 @@ import ru.mos.polls.poll.model.Poll;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
 
-/**
- * Created by wlTrunks on 14.06.2017.
- */
-
 public class Events {
     private Events() {
     }

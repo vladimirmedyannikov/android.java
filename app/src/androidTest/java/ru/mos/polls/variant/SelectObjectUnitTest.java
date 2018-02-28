@@ -13,10 +13,6 @@ import ru.mos.polls.survey.variants.select.GorodSelectObject;
 import ru.mos.polls.survey.variants.select.ServiceSelectActivity;
 import ru.mos.polls.survey.variants.select.ServiceSelectObject;
 
-/**
- * Created by Trunks on 22.05.2017.
- */
-
 public class SelectObjectUnitTest extends BaseUnitTest {
 
     @Test

@@ -7,10 +7,6 @@ import ru.mos.polls.BaseUnitTest;
 import ru.mos.polls.survey.parsers.SurveyQuestionFactory;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 
-/**
- * Created by Trunks on 16.05.2017.
- */
-
 public class RadioboxSurveyQuestionUnitTest extends BaseUnitTest {
 
     @Test

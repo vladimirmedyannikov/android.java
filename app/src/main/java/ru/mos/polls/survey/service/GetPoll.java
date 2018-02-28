@@ -6,10 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-/**
- * Created by Trunks on 21.02.2018.
- */
-
 public class GetPoll {
     public static class Request extends AuthRequest {
         @SerializedName("hearing_id")

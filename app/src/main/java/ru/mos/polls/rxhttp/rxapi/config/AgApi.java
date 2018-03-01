@@ -44,6 +44,7 @@ import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
 import ru.mos.polls.profile.ui.views.service.AddressesService;
+import ru.mos.polls.push.service.RegisterPush;
 import ru.mos.polls.quests.controller.service.Hide;
 import ru.mos.polls.quests.controller.service.HideNews;
 import ru.mos.polls.quests.controller.service.SmsInviteNotice;
@@ -161,6 +162,7 @@ public interface AgApi {
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
             String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
             String LOG_OUT = "json/v0.2/auth/user/logout";
+            String PUSH_REGISTER = "json/v0.2/push/android/register";
         }
     }
 
@@ -343,6 +345,9 @@ public interface AgApi {
 
     @POST("/" + Api.Methods.LOG_OUT)
     Observable<EmptyResponse> logOut(@Body ProfileGet.LoginRequest body);
+
+    @POST("/" + Api.Methods.PUSH_REGISTER)
+    Observable<RegisterPush.Response> registerPush(@Body RegisterPush.Request body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FIND_VARIANTS)
     Observable<SelectService.VariantsResponse> findVariants(@Body SelectService.Request body);

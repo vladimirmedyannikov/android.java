@@ -10,20 +10,17 @@ import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.ToolbarDynamicActivity;
-import ru.mos.polls.UrlManager;
 import ru.mos.polls.WebViewActivity;
 import ru.mos.polls.about.model.AboutItem;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.LayoutAboutAppBinding;
-import ru.mos.polls.fragments.DynamicFragment;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
+import ru.mos.polls.ourapps.state.OurAppsState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.state.SupportState;
@@ -80,11 +77,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                         case AboutItem.OUR_APPS:
                             Statistics.ourApps();
                             GoogleStatistics.AGNavigation.ourApps();
-                            intent = new Intent(getActivity(), ToolbarDynamicActivity.class);
-                            intent.putExtra(DynamicFragment.BASE_URL, API.getURL(UrlManager.url(UrlManager.Controller.INFORAMTION, UrlManager.Methods.GET_OUR_APPS)));
-                            intent.putExtra(DynamicFragment.PARAMS, "{\"user_agent\": \"android\"}");
-                            intent.putExtra(DynamicFragment.DEF_TITLE, getActivity().getString(R.string.our_apps));
-                            getActivity().startActivity(intent);
+                            getFragment().navigateTo().state(Add.newActivity(new OurAppsState(), ru.mos.polls.base.ui.BaseActivity.class));
                             break;
                         case AboutItem.SHARE_SOCIAL:
                             SocialUIController.showSocialsDialog(disposables, (BaseActivity) getActivity(), new SocialUIController.SocialClickListener() {

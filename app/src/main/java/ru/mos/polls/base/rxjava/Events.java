@@ -268,6 +268,21 @@ public class Events {
         }
     }
 
+    public static class OurAppEvents extends BaseEvents {
+        public static final int OPEN_APPS = 1;
+
+        private String link;
+
+        public OurAppEvents(String link) {
+            this.link = link;
+            eventType = OPEN_APPS;
+        }
+
+        public String getLink() {
+            return link;
+        }
+    }
+
     abstract static class BaseEvents {
         protected int eventType;
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,6 @@ import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
 import ru.mos.polls.event.controller.EventApiControllerRX;
 import ru.mos.polls.event.gui.activity.EventActivity;
-import ru.mos.polls.fragments.AgDynamicFragment;
 import ru.mos.polls.friend.ContactsController;
 import ru.mos.polls.friend.ui.fragment.FriendsFragment;
 import ru.mos.polls.geotarget.GeotargetApiControllerRX;
@@ -267,6 +267,16 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                                         String.valueOf(action.getNews().getId()),
                                         true,
                                         true);
+                                break;
+                        }
+                    }
+                    if (o instanceof Events.OurAppEvents) {
+                        Events.OurAppEvents action = (Events.OurAppEvents) o;
+                        switch (action.getEventType()) {
+                            case Events.OurAppEvents.OPEN_APPS:
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(((Events.OurAppEvents) o).getLink()));
+                                this.startActivity(intent);
                                 break;
                         }
                     }

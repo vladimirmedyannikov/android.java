@@ -258,7 +258,6 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
 
     public void visibilityFlatInput(int gone) {
         addFlatLayout.setVisibility(gone);
-//        warningContainer.setVisibility(gone);
     }
 
     @Override

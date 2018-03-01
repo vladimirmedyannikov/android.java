@@ -362,5 +362,5 @@ public interface AgApi {
     Observable<GeneralResponse<List<Value>>> getAddressStreetList(@Body AddressesService.Request body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_HOUSE_LIST)
-    Observable<AddressesService.Response> getAddressHouseList(@Body AddressesService.Request body);
+    Observable<GeneralResponse<List<Value>>> getAddressHouseList(@Body AddressesService.Request body);
 }

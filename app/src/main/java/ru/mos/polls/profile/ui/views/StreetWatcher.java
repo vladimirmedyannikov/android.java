@@ -7,11 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,12 +18,10 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.profile.model.flat.StreetAdapter;
 import ru.mos.polls.profile.model.flat.Value;
-import ru.mos.polls.UrlManager;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.helpers.TextHelper;
 import ru.mos.polls.profile.ui.views.service.AddressesService;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 
 public class StreetWatcher implements TextWatcher {
@@ -41,7 +34,6 @@ public class StreetWatcher implements TextWatcher {
         streets.add("пер");
         streets.add("про");
         streets.add("нов");
-
         return streets;
     }
 
@@ -69,56 +61,27 @@ public class StreetWatcher implements TextWatcher {
         String pattern = s.toString();
         if (pattern.length() < 3)
             return;
-
         progressBar.setVisibility(View.VISIBLE);
-//        final Response.Listener<JSONArray> listener = new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                progressBar.setVisibility(View.INVISIBLE);
-//                ArrayAdapter<Value> adapter = new StreetAdapter(activity, R.layout.elk_item_dropdown);
-//                int count = response.length();
-//                for (int i = 0, length = count; i < length; i++) {
-//                    JSONObject val = response.optJSONObject(i);
-//                    String label = val.optString("label");
-//                    label = TextHelper.capitalizeFirstLatter(label);
-//                    if (val.isNull("terr_name"))
-//                        adapter.add(new Value(val.optString("value"), label));
-//                    else
-//                        adapter.add(new Value(val.optString("value"), label, val.optString("terr_name")));
-//                }
-//                atv.setAdapter(adapter);
-//                if (atv.hasFocus())
-//                    atv.showDropDown();
-//                request = null;
-//                StreetWatcher.this.listener.onDataLoaded(count);
-//            }
-//        };
-//        JSONObject params = new JSONObject();
-//        try {
-//            params.put("term", pattern);
-//            params.put("limit", 250);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        Response.ErrorListener errorListener = new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                progressBar.setVisibility(View.INVISIBLE);
-//                request = null;
-//            }
-//        };
-//        request = new JsonArrayRequest(API.getURL(UrlManager.url(UrlManager.Controller.AGPROFILE, UrlManager.Methods.GET_ADDRESS_STREET_LIST)), params, listener, errorListener);
-//        activity.addRequest(request);
-        AddressesService.Request request = new AddressesService.Request(pattern,250);
         HandlerApiResponseSubscriber<List<Value>> handler = new HandlerApiResponseSubscriber<List<Value>>(activity, null) {
             @Override
             protected void onResult(List<Value> result) {
+                progressBar.setVisibility(View.INVISIBLE);
+                ArrayAdapter<Value> adapter = new StreetAdapter(activity, R.layout.elk_item_dropdown);
+                atv.setAdapter(adapter);
+                adapter.addAll(result);
+                if (atv.hasFocus())
+                    atv.showDropDown();
                 StreetWatcher.this.listener.onDataLoaded(result.size());
+            }
+
+            @Override
+            public void onHasError(GeneralResponse<List<Value>> generalResponse) {
+                progressBar.setVisibility(View.INVISIBLE);
             }
         };
         activity.getDisposables().add(AGApplication
                 .api
-                .getAddressStreetList(new AddressesService.Request(pattern,250))
+                .getAddressStreetList(new AddressesService.Request(pattern, 250))
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,9 +89,6 @@ public class StreetWatcher implements TextWatcher {
     }
 
     public interface Listener {
-
         void onDataLoaded(int count);
-
     }
-
 }

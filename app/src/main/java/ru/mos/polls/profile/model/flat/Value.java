@@ -2,9 +2,12 @@ package ru.mos.polls.profile.model.flat;
 
 import com.google.gson.annotations.SerializedName;
 
+import ru.mos.polls.helpers.TextHelper;
+
 public class Value {
     private String value;
     private String label;
+    @SerializedName("terr_name")
     private String territory;
     @SerializedName("area_id")
     String areaId;
@@ -32,7 +35,7 @@ public class Value {
     }
 
     public String getLabel() {
-        return label;
+        return TextHelper.capitalizeFirstLatter(label);
     }
 
     public void setLabel(String label) {

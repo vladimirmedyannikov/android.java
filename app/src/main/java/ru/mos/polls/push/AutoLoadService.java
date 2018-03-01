@@ -24,19 +24,15 @@ public class AutoLoadService extends Service {
     public static final int REFRESH_DATA = 6;
     private CompositeDisposable disposable;
 
-//    private RequestQueue requestQueue;
 
     @Override
     public void onCreate() {
         super.onCreate();
         disposable = new CompositeDisposable();
-//        requestQueue = Volley.newRequestQueue(this);
     }
 
     @Override
     public void onDestroy() {
-//		requestQueue.stop();
-//		requestQueue = null;
         disposable.clear();
         super.onDestroy();
     }

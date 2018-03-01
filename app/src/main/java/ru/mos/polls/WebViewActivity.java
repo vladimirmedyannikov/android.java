@@ -17,14 +17,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.model.NewsFindModel;
 import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
+import ru.mos.polls.service.NewsFind;
 import ru.mos.polls.util.NetworkUtils;
 
 
@@ -295,33 +299,26 @@ public class WebViewActivity extends ToolbarAbstractActivity {
     }
 
     private void findShareUrl(long id) {
-//        String url = API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.FIND));
-//        JSONObject requestJson = new JSONObject();
-//        try {
-//            JSONObject authJson = new JSONObject();
-//            authJson.put(Session.SESSION_ID, Session.getSession(this));
-//            requestJson.put(Session.AUTH, authJson);
-//            requestJson.put(ID, id);
-//        } catch (JSONException ignored) {
-//        }
-//        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                if (jsonObject != null) {
-//                    shareUrl = jsonObject.optString("public_site_url");
-//                    boolean isShareEnable = !TextUtils.isEmpty(shareUrl) && !"null".equalsIgnoreCase(shareUrl);
-//                    if (shareMenuItem != null) {
-//                        shareMenuItem.setVisible(isShareEnable);
-//                    }
-//                }
-//
-//            }
-//        };
-//        Response.ErrorListener errorListener = new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//            }
-//        };
-//        addRequest(new JsonObjectRequest(url, requestJson, responseListener, errorListener));
+        HandlerApiResponseSubscriber<NewsFindModel> handler = new HandlerApiResponseSubscriber<NewsFindModel>() {
+            @Override
+            protected void onResult(NewsFindModel result) {
+                shareUrl = result.getPublicSiteUrl();
+                boolean isShareEnable = !TextUtils.isEmpty(shareUrl) && !"null".equalsIgnoreCase(shareUrl);
+                if (shareMenuItem != null) {
+                    shareMenuItem.setVisible(isShareEnable);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                super.onError(throwable);
+            }
+        };
+        disposables.add(AGApplication
+                .api
+                .findNews(new NewsFind.Request(id))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(handler));
     }
 }

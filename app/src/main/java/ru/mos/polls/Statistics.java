@@ -612,4 +612,7 @@ public class Statistics {
     public static void logon() {
         FlurryAgent.logEvent("authorization");
     }
+    public static void customEvent(String name, Map<String, String> params) {
+        FlurryAgent.logEvent(name, params);
+    }
 }

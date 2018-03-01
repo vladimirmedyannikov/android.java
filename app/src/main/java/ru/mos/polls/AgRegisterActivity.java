@@ -23,14 +23,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.polls.util.Dialogs;
-import ru.mos.elk.netframework.request.StringRequest;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -57,8 +54,8 @@ public class AgRegisterActivity extends BaseActivity {
 
         configActionButton();
         configPhoneEdit();
-        tvError = (TextView) findViewById(ru.mos.elk.R.id.tvError);
-        ru.mos.elk.Statistics.authEnterRegistration();
+        tvError = (TextView) findViewById(R.id.tvError);
+        Statistics.authEnterRegistration();
 
         Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer_link));
         TextView offer = (TextView) findViewById(R.id.tvOffer);
@@ -147,7 +144,7 @@ public class AgRegisterActivity extends BaseActivity {
     }
 
     private void configActionButton() {
-        btnAction = findViewById(ru.mos.elk.R.id.btnAction);
+        btnAction = findViewById(R.id.btnAction);
         btnAction.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -163,7 +160,7 @@ public class AgRegisterActivity extends BaseActivity {
     }
 
     private void configPhoneEdit() {
-        etPhoneNumber = (EditText) findViewById(ru.mos.elk.R.id.etPhoneNumber);
+        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         TextWatcher watcher = new TextWatcher() {
 
             @Override
@@ -182,7 +179,7 @@ public class AgRegisterActivity extends BaseActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (etPhoneNumber.getText().length() == 10 && (actionId == ru.mos.elk.R.id.actionLogin || actionId == EditorInfo.IME_ACTION_DONE)) {
+                if (etPhoneNumber.getText().length() == 10 && (actionId == R.id.actionLogin || actionId == EditorInfo.IME_ACTION_DONE)) {
                     register();
                     return true;
                 }
@@ -219,48 +216,10 @@ public class AgRegisterActivity extends BaseActivity {
             tvError.setVisibility(View.GONE);
 
             dialog = Dialogs.showProgressDialog(this, waitId);
-            Response.Listener<String> listener = new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    onRegistrationSuccess();
-                }
-
-            };
-            Response.ErrorListener errListener = new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    onRegistrationFail(error, dialog);
-                }
-            };
-            String url = API.getURL("json/v0.3/auth/user/recoverypassword");
-            addRequest(new StringRequest(url, getQueryParams(), listener, errListener, false), dialog);
         }
     }
 
-    protected void onRegistrationFail(VolleyError error, ProgressDialog dialog) {
-        dialog.dismiss();
-        tvError.setText(error.getMessage());
-        tvError.setVisibility(View.VISIBLE);
-    }
-
-    protected void onRegistrationSuccess() {
-        if (successId == R.string.elk_succeeded_register)
-            Statistics.registration();
-        else if (successId == R.string.elk_succeeded_restore)
-            Statistics.passwRecovered();
-        dialog.dismiss();
-        Toast.makeText(this, successId, Toast.LENGTH_LONG).show();
-        String phone = etPhoneNumber.getText().toString();
-
-        SharedPreferences prefs = getSharedPreferences(AgUser.PREFS, Activity.MODE_PRIVATE);
-        prefs.edit().putString(AgUser.PHONE, "7" + phone).commit();
-        startAuth();
-        statistics.check(true);
-    }
-
     protected int getLayout() {
-        return ru.mos.elk.R.layout.activity_register;
+        return R.layout.activity_register;
     }
 }

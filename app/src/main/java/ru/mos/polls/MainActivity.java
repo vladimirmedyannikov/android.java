@@ -593,8 +593,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     @Override
     public void onBackPressed() {
-        AgDynamicFragment df = (AgDynamicFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS);
-        if (df == null || !df.canGoBack()) {
+//        AgDynamicFragment df = (AgDynamicFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS);
+//        if (df == null || !df.canGoBack()) {
             if (isFirstBack) {
                 isFirstBack = false;
                 Toast.makeText(this, R.string.one_more_back_to_exit, Toast.LENGTH_SHORT).show();
@@ -613,7 +613,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 isFirstBack = true;
                 super.onBackPressed();
             }
-        }
+//        }
     }
 
     @Override

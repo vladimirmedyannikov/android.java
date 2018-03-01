@@ -12,11 +12,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley2.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
@@ -65,7 +66,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
     boolean isOwnAchievement;
     private String achievementId;
     private Achievement achievement;
-    private ImageLoader imageLoader;
+    ImageLoader imageLoader;
     private SocialController socialController;
     private PostCallback postCallback = new PostCallback() {
         @Override
@@ -86,7 +87,7 @@ public class AchievementActivity extends ToolbarAbstractActivity {
         setContentView(R.layout.activity_achievement);
         ButterKnife.bind(this);
         setTitle(R.string.achievement_tab_title);
-        imageLoader = createImageLoader();
+        imageLoader = AGApplication.getImageLoader();
         socialController = new SocialController(this);
         if (getAchievement()) {
             loadAchievement();

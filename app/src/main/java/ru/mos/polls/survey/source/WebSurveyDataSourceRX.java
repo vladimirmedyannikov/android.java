@@ -17,9 +17,9 @@ import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.elk.Statistics;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.electronichouse.vm.HousePollFragmentVM;

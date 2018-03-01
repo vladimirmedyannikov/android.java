@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.text.TextUtils;
 
-import com.android.volley2.RequestQueue;
-import com.android.volley2.toolbox.Volley;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONException;
@@ -16,9 +14,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import ru.mos.elk.netframework.request.ResponseErrorCode;
-import ru.mos.elk.simplenet.ServiceJSONClient;
-import ru.mos.elk.simplenet.URLMethod;
 import ru.mos.polls.api.API;
 
 public class AutoLoadService extends Service {    
@@ -26,18 +21,18 @@ public class AutoLoadService extends Service {
 	public static final int GCM_REGISTER = 5;
     public static final int REFRESH_DATA = 6;
 
-    private RequestQueue requestQueue;
+//    private RequestQueue requestQueue;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-        requestQueue = Volley.newRequestQueue(this);
+//        requestQueue = Volley.newRequestQueue(this);
 	}
 	
 	@Override
 	public void onDestroy() {
-		requestQueue.stop();
-		requestQueue = null;
+//		requestQueue.stop();
+//		requestQueue = null;
 		super.onDestroy();
 	}
 	
@@ -85,13 +80,13 @@ public class AutoLoadService extends Service {
 						params.put("device_info", deviceInfo);
 						params.put("empAction", "registerPush");
 
-						ServiceJSONClient client = new ServiceJSONClient();
-						client.communicate(URLMethod.POST, API.getURL(GCMHelper.REGISTER_PATH), params);
-						if(client.getErrorCode()==HttpURLConnection.HTTP_OK){
-							JSONObject response = new JSONObject(client.getResponse());
-							if(response.optInt("errorCode")==ResponseErrorCode.OK)
-								prefs.edit().putBoolean(GCMHelper.PROPERTY_ON_SERVER, true).commit();
-						}
+//						ServiceJSONClient client = new ServiceJSONClient();
+//						client.communicate(URLMethod.POST, API.getURL(GCMHelper.REGISTER_PATH), params);
+//						if(client.getErrorCode()==HttpURLConnection.HTTP_OK){
+//							JSONObject response = new JSONObject(client.getResponse());
+//							if(response.optInt("errorCode")==ResponseErrorCode.OK)
+//								prefs.edit().putBoolean(GCMHelper.PROPERTY_ON_SERVER, true).commit();
+//						}
 					}
 				} catch (IOException e) {
 					e.printStackTrace();

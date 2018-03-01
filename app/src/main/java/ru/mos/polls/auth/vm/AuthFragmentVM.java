@@ -92,7 +92,7 @@ public class AuthFragmentVM extends UIComponentFragmentViewModel<AuthFragment, F
     }
 
     public void onAction() {
-        final ProgressDialog dialog = Dialogs.showProgressDialog(getActivity(), ru.mos.elk.R.string.elk_wait_authorization);
+        final ProgressDialog dialog = Dialogs.showProgressDialog(getActivity(), R.string.elk_wait_authorization);
         GuiUtils.hideKeyboard(password);
         tvError.setVisibility(View.GONE);
         ProfileManagerRX.AgUserListener listener = new ProfileManagerRX.AgUserListener() {

@@ -301,9 +301,6 @@ public class AgAuthActivity extends BaseActivity {
                         }).setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(AgAuthActivity.this, AgRestoreActivity.class);
-                        intent.putExtra("phone", etLogin.getUnmaskedText());
-                        startActivityForResult(intent, REQUEST_RESTORE);
                     }
                 }).show();
                 break;

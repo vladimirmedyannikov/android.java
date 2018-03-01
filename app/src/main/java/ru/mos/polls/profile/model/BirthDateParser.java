@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import ru.mos.elk.R;
+import ru.mos.polls.R;
+
 
 public class BirthDateParser implements Parcelable {
 

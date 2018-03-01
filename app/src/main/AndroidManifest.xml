@@ -78,12 +78,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="ru.mos.polls.AgRestoreActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
             android:name="ru.mos.polls.instruction.InstructionActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
@@ -121,11 +115,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
 
-        <activity
-            android:name="ru.mos.polls.offer.OfferActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/offer_request"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="ru.mos.polls.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -196,11 +186,6 @@
             android:label="@string/gorod_select_title"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".DinamicWithArrowActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".AgChangePasswordActivity"
             android:configChanges="orientation|screenSize"

@@ -47,7 +47,7 @@ public class PopupItem {
 
         PopupItem[] ITEMS = new PopupItem[]{
                 /*new PopupItem(HOW_IT_WORKS, R.string.how_it_works),*/
-                new PopupItem(RECOVERY_PASSWORD, R.string.recovery_password),
+//                new PopupItem(RECOVERY_PASSWORD, R.string.recovery_password),
                 new PopupItem(FEEDBACK, R.string.feedback)
         };
 

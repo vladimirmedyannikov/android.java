@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import ru.mos.elk.R;
+import ru.mos.polls.R;
+
 
 public class StreetAdapter extends ArrayAdapter<Value> {
 

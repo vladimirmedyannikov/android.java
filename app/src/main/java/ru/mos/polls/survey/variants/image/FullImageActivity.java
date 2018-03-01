@@ -4,17 +4,17 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.android.volley2.RequestQueue;
-import com.android.volley2.VolleyError;
-import com.android.volley2.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import ru.mos.elk.netframework.utils.BitmapLruCache;
-import ru.mos.polls.AbstractActivity;
+import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
-import ru.mos.polls.helpers.BitmapHelper;
 import ru.mos.polls.helpers.TitleHelper;
 
 public class FullImageActivity extends ToolbarAbstractActivity {
@@ -33,31 +33,28 @@ public class FullImageActivity extends ToolbarAbstractActivity {
         if (TextUtils.isEmpty(url)) {
             finish();
         } else {
-            /**
-             * Исопльзуем общую очередь зарпосов
-             */
-            RequestQueue queue = AbstractActivity.RequestQueueManager.getInstance(this).getQueue();
-            /**
-             * Используем общий кеш для картнок
-             */
-            BitmapLruCache cache = BitmapHelper.BitmapLruCacheManager.getInstance(5000).getCache();
-
-            ImageLoader imageLoader = new ImageLoader(queue, cache);
-            imageLoader.get(url, new ImageLoader.ImageListener() {
-
+            ImageLoader imageLoader = AGApplication.getImageLoader();
+            imageLoader.loadImage(url, new ImageLoadingListener() {
                 @Override
-                public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                    Bitmap btmp = imageContainer.getBitmap();
-                    imageView.setImageBitmap(btmp);
+                public void onLoadingStarted(String s, View view) {
                 }
 
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    /**
-                     * Иногда все ж суда попадаем, не выводим сообщение
-                     */
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                    String errorMessage = String.format(getString(R.string.error_occurs), failReason.getType().toString());
+                    Toast.makeText(FullImageActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
 
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+                }
             });
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

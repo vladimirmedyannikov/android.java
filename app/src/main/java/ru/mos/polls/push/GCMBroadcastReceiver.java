@@ -18,7 +18,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.rxhttp.session.Session;
+
 
 /** Simple realization of push receiving class. If push intent contains "action" key, then it will be proceeded as "emp push". Otherwise nonEmpAction class will be used
  * For emp pushed to be shown guid in push parameters and in application must be equal.
@@ -66,7 +67,7 @@ public class GCMBroadcastReceiver extends BroadcastReceiver{
             if(!checkGuid(context,bundle.getString(GCMHelper.GUID))) {
                 return;
             }
-            if(!isAuthReq ||(isAuthReq && Session.isAuthorized(context))){
+            if(!isAuthReq ||(isAuthReq && Session.get().hasSession())){
                 action.onPushRecived(intent);
                 if (!action.isPushNotValid()) {
                     notifyUser(context, msgTitle, msgBody, action);

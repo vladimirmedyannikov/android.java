@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
@@ -35,8 +33,8 @@ public abstract class PullableFragment extends Fragment {
 
         if (ptrLayout != null) {
             ptrLayout.setColorSchemeResources(R.color.green_light, R.color.green_light/*, R.color.lightGreen*/);
-            StopRefreshListener listener = new StopRefreshListener();
-            ptrLayout.setOnRefreshListener(getOnRefreshListener(listener, listener));
+//            StopRefreshListener listener = new StopRefreshListener();
+//            ptrLayout.setOnRefreshListener(getOnRefreshListener(listener, listener));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ptrLayout.setProgressViewOffset(false, 0,200);
@@ -72,25 +70,25 @@ public abstract class PullableFragment extends Fragment {
         }
     }
 
-    public abstract SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(Response.Listener<Object> responseListener, Response.ErrorListener errorListener);
-
-    private class StopRefreshListener implements Response.Listener<Object>,
-            Response.ErrorListener,
-            SwipeRefreshLayout.OnRefreshListener {
-
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            ptrLayout.setRefreshing(false);
-        }
-
-        @Override
-        public void onResponse(Object jsonObject) {
-            ptrLayout.setRefreshing(false);
-        }
-
-
-        @Override
-        public void onRefresh() {
-        }
-    }
+//    public abstract SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(Response.Listener<Object> responseListener, Response.ErrorListener errorListener);
+//
+//    private class StopRefreshListener implements Response.Listener<Object>,
+//            Response.ErrorListener,
+//            SwipeRefreshLayout.OnRefreshListener {
+//
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            ptrLayout.setRefreshing(false);
+//        }
+//
+//        @Override
+//        public void onResponse(Object jsonObject) {
+//            ptrLayout.setRefreshing(false);
+//        }
+//
+//
+//        @Override
+//        public void onRefresh() {
+//        }
+//    }
 }

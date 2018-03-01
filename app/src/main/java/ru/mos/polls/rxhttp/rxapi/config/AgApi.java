@@ -26,11 +26,13 @@ import ru.mos.polls.innovations.service.NoveltySelect;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.mypoints.service.HistoryGet;
 import ru.mos.polls.news.service.NewsGet;
+import ru.mos.polls.ourapps.service.GetOurApps;
 import ru.mos.polls.poll.service.PollSelect;
 import ru.mos.polls.profile.controller.service.GetAchievement;
 import ru.mos.polls.profile.controller.service.GetDistrictArea;
 import ru.mos.polls.profile.controller.service.GetReference;
 import ru.mos.polls.profile.model.Reference;
+import ru.mos.polls.profile.model.flat.Value;
 import ru.mos.polls.profile.service.AchievementsGet;
 import ru.mos.polls.profile.service.AchievementsSelect;
 import ru.mos.polls.profile.service.AvatarSet;
@@ -41,6 +43,7 @@ import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
+import ru.mos.polls.profile.ui.views.service.AddressesService;
 import ru.mos.polls.quests.controller.service.Hide;
 import ru.mos.polls.quests.controller.service.HideNews;
 import ru.mos.polls.quests.controller.service.SmsInviteNotice;
@@ -96,6 +99,7 @@ public interface AgApi {
             String GEOTARGET = "geotarget";
             String NEWS = "news";
             String PROMOCODE = "PromoCode";
+            String INFORAMTION = "information";
         }
 
         interface Methods {
@@ -111,7 +115,6 @@ public interface AgApi {
             String GET_ACHIEVEMENTS = "getAchievement";
             String GET_PROFILE = "getProfile";
             String SET_PROFILE = "setProfile";
-            String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
             String VISIBLE = "visible";
             String GET_HISTORY = "getHistory";
             String GET_FEEDBACK_SUBJECTS = "getFeedbackSubjects";
@@ -150,6 +153,9 @@ public interface AgApi {
             String SMS_INVITATION_NOTICE = "smsInvitationNotice";
             String FIND_OBJECTS = "findObjects";
             String FIND_VARIANTS = "findVariants";
+            String GET_OUR_APPS = "getOurApps";
+            String GET_ADDRESS_STREET_LIST = "getAddressStreetList";
+            String GET_ADDRESS_HOUSE_LIST = "getAddressHouseList";
 
             String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
             String RECOVERY_PASSWORD = "json/v0.3/auth/user/recoverypassword";
@@ -339,4 +345,13 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLL + "/" + Api.Methods.FIND_OBJECTS)
     Observable<SelectService.ObjectsResponse> findObjects(@Body SelectService.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.INFORAMTION + "/" + Api.Methods.GET_OUR_APPS)
+    Observable<GetOurApps.Response> getOurApps(@Body GetOurApps.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
+    Observable<GeneralResponse<List<Value>>> getAddressStreetList(@Body AddressesService.Request body);
+
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_HOUSE_LIST)
+    Observable<AddressesService.Response> getAddressHouseList(@Body AddressesService.Request body);
 }

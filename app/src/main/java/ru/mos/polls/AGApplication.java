@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.support.multidex.MultiDexApplication;
 
-import com.android.volley2.VolleyLog;
 import com.appsflyer.AppsFlyerLib;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -153,7 +152,6 @@ public class AGApplication extends MultiDexApplication {
         API.registerPush(this);
 
         API.setBuildVersionName(UrlManager.V250);
-        VolleyLog.setIsDebug(!BuildConfig.BUILD_TYPE.equals("release"));
 
         GCMBroadcastReceiver.addAction("promo", getPromoAction());
         GCMBroadcastReceiver.addAction("share", getShareAction());

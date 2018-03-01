@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.survey.hearing.service.AuthPGU;
 import ru.mos.polls.survey.hearing.service.HearingCheck;
 
@@ -48,7 +48,7 @@ public class HearingApiControllerRX {
          * в ходе запроса как обычно приходит сессия,
          * но это сессия пгу, восстанавливаем сессию аг
          */
-        final String agSessionId = Session.getSession(context);
+        final String agSessionId = Session.get().getSession();
         HandlerApiResponseSubscriber<AuthPGU.Response.Result> handler;
         handler = getPguHandler(context, listener, agSessionId);
         disposable.add(AGApplication
@@ -60,7 +60,7 @@ public class HearingApiControllerRX {
     }
 
     public static void pguAuth(CompositeDisposable disposable, final Context context, String pguLogin, String pguPassword, final HearingApiControllerRX.PguAuthListener listener) {
-        final String agSessionId = Session.getSession(context);
+        final String agSessionId = Session.get().getSession();
         HandlerApiResponseSubscriber<AuthPGU.Response.Result> handler;
         handler = getPguHandler(context, listener, agSessionId);
         disposable.add(AGApplication
@@ -77,7 +77,7 @@ public class HearingApiControllerRX {
             @Override
             public void onNext(GeneralResponse<AuthPGU.Response.Result> generalResponse) {
                 super.onNext(generalResponse);
-                Session.setSession(agSessionId);
+                Session.get().setSession(agSessionId);
                 if (generalResponse.hasError()) {
                     if (listener != null) {
                         listener.onError(generalResponse.getErrorMessage());

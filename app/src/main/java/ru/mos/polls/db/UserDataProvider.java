@@ -22,7 +22,7 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
-import ru.mos.elk.R;
+import ru.mos.polls.R;
 
 
 public class UserDataProvider extends ContentProvider{

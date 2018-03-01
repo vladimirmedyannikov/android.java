@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import ru.mos.elk.Constants;
 import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.util.AgTextUtil;
 
@@ -33,6 +32,7 @@ import ru.mos.polls.util.AgTextUtil;
  * @since 1.9
  */
 public class AgUser implements Serializable {
+    long MINUTE = 60000L;
     public static final String PREFS = "ru.mos.elk.PREFS";
 
     public static final String PERSONAL_EXPIRED = "personal_expired";
@@ -301,7 +301,7 @@ public class AgUser implements Serializable {
         editor.putInt(CHILDRENS_COUNT, childCount);
         editor.putBoolean(HAS_CAR, isCarExist);
         editor.putString(CHILDREN_BIRTHDAYS, childBirthdaysAsJsonArray().toString());
-        editor.putLong(PERSONAL_EXPIRED, System.currentTimeMillis() + Constants.MINUTE * 10);
+        editor.putLong(PERSONAL_EXPIRED, System.currentTimeMillis() + MINUTE * 10);
         editor.putBoolean(IS_EMAIL_CONFIRMED, isEmailConfirmed);
         editor.putBoolean(IS_PGU_CONNECTED, isPguConnected);
         editor.putBoolean(IS_PROFILE_VISIBLE, isProfileVisible);

@@ -17,18 +17,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ru.mos.elk.netframework.request.JsonObjectRequest;
-import ru.mos.elk.netframework.request.Session;
-import ru.mos.polls.api.API;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.quests.controller.QuestsApiControllerRX;
@@ -303,33 +295,33 @@ public class WebViewActivity extends ToolbarAbstractActivity {
     }
 
     private void findShareUrl(long id) {
-        String url = API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.FIND));
-        JSONObject requestJson = new JSONObject();
-        try {
-            JSONObject authJson = new JSONObject();
-            authJson.put(Session.SESSION_ID, Session.getSession(this));
-            requestJson.put(Session.AUTH, authJson);
-            requestJson.put(ID, id);
-        } catch (JSONException ignored) {
-        }
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                if (jsonObject != null) {
-                    shareUrl = jsonObject.optString("public_site_url");
-                    boolean isShareEnable = !TextUtils.isEmpty(shareUrl) && !"null".equalsIgnoreCase(shareUrl);
-                    if (shareMenuItem != null) {
-                        shareMenuItem.setVisible(isShareEnable);
-                    }
-                }
-
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-        };
-        addRequest(new JsonObjectRequest(url, requestJson, responseListener, errorListener));
+//        String url = API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.FIND));
+//        JSONObject requestJson = new JSONObject();
+//        try {
+//            JSONObject authJson = new JSONObject();
+//            authJson.put(Session.SESSION_ID, Session.getSession(this));
+//            requestJson.put(Session.AUTH, authJson);
+//            requestJson.put(ID, id);
+//        } catch (JSONException ignored) {
+//        }
+//        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                if (jsonObject != null) {
+//                    shareUrl = jsonObject.optString("public_site_url");
+//                    boolean isShareEnable = !TextUtils.isEmpty(shareUrl) && !"null".equalsIgnoreCase(shareUrl);
+//                    if (shareMenuItem != null) {
+//                        shareMenuItem.setVisible(isShareEnable);
+//                    }
+//                }
+//
+//            }
+//        };
+//        Response.ErrorListener errorListener = new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//            }
+//        };
+//        addRequest(new JsonObjectRequest(url, requestJson, responseListener, errorListener));
     }
 }

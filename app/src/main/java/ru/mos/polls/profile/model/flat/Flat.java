@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-import ru.mos.elk.R;
+import ru.mos.polls.R;
 import ru.mos.polls.db.UserData;
 import ru.mos.polls.db.UserDataProvider;
 import ru.mos.polls.util.AgTextUtil;
@@ -177,7 +177,6 @@ public class Flat implements Serializable {
      * Объект квартиы, сохраненный локально на устройстве
      *
      * @param context
-     * @param type    тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      * @return
      */
     public static Flat fromDb(Context context, Type type) {
@@ -246,7 +245,6 @@ public class Flat implements Serializable {
      * Удаление адреса из локальной бд
      *
      * @param context
-     * @param type    тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      */
     public static void delete(Context context, Type type) {
         ContentResolver cr = context.getContentResolver();
@@ -259,7 +257,6 @@ public class Flat implements Serializable {
      * Квартира пользователя
      *
      * @param cursor курсор таблицы flat
-     * @param type   тип кватиры {@link ru.mos.elk.profile.flat.Flat.Type}
      */
     public Flat(Cursor cursor, Type type) {
         if (cursor != null) {

@@ -32,7 +32,6 @@ import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
 import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.util.Dialogs;
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
@@ -147,7 +146,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.btnAction)
     public void onAction() {
-        final ProgressDialog dialog = Dialogs.showProgressDialog(this, ru.mos.elk.R.string.elk_wait_authorization);
+        final ProgressDialog dialog = Dialogs.showProgressDialog(this, R.string.elk_wait_authorization);
         GuiUtils.hideKeyboard(etCode);
         tvError.setVisibility(View.GONE);
 
@@ -197,7 +196,6 @@ public class AgPhoneConfirmActivity extends BaseActivity {
             auth.put("login", "7" + phone);
             auth.put("password", etCode.getText().toString());
             auth.put(GCMHelper.GUID, getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE).getString(GCMHelper.GUID, null));
-            params.put(Session.AUTH, auth);
             SharedPreferences gcmPrefs = getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE);
             if (!gcmPrefs.getBoolean(GCMHelper.PROPERTY_ON_SERVER, false)) {
                 JSONObject deviceInfo = new JSONObject();

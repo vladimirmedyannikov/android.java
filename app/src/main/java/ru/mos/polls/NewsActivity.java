@@ -44,8 +44,8 @@ public class NewsActivity extends AbstractActivity {
 
     @Override
     public void onBackPressed() {
-        DynamicFragment df = (DynamicFragment) getSupportFragmentManager().findFragmentByTag("news");
-        if (df == null || !df.canGoBack())
+//        DynamicFragment df = (DynamicFragment) getSupportFragmentManager().findFragmentByTag("news");
+//        if (df == null || !df.canGoBack())
             super.onBackPressed();
     }
 

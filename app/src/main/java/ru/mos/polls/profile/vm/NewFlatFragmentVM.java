@@ -215,7 +215,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
         etBuilding.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == ru.mos.elk.R.id.actionLogin || actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == R.id.actionLogin || actionId == EditorInfo.IME_ACTION_NEXT) {
                     return true;
                 }
                 return false;

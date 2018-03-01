@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.quests.model.quest.ProfileQuest;
 import ru.mos.polls.quests.model.quest.RateAppQuest;
 import ru.mos.polls.quests.model.quest.SocialQuest;
+import ru.mos.polls.rxhttp.session.Session;
 
 /**
  * Инкапсулирует обработку неявного старта экрана через url scheme
@@ -55,7 +55,6 @@ public abstract class UrlSchemeController {
     /**
      * Обработка запуска заданий, экранов списка мероприятий, голосований и другое
      * Запуск заданий не срабатывает при старте через url scheme, так как экран уже запущен
-     * поэтому задания обрабатываем старым методом через {@link ru.mos.polls.quests.QuestsFragment.Listener}
      *
      * Но через url scheme удается открывать экраны списка голосований, мероприятий, новинок, новостей
      *
@@ -214,7 +213,7 @@ public abstract class UrlSchemeController {
     public static void startFromUri(Activity activity, UriListener uriListener) {
         Uri uri = activity.getIntent().getData();
         if (uri != null) {
-            if (Session.isAuthorized(activity)) {
+            if (Session.get().hasSession()) {
                 /**
                  * Пользователь атворизован, "вытягиваем" из параметров url
                  * нужные данные для работы экрана

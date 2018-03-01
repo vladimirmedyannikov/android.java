@@ -39,7 +39,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
@@ -48,6 +47,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.util.NetworkUtils;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -157,9 +157,9 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
         request.setMimeType(mimetype);
         cookieManager = CookieManager.getInstance();
         PersistentConfig persistentConfig = new PersistentConfig(activity.getApplicationContext());
-        persistentConfig.setCookie(getCookies(Session.getSession(activity.getApplicationContext())));
+        persistentConfig.setCookie(getCookies(Session.get().getSession()));
         cookieManager.setCookie(host, persistentConfig.getCookieString());
-        request.addRequestHeader("Cookie", getCookies(Session.getSession(activity.getApplicationContext())));
+        request.addRequestHeader("Cookie", getCookies(Session.get().getSession()));
         request.setDescription("Downloading file...");
         request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
         request.allowScanningByMediaScanner();
@@ -208,7 +208,7 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
             CookieSyncManager.createInstance(activity);
             cookieManager = CookieManager.getInstance();
             PersistentConfig persistentConfig = new PersistentConfig(activity.getApplicationContext());
-            persistentConfig.setCookie(getCookies(Session.getSession(activity.getApplicationContext())));
+            persistentConfig.setCookie(getCookies(Session.get().getSession()));
             sessionCookie = persistentConfig.getCookieString();
             if (sessionCookie != null) {
                 cookieManager.removeSessionCookie();

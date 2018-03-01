@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Remove;
-import ru.mos.elk.netframework.request.Session;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -29,6 +28,7 @@ import ru.mos.polls.databinding.LayoutSupportBinding;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.support.model.Subject;
 import ru.mos.polls.support.service.FeedbackSend;
 import ru.mos.polls.support.service.SubjectsLoad;
@@ -184,7 +184,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                         getBinding().etEmail.getText().toString(),
                         getBinding().etMessage.getText().toString(),
                         getBinding().orderNumber.getText().toString(),
-                        Session.getSession(getActivity())))
+                        Session.get().getSession()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservabl.subscribeWith(handler));

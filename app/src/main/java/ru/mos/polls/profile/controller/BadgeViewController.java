@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.android.volley2.VolleyError;
-import com.android.volley2.toolbox.ImageLoader;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import ru.mos.polls.profile.model.Achievement;
 
@@ -19,28 +21,28 @@ public class BadgeViewController {
                 && !"null".equalsIgnoreCase(achievement.getImageUrl())) {
             badge.setVisibility(View.GONE);
             loadingBadgeProgress.setVisibility(View.VISIBLE);
-            imageLoader.get(achievement.getImageUrl(), new ImageLoader.ImageListener() {
+            imageLoader.loadImage(achievement.getImageUrl(), new ImageLoadingListener() {
                 @Override
-                public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if (imageContainer != null) {
-                        Bitmap bitmap = imageContainer.getBitmap();
-                        if (bitmap != null) {
-                            badge.setImageBitmap(bitmap);
-                            badge.setVisibility(View.VISIBLE);
-                            loadingBadgeProgress.setVisibility(View.GONE);
-                        }
-                    }
+                public void onLoadingStarted(String s, View view) {
                 }
 
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
                     badge.setVisibility(View.GONE);
                     loadingBadgeProgress.setVisibility(View.GONE);
                 }
 
-                private void setImageVisible(boolean visibility) {
-                    badge.setVisibility(visibility ? View.VISIBLE : View.GONE);
-                    loadingBadgeProgress.setVisibility(visibility ? View.GONE : View.VISIBLE);
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    if (bitmap != null) {
+                        badge.setImageBitmap(bitmap);
+                        badge.setVisibility(View.VISIBLE);
+                        loadingBadgeProgress.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
                 }
             });
         }

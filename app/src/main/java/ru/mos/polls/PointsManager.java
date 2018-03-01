@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-import ru.mos.elk.Constants;
 import ru.mos.polls.db.PollsData;
 import ru.mos.polls.db.PollsProvider;
 import ru.mos.polls.model.PointHistory;
 import ru.mos.polls.model.UserPoints;
+import ru.mos.polls.util.Constants;
 
 
 public abstract class PointsManager {

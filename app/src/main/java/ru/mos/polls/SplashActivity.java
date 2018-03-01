@@ -8,14 +8,14 @@ import android.view.MotionEvent;
 
 import com.appsflyer.AppsFlyerLib;
 
-import ru.mos.elk.api.API;
-import ru.mos.elk.netframework.request.Session;
+import ru.mos.polls.rxhttp.session.Session;
+
 
 public class SplashActivity extends Activity {
 
     public static void startApp(Context context) {
         Intent intent = new Intent(context, AgAuthActivity.class);
-        if (Session.isAuthorized(context)) {
+        if (Session.get().hasSession()) {
             intent = new Intent(context, MainActivity.class);
         }
         intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
@@ -30,7 +30,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        API.registerPush(this);
         AppsFlyerLib.sendTracking(getApplicationContext());
 
         AppsFlyerLib.sendTracking(getApplicationContext());

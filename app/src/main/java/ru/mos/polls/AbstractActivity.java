@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.android.volley2.RequestQueue;
-import com.android.volley2.toolbox.Volley;
 
 import ru.mos.polls.base.activity.BaseActivity;
 
@@ -78,32 +76,6 @@ public abstract class AbstractActivity extends BaseActivity {
             }
         } catch (WindowManager.BadTokenException ignored) {
 
-        }
-    }
-
-    /**
-     * Один объект очереди для запросов
-     */
-    public static class RequestQueueManager {
-        private static RequestQueueManager instance;
-        private RequestQueue queue;
-
-        private RequestQueueManager(Context context) {
-            if (queue == null) {
-                queue = Volley.newRequestQueue(context, null, null);
-            }
-        }
-
-        public static synchronized RequestQueueManager getInstance(Context context) {
-            if (instance == null) {
-                instance = new RequestQueueManager(context);
-            }
-
-            return instance;
-        }
-
-        public RequestQueue getQueue() {
-            return queue;
         }
     }
 

@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import me.ilich.juggler.change.Add;
-import ru.mos.polls.AgRestoreActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.BaseActivity;
@@ -99,13 +98,13 @@ public abstract class PopupController {
                         InstructionActivity.startActivity(context);
                         popupWindow.dismiss();
                         break;
-                    case PopupItem.Auth.RECOVERY_PASSWORD:
-                        new GoogleStatistics.Auth().recoveryClick();
-                        Intent intent = new Intent(context, AgRestoreActivity.class);
-                        intent.putExtra("phone", phone);
-                        context.startActivity(intent);
-                        popupWindow.dismiss();
-                        break;
+//                    case PopupItem.Auth.RECOVERY_PASSWORD:
+//                        new GoogleStatistics.Auth().recoveryClick();
+//                        Intent intent = new Intent(context, AgRestoreActivity.class);
+//                        intent.putExtra("phone", phone);
+//                        context.startActivity(intent);
+//                        popupWindow.dismiss();
+//                        break;
                     case PopupItem.Auth.FEEDBACK:
                         new GoogleStatistics.Auth().feedbackClick();
 //                        AgSupportActivity.startActivity(context);

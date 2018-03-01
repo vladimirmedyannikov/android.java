@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,22 +161,22 @@ public abstract class AbstractEventsFragment extends PullableFragment {
         }
     }
 
-
-    @Override
-    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(final Response.Listener<Object> responseListener, final Response.ErrorListener errorListener) {
-        return new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                /**
-                 * при pull-to-refresh удаляем все мероприятия из списка
-                 * обновляем pageInfo
-                 */
-                pageInfo.clear();
-                events.clear();
-                refreshEvents();
-            }
-        };
-    }
+//
+//    @Override
+//    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(final Response.Listener<Object> responseListener, final Response.ErrorListener errorListener) {
+//        return new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                /**
+//                 * при pull-to-refresh удаляем все мероприятия из списка
+//                 * обновляем pageInfo
+//                 */
+//                pageInfo.clear();
+//                events.clear();
+//                refreshEvents();
+//            }
+//        };
+//    }
 
     protected void refreshEvents() {
         refreshEvents(false, false);

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley2.Response;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,19 +54,14 @@ public class StatusFragment extends PullableFragment {
         currentAction = PointHistory.Action.ALL;
     }
 
-    @Override
-    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(Response.Listener<Object> responseListener, Response.ErrorListener errorListener) {
-        return null;
-    }
+//    @Override
+//    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener(Response.Listener<Object> responseListener, Response.ErrorListener errorListener) {
+//        return null;
+//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (this instanceof MyPointsFragment) {
-            processPoints();
-        } else {
-            processCurrentPoints();
-        }
     }
 
     /**

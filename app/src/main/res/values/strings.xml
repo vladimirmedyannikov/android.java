@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="elk_authority">ru.mos.polls.elk.AUTHORITY</string>
     <string name="polls_authority">ru.mos.polls.AUTHORITY</string>
@@ -847,4 +847,32 @@
     <string name="elk_wait_delete">Удаление…</string>
     <string name="elk_wait_update">Обновление…</string>
     <string name="elk_wait_block">Блокировка…</string>
+
+    <!-- from ELK -->
+    <string name="add_address">Добавить адрес</string>
+    <string name="elk_street">Улица</string>
+    <string name="elk_building">Строение</string>
+    <string name="elk_password">Пароль</string>
+    <string name="elk_authorize">Войти</string>
+    <string name="elk_oldPassword">Текущий пароль</string>
+    <string name="elk_newPassword">Новый пароль</string>
+    <string name="elk_info_change_password">Новый пароль должен содержать не менее %s символов.</string>
+    <string name="elk_restoreBtn">Восстановить</string>
+    <string name="title_formatted_address" formatted="false" tools:ignore="StringFormatInvalid">%s, %s</string>
+    <string-array name="elk_birthdate_months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+    <string name="elk_birthdate_pattern" formatted="false">%s %s %s г.р.</string>
+    <string name="elk_succeeded_change">Пароль успешно изменен</string>
 </resources>

@@ -6,18 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import com.android.volley2.Response;
-import com.android.volley2.VolleyError;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import ru.mos.elk.R;
-import ru.mos.elk.netframework.request.JsonArrayRequest;
-import ru.mos.polls.profile.model.flat.Value;
-import ru.mos.polls.UrlManager;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 
 
@@ -27,7 +16,7 @@ public class BuildingWatcher implements TextWatcher {
     private final AutoCompleteTextView etStreet;
     private final AutoCompleteTextView atv;
     private final View progressBar;
-    private JsonArrayRequest request;
+//    private JsonArrayRequest request;
     private final Listener listener;
 
     public BuildingWatcher(BaseActivity activity, AutoCompleteTextView etStreet, AutoCompleteTextView atv, View progressBar, Listener listener) {
@@ -53,45 +42,45 @@ public class BuildingWatcher implements TextWatcher {
         if (newBuilding.length() == 0)
             return;
 
-        if (request != null)
-            request.cancel();
+//        if (request != null)
+//            request.cancel();
 
         progressBar.setVisibility(View.VISIBLE);
-        final Response.Listener<JSONArray> listener = new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                ArrayAdapter<Value> newAdapter = new ArrayAdapter<Value>(activity, R.layout.elk_item_dropdown, R.id.tvTitle);
-                progressBar.setVisibility(View.INVISIBLE);
-                int count = response.length();
-                for (int i = 0, length = count; i < length; i++) {
-                    JSONObject val = response.optJSONObject(i);
-                    newAdapter.add(new Value(val.optString("value"), val.optString("label")));
-                }
-                atv.setAdapter(newAdapter);
-                if (atv.hasFocus())
-                    atv.showDropDown();
-                request = null;
-                BuildingWatcher.this.listener.onDataLoaded(count);
-            }
-        };
-        JSONObject params = new JSONObject();
-        try {
-            params.put("term", newBuilding);
-            params.put("limit", 1000);
-            params.put("ul", etStreet.getTag());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.INVISIBLE);
-                request = null;
-            }
-        };
-        request = new JsonArrayRequest(API.getURL(UrlManager.url(UrlManager.Controller.AGPROFILE, UrlManager.Methods.GET_ADDRESS_HOUSE_LIST)), params, listener, errorListener);
-        activity.addRequest(request);
+//        final Response.Listener<JSONArray> listener = new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                ArrayAdapter<Value> newAdapter = new ArrayAdapter<Value>(activity, R.layout.elk_item_dropdown, R.id.tvTitle);
+//                progressBar.setVisibility(View.INVISIBLE);
+//                int count = response.length();
+//                for (int i = 0, length = count; i < length; i++) {
+//                    JSONObject val = response.optJSONObject(i);
+//                    newAdapter.add(new Value(val.optString("value"), val.optString("label")));
+//                }
+//                atv.setAdapter(newAdapter);
+//                if (atv.hasFocus())
+//                    atv.showDropDown();
+//                request = null;
+//                BuildingWatcher.this.listener.onDataLoaded(count);
+//            }
+//        };
+//        JSONObject params = new JSONObject();
+//        try {
+//            params.put("term", newBuilding);
+//            params.put("limit", 1000);
+//            params.put("ul", etStreet.getTag());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Response.ErrorListener errorListener = new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                progressBar.setVisibility(View.INVISIBLE);
+//                request = null;
+//            }
+//        };
+//        request = new JsonArrayRequest(API.getURL(UrlManager.url(UrlManager.Controller.AGPROFILE, UrlManager.Methods.GET_ADDRESS_HOUSE_LIST)), params, listener, errorListener);
+//        activity.addRequest(request);
         this.listener.onAfterTextChanged(s);
     }
 

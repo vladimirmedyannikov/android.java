@@ -14,8 +14,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.api.API;
 import ru.mos.polls.push.service.RegisterPush;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 
 public class AutoLoadService extends Service {
@@ -53,7 +53,7 @@ public class AutoLoadService extends Service {
 
     private void pushRegister() {
         final SharedPreferences prefs = getSharedPreferences(GCMHelper.PREFERENCES, MODE_PRIVATE);
-        final String guid = API.getGUID(this);
+        final String guid = AgApiBuilder.getGUID(this);
         Thread gcmThread = new Thread() {
             public void run() {
                 try {

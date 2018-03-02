@@ -21,15 +21,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.mos.polls.util.Dialogs;
-import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.api.API;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.popup.PopupController;
 

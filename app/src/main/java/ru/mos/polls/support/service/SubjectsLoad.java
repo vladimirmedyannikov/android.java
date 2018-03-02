@@ -2,7 +2,7 @@ package ru.mos.polls.support.service;
 
 import java.util.List;
 
-import ru.mos.polls.api.Token;
+import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.support.model.Subject;
 
@@ -11,7 +11,7 @@ public class SubjectsLoad {
     public static class Request {
         String token;
         public Request() {
-            token = Token.AG.getToken(true);
+            token = AgApiBuilder.token().get();
         }
     }
 

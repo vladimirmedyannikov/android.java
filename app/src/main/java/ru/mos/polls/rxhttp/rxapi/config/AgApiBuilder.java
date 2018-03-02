@@ -1,5 +1,8 @@
 package ru.mos.polls.rxhttp.rxapi.config;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,6 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.mos.polls.BuildConfig;
+import ru.mos.polls.push.GCMHelper;
 
 
 public class AgApiBuilder {
@@ -107,6 +111,19 @@ public class AgApiBuilder {
     private static String getUUID() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
+    }
+
+
+    public static String getGUID(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(GCMHelper.PREFERENCES, Context.MODE_PRIVATE);
+        String guid;
+        if (prefs.contains(GCMHelper.GUID))
+            guid = prefs.getString(GCMHelper.GUID, null);
+        else {
+            guid = UUID.randomUUID().toString();
+            prefs.edit().putString(GCMHelper.GUID, guid).commit();
+        }
+        return guid;
     }
 
     /**

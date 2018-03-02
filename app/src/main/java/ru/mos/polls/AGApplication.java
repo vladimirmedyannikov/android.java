@@ -29,8 +29,6 @@ import java.io.File;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
-import ru.mos.polls.api.API;
-import ru.mos.polls.api.Token;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.RxEventBus;
 import ru.mos.polls.db.UserData;
@@ -42,6 +40,7 @@ import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.push.GCMBroadcastReceiver;
+import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.push.PushChannel;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
@@ -139,19 +138,20 @@ public class AGApplication extends MultiDexApplication {
         BaseActivity.setFlurryKey(getString(R.string.ag_flurry_key));
         AppsFlyerLib.setAppsFlyerKey("TvVxifM6uMLnGmiZEwifAi");
 
-        if (BuildConfig.BUILD_TYPE.equals("customer")) {
-            Token.AG.setCustomToken("ag_uat_token3");
-            Token.AG.setIsCustom(true);
-        } else if (BuildConfig.BUILD_TYPE.equals("release")) {
-            API.setIsDebug(false);
-        } else {
-            API.setIsDebug(true);
-        }
-        API.setToken(Token.AG);
+//        if (BuildConfig.BUILD_TYPE.equals("customer")) {
+//            Token.AG.setCustomToken("ag_uat_token3");
+//            Token.AG.setIsCustom(true);
+//        }
+//        else if (BuildConfig.BUILD_TYPE.equals("release")) {
+//            API.setIsDebug(false);
+//        } else {
+//            API.setIsDebug(true);
+//        }
+//        API.setToken(Token.AG);
 
-        API.registerPush(this);
+        GCMHelper.registerPush(this);
 
-        API.setBuildVersionName(UrlManager.V250);
+//        API.setBuildVersionName(UrlManager.V250);
 
         GCMBroadcastReceiver.addAction("promo", getPromoAction());
         GCMBroadcastReceiver.addAction("share", getShareAction());

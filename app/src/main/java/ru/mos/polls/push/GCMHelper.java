@@ -1,7 +1,9 @@
 package ru.mos.polls.push;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
 public abstract class GCMHelper {
@@ -31,5 +33,13 @@ public abstract class GCMHelper {
 			// should never happen
 			throw new RuntimeException("Could not get package name: " + e);
 		}
+	}
+
+	public static void registerPush(Context context) {
+		if (context.checkCallingOrSelfPermission("com.google.android.c2dm.permission.RECEIVE") != PackageManager.PERMISSION_GRANTED)
+			return;
+		Intent intent = new Intent(context, AutoLoadService.class);
+		intent.putExtra(AutoLoadService.TASK, AutoLoadService.GCM_REGISTER);
+		context.startService(intent);
 	}
 }

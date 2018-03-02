@@ -146,6 +146,6 @@ public interface AgApi {
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + Api.Controllers.POLLTASK + "/" + Api.Methods.GET)
     Observable<PolltaskGet.Response> getPolltasks(@Body PolltaskGet.Request body);
 
-    @POST("/" + AgApi.Api.Versions.V_2_4_1 + "/" + AgApi.Api.Controllers.POLLTASK + "/" + Api.Methods.GET_BANNER_STATISTICS)
+    @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.POLLTASK + "/" + Api.Methods.GET_BANNER_STATISTICS)
     Observable<GetBannerStatistics.Response> getBannerStatistics();
 }

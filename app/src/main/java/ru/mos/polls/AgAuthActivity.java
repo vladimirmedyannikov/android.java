@@ -102,7 +102,9 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GuiUtils.showKeyboard(etLogin);
+        if (EasyPermissions.hasPermissions(this, SMS_PERMS)) {
+            GuiUtils.showKeyboard(etLogin);
+        }
     }
 
 

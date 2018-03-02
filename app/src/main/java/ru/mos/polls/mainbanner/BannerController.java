@@ -11,7 +11,7 @@ import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.mainbanner.service.GetBannerStatistics;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 /**
  * Created by Trunks on 19.01.2018.
@@ -38,6 +38,13 @@ public class BannerController {
                 if (!headerAdded) {
                     recyclerView.addItemDecoration(new HeaderDecoration(bannerView));
                     headerAdded = true;
+                }
+            }
+
+            @Override
+            public void onNext(GeneralResponse<GetBannerStatistics.Response.Result> generalResponse) {
+                if (!generalResponse.hasError()) {
+                    onResult(generalResponse.getResult());
                 }
             }
 

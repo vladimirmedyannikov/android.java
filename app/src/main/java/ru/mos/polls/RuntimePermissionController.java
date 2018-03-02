@@ -2,8 +2,11 @@ package ru.mos.polls;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -58,21 +61,31 @@ public class RuntimePermissionController {
      */
     public void requestRuntimePermission(final String permission, final int requestCode) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setMessage(R.string.permission_not_available)
-                    .setPositiveButton(R.string.app_continue, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(activity,
-                                    new String[]{permission},
-                                    requestCode);
-                        }
-                    });
-            builder.show();
-        } else {
             ActivityCompat.requestPermissions(activity,
                     new String[]{permission},
                     requestCode);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            if (Build.VERSION.SDK_INT >= 23 && !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                builder.setMessage(R.string.permission_not_available_goto_settings)
+                        .setPositiveButton("Да", (dialog, which) -> {
+                            Intent i = new Intent();
+                            i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            i.addCategory(Intent.CATEGORY_DEFAULT);
+                            i.setData(Uri.parse("package:" + activity.getPackageName()));
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                            activity.startActivity(i);
+                        })
+                        .setNegativeButton("Нет", null);
+            } else {
+                builder.setMessage(R.string.permission_not_available)
+                        .setPositiveButton(R.string.app_continue, (dialog, which) -> ActivityCompat.requestPermissions(activity,
+                                new String[]{permission},
+                                requestCode));
+            }
+            builder.show();
         }
     }
 

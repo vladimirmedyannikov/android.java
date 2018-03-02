@@ -661,6 +661,7 @@
     <string name="number_format_exception">При отправке смс произошла ошибка, возможно, номер телефона не соответствует требуемому формату</string>
     <string name="app_continue">Продолжить</string>
     <string name="permission_not_available">Для корректной работы приложения, требуется получить разрешение</string>
+    <string name="permission_not_available_goto_settings">Для корректной работы приложения, требуется получить разрешение.\nПерейти в настройки приложения?</string>
     <string name="register_code">Получить код подтверждения</string>
     <string name="has_code">Уже есть код подтверждения</string>
     <string name="password_confirm">Установка пароля</string>
@@ -775,7 +776,7 @@
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
-    <string name="auth_error_confirm_code_not_correct">Неверный код подтверждения</string>
+    <string name="auth_error_confirm_code_not_correct">Ошибка авторизации</string>
     <string name="permission_camera_gallery">Для корректной работы необходимо предоставить доступ к камере и внутренней памяти устройства</string>
     <string name="crop_image_menu_crop">Вырезать</string>
     <string name="crop_image_menu_flip_horizontally">Перевернуть по горизонтали</string>
@@ -834,4 +835,18 @@
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
     <string name="go_to_house_poll_desc">Вы можете подать заявку на проведение голосования, если зарегистрированы или являетесь собственником в вашем доме. Заявки подаются на сайте ag.mos.ru. Свяжите свой профиль с профилем на mos.ru и перейдите на сайт для размещения заявки.\nПерейти на сайт?</string>
+    <string name="promo_push_string">Информационное уведомление</string>
+    <string name="share_push_string">Поделиться с друзьями</string>
+    <string name="new_poll_push_string">Новые голосования</string>
+    <string name="moscow_news_push_string">Новости</string>
+    <string name="novelty_push_string">Новинки</string>
+    <string name="achievement_push_string">Достижения</string>
+    <string name="hearing_push_string">Публичные слушания</string>
+    <string name="news_poll_push_string">Новости о голосованиях</string>
+    <string name="geotarget_area_remove_push_string">Уведомление об исключении зоны геотаргетинга</string>
+    <string name="geotarget_area_update_push_string">Уведомление об обновлении зоны геотаргетинга</string>
+
+    <string name="push_group_other">Другое</string>
+    <string name="push_group_news">Новости</string>
+    <string name="push_group_polls">Голосования</string>
 </resources>

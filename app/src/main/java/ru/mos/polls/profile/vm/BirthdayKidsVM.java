@@ -7,17 +7,25 @@ import android.view.View;
 import java.util.Calendar;
 
 import ru.mos.polls.BR;
+import ru.mos.polls.R;
+import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.base.ui.dialog.YearDialogFragment;
-import ru.mos.polls.base.vm.BaseVM;
 import ru.mos.polls.databinding.ItemBirthdayKidsBinding;
 import ru.mos.polls.profile.model.BirthdayKids;
 
-public class BirthdayKidsVM extends BaseVM<BirthdayKids, ItemBirthdayKidsBinding> {
-    FragmentManager fr;
+public class BirthdayKidsVM extends RecyclerBaseViewModel<BirthdayKids, ItemBirthdayKidsBinding> {
+    private FragmentManager fr;
 
-    public BirthdayKidsVM(BirthdayKids birthdayKids, ItemBirthdayKidsBinding binding, FragmentManager fr) {
-        super(birthdayKids, binding);
+    public BirthdayKidsVM(BirthdayKids birthdayKids, FragmentManager fr) {
+        super(birthdayKids);
         this.fr = fr;
+    }
+
+    @Override
+    public void onBind(ItemBirthdayKidsBinding viewDataBinding) {
+        super.onBind(viewDataBinding);
+        viewDataBinding.setViewModel(this);
+        viewDataBinding.executePendingBindings();
     }
 
     public String getHint() {
@@ -64,4 +72,13 @@ public class BirthdayKidsVM extends BaseVM<BirthdayKids, ItemBirthdayKidsBinding
         return String.valueOf(c.get(Calendar.YEAR));
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.item_birthday_kids;
+    }
+
+    @Override
+    public int getViewType() {
+        return 0;
+    }
 }

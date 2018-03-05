@@ -145,9 +145,8 @@ public class UserTabFragmentVM extends BaseProfileTabFragmentVM<UserTabFragment,
             }
         }
         if (update) {
-            statisticsList.clear();
-            statisticsList.addAll(saved.getStatisticList(getActivity()));
-            userStatisticsAdapter.notifyDataSetChanged();
+            userStatisticsAdapter.clear();
+            userStatisticsAdapter.add(saved.getStatisticList(getActivity()));
         }
     }
 

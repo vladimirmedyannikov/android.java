@@ -1,1 +1,1 @@
-include ':app', ':elkag'
+include ':app'

@@ -3,18 +3,36 @@ package ru.mos.polls.profile.vm;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 
-import ru.mos.polls.base.vm.BaseVM;
+import ru.mos.polls.R;
+import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemBindSocialNewBinding;
 import ru.mos.polls.social.model.AppBindItem;
 import ru.mos.polls.social.model.AppSocial;
 
-public class SocialVM extends BaseVM<AppSocial,ItemBindSocialNewBinding> {
-    AppCompatImageView unbindIcon;
+public class SocialVM extends RecyclerBaseViewModel<AppSocial, ItemBindSocialNewBinding> {
+    private AppCompatImageView unbindIcon;
 
-    public SocialVM(AppSocial social, ItemBindSocialNewBinding binding) {
-        super(social,binding);
-        unbindIcon = binding.socialUnbind;
+    public SocialVM(AppSocial social) {
+        super(social);
+    }
+
+    @Override
+    public void onBind(ItemBindSocialNewBinding viewDataBinding) {
+        super.onBind(viewDataBinding);
+        viewDataBinding.setViewModel(this);
+        viewDataBinding.executePendingBindings();
+        unbindIcon = viewDataBinding.socialUnbind;
         setUnbindIconVisibility();
+    }
+
+    @Override
+    public int getViewType() {
+        return 0;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.item_bind_social_new;
     }
 
     public int getIcon() {

@@ -39,7 +39,8 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     @Override
     public void onBindViewHolder(AddressListAdapter.Holder holder, int position) {
         holder.title.setText(addresses.get(position).getTitle());
-        holder.check.setVisibility(addresses.get(position).isChecked() ? View.VISIBLE : View.GONE);
+        holder.value.setText(addresses.get(position).getValue());
+        holder.textContainer.setOnClickListener(v -> addresses.get(position).doAction());
     }
 
     public void refreshData() {
@@ -55,11 +56,10 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     class Holder extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
         TextView title;
-        @BindView(R.id.ic_check)
-        AppCompatImageView check;
+        @BindView(R.id.value)
+        TextView value;
         @BindView(R.id.text_container)
         View textContainer;
-
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

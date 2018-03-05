@@ -23,16 +23,15 @@ import ru.mos.polls.profile.vm.NewFlatFragmentVM;
 public class ItemAddress {
     private String title;
     private String value;
-    private boolean checked;
-
-    public ItemAddress(String title, String value, boolean checked) {
+    private Runnable action;
+    public ItemAddress(String title, String value, Runnable action) {
         this.title = title;
         this.value = value;
-        this.checked = checked;
+        this.action = action;
     }
 
-    public boolean isChecked() {
-        return checked;
+    public void doAction() {
+        action.run();
     }
 
     public String getTitle() {
@@ -47,20 +46,36 @@ public class ItemAddress {
         this.title = title;
     }
 
+    public Runnable getAction() {
+        return action;
+    }
+
+    public void setAction(Runnable action) {
+        this.action = action;
+    }
+
     public static List<ItemAddress> getDefault(final MainActivity mainActivity) {
         List<ItemAddress> res = new ArrayList<>();
         AgUser user = new AgUser(mainActivity);
 
         String registerAddress = user.getRegistration().getAddressTitle(mainActivity.getBaseContext());
-        res.add(new ItemAddress(mainActivity.getString(R.string.title_registration), registerAddress, !user.getRegistration().isEmpty()));
+        res.add(new ItemAddress(mainActivity.getString(R.string.title_registration), registerAddress, () -> {
+            mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getRegistration(), NewFlatFragmentVM.FLAT_TYPE_REGISTRATION), BaseActivity.class));
+        }));
 
-        res.add(new ItemAddress(mainActivity.getString(R.string.title_residance), getRegistrationAddressTitle(user, mainActivity), !user.getResidence().isEmpty()));
+        res.add(new ItemAddress(mainActivity.getString(R.string.title_residance), getRegistrationAddressTitle(user, mainActivity), () -> {
+            mainActivity.navigateTo().state(Add.newActivity(new NewFlatState(user.getResidence(), NewFlatFragmentVM.FLAT_TYPE_RESIDENCE), BaseActivity.class));
+        }));
 
         String ownAddress = AgUser.getOwnPropertyList(mainActivity).size() > 0 ? "Указаны" : "Не указаны";
-        res.add(new ItemAddress(mainActivity.getString(R.string.property_addresses), ownAddress, AgUser.getOwnPropertyList(mainActivity).size() > 0));
+        res.add(new ItemAddress(mainActivity.getString(R.string.property_addresses), ownAddress, () -> {
+            mainActivity.navigateTo().state(Add.newActivity(new AddPrivatePropertyState(null), BaseActivity.class));
+        }));
 
         String pguConnected = user.isPguConnected() ? "Подключено" : "Не указана";
-        res.add(new ItemAddress(mainActivity.getString(R.string.profile_pgu), pguConnected, user.isPguConnected()));
+        res.add(new ItemAddress(mainActivity.getString(R.string.profile_pgu), pguConnected, () -> {
+            mainActivity.navigateTo().state(Add.newActivity(new PguAuthState(PguAuthState.PGU_STATUS), BaseActivity.class));
+        }));
         return res;
     }
 

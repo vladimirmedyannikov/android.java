@@ -447,7 +447,7 @@
     <string name="title_add_address">Адрес</string>
     <!--<string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях, вы должны иметь верифицированный адрес регистрации.\n\nВведите данные вашей учетной записи на mos.ru для проверки наличия верифицированного адреса регистрации</string>-->
     <string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях или других юридически значимых голосованиях, вы должны иметь верифицированный адрес регистрации.\n\nУстановите связь с вашим профилем на mos.ru для проверки наличия верифицированного адреса регистрации.</string>
-    <string name="pgu_hint_email">Логин (псевдоним)</string>
+    <string name="pgu_hint_email">Логин (СНИЛС\Телефон\Почта)</string>
     <string name="pgu_hint_password">Пароль</string>
     <string name="rempte_service_not_work">Ошибка удаленного сервиса</string>
     <string name="date_soon">Cкоро</string>

@@ -2,12 +2,10 @@ package ru.mos.polls.settings.vm;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 
 import ru.mos.elk.BaseActivity;
 import ru.mos.elk.profile.ProfileManager;
 import ru.mos.polls.AgAuthActivity;
-import ru.mos.polls.AgChangePasswordActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
@@ -15,6 +13,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.changepassword.state.ChangePasswordState;
 import ru.mos.polls.databinding.LayoutSettingsBinding;
 import ru.mos.polls.geotarget.manager.GeotargetManager;
 import ru.mos.polls.settings.model.Item;
@@ -59,9 +58,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
                     notifyAboutBlocking();
                     break;
                 case Item.CHANGE_PASSWORD:
-                    if (getActivity() != null) {
-                        getActivity().startActivity(new Intent(getActivity(), AgChangePasswordActivity.class));
-                    }
+                    getFragment().navigateTo(new ChangePasswordState(), ru.mos.polls.base.ui.BaseActivity.class);
                     break;
                 case Item.LOGOUT:
                     showLogoutDialog();

@@ -9,6 +9,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/root"
         style="@style/item"
         android:orientation="vertical"
         android:padding="@dimen/pd_xsmall">

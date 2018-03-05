@@ -772,7 +772,7 @@
     <string name="tutorial_cancel">Завершить</string>
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
-    <string name="ag_agree_with_offer">Отправляя свой номер, вы соглашаетесь с</string>
+    <string name="ag_agree_with_offer">Отправляя свой номер, вы соглашаетесь с условиями оферты и получением пароля.</string>
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
@@ -829,9 +829,9 @@
     <string name="info_survey_title">Информирование</string>
     <string name="your_comment" formatted="false">Ваш комментарий: %s</string>
     <string name="poll_inform_title">Информирование</string>
-    <string name="registered_in_service">Есть регистрация в сервисах Москвы?</string>
+    <string name="registered_in_service">Есть пароль?</string>
     <string name="password_or_code">Пароль</string>
-    <string name="auth_description">Если вы уже получали пароль или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
+    <string name="auth_description">Если у вас уже есть пароль или вы являетесь пользователем других сервисов Москвы (Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы), то укажите ваш телефон и пароль для входа.</string>
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
     <string name="go_to_house_poll_desc">Вы можете подать заявку на проведение голосования, если зарегистрированы или являетесь собственником в вашем доме. Заявки подаются на сайте ag.mos.ru. Свяжите свой профиль с профилем на mos.ru и перейдите на сайт для размещения заявки.\nПерейти на сайт?</string>

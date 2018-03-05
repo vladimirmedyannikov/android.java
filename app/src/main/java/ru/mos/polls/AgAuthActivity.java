@@ -6,15 +6,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -142,8 +147,10 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void configureEdits() {
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
-        offer.setPaintFlags(offer.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        offer.setOnClickListener(new View.OnClickListener() {
+        Spannable text = new SpannableString(getString(R.string.ag_agree_with_offer));
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green_light)), 39, 56, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new UnderlineSpan(), 39, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
                 GuiUtils.hideKeyboard(v);
@@ -155,7 +162,9 @@ public class AgAuthActivity extends AuthActivity {
                         false,
                         false);
             }
-        });
+        }, 39, 56, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        offer.setText(text);
+        offer.setMovementMethod(LinkMovementMethod.getInstance());
         String phone = AgUser.getPhone(this);
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));

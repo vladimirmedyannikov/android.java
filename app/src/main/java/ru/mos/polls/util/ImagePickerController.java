@@ -1,6 +1,5 @@
 package ru.mos.polls.util;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,10 +31,6 @@ import ru.mos.polls.R;
 
 public class ImagePickerController {
     public static final int MEDIA_PERMISSION_REQUEST_CODE = 987;
-    public static final String[] MEDIA_PERMS = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     public static final int REQUEST_GALLERY = 1004;
     public static final int REQUEST_CAMERA = 1005;

@@ -74,6 +74,7 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.util.Dialogs;
+import ru.mos.polls.util.PermissionsUtils;
 import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
@@ -81,8 +82,6 @@ import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
-
-import static ru.mos.polls.friend.vm.FriendsFragmentVM.CONTACTS_PERMS;
 
 public class MainActivity extends ToolbarAbstractActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String IS_TASK = "is_task";
@@ -109,9 +108,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     private static final int GPS_PERMISSION_REQUEST = 9824;
     public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;
-    private static final String[] GPS_PERMS = {
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-    };
+    public static final int REQUEST_CODE_SMS = 111;
 
     private SmsInviteControllerRX SmsInviteControllerRX;
     private SocialController socialController;
@@ -119,11 +116,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     private InformerUIController informerUIController;
     private NavigationDrawerFragment navFragment;
     private DrawerLayout drawerLayout;
-    /**
-     * Не используется с {@since 1.9.6}
-     * так как откатили android sdk {@link RuntimePermissionController}
-     */
-    private RuntimePermissionController runtimePermissionController;
     private boolean isGPSEnableDialogShowed;
 
     private Callback callback;
@@ -185,7 +177,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         Statistics.mainEnter();
         instance = this;
         SocialApiControllerRX.loadSocials(disposables, this, null, Progressable.STUB);
-        runtimePermissionController = new RuntimePermissionController(this);
 
         updateGeotargetAreas();
         initGeotargetManager();
@@ -197,19 +188,18 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void findFriends() {
         if (ContactsController.Manager.isNeedUpdate(this)) {
-            if (EasyPermissions.hasPermissions(this, CONTACTS_PERMS)) {
+            if (PermissionsUtils.CONTACTS.isGranted(this)) {
                 ContactsController contactsController = new ContactsController(this);
                 contactsController.setPhone(AgUser.getPhone(this));
                 contactsController.silentFindFriends();
                 ContactsController.Manager.increment(this);
             } else {
-                EasyPermissions.requestPermissions(this,
-                        getString(R.string.permission_contacts),
-                        CONTACTS_PERMISSION_REQUEST_CODE,
-                        CONTACTS_PERMS);
+                PermissionsUtils.CONTACTS.request(this, CONTACTS_PERMISSION_REQUEST_CODE);
             }
         }
     }
+
+
 
     @SuppressWarnings("VisibleForTests")
     Disposable disposable;
@@ -284,7 +274,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     }
 
     private void initGeotargetManager() {
-        if (EasyPermissions.hasPermissions(this, GPS_PERMS)) {
+        if (PermissionsUtils.GPS.isGranted(this)) {
             GeotargetJobManager geotargetJobManager = new GeotargetJobManager(this);
             geotargetJobManager.start();
         }
@@ -321,14 +311,10 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
          */
         if (LocationController.isLocationNetworkProviderEnabled(this)
                 || LocationController.isLocationGPSProviderEnabled(this)) {
-            if (!EasyPermissions.hasPermissions(this, GPS_PERMS)
+            if (!PermissionsUtils.GPS.isGranted(this)
                     && GpsRequestPermsManager.isNeedRequestGps(this)) {
                 GpsRequestPermsManager.incrementSyncTime(this);
-                EasyPermissions.requestPermissions(this,
-                        getString(R.string.get_permission),
-                        GPS_PERMISSION_REQUEST,
-                        GPS_PERMS);
-
+                PermissionsUtils.GPS.request(this, GPS_PERMISSION_REQUEST);
             }
         } else {
             if (!isGPSEnableDialogShowed && GpsRequestPermsManager.isNeedRequestGps(this)) {
@@ -481,8 +467,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onInviteFriends(boolean isTask) {
-                        if (!runtimePermissionController.hasSmsSend()) {
-                            runtimePermissionController.requestSmsSend();
+                        if (!PermissionsUtils.SMS.isGranted(MainActivity.this)) {
+                            PermissionsUtils.SMS.request(MainActivity.this, REQUEST_CODE_SMS);
                         } else {
                             SmsInviteControllerRX.process(isTask);
                         }
@@ -647,8 +633,13 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (runtimePermissionController.smsReceivePermissionGranted(requestCode, grantResults)) {
-            SmsInviteControllerRX.process(true);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE_SMS: {
+                if (PermissionsUtils.SMS.isGranted(this)) {
+                    SmsInviteControllerRX.process(true);
+                }
+            }
         }
         initGeotargetManager();
     }

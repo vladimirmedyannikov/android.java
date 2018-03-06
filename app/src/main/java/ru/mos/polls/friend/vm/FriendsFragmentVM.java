@@ -1,6 +1,5 @@
 package ru.mos.polls.friend.vm;
 
-import android.Manifest;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -11,7 +10,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
@@ -36,13 +34,11 @@ import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.NetworkUtils;
+import ru.mos.polls.util.PermissionsUtils;
 
 
 public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragment, LayoutFriendsBinding> {
     public static final int CONTACTS_PERMISSION_REQUEST_CODE = 987;
-    public static final String[] CONTACTS_PERMS = {
-            Manifest.permission.READ_CONTACTS
-    };
 
     private FriendsAdapter adapter;
     private ContactsManager contactsManager;
@@ -118,15 +114,12 @@ public class FriendsFragmentVM extends UIComponentFragmentViewModel<FriendsFragm
     @AfterPermissionGranted(CONTACTS_PERMISSION_REQUEST_CODE)
     private void chooseContact() {
         if (ContactsController.Manager.isNeedUpdate(getActivity())) {
-            if (EasyPermissions.hasPermissions(getFragment().getContext(), CONTACTS_PERMS)) {
+            if (PermissionsUtils.CONTACTS.isGranted(getFragment().getContext())) {
                 ContactsController contactsController = new ContactsController(getActivity());
                 contactsController.silentFindFriends();
                 ContactsController.Manager.increment(getActivity());
             } else {
-                EasyPermissions.requestPermissions(getFragment(),
-                        getFragment().getResources().getString(R.string.permission_contacts),
-                        CONTACTS_PERMISSION_REQUEST_CODE,
-                        CONTACTS_PERMS);
+                PermissionsUtils.CONTACTS.request(getFragment(), CONTACTS_PERMISSION_REQUEST_CODE);
             }
         }
     }

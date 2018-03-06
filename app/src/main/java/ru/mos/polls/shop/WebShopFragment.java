@@ -1,6 +1,5 @@
 package ru.mos.polls.shop;
 
-import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +37,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
@@ -49,6 +47,7 @@ import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.util.NetworkUtils;
+import ru.mos.polls.util.PermissionsUtils;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -83,9 +82,6 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
     View root;
 
     CookieManager cookieManager;
-    private static final String[] WRITE_EXTERNAL_STORAGE = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
     public static final int WRITE_EXTERNAL_REQUEST_CODE = 788;
 
     @OnClick(R.id.internet_lost_reload)
@@ -143,10 +139,10 @@ public class WebShopFragment extends Fragment implements MainActivity.Callback {
 
     public void setWebViewDownloadListener() {
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            if (EasyPermissions.hasPermissions(getActivity(), WRITE_EXTERNAL_STORAGE)) {
+            if (PermissionsUtils.WRITE_EXTERNAL_STORAGE.isGranted(getActivity())) {
                 downloadFile(url, userAgent, contentDisposition, mimetype);
             } else {
-                EasyPermissions.requestPermissions(getActivity(), "Для сохранения файла необходимо разрешение", WRITE_EXTERNAL_REQUEST_CODE, WRITE_EXTERNAL_STORAGE);
+                PermissionsUtils.WRITE_EXTERNAL_STORAGE.request(getActivity(), WRITE_EXTERNAL_REQUEST_CODE);
             }
         });
     }

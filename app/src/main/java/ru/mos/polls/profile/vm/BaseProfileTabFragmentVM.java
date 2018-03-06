@@ -45,6 +45,7 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.util.FileUtils;
 import ru.mos.polls.util.ImagePickerController;
 import ru.mos.polls.util.NetworkUtils;
+import ru.mos.polls.util.PermissionsUtils;
 
 public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B extends ViewDataBinding> extends UIComponentFragmentViewModel<F, B> implements EasyPermissions.PermissionCallbacks {
     protected RecyclerView recyclerView;
@@ -94,12 +95,10 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     }
 
     public void showChooseMediaDialog() {
-        if (EasyPermissions.hasPermissions(getFragment().getContext(), ImagePickerController.MEDIA_PERMS)) {
+        if (PermissionsUtils.CAMERA_MEDIA.isGranted(getFragment().getContext())) {
             ImagePickerController.showDialog(getFragment());
         } else {
-            EasyPermissions.requestPermissions(getFragment(),
-                    getFragment().getResources().getString(R.string.permission_camera_gallery),
-                    ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE, ImagePickerController.MEDIA_PERMS);
+            PermissionsUtils.CAMERA_MEDIA.request(getFragment(), ImagePickerController.MEDIA_PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -239,7 +238,7 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        ImagePickerController.showDialog(getFragment());
+        if (PermissionsUtils.CAMERA_MEDIA.isGranted(getActivity())) ImagePickerController.showDialog(getFragment());
     }
 
     @Override

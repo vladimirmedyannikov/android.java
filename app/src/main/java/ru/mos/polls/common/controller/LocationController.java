@@ -1,16 +1,12 @@
 package ru.mos.polls.common.controller;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -21,6 +17,7 @@ import com.google.android.gms.location.LocationServices;
 
 import ru.mos.polls.R;
 import ru.mos.polls.common.model.Position;
+import ru.mos.polls.util.PermissionsUtils;
 
 /**
  * Контроллер для работы с меcтоположением, получает данные на основе google play service
@@ -103,8 +100,7 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         boolean result = false;
         switch (requestCode) {
             case RUNTIME_LOCATION_REQUEST: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (PermissionsUtils.GPS.isGranted(activity)) {
                     connect(activity);
                     result = true;
                 }
@@ -114,10 +110,10 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
     }
 
     public void connect(Activity context) {
-        if (hasFineLocationPermission(context) && hasCoarseLocationPermission(context)) {
+        if (PermissionsUtils.GPS.isGranted(context)) {
             locationClient.connect();
         } else {
-            requestAllLocationRuntimePermission(context);
+            PermissionsUtils.GPS.request(context, RUNTIME_LOCATION_REQUEST);
         }
     }
 
@@ -162,26 +158,6 @@ public class LocationController implements LocationListener, GoogleApiClient.Con
         } else {
             this.listener = OnPositionListener.STUB;
         }
-    }
-
-    public void requestAllLocationRuntimePermission(final Activity context) {
-        if (!hasFineLocationPermission(context)) {
-            ActivityCompat.requestPermissions(context,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    RUNTIME_LOCATION_REQUEST);
-        }
-    }
-
-    public boolean hasFineLocationPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
-    }
-
-    public boolean hasCoarseLocationPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
     }
 
     private void initLocationRequest() {

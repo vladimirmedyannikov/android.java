@@ -17,6 +17,7 @@ public class Subscription {
     public static final String TYPE_EVENT_APPROACHING = "event_approaching";
     public static final String TYPE_EVENT_NEW = "event_new";
     public static final String TYPE_NOVELTY_NEW = "novelty_new";
+    public static final String TYPE_OSS = "oss";
 
     public static Subscription fromJson(JSONObject jsonObject) {
         final Subscription result;

@@ -61,6 +61,13 @@
 
                     <include layout="@layout/layout_subscribe_news"/>
                 </LinearLayout>
+
+                <!--Электронный дом-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_subscribe_oss"/>
+                </LinearLayout>
                 <!--Кнопка сохранить-->
                 <View
                     style="@style/not_used"/>

@@ -33,6 +33,7 @@ import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
+import ru.mos.polls.fortesters.TestersController;
 import ru.mos.polls.mainbanner.BannerController;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.controller.QuestStateController;

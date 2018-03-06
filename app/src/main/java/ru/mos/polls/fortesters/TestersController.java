@@ -5,14 +5,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import ru.mos.elk.api.API;
 import ru.mos.polls.BuildConfig;
 import ru.mos.polls.R;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
 
-/**
- * Created by Trunks on 31.01.2018.
- */
 
 public class TestersController {
 
@@ -46,12 +42,10 @@ public class TestersController {
     public static void enableProd() {
         isProdEnable = true;
         AgApiBuilder.setForTestProd(true);
-        API.setIsDebug(true);
     }
 
     public static void disableProd() {
         isProdEnable = false;
         AgApiBuilder.setForTestProd(false);
-        API.setIsDebug(false);
     }
 }

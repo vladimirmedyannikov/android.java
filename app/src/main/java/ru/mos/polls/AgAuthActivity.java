@@ -148,8 +148,10 @@ public class AgAuthActivity extends AuthActivity {
     protected void configureEdits() {
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
         Spannable text = new SpannableString(getString(R.string.ag_agree_with_offer));
-        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green_light)), 39, 56, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        text.setSpan(new UnderlineSpan(), 39, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        int startPosition = GuiUtils.getStartPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
+        int endPosition = GuiUtils.getEndPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green_light)), startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new UnderlineSpan(), startPosition, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         text.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
@@ -162,7 +164,7 @@ public class AgAuthActivity extends AuthActivity {
                         false,
                         false);
             }
-        }, 39, 56, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         offer.setText(text);
         offer.setMovementMethod(LinkMovementMethod.getInstance());
         String phone = AgUser.getPhone(this);

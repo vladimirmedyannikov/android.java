@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Набор вспомогательных методов для UI
@@ -27,6 +30,32 @@ import android.widget.Toast;
  * @since 2.1.0
  */
 public class GuiUtils {
+
+    public static int getStartPosition(String source, String target) {
+        int position = 0;
+        if (source != null && target != null) {
+            Pattern word = Pattern.compile(target);
+            Matcher match = word.matcher(source);
+            while (match.find()) {
+                position = match.start();
+                break;
+            }
+        }
+        return position;
+    }
+
+    public static int getEndPosition(String source, String target) {
+        int position = 0;
+        if (source != null && target != null) {
+            Pattern word = Pattern.compile(target);
+            Matcher match = word.matcher(source);
+            while (match.find()) {
+                position = match.end();
+                break;
+            }
+        }
+        return position;
+    }
 
     public static void setTextAndVisibility(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
@@ -153,7 +182,7 @@ public class GuiUtils {
             ignored.printStackTrace();
         }
     }
-    
+
     public static void displayOkMessage(Context context, String message, String title, DialogInterface.OnClickListener okListener) {
         if (context == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

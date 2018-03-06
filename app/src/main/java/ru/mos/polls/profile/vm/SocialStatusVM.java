@@ -6,7 +6,7 @@ import ru.mos.polls.base.RecyclerBaseViewModel;
 import ru.mos.polls.databinding.ItemAgSocialStatusBinding;
 import ru.mos.polls.profile.model.AgSocialStatus;
 
-public class SocialStatusVM extends RecyclerBaseViewModel<AgSocialStatus, ItemAgSocialStatusBinding>/*BaseVM<AgSocialStatus, ItemAgSocialStatusBinding>*/ {
+public class SocialStatusVM extends RecyclerBaseViewModel<AgSocialStatus, ItemAgSocialStatusBinding> {
 
     private OnSocialStatusItemClick listener;
 

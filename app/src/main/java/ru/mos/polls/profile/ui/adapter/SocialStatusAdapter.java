@@ -8,7 +8,7 @@ import ru.mos.polls.profile.model.AgSocialStatus;
 import ru.mos.polls.profile.vm.OnSocialStatusItemClick;
 import ru.mos.polls.profile.vm.SocialStatusVM;
 
-public class SocialStatusAdapter extends BaseRecyclerAdapter<SocialStatusVM>/*BaseAdapter<SocialStatusVM, BindingHolder<ItemAgSocialStatusBinding>, ItemAgSocialStatusBinding, AgSocialStatus>*/ {
+public class SocialStatusAdapter extends BaseRecyclerAdapter<SocialStatusVM> {
 
     private OnSocialStatusItemClick listener;
 

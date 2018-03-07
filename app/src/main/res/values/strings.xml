@@ -316,11 +316,11 @@
     <string name="promo">Использовать промокод</string>
     <string name="notifying">Настройка оповещений</string>
     <string name="subscribes">Подписки</string>
-    <string name="poll_result">Оповещать меня о результатах голосования</string>
+    <string name="poll_result">Результаты голосований</string>
     <string name="push">Push</string>
     <string name="poll_decision">Оповещать меня о принятых решениях</string>
     <string name="sms">Sms</string>
-    <string name="poll_new">Оповещать меня о новых голосованиях</string>
+    <string name="poll_new">Новые голосования</string>
     <string name="empty" />
     <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
     <string name="poll_effected">Оповещать меня об исполненных решениях</string>
@@ -582,8 +582,8 @@
     <string name="novelty_result_share_simple">Благодарим за участие</string>
     <string name="social_hint_for_achievement">Достижение будет показано на Вашей странице в социальной сети</string>
     <string name="notify_about_blocking">Для блокировки обратитесь в службу поддержки при помощи функции обратной связи</string>
-    <string name="subscribe_results">Оповещать меня о результатах работы проекта</string>
-    <string name="news_subscribe">Оповещать меня о новостях проекта</string>
+    <string name="subscribe_results">Результаты работы проекта</string>
+    <string name="news_subscribe">Новости проекта</string>
     <string name="hint_innovation_is_old">Голосование завершено</string>
     <string name="error_has_not_auth_the_application">Не удается разместить пост на Вашей стене в социальной сети, так как Вы не дали разрешение при авторизации. Попробуйте повторить операцию</string>
     <string name="hint_for_fb">Например:\n%s</string>

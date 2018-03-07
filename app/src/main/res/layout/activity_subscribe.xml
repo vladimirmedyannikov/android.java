@@ -13,8 +13,6 @@
             style="@style/wrap"
             android:layout_centerInParent="true"/>
 
-        <include layout="@layout/layout_button_container_save"/>
-
         <ScrollView
             android:id="@+id/subscribeContainer"
             style="@style/root"

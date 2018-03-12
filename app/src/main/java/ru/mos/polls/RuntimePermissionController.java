@@ -60,7 +60,7 @@ public class RuntimePermissionController {
      *                    используется в методе {@link Activity#onRequestPermissionsResult(int, String[], int[])}
      */
     public void requestRuntimePermission(final String permission, final int requestCode) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission) && (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(activity,
                     new String[]{permission},
                     requestCode);

@@ -8,7 +8,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'io.fabric.tools:gradle:1.25.1'
-
     }
 }
 
@@ -81,7 +80,6 @@ android {
             minifyEnabled false
             shrinkResources false
             debuggable true
-//            testCoverageEnabled true
         }
 
         codecov {
@@ -144,7 +142,6 @@ android {
 
                 debug {
                     signingConfig signingConfigs.debug
-//                    testCoverageEnabled true
                 }
             }
         }
@@ -157,63 +154,93 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.android.support:multidex:1.0.1'
-    implementation 'com.android.support:support-v4:27.0.2'
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:design:27.0.2'
-    implementation 'com.android.support:support-annotations:27.0.2'
-    implementation 'com.android.support:cardview-v7:27.0.2'
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
-    implementation 'com.android.support:gridlayout-v7:27.0.2'
-    implementation 'com.google.android.gms:play-services-location:11.8.0'
-    implementation 'com.google.android.gms:play-services-analytics:11.8.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    annotationProcessor 'com.android.databinding:compiler:2.3.0'
-    implementation 'com.googlecode.libphonenumber:libphonenumber:7.4.3'
-    implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    /**
-     * Библиотека mos_social для работы с соцсетями
-     */
-    implementation(name: 'mos_social_0.1.86', ext: 'aar') {
-        exclude module: 'support-v4'
-    }
-    implementation 'com.twitter.sdk.android:twitter:3.0.0'
-    implementation 'com.twitter.sdk.android:tweet-ui:3.0.0'
-    implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
-    implementation 'com.twitter.sdk.android:tweet-composer:3.0.0'
-    implementation 'com.vk:androidsdk:1.6.7'
-    implementation 'com.facebook.android:facebook-android-sdk:4.12.1'
-    implementation 'ru.ok:odnoklassniki-android-sdk:2.0.8'
-    implementation 'com.google.android.gms:play-services-auth:11.8.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    //
-    implementation 'pub.devrel:easypermissions:0.1.9'
-    implementation 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.7.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation 'com.google.code.gson:gson:2.8.1'
-    //    compile "android.arch.lifecycle:runtime:1.0.0-alpha1"
-    //    compile "android.arch.lifecycle:extensions:1.0.0-alpha1"
-    //    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha1"
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
-    implementation 'pub.devrel:easypermissions:0.4.2'
-    implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
-
-    implementation 'com.google.android.gms:play-services-gcm:11.8.0'
+    compileTests()
+    compileAndroidSdk()
+    compileGoogleServices()
+    compileRXAndRetrofit()
+    compileMosSocialLib()
+    compileUtils()
     implementation 'me.ilich:juggler:0.1.22'
+}
+
+def compileAndroidSdk() {
+    dependencies {
+        implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+        annotationProcessor 'com.android.databinding:compiler:3.0.1'
+        implementation 'com.android.support:multidex:1.0.3'
+        implementation 'com.android.support:support-v4:27.1.0'
+        implementation 'com.android.support:appcompat-v7:27.1.0'
+        implementation 'com.android.support:design:27.1.0'
+        implementation 'com.android.support:support-annotations:27.1.0'
+        implementation 'com.android.support:cardview-v7:27.1.0'
+        implementation 'com.android.support:recyclerview-v7:27.1.0'
+        implementation 'com.android.support:gridlayout-v7:27.1.0'
+    }
+}
+
+def compileGoogleServices() {
+    dependencies {
+        implementation 'com.google.android.gms:play-services-gcm:11.8.0'
+        implementation 'com.google.android.gms:play-services-location:11.8.0'
+        implementation 'com.google.android.gms:play-services-analytics:11.8.0'
+    }
+}
+
+def compileRXAndRetrofit() {
+    dependencies {
+        implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+        implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+        implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+        implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+        implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+        implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+        implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+        implementation 'com.google.code.gson:gson:2.8.1'
+    }
+}
+
+def compileTests() {
+    dependencies {
+        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        testCompile 'junit:junit:4.12'
+    }
+}
+
+def compileUtils() {
+    dependencies {
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        implementation 'com.jakewharton:butterknife:8.8.1'
+        implementation 'com.googlecode.libphonenumber:libphonenumber:7.4.3'
+        implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
+        implementation 'de.hdodenhof:circleimageview:2.2.0'
+        implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.0'
+        implementation 'pub.devrel:easypermissions:1.1.3'
+        implementation 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.7.0'
+        implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    }
+}
+
+def compileMosSocialLib() {
+    dependencies {
+        /**
+         * Библиотека mos_social для работы с соцсетями
+         */
+        implementation(name: 'mos_social_0.1.86', ext: 'aar') {
+            exclude module: 'support-v4'
+        }
+        implementation 'com.twitter.sdk.android:twitter:3.0.0'
+        implementation 'com.twitter.sdk.android:tweet-ui:3.0.0'
+        implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
+        implementation 'com.twitter.sdk.android:tweet-composer:3.0.0'
+        implementation 'com.vk:androidsdk:1.6.7'
+        implementation 'com.facebook.android:facebook-android-sdk:4.12.1'
+        implementation 'ru.ok:odnoklassniki-android-sdk:2.0.8'
+        implementation 'com.google.android.gms:play-services-auth:11.8.0'
+        implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+        implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    }
 }

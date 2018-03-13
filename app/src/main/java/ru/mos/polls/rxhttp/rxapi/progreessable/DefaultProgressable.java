@@ -19,6 +19,11 @@ public class DefaultProgressable implements Progressable {
         this.context = context;
     }
 
+    public DefaultProgressable(Context context, String message) {
+        this.context = context;
+        this.message = message;
+    }
+
     @Override
     public void begin() {
         if (progressDialog == null) {

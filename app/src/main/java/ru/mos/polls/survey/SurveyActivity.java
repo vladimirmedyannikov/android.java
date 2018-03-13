@@ -217,6 +217,7 @@ public class SurveyActivity extends BaseActivity {
 
     private void loadSurvey() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.elk_wait_load));
         progressDialog.setCancelable(false);
         progressDialog.show();
         WebSurveyDataSourceRX webSurveyDataSourceRX = new WebSurveyDataSourceRX(this);

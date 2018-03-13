@@ -5,10 +5,13 @@ import android.support.annotation.Nullable;
 
 import com.android.databinding.library.baseAdapters.BR;
 
+import me.ilich.juggler.change.Add;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
+import ru.mos.polls.subscribes.state.SubscribeState;
 
 
 public class QuestsFragment extends MenuBindingFragment<QuestsFragmentVM, LayoutQuestsBinding> {
@@ -55,5 +58,9 @@ public class QuestsFragment extends MenuBindingFragment<QuestsFragmentVM, Layout
 
     public void setListener(QuestsFragmentVM.Listener listener) {
         this.listener = listener;
+    }
+
+    public void navigateToSubscribe() {
+        navigateTo().state(Add.newActivity(new SubscribeState(), BaseActivity.class));
     }
 }

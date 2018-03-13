@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/wrap"
+            android:layout_centerInParent="true"/>
+
+        <ScrollView
+            android:id="@+id/root"
+            style="@style/root"
+            android:layout_above="@id/buttonContainer"
+            android:fillViewport="true">
+
+            <LinearLayout
+                style="@style/item.linear">
+                <!--Оповещать меня о новых голосованиях-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_polls_new"/>
+                </LinearLayout>
+                <!--Результаты голосования-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_polls_results"/>
+                </LinearLayout>
+                <!--Результаты принятых решений-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_polls_decisions"/>
+                </LinearLayout>
+                <!--Исполненные решения-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout"
+                    android:visibility="gone">
+
+                    <include layout="@layout/layout_polls_effected"/>
+                </LinearLayout>
+                <!--Новые мероприятия-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout"
+                    android:visibility="gone">
+
+                    <include layout="@layout/layout_subscribe_events"/>
+                </LinearLayout>
+                <!--Новости проекта-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_subscribe_news"/>
+                </LinearLayout>
+
+                <!--Электронный дом-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_subscribe_oss"/>
+                </LinearLayout>
+                <!--Кнопка сохранить-->
+                <View
+                    style="@style/not_used"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</layout>

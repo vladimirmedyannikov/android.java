@@ -56,7 +56,6 @@ import ru.mos.polls.rxhttp.rxapi.model.Page;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.AppPostValue;
-import ru.mos.polls.subscribes.gui.SubscribeActivity;
 
 
 public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragment, LayoutQuestsBinding, QuestsItemAdapter> {
@@ -201,7 +200,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
     @OnClick(R.id.subscribe)
     public void subscribe() {
-        SubscribeActivity.startActivity(getActivity());
+        getFragment().navigateToSubscribe();
     }
 
     @Override

@@ -76,7 +76,7 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
                 });
             }
         };
-        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(errorHandler) {
+        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(errorHandler, new DefaultProgressable(actionBarActivity, actionBarActivity.getString(R.string.elk_wait_load)).setCancelable(false)) {
             @Override
             protected void onResult(JsonObject result) {
                 try {

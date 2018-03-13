@@ -7,6 +7,7 @@ import android.os.Handler;
 /**
  * Прогресс загрузки поумолчанию
  * Прогресс отображается средствами {@link ProgressDialog}
+ *
  * @since 1.0
  */
 public class DefaultProgressable implements Progressable {
@@ -17,11 +18,18 @@ public class DefaultProgressable implements Progressable {
 
     public DefaultProgressable(Context context) {
         this.context = context;
+        progressDialog = new ProgressDialog(context);
     }
 
     public DefaultProgressable(Context context, String message) {
         this.context = context;
         this.message = message;
+        progressDialog = new ProgressDialog(context);
+    }
+
+    public DefaultProgressable setCancelable(boolean flag) {
+        progressDialog.setCancelable(flag);
+        return this;
     }
 
     @Override

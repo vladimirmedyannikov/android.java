@@ -1,7 +1,6 @@
 package ru.mos.polls.survey;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -216,31 +215,16 @@ public class SurveyActivity extends BaseActivity {
     }
 
     private void loadSurvey() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.elk_wait_load));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
         WebSurveyDataSourceRX webSurveyDataSourceRX = new WebSurveyDataSourceRX(this);
         webSurveyDataSourceRX.load(surveyId, isHearing, new SurveyDataSource.LoadListener() {
             @Override
             public void onLoaded(Survey loadedSurvey) {
-                dismissProgressDialog();
                 survey = loadedSurvey;
                 setFragment();
             }
 
             @Override
             public void onError(String message) {
-                dismissProgressDialog();
-            }
-
-            private void dismissProgressDialog() {
-                try {
-                    if (progressDialog != null) {
-                        progressDialog.dismiss();
-                    }
-                } catch (Exception ignored) {
-                }
             }
         });
     }

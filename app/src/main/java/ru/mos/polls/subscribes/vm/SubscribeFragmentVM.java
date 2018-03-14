@@ -2,7 +2,6 @@ package ru.mos.polls.subscribes.vm;
 
 import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -116,33 +115,16 @@ public class SubscribeFragmentVM extends UIComponentFragmentViewModel<SubscribeF
         emailOss.setOnCheckedChangeListener(listener);
     }
 
-    void saveSubscribe() {
-        save();
-        createSwitchLists();
-    }
-
-    private void checkSaveButton(CompoundButton buttonView, boolean isChecked) {
-        changedList.put(buttonView.getId(), isChecked);
-        boolean[] changed = new boolean[changedList.size()];
-        for (int i = 0; i < changedList.size(); i++) {
-            int key = changedList.keyAt(i);
-            changed[i] = changedList.get(key);
-        }
-    }
-
     private void getSubscribeState() {
-        setSubscribeProgressVisibility(true);
         SubscribesAPIControllerRX.StateListener listener = new SubscribesAPIControllerRX.StateListener() {
             @Override
             public void onSubscriptionsState(List<Subscription> typeChanells) {
                 refreshControls(typeChanells);
-                setSubscribeProgressVisibility(false);
                 createSwitchLists();
             }
 
             @Override
             public void onError() {
-                setSubscribeProgressVisibility(false);
             }
         };
 
@@ -170,12 +152,6 @@ public class SubscribeFragmentVM extends UIComponentFragmentViewModel<SubscribeF
             int key = changedList.keyAt(i);
             savedArrayValue[i] = changedList.get(key);
         }
-    }
-
-
-    private void setSubscribeProgressVisibility(boolean visibility) {
-        getBinding().progress.setVisibility(visibility ? View.VISIBLE : View.GONE);
-        getBinding().root.setVisibility(visibility ? View.GONE : View.VISIBLE);
     }
 
     private void refreshControls(List<Subscription> typeChannels) {

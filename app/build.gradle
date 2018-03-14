@@ -229,7 +229,7 @@ def compileMosSocialLib() {
         /**
          * Библиотека mos_social для работы с соцсетями
          */
-        implementation(name: 'mos_social_0.1.86', ext: 'aar') {
+        implementation(name: 'mos_social_0.1.92', ext: 'aar') {
             exclude module: 'support-v4'
         }
         implementation 'com.twitter.sdk.android:twitter:3.0.0'
@@ -237,7 +237,7 @@ def compileMosSocialLib() {
         implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
         implementation 'com.twitter.sdk.android:tweet-composer:3.0.0'
         implementation 'com.vk:androidsdk:1.6.7'
-        implementation 'com.facebook.android:facebook-android-sdk:4.12.1'
+        implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
         implementation 'ru.ok:odnoklassniki-android-sdk:2.0.8'
         implementation 'com.google.android.gms:play-services-auth:11.8.0'
         implementation 'com.squareup.okhttp3:okhttp:3.9.1'

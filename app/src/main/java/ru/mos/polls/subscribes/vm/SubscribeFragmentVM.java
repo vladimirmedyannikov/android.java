@@ -71,7 +71,7 @@ public class SubscribeFragmentVM extends UIComponentFragmentViewModel<SubscribeF
 
     public void save() {
         final List<Subscription> subscriptions = getCurrentSubscribe();
-        SubscribesAPIControllerRX.saveSubscribesForPolls(disposables, getFragment().getContext(), subscriptions, null, new SubscribesAPIControllerRX.SaveListener() {
+        SubscribesAPIControllerRX.saveAllSubscribes(disposables, getFragment().getContext(), subscriptions, null, new SubscribesAPIControllerRX.SaveListener() {
             @Override
             public void onSaved() {
                 Toast.makeText(getFragment().getContext(), R.string.subscribe_settings_are_saved, Toast.LENGTH_SHORT).show();
@@ -80,9 +80,8 @@ public class SubscribeFragmentVM extends UIComponentFragmentViewModel<SubscribeF
 
             @Override
             public void onError() {
-
             }
-        });
+        }, getComponent(ProgressableUIComponent.class));
     }
 
     private void setPushListener() {
@@ -147,7 +146,7 @@ public class SubscribeFragmentVM extends UIComponentFragmentViewModel<SubscribeF
             }
         };
 
-        SubscribesAPIControllerRX.loadAllSubscribes(disposables, getFragment().getContext(), listener);
+        SubscribesAPIControllerRX.loadAllSubscribes(disposables, getFragment().getContext(), listener, getComponent(ProgressableUIComponent.class));
     }
 
     private void createSwitchLists() {

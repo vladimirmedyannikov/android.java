@@ -64,7 +64,7 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
 
     public void save() {
         final List<Subscription> subscriptions = getCurrentSubscribe();
-        SubscribesAPIControllerRX.saveSubscribesForPolls(disposables, this, subscriptions, null, new SubscribesAPIControllerRX.SaveListener() {
+        SubscribesAPIControllerRX.saveAllSubscribes(disposables, this, subscriptions, null, new SubscribesAPIControllerRX.SaveListener() {
             @Override
             public void onSaved() {
                 Toast.makeText(SubscribeActivity.this, R.string.subscribe_settings_are_saved, Toast.LENGTH_SHORT).show();
@@ -75,7 +75,7 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
             public void onError() {
 
             }
-        });
+        }, null);
     }
 
     protected void findViews() {
@@ -140,7 +140,7 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
             }
         };
 
-        SubscribesAPIControllerRX.loadAllSubscribes(getDisposables(),this,listener);
+        SubscribesAPIControllerRX.loadAllSubscribes(getDisposables(),this,listener, null);
     }
 
     private void createSwitchLists() {

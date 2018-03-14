@@ -22,6 +22,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.profile.service.model.EmptyResult;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.subscribes.model.Channel;
 import ru.mos.polls.subscribes.model.Subscription;
@@ -57,8 +58,8 @@ public class SubscribesAPIControllerRX {
                 .subscribeWith(handler));
     }
 
-    public static void loadSubscribes(CompositeDisposable disposable, Context context, String[] types, long pollId, long eventId, final StateListener stateListener) {
-        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(context, null) {
+    public static void loadSubscribes(CompositeDisposable disposable, Context context, String[] types, long pollId, long eventId, final StateListener stateListener, Progressable progressable) {
+        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(context, progressable) {
             @Override
             protected void onResult(JsonObject result) {
                 List<Subscription> subscriptions = new ArrayList<Subscription>();
@@ -108,25 +109,25 @@ public class SubscribesAPIControllerRX {
                 .subscribeWith(handler));
     }
 
-    public static void saveAllSubscribes(CompositeDisposable disposable, Context context, List<Subscription> subscriptions) {
-        saveSubscribes(disposable, context, subscriptions, null, null, null);
+    public static void saveSubscribesForPolls(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, Progressable progressable) {
+        saveSubscribes(disposable, context, subscriptions, null, null, null, progressable);
     }
 
-    public static void saveSubscribesForPolls(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, long[] pollIds, final SaveListener saveListener) {
-        saveSubscribes(disposable, context, subscriptions, pollIds, null, saveListener);
+    public static void saveAllSubscribes(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, long[] pollIds, final SaveListener saveListener, Progressable progressable) {
+        saveSubscribes(disposable, context, subscriptions, pollIds, null, saveListener, progressable);
     }
 
     public static void saveSubscribesForEvents(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, long[] eventIds, final SaveListener saveListener) {
-        saveSubscribes(disposable, context, subscriptions, null, eventIds, saveListener);
+        saveSubscribes(disposable, context, subscriptions, null, eventIds, saveListener, null);
     }
 
-    public static void loadAllSubscribes(CompositeDisposable disposable, Context context, final StateListener stateListener) {
-        loadSubscribes(disposable, context, null, -1, -1, stateListener);
+    public static void loadAllSubscribes(CompositeDisposable disposable, Context context, final StateListener stateListener, Progressable progressable) {
+        loadSubscribes(disposable, context, null, -1, -1, stateListener, progressable);
     }
 
     public static void loadEventSubscribes(CompositeDisposable disposable, Context context, long eventId, final StateListener stateListener) {
         String[] types = new String[]{Subscription.TYPE_EVENT_APPROACHING};
-        loadSubscribes(disposable, context, types, -1, eventId, stateListener);
+        loadSubscribes(disposable, context, types, -1, eventId, stateListener, null);
     }
 
     /**
@@ -135,7 +136,7 @@ public class SubscribesAPIControllerRX {
      * @param subscriptions
      * @param pollIds
      */
-    public static void saveSubscribes(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, long[] pollIds, long[] eventIds, final SaveListener saveListener) {
+    public static void saveSubscribes(CompositeDisposable disposable, Context context, List<Subscription> subscriptions, long[] pollIds, long[] eventIds, final SaveListener saveListener, Progressable progressable) {
         JSONArray subscriptionsJsonArray = new JSONArray();
         for (Subscription subscription : subscriptions) {
             JSONObject subscriptionJsonObject = subscription.asJson();
@@ -174,7 +175,7 @@ public class SubscribesAPIControllerRX {
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonObject = (JsonArray) jsonParser.parse(subscriptionsJsonArray.toString());
 
-        HandlerApiResponseSubscriber<EmptyResult[]> handler = new HandlerApiResponseSubscriber<EmptyResult[]>(context) {
+        HandlerApiResponseSubscriber<EmptyResult[]> handler = new HandlerApiResponseSubscriber<EmptyResult[]>(context, progressable) {
             @Override
             protected void onResult(EmptyResult[] result) {
                 if (saveListener != null) {

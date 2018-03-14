@@ -20,6 +20,7 @@ import ru.mos.polls.settings.model.Item;
 import ru.mos.polls.settings.ui.adapter.ItemsAdapter;
 import ru.mos.polls.settings.ui.fragment.SettingsFragment;
 import ru.mos.polls.sourcesvoting.state.SourcesVotingState;
+import ru.mos.polls.subscribes.state.SubscribeState;
 
 public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFragment, LayoutSettingsBinding> {
 
@@ -45,7 +46,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
         ((ItemsAdapter) getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
             switch (item.getId()) {
                 case Item.SUBSCRIBE:
-                    getFragment().navigateToSubscribe();
+                    getFragment().navigateTo(new SubscribeState(), ru.mos.polls.base.ui.BaseActivity.class);
                     break;
                 case Item.USER_LOCK:
                     Statistics.blockAccount();

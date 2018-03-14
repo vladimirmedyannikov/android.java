@@ -94,7 +94,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
             }
         };
 
-        SubscribesAPIControllerRX.loadAllSubscribes(disposables, getActivity(), listener);
+        SubscribesAPIControllerRX.loadAllSubscribes(disposables, getActivity(), listener, null);
     }
 
     public void setListeners() {
@@ -110,7 +110,7 @@ public class PollActiveFragmentVM extends PollBaseFragmentVM {
         Subscription subscription = new Subscription(Subscription.TYPE_AG_NEW);
         subscription.getChannels().add(new Channel(Channel.CHANNEL_EMAIL, isChecked));
         subscriptions.add(subscription);
-        SubscribesAPIControllerRX.saveAllSubscribes(disposables, getActivity(), subscriptions);
+        SubscribesAPIControllerRX.saveSubscribesForPolls(disposables, getActivity(), subscriptions, progressable);
     }
 
     @Override

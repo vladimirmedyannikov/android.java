@@ -849,4 +849,5 @@
     <string name="push_group_other">Другое</string>
     <string name="push_group_news">Новости</string>
     <string name="push_group_polls">Голосования</string>
+    <string name="warning_enter_password">Введите пароль.</string>
 </resources>

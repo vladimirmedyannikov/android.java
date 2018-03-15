@@ -51,7 +51,6 @@ public class PguBindFragment extends JugglerFragment {
 
     private Unbinder unbinder;
     private PguBindingListener pguBindingListener;
-    //ProgressDialog progressDialog;
 
     private ProgressableUIComponent progressableUIComponent;
 
@@ -83,15 +82,6 @@ public class PguBindFragment extends JugglerFragment {
         return root;
     }
 
-//    public void startProgress() {
-//        progressDialog = new ProgressDialog(getActivity());
-//        progressDialog.show();
-//    }
-//
-//    public void stopProgress() {
-//        if (progressDialog != null) progressDialog.dismiss();
-//    }
-
 
     @Override
     public void onPause() {
@@ -109,9 +99,21 @@ public class PguBindFragment extends JugglerFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_confirm) {
-            bind();
+            if (checkField()) bind();
         }
         GuiUtils.hideKeyboard(getView());
+        return true;
+    }
+
+    public boolean checkField() {
+        if (login.getText().toString().length() == 0) {
+            GuiUtils.displayOkMessage(getActivity(), String.format("Поле %s пустое.", getActivity().getString(R.string.pgu_hint_email)), null);
+            return false;
+        }
+        if (password.getText().toString().length() == 0) {
+            GuiUtils.displayOkMessage(getActivity(), getString(R.string.warning_enter_password), null);
+            return false;
+        }
         return true;
     }
 
@@ -147,7 +149,6 @@ public class PguBindFragment extends JugglerFragment {
     private void bind() {
         setPguBindListener(pguBindingListener);
         pguBindingListener.onPrepare();
-//        startProgress();
         progressableUIComponent.begin();
         HearingApiController.PguAuthListener listener = new HearingApiController.PguAuthListener() {
             @Override
@@ -170,8 +171,6 @@ public class PguBindFragment extends JugglerFragment {
             public void onError(String errorMessage) {
                 progressableUIComponent.end();
                 etPassword.setError(errorMessage);
-//                error.setText(errorMessage);
-//                error.setVisibility(View.VISIBLE);
                 pguBindingListener.onError();
             }
         };

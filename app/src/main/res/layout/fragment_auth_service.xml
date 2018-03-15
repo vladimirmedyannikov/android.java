@@ -47,7 +47,7 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/password"
-                    style="@style/edit_profile.input"
+                    style="@style/input.password"
                     android:hint="@string/password_or_code"
                     android:paddingTop="@dimen/pd_normal" />
 

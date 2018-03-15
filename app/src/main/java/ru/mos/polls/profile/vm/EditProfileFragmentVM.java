@@ -323,7 +323,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
     }
 
     public void setResidenceFlatView(Flat registationFlat, Flat residenceFlat) {
-        if (!registationFlat.isEmpty() && residenceFlat.compareByFullAddress(registationFlat)) {
+        if ((!registationFlat.isEmpty() && residenceFlat.isEmpty()) || (!registationFlat.isEmpty() && !residenceFlat.isEmpty() && residenceFlat.compareByFullAddress(registationFlat))) {
             residence.setText(getActivity().getString(R.string.coincidesAddressRegistration));
             return;
         }

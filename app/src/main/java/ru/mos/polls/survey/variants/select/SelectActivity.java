@@ -74,7 +74,7 @@ public abstract class SelectActivity extends ToolbarAbstractActivity {
         }
 
         String emptyText = intentExtraProcessor.getEmptyText();
-        emptyTextView.setText(emptyText);
+        emptyTextView.setText(TextUtils.isEmpty(emptyText) ? getString(R.string.data_not_found) : emptyText);
     }
 
     @OnItemClick(R.id.list)

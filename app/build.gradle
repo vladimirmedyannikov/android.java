@@ -39,7 +39,7 @@ android {
     defaultConfig {
         applicationId "ru.mos.polls"
         versionCode Integer.parseInt(System.getenv("BUILD_NUMBER") ?: "1")
-        versionName "2.5.0"
+        versionName "2.5.1"
         minSdkVersion 15
         targetSdkVersion 27
         multiDexEnabled true

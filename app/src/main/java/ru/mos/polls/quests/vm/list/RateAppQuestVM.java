@@ -13,7 +13,7 @@ import ru.mos.polls.quests.model.quest.RateAppQuest;
  *         on 06.12.17.
  */
 
-public class RateAppQuestVM extends RecyclerBaseViewModel<RateAppQuest, QuestSocialBinding> {
+public class RateAppQuestVM extends QuestVM<RateAppQuest, QuestSocialBinding> {
     public RateAppQuestVM(RateAppQuest model, QuestSocialBinding viewDataBinding) {
         super(model, viewDataBinding);
     }

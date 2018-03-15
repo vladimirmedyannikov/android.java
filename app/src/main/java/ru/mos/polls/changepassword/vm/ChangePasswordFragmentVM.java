@@ -38,26 +38,41 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
 
     @Override
     public void onOptionsItemSelected(int menuItemId) {
-        if (checkNewPass()) {
-            HandlerApiResponseSubscriber<String> handler = new HandlerApiResponseSubscriber<String>(getActivity(), getProgressable()) {
-                @Override
-                protected void onResult(String result) {
-                    GuiUtils.displayOkMessage(getActivity(), "Пароль успешно изменён.", (dialogInterface, i) -> {
-                        getActivity().finish();
-                    });
-                }
-            };
-            disposables.add(AGApplication.api
-                    .changePassword(new ChangePassword.Request(oldPass.getText().toString(), newPass.getText().toString()))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(handler));
-        } else {
-            GuiUtils.displayOkMessage(getActivity(), "Пароли не совпадают.", null);
+        if (!checkOldPass()) {
+            GuiUtils.displayOkMessage(getActivity(), "Введите текущий пароль.", null);
+            return;
         }
+        if (!checkNewPass()) {
+            GuiUtils.displayOkMessage(getActivity(), "Введите новый пароль.", null);
+            return;
+        }
+        if (!checkNewPassEqualsRepeatPass()) {
+            GuiUtils.displayOkMessage(getActivity(), "Пароли не совпадают.", null);
+            return;
+        }
+        HandlerApiResponseSubscriber<String> handler = new HandlerApiResponseSubscriber<String>(getActivity(), getProgressable()) {
+            @Override
+            protected void onResult(String result) {
+                GuiUtils.displayOkMessage(getActivity(), "Пароль успешно изменён.", (dialogInterface, i) -> {
+                    getActivity().finish();
+                });
+            }
+        };
+        disposables.add(AGApplication.api
+                .changePassword(new ChangePassword.Request(oldPass.getText().toString(), newPass.getText().toString()))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(handler));
     }
 
+    public boolean checkOldPass() {
+        return !oldPass.getText().toString().isEmpty();
+    }
     public boolean checkNewPass() {
+        return !newPass.getText().toString().isEmpty();
+    }
+    public boolean checkNewPassEqualsRepeatPass() {
         return newPass.getText().toString().equals(repeatPass.getText().toString());
     }
+
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mask="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout style="@style/root">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/root"
+            style="@style/root.padding"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/topContainer"
+                style="@style/linear"
+                android:paddingTop="@dimen/pd_normal">
+
+                <include
+                    layout="@layout/layout_auth_logo"
+                    android:visibility="gone" />
+
+                <TextView
+                    style="@style/header.green"
+                    android:text="@string/elk_authorization"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ru.mos.polls.maskedettext.MaskedEditText
+                        android:id="@+id/et_code_country"
+                        style="@style/input"
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="@dimen/pd_xxsmall"
+                        android:background="#00000000"
+                        android:inputType="phone"
+                        android:textColor="@color/disable_code_country"
+                        mask:char_representation="#"
+                        mask:mask="+#" />
+
+                    <ru.mos.polls.maskedettext.MaskedEditText
+                        android:id="@+id/etLogin"
+                        style="@style/input"
+                        android:inputType="phone"
+                        mask:char_representation="#"
+                        mask:mask="### ### ####"
+                        mask:mask_fill="" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    style="@style/input.password"
+                    android:hint="@string/elk_password"
+                    android:visibility="gone" />
+
+                <include layout="@layout/layout_offerta" />
+
+                <TextView
+                    android:id="@+id/tvError"
+                    style="@style/text.center.red"
+                    android:layout_margin="@dimen/pd_xxsmall" />
+
+                <Button
+                    android:id="@+id/btnSkip"
+                    style="@style/not_used" />
+
+                <Button
+                    android:id="@+id/btnAction"
+                    style="@style/button.centered.action"
+                    android:layout_width="160dp"
+                    android:text="@string/elk_authorize"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvInfo"
+                    style="@style/not_used" />
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    style="@style/text.link.green"
+                    android:layout_marginTop="@dimen/pd_xxlarge"
+                    android:text="@string/elk_register"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnRestorePassword"
+                    style="@style/not_used" />
+
+                <include layout="@layout/layout_empty_view" />
+
+                <TextView
+                    android:id="@+id/registered_in_service"
+                    style="@style/text.link.green"
+                    android:layout_marginBottom="@dimen/pd_xxsmall"
+                    android:layout_marginTop="@dimen/pd_xxlarge"
+                    android:text="@string/registered_in_service" />
+
+                <TextView
+                    android:id="@+id/help"
+                    style="@style/text.link.green"
+                    android:layout_marginBottom="@dimen/pd_xxsmall"
+                    android:text="@string/help" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

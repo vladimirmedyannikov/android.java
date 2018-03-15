@@ -1,11 +1,12 @@
 package ru.mos.polls;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import ru.mos.polls.fragments.DynamicFragment;
+import me.ilich.juggler.change.Add;
+import ru.mos.polls.auth.state.AgAuthState;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.news.ui.NewsFragment;
 
 
@@ -36,9 +37,10 @@ public class NewsActivity extends AbstractActivity {
     }
 
     public void onGoToPolls(View view) {
-        Intent intent = new Intent(this, AgAuthActivity.class);
-        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, AgAuthActivity.class);
+//        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
+//        startActivity(intent);
+        navigateTo().state(Add.newActivity(new AgAuthState(), BaseActivity.class));
         finish();
     }
 

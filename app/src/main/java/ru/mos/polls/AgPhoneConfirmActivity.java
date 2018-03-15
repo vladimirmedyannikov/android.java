@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,15 +29,16 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import me.ilich.juggler.change.Add;
-import ru.mos.polls.profile.ProfileManagerRX;
-import ru.mos.polls.util.Dialogs;
-import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.auth.state.AgAuthState;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.broadcast.SmsBroadcastReceiver;
+import ru.mos.polls.profile.ProfileManagerRX;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.tutorial.TutorialActivity;
 import ru.mos.polls.tutorial.TutorialFragment;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.GuiUtils;
 
 /**
@@ -214,7 +214,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
-        AgAuthActivity.start(this);
+        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.ui.BaseActivity.class));
         finish();
     }
 

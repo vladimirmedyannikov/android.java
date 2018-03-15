@@ -1,6 +1,5 @@
 package ru.mos.polls;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +7,19 @@ import android.view.MotionEvent;
 
 import com.appsflyer.AppsFlyerLib;
 
+import me.ilich.juggler.change.Add;
+import ru.mos.polls.auth.state.AgAuthState;
+import ru.mos.polls.base.ui.BaseActivity;
 import ru.mos.polls.rxhttp.session.Session;
 
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     public static void startApp(Context context) {
-        Intent intent = new Intent(context, AgAuthActivity.class);
+        Intent intent = new Intent(context, SplashActivity.class);
         if (Session.get().hasSession()) {
             intent = new Intent(context, MainActivity.class);
         }
-        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
         context.startActivity(intent);
     }
 
@@ -60,7 +61,11 @@ public class SplashActivity extends Activity {
     }
 
     private void onSplashShowingComplete() {
-        startApp(SplashActivity.this);
+        if (!Session.get().hasSession()) {
+            navigateTo().state(Add.newActivity(new AgAuthState(), BaseActivity.class));
+        } else {
+            startApp(SplashActivity.this);
+        }
         finish();
     }
 

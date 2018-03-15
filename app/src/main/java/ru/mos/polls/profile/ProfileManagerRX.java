@@ -16,9 +16,12 @@ import org.json.JSONObject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.change.Remove;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.R;
+import ru.mos.polls.auth.state.AgAuthState;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.db.UserData;
 import ru.mos.polls.db.UserDataProvider;
@@ -179,6 +182,20 @@ public class ProfileManagerRX {
         Session.get().clear();
     }
 
+    public static void afterLoggedOut(BaseActivity baseActivity) {
+        baseActivity.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
+        NotificationManager notificationmanager = (NotificationManager) baseActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        try {
+            for (int i = 0; i <= GCMBroadcastReceiver.messageNotifyId; ++i) {
+                notificationmanager.cancel(i);
+            }
+        } catch (Exception ignored) {
+        }
+        ProfileManagerRX.clearStoredData(baseActivity);
+        Session.get().clear();
+        baseActivity.navigateTo().state(Remove.closeAllActivities(), Add.newActivity(new AgAuthState(), BaseActivity.class));
+    }
+
     public static void logOut(final BaseActivity alkActivity, final Class<?> authActivity, final Class<?> afterLoginActivity) {
         final ProgressDialog dialog = Dialogs.showProgressDialog(alkActivity, R.string.elk_wait_logout);
         JSONObject params = new JSONObject();
@@ -191,13 +208,15 @@ public class ProfileManagerRX {
             @Override
             protected void onResult(EmptyResult[] result) {
                 dialog.dismiss();
-                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
+//                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
+                afterLoggedOut(alkActivity);
             }
 
             @Override
             public void onErrorListener() {
                 dialog.dismiss();
-                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
+//                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
+                afterLoggedOut(alkActivity);
             }
         };
         ProfileGet.LoginRequest request = new ProfileGet.LoginRequest();

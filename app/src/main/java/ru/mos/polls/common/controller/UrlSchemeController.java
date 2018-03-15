@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import ru.mos.polls.AgAuthActivity;
+import me.ilich.juggler.change.Add;
+import ru.mos.polls.auth.state.AgAuthState;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.quests.model.quest.ProfileQuest;
 import ru.mos.polls.quests.model.quest.RateAppQuest;
 import ru.mos.polls.quests.model.quest.SocialQuest;
@@ -62,7 +64,7 @@ public abstract class UrlSchemeController {
      * @param screenListListener
      * @param taskListener
      */
-    public static void start(Activity activity, ScreenListListener screenListListener, TaskListener taskListener) {
+    public static void start(BaseActivity activity, ScreenListListener screenListListener, TaskListener taskListener) {
         if (screenListListener == null) {
             screenListListener = ScreenListListener.STUB;
         }
@@ -117,7 +119,7 @@ public abstract class UrlSchemeController {
      * @param activity
      * @param listener
      */
-    public static void startPoll(Activity activity, final IdListener listener) {
+    public static void startPoll(BaseActivity activity, final IdListener listener) {
         if (isHearing(activity)) {
             getId(activity, listener, HEARING_ID);
         } else {
@@ -142,7 +144,7 @@ public abstract class UrlSchemeController {
      * @param activity
      * @param listener
      */
-    public static void startAchievement(Activity activity, final IdListener listener) {
+    public static void startAchievement(BaseActivity activity, final IdListener listener) {
         getId(activity, listener, ACHIEVEMENT_ID);
     }
 
@@ -151,7 +153,7 @@ public abstract class UrlSchemeController {
      * @param activity
      * @param listener
      */
-    public static void startEvent(Activity activity, final IdListener listener) {
+    public static void startEvent(BaseActivity activity, final IdListener listener) {
         getId(activity, listener, EVENT_ID);
     }
 
@@ -160,7 +162,7 @@ public abstract class UrlSchemeController {
      * @param activity
      * @param listener
      */
-    public static void startNovelty(Activity activity, final IdListener listener) {
+    public static void startNovelty(BaseActivity activity, final IdListener listener) {
         getId(activity, listener, NOVELTY_ID);
     }
 
@@ -169,7 +171,7 @@ public abstract class UrlSchemeController {
      * @param activity
      * @param linkListener
      */
-    public static void startWebView(Activity activity, final LinkListener linkListener) {
+    public static void startWebView(BaseActivity activity, final LinkListener linkListener) {
         UriListener uriListener = new UriListener() {
             @Override
             public void onDetected(Uri uri) {
@@ -192,7 +194,7 @@ public abstract class UrlSchemeController {
         startFromUri(activity, uriListener);
     }
 
-    public static void getId(Activity activity, final IdListener listener, final String id) {
+    public static void getId(BaseActivity activity, final IdListener listener, final String id) {
         UriListener uriListener = new UriListener() {
             @Override
             public void onDetected(Uri uri) {
@@ -210,7 +212,7 @@ public abstract class UrlSchemeController {
         startFromUri(activity, uriListener);
     }
 
-    public static void startFromUri(Activity activity, UriListener uriListener) {
+    public static void startFromUri(BaseActivity activity, UriListener uriListener) {
         Uri uri = activity.getIntent().getData();
         if (uri != null) {
             if (Session.get().hasSession()) {
@@ -226,9 +228,10 @@ public abstract class UrlSchemeController {
                  * Если пользователь не авторизован,
                  * то прокидываем его на экран авторизации
                  */
-                Intent authIntent = new Intent(activity, AgAuthActivity.class);
-                authIntent.setData(uri);
-                activity.startActivity(authIntent);
+//                Intent authIntent = new Intent(activity, AgAuthActivity.class);
+//                authIntent.setData(uri);
+//                activity.startActivity(authIntent);
+                activity.navigateTo().state(Add.newActivity(new AgAuthState(), BaseActivity.class));
                 activity.finish();
             }
         }

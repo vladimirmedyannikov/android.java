@@ -18,7 +18,8 @@ public enum PermissionsUtils {
     GPS(R.string.gps_rationale, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
     ALL_EXTERNAL_STORAGE(R.string.external_rationale, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
     WRITE_EXTERNAL_STORAGE(R.string.external_rationale, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-    SMS(R.string.read_sms_rationale, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS),
+    SMS(R.string.read_write_sms_rationale, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS),
+    SMS_RECEIVE(R.string.read_sms_rationale, Manifest.permission.RECEIVE_SMS),
     CAMERA_MEDIA(R.string.camera_rationale, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
     CONTACTS(R.string.contacts_read_rationale, Manifest.permission.READ_CONTACTS);
 

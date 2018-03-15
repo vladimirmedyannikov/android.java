@@ -1,10 +1,7 @@
 package ru.mos.polls;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,13 +19,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.mos.polls.util.Dialogs;
+import me.ilich.juggler.change.Add;
+import ru.mos.polls.auth.state.AgAuthState;
+import ru.mos.polls.auth.vm.AgAuthFragmentVM;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.popup.PopupController;
+import ru.mos.polls.util.Dialogs;
 
 public class AgRegisterActivity extends BaseActivity {
     private GoogleStatistics.Registry statistics = new GoogleStatistics.Registry();
@@ -56,8 +55,8 @@ public class AgRegisterActivity extends BaseActivity {
 
         Spanned spanned = Html.fromHtml(getString(R.string.ag_agree_offer_link));
         TextView offer = (TextView) findViewById(R.id.tvOffer);
-        AgAuthActivity.OfferLinkMovementMethod movementMethod = AgAuthActivity.OfferLinkMovementMethod.getInstance();
-        movementMethod.setLinkListener(new AgAuthActivity.OfferLinkMovementMethod.LinkListener() {
+        AgAuthFragmentVM.OfferLinkMovementMethod movementMethod = AgAuthFragmentVM.OfferLinkMovementMethod.getInstance();
+        movementMethod.setLinkListener(new AgAuthFragmentVM.OfferLinkMovementMethod.LinkListener() {
             @Override
             public void onClicked() {
                 statistics.offerClick();
@@ -121,12 +120,13 @@ public class AgRegisterActivity extends BaseActivity {
     }
 
     private void startAuth() {
-        Intent authIntent = new Intent(AgRegisterActivity.this, AgAuthActivity.class);
-        authIntent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
-        EditText phone = (EditText) findViewById(R.id.etPhoneNumber);
-        authIntent.putExtra("phone", phone.getText().toString());
-        authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(authIntent);
+//        Intent authIntent = new Intent(AgRegisterActivity.this, AgAuthActivity.class);
+//        authIntent.putExtra(AgAuthActivity.PASSED_ACTIVITY, MainActivity.class);
+//        EditText phone = (EditText) findViewById(R.id.etPhoneNumber);
+//        authIntent.putExtra("phone", phone.getText().toString());
+//        authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(authIntent);
+        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.ui.BaseActivity.class));
         finish();
     }
 

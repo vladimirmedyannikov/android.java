@@ -221,7 +221,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.APPEvents action = (Events.APPEvents) o;
                         switch (action.getEventType()) {
                             case Events.APPEvents.UNAUTHORIZED:
-                                ProfileManagerRX.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
+//                                ProfileManagerRX.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
+                                ProfileManagerRX.afterLoggedOut(this);
                                 break;
                         }
                     }

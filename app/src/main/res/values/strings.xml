@@ -125,6 +125,7 @@
     <string name="ag_hint_phone_email">Ваш телефон (10 цифр)</string>
     <string name="elk_authorization">Вход</string>
     <string name="elk_restoreTitle">Восстановление пароля</string>
+    <string name="ag_auth_title">Ваш телефон</string>
 
     <string name="marital_non_select_item_title">Семейное положение</string>
     <string name="gender_non_select_item_title">Пол</string>
@@ -847,6 +848,7 @@
     <string name="geotarget_area_update_push_string">Уведомление об обновлении зоны геотаргетинга</string>
 
     <string name="gps_rationale">Для корректной работы приложения необходимы разрешения для определения местоположения</string>
+    <string name="read_write_sms_rationale">Для корректной работы приложения необходимы разрешения для чтения и отправки SMS</string>
     <string name="read_sms_rationale">Для корректной работы приложения необходимы разрешения для чтения SMS</string>
     <string name="camera_rationale">Для корректной работы приложения необходимы разрешения для доступа к камере</string>
     <string name="external_rationale">Для корректной работы приложения необходимы разрешения для доступа к внешнему хранилищу</string>

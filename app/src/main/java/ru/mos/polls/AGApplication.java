@@ -155,7 +155,7 @@ public class AGApplication extends MultiDexApplication {
         }
         API.setToken(Token.AG);
 
-        API.registerPush(this);
+//        API.registerPush(this);
 
         API.setBuildVersionName(UrlManager.V250);
         VolleyLog.setIsDebug(!BuildConfig.BUILD_TYPE.equals("release"));

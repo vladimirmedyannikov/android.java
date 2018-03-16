@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -57,7 +56,6 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
@@ -67,6 +65,7 @@ import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
+import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialUIController;
@@ -159,7 +158,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         setSupportProgressBarIndeterminateVisibility(false);
 

@@ -9,6 +9,7 @@
 
     <RelativeLayout
         style="@style/wrap"
+        android:layout_marginLeft="8dp"
         android:layout_gravity="center">
 
         <ProgressBar
@@ -18,8 +19,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/expertAvatar"
-            android:layout_width="@dimen/vs_small"
-            android:layout_height="@dimen/vs_small"
+            android:layout_width="@dimen/vs_xxsmall"
+            android:layout_height="@dimen/vs_xxsmall"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 

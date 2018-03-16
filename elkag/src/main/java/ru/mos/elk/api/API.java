@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 
 import java.util.UUID;
 
@@ -53,11 +52,7 @@ public class API {
             return;
         Intent intent = new Intent(context, AutoLoadService.class);
         intent.putExtra(AutoLoadService.TASK, AutoLoadService.GCM_REGISTER);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent);
-        } else {
-            context.startService(intent);
-        }
+        context.startService(intent);
     }
 
     public static void refreshData(Context context) {

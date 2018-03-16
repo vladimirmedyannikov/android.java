@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 
 import com.appsflyer.AppsFlyerLib;
 
+import ru.mos.elk.api.API;
 import ru.mos.elk.netframework.request.Session;
 
 public class SplashActivity extends Activity {
@@ -29,6 +30,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        API.registerPush(this);
         AppsFlyerLib.sendTracking(getApplicationContext());
 
         AppsFlyerLib.sendTracking(getApplicationContext());

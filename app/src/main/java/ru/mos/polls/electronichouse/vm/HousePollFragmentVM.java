@@ -137,7 +137,6 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
     @SuppressWarnings("newApi")
     @OnClick(R.id.fab_add_house_poll)
     void addClick(View v) {
-//        getFragment().navigateTo(new WebViewState(), BaseActivity.class);
         GuiUtils.displayYesOrNotDialog(getActivity(), getActivity().getString(R.string.go_to_house_poll_desc), (DialogInterface.OnClickListener) (dialog, which) -> {
             Uri uri = Uri.parse(UrlHelper.getHouseConstructorUrl());
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);

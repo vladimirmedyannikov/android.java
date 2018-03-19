@@ -58,13 +58,6 @@
         </activity>
 
         <activity
-            android:name="ru.mos.polls.AgAuthActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible" />
-        <activity
             android:name="ru.mos.polls.AgPhoneConfirmActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
@@ -364,7 +357,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".base.ui.BaseActivity"
+            android:name=".base.activity.BaseActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

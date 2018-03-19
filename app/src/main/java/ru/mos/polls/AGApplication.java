@@ -181,7 +181,6 @@ public class AGApplication extends MultiDexApplication {
             }
         };
         registerReceiver(logoutReceiver, new IntentFilter(BaseActivity.INTENT_LOGOUT));
-        BaseActivity.addAuthRequire(MainActivity.class);
 
         imageLoader = ImageLoader.getInstance();
         cacheDir = StorageUtils.getCacheDirectory(this);

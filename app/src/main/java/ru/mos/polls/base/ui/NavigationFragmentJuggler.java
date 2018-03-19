@@ -16,6 +16,7 @@ import me.ilich.juggler.gui.JugglerNavigationFragment;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.R;
 import ru.mos.polls.about.state.AboutAppState;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.util.GuiUtils;
 
 

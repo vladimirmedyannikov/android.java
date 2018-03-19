@@ -30,7 +30,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.base.rxjava.Events;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;

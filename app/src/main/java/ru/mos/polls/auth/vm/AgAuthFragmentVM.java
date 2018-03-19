@@ -84,7 +84,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
         codeCountry = binding.etCodeCountry;
         etLogin = binding.etLogin;
         tvError = binding.tvError;
-        binding.registeredInService.setOnClickListener(v -> getFragment().navigateTo(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.ui.BaseActivity.class));
+        binding.registeredInService.setOnClickListener(v -> getFragment().navigateTo(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.activity.BaseActivity.class));
         etLogin.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_DONE) {
                 doRequestAction();
@@ -95,7 +95,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
                     AbstractActivity.hideSoftInput(getFragment().getContext(), etLogin);
                     statistics.helpClick();
                     new GoogleStatistics.Auth().feedbackClick();
-                    getFragment().navigateTo(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class);
+                    getFragment().navigateTo(new SupportState(true), ru.mos.polls.base.activity.BaseActivity.class);
                 }
         );
         binding.etLogin.setOnFocusChangeListener((view, b) -> {
@@ -208,20 +208,6 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(handler);
-    }
-
-    private JSONObject getQueryParams() {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("msisdn", codeCountry.getUnmaskedText() + etLogin.getUnmaskedText());
-            JSONObject deviceInfo = new JSONObject();
-            deviceInfo.put("os", "Android " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")");
-            deviceInfo.put("device", Build.MODEL + " (" + Build.MANUFACTURER + ")");
-            params.put("client_info", deviceInfo);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return params;
     }
 
     public boolean checkCodeText() {

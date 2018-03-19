@@ -211,7 +211,7 @@ public class AgAuthActivity extends BaseActivity {
 
     @OnClick(R.id.registered_in_service)
     public void authInService() {
-        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new AuthState(etLogin.getUnmaskedText()), ru.mos.polls.base.activity.BaseActivity.class));
     }
 
     @OnEditorAction(R.id.etLogin)
@@ -227,7 +227,7 @@ public class AgAuthActivity extends BaseActivity {
         AbstractActivity.hideSoftInput(AgAuthActivity.this, etLogin);
         statistics.helpClick();
         new GoogleStatistics.Auth().feedbackClick();
-        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.activity.BaseActivity.class));
     }
 
     @OnFocusChange(value = {R.id.etLogin, R.id.etPassword})

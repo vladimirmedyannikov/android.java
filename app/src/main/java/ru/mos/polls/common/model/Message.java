@@ -15,7 +15,7 @@ import me.ilich.juggler.change.Add;
 import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.social.model.AppPostValue;

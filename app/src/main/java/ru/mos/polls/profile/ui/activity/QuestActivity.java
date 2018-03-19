@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
 import me.ilich.juggler.change.Add;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.state.NewFlatState;

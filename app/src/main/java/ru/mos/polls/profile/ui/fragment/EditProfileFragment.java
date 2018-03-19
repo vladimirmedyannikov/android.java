@@ -7,7 +7,7 @@ import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.profile.vm.EditProfileFragmentVM;

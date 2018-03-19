@@ -3,9 +3,7 @@ package ru.mos.polls.settings.vm;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.GoogleStatistics;
-import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -46,7 +44,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
         ((ItemsAdapter) getComponent(RecyclerUIComponent.class).getAdapter()).setOnItemClickListener(item -> {
             switch (item.getId()) {
                 case Item.SUBSCRIBE:
-                    getFragment().navigateTo(new SubscribeState(), ru.mos.polls.base.ui.BaseActivity.class);
+                    getFragment().navigateTo(new SubscribeState(), ru.mos.polls.base.activity.BaseActivity.class);
                     break;
                 case Item.USER_LOCK:
                     Statistics.blockAccount();
@@ -54,13 +52,13 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
                     notifyAboutBlocking();
                     break;
                 case Item.CHANGE_PASSWORD:
-                    getFragment().navigateTo(new ChangePasswordState(), ru.mos.polls.base.ui.BaseActivity.class);
+                    getFragment().navigateTo(new ChangePasswordState(), ru.mos.polls.base.activity.BaseActivity.class);
                     break;
                 case Item.LOGOUT:
                     showLogoutDialog();
                     break;
                 case Item.SOURCES_POLL:
-                    getFragment().navigateTo(new SourcesVotingState(), ru.mos.polls.base.ui.BaseActivity.class);
+                    getFragment().navigateTo(new SourcesVotingState(), ru.mos.polls.base.activity.BaseActivity.class);
                     break;
             }
         });
@@ -74,7 +72,7 @@ public class SettingsFragmentVM extends UIComponentFragmentViewModel<SettingsFra
             public void onClick(DialogInterface dialog, int which) {
                 GeotargetManager.stop(getFragment().getContext());
                 ProfileManagerRX
-                        .logOut((BaseActivity) getActivity(), AgAuthActivity.class, MainActivity.class);
+                        .logOut((BaseActivity) getActivity());
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

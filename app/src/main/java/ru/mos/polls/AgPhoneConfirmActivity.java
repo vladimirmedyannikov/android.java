@@ -134,7 +134,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.feedback)
     public void onFeedback() {
-        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.activity.BaseActivity.class));
     }
 
     @Override
@@ -214,7 +214,7 @@ public class AgPhoneConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.help)
     public void onHelp() {
-        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.activity.BaseActivity.class));
         finish();
     }
 

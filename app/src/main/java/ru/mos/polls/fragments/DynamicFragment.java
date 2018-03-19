@@ -47,7 +47,6 @@ public class DynamicFragment extends PullableFragment {
     public static final long NO_CACHING = -1L;
 //    private static final long DEF_EXPIRE_INTERVAL = Constants.DAY;
 
-    //    private BaseActivity activity;
 //    private DynamicManager manager;
 //    private boolean isForwardMotion = true;
 //    private boolean isClean;
@@ -147,7 +146,6 @@ public class DynamicFragment extends PullableFragment {
         Bundle args = getArguments();
 //        if (args == null)
 //            args = new Bundle();
-//        activity = (BaseActivity) getActivity();
 //
 //        if (args.containsKey(DEF_TITLE)) {
 //            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {

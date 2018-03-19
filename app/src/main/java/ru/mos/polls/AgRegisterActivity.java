@@ -126,7 +126,7 @@ public class AgRegisterActivity extends BaseActivity {
 //        authIntent.putExtra("phone", phone.getText().toString());
 //        authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(authIntent);
-        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.ui.BaseActivity.class));
+        navigateTo().state(Add.newActivity(new AgAuthState(), ru.mos.polls.base.activity.BaseActivity.class));
         finish();
     }
 

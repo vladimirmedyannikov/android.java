@@ -6,7 +6,7 @@ import android.view.View;
 
 import me.ilich.juggler.change.Add;
 import ru.mos.polls.auth.state.AgAuthState;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.news.ui.NewsFragment;
 
 

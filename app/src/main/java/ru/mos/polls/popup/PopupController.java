@@ -13,7 +13,7 @@ import android.widget.PopupWindow;
 import me.ilich.juggler.change.Add;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BaseActivity;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.instruction.InstructionActivity;
 import ru.mos.polls.support.state.SupportState;

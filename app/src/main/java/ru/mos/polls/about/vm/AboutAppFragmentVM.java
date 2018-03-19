@@ -77,7 +77,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                         case AboutItem.OUR_APPS:
                             Statistics.ourApps();
                             GoogleStatistics.AGNavigation.ourApps();
-                            getFragment().navigateTo().state(Add.newActivity(new OurAppsState(), ru.mos.polls.base.ui.BaseActivity.class));
+                            getFragment().navigateTo().state(Add.newActivity(new OurAppsState(), ru.mos.polls.base.activity.BaseActivity.class));
                             break;
                         case AboutItem.SHARE_SOCIAL:
                             SocialUIController.showSocialsDialog(disposables, (BaseActivity) getActivity(), new SocialUIController.SocialClickListener() {
@@ -96,7 +96,7 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                             FunctionalHelper.startGooglePlay(getActivity());
                             break;
                         case AboutItem.FEEDBACK:
-                            getFragment().navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.ui.BaseActivity.class));
+                            getFragment().navigateTo().state(Add.newActivity(new SupportState(true), ru.mos.polls.base.activity.BaseActivity.class));
                             break;
                     }
                 })))

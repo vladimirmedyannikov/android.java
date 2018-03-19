@@ -8,6 +8,7 @@ import me.ilich.juggler.change.Remove;
 import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.profile.vm.WizardRequestInterfaceListener;
 

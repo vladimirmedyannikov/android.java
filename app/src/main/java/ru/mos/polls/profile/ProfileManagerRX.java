@@ -19,7 +19,6 @@ import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.change.Remove;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.AgAuthActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.auth.state.AgAuthState;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -163,25 +162,6 @@ public class ProfileManagerRX {
         prefs.edit().clear().putString(AgUser.PHONE, phone).commit();
     }
 
-    public static void afterLoggedOut(Activity elkActivity, Class<?> authActivity, Class<?> afterLoginActivity) {
-        Intent intent = new Intent(elkActivity, authActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(AgAuthActivity.PASSED_ACTIVITY, afterLoginActivity);
-        elkActivity.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
-        elkActivity.startActivity(intent);
-        elkActivity.finish();
-
-        NotificationManager notificationmanager = (NotificationManager) elkActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-        try {
-            for (int i = 0; i <= GCMBroadcastReceiver.messageNotifyId; ++i) {
-                notificationmanager.cancel(i);
-            }
-        } catch (Exception ignored) {
-        }
-        ProfileManagerRX.clearStoredData(elkActivity);
-        Session.get().clear();
-    }
-
     public static void afterLoggedOut(BaseActivity baseActivity) {
         baseActivity.sendBroadcast(new Intent(BaseActivity.INTENT_LOGOUT));
         NotificationManager notificationmanager = (NotificationManager) baseActivity.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -196,7 +176,7 @@ public class ProfileManagerRX {
         baseActivity.navigateTo().state(Remove.closeAllActivities(), Add.newActivity(new AgAuthState(), BaseActivity.class));
     }
 
-    public static void logOut(final BaseActivity alkActivity, final Class<?> authActivity, final Class<?> afterLoginActivity) {
+    public static void logOut(final BaseActivity alkActivity) {
         final ProgressDialog dialog = Dialogs.showProgressDialog(alkActivity, R.string.elk_wait_logout);
         JSONObject params = new JSONObject();
         try {
@@ -208,14 +188,12 @@ public class ProfileManagerRX {
             @Override
             protected void onResult(EmptyResult[] result) {
                 dialog.dismiss();
-//                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
                 afterLoggedOut(alkActivity);
             }
 
             @Override
             public void onErrorListener() {
                 dialog.dismiss();
-//                afterLoggedOut(alkActivity, authActivity, afterLoginActivity);
                 afterLoggedOut(alkActivity);
             }
         };

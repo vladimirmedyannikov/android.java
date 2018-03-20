@@ -9,16 +9,22 @@ import ru.mos.polls.social.model.AppSocial;
 
 public class SocialBindAdapter extends BaseRecyclerAdapter<SocialVM> {
 
-    public SocialBindAdapter(List<AppSocial> list) {
-        add(list);
+    public SocialBindAdapter(List<AppSocial> list, Listener listener) {
+        add(list, listener);
     }
 
-    public void add(List<AppSocial> socials) {
+    private void add(List<AppSocial> socials, Listener listener) {
         List<SocialVM> content = new ArrayList<>();
         for (AppSocial social : socials) {
-            SocialVM addressesPropertyVM = new SocialVM(social);
+            SocialVM addressesPropertyVM = new SocialVM(social, listener);
             content.add(addressesPropertyVM);
         }
         addData(content);
+    }
+
+    public interface Listener {
+        void onBindClick(AppSocial social);
+
+        void onCloseClick(AppSocial social);
     }
 }

@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/root"
-                xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         style="@style/root">
-        <ProgressBar
-            android:id="@+id/progress"
-            style="@style/item"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
 
-        <RelativeLayout
-            android:id="@+id/root"
-            style="@style/root">
-            <LinearLayout
-                android:id="@+id/notifyContainer"
-                style="@style/item.linear"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/background_text_field"
-                android:padding="@dimen/pd_normal">
+        <RelativeLayout style="@style/root">
 
-                <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/socialShareNotify"
-                    style="@style/wrap"
-                    android:layout_alignParentRight="true"
-                    android:paddingBottom="@dimen/pd_xxsmall"
-                    android:text="@string/social_share_notify"
-                    android:textColor="@color/greyHint"
-                    android:textOff="@string/empty"
-                    android:textOn="@string/empty"/>
-            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/item"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
 
-            <ListView
-                android:id="@id/list"
-                style="@style/linear"
-                android:layout_above="@id/notifyContainer"
-                android:listSelector="@android:color/transparent"/>
+            <RelativeLayout
+                android:id="@+id/root"
+                style="@style/root">
+
+                <LinearLayout
+                    android:id="@+id/notifyContainer"
+                    style="@style/item.linear"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/background_text_field"
+                    android:padding="@dimen/pd_normal">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/socialShareNotify"
+                        style="@style/wrap"
+                        android:layout_alignParentRight="true"
+                        android:paddingBottom="@dimen/pd_xxsmall"
+                        android:text="@string/social_share_notify"
+                        android:textColor="@color/greyHint"
+                        android:textOff="@string/empty"
+                        android:textOn="@string/empty" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/list"
+                    style="@style/linear"
+                    android:layout_above="@id/notifyContainer"
+                    android:listSelector="@android:color/transparent" />
+                <TextView
+                    android:id="@android:id/empty"
+                    android:visibility="gone"
+                    style="@style/emptylist"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/pd_xxxlarge"
+                    android:text="@string/empty_list" />
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</layout>

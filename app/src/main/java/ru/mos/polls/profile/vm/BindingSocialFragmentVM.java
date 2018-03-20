@@ -44,6 +44,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
     private List<AppSocial> changedSocials, savedSocials;
     private SwitchCompat socialShareNotify;
     private View notifyContainer;
+    private SocialBindAdapter.Listener socialClickListener;
     private AuthCallback authCallback = new AuthCallback() {
         @Override
         public void authSuccess(Social social) {
@@ -73,10 +74,9 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
         notifyContainer.setVisibility(isTask ? View.GONE : View.VISIBLE);
         socialShareNotify.setChecked(CustomDialogController.isShareEnable(getActivity()));
         socialController = new SocialController((BaseActivity) getActivity());
-        socialController.getEventController().registerCallback(authCallback);
         savedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
         changedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
-        socialBindAdapter = new SocialBindAdapter(changedSocials, new SocialBindAdapter.Listener() {
+        socialClickListener = new SocialBindAdapter.Listener() {
             @Override
             public void onBindClick(AppSocial social) {
                 socialController.auth(social.getId());
@@ -86,7 +86,8 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
             public void onCloseClick(AppSocial social) {
                 showUnBindDialog(social);
             }
-        });
+        };
+        socialBindAdapter = new SocialBindAdapter(changedSocials, socialClickListener);
         socialShareNotify.setOnCheckedChangeListener((compoundButton, b) -> {
             socialShareNotify.setChecked(b);
             CustomDialogController.setShareAbility(getFragment().getContext(), b);
@@ -97,6 +98,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
     public void onViewCreated() {
         super.onViewCreated();
         refreshSocials();
+        socialController.getEventController().registerCallback(authCallback);
     }
 
     @Override
@@ -184,7 +186,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
                         break;
                     }
                 }
-                socialBindAdapter.notifyDataSetChanged();
+                socialBindAdapter.set(changedSocials);
             }
 
             @Override
@@ -214,7 +216,13 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
                 }
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
                 social.setIsLogin(false);
-                socialBindAdapter.notifyDataSetChanged();
+                for (int i = 0; i < changedSocials.size(); i++) {
+                    if (changedSocials.get(i).getId() == social.getId()) {
+                        changedSocials.get(i).setIsLogin(false);
+                        break;
+                    }
+                }
+                socialBindAdapter.set(changedSocials);
             }
 
             @Override

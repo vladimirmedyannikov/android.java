@@ -73,6 +73,9 @@ public class WebShopFragmentVM extends UIComponentFragmentViewModel<WebShopFragm
         progress = binding.progress;
         root = binding.root;
         rootConnectionError = binding.relativeView.findViewById(R.id.rootConnectionError);
+        binding.relativeView.findViewById(R.id.internet_lost_reload).setOnClickListener(view -> {
+            if (checkInternetConnection()) webView.loadUrl(url);
+        });
     }
 
     @Override

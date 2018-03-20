@@ -32,6 +32,7 @@ import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.ui.InfoSurveyFragment;
+import ru.mos.polls.survey.ui.PollsSummaryFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
@@ -71,10 +72,11 @@ public class SurveyActivity extends BaseActivity {
     private Survey survey;
     private SurveyFragment surveyFragment;
     private SurveySummaryFragment surveySummaryFragment;
+    private PollsSummaryFragment pollsSummaryFragment;
     private Fragment currentFragment;
 
     private SocialController socialController;
-    private Callback callback = Callback.STUB;
+    private BackPressedListener backPressedListener = BackPressedListener.STUB;
     private PostCallback postCallback = new PostCallback() {
         @Override
         public void postSuccess(Social social, @Nullable PostValue postValue) {
@@ -118,11 +120,11 @@ public class SurveyActivity extends BaseActivity {
         SocialUIController.unregisterPostingReceiver(this);
     }
 
-    public void setCallback(Callback callback) {
-        if (callback == null) {
-            this.callback = Callback.STUB;
+    public void setBackPressedListener(BackPressedListener backPressedListener) {
+        if (backPressedListener == null) {
+            this.backPressedListener = BackPressedListener.STUB;
         } else {
-            this.callback = callback;
+            this.backPressedListener = backPressedListener;
         }
     }
 
@@ -149,13 +151,13 @@ public class SurveyActivity extends BaseActivity {
     }
 
     private void onUpPressed() {
-        callback.onUpPressed();
+        backPressedListener.onUp();
     }
 
     @Override
     public void onBackPressed() {
         if (currentFragment != null) {
-            callback.onBackPressed();
+            backPressedListener.onBack();
         } else {
             super.onBackPressed();
         }
@@ -202,7 +204,7 @@ public class SurveyActivity extends BaseActivity {
 
     private void tryToExecuteActionCallback(int requestCode) {
         if (requestCode == ActionSurveyVariant.REQUEST_FILLING_LOCATION_DATA) {
-            callback.onLocationUpdated();
+            backPressedListener.onLocationUpdated();
         }
     }
 
@@ -286,8 +288,7 @@ public class SurveyActivity extends BaseActivity {
 
     private void replaceFragment(Fragment fragment) {
         currentFragment = fragment;
-        setCallback((Callback) fragment);
-
+        setBackPressedListener((BackPressedListener) fragment);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
@@ -303,9 +304,10 @@ public class SurveyActivity extends BaseActivity {
     }
 
     private Fragment getSummaryFragment(Survey survey) {
-        surveySummaryFragment = SurveySummaryFragment.newInstance(survey, true);
-        surveySummaryFragment.setCallback(getSummaryFragmentCallback());
-        return surveySummaryFragment;
+//        surveySummaryFragment = SurveySummaryFragment.newInstance(survey, true);
+//        surveySummaryFragment.setCallback(getSummaryFragmentCallback());
+        pollsSummaryFragment = PollsSummaryFragment.newInstance(survey, true, getSummaryFragmentCallback());
+        return pollsSummaryFragment;
     }
 
     public SurveySummaryFragment.Callback getSummaryFragmentCallback() {
@@ -373,7 +375,7 @@ public class SurveyActivity extends BaseActivity {
                 SurveyActivity.this.survey = survey;
                 if (survey.getKind().isHearing() || !isRedirectNeed(survey)) {
                     getSummaryFragment(survey);
-                    replaceFragment(surveySummaryFragment);
+                    replaceFragment(pollsSummaryFragment);
                 } else {
                     doInterrupt(survey);
                 }
@@ -442,14 +444,14 @@ public class SurveyActivity extends BaseActivity {
         }
     }
 
-    public interface Callback {
-        Callback STUB = new Callback() {
+    public interface BackPressedListener {
+        BackPressedListener STUB = new BackPressedListener() {
             @Override
-            public void onBackPressed() {
+            public void onBack() {
             }
 
             @Override
-            public void onUpPressed() {
+            public void onUp() {
 
             }
 
@@ -458,9 +460,9 @@ public class SurveyActivity extends BaseActivity {
             }
         };
 
-        void onBackPressed();
+        void onBack();
 
-        void onUpPressed();
+        void onUp();
 
         void onLocationUpdated();
     }

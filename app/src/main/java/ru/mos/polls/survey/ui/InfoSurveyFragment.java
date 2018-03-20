@@ -47,7 +47,7 @@ import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
 
-public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callback {
+public class InfoSurveyFragment extends Fragment implements SurveyActivity.BackPressedListener {
     public static final String ARG_POLL_ID = "poll_id";
     public static final String ARG_SURVEY = "survey";
 
@@ -357,7 +357,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBack() {
         if (isCommentFrAdded) {
             commentFragment.onBackPressed();
             getActivity().setTitle(getString(R.string.poll_inform_title));
@@ -368,7 +368,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
     }
 
     @Override
-    public void onUpPressed() {
+    public void onUp() {
         interrupt();
     }
 

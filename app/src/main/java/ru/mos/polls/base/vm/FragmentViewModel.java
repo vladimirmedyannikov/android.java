@@ -87,4 +87,8 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
                 pd.dismiss();
         }
     };
+
+    public void onStart() {
+
+    }
 }

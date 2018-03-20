@@ -44,7 +44,7 @@ import ru.mos.polls.survey.variants.select.GorodSelectObject;
 import ru.mos.polls.survey.variants.select.SelectObject;
 import ru.mos.polls.survey.variants.select.ServiceSelectObject;
 
-public class SurveyFragment extends Fragment implements SurveyActivity.Callback, SurveyButtons.CallBack {
+public class SurveyFragment extends Fragment implements SurveyActivity.BackPressedListener, SurveyButtons.CallBack {
     private static final String EXTRA_POLL_ID = "extra_poll_id";
     private static final String EXTRA_PAGE = "extra_page_index";
     private static final String EXTRA_QUESTION_ID = "extra_question_id";
@@ -334,7 +334,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
                 callback.onSurveyDone(survey);
             }
         } else {
-            onBackPressed();
+            onBack();
         }
     }
 
@@ -439,7 +439,7 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
         if (savedInstanceState != null) {
             pollId = savedInstanceState.getLong(EXTRA_POLL_ID);
             questionId = savedInstanceState.getLong(EXTRA_QUESTION_ID);
-            ((SurveyActivity) getActivity()).setCallback(this);
+            ((SurveyActivity) getActivity()).setBackPressedListener(this);
             ((SurveyActivity) getActivity()).setCurrentFragment(this);
             setCallback(((SurveyActivity) getActivity()).getSurveyCallback());
         }
@@ -643,12 +643,12 @@ public class SurveyFragment extends Fragment implements SurveyActivity.Callback,
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBack() {
         interrupt();
     }
 
     @Override
-    public void onUpPressed() {
+    public void onUp() {
         interruptUp();
     }
 

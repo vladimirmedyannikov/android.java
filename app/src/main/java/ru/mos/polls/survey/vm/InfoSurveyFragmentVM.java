@@ -86,12 +86,12 @@ public class InfoSurveyFragmentVM  {
 //    }
 //
 //    @Override
-//    public void onBackPressed() {
+//    public void onBack() {
 //
 //    }
 //
 //    @Override
-//    public void onUpPressed() {
+//    public void onUp() {
 //
 //    }
 //

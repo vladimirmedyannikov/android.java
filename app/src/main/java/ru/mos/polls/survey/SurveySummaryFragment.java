@@ -49,7 +49,7 @@ import ru.mos.polls.survey.summary.SurveyHeader;
 import ru.mos.polls.survey.summary.SurveyTitleView;
 
 
-public class SurveySummaryFragment extends Fragment implements SurveyActivity.Callback {
+public class SurveySummaryFragment extends Fragment implements SurveyActivity.BackPressedListener {
     public static final String EXTRA_SURVEY_ID = "extra_survey_id";
 
     public static SurveySummaryFragment newInstance(Survey survey, boolean isHearing) {
@@ -184,7 +184,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBack() {
         if (survey == null) {
             activity.finish();//если сурвей нулл то просто закрыть это активити, ничего не делая или что то еще?
         }
@@ -217,8 +217,8 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     }
 
     @Override
-    public void onUpPressed() {
-        onBackPressed();
+    public void onUp() {
+        onBack();
     }
 
     @Override
@@ -360,7 +360,7 @@ public class SurveySummaryFragment extends Fragment implements SurveyActivity.Ca
     private void restoreSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             long surveyId = savedInstanceState.getLong(EXTRA_SURVEY_ID);
-            ((SurveyActivity) getActivity()).setCallback(this);
+            ((SurveyActivity) getActivity()).setBackPressedListener(this);
             ((SurveyActivity) getActivity()).setCurrentFragment(this);
             setCallback(((SurveyActivity) getActivity()).getSummaryFragmentCallback());
             loadSurvey(surveyId);

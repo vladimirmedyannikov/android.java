@@ -32,8 +32,10 @@ public abstract class MenuBindingFragment<VM extends MenuFragmentVM, B extends V
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(getMenuResource(), menu);
-        this.menu = menu;
+        if (getMenuResource() != 0) {
+            inflater.inflate(getMenuResource(), menu);
+            this.menu = menu;
+        }
         super.onCreateOptionsMenu(menu, inflater);
         getViewModel().onCreateOptionsMenu();
     }

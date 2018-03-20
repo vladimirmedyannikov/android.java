@@ -21,9 +21,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.util.GuiUtils;
 
-public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment  {
+public abstract class BindingFragment<VM extends FragmentViewModel, B extends ViewDataBinding> extends JugglerFragment {
 
     protected abstract VM onCreateViewModel(B binding);
+
     protected CompositeDisposable disposable;
 
     private B binding;
@@ -82,6 +83,12 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         viewModel.onPause();
         GuiUtils.hideKeyboard(getView());
         super.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewModel.onStart();
     }
 
     @Override

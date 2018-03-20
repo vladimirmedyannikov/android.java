@@ -29,8 +29,8 @@ import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
-import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.common.controller.LocationController;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.electronichouse.ui.fragment.ElectronicHouseFragment;
@@ -67,7 +67,7 @@ import ru.mos.polls.quests.controller.QuestsApiControllerRX;
 import ru.mos.polls.quests.controller.SmsInviteControllerRX;
 import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
-import ru.mos.polls.shop.WebShopFragment;
+import ru.mos.polls.shop.ui.WebShopFragment;
 import ru.mos.polls.social.controller.SocialApiControllerRX;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
@@ -568,7 +568,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             case NavigationMenuItem.SHOP:
                 Statistics.shopBuy();
                 GoogleStatistics.AGNavigation.shopBuy();
-                fr = WebShopFragment.newInstance();
+                fr = WebShopFragment.instance();
                 callback = (WebShopFragment) fr;
                 tag = TAG_SHOP;
                 break;

@@ -38,7 +38,6 @@ import ru.mos.social.model.social.Social;
 public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<BindingSocialFragment, FragmentBindSocialBinding> {
 
     private boolean isTask;
-    private Unbinder unbinder;
     private SocialController socialController;
     private SocialBindAdapter socialBindAdapter;
     private List<AppSocial> changedSocials, savedSocials;
@@ -73,7 +72,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
         notifyContainer = binding.notifyContainer;
         notifyContainer.setVisibility(isTask ? View.GONE : View.VISIBLE);
         socialShareNotify.setChecked(CustomDialogController.isShareEnable(getActivity()));
-        socialController = new SocialController((BaseActivity) getActivity());
+        socialController = new SocialController(getActivity());
         savedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
         changedSocials = ((AppStorable) Configurator.getInstance(getActivity()).getStorable()).getAll();
         socialClickListener = new SocialBindAdapter.Listener() {
@@ -146,12 +145,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
                 getFragment().getString(AppBindItem.getTitle(social.getId())));
         builder.setMessage(message);
         builder.setNegativeButton(R.string.ag_no, null);
-        builder.setPositiveButton(R.string.confirm_unbind_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                unBindSocial(social);
-            }
-        });
+        builder.setPositiveButton(R.string.confirm_unbind_ok, (dialog, which) -> unBindSocial(social));
         builder.show();
     }
 
@@ -180,18 +174,11 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
                 social.copy(loadedSocial);
                 social.setIsLogin(true);
                 Configurator.getInstance(getActivity()).getStorable().save(social);
-                for (int i = 0; i < changedSocials.size(); i++) {
-                    if (changedSocials.get(i).getId() == social.getId()) {
-                        changedSocials.get(i).setIsLogin(true);
-                        break;
-                    }
-                }
-                socialBindAdapter.set(changedSocials);
+                setSocialBinding(social, true);
             }
 
             @Override
             public void onError(AppSocial social) {
-//                hideProgress();
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
             }
         };
@@ -215,14 +202,7 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
                     Statistics.profileSocialLogin(loadedSocial.getName());
                 }
                 Configurator.getInstance(getActivity()).getStorable().clear(social.getId());
-                social.setIsLogin(false);
-                for (int i = 0; i < changedSocials.size(); i++) {
-                    if (changedSocials.get(i).getId() == social.getId()) {
-                        changedSocials.get(i).setIsLogin(false);
-                        break;
-                    }
-                }
-                socialBindAdapter.set(changedSocials);
+                setSocialBinding(social, false);
             }
 
             @Override
@@ -230,5 +210,16 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
             }
         };
         SocialApiControllerRX.unbindSocialFromAg(disposables, getFragment().getContext(), social, listener, getComponent(ProgressableUIComponent.class));
+    }
+
+    public void setSocialBinding(AppSocial social, boolean status) {
+        social.setIsLogin(status);
+        for (int i = 0; i < changedSocials.size(); i++) {
+            if (changedSocials.get(i).getId() == social.getId()) {
+                changedSocials.get(i).setIsLogin(status);
+                break;
+            }
+        }
+        socialBindAdapter.set(changedSocials);
     }
 }

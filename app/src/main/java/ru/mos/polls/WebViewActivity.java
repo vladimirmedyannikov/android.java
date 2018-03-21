@@ -31,7 +31,7 @@ import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.service.NewsFind;
 import ru.mos.polls.util.NetworkUtils;
 
-
+@Deprecated
 public class WebViewActivity extends ToolbarAbstractActivity {
     public static final String INFORMATION_TITLE = "information_title_extra";
     public static final String INFORMATION_URL = "information_url_extra";

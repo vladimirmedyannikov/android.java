@@ -23,9 +23,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -40,6 +37,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.WebViewActivity;
 import ru.mos.polls.auth.state.AuthState;
 import ru.mos.polls.auth.ui.AgAuthFragment;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
@@ -56,6 +54,7 @@ import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.PermissionsUtils;
+import ru.mos.polls.webview.state.WebViewState;
 
 public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragment, FragmentAgAuthBinding> {
 
@@ -163,12 +162,12 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
             public void onClick(View v) {
                 GuiUtils.hideKeyboard(v);
                 statistics.offerClick();
-                WebViewActivity.startActivity(getFragment().getContext(),
+                getFragment().navigateTo(new WebViewState(
                         getFragment().getString(R.string.title_offer),
                         getFragment().getString(R.string.url_offer),
                         null,
                         false,
-                        false);
+                        false), BaseActivity.class);
             }
         }, startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         offer.setText(text);
@@ -287,7 +286,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
             } else if ("event".equalsIgnoreCase(host)) {
                 startIntent = new Intent(getFragment().getContext(), EventActivity.class);
             } else if ("new".equalsIgnoreCase(host) || "advertisement".equalsIgnoreCase(host)) {
-                startIntent = new Intent(getFragment().getContext(), WebViewActivity.class);
+                startIntent = new Intent(getFragment().getContext(), WebViewActivity.class); // TODO: 21.03.18  метод не используется, мб удалить?
             } else if ("poll".equalsIgnoreCase(host)) {
                 startIntent = new Intent(getFragment().getContext(), SurveyActivity.class);
             } else if ("novelty".equalsIgnoreCase(host)) {

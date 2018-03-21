@@ -38,7 +38,7 @@ public class Information implements Serializable {
         this.link = link;
     }
 
-    public void showInfoActivity(Context context) {
+    public void showInfoActivity(Context context) { // TODO: 21.03.18 метод не используется, мб удалить?
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(WebViewActivity.INFORMATION_TITLE, getTitle());
         intent.putExtra(WebViewActivity.INFORMATION_URL, getLink());

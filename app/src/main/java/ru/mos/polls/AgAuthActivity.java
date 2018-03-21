@@ -40,21 +40,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
-import ru.mos.polls.profile.service.ProfileGet;
-import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
-import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
-import ru.mos.polls.util.Dialogs;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.auth.state.AuthState;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.support.state.SupportState;
+import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.service.ProfileGet;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
+import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
+import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.survey.SurveyActivity;
+import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.GuiUtils;
+import ru.mos.polls.webview.state.WebViewState;
 
 
 public class AgAuthActivity extends BaseActivity {
@@ -147,12 +148,12 @@ public class AgAuthActivity extends BaseActivity {
             public void onClick(View v) {
                 GuiUtils.hideKeyboard(v);
                 statistics.offerClick();
-                WebViewActivity.startActivity(AgAuthActivity.this,
+                navigateTo().state(Add.newActivity(new WebViewState(
                         getString(R.string.title_offer),
                         getString(R.string.url_offer),
                         null,
                         false,
-                        false);
+                        false), BaseActivity.class));
             }
         });
         String phone = AgUser.getPhone(this);
@@ -348,7 +349,7 @@ public class AgAuthActivity extends BaseActivity {
             } else if ("event".equalsIgnoreCase(host)) {
                 startIntent = new Intent(this, EventActivity.class);
             } else if ("new".equalsIgnoreCase(host) || "advertisement".equalsIgnoreCase(host)) {
-                startIntent = new Intent(this, WebViewActivity.class);
+                startIntent = new Intent(this, WebViewActivity.class); // TODO: 21.03.18 метод не исспользщуется, мб удалить?
             } else if ("poll".equalsIgnoreCase(host)) {
                 startIntent = new Intent(this, SurveyActivity.class);
             } else if ("novelty".equalsIgnoreCase(host)) {

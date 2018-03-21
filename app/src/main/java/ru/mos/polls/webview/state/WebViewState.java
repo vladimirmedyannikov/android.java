@@ -11,13 +11,21 @@ import ru.mos.polls.webview.ui.WebViewFragment;
 
 public class WebViewState extends ContentBelowToolbarState<WebViewState.WebViewParams> {
 
-    public WebViewState() {
-        super(new WebViewParams());
+    public static WebViewState getStateForNew(String id, String title, String linkUrl) {
+        return new WebViewState(title, linkUrl, id, true, true);
+    }
+
+    public WebViewState(String title, String linkUrl, String id, boolean onlyLoadFirstUrl, boolean isShareEnable) {
+        super(new WebViewParams(title, linkUrl, id, onlyLoadFirstUrl, isShareEnable));
+    }
+
+    public WebViewState(Context context, String id, String title, String linkUrl) {
+        super(new WebViewParams(title, linkUrl, id, false, true));
     }
 
     @Override
     protected JugglerFragment onConvertContent(WebViewParams params, @Nullable JugglerFragment fragment) {
-        return new WebViewFragment();
+        return WebViewFragment.getInstance(params.title, params.linkUrl, params.id, params.onlyLoadFirstUrl, params.isShareEnable);
     }
 
     @Override
@@ -29,13 +37,22 @@ public class WebViewState extends ContentBelowToolbarState<WebViewState.WebViewP
     @Nullable
     @Override
     public String getTitle(Context context, WebViewParams params) {
-        return "Заявка на голосование";
+        return params.title;
     }
 
     static class WebViewParams extends State.Params {
+        String title;
+        String linkUrl;
+        String id;
+        boolean onlyLoadFirstUrl;
+        boolean isShareEnable;
 
-        public WebViewParams() {
+        public WebViewParams(String title, String linkUrl, String id, boolean onlyLoadFirstUrl, boolean isShareEnable) {
+            this.title = title;
+            this.linkUrl = linkUrl;
+            this.id = id;
+            this.onlyLoadFirstUrl = onlyLoadFirstUrl;
+            this.isShareEnable = isShareEnable;
         }
-
     }
 }

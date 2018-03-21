@@ -10,7 +10,6 @@ import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
-import ru.mos.polls.WebViewActivity;
 import ru.mos.polls.about.model.AboutItem;
 import ru.mos.polls.about.ui.fragment.AboutAppFragment;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -24,6 +23,7 @@ import ru.mos.polls.ourapps.state.OurAppsState;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.support.state.SupportState;
+import ru.mos.polls.webview.state.WebViewState;
 
 
 public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFragment, LayoutAboutAppBinding> {
@@ -48,31 +48,31 @@ public class AboutAppFragmentVM extends UIComponentFragmentViewModel<AboutAppFra
                     Intent intent = null;
                     switch (id) {
                         case AboutItem.ABOUT_PROJECT:
-                            WebViewActivity.startActivity(getActivity(),
+                            getFragment().navigateTo().state(Add.newActivity(new WebViewState(
                                     getActivity().getString(R.string.title_about_project),
                                     getActivity().getString(R.string.url_about_app),
                                     null,
                                     false,
-                                    false);
+                                    false), ru.mos.polls.base.activity.BaseActivity.class));
                             break;
                         case AboutItem.USER_GUIDE:
-                            WebViewActivity.startActivity(getActivity(),
+                            getFragment().navigateTo().state(Add.newActivity(new WebViewState(
                                     getActivity().getString(R.string.title_user_guide),
                                     getActivity().getString(R.string.url_user_guide),
                                     null,
                                     false,
-                                    false);
+                                    false), ru.mos.polls.base.activity.BaseActivity.class));
                             break;
                         case AboutItem.INSTRUCTION:
                             InstructionActivity.startActivity(getActivity());
                             break;
                         case AboutItem.OFFER:
-                            WebViewActivity.startActivity(getActivity(),
+                            getFragment().navigateTo().state(Add.newActivity(new WebViewState(
                                     getActivity().getString(R.string.title_offer),
                                     getActivity().getString(R.string.url_offer),
                                     null,
                                     false,
-                                    false);
+                                    false), ru.mos.polls.base.activity.BaseActivity.class));
                             break;
                         case AboutItem.OUR_APPS:
                             Statistics.ourApps();

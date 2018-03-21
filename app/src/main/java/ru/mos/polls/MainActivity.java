@@ -76,6 +76,7 @@ import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.PermissionsUtils;
 import ru.mos.polls.util.SMSUtils;
+import ru.mos.polls.webview.state.WebViewState;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.social.callback.PostCallback;
@@ -252,12 +253,12 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                                 if (action.getNews().isNeedHideTask()) {
                                     QuestsApiControllerRX.hideNews(disposables, this, action.getNews().getId(), null, Progressable.STUB);
                                 }
-                                WebViewActivity.startActivity(this,
+                                navigateTo().state(Add.newActivity(new WebViewState(
                                         action.getNews().getTitle(),
                                         action.getNews().getLinkUrl(),
                                         String.valueOf(action.getNews().getId()),
                                         true,
-                                        true);
+                                        true), BaseActivity.class));
                                 break;
                         }
                     }

@@ -492,7 +492,7 @@ public class AGApplication extends MultiDexApplication {
 
             @Override
             public Intent getNotifyIntent() {
-                return WebViewActivity.getIntentForNew(AGApplication.this, id, linkTitle, link);
+                return PushProcessActivity.getIntentForAgNew(AGApplication.this, linkTitle, link, id);
             }
 
             @Override

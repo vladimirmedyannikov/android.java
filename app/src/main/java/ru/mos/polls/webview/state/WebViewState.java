@@ -19,7 +19,7 @@ public class WebViewState extends ContentBelowToolbarState<WebViewState.WebViewP
         super(new WebViewParams(title, linkUrl, id, onlyLoadFirstUrl, isShareEnable));
     }
 
-    public WebViewState(Context context, String id, String title, String linkUrl) {
+    public WebViewState(String id, String title, String linkUrl) {
         super(new WebViewParams(title, linkUrl, id, false, true));
     }
 

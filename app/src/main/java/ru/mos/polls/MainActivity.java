@@ -46,8 +46,8 @@ import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.helpers.FunctionalHelper;
 import ru.mos.polls.informer.InformerUIController;
-import ru.mos.polls.innovations.ui.activity.InnovationActivity;
-import ru.mos.polls.innovations.ui.fragment.InnovationFragment;
+import ru.mos.polls.innovations.state.InnovationState;
+import ru.mos.polls.innovations.ui.fragment.InnovationsFragment;
 import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
@@ -240,7 +240,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.InnovationsEvents action = (Events.InnovationsEvents) o;
                         switch (action.getEventType()) {
                             case Events.InnovationsEvents.OPEN_INNOVATIONS:
-                                InnovationActivity.startActivity(this, action.getInnovationId());
+                                navigateTo().state(Add.newActivity(new InnovationState(action.getInnovationId()), BaseActivity.class));
                                 break;
                         }
                     }
@@ -561,7 +561,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 tag = TAG_ABOUT;
                 break;
             case NavigationMenuItem.NOVELTY:
-                fr = InnovationFragment.newInstance();
+                fr = InnovationsFragment.newInstance();
                 tag = TAG_NOVELTY;
                 Statistics.innovationsListFragment();
                 GoogleStatistics.Innovation.innovationsListFragment();
@@ -690,7 +690,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onInnovation(long id) {
-                InnovationActivity.startActivity(MainActivity.this, id);
+                navigateTo().state(Add.newActivity(new InnovationState(id), BaseActivity.class));
             }
         };
 

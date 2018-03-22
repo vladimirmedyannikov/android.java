@@ -16,8 +16,13 @@ import android.view.inputmethod.InputMethodManager;
 
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.change.Remove;
+import me.ilich.juggler.gui.JugglerActivity;
 import me.ilich.juggler.gui.JugglerFragment;
+import me.ilich.juggler.states.State;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.vm.FragmentViewModel;
 import ru.mos.polls.util.GuiUtils;
 
@@ -130,6 +135,18 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         IBinder view = fragment.getView().getRootView().getWindowToken();
         InputMethodManager imm = (InputMethodManager) fragment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view, 0);
+    }
+
+    public void navigateToActivityForResult(State state, int code) {
+        navigateTo().state(Add.newActivityForResult(state, BaseActivity.class, code));
+    }
+
+    public void navigateTo(State state, Class<? extends JugglerActivity> activityClass) {
+        navigateTo().state(Add.newActivity(state, activityClass));
+    }
+
+    public void navigateToCloseCurrActivity() {
+        navigateTo().state(Remove.closeCurrentActivity());
     }
 
     @Override

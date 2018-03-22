@@ -49,6 +49,7 @@ import ru.mos.social.model.social.Social;
  *
  * @since 1.9
  */
+@Deprecated
 public class InnovationActivity extends ToolbarAbstractActivity implements InnovationButtons.CallBack {
     private static final int REQUEST = 100;
     private static final String EXTRA_SHORT_INNOVATION = "extra_short_innovation";
@@ -123,7 +124,7 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_innovation);
         ButterKnife.bind(this);
-        innovationButtons.setActivity(InnovationActivity.this);
+//        innovationButtons.setFragment(InnovationActivity.this);
         TitleHelper.setTitle(this, R.string.title_innovation);
         setListenerToRatingbar();
         socialController = new SocialController(this);

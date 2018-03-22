@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
-import ru.mos.polls.innovations.ui.activity.InnovationActivity;
+import ru.mos.polls.innovations.vm.InnovationFragmentVM;
 
 public class InnovationButtons extends RelativeLayout {
     private TextView send;
-    private InnovationActivity activity;
+    private InnovationFragmentVM fragment;
 
     public InnovationButtons(Context context) {
         super(context);
@@ -43,8 +43,8 @@ public class InnovationButtons extends RelativeLayout {
         addView(v);
     }
 
-    public void setActivity(InnovationActivity activity) {
-        this.activity = activity;
+    public void setFragment(InnovationFragmentVM fragment) {
+        this.fragment = fragment;
     }
 
     public View getView() {
@@ -59,7 +59,7 @@ public class InnovationButtons extends RelativeLayout {
         send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.rateInnovation();
+                fragment.rateInnovation();
             }
         });
     }
@@ -80,7 +80,7 @@ public class InnovationButtons extends RelativeLayout {
         send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.shareSocial();
+                fragment.shareSocial();
             }
         });
     }

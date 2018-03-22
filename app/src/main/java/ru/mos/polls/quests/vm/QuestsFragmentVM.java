@@ -34,6 +34,7 @@ import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.LayoutQuestsBinding;
 import ru.mos.polls.fortesters.TestersController;
+import ru.mos.polls.innovations.state.InnovationState;
 import ru.mos.polls.mainbanner.BannerController;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -42,6 +43,7 @@ import ru.mos.polls.quests.model.quest.AdvertisementQuest;
 import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.model.quest.FavoriteSurveysQuest;
 import ru.mos.polls.quests.model.quest.NewsQuest;
+import ru.mos.polls.quests.model.quest.NoveltyQuest;
 import ru.mos.polls.quests.model.quest.OtherQuest;
 import ru.mos.polls.quests.model.quest.ProfileQuest;
 import ru.mos.polls.quests.model.quest.Quest;
@@ -95,7 +97,11 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                     BadgeManager.markNewsAsReaded(Long.parseLong(quest.getId()));
                     BadgeManager.uploadReadedNews((BaseActivity) getActivity());
                 }
-                quest.onClick(getActivity(), listener);
+                if (quest instanceof NoveltyQuest) {
+                    getFragment().navigateTo(new InnovationState(Long.valueOf(quest.getId())), BaseActivity.class);
+                } else {
+                    quest.onClick(getActivity(), listener);
+                }
                 /**
                  * Скрываем блок из ленты
                  */

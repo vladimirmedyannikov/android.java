@@ -57,7 +57,7 @@ import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.webview.state.WebViewState;
 
-
+@Deprecated
 public class AgAuthActivity extends BaseActivity {
     private static final int SMS_PERMISSION_REQUEST = 9825;
     protected Toolbar toolbar;

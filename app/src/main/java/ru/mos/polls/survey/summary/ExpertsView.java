@@ -26,11 +26,12 @@ import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.experts.DetailsExpert;
 import ru.mos.polls.survey.questions.SurveyQuestion;
+import ru.mos.polls.survey.ui.SurveyFragment;
 
 /**
  * Кастомынй компонент для отображения preview мнений экспертов на экранах
  * списка вопросов голосований {@link ru.mos.polls.survey.SurveySummaryFragment}
- * и на экране вопроса голосования {@link ru.mos.polls.survey.SurveyFragment}<br/>
+ * и на экране вопроса голосования {@link SurveyFragment}<br/>
  * Данные по мнению эксперта описываются моделью {@link DetailsExpert}<br/>
  * Для отображения preview мнения эксперта использовать методу {@link #display(BaseActivity, Survey)}
  * и {@link #display(List)}

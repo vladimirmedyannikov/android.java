@@ -25,6 +25,7 @@ import ru.mos.polls.survey.hearing.gui.view.HearingInfoView;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
 import ru.mos.polls.survey.questions.SurveyQuestion;
+import ru.mos.polls.survey.ui.SurveyFragment;
 
 
 public class SurveyTitleView extends HtmlTitleView {
@@ -84,7 +85,7 @@ public class SurveyTitleView extends HtmlTitleView {
                     text.getQuestionFull());
             /**
              * Для публичных слушаний логика отображения заголовка меняется
-             * Всегда показывает стоимость и заголовок для страницы вопроса {@link ru.mos.polls.survey.SurveyFragment}
+             * Всегда показывает стоимость и заголовок для страницы вопроса {@link SurveyFragment}
              * C версии 2.2.0 показываем стоимость и вопрос для публичного слушания, заголовок убираем
              */
             displayPriceForHearing(survey);

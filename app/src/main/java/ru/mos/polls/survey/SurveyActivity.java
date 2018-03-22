@@ -33,6 +33,7 @@ import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.ui.PollsSummaryFragment;
+import ru.mos.polls.survey.ui.SurveyFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
 import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
@@ -134,6 +135,7 @@ public class SurveyActivity extends BaseActivity {
             case android.R.id.home:
                 if (currentFragment != null) {
                     if (currentFragment instanceof SurveyFragment) {
+                        System.out.println("currentFragment instanceof SurveyFragment");
                         onUpPressed();
                     } else {
                         onBackPressed();
@@ -157,8 +159,10 @@ public class SurveyActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (currentFragment != null) {
+            System.out.println("currentFragment != null");
             backPressedListener.onBack();
         } else {
+            System.out.println("super.onBackPressed");
             super.onBackPressed();
         }
     }
@@ -362,7 +366,7 @@ public class SurveyActivity extends BaseActivity {
 
             @Override
             public void onError() {
-                surveyFragment.setRefreshButtonVisible(View.VISIBLE);
+                surveyFragment.getViewModel().setRefreshButtonVisible(View.VISIBLE);
             }
 
             @Override

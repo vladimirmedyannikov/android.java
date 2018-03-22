@@ -38,7 +38,6 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyActivity;
-import ru.mos.polls.survey.SurveyFragment;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;

@@ -19,13 +19,14 @@ import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AnimationHelper;
 import ru.mos.polls.innovations.model.InnovationDetails;
+import ru.mos.polls.survey.ui.SurveyFragment;
 import ru.mos.polls.util.AgTextUtil;
 
 /**
  * Компонент для отображения информации о вопросе: краткое, полное описание
  * Исопльзуется на экранах:
  * списка вопросов голосования {@link ru.mos.polls.survey.SurveySummaryFragment}
- * деталей голосования {@link ru.mos.polls.survey.SurveyFragment}
+ * деталей голосования {@link SurveyFragment}
  * деталей городской новинки {@link ru.mos.polls.innovations.ui.activity.InnovationActivity}
  *
  * @since 1.8

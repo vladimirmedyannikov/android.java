@@ -19,12 +19,14 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.summary.ProgressView;
+import ru.mos.polls.survey.ui.SurveyFragment;
 
 
 public class SurveyButtons extends LinearLayout {
     private TextView nextQuestionButton, prevQuestionButton;
     private TextView resultButton;
     private Survey survey;
+    private SurveyButtons.CallBack callBack;
     private SurveyFragment fragment;
 
     public SurveyButtons(Context context) {
@@ -54,6 +56,10 @@ public class SurveyButtons extends LinearLayout {
         addView(v);
     }
 
+    public void setCallBack(SurveyButtons.CallBack callBack) {
+        this.callBack = callBack;
+    }
+
     public void setFragment(SurveyFragment fragment) {
         this.fragment = fragment;
     }
@@ -70,21 +76,21 @@ public class SurveyButtons extends LinearLayout {
         resultButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.doResult();
+                callBack.doResult();
             }
         });
         nextQuestionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.doNext();
-                fragment.checkingForParentId();
+                callBack.doNext();
+//                callBack.checkingForParentId();
             }
         });
         prevQuestionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.doPrev();
-                fragment.checkingForParentId();
+                callBack.doPrev();
+//                callBack.checkingForParentId();
             }
         });
         ButterKnife.bind(this);
@@ -329,7 +335,8 @@ public class SurveyButtons extends LinearLayout {
         if (survey.getFilteredQuestionList().size() > 1) {
             resultButton.setVisibility(View.GONE);
         } else {
-            fragment.getActivity().findViewById(R.id.buttonContainer).setVisibility(View.GONE);
+//            callBack.getActivity().findViewById(R.id.buttonContainer).setVisibility(View.GONE);
+            this.setVisibility(GONE);
         }
     }
 

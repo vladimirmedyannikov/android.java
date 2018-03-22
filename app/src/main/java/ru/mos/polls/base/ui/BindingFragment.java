@@ -64,6 +64,10 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         return binding;
     }
 
+    public CompositeDisposable getDisposable() {
+        return disposable;
+    }
+
     private VM getUpdatedViewModel() {
         if (viewModel == null) viewModel = onCreateViewModel(binding);
         else viewModel.updateBinding(binding);

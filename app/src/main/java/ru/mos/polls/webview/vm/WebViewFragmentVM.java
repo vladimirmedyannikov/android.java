@@ -75,12 +75,17 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        getFragment().hideMenuItem(R.id.action_share);
         setWebViewSetting();
         setWebViewClient();
         if (checkInternetConnection()) webView.loadUrl(firstUrl);
         tryHide();
         trySetUrlFromIntent();
+    }
+
+    @Override
+    public void onCreateOptionsMenu() {
+        super.onCreateOptionsMenu();
+        getFragment().hideMenuItem(R.id.action_share);
     }
 
     @Override

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView style="@style/root.padding">
+
+        <LinearLayout
+            style="@style/item.linear"
+            android:paddingTop="@dimen/pd_xxlarge"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/vs_xxlarge"
+                android:layout_height="@dimen/vs_xxlarge"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/loadingBadge"
+                    style="@style/wrap"/>
+
+                <ImageView
+                    android:id="@+id/badge"
+                    android:layout_width="@dimen/vs_xxlarge"
+                    android:layout_height="@dimen/vs_xxlarge"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/body"
+                style="@style/text.large"
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/pd_xsmall"
+                android:paddingTop="@dimen/pd_xlarge"/>
+
+            <Button
+                android:id="@+id/share"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/vs_xxlarge"
+                android:text="@string/share"
+                android:textSize="@dimen/ts_large"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</layout>

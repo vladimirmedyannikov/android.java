@@ -57,8 +57,8 @@ import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
+import ru.mos.polls.profile.state.AchievementState;
 import ru.mos.polls.profile.state.EditProfileState;
-import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
@@ -685,7 +685,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onAchievement(String id) {
-                AchievementActivity.getStartActivity(MainActivity.this, id);
+                navigateTo().state(Add.newActivity(new AchievementState(id, true), BaseActivity.class));
             }
 
             @Override

@@ -8,6 +8,7 @@ import me.ilich.juggler.change.Add;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.innovations.state.InnovationState;
+import ru.mos.polls.profile.state.AchievementState;
 import ru.mos.polls.webview.state.WebViewState;
 
 /**
@@ -36,6 +37,12 @@ public class PushProcessActivity extends BaseActivity {
     private static final String TYPE_NEW_NOVELTY = "type_new_novelty";
     private static final String NOVELTY_ID = "novelty_id";
 
+    /**
+     * для пушей NewAchievement
+     */
+    private static final String TYPE_NEW_ACHIEVEMENT = "type_new_achievement";
+    private static final String ACHIEVEMENT_ID = "achievement_id";
+
 
     public static Intent getIntentForAgNew(Context context, String title, String linkUrl, String id) {
         Intent intent = new Intent(context, PushProcessActivity.class);
@@ -61,6 +68,16 @@ public class PushProcessActivity extends BaseActivity {
         return intent;
     }
 
+    public static Intent getIntentForNewAchievement(Context context, String id) {
+        Intent intent = new Intent(context, PushProcessActivity.class);
+        intent.putExtra(ACHIEVEMENT_ID, id);
+        /**
+         * экстра параметр, определяющий какой именно экран следует открыть
+         */
+        intent.putExtra(TYPE, TYPE_NEW_ACHIEVEMENT);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +95,10 @@ public class PushProcessActivity extends BaseActivity {
                 case TYPE_NEW_NOVELTY:
                     state = new InnovationState(
                             getIntent().getLongExtra(NOVELTY_ID, 0));
+                    break;
+                case TYPE_NEW_ACHIEVEMENT:
+                    state = new AchievementState(getIntent().getStringExtra(ACHIEVEMENT_ID), true);
+                    break;
             }
             if (state != null) {
                 navigateTo().state(Add.newActivity(state, BaseActivity.class));

@@ -14,12 +14,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.base.vm.PullablePaginationFragmentVM;
 import ru.mos.polls.databinding.FragmentAchievementTabProfileBinding;
 import ru.mos.polls.profile.model.Achievements;
 import ru.mos.polls.profile.service.AchievementsSelect;
-import ru.mos.polls.profile.ui.activity.AchievementActivity;
+import ru.mos.polls.profile.state.AchievementState;
 import ru.mos.polls.profile.ui.adapter.AchievementAdapter;
 import ru.mos.polls.profile.ui.fragment.AchievementTabFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -46,7 +47,7 @@ public class AchievementTabFragmentVM extends PullablePaginationFragmentVM<Achie
 
     @Override
     public void onAchievementClick(String id) {
-        AchievementActivity.startActivity(getActivity(), id, friendId == 0);
+        getFragment().navigateTo(new AchievementState(id, friendId == 0), BaseActivity.class);
     }
 
     @Override

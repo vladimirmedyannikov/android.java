@@ -33,7 +33,7 @@ import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
 
-
+@Deprecated
 public class AchievementActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_ACHIEVEMENT_ID = "extra_achievement";
     private static final String EXTRA_IS_OWN = "extra_is_own";

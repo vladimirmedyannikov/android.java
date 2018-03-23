@@ -36,9 +36,11 @@ import ru.mos.polls.databinding.LayoutQuestsBinding;
 import ru.mos.polls.fortesters.TestersController;
 import ru.mos.polls.innovations.state.InnovationState;
 import ru.mos.polls.mainbanner.BannerController;
+import ru.mos.polls.profile.state.AchievementState;
 import ru.mos.polls.quests.adapter.QuestsItemAdapter;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.QuestsApiControllerRX;
+import ru.mos.polls.quests.model.quest.AchievementQuest;
 import ru.mos.polls.quests.model.quest.AdvertisementQuest;
 import ru.mos.polls.quests.model.quest.BackQuest;
 import ru.mos.polls.quests.model.quest.FavoriteSurveysQuest;
@@ -99,6 +101,8 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                 }
                 if (quest instanceof NoveltyQuest) {
                     getFragment().navigateTo(new InnovationState(Long.valueOf(quest.getId())), BaseActivity.class);
+                } else if (quest instanceof AchievementQuest) {
+                    getFragment().navigateTo(new AchievementState(quest.getId(), true), BaseActivity.class);
                 } else {
                     quest.onClick(getActivity(), listener);
                 }
@@ -207,7 +211,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
     @OnClick(R.id.subscribe)
     public void subscribe() {
-        getFragment().navigateTo(new SubscribeState(),BaseActivity.class);
+        getFragment().navigateTo(new SubscribeState(), BaseActivity.class);
     }
 
     @Override

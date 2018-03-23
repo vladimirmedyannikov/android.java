@@ -2,13 +2,12 @@ package ru.mos.polls.innovations.ui.fragment;
 
 import android.os.Bundle;
 
-import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentInnovationBinding;
 import ru.mos.polls.innovations.vm.InnovationFragmentVM;
 
-public class InnovationFragment extends BindingFragment<InnovationFragmentVM, FragmentInnovationBinding>{
+public class InnovationFragment extends NavigateFragment<InnovationFragmentVM, FragmentInnovationBinding> {
 
     public static final int REQUEST = 100;
     public static final String EXTRA_SHORT_INNOVATION = "extra_short_innovation";
@@ -25,11 +24,6 @@ public class InnovationFragment extends BindingFragment<InnovationFragmentVM, Fr
     @Override
     protected InnovationFragmentVM onCreateViewModel(FragmentInnovationBinding binding) {
         return new InnovationFragmentVM(this, binding);
-    }
-
-    @Override
-    public int getVariable() {
-        return BR.viewModel;
     }
 
     @Override

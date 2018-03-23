@@ -2,17 +2,13 @@ package ru.mos.polls.profile.ui.fragment;
 
 import android.os.Bundle;
 
-import me.ilich.juggler.change.Add;
-import me.ilich.juggler.gui.JugglerActivity;
-import me.ilich.juggler.states.State;
 import ru.mos.polls.BR;
 import ru.mos.polls.R;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.base.ui.BindingFragment;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.databinding.FragmentNewEditProfileBinding;
 import ru.mos.polls.profile.vm.EditProfileFragmentVM;
 
-public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, FragmentNewEditProfileBinding> {
+public class EditProfileFragment extends NavigateFragment<EditProfileFragmentVM, FragmentNewEditProfileBinding> {
     public static EditProfileFragment newInstance(int coordScreen) {
         EditProfileFragment f = new EditProfileFragment();
         Bundle bundle = new Bundle(1);
@@ -49,13 +45,5 @@ public class EditProfileFragment extends BindingFragment<EditProfileFragmentVM, 
         } else {
             return 0;
         }
-    }
-
-    public void navigateToActivityForResult(State state, int code) {
-        navigateTo().state(Add.newActivityForResult(state, BaseActivity.class, code));
-    }
-
-    public void navigateTo(State state, Class<? extends JugglerActivity> activityClass) {
-        navigateTo().state(Add.newActivity(state, activityClass));
     }
 }

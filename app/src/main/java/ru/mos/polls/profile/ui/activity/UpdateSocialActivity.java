@@ -16,6 +16,7 @@ import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.profile.ui.fragment.BindingSocialFragment;
 import ru.mos.polls.quests.controller.QuestStateController;
 
+@Deprecated
 public class UpdateSocialActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_IS_TASK = "is_task";
 
@@ -55,7 +56,7 @@ public class UpdateSocialActivity extends ToolbarAbstractActivity {
 
     @Override
     public void onBackPressed() {
-        if (fragment.isQuestExecuted()) {
+//        if (fragment.isQuestExecuted()) {
             QuestStateController.getInstance().updateSocialUnavaible();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.quest_task_done);
@@ -67,7 +68,7 @@ public class UpdateSocialActivity extends ToolbarAbstractActivity {
                 }
             });
             builder.show();
-        } else super.onBackPressed();
+//        } else super.onBackPressed();
     }
 
     @Override

@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
@@ -41,10 +42,10 @@ import ru.mos.polls.profile.model.flat.Flat;
 import ru.mos.polls.profile.service.ProfileSet;
 import ru.mos.polls.profile.service.model.Personal;
 import ru.mos.polls.profile.state.AddPrivatePropertyState;
+import ru.mos.polls.profile.state.BindingSocialState;
 import ru.mos.polls.profile.state.EditPersonalInfoState;
 import ru.mos.polls.profile.state.NewFlatState;
 import ru.mos.polls.profile.state.PguAuthState;
-import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
 import ru.mos.polls.profile.ui.adapter.MaritalStatusAdapter;
 import ru.mos.polls.profile.ui.fragment.EditProfileFragment;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
@@ -234,7 +235,7 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
             getFragment().navigateToActivityForResult(new EditPersonalInfoState(savedUser, EditPersonalInfoFragmentVM.BIRTHDAY_KIDS), EditPersonalInfoFragmentVM.BIRTHDAY_KIDS);
         });
         socialBindTitle.setOnClickListener(v -> {
-            UpdateSocialActivity.startActivity(getActivity());
+            getFragment().navigateTo(new BindingSocialState(false), BaseActivity.class);
         });
         bindingMostTitle.setOnClickListener(v -> {
             getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);

@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -57,9 +56,9 @@ import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.state.AchievementState;
+import ru.mos.polls.profile.state.BindingSocialState;
 import ru.mos.polls.profile.state.EditProfileState;
-import ru.mos.polls.profile.ui.activity.UpdateSocialActivity;
+import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -153,7 +152,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         setSupportProgressBarIndeterminateVisibility(false);
 
@@ -199,8 +197,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             }
         }
     }
-
-
 
     @SuppressWarnings("VisibleForTests")
     Disposable disposable;
@@ -436,7 +432,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onUpdateSocial() {
-                        UpdateSocialActivity.startActivityForQuest(MainActivity.this);
+                        navigateTo().state(Add.newActivity(new BindingSocialState(true), BaseActivity.class));
                     }
 
                     @Override
@@ -685,7 +681,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onAchievement(String id) {
-                navigateTo().state(Add.newActivity(new AchievementState(id, true), BaseActivity.class));
+                AchievementActivity.getStartActivity(MainActivity.this, id);
             }
 
             @Override
@@ -697,7 +693,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         UrlSchemeController.TaskListener taskListener = new UrlSchemeController.TaskListener() {
             @Override
             public void onUpdateSocial() {
-                startActivity(new Intent(MainActivity.this, UpdateSocialActivity.class).putExtra(IS_TASK, true));
+                navigateTo().state(Add.newActivity(new BindingSocialState(true), BaseActivity.class));
             }
 
             @Override

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        style="@style/root.padding"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/topContainer"
+            style="@style/linear">
+
+            <include
+                layout="@layout/layout_auth_logo"
+                android:visibility="gone" />
+
+            <TextView
+                style="@style/text.gray"
+                android:text="@string/hint_sms_sent" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                style="@style/text.medium"
+                tools:text="+7 (917) 814-69-80" />
+
+            <EditText
+                android:id="@+id/etCode"
+                style="@style/input.phone"
+                android:hint="@string/password"
+                android:imeOptions="actionNext" />
+
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/text.center.red"
+                android:layout_margin="@dimen/pd_xxsmall" />
+
+            <Button
+                android:id="@+id/btnAction"
+                style="@style/button.centered.action"
+                android:layout_width="160dp"
+                android:text="@string/code_confirm_send"
+                android:visibility="gone" />
+
+            <include layout="@layout/layout_empty_view" />
+
+            <TextView
+                android:id="@+id/help"
+                style="@style/text.link.green"
+                android:layout_marginTop="@dimen/pd_xxlarge"
+                android:text="@string/help_phone_not_correct" />
+
+            <TextView
+                android:id="@+id/feedback"
+                style="@style/text.link.green"
+                android:layout_marginBottom="@dimen/pd_xxsmall"
+                android:text="@string/help" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

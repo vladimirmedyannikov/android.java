@@ -40,6 +40,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.change.Add;
 import pub.devrel.easypermissions.EasyPermissions;
+import ru.mos.polls.auth.state.AgPhoneConfirmState;
 import ru.mos.polls.auth.state.AuthState;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.event.gui.activity.EventActivity;
@@ -172,7 +173,7 @@ public class AgAuthActivity extends BaseActivity {
             protected void onResult(Object result) {
                 dialog.dismiss();
                 finish();
-                AgPhoneConfirmActivity.start(AgAuthActivity.this, etLogin.getUnmaskedText());
+                navigateTo().state(Add.newActivity(new AgPhoneConfirmState(etLogin.getUnmaskedText()), BaseActivity.class));
             }
 
             @Override

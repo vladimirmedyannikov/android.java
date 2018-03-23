@@ -28,13 +28,13 @@ import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
-import ru.mos.polls.AgPhoneConfirmActivity;
 import ru.mos.polls.AgRegisterActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.WebViewActivity;
+import ru.mos.polls.auth.state.AgPhoneConfirmState;
 import ru.mos.polls.auth.state.AuthState;
 import ru.mos.polls.auth.ui.AgAuthFragment;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -186,7 +186,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
             @Override
             protected void onResult(Object result) {
                 getFragment().navigateToCloseCurrActivity();
-                AgPhoneConfirmActivity.start(getFragment().getContext(), etLogin.getUnmaskedText());
+                getFragment().navigateTo(new AgPhoneConfirmState(etLogin.getUnmaskedText()), BaseActivity.class);
             }
 
             @Override

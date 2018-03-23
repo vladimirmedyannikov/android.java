@@ -45,6 +45,7 @@ import ru.mos.polls.util.GuiUtils;
  * @since 2.3
  */
 
+@Deprecated
 public class AgPhoneConfirmActivity extends BaseActivity {
     public static final int CONFIRM_CODE_NOT_VALID = 401;
     public static final String EXTRA_PHONE = "extra_phone";

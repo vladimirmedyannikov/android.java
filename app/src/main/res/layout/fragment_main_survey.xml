@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout style="@style/root">
+
+
+        <include layout="@layout/layout_internet_connection_lost" />
+
+        <FrameLayout
+            android:id="@+id/container"
+            style="@style/root" />
+    </RelativeLayout>
+</layout>

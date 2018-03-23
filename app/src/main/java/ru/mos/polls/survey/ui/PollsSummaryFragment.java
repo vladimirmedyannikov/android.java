@@ -9,11 +9,10 @@ import ru.mos.polls.R;
 import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentSurveySummaryBinding;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.SurveySummaryFragment;
 import ru.mos.polls.survey.vm.PollsSummaryFragmentVM;
 
-public class PollsSummaryFragment extends MenuBindingFragment<PollsSummaryFragmentVM, FragmentSurveySummaryBinding> implements SurveyActivity.BackPressedListener {
+public class PollsSummaryFragment extends MenuBindingFragment<PollsSummaryFragmentVM, FragmentSurveySummaryBinding> implements BackPressedListener {
 
     private Survey survey = null;
     private SurveySummaryFragment.Callback callback = SurveySummaryFragment.Callback.STUB;

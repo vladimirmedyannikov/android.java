@@ -24,7 +24,6 @@ public class InnovationState extends ContentBelowToolbarState<InnovationState.In
     @Override
     protected JugglerFragment onConvertToolbar(InnovationParams params, @Nullable JugglerFragment fragment) {
         return CommonToolbarFragment.createBack();
-
     }
 
     @Nullable

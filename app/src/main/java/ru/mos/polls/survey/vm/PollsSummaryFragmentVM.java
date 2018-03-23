@@ -29,7 +29,6 @@ import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.SurveySummaryFragment;
 import ru.mos.polls.survey.experts.DetailsExpert;
 import ru.mos.polls.survey.experts.DetailsExpertsActivity;
@@ -43,6 +42,7 @@ import ru.mos.polls.survey.summary.QuestionsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
 import ru.mos.polls.survey.summary.SurveyTitleView;
 import ru.mos.polls.survey.ui.PollsSummaryFragment;
+import ru.mos.polls.survey.ui.SurveyMainFragment;
 
 public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSummaryFragment, FragmentSurveySummaryBinding> {
 
@@ -171,7 +171,6 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
     }
 
     private void loadSurvey(long surveyId) {
-//        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressable.begin();
         SurveyDataSource.LoadListener listener = new SurveyDataSource.LoadListener() {
 
@@ -296,9 +295,12 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
     public void restoreSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             long surveyId = savedInstanceState.getLong(PollsSummaryFragment.EXTRA_SURVEY_ID);
-            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
-            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
-            setCallback(((SurveyActivity) getActivity()).getSummaryFragmentCallback());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().setBackPressedListener(getFragment());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().setCurrentFragment(getFragment());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback();
+//            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
+//            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
+//            setCallback(((SurveyActivity) getActivity()).getSummaryFragmentCallback());
             loadSurvey(surveyId);
         }
     }

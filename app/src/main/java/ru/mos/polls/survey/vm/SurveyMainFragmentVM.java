@@ -1,31 +1,30 @@
-package ru.mos.polls.survey;
+package ru.mos.polls.survey.vm;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.List;
 
-import me.ilich.juggler.gui.JugglerActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.common.controller.UrlSchemeController;
+import ru.mos.polls.databinding.FragmentMainSurveyBinding;
 import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
+import ru.mos.polls.survey.SharedPreferencesSurveyManager;
+import ru.mos.polls.survey.Survey;
+import ru.mos.polls.survey.SurveySummaryFragment;
+import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
@@ -35,40 +34,14 @@ import ru.mos.polls.survey.ui.BackPressedListener;
 import ru.mos.polls.survey.ui.InfoSurveyFragment;
 import ru.mos.polls.survey.ui.PollsSummaryFragment;
 import ru.mos.polls.survey.ui.SurveyFragment;
+import ru.mos.polls.survey.ui.SurveyMainFragment;
 import ru.mos.polls.survey.variants.ActionSurveyVariant;
-import ru.mos.polls.util.StubUtils;
 import ru.mos.social.callback.PostCallback;
 import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
 
-import static android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled;
-
-@Deprecated
-public class SurveyActivity extends BaseActivity {
-    public static final String EXTRA_SURVEY_ID = "extra_survey_id";
-    public static final String EXTRA_IS_HEARING = "extra_is_hearing";
-    public static final String EXTRA_RESULT_SURVEY_STATE = "extra_result_survey_state";
-    public static final String IS_ACTIVITY_RESTARTED = "extra_is_activity_resturt";
-
-    public static final int REQUEST_POLLS = 0;
-
-    public static void startActivityForResult(Activity activity, long pollId, boolean isHearing) {
-        Intent intent = getStartIntent(activity, pollId, isHearing);
-        activity.startActivityForResult(intent, REQUEST_POLLS);
-    }
-
-    public static Intent getStartIntent(Context context, long pollId, boolean isHearing) {
-        Intent intent = new Intent(context, SurveyActivity.class);
-        intent.putExtra(EXTRA_SURVEY_ID, pollId);
-        intent.putExtra(EXTRA_IS_HEARING, isHearing);
-        return intent;
-    }
-
-    public static boolean onResult(int requestCode, int resultCode, Intent data) {
-        return resultCode == RESULT_OK && requestCode == REQUEST_POLLS && data != null;
-    }
-
+public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMainFragment, FragmentMainSurveyBinding> {
     private long surveyId;
     private boolean isHearing;
     private Survey survey;
@@ -82,44 +55,53 @@ public class SurveyActivity extends BaseActivity {
     private PostCallback postCallback = new PostCallback() {
         @Override
         public void postSuccess(Social social, @Nullable PostValue postValue) {
-            SocialUIController.sendPostingResult(SurveyActivity.this, (AppPostValue) postValue, null);
+            SocialUIController.sendPostingResult(getActivity(), (AppPostValue) postValue, null);
         }
 
         @Override
         public void postFailure(Social social, @Nullable PostValue postValue, Exception e) {
-            SocialUIController.sendPostingResult(SurveyActivity.this, (AppPostValue) postValue, e);
+            SocialUIController.sendPostingResult(getActivity(), (AppPostValue) postValue, e);
         }
     };
 
+    public SurveyMainFragmentVM(SurveyMainFragment fragment, FragmentMainSurveyBinding binding) {
+        super(fragment, binding);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCompatVectorFromResourcesEnabled(true);
-        setContentView(R.layout.activity_fragment_survey);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        if (setSurveyId() && !isNeedLoading(savedInstanceState)) {
+    protected void initialize(FragmentMainSurveyBinding binding) {
+
+    }
+
+    @Override
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder().build();
+    }
+
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        if (setSurveyId() && !isNeedLoading(getFragment().getSavedInstanceState())) {
             loadSurvey();
         }
-        socialController = new SocialController(this);
+        socialController = new SocialController(getActivity());
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onResume() {
         socialController.getEventController().registerCallback(postCallback);
-        SocialUIController.registerPostingReceiver(this);
+        SocialUIController.registerPostingReceiver(getActivity());
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onPause() {
         socialController.getEventController().unregisterAllCallback();
-        SocialUIController.unregisterPostingReceiver(this);
+        SocialUIController.unregisterPostingReceiver(getActivity());
+    }
+
+    public void setCurrentFragment(Fragment currentFragment) {
+        this.currentFragment = currentFragment;
     }
 
     public void setBackPressedListener(BackPressedListener backPressedListener) {
@@ -130,61 +112,20 @@ public class SurveyActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (currentFragment != null) {
-                    if (currentFragment instanceof SurveyFragment) {
-                        onUpPressed();
-                    } else {
-                        onBackPressed();
-                    }
-                } else {
-                    onBackPressed();
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void setCurrentFragment(Fragment currentFragment) {
-        this.currentFragment = currentFragment;
-    }
-
-    private void onUpPressed() {
-        backPressedListener.onUp();
-    }
-
-    @Override
     public void onBackPressed() {
         if (currentFragment != null) {
+            if (currentFragment instanceof SurveyFragment) {
+                backPressedListener.onUp();
+            } else {
+                backPressedListener.onBack();
+            }
+        } else {
             backPressedListener.onBack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    /**
-     * т.к. Juggler не используется, но идет наследование от {@link BaseActivity}
-     * то срабатывает {@link JugglerActivity#onSupportNavigateUp()}
-     * при нажатии экранной стрелки "<-" в {@link ru.mos.polls.survey.vm.InfoCommentFragmentVM}
-     * в котором вызвается {@link Activity#finish()}
-     *
-     * @return
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        if (currentFragment != null && currentFragment instanceof InfoSurveyFragment) {
-            return false;
-        } else {
-            return super.onSupportNavigateUp();
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         socialController.onActivityResult(requestCode, resultCode, data);
         tryToExecuteActionCallback(requestCode);
         /**
@@ -200,8 +141,7 @@ public class SurveyActivity extends BaseActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(IS_ACTIVITY_RESTARTED, true);
+        outState.putBoolean(SurveyMainFragment.IS_ACTIVITY_RESTARTED, true);
     }
 
     private void tryToExecuteActionCallback(int requestCode) {
@@ -213,13 +153,13 @@ public class SurveyActivity extends BaseActivity {
     private boolean isNeedLoading(Bundle savedInstanceState) {
         boolean result = false;
         if (savedInstanceState != null) {
-            result = savedInstanceState.getBoolean(IS_ACTIVITY_RESTARTED);
+            result = savedInstanceState.getBoolean(SurveyMainFragment.IS_ACTIVITY_RESTARTED);
         }
         return result;
     }
 
     private void loadSurvey() {
-        WebSurveyDataSourceRX webSurveyDataSourceRX = new WebSurveyDataSourceRX(this);
+        WebSurveyDataSourceRX webSurveyDataSourceRX = new WebSurveyDataSourceRX((BaseActivity) getActivity());
         webSurveyDataSourceRX.load(surveyId, isHearing, new SurveyDataSource.LoadListener() {
             @Override
             public void onLoaded(Survey loadedSurvey) {
@@ -233,23 +173,15 @@ public class SurveyActivity extends BaseActivity {
         });
     }
 
-    public static Survey getStub(Context context) {
-        return new Gson().fromJson(
-                StubUtils.fromRawAsJsonObject(context, R.raw.survey_hearing).toString(),
-                new TypeToken<Survey>() {
-                }.getType()
-        );
-    }
-
     private boolean setSurveyId() {
-        Intent intent = getIntent();
-        isHearing = intent.getBooleanExtra(EXTRA_IS_HEARING, false);
-        surveyId = intent.getLongExtra(EXTRA_SURVEY_ID, -1);
-        if (UrlSchemeController.hasUri(this)) {
-            if (UrlSchemeController.isHearing(this)) {
+        Bundle bundle = getFragment().getArguments();
+        isHearing = bundle.getBoolean(SurveyMainFragment.EXTRA_IS_HEARING, false);
+        surveyId = bundle.getLong(SurveyMainFragment.EXTRA_SURVEY_ID, -1);
+        if (UrlSchemeController.hasUri(getActivity())) {
+            if (UrlSchemeController.isHearing(getActivity())) {
                 isHearing = true;
             }
-            UrlSchemeController.startPoll(this, new UrlSchemeController.IdListener() {
+            UrlSchemeController.startPoll((BaseActivity) getActivity(), new UrlSchemeController.IdListener() {
                 @Override
                 public void onDetectedId(Object id) {
                     surveyId = (Long) id;
@@ -257,7 +189,6 @@ public class SurveyActivity extends BaseActivity {
             });
 
         }
-
         return surveyId != -1;
     }
 
@@ -291,7 +222,7 @@ public class SurveyActivity extends BaseActivity {
     private void replaceFragment(Fragment fragment) {
         currentFragment = fragment;
         setBackPressedListener((BackPressedListener) fragment);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragment().getChildFragmentManager();
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.container, fragment)
@@ -306,8 +237,6 @@ public class SurveyActivity extends BaseActivity {
     }
 
     private Fragment getSummaryFragment(Survey survey) {
-//        surveySummaryFragment = SurveySummaryFragment.newInstance(survey, true);
-//        surveySummaryFragment.setCallback(getSummaryFragmentCallback());
         pollsSummaryFragment = PollsSummaryFragment.newInstance(survey, true, getSummaryFragmentCallback());
         return pollsSummaryFragment;
     }
@@ -316,7 +245,7 @@ public class SurveyActivity extends BaseActivity {
         SurveySummaryFragment.Callback callback = new SurveySummaryFragment.Callback() {
             @Override
             public void onQuestionClicked(Survey survey, long questionId) {
-                SurveyActivity.this.survey = survey;
+                SurveyMainFragmentVM.this.survey = survey;
                 getSurveyFragment(survey, questionId);
                 replaceFragment(surveyFragment);
             }
@@ -358,8 +287,8 @@ public class SurveyActivity extends BaseActivity {
             @Override
             public void onPageShowed(int pageId, int pagesCount) {
                 String pagesCountValue = String.valueOf(pagesCount);
-                String title = String.format(getString(R.string.survey_title), String.valueOf(pageId + 1), pagesCountValue);
-                TitleHelper.setTitle(SurveyActivity.this, title);
+                String title = String.format(getActivity().getString(R.string.survey_title), String.valueOf(pageId + 1), pagesCountValue);
+                TitleHelper.setTitle(getActivity(), title);
             }
 
             @Override
@@ -374,7 +303,7 @@ public class SurveyActivity extends BaseActivity {
 
             @Override
             public void onSurveyInterrupted(Survey survey) {
-                SurveyActivity.this.survey = survey;
+                SurveyMainFragmentVM.this.survey = survey;
                 if (survey.getKind().isHearing() || !isRedirectNeed(survey)) {
                     getSummaryFragment(survey);
                     replaceFragment(pollsSummaryFragment);
@@ -388,17 +317,16 @@ public class SurveyActivity extends BaseActivity {
                 socialController.post(socialPostValue, socialPostValue.getSocialId());
             }
         };
-
         return callback;
     }
 
     public void doInterrupt(final Survey survey) {
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
-            WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX(SurveyActivity.this);
+            WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX((BaseActivity) getActivity());
             sourceRX.save(survey,
-                    new SaveListener.SaveOnInterruptListener(SurveyActivity.this, survey), true);
+                    new SaveListener.SaveOnInterruptListener((BaseActivity) getActivity(), survey), true);
         } else {
-            finish();
+            getActivity().finish();
         }
     }
 
@@ -423,26 +351,26 @@ public class SurveyActivity extends BaseActivity {
                 survey.verify();
                 ok = true;
             } catch (VerificationException e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             if (ok) {
-                SharedPreferencesSurveyManager manager = new SharedPreferencesSurveyManager(SurveyActivity.this);
+                SharedPreferencesSurveyManager manager = new SharedPreferencesSurveyManager(getActivity());
                 manager.saveCurrentPage(survey);
-                WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX(SurveyActivity.this);
+                WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX((BaseActivity) getActivity());
                 Runnable tryFinish = new Runnable() {
                     @Override
                     public void run() {
                         if (survey.isShowPollStats()) {
                             loadSurvey();
                         } else {
-                            SurveyActivity.this.finish();
+                            getActivity().finish();
                         }
                     }
                 };
-                sourceRX.save(survey, new SaveListener.SaveOnFinishListener(SurveyActivity.this, survey, socialController, tryFinish), false);
+                sourceRX.save(survey, new SaveListener.SaveOnFinishListener((BaseActivity) getActivity(), survey, socialController, tryFinish), false);
             }
         } else {
-            finish();
+            getActivity().finish();
         }
     }
 }

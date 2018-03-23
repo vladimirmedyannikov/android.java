@@ -72,6 +72,7 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
+import ru.mos.polls.survey.state.SurveyState;
 import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.util.PermissionsUtils;
 import ru.mos.polls.util.SMSUtils;
@@ -227,8 +228,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.PollEvents action = (Events.PollEvents) o;
                         switch (action.getEventType()) {
                             case Events.PollEvents.OPEN_POLL:
-                                action.getPoll();
-                                SurveyActivity.startActivityForResult(this, action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
+//                                SurveyActivity.startActivityForResult(this, action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
+                                navigateTo().state(Add.newActivity(new SurveyState(action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind())), BaseActivity.class));
                                 break;
                         }
                     }
@@ -589,24 +590,24 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     public void onBackPressed() {
 //        AgDynamicFragment df = (AgDynamicFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS);
 //        if (df == null || !df.canGoBack()) {
-            if (isFirstBack) {
-                isFirstBack = false;
-                Toast.makeText(this, R.string.one_more_back_to_exit, Toast.LENGTH_SHORT).show();
-                new Thread("BackThread") {
-                    @Override
-                    public void run() {
-                        try {
-                            sleep(2000L);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        isFirstBack = true;
+        if (isFirstBack) {
+            isFirstBack = false;
+            Toast.makeText(this, R.string.one_more_back_to_exit, Toast.LENGTH_SHORT).show();
+            new Thread("BackThread") {
+                @Override
+                public void run() {
+                    try {
+                        sleep(2000L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                }.start();
-            } else {
-                isFirstBack = true;
-                super.onBackPressed();
-            }
+                    isFirstBack = true;
+                }
+            }.start();
+        } else {
+            isFirstBack = true;
+            super.onBackPressed();
+        }
 //        }
     }
 

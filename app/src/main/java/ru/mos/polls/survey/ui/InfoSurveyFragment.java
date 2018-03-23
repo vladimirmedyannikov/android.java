@@ -46,7 +46,7 @@ import ru.mos.polls.survey.variants.InputSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.values.CharVariantValue;
 
-public class InfoSurveyFragment extends Fragment implements SurveyActivity.BackPressedListener {
+public class InfoSurveyFragment extends Fragment implements BackPressedListener {
     public static final String ARG_POLL_ID = "poll_id";
     public static final String ARG_SURVEY = "survey";
 
@@ -386,7 +386,10 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.BackP
                 }
                 survey.endTiming();
                 manager.saveCurrentPage(survey);
-                ((SurveyActivity) getActivity()).doInterrupt(survey);
+//                ((SurveyActivity) getActivity()).doInterrupt(survey);
+                ((SurveyMainFragment) getParentFragment()).getViewModel().doInterrupt(survey);
+//                ((SurveyMainFragment) getParentFragment()).getViewModel().setCurrentFragment(getFragment());
+//                ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback();
             } else {
                 getActivity().finish();
             }

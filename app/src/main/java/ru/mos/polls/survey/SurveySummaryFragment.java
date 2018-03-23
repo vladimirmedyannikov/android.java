@@ -47,9 +47,10 @@ import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.QuestionsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
 import ru.mos.polls.survey.summary.SurveyTitleView;
+import ru.mos.polls.survey.ui.BackPressedListener;
 
-
-public class SurveySummaryFragment extends Fragment implements SurveyActivity.BackPressedListener {
+@Deprecated
+public class SurveySummaryFragment extends Fragment implements BackPressedListener {
     public static final String EXTRA_SURVEY_ID = "extra_survey_id";
 
     public static SurveySummaryFragment newInstance(Survey survey, boolean isHearing) {

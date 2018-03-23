@@ -9,10 +9,9 @@ import ru.mos.polls.base.ui.MenuBindingFragment;
 import ru.mos.polls.databinding.FragmentSurveyBinding;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.vm.SurveyFragmentVM;
 
-public class SurveyFragment extends MenuBindingFragment<SurveyFragmentVM, FragmentSurveyBinding> implements SurveyActivity.BackPressedListener {
+public class SurveyFragment extends MenuBindingFragment<SurveyFragmentVM, FragmentSurveyBinding> implements BackPressedListener {
     public static final String EXTRA_POLL_ID = "extra_poll_id";
     public static final String EXTRA_PAGE = "extra_page_index";
     public static final String EXTRA_QUESTION_ID = "extra_question_id";

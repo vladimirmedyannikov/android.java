@@ -25,12 +25,10 @@ import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.databinding.FragmentSurveyBinding;
 import ru.mos.polls.helpers.AppsFlyerConstants;
-import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.profile.ui.activity.QuestActivity;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.survey.SurveyButtons;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.ListSurveyQuestion;
@@ -40,6 +38,7 @@ import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
 import ru.mos.polls.survey.summary.ProgressView;
 import ru.mos.polls.survey.ui.SurveyFragment;
+import ru.mos.polls.survey.ui.SurveyMainFragment;
 import ru.mos.polls.survey.variants.SelectSurveyVariant;
 import ru.mos.polls.survey.variants.SurveyVariant;
 import ru.mos.polls.survey.variants.select.GorodSelectObject;
@@ -337,7 +336,8 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
         if (survey != null) {
             if (survey.getKind().isHearing()) {
                 callback.onSurveyInterrupted(survey);
-                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
+//                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             } else {
                 try {
                     survey.verify();
@@ -347,7 +347,8 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 }
                 survey.endTiming();
                 manager.saveCurrentPage(survey);
-                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
+//                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             }
         }
     }
@@ -530,9 +531,12 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
         if (savedInstanceState != null) {
             pollId = savedInstanceState.getLong(SurveyFragment.EXTRA_POLL_ID);
             questionId = savedInstanceState.getLong(SurveyFragment.EXTRA_QUESTION_ID);
-            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
-            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
-            setCallback(((SurveyActivity) getActivity()).getSurveyCallback());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().setBackPressedListener(getFragment());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().setCurrentFragment(getFragment());
+            ((SurveyMainFragment)getParentFragment()).getViewModel().getSurveyCallback();
+//            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
+//            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
+//            setCallback(((SurveyActivity) getActivity()).getSurveyCallback());
         }
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.innovations.state.InnovationState;
 import ru.mos.polls.webview.state.WebViewState;
 
 /**
@@ -29,6 +30,13 @@ public class PushProcessActivity extends BaseActivity {
     private static final String ID = "id";
     private static final String IS_SHARE_ENABLE = "is_share_enable";
 
+    /**
+     * для пушей NewNovelty
+     */
+    private static final String TYPE_NEW_NOVELTY = "type_new_novelty";
+    private static final String NOVELTY_ID = "novelty_id";
+
+
     public static Intent getIntentForAgNew(Context context, String title, String linkUrl, String id) {
         Intent intent = new Intent(context, PushProcessActivity.class);
         intent.putExtra(INFORMATION_TITLE, title);
@@ -40,6 +48,16 @@ public class PushProcessActivity extends BaseActivity {
          * экстра параметр, определяющий какой именно экран следует открыть
          */
         intent.putExtra(TYPE, TYPE_AG_NEW);
+        return intent;
+    }
+
+    public static Intent getIntentForNewNovelty(Context context, long id) {
+        Intent intent = new Intent(context, PushProcessActivity.class);
+        intent.putExtra(NOVELTY_ID, id);
+        /**
+         * экстра параметр, определяющий какой именно экран следует открыть
+         */
+        intent.putExtra(TYPE, TYPE_NEW_NOVELTY);
         return intent;
     }
 
@@ -57,6 +75,9 @@ public class PushProcessActivity extends BaseActivity {
                             getIntent().getBooleanExtra(ONLY_LOAD_FIRST_URL, false),
                             getIntent().getBooleanExtra(IS_SHARE_ENABLE, false));
                     break;
+                case TYPE_NEW_NOVELTY:
+                    state = new InnovationState(
+                            getIntent().getLongExtra(NOVELTY_ID, 0));
             }
             if (state != null) {
                 navigateTo().state(Add.newActivity(state, BaseActivity.class));

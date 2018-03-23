@@ -37,7 +37,6 @@ import ru.mos.polls.geotarget.GeotargetApiControllerRX;
 import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
-import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.push.GCMBroadcastReceiver;
 import ru.mos.polls.push.GCMHelper;
@@ -380,8 +379,7 @@ public class AGApplication extends MultiDexApplication {
 
             @Override
             public Intent getNotifyIntent() {
-                Intent intent = InnovationActivity.getStartIntent(AGApplication.this, id);
-                return intent;
+                return PushProcessActivity.getIntentForNewNovelty(AGApplication.this, id);
             }
 
             @Override

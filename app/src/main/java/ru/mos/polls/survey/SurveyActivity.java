@@ -135,7 +135,6 @@ public class SurveyActivity extends BaseActivity {
             case android.R.id.home:
                 if (currentFragment != null) {
                     if (currentFragment instanceof SurveyFragment) {
-                        System.out.println("currentFragment instanceof SurveyFragment");
                         onUpPressed();
                     } else {
                         onBackPressed();
@@ -159,10 +158,8 @@ public class SurveyActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (currentFragment != null) {
-            System.out.println("currentFragment != null");
             backPressedListener.onBack();
         } else {
-            System.out.println("super.onBackPressed");
             super.onBackPressed();
         }
     }

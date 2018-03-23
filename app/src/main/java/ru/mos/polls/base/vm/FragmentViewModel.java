@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -72,6 +73,9 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
     }
 
     public Progressable progressable = new Progressable() {

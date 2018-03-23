@@ -131,6 +131,11 @@ public abstract class BindingFragment<VM extends FragmentViewModel, B extends Vi
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        viewModel.onSaveInstanceState(outState);
+    }
+
     public abstract int getVariable();
 
     public abstract int getLayoutResources();

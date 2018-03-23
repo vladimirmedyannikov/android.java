@@ -83,14 +83,12 @@ public class SurveyButtons extends LinearLayout {
             @Override
             public void onClick(View v) {
                 callBack.doNext();
-//                callBack.checkingForParentId();
             }
         });
         prevQuestionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 callBack.doPrev();
-//                callBack.checkingForParentId();
             }
         });
         ButterKnife.bind(this);
@@ -335,7 +333,6 @@ public class SurveyButtons extends LinearLayout {
         if (survey.getFilteredQuestionList().size() > 1) {
             resultButton.setVisibility(View.GONE);
         } else {
-//            callBack.getActivity().findViewById(R.id.buttonContainer).setVisibility(View.GONE);
             this.setVisibility(GONE);
         }
     }

@@ -57,7 +57,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     Button refresh;
     private SurveyFragment.Callback callback = SurveyFragment.Callback.STUB;
     private SharedPreferencesSurveyManager manager;
-    private ProgressDialog progressDialog;
     private long questionId;
     private long pollId;
     private boolean isHearing;
@@ -89,22 +88,22 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
             surveyDataSource = new WebSurveyDataSourceRX((BaseActivity) getActivity());
         }
         manager = new SharedPreferencesSurveyManager(getActivity());
-        TitleHelper.setTitle(getActivity(), R.string.title_survey_question);
-
     }
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
         if (survey != null) {
-            mSurveyButtons.setCallBack(this);
-            mSurveyButtons.setSurvey(survey);
-            getVariantList();
-            renderScreen();
+            setViews();
         } else {
             loadSurvey(pollId, questionId);
         }
         refresh.setOnClickListener(v -> refresh());
+    }
+
+    public void setSurveyButtons() {
+        mSurveyButtons.setCallBack(this);
+        mSurveyButtons.setSurvey(survey);
     }
 
     @Override
@@ -122,19 +121,14 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     }
 
     public void loadSurvey(long pollId, final long questionId) {
-//        setRefreshButtonVisible(View.GONE);
-//        getComponent(ProgressableUIComponent.class).begin();
         progressable.begin();
         this.questionId = questionId;
         SurveyDataSource.LoadListener listener = new SurveyDataSource.LoadListener() {
             @Override
             public void onLoaded(Survey s) {
-//                getComponent(ProgressableUIComponent.class).end();
                 progressable.end();
                 survey = s;
-                mSurveyButtons.setSurvey(survey);
-                renderScreen();
-//                dismissProgress();
+                setViews();
                 if (requestCode != -1 && data != null) {
                     survey.onActivityResult(requestCode, getActivity().RESULT_OK, data);
                     requestCode = -1;
@@ -146,22 +140,16 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
             public void onError(String message) {
                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                 setRefreshButtonVisible(View.VISIBLE);
-//                dismissProgress();
-//                getComponent(ProgressableUIComponent.class).end();
                 progressable.end();
             }
-//
-//            private void dismissProgress() {
-//                try {
-//                    if (progressDialog != null) {
-//                        progressDialog.dismiss();
-//                    }
-//                } catch (Exception ignored) {
-//                }
-//            }
         };
-//        progressDialog.show();
         surveyDataSource.load(pollId, isHearing, listener);
+    }
+
+    public void setViews() {
+        setSurveyButtons();
+        getVariantList();
+        renderScreen();
     }
 
     void refresh() {
@@ -346,7 +334,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     }
 
     public void interruptUp() {
-        System.out.println("interruptUp");
         if (survey != null) {
             if (survey.getKind().isHearing()) {
                 callback.onSurveyInterrupted(survey);
@@ -412,6 +399,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     }
 
     private void getVariantList() {
+        System.out.println("getVariantList " + survey == null);
         if (survey != null) {
             List<SurveyQuestion> questionList = survey.getQuestionsList();
             selectSurveyVariantList = new SparseArray<>();
@@ -504,6 +492,18 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                     manager.saveCurrentPage(survey);
                 } catch (VerificationException ignored) {
                 }
+            }
+        }
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        if (survey != null) {
+            outState.putLong(SurveyFragment.EXTRA_POLL_ID, survey.getId());
+            outState.putLong(SurveyFragment.EXTRA_QUESTION_ID, survey.getCurrentQuestionId());
+            if (survey.isActive() || survey.isPassed()) {
+                manager.saveCurrentPage(survey);
+            } else {
+                outState.putInt(SurveyFragment.EXTRA_PAGE, survey.getCurrentPageIndex());
             }
         }
     }

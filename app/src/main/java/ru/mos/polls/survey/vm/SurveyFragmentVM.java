@@ -400,7 +400,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     }
 
     private void getVariantList() {
-        System.out.println("getVariantList " + survey == null);
         if (survey != null) {
             List<SurveyQuestion> questionList = survey.getQuestionsList();
             selectSurveyVariantList = new SparseArray<>();

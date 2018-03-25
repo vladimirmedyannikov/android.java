@@ -46,7 +46,6 @@ import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.social.storable.AppStorable;
 import ru.mos.polls.subscribes.manager.SubscribeManager;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
-import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.social.model.Configurator;
 import ru.mos.social.utils.SocialInitUtils;
 
@@ -214,8 +213,7 @@ public class AGApplication extends MultiDexApplication {
 
             @Override
             public Intent getNotifyIntent() {
-                Intent intent = SurveyActivity.getStartIntent(AGApplication.this, hearingId, true);
-                return intent;
+                return PushProcessActivity.getIntentForPoll(AGApplication.this, hearingId, true);
             }
 
             @Override
@@ -341,8 +339,7 @@ public class AGApplication extends MultiDexApplication {
 
             @Override
             public Intent getNotifyIntent() {
-                Intent intent = SurveyActivity.getStartIntent(AGApplication.this, pollId, false);
-                return intent;
+                return PushProcessActivity.getIntentForPoll(AGApplication.this, pollId, false);
             }
 
             @Override

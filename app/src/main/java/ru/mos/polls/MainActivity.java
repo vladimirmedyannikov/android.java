@@ -219,7 +219,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.APPEvents action = (Events.APPEvents) o;
                         switch (action.getEventType()) {
                             case Events.APPEvents.UNAUTHORIZED:
-//                                ProfileManagerRX.afterLoggedOut(this, AgAuthActivity.class, MainActivity.class);
                                 ProfileManagerRX.afterLoggedOut(this);
                                 break;
                         }
@@ -228,7 +227,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                         Events.PollEvents action = (Events.PollEvents) o;
                         switch (action.getEventType()) {
                             case Events.PollEvents.OPEN_POLL:
-//                                SurveyActivity.startActivityForResult(this, action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind()));
                                 navigateTo().state(Add.newActivity(new SurveyState(action.getPoll().getId(), Kind.isHearing(action.getPoll().getKind())), BaseActivity.class));
                                 break;
                         }
@@ -415,8 +413,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onSurvey(long id) {
-                        Intent intent = SurveyActivity.getStartIntent(MainActivity.this, id, false);
-                        startActivity(intent);
+                        navigateTo().state(Add.newActivity(new SurveyState(id, false), BaseActivity.class));
                     }
 
                     @Override
@@ -541,7 +538,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                  */
                 Statistics.enterNews();
                 GoogleStatistics.AGNavigation.enterNews();
-                //fr = NewsDynamicFragment.newInstance(getString(R.string.mainmenu_news), "", API.getURL(UrlManager.url(UrlManager.Controller.NEWS, UrlManager.Methods.GET)));
                 fr = NewsFragment.newInstance();
                 tag = TAG_NEWS;
                 break;

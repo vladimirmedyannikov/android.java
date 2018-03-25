@@ -9,6 +9,7 @@ import me.ilich.juggler.states.State;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.innovations.state.InnovationState;
 import ru.mos.polls.profile.state.AchievementState;
+import ru.mos.polls.survey.state.SurveyState;
 import ru.mos.polls.webview.state.WebViewState;
 
 /**
@@ -43,6 +44,12 @@ public class PushProcessActivity extends BaseActivity {
     private static final String TYPE_NEW_ACHIEVEMENT = "type_new_achievement";
     private static final String ACHIEVEMENT_ID = "achievement_id";
 
+    /**
+     * для пушей Голосований
+     */
+    private static final String TYPE_POLLS = "type_poll";
+    private static final String SURVEY_ID = "survey_id";
+    private static final String SURVEY_IS_HEARING = "is_hearing";
 
     public static Intent getIntentForAgNew(Context context, String title, String linkUrl, String id) {
         Intent intent = new Intent(context, PushProcessActivity.class);
@@ -78,6 +85,14 @@ public class PushProcessActivity extends BaseActivity {
         return intent;
     }
 
+    public static Intent getIntentForPoll(Context context, long id, boolean isHearing) {
+        Intent intent = new Intent(context, PushProcessActivity.class);
+        intent.putExtra(TYPE, TYPE_POLLS);
+        intent.putExtra(SURVEY_ID, id);
+        intent.putExtra(SURVEY_IS_HEARING, isHearing);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +114,9 @@ public class PushProcessActivity extends BaseActivity {
                 case TYPE_NEW_ACHIEVEMENT:
                     state = new AchievementState(getIntent().getStringExtra(ACHIEVEMENT_ID), true);
                     break;
+                case TYPE_POLLS:
+                    state = new SurveyState(getIntent().getLongExtra(SURVEY_ID, 0),
+                            getIntent().getBooleanExtra(SURVEY_IS_HEARING, false));
             }
             if (state != null) {
                 navigateTo().state(Add.newActivity(state, BaseActivity.class));

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.ilich.juggler.change.Add;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
@@ -29,7 +30,6 @@ import ru.mos.polls.common.view.VotersView;
 import ru.mos.polls.model.Information;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.survey.experts.DetailsExpert;
-import ru.mos.polls.survey.experts.DetailsExpertsActivity;
 import ru.mos.polls.survey.filter.Filter;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
@@ -37,6 +37,7 @@ import ru.mos.polls.survey.questions.CheckboxSurveyQuestion;
 import ru.mos.polls.survey.questions.ListViewSurveyQuestion;
 import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
+import ru.mos.polls.survey.state.DetailsExpertsState;
 import ru.mos.polls.survey.status.ActiveStatusProcessor;
 import ru.mos.polls.survey.status.OldStatusProcessor;
 import ru.mos.polls.survey.status.PassedContinuesStatusProcessor;
@@ -396,10 +397,9 @@ public class Survey implements Serializable {
             public void onChooseExpert(DetailsExpert detailsExpert) {
                 Statistics.pollsEnterExperts(id, surveyQuestion.getId());
                 GoogleStatistics.Survey.pollsEnterExperts(id, surveyQuestion.getId());
-                DetailsExpertsActivity.startActivityByQuestionId(activity,
-                        detailsExpert,
+                activity.navigateTo().state(Add.newActivity(DetailsExpertsState.getStateByQuestionId(detailsExpert,
                         surveyQuestion.getId(),
-                        getKind().isHearing());
+                        getKind().isHearing()), BaseActivity.class));
             }
         });
     }

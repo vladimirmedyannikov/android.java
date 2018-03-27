@@ -757,6 +757,7 @@
     <string name="auth_error_code_msg_423">Слишком много попыток авторизации.\nЗабыли пароль? Воспользуйтесь сервисом восстановления пароля.</string>
     <string name="restore">Восстановить</string>
     <string name="innovation_emptylist">Городских новинок нет</string>
+    <string name="experts_emptylist">Экспертов нет</string>
     <string name="tutorial_description_1">Участвуйте в общегородских и территориальных голосованиях. Ваше мнение важно для города</string>
     <string name="tutorial_description_2">Получайте баллы за участие и обменивайте их на городские услуги и сувениры</string>
     <string name="tutorial_description_3">Следите за голосованиями и новостями нашего города</string>

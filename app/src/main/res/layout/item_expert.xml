@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/linear"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:paddingBottom="@dimen/pd_xxlarge">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/layout_one_expert"/>
+    <data>
 
-    <TextView
-        android:id="@+id/body"
-        style="@style/text.large"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/pd_xsmall"
-        android:textSize="@dimen/ts_large"/>
-</LinearLayout>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="ru.mos.polls.survey.vm.item.DetailsExpertVM" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/mainRoot"
+        style="@style/linear"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/pd_normal">
+
+        <include layout="@layout/layout_one_expert" />
+
+        <TextView
+            android:id="@+id/body"
+            style="@style/text.large"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/pd_xsmall"
+            android:textSize="@dimen/ts_large" />
+    </LinearLayout>
+</layout>

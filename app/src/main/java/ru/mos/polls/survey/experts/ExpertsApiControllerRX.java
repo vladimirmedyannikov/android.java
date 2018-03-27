@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.service.GetExpertList;
@@ -27,8 +28,8 @@ import ru.mos.polls.survey.service.GetExpertList;
 
 public class ExpertsApiControllerRX {
 
-    public static void loadDetailExperts(CompositeDisposable disposable, final Context context, long pollId, long questionId, boolean isHearing, final DetailsExpertListener listener) {
-        HandlerApiResponseSubscriber<GetExpertList.Response.Result> handler = new HandlerApiResponseSubscriber<GetExpertList.Response.Result>(context) {
+    public static void loadDetailExperts(CompositeDisposable disposable, final Context context, long pollId, long questionId, boolean isHearing, final DetailsExpertListener listener, Progressable progressable) {
+        HandlerApiResponseSubscriber<GetExpertList.Response.Result> handler = new HandlerApiResponseSubscriber<GetExpertList.Response.Result>(context, progressable) {
             @Override
             protected void onResult(GetExpertList.Response.Result result) {
                 List<DetailsExpert> list = new ArrayList<>();

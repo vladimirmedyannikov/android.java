@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.survey.summary.ExpertsView;
 
 /**
@@ -27,6 +28,7 @@ import ru.mos.polls.survey.summary.ExpertsView;
  *
  * @since 1.8
  */
+@Deprecated
 public class DetailsExpertsActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_EXPERT = "extra_expert";
     private static final String EXTRA_IS_HEARING = "extra_is_hearing";
@@ -99,7 +101,7 @@ public class DetailsExpertsActivity extends ToolbarAbstractActivity {
 
             }
         };
-        ExpertsApiControllerRX.loadDetailExperts(disposables, this, pollId, questionId, isHearing, listener);
+        ExpertsApiControllerRX.loadDetailExperts(disposables, this, pollId, questionId, isHearing, listener, Progressable.STUB);
     }
 
     private int getScrollPosition(List<DetailsExpert> detailsExperts) {

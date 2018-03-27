@@ -3,7 +3,6 @@ package ru.mos.polls.survey.vm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,12 +30,12 @@ import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveySummaryFragment;
 import ru.mos.polls.survey.experts.DetailsExpert;
-import ru.mos.polls.survey.experts.DetailsExpertsActivity;
 import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.model.Meeting;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
+import ru.mos.polls.survey.state.DetailsExpertsState;
 import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.QuestionsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
@@ -85,10 +84,9 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
             public void onChooseExpert(DetailsExpert detailsExpert) {
                 Statistics.pollsEnterExperts(survey.getId(), 0);
                 GoogleStatistics.Survey.pollsEnterExperts(survey.getId(), 0);
-                DetailsExpertsActivity.startActivityByPollId(getActivity(),
-                        detailsExpert,
+                getFragment().navigateTo(DetailsExpertsState.getStateByPollId(detailsExpert,
                         survey.getId(),
-                        survey.getKind().isHearing());
+                        survey.getKind().isHearing()), BaseActivity.class);
             }
         });
         shareButton.setOnClickListener(v -> onClickShareButton());

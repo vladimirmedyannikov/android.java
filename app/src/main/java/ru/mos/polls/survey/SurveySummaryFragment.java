@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +25,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
+import me.ilich.juggler.change.Add;
+import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
@@ -37,12 +38,12 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.experts.DetailsExpert;
-import ru.mos.polls.survey.experts.DetailsExpertsActivity;
 import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.model.Meeting;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
+import ru.mos.polls.survey.state.DetailsExpertsState;
 import ru.mos.polls.survey.summary.ExpertsView;
 import ru.mos.polls.survey.summary.QuestionsView;
 import ru.mos.polls.survey.summary.SurveyHeader;
@@ -50,7 +51,7 @@ import ru.mos.polls.survey.summary.SurveyTitleView;
 import ru.mos.polls.survey.ui.BackPressedListener;
 
 @Deprecated
-public class SurveySummaryFragment extends Fragment implements BackPressedListener {
+public class SurveySummaryFragment extends JugglerFragment implements BackPressedListener {
     public static final String EXTRA_SURVEY_ID = "extra_survey_id";
 
     public static SurveySummaryFragment newInstance(Survey survey, boolean isHearing) {
@@ -148,10 +149,9 @@ public class SurveySummaryFragment extends Fragment implements BackPressedListen
             public void onChooseExpert(DetailsExpert detailsExpert) {
                 Statistics.pollsEnterExperts(survey.getId(), 0);
                 GoogleStatistics.Survey.pollsEnterExperts(survey.getId(), 0);
-                DetailsExpertsActivity.startActivityByPollId(getActivity(),
-                        detailsExpert,
+                navigateTo().state(Add.newActivity(DetailsExpertsState.getStateByPollId(detailsExpert,
                         survey.getId(),
-                        survey.getKind().isHearing());
+                        survey.getKind().isHearing()), BaseActivity.class));
             }
         });
     }

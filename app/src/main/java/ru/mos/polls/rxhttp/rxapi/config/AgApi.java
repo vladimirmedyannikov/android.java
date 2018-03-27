@@ -166,6 +166,10 @@ public interface AgApi {
         }
     }
 
+    static String url(String controller, String method) {
+        return String.format("%s/%s/%s", Api.Versions.CURRENT/*BuildConfig.VERSION_NAME*/, controller, method);
+    }
+
     @POST("/" + Api.Versions.CURRENT + "/" + Api.Controllers.NOVELTY + "/" + Api.Methods.SELECT)
     Observable<NoveltySelect.Response> noveltySelect(@Body NoveltySelect.Request body);
 

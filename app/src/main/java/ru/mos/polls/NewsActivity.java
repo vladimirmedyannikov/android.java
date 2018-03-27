@@ -9,7 +9,7 @@ import ru.mos.polls.auth.state.AgAuthState;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.news.ui.NewsFragment;
 
-
+@Deprecated
 public class NewsActivity extends AbstractActivity {
 
     @Override

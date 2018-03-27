@@ -57,8 +57,9 @@ import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.profile.state.BindingSocialState;
+import ru.mos.polls.profile.state.AchievementState;
 import ru.mos.polls.profile.state.EditProfileState;
-import ru.mos.polls.profile.ui.activity.AchievementActivity;
+import ru.mos.polls.profile.state.PguAuthState;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
@@ -70,10 +71,9 @@ import ru.mos.polls.shop.ui.WebShopFragment;
 import ru.mos.polls.social.controller.SocialApiControllerRX;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
-import ru.mos.polls.survey.SurveyActivity;
-import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
 import ru.mos.polls.survey.state.SurveyState;
 import ru.mos.polls.util.Dialogs;
+import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.PermissionsUtils;
 import ru.mos.polls.util.SMSUtils;
 import ru.mos.polls.webview.state.WebViewState;
@@ -448,7 +448,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onBindToPgu() {
-                        PguAuthActivity.startActivityForQuest(MainActivity.this);
+//                        PguAuthActivity.startActivityForQuest(MainActivity.this);
+                        navigateTo().state(Add.newActivity(new PguAuthState(PguAuthState.PGU_STATUS), BaseActivity.class));
                     }
 
                     @Override
@@ -584,8 +585,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     @Override
     public void onBackPressed() {
-//        AgDynamicFragment df = (AgDynamicFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS);
-//        if (df == null || !df.canGoBack()) {
         if (isFirstBack) {
             isFirstBack = false;
             Toast.makeText(this, R.string.one_more_back_to_exit, Toast.LENGTH_SHORT).show();
@@ -604,7 +603,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
             isFirstBack = true;
             super.onBackPressed();
         }
-//        }
     }
 
     @Override
@@ -618,7 +616,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
     @Override
     public void onNavigationDrawerOpened(View drawerView) {
-        AbstractActivity.hideSoftInput(this, drawerView);
+        GuiUtils.hideKeyboard(drawerView);
     }
 
     @Override
@@ -678,7 +676,7 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onAchievement(String id) {
-                AchievementActivity.getStartActivity(MainActivity.this, id);
+                navigateTo().state(Add.newActivity(new AchievementState(id, true), BaseActivity.class));
             }
 
             @Override
@@ -717,7 +715,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
             @Override
             public void onBindToPgu() {
-                PguAuthActivity.startActivity(MainActivity.this);
+//                PguAuthActivity.startActivity(MainActivity.this);
+                navigateTo().state(Add.newActivity(new PguAuthState(PguAuthState.PGU_STATUS), BaseActivity.class));
             }
 
             @Override

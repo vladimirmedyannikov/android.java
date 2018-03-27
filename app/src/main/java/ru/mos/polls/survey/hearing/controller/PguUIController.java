@@ -4,19 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import ru.mos.polls.profile.model.AgUser;
+import me.ilich.juggler.change.Add;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.FunctionalHelper;
-import ru.mos.polls.survey.hearing.gui.activity.PguAuthActivity;
-import ru.mos.polls.survey.hearing.gui.activity.PguRebindActivity;
-import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
+import ru.mos.polls.profile.state.PguAuthState;
+import ru.mos.polls.profile.vm.PguAuthFragmentVM;
 
 
 public abstract class PguUIController {
@@ -31,14 +29,6 @@ public abstract class PguUIController {
         });
         builder.setNegativeButton(elkActivity.getString(R.string.cancel), null);
         builder.show();
-    }
-
-    public static void startPguBinding(Fragment fragment) {
-        if (AgUser.isPguConnected(fragment.getActivity())) {
-            PguRebindActivity.startActivity(fragment);
-        } else {
-            PguAuthActivity.startActivity(fragment);
-        }
     }
 
     public static void showSimpleDialog(Context context, String title, String message) {
@@ -57,7 +47,8 @@ public abstract class PguUIController {
                 .setPositiveButton(context.getString(R.string.ag_continue), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        PguVerifyActivity.startActivity(context);
+//                        PguVerifyActivity.startActivity(context);
+                        context.navigateTo().state(Add.newActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), BaseActivity.class, PguAuthFragmentVM.CODE_PGU_AUTH));
                     }
                 });
         builder.setNegativeButton(context.getString(R.string.cancel), null);
@@ -81,7 +72,8 @@ public abstract class PguUIController {
         builder.setNegativeButton(R.string.title_nind_other_profile_pgu, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PguVerifyActivity.startActivity(context);
+//                PguVerifyActivity.startActivity(context);
+                context.navigateTo().state(Add.newActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), BaseActivity.class, PguAuthFragmentVM.CODE_PGU_AUTH));
             }
         });
         AlertDialog alertDialog = builder.create();

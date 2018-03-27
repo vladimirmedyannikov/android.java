@@ -18,7 +18,7 @@ import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.survey.hearing.gui.fragment.PguBindFragment;
 
-
+@Deprecated
 public class PguAuthActivity extends ToolbarAbstractActivity {
     private static final String EXTRA_IS_TASK = "extra_is_task";
 

@@ -5,6 +5,7 @@ package ru.mos.polls;
  *
  * @since 1.8
  */
+@Deprecated
 public class UrlManager {
     public static String V210 = "2.1.0";
     public static String V220 = "2.2.0";

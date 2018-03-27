@@ -124,7 +124,6 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
             DefaultResponseErrorHandler errorHandler = new DefaultResponseErrorHandler(actionBarActivity) {
                 @Override
                 public void onServerError(int code, String message) {
-                    super.onServerError(code, message);
                     switch (code) {
                         case HearingApiControllerRX.ERROR_CODE_NO_MASTER_SSO_ID:
                             listener.onPguAuthError(message);

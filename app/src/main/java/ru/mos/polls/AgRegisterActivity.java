@@ -28,7 +28,7 @@ import ru.mos.polls.auth.vm.AgAuthFragmentVM;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.util.Dialogs;
-
+@Deprecated
 public class AgRegisterActivity extends BaseActivity {
     private GoogleStatistics.Registry statistics = new GoogleStatistics.Registry();
 

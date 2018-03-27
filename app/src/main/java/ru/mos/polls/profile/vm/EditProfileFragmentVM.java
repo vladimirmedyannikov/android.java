@@ -238,15 +238,13 @@ public class EditProfileFragmentVM extends UIComponentFragmentViewModel<EditProf
             getFragment().navigateTo(new BindingSocialState(false), BaseActivity.class);
         });
         bindingMostTitle.setOnClickListener(v -> {
-            getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.PGU_AUTH);
+            getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_STATUS), PguAuthFragmentVM.CODE_PGU_AUTH);
         });
         privateProperty.setOnClickListener(v -> getFragment().navigateToActivityForResult(new AddPrivatePropertyState(null), 6622));  //вернуть в версии 2.5.0
     }
 
     public void refreshView(AgUser agUser) {
-//        setGenderView(agUser.getGender());
         initGender(agUser);
-//        setMartialStatusView(agUser.getGender());
         initMarital(agUser);
         displayBirthday();
         setRegistationFlatView(agUser.getRegistration());

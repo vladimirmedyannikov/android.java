@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mos.polls.BuildConfig;
-import ru.mos.polls.UrlManager;
 import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
@@ -33,7 +32,7 @@ public class FeedbackSend{
             this.subjectId = subjectId;
             apiVersion = new ArrayList<>();
             apiVersion.add(GCMHelper.REGISTER_PATH);
-            apiVersion.add(UrlManager.url(AgApi.Api.Controllers.SUPPORT, AgApi.Api.Methods.SEND_FEEDBACK));
+            apiVersion.add(AgApi.url(AgApi.Api.Controllers.SUPPORT, AgApi.Api.Methods.SEND_FEEDBACK));
             this.email = email;
             this.message = message;
             if (!TextUtils.isEmpty(orderNumber)) {

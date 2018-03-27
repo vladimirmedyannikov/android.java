@@ -19,13 +19,13 @@ import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.FragmentMainSurveyBinding;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.profile.vm.PguAuthFragmentVM;
 import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveySummaryFragment;
 import ru.mos.polls.survey.VerificationException;
-import ru.mos.polls.survey.hearing.gui.activity.PguVerifyActivity;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SaveListener;
 import ru.mos.polls.survey.source.SurveyDataSource;
@@ -132,7 +132,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
          * Вернулись с эерана авторизации в пгу
          * еще раз отпралвяем запрос на
          */
-        if (PguVerifyActivity.isAuth(data)) {
+        if (PguAuthFragmentVM.isAuth(resultCode, requestCode, data)) {
             if (survey.getKind().isHearing()) {
                 doFinish(survey);
             }

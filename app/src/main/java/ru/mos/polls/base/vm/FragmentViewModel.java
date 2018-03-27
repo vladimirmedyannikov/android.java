@@ -2,11 +2,14 @@ package ru.mos.polls.base.vm;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import io.reactivex.disposables.CompositeDisposable;
 import me.ilich.juggler.gui.JugglerFragment;
@@ -78,6 +81,10 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
     public void onSaveInstanceState(Bundle outState) {
     }
 
+    public void onStart() {
+
+    }
+
     public Progressable progressable = new Progressable() {
         @Override
         public void begin() {
@@ -91,8 +98,4 @@ public abstract class FragmentViewModel<F extends JugglerFragment, B extends Vie
                 pd.dismiss();
         }
     };
-
-    public void onStart() {
-
-    }
 }

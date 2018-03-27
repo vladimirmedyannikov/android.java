@@ -17,6 +17,7 @@ import ru.mos.polls.base.activity.BaseActivity;
  * Содержит общие методы для классов экранов, использвоать
  * для экранов с toolbar-ом
  */
+@Deprecated
 public abstract class ToolbarAbstractActivity extends BaseActivity {
     protected Toolbar toolbar;
     protected ProgressDialog progressDialog;

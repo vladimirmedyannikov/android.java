@@ -146,6 +146,11 @@ public class HearingApiControllerRX {
                     onResult(generalResponse.getResult());
                 }
             }
+
+            @Override
+            public void onHasError(GeneralResponse<HearingCheck.Response.Result> generalResponse) {
+                //не нужен
+            }
         };
         disposable.add(AGApplication
                 .api

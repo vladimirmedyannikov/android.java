@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ru.mos.polls.R;
 
-
+@Deprecated
 public class PguRebindActivity extends PguAuthActivity {
     protected View rebind;
     protected TextView pguTitle;

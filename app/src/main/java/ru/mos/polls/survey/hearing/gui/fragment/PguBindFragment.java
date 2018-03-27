@@ -1,5 +1,7 @@
 package ru.mos.polls.survey.hearing.gui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -35,6 +37,7 @@ import ru.mos.polls.util.GuiUtils;
 
 
 public class PguBindFragment extends JugglerFragment {
+    public static final String EXTRA_AUTH_RESULT = "extra_auth_result";
     @BindView(R.id.container)
     RelativeLayout container;
     @BindView(R.id.tvError)
@@ -151,7 +154,8 @@ public class PguBindFragment extends JugglerFragment {
         HearingApiControllerRX.PguAuthListener listener1 = new HearingApiControllerRX.PguAuthListener() {
             @Override
             public void onSuccess(QuestMessage questMessage, int percent) {
-                AbstractActivity.hideSoftInput(getActivity(), password);
+                setResult(true);
+                GuiUtils.hideKeyboard(password);
                 AgUser.setPercentFillProfile(getActivity(), percent);
                 AGApplication.bus().send(new Events.WizardEvents(Events.WizardEvents.WIZARD_PGU, percent));
                 questMessage.show(getActivity(), true);
@@ -174,7 +178,11 @@ public class PguBindFragment extends JugglerFragment {
         };
         HearingApiControllerRX.pguBind(((BaseActivity) getActivity()).getDisposables(), getContext(), login.getText().toString(), password.getText().toString(), listener1);
     }
-
+    private void setResult(boolean isAuth) {
+        Intent result = new Intent();
+        result.putExtra(EXTRA_AUTH_RESULT, isAuth);
+        getActivity().setResult(Activity.RESULT_OK, result);
+    }
     public interface PguBindingListener {
         PguBindingListener STUB = new PguBindingListener() {
             @Override

@@ -16,6 +16,7 @@ import ru.mos.polls.base.activity.BaseActivity;
  * Инкапсулирует общие, нужные методы
  * <p/>
  */
+@Deprecated
 public abstract class AbstractActivity extends BaseActivity {
     protected ProgressDialog progressDialog;
 

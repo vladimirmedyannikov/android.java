@@ -2,7 +2,6 @@ package ru.mos.polls.survey.vm;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -336,7 +335,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
         if (survey != null) {
             if (survey.getKind().isHearing()) {
                 callback.onSurveyInterrupted(survey);
-                ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
 //                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             } else {
                 try {
@@ -347,7 +346,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 }
                 survey.endTiming();
                 manager.saveCurrentPage(survey);
-                ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
+                ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
 //                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             }
         }
@@ -530,9 +529,9 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
         if (savedInstanceState != null) {
             pollId = savedInstanceState.getLong(SurveyFragment.EXTRA_POLL_ID);
             questionId = savedInstanceState.getLong(SurveyFragment.EXTRA_QUESTION_ID);
-            ((SurveyMainFragment)getParentFragment()).getViewModel().setBackPressedListener(getFragment());
-            ((SurveyMainFragment)getParentFragment()).getViewModel().setCurrentFragment(getFragment());
-            ((SurveyMainFragment)getParentFragment()).getViewModel().getSurveyCallback();
+            ((SurveyMainFragment) getParentFragment()).getViewModel().setBackPressedListener(getFragment());
+            ((SurveyMainFragment) getParentFragment()).getViewModel().setCurrentFragment(getFragment());
+            ((SurveyMainFragment) getParentFragment()).getViewModel().getSurveyCallback();
 //            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
 //            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
 //            setCallback(((SurveyActivity) getActivity()).getSurveyCallback());

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import ru.mos.polls.fragments.DynamicFragment;
 
-
+@Deprecated
 public class ToolbarDynamicActivity extends ToolbarAbstractActivity {
 
     @Override

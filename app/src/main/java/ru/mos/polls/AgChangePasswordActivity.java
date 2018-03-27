@@ -22,7 +22,7 @@ import ru.mos.polls.util.Dialogs;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.helpers.TitleHelper;
 
-
+@Deprecated
 public class AgChangePasswordActivity extends BaseActivity {
     private static final int MIN_PASSWORD_LENGTH = 5;
 

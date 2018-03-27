@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import ru.mos.polls.R;
 import ru.mos.polls.ToolbarAbstractActivity;
 import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.profile.vm.PguAuthFragmentVM;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
 import ru.mos.polls.survey.hearing.model.Meeting;
 
@@ -67,7 +68,7 @@ public class MeetingActivity extends ToolbarAbstractActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (PguVerifyActivity.isAuth(resultCode, requestCode, data)) {
+        if (PguAuthFragmentVM.isAuth(resultCode, requestCode, data)) {
             meeting.setStatus(Meeting.Status.REGISTERED);
             isSubscribed = true;
             refreshAction();

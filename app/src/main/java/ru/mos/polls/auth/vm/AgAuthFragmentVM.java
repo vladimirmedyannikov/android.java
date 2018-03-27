@@ -27,7 +27,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.AgRegisterActivity;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.MainActivity;
@@ -91,7 +90,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
             return true;
         });
         binding.help.setOnClickListener(view -> {
-                    AbstractActivity.hideSoftInput(getFragment().getContext(), etLogin);
+                    GuiUtils.hideKeyboard(etLogin);
                     statistics.helpClick();
                     new GoogleStatistics.Auth().feedbackClick();
                     getFragment().navigateTo(new SupportState(true), ru.mos.polls.base.activity.BaseActivity.class);

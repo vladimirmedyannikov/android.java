@@ -1,5 +1,7 @@
 package ru.mos.polls.profile.vm;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,8 @@ import ru.mos.polls.profile.ui.fragment.PguAuthFragment;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 
 public class PguAuthFragmentVM extends FragmentViewModel<PguAuthFragment, FragmentPguAuthBinding> {
-    public static final int PGU_AUTH = 13245;
+    public static final int CODE_PGU_AUTH = 13245;
+    public static final String EXTRA_AUTH_RESULT = "extra_auth_result";
 
     TextView help;
     TextView pguTitle;
@@ -49,8 +52,8 @@ public class PguAuthFragmentVM extends FragmentViewModel<PguAuthFragment, Fragme
 
     public void setListener() {
         help.setOnClickListener(v -> PopupController.pgu(getActivity()));
-        pguConnBtn.setOnClickListener(v -> getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), PguAuthFragmentVM.PGU_AUTH));
-        pguRebind.setOnClickListener(v -> getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), PguAuthFragmentVM.PGU_AUTH));
+        pguConnBtn.setOnClickListener(v -> getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), PguAuthFragmentVM.CODE_PGU_AUTH));
+        pguRebind.setOnClickListener(v -> getFragment().navigateToActivityForResult(new PguAuthState(PguAuthState.PGU_AUTH), PguAuthFragmentVM.CODE_PGU_AUTH));
     }
 
     @Override
@@ -71,6 +74,17 @@ public class PguAuthFragmentVM extends FragmentViewModel<PguAuthFragment, Fragme
         }
         if (forWizard) {
             help.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public static boolean isAuth(int resultCode, int requestCode, Intent data) {
+        return resultCode == Activity.RESULT_OK && requestCode == CODE_PGU_AUTH;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == CODE_PGU_AUTH) {
+            data.putExtra(EXTRA_AUTH_RESULT, true);
         }
     }
 }

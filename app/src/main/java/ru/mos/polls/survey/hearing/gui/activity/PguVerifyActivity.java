@@ -24,7 +24,7 @@ import ru.mos.polls.helpers.TitleHelper;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 
-
+@Deprecated
 public class PguVerifyActivity extends ToolbarAbstractActivity {
     public static final int REQUEST_AUTH_RESULT = 100;
     public static final String EXTRA_AUTH_RESULT = "extra_auth_result";

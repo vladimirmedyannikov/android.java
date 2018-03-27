@@ -11,8 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
-import pub.devrel.easypermissions.EasyPermissions;
-
 /**
  * Инкапсуляция работы с {@link RuntimePermission}
  *
@@ -22,6 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class RuntimePermissionController {
     public static final int REQUEST_CODE_SMS_SEND = 1;
     public static final int REQUEST_CODE_SMS_RECEIVE = 2;
+    public static final int REQUEST_READ_PHONE_STATE = 3;
 
     private Activity activity;
 
@@ -35,6 +34,10 @@ public class RuntimePermissionController {
 
     public boolean hasSmsReceive() {
         return has(Manifest.permission.RECEIVE_SMS);
+    }
+
+    public boolean hasRequestReadPhoneState() {
+        return has(Manifest.permission.READ_PHONE_STATE);
     }
 
     /**
@@ -55,6 +58,10 @@ public class RuntimePermissionController {
         requestRuntimePermission(Manifest.permission.RECEIVE_SMS, REQUEST_CODE_SMS_RECEIVE);
     }
 
+    public void requestReadPhoneState() {
+        requestRuntimePermission(Manifest.permission.READ_PHONE_STATE, REQUEST_READ_PHONE_STATE);
+    }
+
     /**
      * Запрос на получение разрешений {@link RuntimePermission}
      *
@@ -63,25 +70,41 @@ public class RuntimePermissionController {
      *                    используется в методе {@link Activity#onRequestPermissionsResult(int, String[], int[])}
      */
     public void requestRuntimePermission(final String permission, final int requestCode) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission) && ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setMessage(R.string.permission_not_available)
                     .setPositiveButton(R.string.app_continue, (dialog, which) -> ActivityCompat.requestPermissions(activity,
                             new String[]{permission},
                             requestCode));
             builder.show();
-            return;
-        }
-        if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED && !EasyPermissions.permissionPermanentlyDenied(activity, permission)) {
+        } else {
             ActivityCompat.requestPermissions(activity,
                     new String[]{permission},
                     requestCode);
-            return;
         }
+    }
 
+    /**
+     * проверка того, нажал ли пользователь "больше не спрашивать" при отклонении
+     * @param permission
+     */
+    private void checkPermissionDeniedPermanently(final String permission) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        /**
+         * если после отклонения разрешения функция {@link ActivityCompat#shouldShowRequestPermissionRationale(Activity, String)}
+         * вернула false, то пользователь чекнул "больше не спрашивать"
+         */
         if (Build.VERSION.SDK_INT >= 23 && !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-            builder.setMessage(R.string.permission_not_available_goto_settings)
+            String message = "Для корректной работы приложения, требуется получить разрешение \"%s\".\nПерейти в настройки приложения?";
+            switch (permission) {
+                case Manifest.permission.SEND_SMS:
+                    message = String.format(message, "SMS");
+                    break;
+                case Manifest.permission.READ_PHONE_STATE:
+                    message = String.format(message, "Телефон");
+                    break;
+            }
+            builder.setMessage(message)
                     .setPositiveButton("Да", (dialog, which) -> {
                         Intent i = new Intent();
                         i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -111,6 +134,29 @@ public class RuntimePermissionController {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 result = true;
+            } else {
+                checkPermissionDeniedPermanently(Manifest.permission.SEND_SMS);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Проверка наличия разрешения {@link RuntimePermission}<br/>
+     * Метод вызывается в {@link Activity#onRequestPermissionsResult(int, String[], int[])}
+     *
+     * @param requestCode  код запроса
+     * @param grantResults установено/не установлено разрешение {@link RuntimePermission}
+     * @return true - разрешение на readPhoneState есть
+     */
+    public boolean readPhoneStatePermissionGranted(int requestCode, int[] grantResults) {
+        boolean result = false;
+        if (requestCode == REQUEST_READ_PHONE_STATE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                result = true;
+            } else {
+                checkPermissionDeniedPermanently(Manifest.permission.READ_PHONE_STATE);
             }
         }
         return result;

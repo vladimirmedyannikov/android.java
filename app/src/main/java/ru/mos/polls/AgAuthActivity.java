@@ -57,9 +57,9 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.session.Session;
+import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 
@@ -68,7 +68,8 @@ public class AgAuthActivity extends AuthActivity {
     private static final int SMS_PERMISSION_REQUEST = 9825;
     protected Toolbar toolbar;
     private static final String[] SMS_PERMS = {
-            Manifest.permission.RECEIVE_SMS
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.SEND_SMS
     };
 
     private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();

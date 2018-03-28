@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout style="@style/linear">
+
+        <ScrollView
+            style="@style/root"
+            android:layout_above="@id/buttonContainer"
+            android:layout_below="@id/toolbar">
+
+            <LinearLayout style="@style/linear">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/text.large.black"
+                    android:paddingBottom="@dimen/pd_normal"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_xsmall"
+                    android:text="@string/address_of_exposition"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/ag_separator" />
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/text.large.black"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/ag_list_selector"
+                    android:drawablePadding="@dimen/pd_xxsmall"
+                    android:drawableRight="@drawable/arrow_question"
+                    android:paddingBottom="@dimen/pd_xsmall"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_xsmall"
+                    android:text="@string/place" />
+
+                <include layout="@layout/ag_separator" />
+
+                <TextView
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xsmall"
+                    android:paddingTop="@dimen/pd_normal"
+                    android:text="@string/date_of_exposition"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:text="с 15.11.2015 до 28.11.2015" />
+
+                <TextView
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_xlarge"
+                    android:text="@string/work_time_of_exposition"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/work"
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:text="@string/work_time_of_exposition" />
+
+                <TextView
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_xlarge"
+                    android:text="@string/contact_information"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/contactContainer"
+                    style="@style/item.linear"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall" />
+
+                <TextView
+                    android:id="@+id/linkTitle"
+                    style="@style/text.large.black"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:paddingTop="@dimen/pd_xlarge"
+                    android:text="@string/subjects_of_project"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/link"
+                    style="@style/text.large.black"
+                    android:linksClickable="true"
+                    android:paddingLeft="@dimen/pd_xxsmall"
+                    android:paddingRight="@dimen/pd_xxsmall"
+                    android:text="@string/detail_subject_of_hearing"
+                    android:textColorLink="@android:color/holo_blue_light" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

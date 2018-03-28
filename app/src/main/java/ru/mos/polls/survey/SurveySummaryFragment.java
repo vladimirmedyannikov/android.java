@@ -38,8 +38,8 @@ import ru.mos.polls.social.controller.SocialUIController;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.subscribes.controller.SubscribesUIController;
 import ru.mos.polls.survey.experts.DetailsExpert;
-import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.model.Meeting;
+import ru.mos.polls.survey.hearing.vm.MeetingFragmentVM;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
@@ -87,7 +87,7 @@ public class SurveySummaryFragment extends JugglerFragment implements BackPresse
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (survey.getKind().isHearing() && MeetingActivity.isSubscribe(resultCode, requestCode)) {
+        if (survey.getKind().isHearing() && MeetingFragmentVM.isSubscribe(resultCode, requestCode)) {
             List<Meeting> meetings = survey.getMeetings();
             if (meetings != null && meetings.size() > 0) {
                 survey.getMeetings().get(0).setStatus(Meeting.Status.REGISTERED);
@@ -260,7 +260,7 @@ public class SurveySummaryFragment extends JugglerFragment implements BackPresse
         renderShareButton();
         surveyHeader.display(survey);
         if (survey.getKind().isHearing()) {
-            surveyHeader.displayHearingInfo(this, survey);
+//            surveyHeader.displayHearingInfo(this, survey); todo т.к. требуется вместо this экземпляр NavigateFragment и текущий фрагмент более не используется (да?, нет?)
         }
         surveyHeader.setStateListener(new SurveyTitleView.StateListener() {
             @Override

@@ -30,8 +30,8 @@ import ru.mos.polls.survey.SharedPreferencesSurveyManager;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveySummaryFragment;
 import ru.mos.polls.survey.experts.DetailsExpert;
-import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.model.Meeting;
+import ru.mos.polls.survey.hearing.vm.MeetingFragmentVM;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.SurveyDataSource;
 import ru.mos.polls.survey.source.WebSurveyDataSourceRX;
@@ -111,7 +111,7 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (survey.getKind().isHearing() && MeetingActivity.isSubscribe(resultCode, requestCode)) {
+        if (survey.getKind().isHearing() && MeetingFragmentVM.isSubscribe(resultCode, requestCode)) {
             List<Meeting> meetings = survey.getMeetings();
             if (meetings != null && meetings.size() > 0) {
                 survey.getMeetings().get(0).setStatus(Meeting.Status.REGISTERED);

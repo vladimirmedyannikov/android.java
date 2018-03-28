@@ -3,7 +3,6 @@ package ru.mos.polls.survey.summary;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,6 +14,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 
@@ -63,7 +63,7 @@ public class SurveyHeader extends FrameLayout {
         surveyTitleView.display(survey);
     }
 
-    public void displayHearingInfo(Fragment fragment, Survey survey) {
+    public void displayHearingInfo(NavigateFragment fragment, Survey survey) {
         surveyTitleView.displayHearingInfo(fragment, survey);
     }
 

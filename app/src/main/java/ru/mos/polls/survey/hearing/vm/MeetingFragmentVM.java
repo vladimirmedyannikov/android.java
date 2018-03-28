@@ -1,9 +1,8 @@
-package ru.mos.polls.survey.hearing.gui.activity;
+package ru.mos.polls.survey.hearing.vm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -13,48 +12,25 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import ru.mos.polls.R;
-import ru.mos.polls.ToolbarAbstractActivity;
-import ru.mos.polls.helpers.TitleHelper;
+import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.base.component.UIComponentFragmentViewModel;
+import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.databinding.FragmentMeetingBinding;
 import ru.mos.polls.profile.vm.PguAuthFragmentVM;
 import ru.mos.polls.survey.hearing.controller.PguUIController;
+import ru.mos.polls.survey.hearing.gui.fragment.MeetingFragment;
 import ru.mos.polls.survey.hearing.model.Meeting;
 
-/**
- * Экран для отображения данных по собранию публичного слушания
- *
- * @since 2.0
- */
-@Deprecated
-public class MeetingActivity extends ToolbarAbstractActivity {
+public class MeetingFragmentVM extends UIComponentFragmentViewModel<MeetingFragment, FragmentMeetingBinding>{
     private static final int REQUEST = 1001;
-    private static final String EXTRA_TITLE = "extra_title";
-    private static final String EXTRA_MEETING = "extra_meeting";
-    private static final String EXTRA_HEARING_ID = "extra_hearing_id";
 
-    public static void start(Fragment fragment, long hearingId, Meeting meeting, String surveyTitle) {
-        Intent start = new Intent(fragment.getActivity(), MeetingActivity.class);
-        start.putExtra(EXTRA_TITLE, surveyTitle);
-        start.putExtra(EXTRA_HEARING_ID, hearingId);
-        start.putExtra(EXTRA_MEETING, meeting);
-        fragment.startActivityForResult(start, REQUEST);
-    }
-
-    @BindView(R.id.address)
-    TextView address;
-    @BindView(R.id.date)
-    TextView date;
-    @BindView(R.id.description)
-    TextView description;
-    @BindView(R.id.condition)
-    TextView conditions;
-    @BindView(R.id.checkHearing)
-    TextView checkHearing;
-    @BindView(R.id.hintWithoutRegistration)
-    TextView hintWithoutRegistration;
+    private TextView address;
+    private TextView date;
+    private TextView description;
+    private TextView conditions;
+    private TextView checkHearing;
+    private TextView hintWithoutRegistration;
 
     private String surveyTitle;
     private long hearingId;
@@ -63,11 +39,39 @@ public class MeetingActivity extends ToolbarAbstractActivity {
     private boolean isSubscribed;
 
     public static boolean isSubscribe(int resultCode, int requestCode) {
-        return resultCode == RESULT_OK && requestCode == REQUEST;
+        return resultCode == Activity.RESULT_OK && requestCode == REQUEST;
+    }
+
+    public MeetingFragmentVM(MeetingFragment fragment, FragmentMeetingBinding binding) {
+        super(fragment, binding);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected UIComponentHolder createComponentHolder() {
+        return new UIComponentHolder.Builder().build();
+    }
+
+    @Override
+    protected void initialize(FragmentMeetingBinding binding) {
+        address = binding.address;
+        date = binding.date;
+        description = binding.description;
+        conditions = binding.condition;
+        checkHearing = binding.checkHearing;
+        hintWithoutRegistration = binding.hintWithoutRegistration;
+        surveyTitle = getFragment().getExtraTitle();
+        hearingId = getFragment().getExtraHearingId();
+        meeting = getFragment().getExtraMeeting();
+        checkHearing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PguUIController.showHearingSubscribe((BaseActivity) getActivity(), surveyTitle, hearingId, meeting.getId());
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (PguAuthFragmentVM.isAuth(resultCode, requestCode, data)) {
             meeting.setStatus(Meeting.Status.REGISTERED);
@@ -77,34 +81,13 @@ public class MeetingActivity extends ToolbarAbstractActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meeting);
-        ButterKnife.bind(this);
-        getParams();
+    public void onViewCreated() {
+        super.onViewCreated();
         refreshUI();
     }
 
-    @Override
-    protected void findViews() {
-        TitleHelper.setTitle(this, getString(R.string.title_meeting));
-    }
-
-    @OnClick(R.id.checkHearing)
-    void setCheckHearing() {
-        PguUIController.showHearingSubscribe(MeetingActivity.this, surveyTitle, hearingId, meeting.getId());
-    }
-
-    protected void getParams() {
-        surveyTitle = getIntent().getStringExtra(EXTRA_TITLE);
-        meeting = (Meeting) getIntent().getSerializableExtra(EXTRA_MEETING);
-        hearingId = getIntent().getLongExtra(EXTRA_HEARING_ID, -1);
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(isSubscribed ? RESULT_OK : RESULT_CANCELED);
-        finish();
+    public int getResult() {
+        return isSubscribed ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
     }
 
     protected void refreshUI() {
@@ -122,7 +105,7 @@ public class MeetingActivity extends ToolbarAbstractActivity {
             address.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    meeting.getPosition().goToGoogleMapsOnly(MeetingActivity.this, meeting.getAddress());
+                    meeting.getPosition().goToGoogleMapsOnly(getFragment().getContext(), meeting.getAddress());
                 }
             });
         }
@@ -135,16 +118,16 @@ public class MeetingActivity extends ToolbarAbstractActivity {
 
     private void refreshAction() {
         if (meeting.getDate() < System.currentTimeMillis() || meeting.isClosed() && !meeting.getConditions().isWithoutRegistration()) {
-            setButtonDisabled(getString(R.string.meeting_held));
+            setButtonDisabled(getFragment().getString(R.string.meeting_held));
         } else if (meeting.isRegistered()) {
             checkHearing.setEnabled(false);
-            checkHearing.setText(getString(R.string.you_singin_meeting));
+            checkHearing.setText(getFragment().getString(R.string.you_singin_meeting));
         } else if (meeting.getConditions().isWithoutRegistration()) {
-            setButtonDisabled(getString(R.string.free_entrace));
+            setButtonDisabled(getFragment().getString(R.string.free_entrace));
         } else if (meeting.getEndRegistration() < System.currentTimeMillis()) {
-            setButtonDisabled(getString(R.string.signin_closed));
+            setButtonDisabled(getFragment().getString(R.string.signin_closed));
         } else if (meeting.isPreview()) {
-            setButtonDisabled(getString(R.string.meeting_preview));
+            setButtonDisabled(getFragment().getString(R.string.meeting_preview));
         } else {
             checkHearing.setEnabled(true);
             checkHearing.setText(R.string.signin_to_meeting);
@@ -154,13 +137,13 @@ public class MeetingActivity extends ToolbarAbstractActivity {
     private void setButtonDisabled(String string) {
         hintWithoutRegistration.setVisibility(View.VISIBLE);
         hintWithoutRegistration.setText(string);
-        hintWithoutRegistration.setTextColor(getResources().getColor(R.color.ag_grey_color));
+        hintWithoutRegistration.setTextColor(getFragment().getResources().getColor(R.color.ag_grey_color));
         checkHearing.setVisibility(View.GONE);
     }
 
     private void displayConditions() {
         if (meeting.getConditions().isMandatoryRegistration()) {
-            conditions.setTextColor(getResources().getColor(R.color.ag_red));
+            conditions.setTextColor(getFragment().getResources().getColor(R.color.ag_red));
         }
         conditions.setText(meeting.getConditions().getLabel());
     }

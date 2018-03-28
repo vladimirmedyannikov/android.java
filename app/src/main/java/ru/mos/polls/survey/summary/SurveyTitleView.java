@@ -3,7 +3,6 @@ package ru.mos.polls.survey.summary;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,13 +16,15 @@ import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
+import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.base.ui.NavigateFragment;
 import ru.mos.polls.common.view.HtmlTitleView;
 import ru.mos.polls.survey.Survey;
-import ru.mos.polls.survey.hearing.gui.activity.ExpositionActivity;
-import ru.mos.polls.survey.hearing.gui.activity.MeetingActivity;
 import ru.mos.polls.survey.hearing.gui.view.HearingInfoView;
 import ru.mos.polls.survey.hearing.model.Exposition;
 import ru.mos.polls.survey.hearing.model.Meeting;
+import ru.mos.polls.survey.hearing.state.ExpositionState;
+import ru.mos.polls.survey.hearing.state.MeetingState;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.ui.SurveyFragment;
 
@@ -172,19 +173,19 @@ public class SurveyTitleView extends HtmlTitleView {
     /**
      * Отображение экспозиций и собраний
      */
-    public void displayHearingInfo(final Fragment fragment, final Survey survey) {
+    public void displayHearingInfo(final NavigateFragment fragment, final Survey survey) {
         if (survey.getKind().isHearing()) {
             hearingInfoView.setVisibility(View.VISIBLE);
             hearingInfoView.display(survey);
             hearingInfoView.setCallback(new HearingInfoView.Callback() {
                 @Override
                 public void onMeeting(Meeting meeting) {
-                    MeetingActivity.start(fragment, survey.getId(), meeting, survey.getTitle());
+                    fragment.navigateTo(new MeetingState(survey.getId(), meeting, survey.getTitle()), BaseActivity.class);
                 }
 
                 @Override
                 public void onExposition(Exposition exposition) {
-                    ExpositionActivity.start(getContext(), exposition, survey.getTitle());
+                    fragment.navigateTo(new ExpositionState(exposition, survey.getTitle()), BaseActivity.class);
                 }
             });
         }

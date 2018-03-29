@@ -13,8 +13,6 @@
             style="@style/wrap"
             android:layout_centerInParent="true"/>
 
-        <include layout="@layout/layout_button_container_save"/>
-
         <ScrollView
             android:id="@+id/subscribeContainer"
             style="@style/root"
@@ -60,6 +58,13 @@
                     style="@style/polls_subscibe_layout">
 
                     <include layout="@layout/layout_subscribe_news"/>
+                </LinearLayout>
+
+                <!--Электронный дом-->
+                <LinearLayout
+                    style="@style/polls_subscibe_layout">
+
+                    <include layout="@layout/layout_subscribe_oss"/>
                 </LinearLayout>
                 <!--Кнопка сохранить-->
                 <View

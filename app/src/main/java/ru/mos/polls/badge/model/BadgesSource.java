@@ -227,9 +227,6 @@ public class BadgesSource {
 
     public void setAvatar(String url, Bitmap bitmap) {
         lastAvatartUrl = url;
-        if (lastAvatarBitmap != null) {
-            lastAvatarBitmap.recycle();
-        }
         lastAvatarBitmap = copyBitmap(bitmap);
     }
 

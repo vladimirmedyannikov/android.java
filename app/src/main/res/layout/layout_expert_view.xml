@@ -12,9 +12,11 @@
         android:text="@string/title_experts"/>
 
     <LinearLayout
-        style="@style/item"
+        style="@style/wrap"
+        android:layout_width="match_parent"
         android:layout_below="@id/title"
         android:background="@drawable/background_text_field"
+        android:paddingBottom="@dimen/pd_xxxsmall"
         android:clickable="true"
         android:focusable="true">
 

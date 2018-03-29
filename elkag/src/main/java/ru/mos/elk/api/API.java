@@ -20,7 +20,7 @@ public class API {
      * с версии 2.0.0 версионность методов сервисов привязана к версиям релизов<br/>
      * в клиентском коде в классе {@link android.app.Application} необходимо вызвать метод {@link #setBuildVersionName(String)}
      */
-    private static String buildVersionName = "2.3.0";
+    private static String buildVersionName = "2.5.0";
 
     public static void setToken(Token token) {
         API.token = token;

@@ -37,9 +37,10 @@
     <application
         android:name="ru.mos.polls.AGApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher_v230"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
-        android:logo="@drawable/ic_launcher_v230"
+        android:logo="@mipmap/ic_launcher"
         android:theme="@style/AppTheme"
         tools:node="merge"
         tools:replace="theme,icon">

@@ -34,6 +34,7 @@ public class PolltaskGet {
 
         public static class Result {
             private List<QuestFamilyElement> tasks;
+
             public List<Quest> getTasks() {
                 List<Quest> tasks = new ArrayList<>();
                 for (int i = 0; i < this.tasks.size(); i++) {
@@ -70,7 +71,7 @@ public class PolltaskGet {
                             tasks.add(new ResultsQuest(i, currIterTask));
                             break;
                         case SocialQuest.TYPE_SOCIAL:
-                            if (currIterTask.getAppIds() != null) {
+                            if (currIterTask.getId().equalsIgnoreCase(RateAppQuest.ID_RATE_THIS_APP)) {
                                 //оценка приложения
                                 tasks.add(new RateAppQuest(i, currIterTask));
                             } else {

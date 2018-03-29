@@ -6,15 +6,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,9 +57,9 @@ import ru.mos.polls.event.gui.activity.EventActivity;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.innovations.ui.activity.InnovationActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.profile.ui.activity.AchievementActivity;
 import ru.mos.polls.rxhttp.session.Session;
+import ru.mos.polls.support.state.SupportState;
 import ru.mos.polls.survey.SurveyActivity;
 import ru.mos.polls.util.GuiUtils;
 
@@ -63,7 +68,8 @@ public class AgAuthActivity extends AuthActivity {
     private static final int SMS_PERMISSION_REQUEST = 9825;
     protected Toolbar toolbar;
     private static final String[] SMS_PERMS = {
-            Manifest.permission.RECEIVE_SMS
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.SEND_SMS
     };
 
     private GoogleStatistics.Auth statistics = new GoogleStatistics.Auth();
@@ -142,8 +148,12 @@ public class AgAuthActivity extends AuthActivity {
     @Override
     protected void configureEdits() {
         TextView offer = ButterKnife.findById(this, R.id.tvOffer);
-        offer.setPaintFlags(offer.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        offer.setOnClickListener(new View.OnClickListener() {
+        Spannable text = new SpannableString(getString(R.string.ag_agree_with_offer));
+        int startPosition = GuiUtils.getStartPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
+        int endPosition = GuiUtils.getEndPosition(getString(R.string.ag_agree_with_offer), getString(R.string.offerta_offer));
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green_light)), startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new UnderlineSpan(), startPosition, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
                 GuiUtils.hideKeyboard(v);
@@ -155,7 +165,9 @@ public class AgAuthActivity extends AuthActivity {
                         false,
                         false);
             }
-        });
+        }, startPosition, endPosition, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        offer.setText(text);
+        offer.setMovementMethod(LinkMovementMethod.getInstance());
         String phone = AgUser.getPhone(this);
         if (phone != null && phone.length() > 1) {
             etLogin.setText(phone.substring(1));

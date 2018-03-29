@@ -142,6 +142,19 @@ public class InnovationActivity extends ToolbarAbstractActivity implements Innov
         if (getShortInnovation()) {
             loadInnovation();
         }
+        ScrollView sv = findViewById(R.id.container);
+        htmlTitleView.setStateListener(new HtmlTitleView.StateListener() {
+            @Override
+            public void onExpand() {
+                sv.fullScroll(ScrollView.FOCUS_UP);
+                htmlTitleView.scrollFullContainerToTop();
+            }
+
+            @Override
+            public void onCollapse() {
+
+            }
+        });
     }
 
     @Override

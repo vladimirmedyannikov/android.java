@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -57,7 +57,6 @@ import ru.mos.polls.mypoints.ui.NewMyPointsFragment;
 import ru.mos.polls.navigation.actionbar.ActionBarNavigationController;
 import ru.mos.polls.navigation.drawer.NavigationDrawerFragment;
 import ru.mos.polls.navigation.drawer.NavigationMenuItem;
-import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.state.EditProfileState;
@@ -67,6 +66,7 @@ import ru.mos.polls.profile.ui.fragment.ProfileFragment;
 import ru.mos.polls.quests.ProfileQuestActivity;
 import ru.mos.polls.quests.controller.QuestStateController;
 import ru.mos.polls.quests.controller.SmsInviteController;
+import ru.mos.polls.quests.vm.QuestsFragmentVM;
 import ru.mos.polls.shop.WebShopFragment;
 import ru.mos.polls.social.controller.AgSocialApiController;
 import ru.mos.polls.social.controller.SocialUIController;
@@ -159,7 +159,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
         setSupportProgressBarIndeterminateVisibility(false);
 
@@ -453,6 +452,9 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                     public void onInviteFriends(boolean isTask) {
                         if (!runtimePermissionController.hasSmsSend()) {
                             runtimePermissionController.requestSmsSend();
+                        } else if (!runtimePermissionController.hasRequestReadPhoneState()
+                                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                            runtimePermissionController.requestReadPhoneState();
                         } else {
                             smsInviteController.process(isTask);
                         }
@@ -616,7 +618,23 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (runtimePermissionController.smsReceivePermissionGranted(requestCode, grantResults)) {
+            /**
+             * для 8 андроида при отправке смс получаем эксепшн
+             * java.lang.SecurityException: Neither user 10199 nor current process has android.permission.READ_PHONE_STATE.
+             */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (runtimePermissionController.hasRequestReadPhoneState()) {
+                    smsInviteController.process(true);
+                } else {
+                    runtimePermissionController.requestReadPhoneState();
+                }
+            } else {
+                smsInviteController.process(true);
+            }
+        }
+        if (runtimePermissionController.readPhoneStatePermissionGranted(requestCode, grantResults)) {
             smsInviteController.process(true);
         }
         initGeotargetManager();

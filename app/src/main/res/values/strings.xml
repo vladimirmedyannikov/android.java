@@ -316,11 +316,11 @@
     <string name="promo">Использовать промокод</string>
     <string name="notifying">Настройка оповещений</string>
     <string name="subscribes">Подписки</string>
-    <string name="poll_result">Оповещать меня о результатах голосования</string>
+    <string name="poll_result">Результаты голосований</string>
     <string name="push">Push</string>
     <string name="poll_decision">Оповещать меня о принятых решениях</string>
     <string name="sms">Sms</string>
-    <string name="poll_new">Оповещать меня о новых голосованиях</string>
+    <string name="poll_new">Новые голосования</string>
     <string name="empty" />
     <string name="notify_me">Вы можете узнать об этом голосовании больше</string>
     <string name="poll_effected">Оповещать меня об исполненных решениях</string>
@@ -395,7 +395,7 @@
     <string name="location">Место жительства</string>
     <string name="social">Социальные сети</string>
     <string name="title_survey_question">ВОПРОС %s</string>
-    <string name="result_send">Завершить голосование</string>
+    <string name="result_send">Завершить</string>
     <string name="action_survey_subsrcribe">Настройка оповещения</string>
     <string name="empty_old_pollslist">Список прошедших голосований пуст</string>
     <string name="polls_old">Прошедшие</string>
@@ -447,7 +447,7 @@
     <string name="title_add_address">Адрес</string>
     <!--<string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях, вы должны иметь верифицированный адрес регистрации.\n\nВведите данные вашей учетной записи на mos.ru для проверки наличия верифицированного адреса регистрации</string>-->
     <string name="pgu_auth_message">Для того, чтобы участвовать в публичных слушаниях или других юридически значимых голосованиях, вы должны иметь верифицированный адрес регистрации.\n\nУстановите связь с вашим профилем на mos.ru для проверки наличия верифицированного адреса регистрации.</string>
-    <string name="pgu_hint_email">Логин (псевдоним)</string>
+    <string name="pgu_hint_email">Логин (СНИЛС\\Телефон\\Почта)</string>
     <string name="pgu_hint_password">Пароль</string>
     <string name="rempte_service_not_work">Ошибка удаленного сервиса</string>
     <string name="date_soon">Cкоро</string>
@@ -582,8 +582,8 @@
     <string name="novelty_result_share_simple">Благодарим за участие</string>
     <string name="social_hint_for_achievement">Достижение будет показано на Вашей странице в социальной сети</string>
     <string name="notify_about_blocking">Для блокировки обратитесь в службу поддержки при помощи функции обратной связи</string>
-    <string name="subscribe_results">Оповещать меня о результатах работы проекта</string>
-    <string name="news_subscribe">Оповещать меня о новостях проекта</string>
+    <string name="subscribe_results">Результаты работы проекта</string>
+    <string name="news_subscribe">Новости проекта</string>
     <string name="hint_innovation_is_old">Голосование завершено</string>
     <string name="error_has_not_auth_the_application">Не удается разместить пост на Вашей стене в социальной сети, так как Вы не дали разрешение при авторизации. Попробуйте повторить операцию</string>
     <string name="hint_for_fb">Например:\n%s</string>
@@ -772,7 +772,7 @@
     <string name="tutorial_cancel">Завершить</string>
     <string name="ag_agree_offer">Я согласен с уловиями оферты</string>
     <string name="ag_agree">я согласен с</string>
-    <string name="ag_agree_with_offer">Отправляя свой номер, вы соглашаетесь с</string>
+    <string name="ag_agree_with_offer">Отправляя свой номер, вы соглашаетесь с условиями оферты и получением пароля.</string>
     <string name="offerta_offer">условиями оферты</string>
     <string name="title_less">Свернуть</string>
     <string name="get_permission_sms">Для автоматического чтения кода  из СМС при авторизации и регистрации необходимо предоставить разрешение</string>
@@ -824,15 +824,31 @@
     <string name="achievement_tab_title">Достижение</string>
     <string name="remove_addresses_dialog_message" formatted="false">Удалить адрес собственности \"%s\"?</string>
     <string name="empty_flat_error">Некорректный адрес</string>
-    <string name="news_government_moscow">Новости правительства Москвы</string>
+    <string name="news_government_moscow">Новости Правительства Москвы</string>
     <string name="poll_old_empty_title">Вы еще не участвовали ни в одном голосовании</string>
     <string name="info_survey_title">Информирование</string>
     <string name="your_comment" formatted="false">Ваш комментарий: %s</string>
     <string name="poll_inform_title">Информирование</string>
-    <string name="registered_in_service">Есть регистрация в сервисах Москвы?</string>
+    <string name="registered_in_service">Есть пароль?</string>
     <string name="password_or_code">Пароль</string>
-    <string name="auth_description">Если вы уже получали пароль или являетесь пользователем сервисов Москвы, то укажите ваш телефон и пароль для входа. Сервисы на платформе ЕМП:\n\nНаш город, Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы</string>
+    <string name="auth_description">Если у вас уже есть пароль или вы являетесь пользователем других сервисов Москвы (Госуслуги Москвы, Узнай Москву, Парковки Москвы, ЕМИАС города Москвы), то укажите ваш телефон и пароль для входа.</string>
     <string name="apartament_number">Номер квартиры</string>
     <string name="apartament_number_answer" formatted="false">Номер квартиры: %s</string>
     <string name="go_to_house_poll_desc">Вы можете подать заявку на проведение голосования, если зарегистрированы или являетесь собственником в вашем доме. Заявки подаются на сайте ag.mos.ru. Свяжите свой профиль с профилем на mos.ru и перейдите на сайт для размещения заявки.\nПерейти на сайт?</string>
+    <string name="promo_push_string">Информационное уведомление</string>
+    <string name="share_push_string">Поделиться с друзьями</string>
+    <string name="new_poll_push_string">Новые голосования</string>
+    <string name="moscow_news_push_string">Новости</string>
+    <string name="novelty_push_string">Новинки</string>
+    <string name="achievement_push_string">Достижения</string>
+    <string name="hearing_push_string">Публичные слушания</string>
+    <string name="news_poll_push_string">Новости о голосованиях</string>
+    <string name="geotarget_area_remove_push_string">Уведомление об исключении зоны геотаргетинга</string>
+    <string name="geotarget_area_update_push_string">Уведомление об обновлении зоны геотаргетинга</string>
+
+    <string name="push_group_other">Другое</string>
+    <string name="push_group_news">Новости</string>
+    <string name="push_group_polls">Голосования</string>
+    <string name="warning_enter_password">Введите пароль.</string>
+    <string name="data_not_found">Данные не найдены</string>
 </resources>

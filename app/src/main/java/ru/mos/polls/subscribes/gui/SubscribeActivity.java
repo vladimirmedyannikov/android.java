@@ -45,10 +45,10 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
             emailResult, pushResult,
             emailEffected, pushEffected,//нет этих тоглев
             emailEvent, pushEvent,
-            emailNews, pushNews;
+            emailNews, pushNews,
+            emailOss, pushOss;
     @BindView(R.id.subscribeProgress)
     ProgressBar subscribeProgress;
-    private Button save;
 
     @BindView(R.id.subscribeContainer)
     ScrollView subscribeContainer;
@@ -83,7 +83,6 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
     }
 
     protected void findViews() {
-
         emailResult = ButterKnife.findById(this, R.id.emailResult);
         pushResult = ButterKnife.findById(this, R.id.pushResult);
 
@@ -96,24 +95,27 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
 
         emailNews = ButterKnife.findById(this, R.id.emailNews);
         pushNews = ButterKnife.findById(this, R.id.pushNews);
-        save = ButterKnife.findById(this, R.id.save);
+
+        emailOss = ButterKnife.findById(this, R.id.emailOss);
+        pushOss = ButterKnife.findById(this, R.id.pushOss);
     }
 
-    @OnCheckedChanged({R.id.pushDecision, R.id.pushNews, R.id.pushNew, R.id.pushResult})
+    @OnCheckedChanged({R.id.pushDecision, R.id.pushNews, R.id.pushNew, R.id.pushResult, R.id.pushOss})
     void setPushListener(CompoundButton buttonView, boolean isChecked) {
-        NotificationController.checkingEnablePush(getBaseContext());
-        checkSaveButton(buttonView, isChecked);
+        if (buttonView.isPressed()) {
+            NotificationController.checkingEnablePush(getBaseContext());
+            save();
+        }
     }
 
-    @OnCheckedChanged({R.id.emailDecision, R.id.emailNew, R.id.emailResult, R.id.emailNews})
+    @OnCheckedChanged({R.id.emailDecision, R.id.emailNew, R.id.emailResult, R.id.emailNews, R.id.emailOss})
     void setEmailListener(CompoundButton buttonView, boolean isChecked) {
-        checkSaveButton(buttonView, isChecked);
+        if (buttonView.isPressed())
+            save();
     }
 
-    @OnClick(R.id.save)
     void saveSubscribe() {
         save();
-        save.setEnabled(false);
         createSwitchLists();
     }
 
@@ -124,7 +126,6 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
             int key = changedList.keyAt(i);
             changed[i] = changedList.get(key);
         }
-        save.setEnabled(!Arrays.equals(savedArrayValue, changed));
     }
 
     private void getSubscribeState() {
@@ -158,6 +159,9 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
         changedList.put(emailNews.getId(), emailNews.isChecked());
         changedList.put(pushNews.getId(), pushNews.isChecked());
 
+        changedList.put(emailOss.getId(), emailOss.isChecked());
+        changedList.put(pushOss.getId(), pushOss.isChecked());
+
         savedArrayValue = new boolean[changedList.size()];
         for (int i = 0; i < changedList.size(); i++) {
             int key = changedList.keyAt(i);
@@ -177,8 +181,8 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
             setChannel(Subscription.TYPE_POLL_DECISIONS, subscription, emailDecision, pushDecision, null);
             setChannel(Subscription.TYPE_AG_NEW, subscription, emailNew, pushNew, null);
             setChannel(Subscription.TYPE_AG_SPECIAL, subscription, emailNews, pushNews, null);
+            setChannel(Subscription.TYPE_OSS, subscription, emailOss, pushOss, null);
         }
-        save.setEnabled(false);
     }
 
     private void setChannel(String subscribeType, Subscription subscription, SwitchCompat email, SwitchCompat push, SwitchCompat sms) {
@@ -202,15 +206,17 @@ public class SubscribeActivity extends ToolbarAbstractActivity {
     }
 
     private List<Subscription> getCurrentSubscribe() {
-        List<Subscription> result = new ArrayList<Subscription>(3);
+        List<Subscription> result = new ArrayList<>();
         Subscription subscriptionResult = getSubscribe(Subscription.TYPE_POLL_RESULTS, emailResult, pushResult, null/*smsResult*/);
         Subscription subscriptionDecision = getSubscribe(Subscription.TYPE_POLL_DECISIONS, emailDecision, pushDecision, null/*smsDecision*/);
         Subscription subscriptionNew = getSubscribe(Subscription.TYPE_AG_NEW, emailNew, pushNew, null);
         Subscription subscriptionNews = getSubscribe(Subscription.TYPE_AG_SPECIAL, emailNews, pushNews, null);
+        Subscription subscriptionOss = getSubscribe(Subscription.TYPE_OSS, emailOss, pushOss, null);
         result.add(subscriptionResult);
         result.add(subscriptionDecision);
         result.add(subscriptionNew);
         result.add(subscriptionNews);
+        result.add(subscriptionOss);
         return result;
     }
 

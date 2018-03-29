@@ -7,10 +7,10 @@
     <CheckBox
         android:id="@+id/cbAgreeOffer"
         style="@style/text"
-        android:visibility="gone"
         android:layout_centerVertical="true"
         android:checked="false"
-        android:paddingRight="@dimen/thick_separator" />
+        android:paddingRight="@dimen/thick_separator"
+        android:visibility="gone" />
 
     <LinearLayout
         style="@style/item.linear"
@@ -23,16 +23,8 @@
         android:paddingTop="@dimen/pd_xxsmall">
 
         <TextView
-            style="@style/text"
-            android:textColor="@color/offer_text"
-            android:layout_marginRight="4dp"
-            android:text="@string/ag_agree_with_offer" />
-
-        <TextView
             android:id="@+id/tvOffer"
             style="@style/text"
-            android:text="@string/offerta_offer"
-            android:textColor="@color/accent_material_light" />
-
+            android:text="@string/offerta_offer" />
     </LinearLayout>
 </RelativeLayout>

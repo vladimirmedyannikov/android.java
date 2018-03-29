@@ -3,6 +3,7 @@ package ru.mos.polls.rxhttp.rxapi.config;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import ru.mos.polls.changepassword.service.ChangePassword;
 import ru.mos.polls.friend.service.FriendFind;
 import ru.mos.polls.friend.service.FriendMy;
 import ru.mos.polls.friend.service.FriendProfile;
@@ -23,6 +24,7 @@ import ru.mos.polls.profile.service.StreetGet;
 import ru.mos.polls.profile.service.UploadMedia;
 import ru.mos.polls.profile.service.VisibilitySet;
 import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
+import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 import ru.mos.polls.sourcesvoting.service.SourcesGet;
 import ru.mos.polls.sourcesvoting.service.SourcesSet;
 import ru.mos.polls.support.service.FeedbackSend;
@@ -80,6 +82,8 @@ public interface AgApi {
             String GET_SOURCES = "getSources";
             String SET_SOURCES = "setSources";
             String GET_BANNER_STATISTICS = "getBasicStatistics";
+
+            String CHANGE_PASSWORD = "json/v0.2/auth/user/updatepassword";
         }
     }
 
@@ -148,4 +152,7 @@ public interface AgApi {
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.POLLTASK + "/" + Api.Methods.GET_BANNER_STATISTICS)
     Observable<GetBannerStatistics.Response> getBannerStatistics();
+
+    @POST("/" + Api.Methods.CHANGE_PASSWORD)
+    Observable<GeneralResponse<String>> changePassword(@Body ChangePassword.Request body);
 }

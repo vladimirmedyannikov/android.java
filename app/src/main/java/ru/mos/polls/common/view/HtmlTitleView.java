@@ -36,7 +36,7 @@ public class HtmlTitleView extends LinearLayout {
 
     private WebView shortContainer, fullContainer;
     protected TextView title;
-//    private ImageView detailsExpand, detailsCollapse;
+    //    private ImageView detailsExpand, detailsCollapse;
     private View /*detailContainer,*/ divider;
     private LinearLayout contentContainer;
     private RelativeLayout buttonContainer;
@@ -220,6 +220,10 @@ public class HtmlTitleView extends LinearLayout {
         algorithm.displayCollapsed();
     }
 
+    public void scrollFullContainerToTop() {
+        fullContainer.scrollTo(0, 0);
+    }
+
     private abstract class Algorithm {
 
         protected final String titleValue;
@@ -242,6 +246,8 @@ public class HtmlTitleView extends LinearLayout {
         @CallSuper
         protected void displayExpended() {
             action.setText(lessValue);
+            requestLayout();
+            invalidate();
         }
 
         public abstract View getShortContainer();
@@ -341,12 +347,12 @@ public class HtmlTitleView extends LinearLayout {
 
     protected View getView() {
         View result = View.inflate(getContext(), getLayoutId(), null);
-        buttonContainer = ButterKnife.findById(result,R.id.buttonContainer);
+        buttonContainer = ButterKnife.findById(result, R.id.buttonContainer);
         /**
          * Отображение данных о вопросе или голосовании
          */
-        title =ButterKnife.findById(result,R.id.title);
-        fullContainer = ButterKnife.findById(result,R.id.fullContainer);
+        title = ButterKnife.findById(result, R.id.title);
+        fullContainer = ButterKnife.findById(result, R.id.fullContainer);
         fullContainer.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         fullContainer.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         fullContainer.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -355,7 +361,7 @@ public class HtmlTitleView extends LinearLayout {
          * webview промаргивает черным цветом, поэтому временно отключил
          */
 
-        shortContainer = ButterKnife.findById(result,R.id.shortContainer);
+        shortContainer = ButterKnife.findById(result, R.id.shortContainer);
         shortContainer.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         shortContainer.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         shortContainer.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -367,8 +373,8 @@ public class HtmlTitleView extends LinearLayout {
         /**
          * Все что относится к  кнопке "Подробнее/свернуть"
          */
-        divider = ButterKnife.findById(result,R.id.divider);
-        contentContainer = ButterKnife.findById(result,R.id.contentContainer);
+        divider = ButterKnife.findById(result, R.id.divider);
+        contentContainer = ButterKnife.findById(result, R.id.contentContainer);
         action = ButterKnife.findById(result, R.id.action);
 
         moreValue = getContext().getString(R.string.title_more);

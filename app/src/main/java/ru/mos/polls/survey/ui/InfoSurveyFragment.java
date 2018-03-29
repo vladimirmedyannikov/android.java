@@ -248,7 +248,7 @@ public class InfoSurveyFragment extends Fragment implements SurveyActivity.Callb
                             infoApartamentNumber.setText(TextUtils.isEmpty(events.getNumber()) ? "" : String.format(getString(R.string.apartament_number_answer), events.getNumber()));
                             InputSurveyVariant numberSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(0);
                             InputSurveyVariant commentSurveyVariant = (InputSurveyVariant) checkboxSurveyQuestion.getVariantsList().get(1);
-                            setCharValue(numberSurveyVariant, events.getNumber());
+                            setCharValue(numberSurveyVariant, TextUtils.isEmpty(events.getNumber()) ? "-" : events.getNumber());
                             setCharValue(commentSurveyVariant, events.getComment());
                             isCommentFrAdded = false;
                         }

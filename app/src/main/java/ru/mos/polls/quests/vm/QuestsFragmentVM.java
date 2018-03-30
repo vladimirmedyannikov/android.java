@@ -162,9 +162,9 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
     }
 
     public void setRecyclerView() {
-    /*
-    * добавляет свайп на recyclerview
-     */
+        /*
+         * добавляет свайп на recyclerview
+         */
         recyclerView.setAdapter(adapter);
         callback = new SwipeItemTouchHelper(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
@@ -337,8 +337,8 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
                  * удаляем публичные слушания и анонсы из ленты
                  */
                 if (quest instanceof FavoriteSurveysQuest) {
-                    if (((FavoriteSurveysQuest) quest).isHearing()
-                            || ((FavoriteSurveysQuest) quest).isHearingPreview()) {
+//                    if (((FavoriteSurveysQuest) quest).isHearing() зачем далять публичные слушания из ленты?
+                    if (((FavoriteSurveysQuest) quest).isHearingPreview()) {
                         continue;
                     }
                 }
@@ -417,7 +417,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
         Listener STUB = new Listener() {
             @Override
-            public void onSurvey(long id) {
+            public void onSurvey(long id, boolean isHearing) {
 
             }
 
@@ -502,7 +502,7 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
             }
         };
 
-        void onSurvey(long id);
+        void onSurvey(long id, boolean isHearing);
 
         void onAllSurveys();
 

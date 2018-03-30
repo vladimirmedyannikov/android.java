@@ -16,10 +16,17 @@ public class FavoriteSurveysQuest extends BackQuest {
     @SerializedName("kind")
     private Kind kind;
 
+
+    public FavoriteSurveysQuest(long innerId, QuestFamilyElement questFamilyElement, Kind kind) {
+        super(innerId, questFamilyElement);
+        this.kind = kind;
+    }
+
     public FavoriteSurveysQuest(long innerId, QuestFamilyElement questFamilyElement) {
         super(innerId, questFamilyElement);
         kind = questFamilyElement.getKind();
     }
+
 
 
     public long getSurveyId() {
@@ -45,6 +52,6 @@ public class FavoriteSurveysQuest extends BackQuest {
 
     @Override
     public void onClick(Context context, QuestsFragmentVM.Listener listener) {
-        listener.onSurvey(getSurveyId());
+        listener.onSurvey(getSurveyId(), isHearing());
     }
 }

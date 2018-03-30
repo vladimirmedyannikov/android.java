@@ -1,16 +1,18 @@
 package ru.mos.polls.poll.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import ru.mos.polls.R;
 
 
 public enum Kind {
-    STANDART("standart", "", android.R.color.transparent),
-    HEARING_PREVIEW("hearing_preview", "публичное слушание", R.color.public_poll),
-    HEARING("hearing", "публичное слушание", R.color.greenText),
-    SPECIAL("special", "специальное голосование", R.color.special_poll),
-    INFORM("informer", "информирование", R.color.special_poll),
-    OSS("oss", "голосование собственников", R.color.greenText),
-    MKD("mkd", "информирование", R.color.special_poll);
+    @SerializedName("hearing") HEARING("hearing", "публичное слушание", R.color.greenText),
+    @SerializedName("standart") STANDART("standart", "", android.R.color.transparent),
+    @SerializedName("hearing_preview") HEARING_PREVIEW("hearing_preview", "публичное слушание", R.color.public_poll),
+    @SerializedName("special") SPECIAL("special", "специальное голосование", R.color.special_poll),
+    @SerializedName("informer") INFORM("informer", "информирование", R.color.special_poll),
+    @SerializedName("oss") OSS("oss", "голосование собственников", R.color.greenText),
+    @SerializedName("mkd") MKD("mkd", "информирование", R.color.special_poll);
 
     public String kind;
     public String label;

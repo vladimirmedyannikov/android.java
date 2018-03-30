@@ -1,5 +1,7 @@
 package ru.mos.polls.quests.model.quest;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.poll.model.Kind;
@@ -23,8 +25,9 @@ public class SurveyOssQuest extends BackQuest {
         return Long.parseLong(getId());
     }
 
-    private void onClick(QuestsFragmentVM.Listener listener) {
-        listener.onSurvey(getSurveyId());
+    @Override
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
+        listener.onSurvey(getSurveyId(), false);
     }
 
     @Override

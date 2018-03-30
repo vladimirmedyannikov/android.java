@@ -46,7 +46,6 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
     private boolean isHearing;
     private Survey survey;
     private SurveyFragment surveyFragment;
-    private SurveySummaryFragment surveySummaryFragment;
     private PollsSummaryFragment pollsSummaryFragment;
     private Fragment currentFragment;
 

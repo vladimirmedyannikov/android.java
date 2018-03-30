@@ -3,6 +3,7 @@ package ru.mos.polls.quests.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.quests.model.QuestFamilyElement;
 import ru.mos.polls.quests.model.quest.AchievementQuest;
 import ru.mos.polls.quests.model.quest.AdvertisementQuest;
@@ -46,7 +47,7 @@ public class PolltaskGet {
                             tasks.add(new EventQuest(i, currIterTask));
                             break;
                         case FavoriteSurveysQuest.ID_HEARING:
-                            tasks.add(new FavoriteSurveysQuest(i, currIterTask));
+                            tasks.add(new FavoriteSurveysQuest(i, currIterTask, Kind.HEARING));
                             break;
                         case FavoriteSurveysQuest.ID_POLL:
                             tasks.add(new FavoriteSurveysQuest(i, currIterTask));

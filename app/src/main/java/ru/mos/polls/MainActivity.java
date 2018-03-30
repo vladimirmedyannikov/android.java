@@ -412,8 +412,8 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
                 qfr.setListener(new QuestsFragmentVM.Listener() {
 
                     @Override
-                    public void onSurvey(long id) {
-                        navigateTo().state(Add.newActivity(new SurveyState(id, false), BaseActivity.class));
+                    public void onSurvey(long id, boolean isHearing) {
+                        navigateTo().state(Add.newActivity(new SurveyState(id, isHearing), BaseActivity.class));
                     }
 
                     @Override

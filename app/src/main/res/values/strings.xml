@@ -826,7 +826,7 @@
     <string name="achievement_tab_title">Достижение</string>
     <string name="remove_addresses_dialog_message" formatted="false">Удалить адрес собственности \"%s\"?</string>
     <string name="empty_flat_error">Некорректный адрес</string>
-    <string name="news_government_moscow">Новости правительства Москвы</string>
+    <string name="news_government_moscow">Новости Правительства Москвы</string>
     <string name="poll_old_empty_title">Вы еще не участвовали ни в одном голосовании</string>
     <string name="info_survey_title">Информирование</string>
     <string name="your_comment" formatted="false">Ваш комментарий: %s</string>

@@ -14,7 +14,7 @@ public class Item {
             new Item(SOURCES_POLL, R.drawable.ic_tower, R.string.sources_poll),  //вернуть в версии 2.5.0
             new Item(SUBSCRIBE, R.drawable.rss, R.string.subscribes),
             new Item(USER_LOCK, R.drawable.elk_block, R.string.user_lock),
-//            new Item(CHANGE_PASSWORD, R.drawable.elk_change_password, R.string.change_password),
+            new Item(CHANGE_PASSWORD, R.drawable.elk_change_password, R.string.change_password),
             new Item(LOGOUT, R.drawable.elk_logout, R.string.logout),
     };
 

@@ -3,10 +3,6 @@
     <RelativeLayout android:id="@+id/layout_main"
         style="@style/root">
 
-        <!--<include-->
-            <!--android:id="@+id/toolbar"-->
-            <!--layout="@layout/toolbar"/>-->
-
         <ProgressBar
             android:id="@+id/loadingProgress"
             style="@style/wrap"

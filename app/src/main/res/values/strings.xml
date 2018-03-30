@@ -900,4 +900,5 @@
     </string-array>
     <string name="elk_birthdate_pattern" formatted="false">%s %s %s г.р.</string>
     <string name="elk_succeeded_change">Пароль успешно изменен</string>
+    <string name="data_not_found">Данные не найдены</string>
 </resources>

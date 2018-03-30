@@ -13,8 +13,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import ru.mos.polls.R;
 import ru.mos.polls.helpers.AnimationHelper;
@@ -42,7 +44,6 @@ public class HtmlTitleView extends LinearLayout {
     private LinearLayout contentContainer;
     private RelativeLayout buttonContainer;
     private TextView action;
-
     private String moreValue, lessValue;
 
     private int contentChangingType = SIMPLE;
@@ -105,6 +106,9 @@ public class HtmlTitleView extends LinearLayout {
     }
 
     protected void onExpanded() {
+        this.requestLayout();
+        this.invalidate();
+        fullContainer.scrollTo(0, 0);
     }
 
     protected void onCollapsed() {
@@ -192,8 +196,8 @@ public class HtmlTitleView extends LinearLayout {
 
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
-                                        stateListener.onExpand();
                                         onExpanded();
+                                        stateListener.onExpand();
                                     }
 
                                     @Override
@@ -247,8 +251,6 @@ public class HtmlTitleView extends LinearLayout {
         @CallSuper
         protected void displayExpended() {
             action.setText(lessValue);
-            requestLayout();
-            invalidate();
         }
 
         public abstract View getShortContainer();
@@ -377,10 +379,8 @@ public class HtmlTitleView extends LinearLayout {
         divider = ButterKnife.findById(result, R.id.divider);
         contentContainer = ButterKnife.findById(result, R.id.contentContainer);
         action = ButterKnife.findById(result, R.id.action);
-
         moreValue = getContext().getString(R.string.title_more);
         lessValue = getContext().getString(R.string.title_less);
-
         return result;
     }
 

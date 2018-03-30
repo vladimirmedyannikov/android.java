@@ -91,6 +91,7 @@ public class InnovationFragmentVM extends UIComponentFragmentViewModel<Innovatio
         innovationButtons = binding.buttonContainer;
         rootConnectionError = binding.layoutMain.findViewById(R.id.rootConnectionError);
         root = binding.root;
+
     }
 
     @Override
@@ -113,6 +114,20 @@ public class InnovationFragmentVM extends UIComponentFragmentViewModel<Innovatio
         if (getShortInnovation()) {
             loadInnovation();
         }
+        ScrollView sv = getFragment().getView().findViewById(R.id.container);
+        htmlTitleView.setStateListener(new HtmlTitleView.StateListener() {
+            @Override
+            public void onExpand() {
+                sv.requestLayout();
+                sv.invalidate();
+                sv.fullScroll(ScrollView.FOCUS_UP);
+            }
+
+            @Override
+            public void onCollapse() {
+
+            }
+        });
     }
 
     @Override

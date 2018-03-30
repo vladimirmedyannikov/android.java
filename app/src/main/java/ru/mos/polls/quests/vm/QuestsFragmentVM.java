@@ -303,11 +303,13 @@ public class QuestsFragmentVM extends PullablePaginationFragmentVM<QuestsFragmen
 
     @Override
     public void onCreateOptionsMenu() {
+        new TestersController(getFragment().getMenu());
         hideNewsMenu();
     }
 
     @Override
     public void onOptionsItemSelected(int menuItemId) {
+        TestersController.switchTestApi(menuItemId, getActivity());
         switch (menuItemId) {
             case R.id.action_invite_friends:
                 if (listener != null) {

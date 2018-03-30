@@ -1,5 +1,7 @@
 package ru.mos.polls.quests.model.quest;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
 
 import ru.mos.polls.quests.model.QuestFamilyElement;
@@ -24,10 +26,6 @@ public class FavoriteSurveysQuest extends BackQuest {
         return Long.parseLong(getId());
     }
 
-    private void onClick(QuestsFragmentVM.Listener listener) {
-        listener.onSurvey(getSurveyId());
-    }
-
     @Override
     public String toString() {
         return "FavoriteQuest " + getId() + " " + getTitle();
@@ -43,5 +41,10 @@ public class FavoriteSurveysQuest extends BackQuest {
 
     public boolean isHearing() {
         return kind != null && kind.isHearing();
+    }
+
+    @Override
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
+        listener.onSurvey(getSurveyId());
     }
 }

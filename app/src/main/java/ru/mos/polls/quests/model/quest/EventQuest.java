@@ -1,6 +1,9 @@
 package ru.mos.polls.quests.model.quest;
 
+import android.content.Context;
+
 import ru.mos.polls.quests.model.QuestFamilyElement;
+import ru.mos.polls.quests.vm.QuestsFragmentVM;
 
 
 public class EventQuest extends BackQuest {
@@ -18,6 +21,11 @@ public class EventQuest extends BackQuest {
     @Override
     public String toString() {
         return "FavoriteQuest " + getId() + " " + getTitle();
+    }
+
+    @Override
+    public void onClick(Context context, QuestsFragmentVM.Listener listener) {
+        listener.onEvent(getSurveyId());
     }
 }
 

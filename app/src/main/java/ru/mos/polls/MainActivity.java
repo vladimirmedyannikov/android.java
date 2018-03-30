@@ -448,7 +448,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onBindToPgu() {
-//                        PguAuthActivity.startActivityForQuest(MainActivity.this);
                         navigateTo().state(Add.newActivity(new PguAuthState(PguAuthState.PGU_STATUS), BaseActivity.class));
                     }
 

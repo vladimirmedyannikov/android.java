@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.ilich.juggler.change.Add;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
@@ -30,13 +32,14 @@ import ru.mos.polls.poll.ui.adapter.PollAdapter;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.util.GuiUtils;
 import ru.mos.polls.util.UrlHelper;
+import ru.mos.polls.webview.state.WebViewState;
 
 
 public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollFragment, FragmentHousePollBinding, PollAdapter> {
 
     public static final String ACTION_POLL_CHANGED = "ru.mos.polls.electronichouse.vm.ACTION_POLL_CHANGED";
     public static final String ARG_POLL = "arg_poll";
-
+    FloatingActionButton fabAddHousePoll;
     private BroadcastReceiver pollPassedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -73,9 +76,11 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
     @Override
     protected void initialize(FragmentHousePollBinding binding) {
         ButterKnife.bind(this, binding.getRoot()); // TODO: 04.12.17 байндинг не видит фаб, позже заменить
+        fabAddHousePoll = binding.fabAddHousePoll;
         recyclerView = binding.list;
         adapter = new PollAdapter();
         subscribeEventsBus();
+        fabAddHousePoll.setOnClickListener(view -> addClick(view));
         super.initialize(binding);
     }
 
@@ -134,13 +139,16 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    @SuppressWarnings("newApi")
-    @OnClick(R.id.fab_add_house_poll)
+    //    @SuppressWarnings("newApi")
+//    @OnClick(R.id.fab_add_house_poll)
     void addClick(View v) {
         GuiUtils.displayYesOrNotDialog(getActivity(), getActivity().getString(R.string.go_to_house_poll_desc), (DialogInterface.OnClickListener) (dialog, which) -> {
-            Uri uri = Uri.parse(UrlHelper.getHouseConstructorUrl());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            getActivity().startActivity(intent);
+//            Uri uri = Uri.parse(UrlHelper.getHouseConstructorUrl());
+//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//            getActivity().startActivity(intent);
+            getFragment().navigateTo(WebViewState.getStateSetCookie( null,
+                    "Размещение заявки",
+                    UrlHelper.getHouseConstructorUrl()), ru.mos.polls.base.activity.BaseActivity.class);
         }, null);
     }
 }

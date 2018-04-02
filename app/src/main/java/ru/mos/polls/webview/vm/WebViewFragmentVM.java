@@ -9,6 +9,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.HttpAuthHandler;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -16,6 +21,7 @@ import android.widget.ProgressBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.BuildConfig;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
@@ -28,8 +34,11 @@ import ru.mos.polls.model.NewsFindModel;
 import ru.mos.polls.quests.controller.QuestsApiControllerRX;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
+import ru.mos.polls.rxhttp.session.Session;
 import ru.mos.polls.service.NewsFind;
+import ru.mos.polls.shop.PersistentConfig;
 import ru.mos.polls.util.NetworkUtils;
+import ru.mos.polls.util.UrlHelper;
 import ru.mos.polls.webview.ui.WebViewFragment;
 
 public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragment, FragmentWebviewBinding> {
@@ -44,7 +53,9 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     private String id;
     private boolean isOnlyLoadFirstUrl;
     private boolean isShareEnable;
+    private boolean setCookie;
     private String shareUrl;
+    CookieManager cookieManager;
 
     public WebViewFragmentVM(WebViewFragment fragment, FragmentWebviewBinding binding) {
         super(fragment, binding);
@@ -68,6 +79,7 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
             firstUrl = getFragment().getArguments().getString(WebViewFragment.INFORMATION_URL, "");
             isOnlyLoadFirstUrl = getFragment().getArguments().getBoolean(WebViewFragment.ONLY_LOAD_FIRST_URL, false);
             isShareEnable = getFragment().getArguments().getBoolean(WebViewFragment.IS_SHARE_ENABLE, true);
+            setCookie = getFragment().getArguments().getBoolean(WebViewFragment.SET_COOKIE, true);
             id = getFragment().getArguments().getString(WebViewFragment.ID);
         }
     }
@@ -119,7 +131,17 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     }
 
     public void setWebViewClient() {
+        webView.setWebChromeClient(new WebChromeClient());
+        if (setCookie) setCookie();
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+//                if (BuildConfig.BUILD_TYPE.equals("debug")) {
+                handler.proceed("ag_test", "5U:bzH");
+//                } else {
+//                    super.onReceivedHttpAuthRequest(view, handler, host, realm);
+//                }
+            }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -143,6 +165,7 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
                 } else {
                     return super.shouldOverrideUrlLoading(view, url);
                 }
+
             }
 
             @Override
@@ -161,6 +184,16 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
                 return isOnlyLoadFirstUrl && !url.equalsIgnoreCase(firstUrl);
             }
         });
+    }
+
+
+    public void setCookie() {
+        CookieSyncManager.createInstance(getActivity());
+        cookieManager = CookieManager.getInstance();
+        PersistentConfig persistentConfig = new PersistentConfig(getActivity());
+        persistentConfig.setCookie(UrlHelper.getCookies(Session.get().getSession()));
+        cookieManager.setCookie(UrlHelper.getHost(), persistentConfig.getCookieString());
+        CookieSyncManager.getInstance().sync();
     }
 
     private void trySetUrlFromIntent() {
@@ -189,8 +222,8 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     /**
      * при сравнении удаляем протоколы http и/или https
      * т.к. они могут быть разные для
-     * @param url
-     * так и для {@link WebViewFragmentVM#firstUrl}
+     *
+     * @param url так и для {@link WebViewFragmentVM#firstUrl}
      * @return
      */
     private boolean isFirstUrl(String url) {
@@ -295,8 +328,10 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     public void setWebViewSetting() {
         webView.setVisibility(View.VISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setSupportMultipleWindows(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.invokeZoomPicker();
     }
 

@@ -15,8 +15,9 @@ public class WebViewFragment extends MenuBindingFragment<WebViewFragmentVM, Frag
     public static final String ONLY_LOAD_FIRST_URL = "only_load_first_url";
     public static final String ID = "id";
     public static final String IS_SHARE_ENABLE = "is_share_enable";
+    public static final String SET_COOKIE = "set_cookie";
 
-    public static WebViewFragment getInstance(String title, String linkUrl, String id, boolean onlyLoadFirstUrl, boolean isShareEnable) {
+    public static WebViewFragment getInstance(String title, String linkUrl, String id, boolean onlyLoadFirstUrl, boolean isShareEnable, boolean setCookie) {
         WebViewFragment webViewFragment = new WebViewFragment();
         Bundle bundle = new Bundle();
         bundle.putString(INFORMATION_TITLE, title);
@@ -24,6 +25,7 @@ public class WebViewFragment extends MenuBindingFragment<WebViewFragmentVM, Frag
         bundle.putString(ID, id);
         bundle.putBoolean(ONLY_LOAD_FIRST_URL, onlyLoadFirstUrl);
         bundle.putBoolean(IS_SHARE_ENABLE, isShareEnable);
+        bundle.putBoolean(SET_COOKIE, setCookie);
         webViewFragment.setArguments(bundle);
         return webViewFragment;
     }

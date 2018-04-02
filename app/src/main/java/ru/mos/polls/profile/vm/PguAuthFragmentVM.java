@@ -84,7 +84,7 @@ public class PguAuthFragmentVM extends FragmentViewModel<PguAuthFragment, Fragme
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == CODE_PGU_AUTH) {
-            data.putExtra(EXTRA_AUTH_RESULT, true);
+            if (data != null) data.putExtra(EXTRA_AUTH_RESULT, true);
         }
     }
 }

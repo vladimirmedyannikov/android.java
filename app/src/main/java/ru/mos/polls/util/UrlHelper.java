@@ -18,4 +18,12 @@ public class UrlHelper {
     public static String getMainUrl() {
         return String.format(MAIN_URL, host);
     }
+
+    public static String getCookies(String sesionId) {
+        return String.format(cookiesPattern, sesionId);
+    }
+
+    public static String getHost() {
+        return host;
+    }
 }

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -56,8 +57,8 @@ import ru.mos.polls.poll.model.Kind;
 import ru.mos.polls.poll.ui.PollFragment;
 import ru.mos.polls.profile.ProfileManagerRX;
 import ru.mos.polls.profile.model.AgUser;
-import ru.mos.polls.profile.state.BindingSocialState;
 import ru.mos.polls.profile.state.AchievementState;
+import ru.mos.polls.profile.state.BindingSocialState;
 import ru.mos.polls.profile.state.EditProfileState;
 import ru.mos.polls.profile.state.PguAuthState;
 import ru.mos.polls.profile.ui.fragment.ProfileFragment;
@@ -463,10 +464,18 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
                     @Override
                     public void onInviteFriends(boolean isTask) {
-                        if (!PermissionsUtils.SMS.isGranted(MainActivity.this)) {
-                            PermissionsUtils.SMS.request(MainActivity.this, REQUEST_CODE_SMS);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            if (!PermissionsUtils.SMS_SEND_OREO.isGranted(MainActivity.this)) {
+                                PermissionsUtils.SMS_SEND_OREO.request(MainActivity.this, REQUEST_CODE_SMS);
+                            } else {
+                                SmsInviteControllerRX.process(isTask);
+                            }
                         } else {
-                            SmsInviteControllerRX.process(isTask);
+                            if (!PermissionsUtils.SMS_SEND.isGranted(MainActivity.this)) {
+                                PermissionsUtils.SMS_SEND.request(MainActivity.this, REQUEST_CODE_SMS);
+                            } else {
+                                SmsInviteControllerRX.process(isTask);
+                            }
                         }
                     }
 
@@ -625,11 +634,18 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionsUtils.onPermissionsResult(this, requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_CODE_SMS: {
-                if (PermissionsUtils.SMS.isGranted(this)) {
-                    SmsInviteControllerRX.process(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (PermissionsUtils.SMS_SEND_OREO.isGranted(this)) {
+                        SmsInviteControllerRX.process(true);
+                    }
+                } else {
+                    if (PermissionsUtils.SMS_SEND.isGranted(this)) {
+                        SmsInviteControllerRX.process(true);
+                    }
                 }
             }
         }

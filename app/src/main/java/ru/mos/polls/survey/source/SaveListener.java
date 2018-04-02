@@ -3,7 +3,6 @@ package ru.mos.polls.survey.source;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +32,7 @@ import ru.mos.social.controller.SocialController;
 public abstract class SaveListener implements SurveyDataSource.SaveListener {
 
     protected final BaseActivity activity;
-    protected ProgressDialog progressDialog;
+//    protected ProgressDialog progressDialog;
 
     protected Survey survey;
 
@@ -43,18 +42,18 @@ public abstract class SaveListener implements SurveyDataSource.SaveListener {
     }
 
     protected void startProgressDialog() {
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(activity);
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
     }
 
     protected void dismissProgressDialog() {
-        try {
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-        } catch (Exception ignored) {
-        }
+//        try {
+//            if (progressDialog != null) {
+//                progressDialog.dismiss();
+//            }
+//        } catch (Exception ignored) {
+//        }
     }
 
     public static class SaveOnFinishListener extends SaveListener {

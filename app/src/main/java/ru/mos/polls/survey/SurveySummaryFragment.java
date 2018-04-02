@@ -394,7 +394,7 @@ public class SurveySummaryFragment extends JugglerFragment implements BackPresse
 
         };
         SurveyDataSource surveyDataSource = new WebSurveyDataSourceRX((BaseActivity) getActivity());
-        surveyDataSource.load(surveyId, isHearing, listener);
+        surveyDataSource.load(surveyId, isHearing, listener, null);
     }
 
     @OnClick(R.id.shareButton)

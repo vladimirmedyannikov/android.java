@@ -230,7 +230,7 @@ public class SurveyActivity extends BaseActivity {
             @Override
             public void onError(String message) {
             }
-        });
+        }, null);
     }
 
     public static Survey getStub(Context context) {
@@ -396,7 +396,7 @@ public class SurveyActivity extends BaseActivity {
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
             WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX(SurveyActivity.this);
             sourceRX.save(survey,
-                    new SaveListener.SaveOnInterruptListener(SurveyActivity.this, survey), true);
+                    new SaveListener.SaveOnInterruptListener(SurveyActivity.this, survey), true, null);
         } else {
             finish();
         }
@@ -439,7 +439,7 @@ public class SurveyActivity extends BaseActivity {
                         }
                     }
                 };
-                sourceRX.save(survey, new SaveListener.SaveOnFinishListener(SurveyActivity.this, survey, socialController, tryFinish), false);
+                sourceRX.save(survey, new SaveListener.SaveOnFinishListener(SurveyActivity.this, survey, socialController, tryFinish), false, null);
             }
         } else {
             finish();

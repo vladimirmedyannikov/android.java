@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import ru.mos.polls.R;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.parsers.SurveyFactory;
 
 public class StubSurveyDataSource implements SurveyDataSource {
-
     private Context context;
 
     public StubSurveyDataSource(Context c) {
@@ -23,7 +23,7 @@ public class StubSurveyDataSource implements SurveyDataSource {
     }
 
     @Override
-    public void load(long surveyId, final boolean isHearing, final LoadListener listener) {
+    public void load(long surveyId, boolean isHearing, LoadListener listener, Progressable progressable) {
         Survey result = null;
 
         StringBuilder sb = new StringBuilder();
@@ -63,12 +63,10 @@ public class StubSurveyDataSource implements SurveyDataSource {
                 listener.onLoaded(aVoid);
             }
         }.execute(result);
-
     }
 
     @Override
-    public void save(Survey survey, SaveListener listener, boolean isInterrupted) {
+    public void save(Survey survey, SaveListener listener, boolean isInterrupted, Progressable progressable) {
         listener.onSaved(0, 0, null);
     }
-
 }

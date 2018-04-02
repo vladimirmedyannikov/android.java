@@ -7,7 +7,13 @@
         <include layout="@layout/layout_internet_connection_lost" />
 
         <FrameLayout
-            android:id="@+id/container"
+            android:id="@+id/root"
             style="@style/root" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/item"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

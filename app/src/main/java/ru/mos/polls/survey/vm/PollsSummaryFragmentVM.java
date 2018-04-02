@@ -186,7 +186,7 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
             }
         };
         SurveyDataSource surveyDataSource = new WebSurveyDataSourceRX((BaseActivity) getActivity());
-        surveyDataSource.load(surveyId, isHearing, listener);
+        surveyDataSource.load(surveyId, isHearing, listener, null);
     }
 
     void onClickShareButton() {
@@ -293,9 +293,9 @@ public class PollsSummaryFragmentVM extends UIComponentFragmentViewModel<PollsSu
     public void restoreSavedState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             long surveyId = savedInstanceState.getLong(PollsSummaryFragment.EXTRA_SURVEY_ID);
-            ((SurveyMainFragment)getParentFragment()).getViewModel().setBackPressedListener(getFragment());
-            ((SurveyMainFragment)getParentFragment()).getViewModel().setCurrentFragment(getFragment());
-            ((SurveyMainFragment)getParentFragment()).getViewModel().getSummaryFragmentCallback();
+            ((SurveyMainFragment) getParentFragment()).getViewModel().setBackPressedListener(getFragment());
+            ((SurveyMainFragment) getParentFragment()).getViewModel().setCurrentFragment(getFragment());
+            ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback();
 //            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
 //            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
 //            setCallback(((SurveyActivity) getActivity()).getSummaryFragmentCallback());

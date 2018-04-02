@@ -27,6 +27,7 @@ import ru.mos.polls.poll.vm.PollActiveFragmentVM;
 import ru.mos.polls.rxhttp.rxapi.handle.error.DefaultResponseErrorHandler;
 import ru.mos.polls.rxhttp.rxapi.handle.response.HandlerApiResponseSubscriber;
 import ru.mos.polls.rxhttp.rxapi.progreessable.DefaultProgressable;
+import ru.mos.polls.rxhttp.rxapi.progreessable.Progressable;
 import ru.mos.polls.social.model.AppPostValue;
 import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
@@ -44,7 +45,7 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
     }
 
     @Override
-    public void load(long surveyId, boolean isHearing, LoadListener listener) {
+    public void load(long surveyId, boolean isHearing, LoadListener listener, Progressable progressable) {
         DefaultResponseErrorHandler errorHandler = new DefaultResponseErrorHandler(actionBarActivity) {
             @Override
             public void onServerError(int code, String message) {
@@ -76,7 +77,7 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
                 });
             }
         };
-        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(errorHandler, new DefaultProgressable(actionBarActivity, actionBarActivity.getString(R.string.elk_wait_load)).setCancelable(false)) {
+        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(errorHandler, progressable) {
             @Override
             protected void onResult(JsonObject result) {
                 try {
@@ -105,7 +106,7 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
     }
 
     @Override
-    public void save(Survey survey, SaveListener listener, boolean isInterrupted) {
+    public void save(Survey survey, SaveListener listener, boolean isInterrupted, Progressable progressable) {
         JSONArray valuesJsonArray = survey.getPrepareAnswersJson();
         boolean noAnswers = valuesJsonArray.length() == 0;
         if (noAnswers) {
@@ -134,7 +135,7 @@ public class WebSurveyDataSourceRX implements SurveyDataSource {
                     }
                 }
             };
-            HandlerApiResponseSubscriber<FillPoll.Response.Result> handler = new HandlerApiResponseSubscriber<FillPoll.Response.Result>(errorHandler, new DefaultProgressable(actionBarActivity, actionBarActivity.getString(R.string.elk_wait_save))) {
+            HandlerApiResponseSubscriber<FillPoll.Response.Result> handler = new HandlerApiResponseSubscriber<FillPoll.Response.Result>(errorHandler, progressable) {
                 @Override
                 protected void onResult(FillPoll.Response.Result result) {
                     Map<String, String> stParams = new HashMap<String, String>();

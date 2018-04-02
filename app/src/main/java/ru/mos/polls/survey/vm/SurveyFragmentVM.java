@@ -141,7 +141,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 progressable.end();
             }
         };
-        surveyDataSource.load(pollId, isHearing, listener);
+        surveyDataSource.load(pollId, isHearing, listener, progressable);
     }
 
     public void setViews() {

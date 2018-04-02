@@ -14,6 +14,7 @@ import java.util.List;
 
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
 import ru.mos.polls.common.controller.UrlSchemeController;
@@ -74,7 +75,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
 
     @Override
     protected UIComponentHolder createComponentHolder() {
-        return new UIComponentHolder.Builder().build();
+        return new UIComponentHolder.Builder().with(new ProgressableUIComponent()).build();
     }
 
     @Override
@@ -169,7 +170,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
             @Override
             public void onError(String message) {
             }
-        });
+        }, getProgressable());
     }
 
     private boolean setSurveyId() {
@@ -224,7 +225,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
         FragmentManager fragmentManager = getFragment().getChildFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.root, fragment)
                 .commit();
     }
 
@@ -323,7 +324,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
         if ((survey.isActive() || survey.isInterrupted()) && isHasAnswer()) {
             WebSurveyDataSourceRX sourceRX = new WebSurveyDataSourceRX((BaseActivity) getActivity());
             sourceRX.save(survey,
-                    new SaveListener.SaveOnInterruptListener((BaseActivity) getActivity(), survey), true);
+                    new SaveListener.SaveOnInterruptListener((BaseActivity) getActivity(), survey), true, getProgressable());
         } else {
             getActivity().finish();
         }
@@ -366,7 +367,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
                         }
                     }
                 };
-                sourceRX.save(survey, new SaveListener.SaveOnFinishListener((BaseActivity) getActivity(), survey, socialController, tryFinish), false);
+                sourceRX.save(survey, new SaveListener.SaveOnFinishListener((BaseActivity) getActivity(), survey, socialController, tryFinish), false, getProgressable());
             }
         } else {
             getActivity().finish();

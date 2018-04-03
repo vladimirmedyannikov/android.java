@@ -137,7 +137,7 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
             @Override
             public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
 //                if (BuildConfig.BUILD_TYPE.equals("debug")) {
-                handler.proceed("ag_test", "5U:bzH");
+                handler.proceed("ag_test", "5U:bzH"); //тестовый контур запаролен
 //                } else {
 //                    super.onReceivedHttpAuthRequest(view, handler, host, realm);
 //                }
@@ -158,7 +158,7 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
                 /**
                  * если url не первый, то открываем в браузере
                  */
-                if ((urlAllowed && isOnline) || !isFirstUrl) {
+                if ((urlAllowed && isOnline && !setCookie) || !isFirstUrl) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     getFragment().startActivity(intent);
                     return true;

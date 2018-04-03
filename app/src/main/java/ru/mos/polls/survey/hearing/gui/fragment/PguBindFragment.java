@@ -24,6 +24,7 @@ import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.AbstractActivity;
@@ -33,6 +34,7 @@ import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.common.model.QuestMessage;
 import ru.mos.polls.popup.PopupController;
 import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
+import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.GuiUtils;
 
 
@@ -43,18 +45,17 @@ public class PguBindFragment extends JugglerFragment {
     @BindView(R.id.tvError)
     TextView error;
     @BindView(R.id.etLogin)
-    TextInputEditText login;
+    MaskedEditText login;
     @BindView(R.id.etPassword)
     TextInputEditText password;
-    @BindView(R.id.auth)
-    Button auth;
 
     @BindView(R.id.etPassword_wrapper)
     TextInputLayout etPassword;
+    @BindView(R.id.etLogin_wrapper)
+    TextInputLayout etLogin;
 
     private Unbinder unbinder;
     private PguBindingListener pguBindingListener;
-    //ProgressDialog progressDialog;
 
     private ProgressableUIComponent progressableUIComponent;
 
@@ -83,18 +84,10 @@ public class PguBindFragment extends JugglerFragment {
         View root = inflater.inflate(R.layout.fragment_pgu_bind, null);
         unbinder = ButterKnife.bind(this, root);
         progressableUIComponent.onViewCreated(getContext(), root);
+        etLogin.setError(getString(R.string.phone_in_format));
+        login.setMask(getString(R.string.mos_ru_phone_mask));
         return root;
     }
-
-//    public void startProgress() {
-//        progressDialog = new ProgressDialog(getActivity());
-//        progressDialog.show();
-//    }
-//
-//    public void stopProgress() {
-//        if (progressDialog != null) progressDialog.dismiss();
-//    }
-
 
     @Override
     public void onPause() {
@@ -129,14 +122,26 @@ public class PguBindFragment extends JugglerFragment {
     }
 
     @OnFocusChange(value = {R.id.etLogin, R.id.etPassword})
-    void setFocus(boolean hasFocus) {
+    void setFocus(View view, boolean hasFocus) {
         if (hasFocus)
             etPassword.setError("");
+        if (view.getId() == R.id.etPassword && hasFocus) {
+
+        }
     }
 
-    @OnTextChanged(value = {R.id.etLogin, R.id.etPassword}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void setLogPassTextChangeListener() {
-        auth.setEnabled(login.getText().length() > 0 && password.getText().length() > 0);
+    public void checkLoginInput() {
+        String inputText = login.getUnmaskedText();
+        if (AgTextUtil.isEmailValid(inputText)) return;
+        String digitText = AgTextUtil.stripDigit(inputText);
+        if (digitText.length() < 9 || digitText.length() > 11) {
+            //
+        } else if (digitText.length() == 11) {
+
+        } else {
+
+        }
+
     }
 
     @Override
@@ -178,11 +183,13 @@ public class PguBindFragment extends JugglerFragment {
         };
         HearingApiControllerRX.pguBind(((BaseActivity) getActivity()).getDisposables(), getContext(), login.getText().toString(), password.getText().toString(), listener1);
     }
+
     private void setResult(boolean isAuth) {
         Intent result = new Intent();
         result.putExtra(EXTRA_AUTH_RESULT, isAuth);
         getActivity().setResult(Activity.RESULT_OK, result);
     }
+
     public interface PguBindingListener {
         PguBindingListener STUB = new PguBindingListener() {
             @Override

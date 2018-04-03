@@ -97,4 +97,16 @@ public abstract class AgTextUtil {
         return android.text.TextUtils.isEmpty(target)
                 || "null".equalsIgnoreCase(target);
     }
+
+    public static String stripDigit(String text) {
+        return text.replaceAll("[^0-9.]", "");
+    }
+
+    public static boolean checkSNILSsum(char[] array) {
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            sum += array[i] * (9 - i);
+        }
+        return false;
+    }
 }

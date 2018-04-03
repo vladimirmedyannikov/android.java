@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/root">
+
     <FrameLayout
         android:id="@+id/root"
         style="@style/root">
-        <RelativeLayout android:id="@+id/container"
+
+        <RelativeLayout
+            android:id="@+id/container"
             style="@style/item.linear"
 
             android:background="@color/white"
@@ -18,17 +21,26 @@
                 <TextView
                     style="@style/text.normal.black"
                     android:layout_marginBottom="@dimen/pd_xsmall"
-                    android:text="Ваш логин и пароль на mos.ru:"/>
+                    android:text="Ваш логин и пароль на mos.ru:" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/etLogin_wrapper"
-                    style="@style/item">
+                    style="@style/item"
+                    app:errorEnabled="true"
+                    app:errorTextAppearance="@style/text.small.gray">
 
-                    <android.support.design.widget.TextInputEditText
+                    <ru.mos.polls.maskedettext.MaskedEditText
                         android:id="@+id/etLogin"
-                        style="@style/input.email"
+                        style="@style/input"
                         android:hint="@string/pgu_hint_email"
-                        android:imeOptions="actionNext"/>
+                        android:imeOptions="actionNext"
+                        app:char_representation="#"
+                        app:mask_fill="" />
+                    <!--<android.support.design.widget.TextInputEditText-->
+                    <!--android:id="@+id/etLogin"-->
+                    <!--style="@style/input.email"-->
+                    <!--android:hint="@string/pgu_hint_email"-->
+                    <!--android:imeOptions="actionNext"/>-->
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -39,7 +51,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/etPassword"
                         style="@style/input.password"
-                        android:hint="@string/pgu_hint_password"/>
+                        android:hint="@string/pgu_hint_password" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -47,7 +59,7 @@
                     android:id="@+id/tvError"
                     style="@style/auth_error"
                     android:paddingTop="@dimen/pd_xsmall"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <Button
@@ -58,12 +70,12 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/pd_xlarge"
                 android:text="@string/pgu_bind"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 style="@style/text.small.gray"
                 android:layout_below="@id/et_auth_layer"
-                android:text="@string/hint_not_auth_pgu"/>
+                android:text="@string/hint_not_auth_pgu" />
 
             <LinearLayout
                 style="@style/wrap"
@@ -72,7 +84,7 @@
 
                 <include
                     android:id="@+id/help"
-                    layout="@layout/layout_help"/>
+                    layout="@layout/layout_help" />
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

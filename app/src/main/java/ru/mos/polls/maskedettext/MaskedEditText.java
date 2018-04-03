@@ -2,6 +2,7 @@ package ru.mos.polls.maskedettext;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 import ru.mos.polls.R;
 
-public class MaskedEditText extends AppCompatEditText implements TextWatcher {
+public class MaskedEditText extends TextInputEditText implements TextWatcher {
 
     private String mask;
     private char maskFill;

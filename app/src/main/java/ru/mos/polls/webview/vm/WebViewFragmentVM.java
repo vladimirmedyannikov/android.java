@@ -158,7 +158,7 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
                 /**
                  * если url не первый, то открываем в браузере
                  */
-                if ((urlAllowed && isOnline && !setCookie) || !isFirstUrl) {
+                if (((urlAllowed && isOnline) || !isFirstUrl) && !setCookie) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     getFragment().startActivity(intent);
                     return true;
@@ -328,10 +328,8 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
     public void setWebViewSetting() {
         webView.setVisibility(View.VISIBLE);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setSupportMultipleWindows(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.invokeZoomPicker();
     }
 

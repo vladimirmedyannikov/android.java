@@ -32,10 +32,7 @@
                     <ru.mos.polls.maskedettext.MaskedEditText
                         android:id="@+id/etLogin"
                         style="@style/input"
-                        android:hint="@string/pgu_hint_email"
-                        android:imeOptions="actionNext"
-                        app:char_representation="#"
-                        app:mask_fill="" />
+                        android:hint="@string/pgu_hint_email" />
                     <!--<android.support.design.widget.TextInputEditText-->
                     <!--android:id="@+id/etLogin"-->
                     <!--style="@style/input.email"-->

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +86,6 @@ public class PguBindFragment extends JugglerFragment {
         unbinder = ButterKnife.bind(this, root);
         progressableUIComponent.onViewCreated(getContext(), root);
         etLogin.setError(getString(R.string.phone_in_format));
-        login.setMask(getString(R.string.mos_ru_phone_mask));
         return root;
     }
 
@@ -126,7 +126,7 @@ public class PguBindFragment extends JugglerFragment {
         if (hasFocus)
             etPassword.setError("");
         if (view.getId() == R.id.etPassword && hasFocus) {
-
+            checkLoginInput();
         }
     }
 
@@ -137,9 +137,13 @@ public class PguBindFragment extends JugglerFragment {
         if (digitText.length() < 9 || digitText.length() > 11) {
             //
         } else if (digitText.length() == 11) {
-
+            if (AgTextUtil.checkSNILSsum(digitText))
+                Toast.makeText(getContext(), "SNILS ok", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(getContext(), "SNILS not ok", Toast.LENGTH_SHORT).show();
+            }
         } else {
-
+            login.setMask(getString(R.string.mos_ru_phone_mask));
         }
 
     }

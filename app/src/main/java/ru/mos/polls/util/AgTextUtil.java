@@ -102,10 +102,16 @@ public abstract class AgTextUtil {
         return text.replaceAll("[^0-9.]", "");
     }
 
-    public static boolean checkSNILSsum(char[] array) {
+    public static boolean checkSNILSsum(String digitText) {
         int sum = 0;
+        int checkSum = Integer.parseInt(digitText.substring(9, 10));
+        char[] array = digitText.toCharArray();
         for (int i = 0; i < 9; i++) {
-            sum += array[i] * (9 - i);
+            int value = Character.getNumericValue(array[i]);
+            sum += value * (9 - i);
+        }
+        if (sum == 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0))) {
+            return true;
         }
         return false;
     }

@@ -104,15 +104,20 @@ public abstract class AgTextUtil {
 
     public static boolean checkSNILSsum(String digitText) {
         int sum = 0;
-        int checkSum = Integer.parseInt(digitText.substring(9, 10));
+        int checkSum = Integer.parseInt(digitText.substring(9, 11));
         char[] array = digitText.toCharArray();
         for (int i = 0; i < 9; i++) {
             int value = Character.getNumericValue(array[i]);
             sum += value * (9 - i);
         }
-        if (sum == 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0))) {
-            return true;
-        }
-        return false;
+        return ((sum < 100 && sum == checkSum) || ((sum == 100 || sum == 101) && checkSum == 0) || (sum > 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0))));
+    }
+
+    public static boolean checkPhone(String digitText) {
+        int first = 0;
+        if (digitText.length() == 11)
+            first = Integer.parseInt(digitText.substring(0, 2));
+        if (digitText.length() == 10) first = Integer.parseInt(digitText.substring(0, 1));
+        return first == 89 || first == 79 || first == 9;
     }
 }

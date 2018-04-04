@@ -12,23 +12,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
-import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
-import ru.mos.polls.AbstractActivity;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
@@ -54,6 +50,7 @@ public class PguBindFragment extends JugglerFragment {
     TextInputLayout etPassword;
     @BindView(R.id.etLogin_wrapper)
     TextInputLayout etLogin;
+    String inputText;
 
     private Unbinder unbinder;
     private PguBindingListener pguBindingListener;
@@ -128,24 +125,34 @@ public class PguBindFragment extends JugglerFragment {
         if (view.getId() == R.id.etPassword && hasFocus) {
             checkLoginInput();
         }
+        if (view.getId() == R.id.etLogin && hasFocus) {
+            if (login.getText().length() > 0) {
+                login.setMask("###################################################################");
+                login.setText(inputText);
+            }
+        }
     }
 
     public void checkLoginInput() {
-        String inputText = login.getUnmaskedText();
+        inputText = login.getUnmaskedText();
         if (AgTextUtil.isEmailValid(inputText)) return;
         String digitText = AgTextUtil.stripDigit(inputText);
-        if (digitText.length() < 9 || digitText.length() > 11) {
-            //
-        } else if (digitText.length() == 11) {
-            if (AgTextUtil.checkSNILSsum(digitText))
-                Toast.makeText(getContext(), "SNILS ok", Toast.LENGTH_SHORT).show();
-            else {
-                Toast.makeText(getContext(), "SNILS not ok", Toast.LENGTH_SHORT).show();
+        if (digitText.length() == 11) {
+            if (AgTextUtil.checkSNILSsum(digitText)) {
+                setLoginText(digitText, R.string.mos_ru_snils);
             }
-        } else {
-            login.setMask(getString(R.string.mos_ru_phone_mask));
+            if (AgTextUtil.checkPhone(digitText)) {
+                setLoginText(digitText.substring(1), R.string.mos_ru_phone_mask);
+            }
+        } else if (digitText.length() == 10) {
+            if (AgTextUtil.checkPhone(digitText))
+                setLoginText(digitText, R.string.mos_ru_phone_mask);
         }
+    }
 
+    public void setLoginText(String digitText, int mask) {
+        login.setMask(getString(mask));
+        login.setText(digitText);
     }
 
     @Override
@@ -185,7 +192,7 @@ public class PguBindFragment extends JugglerFragment {
                 pguBindingListener.onError();
             }
         };
-        HearingApiControllerRX.pguBind(((BaseActivity) getActivity()).getDisposables(), getContext(), login.getText().toString(), password.getText().toString(), listener1);
+        HearingApiControllerRX.pguBind(((BaseActivity) getActivity()).getDisposables(), getContext(), login.getUnmaskedText(), password.getText().toString(), listener1);
     }
 
     private void setResult(boolean isAuth) {

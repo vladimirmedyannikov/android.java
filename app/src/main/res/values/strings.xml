@@ -903,4 +903,5 @@
     <string name="data_not_found">Данные не найдены</string>
     <string name="phone_in_format">Телефон в формате 9XXXXXXXXX</string>
     <string name="mos.ru_phone_mask">(###)###-##-##</string>
+    <string name="mos.ru_snils">###-###-###-##</string>
 </resources>

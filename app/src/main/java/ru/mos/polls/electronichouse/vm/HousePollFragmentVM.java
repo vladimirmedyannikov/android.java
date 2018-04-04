@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
@@ -13,12 +12,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.ilich.juggler.change.Add;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.rxjava.Events;
@@ -75,7 +71,6 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
 
     @Override
     protected void initialize(FragmentHousePollBinding binding) {
-        ButterKnife.bind(this, binding.getRoot()); // TODO: 04.12.17 байндинг не видит фаб, позже заменить
         fabAddHousePoll = binding.fabAddHousePoll;
         recyclerView = binding.list;
         adapter = new PollAdapter();
@@ -139,15 +134,10 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
         disposables.add(responseObservable.subscribeWith(handler));
     }
 
-    //    @SuppressWarnings("newApi")
-//    @OnClick(R.id.fab_add_house_poll)
     void addClick(View v) {
         GuiUtils.displayYesOrNotDialog(getActivity(), getActivity().getString(R.string.go_to_house_poll_desc), (DialogInterface.OnClickListener) (dialog, which) -> {
-//            Uri uri = Uri.parse(UrlHelper.getHouseConstructorUrl());
-//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//            getActivity().startActivity(intent);
             getFragment().navigateTo(WebViewState.getStateSetCookie( null,
-                    "Размещение заявки",
+                    getActivity().getString(R.string.electronic_house_placing_an_order),
                     UrlHelper.getHouseConstructorUrl()), ru.mos.polls.base.activity.BaseActivity.class);
         }, null);
     }

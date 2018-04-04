@@ -119,6 +119,7 @@ public class AGApplication extends MultiDexApplication {
         googleAnalytics = GoogleAnalytics.getInstance(this);
         googleAnalytics.setLocalDispatchPeriod(1800);
         tracker = googleAnalytics.newTracker(/*"UA-52662983-3"*/R.xml.analytics_global_config);
+        tracker.setAppVersion(BuildConfig.VERSION_NAME);
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
@@ -128,12 +129,6 @@ public class AGApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         initGoogleAnalytics();
-//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build();
-//        TwitterAuthConfig config = new TwitterAuthConfig(getString(R.string.tw_consumer_key), getString(R.string.tw_consumer_secret));
-//
-//        Fabric.with(this, crashlyticsKit, new TwitterCore(config));
         SocialInitUtils.init(getApplicationContext());
         AppStorable storable = new AppStorable(this);
         Configurator.getInstance(this).setStorable(storable);
@@ -141,20 +136,7 @@ public class AGApplication extends MultiDexApplication {
         BaseActivity.setFlurryKey(getString(R.string.ag_flurry_key));
         AppsFlyerLib.setAppsFlyerKey("TvVxifM6uMLnGmiZEwifAi");
 
-//        if (BuildConfig.BUILD_TYPE.equals("customer")) {
-//            Token.AG.setCustomToken("ag_uat_token3");
-//            Token.AG.setIsCustom(true);
-//        }
-//        else if (BuildConfig.BUILD_TYPE.equals("release")) {
-//            API.setIsDebug(false);
-//        } else {
-//            API.setIsDebug(true);
-//        }
-//        API.setToken(Token.AG);
-
         GCMHelper.registerPush(this);
-
-//        API.setBuildVersionName(UrlManager.V250);
 
         pushRegister();
 
@@ -273,7 +255,7 @@ public class AGApplication extends MultiDexApplication {
      * Метод, инициализирующий каналы пушей для Android 8 и выше
      *
      * @param appContext контекст приложения
-     * @param channel   канал пуша для создания
+     * @param channel    канал пуша для создания
      */
     private static void createChannel(Context appContext, @NonNull PushChannel channel) {
         if (appContext != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -298,8 +280,8 @@ public class AGApplication extends MultiDexApplication {
     /**
      * Метод, инициализирующий группы уведовмлений для Android 8 и выше
      *
-     * @param appContext контекст приложения
-     * @param channelGroupId айди канала
+     * @param appContext       контекст приложения
+     * @param channelGroupId   айди канала
      * @param channelGroupName название канала
      */
     private static void createChannelGroup(Context appContext, String channelGroupId, @StringRes int channelGroupName) {

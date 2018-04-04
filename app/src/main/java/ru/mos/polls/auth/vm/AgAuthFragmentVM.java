@@ -126,7 +126,7 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
          */
         codeCountry.setText("7");
         codeCountry.setEnabled(false);
-        if (PermissionsUtils.SMS_RECEIVE.isGranted(getFragment().getContext())) {
+        if (PermissionsUtils.SMS.isGranted(getFragment().getContext())) {
             GuiUtils.showKeyboard(etLogin);
         }
     }
@@ -217,8 +217,8 @@ public class AgAuthFragmentVM extends UIComponentFragmentViewModel<AgAuthFragmen
     }
 
     private void checkPermissions() {
-        if (!PermissionsUtils.SMS_RECEIVE.isGranted(getFragment().getContext())) {
-            PermissionsUtils.SMS_RECEIVE.request(getFragment(), SMS_PERMISSION_REQUEST);
+        if (!PermissionsUtils.SMS.isGranted(getFragment().getContext())) {
+            PermissionsUtils.SMS.request(getFragment(), SMS_PERMISSION_REQUEST);
         }
     }
 

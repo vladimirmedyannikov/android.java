@@ -121,6 +121,7 @@ public class CustomFlatFragmentVM extends UIComponentFragmentViewModel<CustomFla
     public void prepareRequest() {
         FlatsEntity entity = null;
         Reference areaReference = (Reference) areaSpinner.getSelectedItem();
+        if (areaReference == null) areaReference = Reference.STUB;
         flat.setDistrict(districtSpinner.getSelectedItem().toString().trim())
                 .setArea(areaReference.getLabel())
                 .setStreet(street.getText().toString().trim())

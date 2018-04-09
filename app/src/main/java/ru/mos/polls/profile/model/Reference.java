@@ -27,8 +27,14 @@ public class Reference {
         return new Adapter(context, content);
     }
 
+    public static Reference STUB = new Reference("", "");
     private String value;
     private String label;
+
+    public Reference(String value, String label) {
+        this.value = value;
+        this.label = label;
+    }
 
     public String getValue() {
         return value;

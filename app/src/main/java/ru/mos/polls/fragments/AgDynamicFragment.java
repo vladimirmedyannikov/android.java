@@ -2,7 +2,7 @@ package ru.mos.polls.fragments;
 
 import android.os.Bundle;
 
-
+@Deprecated
 public class AgDynamicFragment extends DynamicFragment {
 
     public static DynamicFragment newInstance(String defTitle, String params, String baseUrl) {

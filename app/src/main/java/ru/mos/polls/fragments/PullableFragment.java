@@ -12,7 +12,7 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import ru.mos.polls.R;
 
-
+@Deprecated
 public abstract class PullableFragment extends Fragment {
 
     protected SwipeRefreshLayout ptrLayout;

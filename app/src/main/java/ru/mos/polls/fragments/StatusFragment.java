@@ -20,6 +20,7 @@ import ru.mos.polls.model.PointHistory;
  *
  * @since 1.8
  */
+@Deprecated
 public class StatusFragment extends PullableFragment {
     @BindView(R.id.tvPoints)
     TextView tvPoints;

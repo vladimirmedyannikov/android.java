@@ -37,6 +37,7 @@ import ru.mos.polls.util.NetworkUtils;
  * Use the {@link DynamicFragment#newInstance} factory method to
  * create an newInstance of this fragment.
  */
+@Deprecated
 public class DynamicFragment extends PullableFragment {
 
     public static final String BASE_URL = "ru.mos.elk.BASE_URL";

@@ -17,7 +17,7 @@ import ru.mos.polls.PointsManager;
 import ru.mos.polls.R;
 import ru.mos.polls.db.PollsData.TPointHistory;
 
-
+@Deprecated
 public class MyPointsAdapter extends ResourceCursorAdapter {
 
     private final DateFormat df = new SimpleDateFormat("dd.MM.yyyy в HH:mm");

@@ -14,7 +14,7 @@ public class CustomFlatFragment extends MenuBindingFragment<CustomFlatFragmentVM
     public static final String EXTRA_FLAT = "extra_flat";
     public static final String EXTRA_STREET = "extra_street";
     public static final String EXTRA_HOUSE = "extra_house";
-    public static final int REQUEST_FLAT = 101;
+    public static final int REQUEST_FLAT = 1019;
 
     public static CustomFlatFragment newInstanceForWizard(Flat flat, boolean hideWarning, String street, String house, int flatType) {
         return newInstance(flat, hideWarning, street, house, true, flatType);

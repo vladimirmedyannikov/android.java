@@ -31,6 +31,8 @@ public class NewsFragment extends BindingFragment<NewsFragmentVM, FragmentNewsBi
          * Помечаем все новости как прочитанные, такая логика используется с версии 1.9.6<br/>
          */
         BadgeManager.uploadAllNewsAsReaded((BaseActivity) getActivity());
+        if (getActivity() != null)
+            getActivity().setTitle(R.string.mainmenu_news);
     }
 
     @Override

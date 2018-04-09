@@ -84,7 +84,7 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
         if (setSurveyId() && !isNeedLoading(getFragment().getSavedInstanceState())) {
             loadSurvey();
         }
-        socialController = new SocialController(getActivity());
+        socialController = ((BaseActivity) getActivity()).getSocialController();
     }
 
 
@@ -126,7 +126,6 @@ public class SurveyMainFragmentVM extends UIComponentFragmentViewModel<SurveyMai
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        socialController.onActivityResult(requestCode, resultCode, data);
         tryToExecuteActionCallback(requestCode);
         /**
          * Вернулись с эерана авторизации в пгу

@@ -81,7 +81,7 @@ public class InnovationFragmentVM extends UIComponentFragmentViewModel<Innovatio
 
     @Override
     protected void initialize(FragmentInnovationBinding binding) {
-        socialController = new SocialController(getFragment().getActivity());
+        socialController = ((BaseActivity) getActivity()).getSocialController();
         loadingProgress = binding.loadingProgress;
         container = binding.root.findViewById(R.id.container);
         chartsView = binding.root.findViewById(R.id.chartsView);
@@ -91,7 +91,6 @@ public class InnovationFragmentVM extends UIComponentFragmentViewModel<Innovatio
         innovationButtons = binding.buttonContainer;
         rootConnectionError = binding.layoutMain.findViewById(R.id.rootConnectionError);
         root = binding.root;
-
     }
 
     @Override
@@ -135,12 +134,6 @@ public class InnovationFragmentVM extends UIComponentFragmentViewModel<Innovatio
         super.onPause();
         socialController.getEventController().unregisterAllCallback();
         SocialUIController.unregisterPostingReceiver(getFragment().getContext());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        socialController.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onBackPressed() {

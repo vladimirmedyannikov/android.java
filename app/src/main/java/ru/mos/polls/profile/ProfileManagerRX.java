@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -77,15 +78,15 @@ public class ProfileManagerRX {
     }
 
     public static void login(CompositeDisposable disposable, Context context, ProfileGet.LoginRequest body, final AgUserListener agUserListener) {
-        HandlerApiResponseSubscriber<JsonObject> handler = new HandlerApiResponseSubscriber<JsonObject>(context, null) {
+        HandlerApiResponseSubscriber<JsonElement> handler = new HandlerApiResponseSubscriber<JsonElement>() {
             @Override
-            public void onHasError(GeneralResponse<JsonObject> generalResponse) {
+            public void onHasError(GeneralResponse<JsonElement> generalResponse) {
                 super.onHasError(generalResponse);
                 agUserListener.onError(generalResponse.getErrorMessage(), generalResponse.getErrorCode());
             }
 
             @Override
-            public void onNext(GeneralResponse<JsonObject> generalResponse) {
+            public void onNext(GeneralResponse<JsonElement> generalResponse) {
                 Session.get().setSession(generalResponse.getSessionId());
                 if (generalResponse.hasError()) {
                     onHasError(generalResponse);
@@ -95,7 +96,7 @@ public class ProfileManagerRX {
             }
 
             @Override
-            protected void onResult(JsonObject result) {
+            protected void onResult(JsonElement result) {
                 AgUser agUser = null;
                 if (result != null) {
                     try {

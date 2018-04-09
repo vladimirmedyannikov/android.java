@@ -1,5 +1,6 @@
 package ru.mos.polls.rxhttp.rxapi.config;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -204,7 +205,7 @@ public interface AgApi {
     Observable<GeneralResponse<JsonObject>> getProfile(@Body AuthRequest body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_PROFILE)
-    Observable<GeneralResponse<JsonObject>> login(@Body ProfileGet.LoginRequest body);
+    Observable<GeneralResponse<JsonElement>> login(@Body ProfileGet.LoginRequest body);
 
     @POST("/" + AgApi.Api.Versions.CURRENT + "/" + AgApi.Api.Controllers.AGPROFILE + "/" + Api.Methods.GET_ADDRESS_STREET_LIST)
     Observable<StreetGet.Response> getAddressStreetList(@Body StreetGet.Request body);

@@ -40,4 +40,9 @@ public class SurveyMainFragment extends NavigateFragment<SurveyMainFragmentVM, F
         getViewModel().onBackPressed();
         return super.onBackPressed();
     }
+
+    @Override
+    public boolean onUpPressed() {
+        return onBackPressed();
+    }
 }

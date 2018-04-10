@@ -536,6 +536,7 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
     }
 
     private void displayAreaDistrict() {
+        areaAndDistrictLayout.requestFocus();
         if (areaAndDistrictLayout.getVisibility() == View.VISIBLE) {
             return;
         }

@@ -81,7 +81,6 @@ import ru.mos.polls.webview.state.WebViewState;
 import ru.mos.polls.wizardprofile.state.WizardProfileState;
 import ru.mos.polls.wizardprofile.ui.fragment.WizardProfileFragment;
 import ru.mos.social.callback.PostCallback;
-import ru.mos.social.controller.SocialController;
 import ru.mos.social.model.PostValue;
 import ru.mos.social.model.social.Social;
 
@@ -113,7 +112,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
     public static final int REQUEST_CODE_SMS = 111;
 
     private SmsInviteControllerRX SmsInviteControllerRX;
-    private SocialController socialController;
     private QuestStateController questStateController;
     private InformerUIController informerUIController;
     private NavigationDrawerFragment navFragment;
@@ -161,8 +159,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         actionBarDrawerToggle.syncState();
-
-        socialController = new SocialController(this);
         SmsInviteControllerRX = new SmsInviteControllerRX(this);
         informerUIController = new InformerUIController(this);
         questStateController = QuestStateController.getInstance();
@@ -657,7 +653,6 @@ public class MainActivity extends ToolbarAbstractActivity implements NavigationD
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             SmsInviteControllerRX.onActivityResult(requestCode, resultCode, data);
-            socialController.onActivityResult(requestCode, resultCode, data);
         }
         if (resultCode == WizardProfileFragment.RESULT_CODE_START_PROFILE_FOR_INFO_PAGE) {
             navFragment.selectItem(-1);

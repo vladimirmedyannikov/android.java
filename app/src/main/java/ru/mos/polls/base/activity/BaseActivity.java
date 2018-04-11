@@ -15,7 +15,7 @@ public class BaseActivity extends JugglerActivity {
 
     private static String flurryKey = "stub";
     protected CompositeDisposable disposables;
-    private SocialController socialController;
+    protected SocialController socialController;
 
 
     @Override

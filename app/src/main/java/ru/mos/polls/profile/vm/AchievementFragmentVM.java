@@ -2,7 +2,6 @@ package ru.mos.polls.profile.vm;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -76,7 +75,7 @@ public class AchievementFragmentVM extends UIComponentFragmentViewModel<Achievem
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        socialController = new SocialController(getActivity());
+        socialController = ((BaseActivity) getActivity()).getSocialController();
         isOwnAchievement = getFragment().getExtraIsOwn();
         if (getAchievement()) {
             loadAchievement();
@@ -110,12 +109,6 @@ public class AchievementFragmentVM extends UIComponentFragmentViewModel<Achievem
         super.onPause();
         socialController.getEventController().unregisterAllCallback();
         SocialUIController.unregisterPostingReceiver(getFragment().getContext());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        socialController.onActivityResult(requestCode, resultCode, data);
     }
 
     private boolean getAchievement() {

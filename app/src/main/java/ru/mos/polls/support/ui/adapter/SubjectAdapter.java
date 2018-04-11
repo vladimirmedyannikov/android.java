@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ru.mos.polls.R;
 import ru.mos.polls.support.model.Subject;
 
 
@@ -24,7 +25,7 @@ public class SubjectAdapter extends ArrayAdapter<Subject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = View.inflate(getContext(), android.R.layout.simple_spinner_item, null);
+            convertView = View.inflate(getContext(), R.layout.dictionery_item, null);
         }
         TextView title = (TextView) convertView.findViewById(android.R.id.text1);
         Subject subject = getItem(position);

@@ -790,6 +790,7 @@
     <string name="childs">Дети</string>
     <string name="menu_confirm">подтвердить</string>
     <string name="menu_delet_flat">удалить адрес</string>
+    <string name="menu_attach_pic">прикрепить фото</string>
     <string name="mainmenu_friends">Мои друзья</string>
     <string name="kids_birthdays">Возраст детей</string>
     <string name="avatar_sources_title">Выберите источник фотографии</string>

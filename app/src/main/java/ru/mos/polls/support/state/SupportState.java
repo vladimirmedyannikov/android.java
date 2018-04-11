@@ -9,6 +9,7 @@ import me.ilich.juggler.states.ContentBelowToolbarState;
 import me.ilich.juggler.states.State;
 import ru.mos.polls.R;
 import ru.mos.polls.base.ui.CommonToolbarFragment;
+import ru.mos.polls.support.ui.fragment.FeedBackFragment;
 import ru.mos.polls.support.ui.fragment.SupportFragment;
 
 public class SupportState extends ContentBelowToolbarState<SupportState.Params> {
@@ -29,7 +30,7 @@ public class SupportState extends ContentBelowToolbarState<SupportState.Params> 
 
     @Override
     protected JugglerFragment onConvertContent(SupportState.Params params, @Nullable JugglerFragment fragment) {
-        return SupportFragment.instance(params.startWithNewActivity);
+        return FeedBackFragment.instance(params.startWithNewActivity);
     }
 
     @Override

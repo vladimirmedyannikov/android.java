@@ -64,7 +64,7 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
 
     public void onHasError(@NonNull GeneralResponse<R> generalResponse) {
         errorHandler.onServerError(generalResponse.getErrorCode(), generalResponse.getErrorMessage());
-        onErrorListener();
+        onErrorListener(generalResponse.getErrorCode(), generalResponse.getErrorMessage());
     }
 
     @Override
@@ -78,6 +78,6 @@ public abstract class HandlerApiResponseSubscriber<R> extends DisposableObserver
         progressable.end();
     }
 
-    public void onErrorListener() {
+    public void onErrorListener(int code, String message) {
     }
 }

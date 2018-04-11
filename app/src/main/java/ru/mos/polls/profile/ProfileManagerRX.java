@@ -193,7 +193,7 @@ public class ProfileManagerRX {
             }
 
             @Override
-            public void onErrorListener() {
+            public void onErrorListener(int code, String message) {
                 dialog.dismiss();
                 afterLoggedOut(alkActivity);
             }

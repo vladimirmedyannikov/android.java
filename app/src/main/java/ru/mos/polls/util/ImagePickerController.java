@@ -91,11 +91,11 @@ public class ImagePickerController {
         return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
     }
 
-    public static void beginCrop(Fragment fragment, int requestCode, int resultCode, Intent data) {
+    public static void beginCrop(Fragment fragment, int requestCode, int resultCode, Intent data, boolean isFixed) {
         if (resultCode == AppCompatActivity.RESULT_OK && (requestCode == ImagePickerController.REQUEST_CAMERA || requestCode == ImagePickerController.REQUEST_GALLERY)) {
             Uri result = getUri(requestCode, data);
             CropImage.activity(result)
-                    .setFixAspectRatio(true)
+                    .setFixAspectRatio(isFixed)
                     .start(fragment.getContext(), fragment);
         }
     }

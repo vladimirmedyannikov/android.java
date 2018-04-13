@@ -184,7 +184,7 @@ public class SupportFragmentVM extends UIComponentFragmentViewModel<SupportFragm
                         getBinding().etEmail.getText().toString(),
                         getBinding().etMessage.getText().toString(),
                         getBinding().orderNumber.getText().toString(),
-                        Session.get().getSession()))
+                        Session.get().getSession(), null))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         disposables.add(responseObservabl.subscribeWith(handler));

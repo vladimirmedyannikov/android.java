@@ -215,7 +215,7 @@ def compileUtils() {
         implementation 'com.googlecode.libphonenumber:libphonenumber:7.4.3'
         implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
         implementation 'de.hdodenhof:circleimageview:2.2.0'
-        implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.0'
+        implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
         implementation 'pub.devrel:easypermissions:1.2.0'
         implementation 'com.firebase:firebase-jobdispatcher-with-gcm-dep:0.7.0'
         implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'

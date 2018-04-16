@@ -3,6 +3,7 @@ package ru.mos.polls.base.ui;
 
 import android.databinding.ViewDataBinding;
 
+import me.ilich.juggler.Navigable;
 import me.ilich.juggler.change.Add;
 import me.ilich.juggler.change.Remove;
 import me.ilich.juggler.gui.JugglerActivity;
@@ -20,6 +21,11 @@ public abstract class NavigateFragment<VM extends FragmentViewModel, B extends V
 
     public void navigateTo(State state, Class<? extends JugglerActivity> activityClass) {
         navigateTo().state(Add.newActivity(state, activityClass));
+    }
+
+    @Override
+    public Navigable navigateTo() {
+        return super.navigateTo();
     }
 
     public void navigateToCloseCurrActivity() {

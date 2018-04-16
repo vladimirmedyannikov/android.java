@@ -91,7 +91,7 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImagePickerController.beginCrop(getFragment(), requestCode, resultCode, data);
+        ImagePickerController.beginCrop(getFragment(), requestCode, resultCode, data, true);
     }
 
     public void showChooseMediaDialog() {
@@ -238,7 +238,8 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if (PermissionsUtils.CAMERA_MEDIA.isGranted(getActivity())) ImagePickerController.showDialog(getFragment());
+        if (PermissionsUtils.CAMERA_MEDIA.isGranted(getActivity()))
+            ImagePickerController.showDialog(getFragment());
     }
 
     @Override

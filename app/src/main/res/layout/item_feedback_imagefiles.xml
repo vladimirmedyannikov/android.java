@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/pd_small"
+        android:elevation="@dimen/pd_xxsmall"
+        app:cardCornerRadius="@dimen/pd_xxsmall">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vs_large">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/files_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:id="@+id/file_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#f1efef"
+                android:orientation="horizontal"
+                android:padding="@dimen/pd_xxsmall">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/files_name"
+                    style="@style/text.normal.black"
+                    android:layout_weight="1"
+                    android:text="asdasd" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/files_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_cross_delete" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

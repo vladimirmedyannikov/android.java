@@ -41,7 +41,7 @@ public class SubscribesAPIControllerRX {
             }
 
             @Override
-            public void onErrorListener() {
+            public void onErrorListener(int code, String message) {
                 if (listener != null) {
                     listener.onError();
                 }
@@ -84,7 +84,7 @@ public class SubscribesAPIControllerRX {
             }
 
             @Override
-            public void onErrorListener() {
+            public void onErrorListener(int code, String message) {
                 if (stateListener != null) {
                     stateListener.onError();
                 }
@@ -184,7 +184,7 @@ public class SubscribesAPIControllerRX {
             }
 
             @Override
-            public void onErrorListener() {
+            public void onErrorListener(int code, String message) {
                 if (saveListener != null) {
                     saveListener.onError();
                 }
@@ -210,7 +210,7 @@ public class SubscribesAPIControllerRX {
             }
 
             @Override
-            public void onErrorListener() {
+            public void onErrorListener(int code, String message) {
                 if (saveListener != null) {
                     saveListener.onError();
                 }

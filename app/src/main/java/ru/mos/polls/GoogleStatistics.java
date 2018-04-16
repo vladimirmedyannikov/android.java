@@ -221,15 +221,15 @@ public abstract class GoogleStatistics {
      * События для экрана обратной связи
      */
     public static class Feedback {
-        public void feedbackSanded(String subject) {
+        public static void feedbackSanded(String subject) {
             sendEvent(subject, null);
         }
 
-        public void errorOccurs(String subject, String error) {
+        public static void errorOccurs(String subject, String error) {
             sendEvent(subject, error);
         }
 
-        public void sendEvent(String subject, String error) {
+        public static void sendEvent(String subject, String error) {
             GoogleStatistics.sendEvent("Obratnaya_Svyaz", subject, AgTextUtil.isEmpty(error) ? "Ok" : error);
         }
     }

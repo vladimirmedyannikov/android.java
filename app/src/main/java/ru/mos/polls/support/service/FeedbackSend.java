@@ -14,7 +14,7 @@ import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
-public class FeedbackSend{
+public class FeedbackSend {
     public static class Request {
 
         @SerializedName("subject_id")
@@ -27,8 +27,9 @@ public class FeedbackSend{
         private String orderNumber;
         @SerializedName("user_info")
         private FeedbackUserInfo userInfo;
+        private List<String> attachments;
 
-        public Request(int subjectId, String email, String message, String orderNumber, String sessionId) {
+        public Request(int subjectId, String email, String message, String orderNumber, String sessionId, List<String> attachments) {
             this.subjectId = subjectId;
             apiVersion = new ArrayList<>();
             apiVersion.add(GCMHelper.REGISTER_PATH);
@@ -39,6 +40,7 @@ public class FeedbackSend{
                 this.orderNumber = orderNumber;
             }
             this.userInfo = new FeedbackUserInfo(sessionId);
+            this.attachments = attachments;
         }
     }
 
@@ -62,7 +64,7 @@ public class FeedbackSend{
             this.sessionId = sessionId;
         }
 
-        public FeedbackUserInfo(String sessionId){
+        public FeedbackUserInfo(String sessionId) {
             app = "iSuperCitizen";
             appVersion = BuildConfig.VERSION_NAME;
             device = Build.MODEL + " (" + Build.MANUFACTURER + ")";

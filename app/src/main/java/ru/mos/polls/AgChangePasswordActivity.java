@@ -76,7 +76,7 @@ public class AgChangePasswordActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onErrorListener() {
+                public void onErrorListener(int code, String message) {
                     dialog.dismiss();
                 }
             };

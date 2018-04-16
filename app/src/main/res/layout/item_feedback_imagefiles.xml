@@ -17,14 +17,14 @@
                 android:id="@+id/files_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:id="@+id/file_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@color/gray_pale"
+                android:background="#f1efef"
                 android:orientation="horizontal"
                 android:padding="@dimen/pd_xxsmall">
 
@@ -38,7 +38,7 @@
                     android:id="@+id/files_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_inr_cross_circle" />
+                    app:srcCompat="@drawable/ic_cross_delete" />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -4,11 +4,11 @@
         android:id="@+id/action_confirm"
         android:title="@string/menu_confirm"
         android:orderInCategory="101"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/ic_send"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_attach_files"
-        android:icon="@drawable/ic_lnr_trash"
+        android:icon="@drawable/ic_attachment"
         android:orderInCategory="100"
         android:title="@string/menu_attach_pic"
         app:showAsAction="ifRoom" />

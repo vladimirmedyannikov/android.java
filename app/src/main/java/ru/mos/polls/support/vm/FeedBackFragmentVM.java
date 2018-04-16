@@ -1,7 +1,6 @@
 package ru.mos.polls.support.vm;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
@@ -18,9 +17,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -60,6 +59,7 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
     List<Uri> uriList;
     ImagesFilesAdapter adapter;
     ArrayList<String> attachments;
+    HashMap<Uri, String> loadedAttachemnts;
 
     public FeedBackFragmentVM(FeedBackFragment fragment, FragmentFeedbackBinding binding) {
         super(fragment, binding);
@@ -89,6 +89,7 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         attachments = new ArrayList<>();
+        loadedAttachemnts = new HashMap<>();
     }
 
     @Override
@@ -106,19 +107,16 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
     public void showSubjectSelectDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Выберите тему");
-        builder.setAdapter(subjectAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                subject = subjects.get(i);
-                if (subject != null) {
-                    if (subject.getTitle().equals(Subject.WORD_SHOP_BONUS)) {
-                        orderNumberLayout.setVisibility(View.VISIBLE);
-                    } else if (orderNumberLayout.getVisibility() == View.VISIBLE) {
-                        orderNumberLayout.setVisibility(View.GONE);
-                        orderNumberET.setText("");
-                    }
-                    subjectET.setText(subject.getTitle());
+        builder.setAdapter(subjectAdapter, (dialogInterface, i) -> {
+            subject = subjects.get(i);
+            if (subject != null) {
+                if (subject.getTitle().equals(Subject.WORD_SHOP_BONUS)) {
+                    orderNumberLayout.setVisibility(View.VISIBLE);
+                } else if (orderNumberLayout.getVisibility() == View.VISIBLE) {
+                    orderNumberLayout.setVisibility(View.GONE);
+                    orderNumberET.setText("");
                 }
+                subjectET.setText(subject.getTitle());
             }
         });
         AlertDialog dialog = builder.create();
@@ -157,10 +155,6 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
     }
 
     public void sendMessage() {
-        System.out.println("sendMessage ");
-        for (String attachment : attachments) {
-            System.out.println("sendMessage attachment " + attachment);
-        }
         HandlerApiResponseSubscriber<String> handler
                 = new HandlerApiResponseSubscriber<String>(getFragment().getContext(), getProgressable()) {
 
@@ -237,6 +231,7 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
             uriList.add(uri);
             adapter.add(uri);
             checkFilesCount();
+            uploadImagefiles(uri);
         }
     }
 
@@ -248,46 +243,40 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
         }
     }
 
-    public void uploadImagefiles(List<Uri> uriList) {
-        Flowable<Media> mediaList = Flowable.fromIterable(uriList)
-                .subscribeOn(Schedulers.io())
-                .map(uri -> {
-                    File file = FileUtils.getFileFromUri(getFragment().getContext(), uri, FileUtils.getFileName(uri, getActivity()));
+    public void uploadImagefiles(Uri uri) {
+        Observable<Media> media = Observable.just(uri)
+                .flatMap(u -> {
+                    File file = FileUtils.getFileFromUri(getActivity(), u, FileUtils.getFileName(u, getActivity()));
                     Media m = new Media(FileUtils.getFileExtension(file.getName()), FileUtils.getStringFile(file));
-                    return m;
+                    return Observable.just(m);
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        disposables.add(mediaList.subscribe(
-                media -> {
+        disposables.add(media.subscribe(
+                media1 -> {
                     HandlerApiResponseSubscriber<UploadMedia.Response.Result> handler
                             = new HandlerApiResponseSubscriber<UploadMedia.Response.Result>(getActivity(), getProgressable()) {
                         @Override
                         protected void onResult(UploadMedia.Response.Result result) {
                             attachments.add(result.getId());
-                        }
-
-                        @Override
-                        public void onComplete() {
+                            loadedAttachemnts.put(uri, result.getId());
                         }
                     };
                     Observable<UploadMedia.Response> responseObservable = AGApplication.api
                             .uploadFile(new UploadMedia.Request()
-                                    .setContent(media.getBase64())
-                                    .setExtension(media.getExtension()))
+                                    .setContent(media1.getBase64())
+                                    .setExtension(media1.getExtension()))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread());
                     disposables.add(responseObservable.subscribeWith(handler));
-                }
-                , throwable -> throwable.printStackTrace(), this::sendMessage));
+                },
+                throwable -> throwable.printStackTrace()
+        ));
     }
 
     public void sendFeedBack() {
         GuiUtils.hideKeyboard(getFragment().getView());
-        if (uriList.size() == 0) {
-            sendMessage();
-        } else {
-            uploadImagefiles(uriList);
-        }
+        sendMessage();
     }
 
     @Override
@@ -306,6 +295,7 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
     public void onCrossClicked(Uri uri) {
         uriList.remove(uri);
         adapter.removeItem(uri);
+        attachments.remove(loadedAttachemnts.get(uri));
         checkFilesCount();
     }
 }

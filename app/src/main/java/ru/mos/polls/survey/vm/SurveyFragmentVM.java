@@ -101,6 +101,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
 
     public void setSurveyButtons() {
         mSurveyButtons.setCallBack(this);
+        mSurveyButtons.setFragment(getFragment());
         mSurveyButtons.setSurvey(survey);
     }
 

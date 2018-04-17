@@ -13,6 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.PullableUIComponent;
@@ -150,6 +151,7 @@ public class AddressesPropertyFragmentVM extends UIComponentFragmentViewModel<Ad
         if (requestCode == NewFlatFragmentVM.FLAT_TYPE_OWN) {
             if (resultCode == Activity.RESULT_OK) {
                 refreshProfile();
+                GoogleStatistics.Profile.ourFlatAdded();
             }
         }
     }

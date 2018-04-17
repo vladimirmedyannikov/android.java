@@ -24,6 +24,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
@@ -428,10 +429,16 @@ public class NewFlatFragmentVM extends UIComponentFragmentViewModel<NewFlatFragm
                         if (result.getFlats().getRegistration() != null) {
                             newFlat = result.getFlats().getRegistration();
                             newFlat.setType(Flat.Type.REGISTRATION);
+                            if (getFragment() != null && getFragment().getContext() != null) {
+                                GoogleStatistics.Profile.registrationFlatAdded(getFragment().getContext());
+                            }
                         }
                         if (result.getFlats().getResidence() != null) {
                             newFlat = result.getFlats().getResidence();
                             newFlat.setType(Flat.Type.RESIDENCE);
+                            if (getFragment() != null && getFragment().getContext() != null) {
+                                GoogleStatistics.Profile.residenceFlatAdded(getFragment().getContext());
+                            }
                         }
                         if (result.getFlats().getWork() != null) {
                             newFlat = result.getFlats().getWork();

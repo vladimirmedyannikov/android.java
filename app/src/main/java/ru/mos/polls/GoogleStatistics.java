@@ -1,6 +1,8 @@
 package ru.mos.polls;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
@@ -833,6 +835,71 @@ public abstract class GoogleStatistics {
          */
         public static void achievementsDetail() {
             GoogleStatistics.sendEvent(CATEGORY, "Otkritie_Detaliy_Dostigeniya", "Otkritie_Detaliy_Dostigeniya");
+        }
+    }
+
+    public static class Profile {
+        private static final String SP_PROFILE_STAT = "ru.mos.polls_sp_profile_stat";
+        private static final String CATEGORY = "Profile";
+
+        /**
+         * Привязка к PGU
+         */
+        private static final String IS_PGU_CONNECT_STAT = "is_pgu_connect_stat";
+        public static void connectPgu(Context context) {
+            SharedPreferences preferences = context.getSharedPreferences(SP_PROFILE_STAT, Context.MODE_PRIVATE);
+            if (!preferences.getBoolean(IS_PGU_CONNECT_STAT, false)) {
+                GoogleStatistics.sendEvent(CATEGORY, "Zapolnenie_mosru", "Zapolnenie_mosru");
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(IS_PGU_CONNECT_STAT, true);
+                editor.apply();
+            }
+        }
+
+        /**
+         * Добавление фото в профиле
+         */
+        private static final String IS_PHOTO_ADDED_STAT = "is_photo_added_stat";
+        public static void profileAddPhoto(Context context) {
+            SharedPreferences preferences = context.getSharedPreferences(SP_PROFILE_STAT, Context.MODE_PRIVATE);
+            if (!preferences.getBoolean(IS_PHOTO_ADDED_STAT, false)) {
+                GoogleStatistics.sendEvent(CATEGORY, "Zapolnenie_photo", "Zapolnenie_photo");
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(IS_PHOTO_ADDED_STAT, true);
+                editor.apply();
+            }
+        }
+
+        /**
+         * Добавление адреса проживания в профиле
+         */
+        private static final String IS_RESIDENCE_FLAT_ADDED_STAT = "is_residence_flat_added_stat";
+        public static void residenceFlatAdded(Context context) {
+            SharedPreferences preferences = context.getSharedPreferences(SP_PROFILE_STAT, Context.MODE_PRIVATE);
+            if (!preferences.getBoolean(IS_RESIDENCE_FLAT_ADDED_STAT, false)) {
+                GoogleStatistics.sendEvent(CATEGORY, "Zapolnenie_progivanie", "Zapolnenie_progivanie");
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(IS_RESIDENCE_FLAT_ADDED_STAT, true);
+                editor.apply();
+            }
+        }
+
+        /**
+         * Добавление адреса регистрации в профиле
+         */
+        private static final String IS_REGISTRATION_FLAT_ADDED_STAT = "is_registration_flat_added_stat";
+        public static void registrationFlatAdded(Context context) {
+            SharedPreferences preferences = context.getSharedPreferences(SP_PROFILE_STAT, Context.MODE_PRIVATE);
+            if (!preferences.getBoolean(IS_REGISTRATION_FLAT_ADDED_STAT, false)) {
+                GoogleStatistics.sendEvent(CATEGORY, "Zapolnenie_registraciya", "Zapolnenie_registraciya");
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(IS_REGISTRATION_FLAT_ADDED_STAT, true);
+                editor.apply();
+            }
+        }
+
+        public static void ourFlatAdded() {
+            GoogleStatistics.sendEvent(CATEGORY, "Zapolnenie_sobstvennost", "Zapolnenie_sobstvennost");
         }
     }
 }

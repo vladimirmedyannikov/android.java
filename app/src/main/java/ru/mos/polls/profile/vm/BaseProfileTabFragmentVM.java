@@ -27,6 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.ilich.juggler.gui.JugglerFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.badge.manager.BadgeManager;
 import ru.mos.polls.badge.model.BadgesSource;
@@ -185,6 +186,9 @@ public abstract class BaseProfileTabFragmentVM<F extends JugglerFragment, B exte
                 = new HandlerApiResponseSubscriber<AvatarSet.Response.Result>(getActivity(), progressable) {
             @Override
             protected void onResult(AvatarSet.Response.Result result) {
+                if (getFragment() != null && getFragment().getContext() != null) {
+                    GoogleStatistics.Profile.profileAddPhoto(getFragment().getContext());
+                }
                 Toast.makeText(getActivity(), "Аватарка загружена", Toast.LENGTH_SHORT).show();
                 isAvatarLoaded = true;
                 saved.setPercentFillProfile(result.getPercentFillProfile());

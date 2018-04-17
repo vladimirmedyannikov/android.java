@@ -21,15 +21,16 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 import me.ilich.juggler.gui.JugglerFragment;
-import ru.mos.polls.base.activity.BaseActivity;
-import ru.mos.polls.maskedettext.MaskedEditText;
-import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.AGApplication;
+import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
+import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.rxjava.Events;
 import ru.mos.polls.common.model.QuestMessage;
+import ru.mos.polls.maskedettext.MaskedEditText;
 import ru.mos.polls.popup.PopupController;
+import ru.mos.polls.profile.model.AgUser;
 import ru.mos.polls.survey.hearing.controller.HearingApiControllerRX;
 import ru.mos.polls.util.AgTextUtil;
 import ru.mos.polls.util.GuiUtils;
@@ -183,6 +184,9 @@ public class PguBindFragment extends JugglerFragment {
                 }
                 AgUser.setPguConnected(getActivity());
                 pguBindingListener.onSuccess(questMessage);
+                if (getContext() != null) {
+                    GoogleStatistics.Profile.connectPgu(getContext());
+                }
             }
 
             @Override

@@ -71,8 +71,8 @@ public class Area implements Serializable {
         JSONObject result = new JSONObject();
         try {
             result.put("id", id);
-            result.put("lat", position.getLat());
-            result.put("lon", position.getLon());
+            result.put("lat", getPosition().getLat());
+            result.put("lon", getPosition().getLon());
             result.put("r", r);
         } catch (JSONException ignored) {
         }

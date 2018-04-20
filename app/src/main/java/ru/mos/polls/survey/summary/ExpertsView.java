@@ -169,15 +169,18 @@ public class ExpertsView extends LinearLayout {
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
                 progressBar.setVisibility(GONE);
-                imageView.setVisibility(GONE);
+                imageView.setImageResource(R.drawable.ic_avatar_default);
+                imageView.setVisibility(VISIBLE);
             }
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
                 if (bitmap != null) {
                     imageView.setImageBitmap(bitmap);
-                    imageView.setVisibility(VISIBLE);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_avatar_default);
                 }
+                imageView.setVisibility(VISIBLE);
                 progressBar.setVisibility(GONE);
             }
 

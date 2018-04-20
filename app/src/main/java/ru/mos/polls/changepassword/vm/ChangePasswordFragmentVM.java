@@ -1,6 +1,8 @@
 package ru.mos.polls.changepassword.vm;
 
 import android.support.design.widget.TextInputEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -27,6 +29,63 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
         oldPass = binding.oldpass;
         newPass = binding.newpass;
         repeatPass = binding.repeatpass;
+        oldPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().trim().equals(charSequence.toString())) {
+                    oldPass.setText(charSequence.toString().trim());
+                    oldPass.setSelection(oldPass.getText().toString().length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        newPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().trim().equals(charSequence.toString())) {
+                    newPass.setText(charSequence.toString().trim());
+                    newPass.setSelection(newPass.getText().toString().length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        repeatPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().trim().equals(charSequence.toString())) {
+                    repeatPass.setText(charSequence.toString().trim());
+                    repeatPass.setSelection(repeatPass.getText().toString().length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -59,20 +118,20 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
             }
         };
         disposables.add(AGApplication.api
-                .changePassword(new ChangePassword.Request(oldPass.getText().toString(), newPass.getText().toString()))
+                .changePassword(new ChangePassword.Request(oldPass.getText().toString().trim(), newPass.getText().toString().trim()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(handler));
     }
 
     public boolean checkOldPass() {
-        return !oldPass.getText().toString().isEmpty();
+        return !oldPass.getText().toString().trim().isEmpty();
     }
     public boolean checkNewPass() {
-        return !newPass.getText().toString().isEmpty();
+        return !newPass.getText().toString().trim().isEmpty();
     }
     public boolean checkNewPassEqualsRepeatPass() {
-        return newPass.getText().toString().equals(repeatPass.getText().toString());
+        return newPass.getText().toString().trim().equals(repeatPass.getText().toString().trim());
     }
 
 }

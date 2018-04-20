@@ -34,7 +34,7 @@ public class BindingSocialFragment extends NavigateFragment<BindingSocialFragmen
 
     @Override
     protected BindingSocialFragmentVM onCreateViewModel(FragmentBindSocialBinding binding) {
-        return new BindingSocialFragmentVM(this, binding, getArguments() != null && getArguments().getBoolean(IS_TASK, false));
+        return new BindingSocialFragmentVM(this, binding);
     }
 
     @Override
@@ -68,5 +68,12 @@ public class BindingSocialFragment extends NavigateFragment<BindingSocialFragmen
             builder.show();
             return true;
         } else return super.onBackPressed();
+    }
+
+    public boolean isTask() {
+        if (getArguments() != null) {
+            return getArguments().getBoolean(IS_TASK, false);
+        }
+        return false;
     }
 }

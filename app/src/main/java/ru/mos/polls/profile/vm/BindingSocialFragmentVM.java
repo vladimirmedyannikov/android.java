@@ -1,7 +1,6 @@
 package ru.mos.polls.profile.vm;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.SwitchCompat;
@@ -9,14 +8,12 @@ import android.view.View;
 
 import java.util.List;
 
-import butterknife.Unbinder;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.CustomDialogController;
 import ru.mos.polls.GoogleStatistics;
 import ru.mos.polls.R;
 import ru.mos.polls.Statistics;
 import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.RecyclerUIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
@@ -61,13 +58,13 @@ public class BindingSocialFragmentVM extends UIComponentFragmentViewModel<Bindin
         }
     };
 
-    public BindingSocialFragmentVM(BindingSocialFragment fragment, FragmentBindSocialBinding binding, boolean isTask) {
+    public BindingSocialFragmentVM(BindingSocialFragment fragment, FragmentBindSocialBinding binding) {
         super(fragment, binding);
-        this.isTask = isTask;
     }
 
     @Override
     protected void initialize(FragmentBindSocialBinding binding) {
+        isTask = getFragment().isTask();
         socialShareNotify = binding.socialShareNotify;
         notifyContainer = binding.notifyContainer;
         notifyContainer.setVisibility(isTask ? View.GONE : View.VISIBLE);

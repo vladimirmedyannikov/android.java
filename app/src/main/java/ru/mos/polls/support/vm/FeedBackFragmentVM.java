@@ -275,8 +275,12 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
     }
 
     public void sendFeedBack() {
-        GuiUtils.hideKeyboard(getFragment().getView());
-        sendMessage();
+        if (messageET.getText().toString().trim().isEmpty()) {
+            GuiUtils.displayOkMessage(getFragment().getContext(), R.string.enter_text_message, null);
+        } else {
+            GuiUtils.hideKeyboard(getFragment().getView());
+            sendMessage();
+        }
     }
 
     @Override

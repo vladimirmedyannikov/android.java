@@ -906,4 +906,5 @@
     <string name="mos.ru_phone_mask">(###)###-##-##</string>
     <string name="mos.ru_snils">###-###-###-##</string>
     <string name="electronic_house_placing_an_order">Размещение заявки</string>
+    <string name="enter_text_message">Введите текст сообщения</string>
 </resources>

@@ -1,5 +1,6 @@
 package ru.mos.polls.changepassword.vm;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +30,14 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
         oldPass = binding.oldpass;
         newPass = binding.newpass;
         repeatPass = binding.repeatpass;
-        oldPass.addTextChangedListener(new TextWatcher() {
+        oldPass.addTextChangedListener(getWatcher(oldPass));
+        newPass.addTextChangedListener(getWatcher(newPass));
+        repeatPass.addTextChangedListener(getWatcher(repeatPass));
+    }
+
+    @NonNull
+    public TextWatcher getWatcher(TextInputEditText view) {
+        return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -38,8 +46,8 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!charSequence.toString().trim().equals(charSequence.toString())) {
-                    oldPass.setText(charSequence.toString().trim());
-                    oldPass.setSelection(oldPass.getText().toString().length());
+                    view.setText(charSequence.toString().trim());
+                    view.setSelection(view.getText().toString().length());
                 }
             }
 
@@ -47,45 +55,7 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
             public void afterTextChanged(Editable editable) {
 
             }
-        });
-        newPass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().equals(charSequence.toString())) {
-                    newPass.setText(charSequence.toString().trim());
-                    newPass.setSelection(newPass.getText().toString().length());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        repeatPass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().equals(charSequence.toString())) {
-                    repeatPass.setText(charSequence.toString().trim());
-                    repeatPass.setSelection(repeatPass.getText().toString().length());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        };
     }
 
     @Override
@@ -127,9 +97,11 @@ public class ChangePasswordFragmentVM extends UIComponentFragmentViewModel<Chang
     public boolean checkOldPass() {
         return !oldPass.getText().toString().trim().isEmpty();
     }
+
     public boolean checkNewPass() {
         return !newPass.getText().toString().trim().isEmpty();
     }
+
     public boolean checkNewPassEqualsRepeatPass() {
         return newPass.getText().toString().trim().equals(repeatPass.getText().toString().trim());
     }

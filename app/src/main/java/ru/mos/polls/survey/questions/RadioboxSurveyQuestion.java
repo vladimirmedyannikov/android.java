@@ -63,4 +63,9 @@ public class RadioboxSurveyQuestion extends ListViewSurveyQuestion {
         return result;
     }
 
+    public void dropCheckBox() {
+        for (SurveyVariant variant : getVariantsList()) {
+            variant.setChecked(false);
+        }
+    }
 }

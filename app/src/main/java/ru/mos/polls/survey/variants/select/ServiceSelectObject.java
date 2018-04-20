@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class ServiceSelectObject extends SelectObject {
 
-    private static final int REQUEST_CODE = 355;
+    public static final int REQUEST_CODE = 355;
 
     private final String category;
     private long id = -1;

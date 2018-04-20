@@ -10,6 +10,7 @@ import com.appsflyer.AppsFlyerLib;
 import me.ilich.juggler.change.Add;
 import ru.mos.polls.auth.state.AgAuthState;
 import ru.mos.polls.base.activity.BaseActivity;
+import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.rxhttp.session.Session;
 
 
@@ -34,7 +35,7 @@ public class SplashActivity extends BaseActivity {
         AppsFlyerLib.sendTracking(getApplicationContext());
 
         AppsFlyerLib.sendTracking(getApplicationContext());
-
+        GCMHelper.registerPush(this);
         splashTread = new Thread() {
             @Override
             public void run() {

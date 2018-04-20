@@ -44,7 +44,6 @@ import ru.mos.polls.geotarget.manager.AreasManager;
 import ru.mos.polls.geotarget.manager.PrefsAreasManager;
 import ru.mos.polls.geotarget.model.Area;
 import ru.mos.polls.push.GCMBroadcastReceiver;
-import ru.mos.polls.push.GCMHelper;
 import ru.mos.polls.push.PushChannel;
 import ru.mos.polls.rxhttp.rxapi.config.AgApi;
 import ru.mos.polls.rxhttp.rxapi.config.AgApiBuilder;
@@ -135,8 +134,6 @@ public class AGApplication extends MultiDexApplication {
 
         BaseActivity.setFlurryKey(getString(R.string.ag_flurry_key));
         AppsFlyerLib.setAppsFlyerKey("TvVxifM6uMLnGmiZEwifAi");
-
-        GCMHelper.registerPush(this);
 
         pushRegister();
 

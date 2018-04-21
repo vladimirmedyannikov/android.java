@@ -130,9 +130,10 @@ public class SurveyButtons extends LinearLayout {
          * и кнопки навигации по вопросам "назад" {@link #prevQuestionButton} и "вперед" {@link #nextQuestionButton}
          * При это кнопку "Завершить гоосование" (она же "Поделиться") {@link #resultButton} окрашивается в определенные цвета
          * и расширятеся по всей ширине экрана
+         * Если всего 1 вопрос
          */
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) resultButton.getLayoutParams();
-        if ((survey.getFilteredQuestionList().size() == 1 && survey.getQuestionsList().size() == 1) && hasAnswerForCurrentQuestion()) {
+        if ((survey.getFilteredQuestionList().size() == 1 && survey.getQuestionsList().size() == 1)) {
             params.setMargins(0, 0, 0, 0);
             resultButton.setLayoutParams(params);
             setResultButtonDone();
@@ -175,11 +176,9 @@ public class SurveyButtons extends LinearLayout {
     private void renderQuestButtons() {
         /**
          * Отрисовка состояние навигационных кнопок {@link #prevQuestionButton} {@link #nextQuestionButton}
+         * Скрываем если всего 1 вопрос и на него есть ответ
          */
-        System.out.println("renderQuestButtons ");
         if ((survey.getFilteredQuestionList().size() == 1 && survey.getQuestionsList().size() == 1) && hasAnswerForCurrentQuestion()) {
-            System.out.println("renderQuestButtons survey.getQuestionsList().size() " + survey.getQuestionsList().size());
-            System.out.println("renderQuestButtons survey.getFilteredQuestionList().size() " + survey.getFilteredQuestionList().size());
             /**
              * Не показываем , если один вопрос {@link SurveyQuestion}
              */

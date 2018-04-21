@@ -467,7 +467,10 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
-
+        /**
+         * Если вернулись со связаного справочника не выбрав вариант ответа то затираем ответ на него
+         * только для RadioboxSurveyQuestion
+         */
         if (requestCode == ServiceSelectObject.REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
             if (surveyQuestion != null && surveyQuestion instanceof RadioboxSurveyQuestion) {
                 RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) surveyQuestion;

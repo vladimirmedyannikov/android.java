@@ -471,7 +471,11 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
         if (requestCode == ServiceSelectObject.REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
             if (surveyQuestion != null && surveyQuestion instanceof RadioboxSurveyQuestion) {
                 RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) surveyQuestion;
-                radioboxSurveyQuestion.dropCheckBox();
+                radioboxSurveyQuestion.reset();
+                for (SurveyVariant surveyVariant : radioboxSurveyQuestion.getVariantsList()) {
+                    removeChildAnswer(surveyQuestion, surveyVariant);
+                }
+                manager.remove(questionId);
                 renderQuestion();
             }
         }

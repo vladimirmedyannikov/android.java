@@ -132,7 +132,7 @@ public class SurveyButtons extends LinearLayout {
          * и расширятеся по всей ширине экрана
          */
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) resultButton.getLayoutParams();
-        if (survey.getFilteredQuestionList().size() == 1) {
+        if ((survey.getFilteredQuestionList().size() == 1 && survey.getQuestionsList().size() == 1) && hasAnswerForCurrentQuestion()) {
             params.setMargins(0, 0, 0, 0);
             resultButton.setLayoutParams(params);
             setResultButtonDone();
@@ -176,7 +176,10 @@ public class SurveyButtons extends LinearLayout {
         /**
          * Отрисовка состояние навигационных кнопок {@link #prevQuestionButton} {@link #nextQuestionButton}
          */
-        if (survey.getFilteredQuestionList().size() == 1) {
+        System.out.println("renderQuestButtons ");
+        if ((survey.getFilteredQuestionList().size() == 1 && survey.getQuestionsList().size() == 1) && hasAnswerForCurrentQuestion()) {
+            System.out.println("renderQuestButtons survey.getQuestionsList().size() " + survey.getQuestionsList().size());
+            System.out.println("renderQuestButtons survey.getFilteredQuestionList().size() " + survey.getFilteredQuestionList().size());
             /**
              * Не показываем , если один вопрос {@link SurveyQuestion}
              */

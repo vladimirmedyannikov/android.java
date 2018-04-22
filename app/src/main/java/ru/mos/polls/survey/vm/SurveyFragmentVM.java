@@ -31,6 +31,7 @@ import ru.mos.polls.survey.Survey;
 import ru.mos.polls.survey.SurveyButtons;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.questions.ListSurveyQuestion;
+import ru.mos.polls.survey.questions.RadioboxSurveyQuestion;
 import ru.mos.polls.survey.questions.SurveyQuestion;
 import ru.mos.polls.survey.source.StubSurveyDataSource;
 import ru.mos.polls.survey.source.SurveyDataSource;
@@ -61,6 +62,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
     private Intent data;
     private int requestCode;
     private SparseArray<SelectSurveyVariant> selectSurveyVariantList;
+    SurveyQuestion surveyQuestion;
 
     public SurveyFragmentVM(SurveyFragment fragment, FragmentSurveyBinding binding) {
         super(fragment, binding);
@@ -161,7 +163,7 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
 
             @Override
             public void onSurveyVariantBeforeClick(SurveyQuestion surveyQuestion, SurveyVariant surveyVariant) {
-
+                SurveyFragmentVM.this.surveyQuestion = surveyQuestion;
             }
 
             @Override
@@ -337,7 +339,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
             if (survey.getKind().isHearing()) {
                 callback.onSurveyInterrupted(survey);
                 ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
-//                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             } else {
                 try {
                     survey.verify();
@@ -348,7 +349,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 survey.endTiming();
                 manager.saveCurrentPage(survey);
                 ((SurveyMainFragment) getParentFragment()).getViewModel().getSummaryFragmentCallback().onSurveyInterrupted(survey);
-//                ((SurveyActivity) getActivity()).getSummaryFragmentCallback().onSurveyInterrupted(survey);
             }
         }
     }
@@ -467,6 +467,21 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
+        /**
+         * Если вернулись со связаного справочника не выбрав вариант ответа то затираем ответ на него
+         * только для RadioboxSurveyQuestion
+         */
+        if (requestCode == ServiceSelectObject.REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
+            if (surveyQuestion != null && surveyQuestion instanceof RadioboxSurveyQuestion) {
+                RadioboxSurveyQuestion radioboxSurveyQuestion = (RadioboxSurveyQuestion) surveyQuestion;
+                radioboxSurveyQuestion.reset();
+                for (SurveyVariant surveyVariant : radioboxSurveyQuestion.getVariantsList()) {
+                    removeChildAnswer(surveyQuestion, surveyVariant);
+                }
+                manager.remove(questionId);
+                renderQuestion();
+            }
+        }
     }
 
 
@@ -533,9 +548,6 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
             ((SurveyMainFragment) getParentFragment()).getViewModel().setBackPressedListener(getFragment());
             ((SurveyMainFragment) getParentFragment()).getViewModel().setCurrentFragment(getFragment());
             ((SurveyMainFragment) getParentFragment()).getViewModel().getSurveyCallback();
-//            ((SurveyActivity) getActivity()).setBackPressedListener(getFragment());
-//            ((SurveyActivity) getActivity()).setCurrentFragment(getFragment());
-//            setCallback(((SurveyActivity) getActivity()).getSurveyCallback());
         }
     }
 

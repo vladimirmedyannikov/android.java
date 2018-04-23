@@ -26,6 +26,7 @@ import ru.mos.polls.Statistics;
 import ru.mos.polls.base.activity.BaseActivity;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.common.controller.UrlSchemeController;
 import ru.mos.polls.databinding.FragmentWebviewBinding;
 import ru.mos.polls.model.NewsFindModel;
@@ -113,11 +114,17 @@ public class WebViewFragmentVM extends UIComponentFragmentViewModel<WebViewFragm
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, shareUrl);
                 sendIntent.setType("text/plain");
-                getFragment().startActivity(sendIntent);
+                getFragment().startActivity(Intent.createChooser(sendIntent, "Отправить"));
                 break;
             default:
                 super.onOptionsItemSelected(menuItemId);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BindingFragment.hideKeyboard(getFragment());
     }
 
     public boolean webViewCanGoBack() {

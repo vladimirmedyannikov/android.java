@@ -304,6 +304,7 @@
     <string name="would_you_like_to_send_answer">Вы хотите завершить вопрос и отправить результаты?</string>
     <string name="whould_you_like_to_interrupt_survey">Вы хотите прервать вопрос?</string>
     <string name="error_occurs">Произошла ошибка: %s</string>
+    <string name="error_loading_image">Произошла ошибка загрузки изображения</string>
     <string name="error_general">Произошла ошибка</string>
     <string name="hint_set_promo">Введите промокод</string>
     <string name="promo_is_empty">Промокод пуст. Введите значение</string>

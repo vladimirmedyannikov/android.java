@@ -52,6 +52,7 @@
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/orderNumber_feedback"
+                            android:inputType="number"
                             style="@style/edit_profile.input"
                             android:hint="@string/order_number_title_text" />
 

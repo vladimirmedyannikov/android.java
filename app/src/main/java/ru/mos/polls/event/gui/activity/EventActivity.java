@@ -542,8 +542,7 @@ public class EventActivity extends ToolbarAbstractActivity {
                 @Override
                 public void onLoadingFailed(String s, View view, FailReason failReason) {
                     loadingImageProgress.setVisibility(View.GONE);
-                    String errorMessage = String.format(getString(R.string.error_occurs), failReason.getType().toString());
-                    Toast.makeText(EventActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, getString(R.string.error_loading_image), Toast.LENGTH_LONG).show();
                 }
 
                 @Override

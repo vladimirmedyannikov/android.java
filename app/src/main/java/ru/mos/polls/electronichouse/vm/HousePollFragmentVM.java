@@ -135,10 +135,8 @@ public class HousePollFragmentVM extends PullablePaginationFragmentVM<HousePollF
     }
 
     void addClick(View v) {
-        GuiUtils.displayYesOrNotDialog(getActivity(), getActivity().getString(R.string.go_to_house_poll_desc), (DialogInterface.OnClickListener) (dialog, which) -> {
-            getFragment().navigateTo(WebViewState.getStateSetCookie( null,
-                    getActivity().getString(R.string.electronic_house_placing_an_order),
-                    UrlHelper.getHouseConstructorUrl()), ru.mos.polls.base.activity.BaseActivity.class);
-        }, null);
+        getFragment().navigateTo(WebViewState.getStateSetCookie(null,
+                getActivity().getString(R.string.electronic_house_placing_an_order),
+                UrlHelper.getHouseConstructorUrl()), ru.mos.polls.base.activity.BaseActivity.class);
     }
 }

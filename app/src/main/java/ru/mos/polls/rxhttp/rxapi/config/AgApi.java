@@ -85,7 +85,8 @@ public interface AgApi {
             String V_2_4_0 = "v2.4.0";
             String V_2_4_1 = "v2.4.1";
             String V_2_5_0 = "v2.5.0";
-            String CURRENT = V_2_5_0;
+            String V_2_5_2 = "v2.5.2";
+            String CURRENT = V_2_5_2;
         }
 
         interface Controllers {

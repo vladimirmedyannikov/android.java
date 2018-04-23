@@ -6,15 +6,15 @@ import ru.mos.polls.rxhttp.rxapi.model.base.AuthRequest;
 import ru.mos.polls.rxhttp.rxapi.model.base.GeneralResponse;
 
 public class UploadMedia {
-    public static class Request extends AuthRequest {
+    public static class Request {
         @SerializedName("content")
         private String content;
         @SerializedName("extension")
         private String extension;
 
 
-        public Request setContent(String content ) {
-            this.content  = content ;
+        public Request setContent(String content) {
+            this.content = content;
             return this;
         }
 

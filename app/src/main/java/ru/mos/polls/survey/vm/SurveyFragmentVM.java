@@ -14,7 +14,11 @@ import com.appsflyer.AppsFlyerLib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
 import ru.mos.polls.base.activity.BaseActivity;
@@ -22,6 +26,7 @@ import ru.mos.polls.base.component.ProgressableUIComponent;
 import ru.mos.polls.base.component.UIComponent;
 import ru.mos.polls.base.component.UIComponentFragmentViewModel;
 import ru.mos.polls.base.component.UIComponentHolder;
+import ru.mos.polls.base.ui.BindingFragment;
 import ru.mos.polls.databinding.FragmentSurveyBinding;
 import ru.mos.polls.helpers.AppsFlyerConstants;
 import ru.mos.polls.profile.ui.activity.QuestActivity;
@@ -172,6 +177,12 @@ public class SurveyFragmentVM extends UIComponentFragmentViewModel<SurveyFragmen
                 processTitle();
                 processProgress(surveyQuestion, surveyVariant);
                 removeChildAnswer(surveyQuestion, surveyVariant);
+                disposables.add( Observable.timer(100, TimeUnit.MILLISECONDS) //почему сразу не скрывает клаву?!
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aLong -> {
+                BindingFragment.hideKeyboard(getFragment());
+                        }));
             }
 
             @Override

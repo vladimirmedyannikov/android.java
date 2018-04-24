@@ -261,6 +261,12 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
                             attachments.add(result.getId());
                             loadedAttachemnts.put(uri, result.getId());
                         }
+
+                        @Override
+                        public void onErrorListener(int code, String message) {
+                            removeFileList(uri);
+                            Toast.makeText(getActivity(), "Не удалось загрузить файл", Toast.LENGTH_SHORT).show();
+                        }
                     };
                     Observable<UploadMedia.Response> responseObservable = AGApplication.api
                             .uploadFile(new UploadMedia.Request()
@@ -297,6 +303,10 @@ public class FeedBackFragmentVM extends UIComponentFragmentViewModel<FeedBackFra
 
     @Override
     public void onCrossClicked(Uri uri) {
+        removeFileList(uri);
+    }
+
+    public void removeFileList(Uri uri) {
         uriList.remove(uri);
         adapter.removeItem(uri);
         attachments.remove(loadedAttachemnts.get(uri));

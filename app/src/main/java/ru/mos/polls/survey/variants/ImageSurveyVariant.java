@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.IntRange;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,19 +13,13 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.util.List;
 
 import ru.mos.polls.AGApplication;
 import ru.mos.polls.R;
-import ru.mos.polls.badge.manager.BadgeManager;
-import ru.mos.polls.badge.model.BadgesSource;
 import ru.mos.polls.survey.StatusProcessor;
 import ru.mos.polls.survey.VerificationException;
 import ru.mos.polls.survey.variants.image.FullImageActivity;
@@ -55,19 +47,16 @@ public class ImageSurveyVariant extends SurveyVariant {
     protected View onGetView(final Context context, StatusProcessor statusProcessor) {
         View v = View.inflate(context, R.layout.survey_variant_image, null);
         statusProcessor.process(v);
-        tv = (TextView) v.findViewById(R.id.text);
+        tv = v.findViewById(R.id.text);
         statusProcessor.process(tv);
         tv.setText(text);
         statusProcessor.processChecked(tv, this);
 
         final String url = src[0];
-        final ImageView imageView = (ImageView) v.findViewById(R.id.image);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFullImageActivity(context, url);
-                getListener().performParentClick();
-            }
+        final ImageView imageView = v.findViewById(R.id.image);
+        imageView.setOnClickListener(v1 -> {
+            showFullImageActivity(context, url);
+            getListener().performParentClick();
         });
         ImageLoader imageLoader = AGApplication.getImageLoader();
         imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
@@ -94,6 +83,22 @@ public class ImageSurveyVariant extends SurveyVariant {
 
             }
         });
+//        GlideApp.with(imageView)
+//                .load(url)
+//                .listener(new RequestListener<Drawable>() {
+//                    @Override
+//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                        imageView.setVisibility(View.GONE);
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                        imageView.setVisibility(View.VISIBLE);
+//                        return false;
+//                    }
+//                })
+//                .into(imageView);
         return v;
     }
 
